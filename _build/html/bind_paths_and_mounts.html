@@ -1,0 +1,367 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Bind Paths and Mounts &mdash; Singularity container 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Persistent Overlays" href="persistent_overlays.html" />
+    <link rel="prev" title="Singularity Flow" href="singularity_flow.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Singularity container
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_environment.html">Build Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_recipes.html">Container Recipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_flow.html">Singularity Flow</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Bind Paths and Mounts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#system-defined-bind-points">System-defined bind points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-defined-bind-points">User-defined bind points</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#specifying-bind-paths">Specifying Bind Paths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#binding-with-overlay">Binding with Overlay</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running_services.html">Running Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_and_metadata.html">Environment and Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reproducible_scif_apps.html">Reproducible SCI-F Apps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Bind Paths and Mounts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/bind_paths_and_mounts.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bind-paths-and-mounts">
+<h1>Bind Paths and Mounts<a class="headerlink" href="#bind-paths-and-mounts" title="Permalink to this headline">¶</a></h1>
+<p id="sec-bindpaths">If <a class="reference external" href="https://singularity-admindoc.readthedocs.io/en/latest/the_singularity_config_file.html#user-bind-control-boolean-default-yes">enabled by the system administrator</a>, Singularity allows you to map
+directories on your host system to directories within your container
+using bind mounts. This allows you to read and write data on the host
+system with ease.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>When Singularity ‘swaps’ the host operating system for the one inside
+your container, the host file systems becomes inaccessible. But you may
+want to read and write files on the host system from within the
+container. To enable this functionality, Singularity will bind
+directories back in via two primary methods: system-defined bind points
+and conditional user-defined bind points.</p>
+<div class="section" id="system-defined-bind-points">
+<h3>System-defined bind points<a class="headerlink" href="#system-defined-bind-points" title="Permalink to this headline">¶</a></h3>
+<p>The system administrator has the ability to define what bind points will
+be included automatically inside each container. The bind paths are
+locations on the host’s root file system which should also be visible
+within the container. Some of the bind paths are automatically derived
+(e.g. a user’s home directory) and some are statically defined (e.g.
+bind path in the Singularity configuration file). In the default
+configuration, the directories <code class="docutils literal notranslate"><span class="pre">$HOME</span></code> , <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> , <code class="docutils literal notranslate"><span class="pre">/proc</span></code> , <code class="docutils literal notranslate"><span class="pre">/sys</span></code> , <code class="docutils literal notranslate"><span class="pre">/dev</span></code> and are among the system-defined
+bind points.</p>
+</div>
+<div class="section" id="user-defined-bind-points">
+<h3>User-defined bind points<a class="headerlink" href="#user-defined-bind-points" title="Permalink to this headline">¶</a></h3>
+<p>If the system administrator has <a class="reference external" href="https://singularity-admindoc.readthedocs.io/en/latest/the_singularity_config_file.html#user-bind-control-boolean-default-yes">enabled user control of binds</a>, you
+will be able to request your own bind points within your container.</p>
+<p>To <em>mount</em> a bind path inside the container, a <strong>bind point</strong> must be
+defined within the container. The bind point is a directory within the
+container that Singularity can use to bind a directory on the host
+system. This means that if you want to bind to a point within the
+container such as <code class="docutils literal notranslate"><span class="pre">/global</span></code>, that directory must already exist within the
+container.</p>
+<p>It is, however, possible that the system administrator has enabled a
+Singularity feature called <a class="reference external" href="https://singularity-admindoc.readthedocs.io/en/latest/the_singularity_config_file.html#enable-overlay-boolean-default-no">overlay in the Singularity configuration
+file</a>. This will cause the bind points to be created on an as-needed
+basis in an overlay file system so that the underlying container is
+not modified. But because the overlay feature is not always enabled or
+is unavailable in the kernels of some older host systems, it may be
+necessary for container standards to exist to ensure portability from
+host to host.</p>
+<div class="section" id="specifying-bind-paths">
+<h4>Specifying Bind Paths<a class="headerlink" href="#specifying-bind-paths" title="Permalink to this headline">¶</a></h4>
+<p>Many of the Singularity commands such as <code class="docutils literal notranslate"><span class="pre">run</span></code>, <code class="docutils literal notranslate"><span class="pre">exec</span></code> , and <code class="docutils literal notranslate"><span class="pre">shell</span></code> take the <code class="docutils literal notranslate"><span class="pre">--bind</span> <span class="pre">/</span>
+<span class="pre">command-line</span></code> option to specify bind paths, in addition to the <code class="docutils literal notranslate"><span class="pre">SINGULARITY_BINDPATH</span></code>
+environment variable. This option’s argument is a comma-delimited
+string of bind path specifications in the format <code class="docutils literal notranslate"><span class="pre">src[:dest[:opts]]</span></code>, where <code class="docutils literal notranslate"><span class="pre">src</span></code> and <code class="docutils literal notranslate"><span class="pre">dest</span></code> are
+outside and inside paths. If <code class="docutils literal notranslate"><span class="pre">dest</span></code> is not given, it is set equal to <code class="docutils literal notranslate"><span class="pre">src</span></code> . Mount
+options (<code class="docutils literal notranslate"><span class="pre">opts</span></code>) may be specified as <code class="docutils literal notranslate"><span class="pre">ro</span></code> (read-only) or <code class="docutils literal notranslate"><span class="pre">rw</span></code> (read/write, which is
+the default). The <code class="docutils literal notranslate"><span class="pre">--bind/-B</span></code> option can be specified multiple times, or a
+comma-delimited string of bind path specifications can be used.</p>
+<p>Here’s an example of using the <code class="docutils literal notranslate"><span class="pre">-B</span></code> option and binding <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> on the host to <code class="docutils literal notranslate"><span class="pre">/scratch</span></code> in
+the container (<code class="docutils literal notranslate"><span class="pre">/scratch</span></code> does not need to already exist in the container if
+file system overlay is enabled):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity shell -B /tmp:/scratch /tmp/Centos7-ompi.img
+
+Singularity: Invoking an interactive shell within container...
+
+
+Singularity.Centos7-ompi.img&gt; ls /scratch
+
+ssh-7vywtVeOez  systemd-private-cd84c81dda754fe4a7a593647d5a5765-ntpd.service-12nMO4
+</pre></div>
+</div>
+<p>You can bind multiple directories in a single command with this
+syntax:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity shell -B /opt,/data:/mnt /tmp/Centos7-ompi.img
+</pre></div>
+</div>
+<p>This will bind <code class="docutils literal notranslate"><span class="pre">/opt</span></code> on the host to <code class="docutils literal notranslate"><span class="pre">/opt</span></code> in the container and <code class="docutils literal notranslate"><span class="pre">/data</span></code> on the host to <code class="docutils literal notranslate"><span class="pre">/mnt</span></code> in the
+container. Using the environment variable instead of the command line
+argument, this would be:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ export SINGULARITY_BINDPATH=&quot;/opt,/data:/mnt&quot;
+
+$ singularity shell /tmp/Centos7-ompi.img
+</pre></div>
+</div>
+<p>Using the environment variable <code class="docutils literal notranslate"><span class="pre">$SINGULARITY_BINDPATH</span></code>, you can bind directories even when you
+are running your container as an executable file with a runscript. If
+you bind many directories into your Singularity containers and they
+don’t change, you could even benefit by setting this variable in your <code class="docutils literal notranslate"><span class="pre">.bashrc</span></code>
+file.</p>
+</div>
+<div class="section" id="binding-with-overlay">
+<h4>Binding with Overlay<a class="headerlink" href="#binding-with-overlay" title="Permalink to this headline">¶</a></h4>
+<p>If a bind path is requested and the bind point does not exist within the
+container, a warning message will be displayed and Singularity will
+continue trying to start the container. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity shell --bind /global /tmp/Centos7-ompi.img
+
+WARNING: Non existent bind point (directory) in container: &#39;/global&#39;
+
+Singularity: Invoking an interactive shell within container...
+
+
+Singularity.Centos7-ompi.img&gt;
+</pre></div>
+</div>
+<p>Even though <code class="docutils literal notranslate"><span class="pre">/global</span></code> did not exist inside the container, the shell command
+printed a warning but continued on. If overlay is available and enabled,
+you will find that we no longer get the error and <code class="docutils literal notranslate"><span class="pre">/global</span></code> is created and
+accessible as expected:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity shell --bind /global /tmp/Centos7-ompi.img
+
+Singularity: Invoking an interactive shell within container...
+
+
+Singularity.Centos7-ompi.img&gt;
+</pre></div>
+</div>
+<p>In this case, Singularity dynamically created the necessary bind point
+in your container. Without overlay, you would have needed to manually
+create the <code class="docutils literal notranslate"><span class="pre">/global</span></code> directory inside your container.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="persistent_overlays.html" class="btn btn-neutral float-right" title="Persistent Overlays" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="singularity_flow.html" class="btn btn-neutral" title="Singularity Flow" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

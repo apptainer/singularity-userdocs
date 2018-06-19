@@ -1,0 +1,411 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Troubleshooting &mdash; Singularity container 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Appendix" href="appendix.html" />
+    <link rel="prev" title="Singularity and Docker" href="singularity_and_docker.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Singularity container
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_environment.html">Build Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_recipes.html">Container Recipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_flow.html">Singularity Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running_services.html">Running Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_and_metadata.html">Environment and Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reproducible_scif_apps.html">Reproducible SCI-F Apps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#no-space-left-on-device">No space left on device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#segfault-on-bootstrap-of-centos-image">Segfault on Bootstrap of Centos Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-use-singularity-with-grsecurity-enabled-kernels">How to use Singularity with GRSecurity enabled kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-container-isnt-working-on-a-different-host">The container isn’t working on a different host!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#invalid-argument-or-unknown-option">Invalid Argument or Unknown Option</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#error-running-singularity-with-sudo">Error running Singularity with sudo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-resolve-too-many-levels-of-symbolic-links-error">How to resolve “Too many levels of symbolic links” error</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Troubleshooting</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/troubleshooting.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="troubleshooting">
+<h1>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h1>
+<p>A little bit of help.</p>
+<div class="section" id="no-space-left-on-device">
+<h2>No space left on device<a class="headerlink" href="#no-space-left-on-device" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes when you are building an image, Singularity tells you that
+it runs out of space on the device:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">singularity</span> <span class="n">build</span> <span class="n">fatty</span><span class="o">.</span><span class="n">simg</span> <span class="n">Singularity</span>
+
+<span class="ne">IOError</span><span class="p">:</span> <span class="p">[</span><span class="n">Errno</span> <span class="mi">28</span><span class="p">]</span> <span class="n">No</span> <span class="n">space</span> <span class="n">left</span> <span class="n">on</span> <span class="n">device</span>
+
+<span class="n">ABORT</span><span class="p">:</span> <span class="n">Aborting</span> <span class="k">with</span> <span class="n">RETVAL</span><span class="o">=</span><span class="mi">255</span>
+</pre></div>
+</div>
+<p>The issue here is that during build of a squashfs image, Singularity is
+using the <code class="docutils literal notranslate"><span class="pre">$TMPDIR</span></code> . If your <code class="docutils literal notranslate"><span class="pre">$TMPDIR</span></code> is overflowing (or the mount is very small!) then
+you would see this error. As a test, you can try building a sandbox. If
+this is the issue, then the sandbox should work.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">singularity</span> <span class="n">build</span> <span class="o">--</span><span class="n">sandbox</span> <span class="p">[</span><span class="n">fatty</span><span class="p">]</span> <span class="n">Singularity</span>
+</pre></div>
+</div>
+<p><strong>Solution</strong>
+You simply need to set the <code class="docutils literal notranslate"><span class="pre">$SINGULARITY_CACHEDIR</span></code> to a different location that you have more
+room.</p>
+</div>
+<div class="section" id="segfault-on-bootstrap-of-centos-image">
+<h2>Segfault on Bootstrap of Centos Image<a class="headerlink" href="#segfault-on-bootstrap-of-centos-image" title="Permalink to this headline">¶</a></h2>
+<p>If you are bootstrapping a centos 6 docker image from a debian host,
+you might hit a segfault:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity shell docker://centos:6
+
+Docker image path: index.docker.io/library/centos:6
+
+Cache folder set to /home/jbdenis/.singularity/docker
+
+Creating container runtime...
+
+Singularity: Invoking an interactive shell within container...
+
+
+Segmentation fault
+</pre></div>
+</div>
+<p>The fix is on your host, you need to pass the variable <code class="docutils literal notranslate"><span class="pre">vsyscall=emulate</span></code> to the kernel,
+meaning in the file <code class="docutils literal notranslate"><span class="pre">/etc/default/grub</span></code> (note, this file is debian specific), add the
+following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="s2">&quot;vsyscall=emulate&quot;</span>
+</pre></div>
+</div>
+<p>and then update grub and reboot:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">update</span><span class="o">-</span><span class="n">grub</span> <span class="o">&amp;&amp;</span> <span class="n">reboot</span>
+</pre></div>
+</div>
+<p>Please note that this change might have <a class="reference external" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/admin-guide/kernel-parameters.txt?h=v4.13-rc3#n4387">security implications</a> that
+you should be aware of. For more information, see the <a class="reference external" href="https://github.com/singularityware/singularity/issues/845">original issue</a>.</p>
+</div>
+<div class="section" id="how-to-use-singularity-with-grsecurity-enabled-kernels">
+<h2>How to use Singularity with GRSecurity enabled kernels<a class="headerlink" href="#how-to-use-singularity-with-grsecurity-enabled-kernels" title="Permalink to this headline">¶</a></h2>
+<div class="line-block">
+<div class="line">To run Singularity on a GRSecurity enabled kernel, you must disable
+several security features:</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo sysctl -w kernel.grsecurity.chroot_caps=0
+
+$ sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
+
+$ sudo sysctl -w kernel.grsecurity.chroot_deny_chmod=0
+
+$ sudo sysctl -w kernel.grsecurity.chroot_deny_fchdir=0
+</pre></div>
+</div>
+</div>
+<div class="section" id="the-container-isnt-working-on-a-different-host">
+<h2>The container isn’t working on a different host!<a class="headerlink" href="#the-container-isnt-working-on-a-different-host" title="Permalink to this headline">¶</a></h2>
+<p>Singularity by default mounts your home directory. While this is great
+for seamless communication between your host and the container, it can
+introduce issues if you have software modules installed at <code class="docutils literal notranslate"><span class="pre">$HOME</span></code>. For
+example, we had a user <a class="reference external" href="https://github.com/singularityware/singularity/issues/476">run into this issue</a>.</p>
+<p><strong>Solution 1: Specify the home to mount</strong>
+A first thing to try is to point to some “sanitized home,” which is
+the purpose of the -H or –home option. For example, here we are
+creating a home directory under /tmp/homie, and then telling the
+container to mount it as home:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">homie</span> <span class="o">&amp;&amp;</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">homie</span> <span class="o">&amp;&amp;</span> \
+
+<span class="n">singularity</span> <span class="n">exec</span> <span class="o">-</span><span class="n">H</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">homie</span> <span class="n">analysis</span><span class="o">.</span><span class="n">img</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+</pre></div>
+</div>
+<p><strong>Solution 2: Specify the executable to use</strong>
+It may be the issue that there is an executable in your host
+environment (eg, python) that is being called in preference to the
+containers. To avoid this, in your runscript (the <code class="docutils literal notranslate"><span class="pre">%runscript</span></code> section of the
+bootstrap file) you should specify the path to the executable exactly.
+This means:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">runscript</span>
+
+
+<span class="c1"># This specifies the python in the container</span>
+
+<span class="n">exec</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="s2">&quot;$@&quot;</span>
+
+
+<span class="c1"># This may pick up a different one</span>
+
+<span class="n">exec</span> <span class="n">python</span> <span class="s2">&quot;$@&quot;</span>
+</pre></div>
+</div>
+<p>This same idea would be useful if you are issuing the command to the
+container using <code class="docutils literal notranslate"><span class="pre">exec</span></code>. Thanks to <a class="reference external" href="https://github.com/yarikoptic">yarikoptic</a> for the suggestions on this
+issue.</p>
+</div>
+<div class="section" id="invalid-argument-or-unknown-option">
+<h2>Invalid Argument or Unknown Option<a class="headerlink" href="#invalid-argument-or-unknown-option" title="Permalink to this headline">¶</a></h2>
+<p>When I try mounting my container with the <code class="docutils literal notranslate"><span class="pre">-B</span></code> or <code class="docutils literal notranslate"><span class="pre">--bind</span></code> option I receive an
+unknown option or Invalid argument error.
+Make sure that you are using the most recent Singularity release to
+mount your container to the host system, and that the <code class="docutils literal notranslate"><span class="pre">--bind</span></code> argument is
+placed after the execution command. An example might look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run -B $PWD:/data my_container.img
+</pre></div>
+</div>
+<p>Also, make sure you are using an up-to-date Singularity to bootstrap
+your container. Some features (such as <code class="docutils literal notranslate"><span class="pre">--bind</span></code> ) will not work in earlier
+versions.</p>
+</div>
+<div class="section" id="error-running-singularity-with-sudo">
+<h2>Error running Singularity with sudo<a class="headerlink" href="#error-running-singularity-with-sudo" title="Permalink to this headline">¶</a></h2>
+<p>This fix solves the following error when Singularity is installed into
+the default compiled prefix of /usr/local:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity instance.start container.img daemon1
+
+sudo: singularity: command not found
+</pre></div>
+</div>
+<p>The cause of the problem is that <code class="docutils literal notranslate"><span class="pre">sudo</span></code> sanitizes the PATH environment
+variable and does not include /usr/local/bin in the default search
+path. Considering this program path is by default owned by root, it is
+reasonable to extend the default sudo PATH to include this directory.
+To add /usr/local/bin to the default sudo search path, run the program
+visudo which will edit the sudoers file, and search for the string
+‘secure_path’. Once found, append :/usr/local/bin to that line so it
+looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Defaults</span>    <span class="n">secure_path</span> <span class="o">=</span> <span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="how-to-resolve-too-many-levels-of-symbolic-links-error">
+<h2>How to resolve “Too many levels of symbolic links” error<a class="headerlink" href="#how-to-resolve-too-many-levels-of-symbolic-links-error" title="Permalink to this headline">¶</a></h2>
+<p>Running singularity failed with “Too many levels of symbolic links”
+error</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run -B /apps container.img
+
+ERROR : There was an error binding the path /apps: Too many levels of symbolic links
+
+ABORT : Retval = 255
+</pre></div>
+</div>
+<p>You got this error because /apps directory is an autofs mount point. You
+can fix it by editing singularity.conf and adding the following
+directive with corresponding path:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">autofs</span> <span class="n">bug</span> <span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">apps</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="appendix.html" class="btn btn-neutral float-right" title="Appendix" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="singularity_and_docker.html" class="btn btn-neutral" title="Singularity and Docker" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

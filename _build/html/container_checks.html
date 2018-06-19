@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Container Checks &mdash; Singularity container 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Environment and Metadata" href="environment_and_metadata.html" />
+    <link rel="prev" title="Running Services" href="running_services.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Singularity container
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_environment.html">Build Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_recipes.html">Container Recipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_flow.html">Singularity Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running_services.html">Running Services</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Container Checks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#tags-and-organization">Tags and Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-checks-are-available">What checks are available?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="environment_and_metadata.html">Environment and Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reproducible_scif_apps.html">Reproducible SCI-F Apps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Container Checks</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/container_checks.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="container-checks">
+<h1>Container Checks<a class="headerlink" href="#container-checks" title="Permalink to this headline">¶</a></h1>
+<p>New to Singularity 2.4 is the ability to run container “checks” on
+demand. Checks can be anything from a filter for sensitive
+information, to an analysis of installed binaries. A few default
+checks are installed with Singularity and others can be added by the
+administrator. Users can perform checks at build time or on demand:
+Perform all default checks, these are the same</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity check ubuntu.img
+
+$ singularity check --tag default ubuntu.img
+</pre></div>
+</div>
+<p>Perform checks with tag “clean”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity check --tag clean ubuntu.img
+</pre></div>
+</div>
+<div class="section" id="tags-and-organization">
+<h2>Tags and Organization<a class="headerlink" href="#tags-and-organization" title="Permalink to this headline">¶</a></h2>
+<p>Currently, checks are organized by tag and security level. If you know a
+specific tag that you want to use, for example “docker” deploys checks
+for containers with Docker imported layers, you can specify the tag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>USAGE
+
+    -t/--tag       tag to filter checks. default is &quot;default&quot;
+
+                      Available: default, security, docker, clean
+
+
+EXAMPLE
+
+$ singularity check --tag docker ubuntu.img
+</pre></div>
+</div>
+<p>If you want to run checks associated with a different security level,
+you can specify with <code class="docutils literal notranslate"><span class="pre">--low</span></code> , <code class="docutils literal notranslate"><span class="pre">--med</span></code> , or <code class="docutils literal notranslate"><span class="pre">--high</span></code> :</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">USAGE</span><span class="p">:</span> <span class="n">singularity</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="n">check</span> <span class="p">[</span><span class="n">exec</span> <span class="n">options</span><span class="o">...</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">container</span> <span class="n">path</span><span class="o">&gt;</span>
+
+<span class="n">This</span> <span class="n">command</span> <span class="n">will</span> <span class="n">run</span> <span class="n">security</span> <span class="n">checks</span> <span class="k">for</span> <span class="n">an</span> <span class="n">image</span><span class="o">.</span>
+
+<span class="n">Note</span> <span class="n">that</span> <span class="n">some</span> <span class="n">checks</span> <span class="n">require</span> <span class="n">sudo</span><span class="o">.</span>
+
+
+    <span class="o">-</span><span class="n">l</span><span class="o">/--</span><span class="n">low</span>       <span class="n">Specify</span> <span class="n">low</span> <span class="n">threshold</span> <span class="p">(</span><span class="nb">all</span> <span class="n">checks</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
+
+    <span class="o">-</span><span class="n">m</span><span class="o">/--</span><span class="n">med</span>       <span class="n">Perform</span> <span class="n">medium</span> <span class="ow">and</span> <span class="n">high</span> <span class="n">checks</span>
+
+    <span class="o">-</span><span class="n">h</span><span class="o">/--</span><span class="n">high</span>      <span class="n">Perform</span> <span class="n">only</span> <span class="n">checks</span> <span class="n">at</span> <span class="n">level</span> <span class="n">high</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that some checks will require sudo, and you will be alerted if this
+is the case and you didn’t use it. Finally, if you want to run all
+default checks, just don’t specify a tag or level.</p>
+</div>
+</div>
+<div class="section" id="what-checks-are-available">
+<h2>What checks are available?<a class="headerlink" href="#what-checks-are-available" title="Permalink to this headline">¶</a></h2>
+<p>Currently, you can view all installable checks
+<a class="reference external" href="https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh#L49">here</a>,
+and we anticipate adding an ability to view tags that are available,
+along with your own custom checks. You should also ask your
+administration if new checks have been added not supported by
+Singularity. If you want to request adding a new check, please <a class="reference external" href="https://github.com/singularityware/singularity/issues">tell
+us!</a>.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="environment_and_metadata.html" class="btn btn-neutral float-right" title="Environment and Metadata" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="running_services.html" class="btn btn-neutral" title="Running Services" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

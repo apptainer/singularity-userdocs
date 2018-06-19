@@ -1,0 +1,387 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation &mdash; Singularity container 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Build a Container" href="build_a_container.html" />
+    <link rel="prev" title="Introduction" href="introduction.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Singularity container
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#before-you-begin">Before you begin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-the-master-branch">Install the master branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-a-specific-release">Install a specific release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-the-development-branch">Install the development branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#remove-an-old-version">Remove an old version</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_environment.html">Build Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_recipes.html">Container Recipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_flow.html">Singularity Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running_services.html">Running Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_and_metadata.html">Environment and Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reproducible_scif_apps.html">Reproducible SCI-F Apps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Installation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/installation.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation">
+<h1>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h1>
+<p id="sec-installation">This document will guide you through the process of installing
+Singularity from source with the version and location of your choice.</p>
+<div class="section" id="before-you-begin">
+<h2>Before you begin<a class="headerlink" href="#before-you-begin" title="Permalink to this headline">¶</a></h2>
+<p>If you have an earlier version of Singularity installed, you should
+remove it before executing the installation commands.</p>
+<p>These instructions will build Singularity from source on your system.
+So you will need to have some development tools installed. If you run
+into missing dependencies, try installing them like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update &amp;&amp; \
+
+    sudo apt-get install \
+
+    python \
+
+    dh-autoreconf \
+
+    build-essential \
+
+    libarchive-dev
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo yum update &amp;&amp; \
+
+    sudo yum groupinstall &#39;Development Tools&#39; &amp;&amp; \
+
+    sudo yum install libarchive-devel
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-the-master-branch">
+<h2>Install the master branch<a class="headerlink" href="#install-the-master-branch" title="Permalink to this headline">¶</a></h2>
+<p>The following commands will install the latest version of the <a class="reference external" href="https://github.com/singularityware/singularity">GitHub
+repo</a> master branch to <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/singularityware/singularity.git
+
+$ cd singularity
+
+$ ./autogen.sh
+
+$ ./configure --prefix=/usr/local --sysconfdir=/etc
+
+$ make
+
+$ sudo make install
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that the installation prefix is <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> but the configuration directory
+is <code class="docutils literal notranslate"><span class="pre">/etc</span></code>. This ensures that the configuration file <code class="docutils literal notranslate"><span class="pre">singularity.conf</span></code> is placed in the
+standard location.</p>
+</div>
+<p>If you omit the <code class="docutils literal notranslate"><span class="pre">--sysconfdir</span></code> option , the configuration file will be installed in <code class="docutils literal notranslate"><span class="pre">/usr/local/etc</span></code>.
+If you omit the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> option, Singularity will be installed in the <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> directory
+hierarchy by default. And if you specify a custom directory with the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code>
+option, all of Singularity’s binaries and the configuration file will
+be installed within that directory. This last option can be useful if
+you want to install multiple versions of Singularity, install
+Singularity on a shared system, or if you want to remove Singularity
+easily after installing it.</p>
+</div>
+<div class="section" id="install-a-specific-release">
+<h2>Install a specific release<a class="headerlink" href="#install-a-specific-release" title="Permalink to this headline">¶</a></h2>
+<p>The following commands will install a specific release from <a class="reference external" href="https://github.com/singularityware/singularity/releases">GitHub
+releases</a> page to <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ VER=2.5.1
+
+$ wget https://github.com/singularityware/singularity/releases/download/$VER/singularity-$VER.tar.gz
+
+$ tar xvf singularity-$VER.tar.gz
+
+$ cd singularity-$VER
+
+$ ./configure --prefix=/usr/local --sysconfdir=/etc
+
+$ make
+
+$ sudo make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="install-the-development-branch">
+<h2>Install the development branch<a class="headerlink" href="#install-the-development-branch" title="Permalink to this headline">¶</a></h2>
+<p>If you want to test a development branch the routine above should be
+tweaked slightly:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/singularityware/singularity.git
+
+$ cd singularity
+
+$ git fetch
+
+$ git checkout development
+
+$ ./autogen.sh
+
+$ ./configure --prefix=/usr/local --sysconfdir=/etc
+
+$ make
+
+$ sudo make install
+</pre></div>
+</div>
+</div>
+<div class="section" id="remove-an-old-version">
+<h2>Remove an old version<a class="headerlink" href="#remove-an-old-version" title="Permalink to this headline">¶</a></h2>
+<p>Let’s say that we installed Singularity to <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>. To remove it completely,
+you need to hit all of the following:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo rm -rf /usr/local/libexec/singularity
+
+$ sudo rm -rf /usr/local/etc/singularity
+
+$ sudo rm -rf /usr/local/include/singularity
+
+$ sudo rm -rf /usr/local/lib/singularity
+
+$ sudo rm -rf /usr/local/var/lib/singularity/
+
+$ sudo rm /usr/local/bin/singularity
+
+$ sudo rm /usr/local/bin/run-singularity
+
+$ sudo rm /usr/local/etc/bash_completion.d/singularity
+
+$ sudo rm /usr/local/man/man1/singularity.1
+</pre></div>
+</div>
+<p>If you modified the system configuration directory, remove the <code class="docutils literal notranslate"><span class="pre">singularity.conf</span></code> file
+there as well.
+If you installed Singularity in a custom directory, you need only
+remove that directory to uninstall Singularity. For instance if you
+installed singularity with the <code class="docutils literal notranslate"><span class="pre">--prefix=/some/temp/dir</span></code> option argument pair, you can remove
+Singularity like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo rm -rf /some/temp/dir
+</pre></div>
+</div>
+<p>What should you do next? You can check out the <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/quick_start.html#quick-start">quickstart</a> guide, or learn how to
+interact with your container via the <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id36">shell</a> , <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id25">exec</a> , or <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id30">run</a> commands. Or click <strong>next</strong>
+below to continue reading.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="build_a_container.html" class="btn btn-neutral float-right" title="Build a Container" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="introduction.html" class="btn btn-neutral" title="Introduction" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

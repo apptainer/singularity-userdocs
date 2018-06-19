@@ -1,0 +1,681 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Running Services &mdash; Singularity container 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Container Checks" href="container_checks.html" />
+    <link rel="prev" title="Persistent Overlays" href="persistent_overlays.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Singularity container
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_environment.html">Build Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_recipes.html">Container Recipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_flow.html">Singularity Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Running Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#why-container-instances">Why container instances?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#container-instances-in-singularity">Container Instances in Singularity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#nginx-hello-world-in-singularity">Nginx “Hello-world” in Singularity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#putting-all-together">Putting all together</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#building-the-image">Building the image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-server">Running the Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#making-it-pretty">Making it Pretty</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#important-notes">Important Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_and_metadata.html">Environment and Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reproducible_scif_apps.html">Reproducible SCI-F Apps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Running Services</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/running_services.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="running-services">
+<h1>Running Services<a class="headerlink" href="#running-services" title="Permalink to this headline">¶</a></h1>
+<p>Singularity 2.4 introduces the ability to run “container instances”,
+allowing you to run services (e.g. Nginx, MySQL, etc…) using
+Singularity. A container instance, simply put, is a persistent and
+isolated version of the container image that runs in the background.</p>
+<div class="section" id="why-container-instances">
+<h2>Why container instances?<a class="headerlink" href="#why-container-instances" title="Permalink to this headline">¶</a></h2>
+<p>that is pretty simple, I install nginx and start the service:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">y</span> <span class="n">nginx</span>
+
+<span class="n">service</span> <span class="n">nginx</span> <span class="n">start</span>
+</pre></div>
+</div>
+<p>With older versions of Singularity, if you were to do something like
+this, from inside the container you would happily see the service
+start, and the web server running! But then if you were to log out of
+the container what would happen?
+Orphan process within unreachable namespaces!
+You would lose control of the process. It would still be running, but
+you couldn’t easily kill or interface with it. This is a called an
+orphan process. Singularity versions less than 2.4 were not designed
+to handle running services properly.</p>
+</div>
+<div class="section" id="container-instances-in-singularity">
+<h2>Container Instances in Singularity<a class="headerlink" href="#container-instances-in-singularity" title="Permalink to this headline">¶</a></h2>
+<p>With Singularity 2.4 and the addition of container instances, the
+ability to cleanly, reliably, and safely run services in a container is
+here. First, let’s put some commands that we want our instance to
+execute into a script. Let’s call it a <code class="docutils literal notranslate"><span class="pre">startscript</span></code>. This fits into a definition
+file like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">startscript</span>
+
+
+<span class="n">service</span> <span class="n">nginx</span> <span class="n">start</span>
+</pre></div>
+</div>
+<p>Now let’s say we build a container with that startscript into an image
+called <code class="docutils literal notranslate"><span class="pre">nginx.img</span></code> and we want to run an nginx service. All we need to do is start
+the instance with the <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#instance-start">instance.start</a> command, and the
+startscript will run inside the container automatically:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>              [command]        [image]    [name of instance]
+
+$ singularity instance.start   nginx.img  web
+</pre></div>
+</div>
+<p>When we run that command, Singularity creates an isolated environment
+for the container instances’ processes/services to live inside. We can
+confirm that this command started an instance by running the
+instance.list command like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity instance.list
+
+INSTANCE NAME    PID      CONTAINER IMAGE
+
+web              790      /home/mibauer/nginx.img
+</pre></div>
+</div>
+<p>If we want to run multiple instances from the same image, it’s as simple
+as running the command multiple times. The instance names are an
+identifier used to uniquely describe an instance, so they cannot be
+repeated.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity instance.start   nginx.img  web1
+
+$ singularity instance.start   nginx.img  web2
+
+$ singularity instance.start   nginx.img  web3
+</pre></div>
+</div>
+<p>And again to confirm that the instances are running as we expected:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity instance.list
+
+INSTANCE NAME    PID      CONTAINER IMAGE
+
+web1             790      /home/mibauer/nginx.img
+
+web2             791      /home/mibauer/nginx.img
+
+web3             792      /home/mibauer/nginx.img
+</pre></div>
+</div>
+<p>If the service you want to run in your instance requires a bind mount,
+then you must pass the <code class="docutils literal notranslate"><span class="pre">-B</span></code> option when calling <code class="docutils literal notranslate"><span class="pre">instance.start</span></code>. For example, if you wish to
+capture the output of the <code class="docutils literal notranslate"><span class="pre">web1</span></code> container instance which is placed at <code class="docutils literal notranslate"><span class="pre">/output/</span></code> inside
+the container you could do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity instance.start -B output/dir/outside/:/output/ nginx.img  web1
+</pre></div>
+</div>
+<p>If you want to poke around inside of your instance, you can do a normal <code class="docutils literal notranslate"><span class="pre">singularity</span> <span class="pre">shell</span></code>
+command, but give it the instance URI:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity shell instance://web1
+
+Singularity: Invoking an interactive shell within container...
+
+
+Singularity pdf_server.img:~/&gt;
+</pre></div>
+</div>
+<p>Similarly, you can use the <code class="docutils literal notranslate"><span class="pre">singularity</span> <span class="pre">run/exec</span></code> commands on instances:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run instance://web1
+
+$ singularity exec instance://web1 ps -ef
+</pre></div>
+</div>
+<p>When using <code class="docutils literal notranslate"><span class="pre">run</span></code> with an instance URI, the <code class="docutils literal notranslate"><span class="pre">runscript</span></code> will be executed inside of the
+instance. Similarly with <code class="docutils literal notranslate"><span class="pre">exec</span></code>, it will execute the given command in the
+instance.</p>
+<p>When you are finished with your instance you can clean it up with the
+<a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#instance-stop">instance.stop</a> command like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity instance.stop web1
+</pre></div>
+</div>
+<p>If you have multiple instances running and you want to stop all of
+them, you can do so with a wildcard or the -a flag:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity instance.stop \*
+
+$ singularity instance.stop -a
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that you must escape the wildcard with a backslash like this <code class="docutils literal notranslate"><span class="pre">\*</span></code> to
+pass it properly.</p>
+</div>
+</div>
+<div class="section" id="nginx-hello-world-in-singularity">
+<h2>Nginx “Hello-world” in Singularity<a class="headerlink" href="#nginx-hello-world-in-singularity" title="Permalink to this headline">¶</a></h2>
+<p>Let’s take a look at setting up a sample nginx web server using
+instances in Singularity. First we will just create a basic definition
+file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">docker</span>
+
+<span class="n">From</span><span class="p">:</span> <span class="n">nginx</span>
+
+<span class="n">Includecmd</span><span class="p">:</span> <span class="n">no</span>
+
+
+<span class="o">%</span><span class="n">startscript</span>
+
+    <span class="n">nginx</span>
+</pre></div>
+</div>
+<p>All this does is download the official nginx Docker container, convert
+it to a Singularity image, and tell it to run nginx when you start the
+instance. Since we’re running a web server, we’re going to run the
+following commands as root.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># singularity build nginx.img Singularity</span>
+
+<span class="c1"># singularity instance.start nginx.img web1</span>
+</pre></div>
+</div>
+<p>Just like that we’ve downloaded, built, and ran an nginx Singularity
+image. And to confirm that it’s correctly running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ curl localhost
+
+127.0.0.1 - - [06/Oct/2017:21:46:43 +0000] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.47.0&quot; &quot;-&quot;
+
+&lt;!DOCTYPE html&gt;
+
+&lt;html&gt;
+
+&lt;head&gt;
+
+&lt;title&gt;Welcome to nginx!&lt;/title&gt;
+
+&lt;style&gt;
+
+    body {
+
+        width: 35em;
+
+        margin: 0 auto;
+
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+
+    }
+
+&lt;/style&gt;
+
+&lt;/head&gt;
+
+&lt;body&gt;
+
+&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;
+
+&lt;p&gt;If you see this page, the nginx web server is successfully installed and
+
+working. Further configuration is required.&lt;/p&gt;
+
+
+&lt;p&gt;For online documentation and support please refer to
+
+&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;
+
+Commercial support is available at
+
+&lt;a href=&quot;http://nginx.com/&quot;&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;
+
+
+&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;
+
+&lt;/body&gt;
+
+&lt;/html&gt;
+</pre></div>
+</div>
+</div>
+<div class="section" id="putting-all-together">
+<h2>Putting all together<a class="headerlink" href="#putting-all-together" title="Permalink to this headline">¶</a></h2>
+<p>In this section, we will demonstrate an example of packaging a service
+into a container and running it. The service we will be packaging is an
+API server that converts a web page into a PDF, and can be found
+<a class="reference external" href="https://github.com/alvarcarto/url-to-pdf-api">here</a>. The final
+example can be found <a class="reference external" href="https://github.com/bauerm97/instance-example">here on GitHub</a>.
+If you wish to just download the final image directly from Singularity
+Hub, simply run <code class="docutils literal notranslate"><span class="pre">singularity</span> <span class="pre">pull</span> <span class="pre">shub://bauerm97/instance-example</span></code>.</p>
+<div class="section" id="building-the-image">
+<h3>Building the image<a class="headerlink" href="#building-the-image" title="Permalink to this headline">¶</a></h3>
+<p>To begin, we need to build the image. When looking at the GitHub page of
+the <code class="docutils literal notranslate"><span class="pre">url-to-pdf-api</span></code>, we can see that it is a Node 8 server that uses headless Chromium
+called <a class="reference external" href="https://github.com/GoogleChrome/puppeteer">Puppeteer</a>. Let’s first choose a base from which to build our
+container, in this case I used the docker image <code class="docutils literal notranslate"><span class="pre">node:8</span></code> which comes
+pre-installed with Node 8:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">docker</span>
+
+<span class="n">From</span><span class="p">:</span> <span class="n">node</span><span class="p">:</span><span class="mi">8</span>
+
+<span class="n">Includecmd</span><span class="p">:</span> <span class="n">no</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">Puppeteer also requires a few dependencies to be manually installed in
+addition to Node 8, so we can add those into the <code class="docutils literal notranslate"><span class="pre">post</span></code> section as well as
+the installation script for the <code class="docutils literal notranslate"><span class="pre">url-to-pdf-api</span></code>:</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">post</span>
+
+     <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span>
+
+     <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">install</span> <span class="o">-</span><span class="n">yq</span> <span class="n">gconf</span><span class="o">-</span><span class="n">service</span> <span class="n">libasound2</span> <span class="n">libatk1</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mi">0</span> <span class="n">libc6</span> <span class="n">libcairo2</span> <span class="n">libcups2</span> \
+
+     <span class="n">libdbus</span><span class="o">-</span><span class="mi">1</span><span class="o">-</span><span class="mi">3</span> <span class="n">libexpat1</span> <span class="n">libfontconfig1</span> <span class="n">libgcc1</span> <span class="n">libgconf</span><span class="o">-</span><span class="mi">2</span><span class="o">-</span><span class="mi">4</span> <span class="n">libgdk</span><span class="o">-</span><span class="n">pixbuf2</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mi">0</span> \
+
+     <span class="n">libglib2</span><span class="o">.</span><span class="mi">0</span><span class="o">-</span><span class="mi">0</span> <span class="n">libgtk</span><span class="o">-</span><span class="mi">3</span><span class="o">-</span><span class="mi">0</span> <span class="n">libnspr4</span> <span class="n">libpango</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mi">0</span> <span class="n">libpangocairo</span><span class="o">-</span><span class="mf">1.0</span><span class="o">-</span><span class="mi">0</span> <span class="n">libstdc</span><span class="o">++</span><span class="mi">6</span> \
+
+     <span class="n">libx11</span><span class="o">-</span><span class="mi">6</span> <span class="n">libx11</span><span class="o">-</span><span class="n">xcb1</span> <span class="n">libxcb1</span> <span class="n">libxcomposite1</span> <span class="n">libxcursor1</span> <span class="n">libxdamage1</span> <span class="n">libxext6</span> \
+
+     <span class="n">libxfixes3</span> <span class="n">libxi6</span> <span class="n">libxrandr2</span> <span class="n">libxrender1</span> <span class="n">libxss1</span> <span class="n">libxtst6</span> <span class="n">ca</span><span class="o">-</span><span class="n">certificates</span> \
+
+     <span class="n">fonts</span><span class="o">-</span><span class="n">liberation</span> <span class="n">libappindicator1</span> <span class="n">libnss3</span> <span class="n">lsb</span><span class="o">-</span><span class="n">release</span> <span class="n">xdg</span><span class="o">-</span><span class="n">utils</span> <span class="n">wget</span> <span class="n">curl</span>
+
+     <span class="n">rm</span> <span class="o">-</span><span class="n">r</span> <span class="o">/</span><span class="n">var</span><span class="o">/</span><span class="n">lib</span><span class="o">/</span><span class="n">apt</span><span class="o">/</span><span class="n">lists</span><span class="o">/*</span>
+
+     <span class="n">cd</span> <span class="o">/</span>
+
+     <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">alvarcarto</span><span class="o">/</span><span class="n">url</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">pdf</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">git</span> <span class="n">pdf_server</span>
+
+     <span class="n">cd</span> <span class="n">pdf_server</span>
+
+     <span class="n">npm</span> <span class="n">install</span>
+
+     <span class="n">chmod</span> <span class="o">-</span><span class="n">R</span> <span class="mi">0755</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>And now we need to define what happens when we start an instance of the
+container. In this situation, we want to run the commands that starts up
+the url-to-pdf-api server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">startscript</span>
+
+    <span class="n">cd</span> <span class="o">/</span><span class="n">pdf_server</span>
+
+    <span class="c1"># Use nohup and /dev/null to completely detach server process from terminal</span>
+
+    <span class="n">nohup</span> <span class="n">npm</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">&amp;</span>
+</pre></div>
+</div>
+<p>Also, the <code class="docutils literal notranslate"><span class="pre">url-to-pdf-api</span></code> server requires <code class="docutils literal notranslate"><span class="pre">environment</span></code> some variables be set, which we can do in the
+environment section:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">environment</span>
+
+    <span class="n">NODE_ENV</span><span class="o">=</span><span class="n">development</span>
+
+    <span class="n">PORT</span><span class="o">=</span><span class="mi">8000</span>
+
+    <span class="n">ALLOW_HTTP</span><span class="o">=</span><span class="n">true</span>
+
+    <span class="n">URL</span><span class="o">=</span><span class="n">localhost</span>
+
+    <span class="n">export</span> <span class="n">NODE_ENV</span> <span class="n">PORT</span> <span class="n">ALLOW_HTTP</span> <span class="n">URL</span>
+</pre></div>
+</div>
+<p>Now we can build the definition file into an image! Simply run <code class="docutils literal notranslate"><span class="pre">build</span></code> and the
+image will be ready to go:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build url-to-pdf-api.img Singularity
+</pre></div>
+</div>
+</div>
+<div class="section" id="running-the-server">
+<h3>Running the Server<a class="headerlink" href="#running-the-server" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have an image, we are ready to start an instance and run the
+server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity instance.start url-to-pdf-api.img pdf
+</pre></div>
+</div>
+<p>We can confirm it’s working by sending the server an http request using
+curl:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ curl -o google.pdf localhost:8000/api/render?url=http://google.com
+
+  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+100 51664  100 51664    0     0  12443      0  0:00:04  0:00:04 --:--:-- 12446
+</pre></div>
+</div>
+<p>If you shell into the instance, you can see the running processes:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity shell instance://pdf
+
+Singularity: Invoking an interactive shell within container...
+
+
+Singularity pdf_server.img:~/bauerm97/instance-example&gt; ps auxf
+
+USER       PID %CPU %MEM    VSZ   RSS TTY      STAT START   TIME COMMAND
+
+node        87  0.2  0.0  20364  3384 pts/0    S    16:16   0:00 /bin/bash --norc
+
+node        88  0.0  0.0  17496  2144 pts/0    R+   16:16   0:00  \_ ps auxf
+
+node         1  0.0  0.0  13968  1904 ?        Ss   16:10   0:00 singularity-instance: mibauer [pdf]
+
+node         3  0.1  0.4 997452 40364 ?        Sl   16:10   0:00 npm
+
+node        13  0.0  0.0   4340   724 ?        S    16:10   0:00  \_ sh -c nodemon --watch ./src -e j
+
+node        14  0.0  0.4 1184492 37008 ?       Sl   16:10   0:00      \_ node /scif/apps/pdf_server/p
+
+node        26  0.0  0.0   4340   804 ?        S    16:10   0:00          \_ sh -c node src/index.js
+
+node        27  0.2  0.5 906108 43424 ?        Sl   16:10   0:00              \_ node src/index.js
+
+Singularity pdf_server.img:~/bauerm97/instance-example&gt; ls
+
+LICENSE  README.md  Singularity  out  pdf_server.img
+
+Singularity pdf_server.img:~/bauerm97/instance-example&gt; exit
+</pre></div>
+</div>
+</div>
+<div class="section" id="making-it-pretty">
+<h3>Making it Pretty<a class="headerlink" href="#making-it-pretty" title="Permalink to this headline">¶</a></h3>
+<p>Now that we have confirmation that the server is working, let’s make
+it a little cleaner. It’s difficult to remember the exact curl command
+and URL syntax each time you want to request a PDF, so let’s automate
+that. To do that, we’re going to be using Standard Container
+Integration Format (SCIF) apps, which are integrated directly into
+singularity. If you haven’t already, check out the <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/reproducible_scif_apps.html">Singularity app documentation</a> to come up to
+speed.</p>
+<p>First off, we’re going to move the installation of the url-to-pdf-api
+into an app, so that there is a designated spot to place output files.
+To do that, we want to add a section to our definition file to build
+the server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">appinstall</span> <span class="n">pdf_server</span>
+
+    <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">alvarcarto</span><span class="o">/</span><span class="n">url</span><span class="o">-</span><span class="n">to</span><span class="o">-</span><span class="n">pdf</span><span class="o">-</span><span class="n">api</span><span class="o">.</span><span class="n">git</span> <span class="n">pdf_server</span>
+
+    <span class="n">cd</span> <span class="n">pdf_server</span>
+
+    <span class="n">npm</span> <span class="n">install</span>
+
+    <span class="n">chmod</span> <span class="o">-</span><span class="n">R</span> <span class="mi">0755</span> <span class="o">.</span>
+</pre></div>
+</div>
+<p>And update our <code class="docutils literal notranslate"><span class="pre">startscript</span></code> to point to the app location:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">startscript</span>
+
+    <span class="n">cd</span> <span class="s2">&quot;$</span><span class="si">{APPROOT_pdf_server}</span><span class="s2">/pdf_server&quot;</span>
+
+    <span class="c1"># Use nohup and /dev/null to completely detach server process from terminal</span>
+
+    <span class="n">nohup</span> <span class="n">npm</span> <span class="n">start</span> <span class="o">&gt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="mi">2</span><span class="o">&gt;&amp;</span><span class="mi">1</span> <span class="o">&lt;</span> <span class="o">/</span><span class="n">dev</span><span class="o">/</span><span class="n">null</span> <span class="o">&amp;</span>
+</pre></div>
+</div>
+<p>Now we want to define the pdf_client app, which we will run to send the
+requests to the server:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">apprun</span> <span class="n">pdf_client</span>
+
+    <span class="k">if</span> <span class="p">[</span> <span class="o">-</span><span class="n">z</span> <span class="s2">&quot;$</span><span class="si">{1:-}</span><span class="s2">&quot;</span> <span class="p">];</span> <span class="n">then</span>
+
+        <span class="n">echo</span> <span class="s2">&quot;Usage: singularity run --app pdf &lt;instance://name&gt; &lt;URL&gt; [output file]&quot;</span>
+
+        <span class="n">exit</span> <span class="mi">1</span>
+
+    <span class="n">fi</span>
+
+    <span class="n">curl</span> <span class="o">-</span><span class="n">o</span> <span class="s2">&quot;$</span><span class="si">{SINGULARITY_APPDATA}</span><span class="s2">/output/${2:-output.pdf}&quot;</span> <span class="s2">&quot;$</span><span class="si">{URL}</span><span class="s2">:$</span><span class="si">{PORT}</span><span class="s2">/api/render?url=$</span><span class="si">{1}</span><span class="s2">&quot;</span>
+</pre></div>
+</div>
+<p>As you can see, the <code class="docutils literal notranslate"><span class="pre">pdf_client</span></code> app checks to make sure that the user provides at
+least one argument. Now that we have an output directory in the
+container, we need to expose it to the host using a bind mount. Once
+we’ve rebuilt the container, make a new directory callout <code class="docutils literal notranslate"><span class="pre">out</span></code> for the
+generated PDF’s to go. Now we simply start the instance like so:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity instance.start -B out/:/scif/data/pdf_client/output/ url-to-pdf-api.img pdf
+</pre></div>
+</div>
+<p>And to request a pdf simply do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run --app pdf_client instance://pdf http://google.com google.pdf
+</pre></div>
+</div>
+<p>And to confirm that it worked:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ls out/
+
+google.pdf
+</pre></div>
+</div>
+<p>When you are finished, use the instance.stop command to close all
+running instances.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity instance.stop \*
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="important-notes">
+<h2>Important Notes<a class="headerlink" href="#important-notes" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The instances are linked with your user. So if you start an instance
+with sudo, that is going to go under root, and you will need to call <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">singularity</span> <span class="pre">instance.list</span></code>
+in order to see it.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="container_checks.html" class="btn btn-neutral float-right" title="Container Checks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="persistent_overlays.html" class="btn btn-neutral" title="Persistent Overlays" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

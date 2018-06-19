@@ -1,0 +1,646 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>User Guide &mdash; Singularity container 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Quick Start" href="quick_start.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="#" class="icon icon-home"> Singularity container
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_environment.html">Build Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_recipes.html">Container Recipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_flow.html">Singularity Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running_services.html">Running Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_and_metadata.html">Environment and Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reproducible_scif_apps.html">Reproducible SCI-F Apps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">Singularity container</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="#">Docs</a> &raquo;</li>
+        
+      <li>User Guide</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="user-guide">
+<h1>User Guide<a class="headerlink" href="#user-guide" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#installation">Installation</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#overview-of-the-singularity-interface">Overview of the Singularity Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#download-pre-built-images">Download pre-built images</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#interact-with-images">Interact with images</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#shell">Shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#executing-commands">Executing Commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#running-a-container">Running a container</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#working-with-files">Working with Files</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="quick_start.html#id2">Build images from scratch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#sandbox-directory">Sandbox Directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#writable-image">Writable Image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#converting-images-from-one-format-to-another">Converting images from one format to another</a></li>
+<li class="toctree-l3"><a class="reference internal" href="quick_start.html#singularity-recipes">Singularity Recipes</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#welcome-to-singularity">Welcome to Singularity!</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#mobility-of-compute">Mobility of Compute</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#reproducibility">Reproducibility</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#user-freedom">User Freedom</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#support-on-existing-traditional-hpc">Support on Existing Traditional HPC</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#a-high-level-view-of-singularity">A High Level View of Singularity</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#security-and-privilege-escalation">Security and privilege escalation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#the-singularity-container-image">The Singularity container image</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="introduction.html#copying-sharing-branching-and-distributing-your-image"><em>Copying, sharing, branching, and distributing your image</em></a></li>
+<li class="toctree-l4"><a class="reference internal" href="introduction.html#supported-container-formats"><em>Supported container formats</em></a></li>
+<li class="toctree-l4"><a class="reference internal" href="introduction.html#supported-uris"><em>Supported URIs</em></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#name-spaces-and-isolation">Name-spaces and isolation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#compatibility-with-standard-work-flows-pipes-and-io">Compatibility with standard work-flows, pipes and IO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#the-singularity-process-flow">The Singularity Process Flow</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#the-singularity-usage-workflow">The Singularity Usage Workflow</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="introduction.html#singularity-commands">Singularity Commands</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="introduction.html#support">Support</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#before-you-begin">Before you begin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-the-master-branch">Install the master branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-a-specific-release">Install a specific release</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-the-development-branch">Install the development branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#remove-an-old-version">Remove an old version</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a Container</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="build_a_container.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_a_container.html#downloading-a-existing-container-from-singularity-hub">Downloading a existing container from Singularity Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_a_container.html#downloading-a-existing-container-from-docker-hub">Downloading a existing container from Docker Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_a_container.html#creating-writable-images-and-sandbox-directories">Creating <code class="docutils literal notranslate"><span class="pre">--writable</span></code> images and <code class="docutils literal notranslate"><span class="pre">--sandbox</span></code> directories</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="build_a_container.html#writable"><code class="docutils literal notranslate"><span class="pre">--writable</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_a_container.html#sandbox"><code class="docutils literal notranslate"><span class="pre">--sandbox</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="build_a_container.html#converting-containers-from-one-format-to-another">Converting containers from one format to another</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_a_container.html#building-containers-from-singularity-recipe-files">Building containers from Singularity recipe files</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="build_a_container.html#force"><code class="docutils literal notranslate"><span class="pre">--force</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_a_container.html#section"><code class="docutils literal notranslate"><span class="pre">--section</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_a_container.html#notest"><code class="docutils literal notranslate"><span class="pre">--notest</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="build_a_container.html#checks"><code class="docutils literal notranslate"><span class="pre">--checks</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="build_a_container.html#more-build-topics">More Build topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="build_environment.html">Build Environment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="build_environment.html#cache-folders">Cache Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_environment.html#temporary-folders">Temporary Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_environment.html#pull-folder">Pull Folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_environment.html#environment-variables">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="build_environment.html#cache">Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="build_environment.html#defaults">Defaults</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="build_environment.html#docker">Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="build_environment.html#singularity-hub">Singularity Hub</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="build_environment.html#general">General</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="container_recipes.html">Container Recipes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="container_recipes.html#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="container_recipes.html#header">Header</a></li>
+<li class="toctree-l3"><a class="reference internal" href="container_recipes.html#sections">Sections</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="container_recipes.html#help">%help</a></li>
+<li class="toctree-l4"><a class="reference internal" href="container_recipes.html#setup">%setup</a></li>
+<li class="toctree-l4"><a class="reference internal" href="container_recipes.html#files">%files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="container_recipes.html#labels">%labels</a></li>
+<li class="toctree-l4"><a class="reference internal" href="container_recipes.html#environment">%environment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="container_recipes.html#post">%post</a></li>
+<li class="toctree-l4"><a class="reference internal" href="container_recipes.html#runscript">%runscript</a></li>
+<li class="toctree-l4"><a class="reference internal" href="container_recipes.html#test">%test</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="container_recipes.html#apps">Apps</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container_recipes.html#examples">Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container_recipes.html#best-practices-for-build-recipes">Best Practices for Build Recipes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_flow.html">Singularity Flow</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="singularity_flow.html#building-images">Building Images</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="singularity_flow.html#the-singularity-flow">The Singularity Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="singularity_flow.html#development-commands">1. Development Commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="singularity_flow.html#sandbox-folder">Sandbox Folder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="singularity_flow.html#writable-image">Writable Image</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="singularity_flow.html#production-commands">2. Production Commands</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="singularity_flow.html#recommended-production-build">Recommended Production Build</a></li>
+<li class="toctree-l4"><a class="reference internal" href="singularity_flow.html#production-build-from-sandbox">Production Build from Sandbox</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bind_paths_and_mounts.html#overview">Overview</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bind_paths_and_mounts.html#system-defined-bind-points">System-defined bind points</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bind_paths_and_mounts.html#user-defined-bind-points">User-defined bind points</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="bind_paths_and_mounts.html#specifying-bind-paths">Specifying Bind Paths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="bind_paths_and_mounts.html#binding-with-overlay">Binding with Overlay</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="persistent_overlays.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="persistent_overlays.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="running_services.html">Running Services</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="running_services.html#why-container-instances">Why container instances?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_services.html#container-instances-in-singularity">Container Instances in Singularity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_services.html#nginx-hello-world-in-singularity">Nginx “Hello-world” in Singularity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="running_services.html#putting-all-together">Putting all together</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="running_services.html#building-the-image">Building the image</a></li>
+<li class="toctree-l3"><a class="reference internal" href="running_services.html#running-the-server">Running the Server</a></li>
+<li class="toctree-l3"><a class="reference internal" href="running_services.html#making-it-pretty">Making it Pretty</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="running_services.html#important-notes">Important Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="container_checks.html#tags-and-organization">Tags and Organization</a></li>
+<li class="toctree-l2"><a class="reference internal" href="container_checks.html#what-checks-are-available">What checks are available?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="environment_and_metadata.html">Environment and Metadata</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="environment_and_metadata.html#environment">Environment</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_and_metadata.html#labels">Labels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="environment_and_metadata.html#container-metadata">Container Metadata</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="reproducible_scif_apps.html">Reproducible SCI-F Apps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="reproducible_scif_apps.html#why-do-we-need-sci-f">Why do we need SCI-F?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="reproducible_scif_apps.html#mixed-up-modules">Mixed up Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reproducible_scif_apps.html#container-transparency">Container Transparency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reproducible_scif_apps.html#container-modularity">Container Modularity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reproducible_scif_apps.html#sections">Sections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="reproducible_scif_apps.html#interaction">Interaction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="reproducible_scif_apps.html#cowsay-container">Cowsay Container</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="singularity_and_docker.html#tldr-too-long-didnt-read">TLDR (Too Long Didn’t Read)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="singularity_and_docker.html#import-a-docker-image-into-a-singularity-image">Import a Docker image into a Singularity Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="singularity_and_docker.html#quick-start-the-docker-registry">Quick Start: The Docker Registry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="singularity_and_docker.html#the-build-specification-file-singularity">The Build Specification file, Singularity</a></li>
+<li class="toctree-l2"><a class="reference internal" href="singularity_and_docker.html#how-does-the-runscript-work">How does the runscript work?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="singularity_and_docker.html#how-do-i-specify-my-docker-image">How do I specify my Docker image?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="singularity_and_docker.html#custom-authentication">Custom Authentication</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="singularity_and_docker.html#authentication-in-the-singularity-build-file">Authentication in the Singularity Build File</a></li>
+<li class="toctree-l3"><a class="reference internal" href="singularity_and_docker.html#authentication-in-the-environment">Authentication in the Environment</a></li>
+<li class="toctree-l3"><a class="reference internal" href="singularity_and_docker.html#testing-authentication">Testing Authentication</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="singularity_and_docker.html#best-practices">Best Practices</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="singularity_and_docker.html#installation-to-root">1. Installation to Root</a></li>
+<li class="toctree-l3"><a class="reference internal" href="singularity_and_docker.html#library-configurations">2. Library Configurations</a></li>
+<li class="toctree-l3"><a class="reference internal" href="singularity_and_docker.html#don-t-install-to-home-or-tmp">3. Don’t install to $HOME or $TMP</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="singularity_and_docker.html#troubleshooting">Troubleshooting</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#no-space-left-on-device">No space left on device</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#segfault-on-bootstrap-of-centos-image">Segfault on Bootstrap of Centos Image</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#how-to-use-singularity-with-grsecurity-enabled-kernels">How to use Singularity with GRSecurity enabled kernels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#the-container-isnt-working-on-a-different-host">The container isn’t working on a different host!</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#invalid-argument-or-unknown-option">Invalid Argument or Unknown Option</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#error-running-singularity-with-sudo">Error running Singularity with sudo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="troubleshooting.html#how-to-resolve-too-many-levels-of-symbolic-links-error">How to resolve “Too many levels of symbolic links” error</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#build-docker-module">build-docker-module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#keywords">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#build-shub">build-shub</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#sec-build-shub">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id3">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id4">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#build-localimage">build-localimage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id5">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id6">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id7">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#build-yum">build-yum</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id8">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id9">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id10">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#build-debootstrap">build-debootstrap</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id11">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id12">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id13">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#build-arch">build-arch</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id14">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id15">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id16">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#build-busybox">build-busybox</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id17">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id18">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id19">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#build-zypper">build-zypper</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id20">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id21">Keywords</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#singularity-action-flags">Singularity Action Flags</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#examples">Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#commands">Commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#command-usage">Command Usage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#the-singularity-command">The Singularity command</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#options-and-argument-processing">Options and argument processing</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#singularity-help">Singularity Help</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#commands-usage">Commands Usage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#support">Support</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id22">build</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id23">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id24">Examples</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#download-an-existing-container-from-singularity-hub-or-docker-hub">Download an existing container from Singularity Hub or Docker Hub</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#create-writable-images-and-sandbox-directories">Create –writable images and –sandbox directories</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#convert-containers-from-one-format-to-another">Convert containers from one format to another</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#build-a-container-from-a-singularity-recipe">Build a container from a Singularity recipe</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id25">exec</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id26">Examples</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#printing-the-os-release-inside-the-container">Printing the OS release inside the container</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#printing-the-os-release-for-a-running-instance">Printing the OS release for a running instance</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#runtime-flags">Runtime Flags</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#special-characters">Special Characters</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#a-python-example">A Python example</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#a-gpu-example">A GPU example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id27">inspect</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#json-api-standard">JSON Api Standard</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#inspect-flags">Inspect Flags</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#labels">Labels</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#runscript">Runscript</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#help">Help</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#environment">Environment</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#test">Test</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#deffile">Deffile</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id28">pull</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#singularity-hub">Singularity Hub</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#how-do-tags-work">How do tags work?</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#image-names">Image Names</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#custom-name">Custom Name</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#name-by-commit">Name by commit</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#name-by-hash">Name by hash</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#pull-to-different-folder">Pull to different folder</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#pull-by-commit">Pull by commit</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id29">Docker</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id30">run</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id31">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id32">Runtime Flags</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id34">Examples</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#defining-the-runscript">Defining the Runscript</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id36">shell</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#change-your-shell">Change your shell</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#bash">Bash</a></li>
+</ul>
+</li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#shell-help">Shell Help</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#image-command-group">Image Command Group</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id38">image.export</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id39">image.expand</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#increasing-the-size-of-an-existing-image">Increasing the size of an existing image</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id40">image.import</a></li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id41">image.create</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#creating-a-new-blank-singularity-container-image">Creating a new blank Singularity container image</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#overwriting-an-image-with-a-new-one">Overwriting an image with a new one</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#instance-command-group">Instance Command Group</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#instance-start">instance.start</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id43">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id44">Examples</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#start-an-instance-called-cow1-from-a-container-on-singularity-hub">Start an instance called cow1 from a container on Singularity Hub</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#start-an-interactive-shell-within-the-instance-that-you-just-started">Start an interactive shell within the instance that you just started</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#execute-the-runscript-within-the-instance">Execute the runscript within the instance</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#run-a-command-within-a-running-instance">Run a command within a running instance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#instance-list">instance.list</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id45">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id46">Examples</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#start-a-few-named-instances-from-containers-on-singularity-hub">Start a few named instances from containers on Singularity Hub</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#list-running-instances">List running instances</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#instance-stop">instance.stop</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id48">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id49">Examples</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#id51">Start a few named instances from containers on Singularity Hub</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#stop-a-single-instance">Stop a single instance</a></li>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#stop-all-running-instances">Stop all running instances</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="appendix.html#deprecated">Deprecated</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="appendix.html#id53">bootstrap</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#quick-start">Quick Start</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="quick_start.html" class="btn btn-neutral float-right" title="Quick Start" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

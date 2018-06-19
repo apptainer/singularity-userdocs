@@ -1,0 +1,440 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Build Environment &mdash; Singularity container 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Container Recipes" href="container_recipes.html" />
+    <link rel="prev" title="Build a Container" href="build_a_container.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Singularity container
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a Container</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Build Environment</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cache-folders">Cache Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#temporary-folders">Temporary Folders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pull-folder">Pull Folder</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#environment-variables">Environment Variables</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#cache">Cache</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#defaults">Defaults</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#docker">Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#singularity-hub">Singularity Hub</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#general">General</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="container_recipes.html">Container Recipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_flow.html">Singularity Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running_services.html">Running Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_and_metadata.html">Environment and Metadata</a></li>
+<li class="toctree-l1"><a class="reference internal" href="reproducible_scif_apps.html">Reproducible SCI-F Apps</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Build Environment</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/build_environment.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="build-environment">
+<h1>Build Environment<a class="headerlink" href="#build-environment" title="Permalink to this headline">¶</a></h1>
+<p id="sec-buildenv">It’s commonly the case that you want to customize your build
+environment, such as specifying a custom cache directory for layers, or
+sending your Docker Credentials to the registry endpoint. Here we will
+discuss those things</p>
+<div class="section" id="cache-folders">
+<h2>Cache Folders<a class="headerlink" href="#cache-folders" title="Permalink to this headline">¶</a></h2>
+<p>To make download of layers for build and <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id28">pull</a> faster and less redundant, we
+use a caching strategy. By default, the Singularity software will create
+a set of folders in your <code class="docutils literal notranslate"><span class="pre">$HOME</span></code> directory for docker layers, Singularity Hub
+images, and Docker metadata, respectively:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$HOME/.singularity
+
+$HOME/.singularity/docker
+
+$HOME/.singularity/shub
+
+$HOME/.singularity/metadata
+</pre></div>
+</div>
+<p>Fear not, you have control to customize this behavior! If you don’t want
+the cache to be created (and a temporary directory will be used), set <code class="docutils literal notranslate"><span class="pre">SINGULARITY_DISABLE_CACHE</span></code> to
+True/yes, or if you want to move it elsewhere, set <code class="docutils literal notranslate"><span class="pre">SINGULARITY_CACHEDIR</span></code> to the full path
+where you want to cache. Remember that when you run commands as sudo
+this will use root’s home at <code class="docutils literal notranslate"><span class="pre">/root</span></code> and not your user’s home.</p>
+</div>
+<div class="section" id="temporary-folders">
+<h2>Temporary Folders<a class="headerlink" href="#temporary-folders" title="Permalink to this headline">¶</a></h2>
+<blockquote>
+<div></div></blockquote>
+<p id="sec-temporaryfolders">Singularity also uses some temporary directories to build the squashfs filesystem,
+so this temp space needs to be large enough to hold the entire resulting Singularity image.
+By default this happens in <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> but can be overridden by setting <code class="docutils literal notranslate"><span class="pre">SINGULARITY_TMPDIR</span></code> to the full
+path where you want the squashfs temp files to be stored. Since images
+are typically built as root, be sure to set this variable in root’s
+environment.</p>
+<p>If you are building an image on the fly, for example</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">exec</span> <span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">busybox</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>by default a temporary runtime directory is created that looks like <code class="docutils literal notranslate"><span class="pre">/tmp/.singularity-runtime.xxxxxxxx</span></code>.</p>
+<p>This can be problematic for some <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> directories that are hosted at
+Jetstream/OpenStack, Azure, and possibly EC2, which are very small. If
+you need to change the location of this runtime, then <strong>export</strong> the
+variable <code class="docutils literal notranslate"><span class="pre">SINGULARITY_LOCALCACHEDIR</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SINGULARITY_LOCALCACHEDIR</span><span class="o">=/</span><span class="n">tmp</span><span class="o">/</span><span class="n">pancakes</span>
+
+<span class="n">export</span> <span class="n">SINGULARITY_LOCALCACHEDIR</span>
+
+<span class="n">singularity</span> <span class="n">exec</span> <span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">busybox</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>The above runtime folder would be created under <code class="docutils literal notranslate"><span class="pre">/tmp/pancakes/.singularity-runtime.xxxxxxxx</span></code></p>
+</div>
+<div class="section" id="pull-folder">
+<h2>Pull Folder<a class="headerlink" href="#pull-folder" title="Permalink to this headline">¶</a></h2>
+<p>For details about customizing the output location of <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id28">pull</a>, see the
+<a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id28">pull docs</a>. You have the similar ability to set it to be something
+different, or to customize the name of the pulled image.</p>
+</div>
+<div class="section" id="environment-variables">
+<h2>Environment Variables<a class="headerlink" href="#environment-variables" title="Permalink to this headline">¶</a></h2>
+<p>All environmental variables are parsed by Singularity python helper
+functions, and specifically the file <a class="reference external" href="https://github.com/singularityware/singularity/blob/master/libexec/python/defaults.py">defaults.py</a> is a gateway
+between variables defined at runtime, and pre-defined defaults. By way
+of import from the file, variables set at runtime do not change if
+re-imported. This was done intentionally to prevent changes during the
+execution, and could be changed if needed. For all variables, the
+order of operations works as follows:</p>
+<ol class="arabic simple">
+<li>First preference goes to environment variable set at runtime</li>
+<li>Second preference goes to default defined in this file</li>
+<li>Then, if neither is found, null is returned except in the case that <code class="docutils literal notranslate"><span class="pre">required=True</span></code>.
+A <code class="docutils literal notranslate"><span class="pre">required=True</span></code> variable not found will system exit with an error.</li>
+<li>Variables that should not be displayed in debug logger are set with <code class="docutils literal notranslate"><span class="pre">silent=True</span></code>,
+and are only reported to be defined.</li>
+</ol>
+<p>For boolean variables, the following are acceptable for True, with any
+kind of capitalization or not:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="s2">&quot;yes&quot;</span><span class="p">,</span> <span class="s2">&quot;true&quot;</span><span class="p">,</span> <span class="s2">&quot;t&quot;</span><span class="p">,</span> <span class="s2">&quot;1&quot;</span><span class="p">,</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cache">
+<h2>Cache<a class="headerlink" href="#cache" title="Permalink to this headline">¶</a></h2>
+<p>The location and usage of the cache is also determined by environment
+variables.</p>
+<p><strong>SINGULARITY_DISABLE_CACHE</strong> If you want to disable the cache, this
+means is that the layers are written to a temporary directory. Thus,
+if you want to disable cache and write to a temporary folder, simply
+set <code class="docutils literal notranslate"><span class="pre">SINGULARITY_DISABLE_CACHE</span></code> to any true/yes value. By default, the cache is not disabled.</p>
+<p><strong>SINGULARITY_CACHEDIR</strong> Is the base folder for caching layers and
+singularity hub images. If not defined, it uses default of <code class="docutils literal notranslate"><span class="pre">$HOME/.singularity</span></code>. If
+defined, the defined location is used instead.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">SINGULARITY_DISABLE_CACHE</span></code> is set to True, this value is ignored in favor of a temporary
+directory. For specific sub-types of things to cache, subdirectories
+are created (by python), including <code class="docutils literal notranslate"><span class="pre">$SINGULARITY_CACHEDIR/docker</span></code> for docker layers and <code class="docutils literal notranslate"><span class="pre">$SINGULARITY_CACHEDIR/shub</span></code> for
+Singularity Hub images. If the cache is not created, the Python script
+creates it.</p>
+<p><strong>SINGULARITY_PULLFOLDER</strong> While this isn’t relevant for build, since
+build is close to pull, we will include it here. By default, images
+are pulled to the present working directory. The user can change this
+variable to change that.</p>
+<p><strong>SINGULARITY_TMPDIR</strong> Is the base folder for squashfs image
+temporary building. If not defined, it uses default of <code class="docutils literal notranslate"><span class="pre">$TEMPDIR</span></code>. If defined,
+the defined location is used instead.</p>
+<p><strong>SINGULARITY_LOCALCACHEDIR</strong> Is the temporary folder (default <code class="docutils literal notranslate"><span class="pre">/tmp</span></code>) to
+generate runtime folders (containers “on the fly”) typically a <code class="docutils literal notranslate"><span class="pre">run</span></code>, <code class="docutils literal notranslate"><span class="pre">exec</span></code> , or <code class="docutils literal notranslate"><span class="pre">shell</span></code>
+or a <code class="docutils literal notranslate"><span class="pre">docker://</span></code> image. This is different from where downloaded layers are cached
+(<code class="docutils literal notranslate"><span class="pre">$SINGULARITY_CACHEDIR</span></code>) or pulled (<code class="docutils literal notranslate"><span class="pre">SINGULARITY_PULLFOLDER</span></code>) or where a (non on-the-fly build) happens ( <code class="docutils literal notranslate"><span class="pre">$SINGULARITY_TMPDIR</span></code> ). See
+<a class="reference external" href="#temporary-folders">temporary folders</a> above for an example. You can generally determine the value of this
+setting by running a command with <code class="docutils literal notranslate"><span class="pre">--debug</span></code> , and seeing the last line “Removing
+directory:”</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="o">--</span><span class="n">debug</span> <span class="n">run</span> <span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">busybox</span> <span class="n">echo</span> <span class="s2">&quot;pizza!&quot;</span>
+
+<span class="o">...</span>
+
+<span class="n">DEBUG</span>   <span class="p">[</span><span class="n">U</span><span class="o">=</span><span class="mi">1000</span><span class="p">,</span><span class="n">P</span><span class="o">=</span><span class="mi">960</span><span class="p">]</span>     <span class="n">s_rmdir</span><span class="p">()</span>                                 <span class="n">Removing</span> <span class="n">directory</span><span class="p">:</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/.</span><span class="n">singularity</span><span class="o">-</span><span class="n">runtime</span><span class="o">.</span><span class="n">oArO0k</span>
+</pre></div>
+</div>
+<div class="section" id="defaults">
+<h3>Defaults<a class="headerlink" href="#defaults" title="Permalink to this headline">¶</a></h3>
+<p>The following variables have defaults that can be customized by you via
+environment variables at runtime.</p>
+<div class="section" id="docker">
+<h4>Docker<a class="headerlink" href="#docker" title="Permalink to this headline">¶</a></h4>
+<p><strong>DOCKER_API_BASE</strong> Set as <code class="docutils literal notranslate"><span class="pre">index.docker.io</span></code>, which is the name of the registry. In
+the first version of Singularity we parsed the Registry argument from
+the build spec file, however now this is removed because it can be
+obtained directly from the image name (eg, <code class="docutils literal notranslate"><span class="pre">registry/namespace/repo:tag</span></code>). If you don’t specify a
+registry name for your image, this default is used. If you have
+trouble with your registry being detected from the image URI, use this
+variable.</p>
+<p><strong>DOCKER_API_VERSION</strong> Is the version of the Docker Registry API
+currently being used, by default now is <code class="docutils literal notranslate"><span class="pre">v2</span></code>.
+<strong>DOCKER_OS</strong> This is exposed via the exported environment variable <code class="docutils literal notranslate"><span class="pre">SINGULARITY_DOCKER_OS</span></code>
+and pertains to images that reveal a version 2 manifest with a
+<a class="reference external" href="https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list">manifest list</a>. In the case that the list is present, we must choose
+an operating system (this variable) and an architecture (below). The
+default is <code class="docutils literal notranslate"><span class="pre">linux</span></code>.</p>
+<p><strong>DOCKER_ARCHITECTURE</strong> This is exposed via the exported environment
+variable <code class="docutils literal notranslate"><span class="pre">SINGULARITY_DOCKER_ARCHITECTURE</span></code>
+and the same applies as for the <code class="docutils literal notranslate"><span class="pre">DOCKER_OS</span></code> with regards to being used in context
+of a list of manifests. In the case that the list is present, we must
+choose an architecture (this variable) and an os (above). The default
+is <code class="docutils literal notranslate"><span class="pre">amd64</span></code>, and other common ones include <code class="docutils literal notranslate"><span class="pre">arm</span></code>, <code class="docutils literal notranslate"><span class="pre">arm64</span></code>, <code class="docutils literal notranslate"><span class="pre">ppc64le</span></code>, <code class="docutils literal notranslate"><span class="pre">386</span></code>, and <code class="docutils literal notranslate"><span class="pre">s390x</span></code>.
+<strong>NAMESPACE</strong> Is the default namespace, <code class="docutils literal notranslate"><span class="pre">library</span></code>.</p>
+<p><strong>RUNSCRIPT_COMMAND</strong> Is not obtained from the environment, but is a
+hard coded default (“/bin/bash”). This is the fallback command used in
+the case that the docker image does not have a CMD or ENTRYPOINT.
+<strong>TAG</strong> Is the default tag, <code class="docutils literal notranslate"><span class="pre">latest</span></code>.</p>
+<p><strong>SINGULARITY_NOHTTPS</strong> This is relevant if you want to use a
+registry that doesn’t have https, and it speaks for itself. If you
+export the variable <code class="docutils literal notranslate"><span class="pre">SINGULARITY_NOHTTPS</span></code> you can force the software to not use https when
+interacting with a Docker registry. This use case is typically for use
+of a local registry.</p>
+</div>
+<div class="section" id="singularity-hub">
+<h4>Singularity Hub<a class="headerlink" href="#singularity-hub" title="Permalink to this headline">¶</a></h4>
+<p><strong>SHUB_API_BASE</strong> The default base for the Singularity Hub API,
+which is <code class="docutils literal notranslate"><span class="pre">https://singularity-hub.org/api</span></code>. If you deploy your own registry, you don’t need
+to change this, you can again specify the registry name in the URI.</p>
+</div>
+</div>
+<div class="section" id="general">
+<h3>General<a class="headerlink" href="#general" title="Permalink to this headline">¶</a></h3>
+<p><strong>SINGULARITY_PYTHREADS</strong> The Python modules use threads (workers) to
+download layer files for Docker, and change permissions. By default,
+we will use 9 workers, unless the environment variable <code class="docutils literal notranslate"><span class="pre">SINGULARITY_PYTHREADS</span></code> is defined.
+<strong>SINGULARITY_COMMAND_ASIS</strong> By default, we want to make sure the
+container running process gets passed forward as the current process,
+so we want to prefix whatever the Docker command or entrypoint is with
+<code class="docutils literal notranslate"><span class="pre">exec</span></code>. We also want to make sure that following arguments get passed, so we
+append <code class="docutils literal notranslate"><span class="pre">&quot;$&#64;&quot;</span></code>. Thus, some entrypoint or cmd might look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span>
+</pre></div>
+</div>
+<p>and we would parse it into the runscript as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">exec</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="s2">&quot;$@&quot;</span>
+</pre></div>
+</div>
+<p>However, it might be the case that the user does not want this. For this
+reason, we have the environmental variable <code class="docutils literal notranslate"><span class="pre">RUNSCRIPT_COMMAND_ASIS</span></code>. If defined as
+yes/y/1/True/true, etc., then the runscript will remain as <code class="docutils literal notranslate"><span class="pre">/usr/bin/python</span></code>.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="container_recipes.html" class="btn btn-neutral float-right" title="Container Recipes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="build_a_container.html" class="btn btn-neutral" title="Build a Container" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

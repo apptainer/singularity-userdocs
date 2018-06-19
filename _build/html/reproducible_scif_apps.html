@@ -1,0 +1,839 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Reproducible SCI-F Apps &mdash; Singularity container 1.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Singularity and Docker" href="singularity_and_docker.html" />
+    <link rel="prev" title="Environment and Metadata" href="environment_and_metadata.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Singularity container
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a Container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_environment.html">Build Environment</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_recipes.html">Container Recipes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_flow.html">Singularity Flow</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="running_services.html">Running Services</a></li>
+<li class="toctree-l1"><a class="reference internal" href="container_checks.html">Container Checks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="environment_and_metadata.html">Environment and Metadata</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Reproducible SCI-F Apps</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#why-do-we-need-sci-f">Why do we need SCI-F?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mixed-up-modules">Mixed up Modules</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#container-transparency">Container Transparency</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#container-modularity">Container Modularity</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sections">Sections</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#interaction">Interaction</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#cowsay-container">Cowsay Container</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a></li>
+<li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
+<li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Reproducible SCI-F Apps</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/reproducible_scif_apps.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="reproducible-sci-f-apps">
+<h1>Reproducible SCI-F Apps<a class="headerlink" href="#reproducible-sci-f-apps" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="why-do-we-need-sci-f">
+<span id="sec-scifapps"></span><h2>Why do we need SCI-F?<a class="headerlink" href="#why-do-we-need-sci-f" title="Permalink to this headline">¶</a></h2>
+<p>The Scientific Filesystem (SCIF) provides internal modularity of
+containers, and it makes it easy for the creator to give the container
+implied metadata about software. For example, installing a set of
+libraries, defining environment variables, or adding labels that
+belong to app <code class="docutils literal notranslate"><span class="pre">foo</span></code> makes a strong assertion that those dependencies belong
+to <code class="docutils literal notranslate"><span class="pre">foo</span></code> . When I run foo, I can be confident that the container is running
+in this context, meaning with <code class="docutils literal notranslate"><span class="pre">foo's</span></code> custom environment, and with <code class="docutils literal notranslate"><span class="pre">foo's</span></code> libraries
+and executables on the path. This is drastically different from
+serving many executables in a single container, because there is no
+way to know which are associated with which of the container’s
+intended functions. This documentation will walk through some
+rationale, background, and examples of the SCIF integration for
+Singularity containers. For other examples (and a client that works
+across container technologies) see the the <a class="reference external" href="https://sci-f.github.io/">scientific filesystem</a>.
+This page will primarily cover the native Singularity SCIF
+integration.</p>
+<p>To start, let’s take a look at this series of steps to install
+dependencies for software foo and bar.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">post</span>
+
+
+<span class="c1"># install dependencies 1</span>
+
+<span class="c1"># install software A (foo)</span>
+
+<span class="c1"># install software B (bar)</span>
+
+<span class="c1"># install software C (foo)</span>
+
+<span class="c1"># install software D (bar)</span>
+</pre></div>
+</div>
+<p>The creator may know that A and C were installed for <code class="docutils literal notranslate"><span class="pre">foo</span></code> and B and D for <code class="docutils literal notranslate"><span class="pre">bar</span></code> ,
+but down the road, when someone discovers the container, if they can
+find the software at all, the intention of the container creator would
+be lost. As many are now, containers without any form of internal
+organization and predictability are black boxes. We don’t know if some
+software installed to <code class="docutils literal notranslate"><span class="pre">/opt</span></code> , or to  <code class="docutils literal notranslate"><span class="pre">/usr/local/bin</span></code> , or to their custom favorite folder <code class="docutils literal notranslate"><span class="pre">/code</span></code> . We
+could assume that the creator added important software to the path and
+look in these locations, but that approach is still akin to fishing in a
+swamp. We might only hope that the container’s main function, the
+Singularity runscript, is enough to make the container perform as
+intended.</p>
+<div class="section" id="mixed-up-modules">
+<h3>Mixed up Modules<a class="headerlink" href="#mixed-up-modules" title="Permalink to this headline">¶</a></h3>
+<div class="line-block">
+<div class="line">If your container truly runs one script, the traditional model of a
+runscript fits well. Even in the case of having two functions like <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code>
+you probably have something like this.</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">runscript</span>
+
+<span class="k">if</span> <span class="n">some</span> <span class="n">logic</span> <span class="n">to</span> <span class="n">choose</span> <span class="n">foo</span><span class="p">:</span>
+
+   <span class="n">check</span> <span class="n">arguments</span> <span class="k">for</span> <span class="n">foo</span>
+
+   <span class="n">run</span> <span class="n">foo</span>
+
+<span class="k">else</span> <span class="k">if</span> <span class="n">some</span> <span class="n">logic</span> <span class="n">to</span> <span class="n">choose</span> <span class="n">bar</span><span class="p">:</span>
+
+   <span class="n">run</span> <span class="n">bar</span>
+</pre></div>
+</div>
+<p>and maybe your environment looks like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">environment</span>
+
+    <span class="n">BEST_GUY</span><span class="o">=</span><span class="n">foo</span>
+
+    <span class="n">export</span> <span class="n">BEST_GUY</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">but what if you run into this issue, with foo and bar?</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">environment</span>
+
+    <span class="n">BEST_GUY</span><span class="o">=</span><span class="n">foo</span>
+
+    <span class="n">BEST_GUY</span><span class="o">=</span><span class="n">bar</span>
+
+    <span class="n">export</span> <span class="n">BEST_GUY</span>
+</pre></div>
+</div>
+<p>You obviously can’t have them at separate times. You’d have to source
+some custom environment file (that you make on your own) and it gets
+hard easily with issues of using shell and sourcing. We don’t know who
+the best guy is! You probably get the general idea. Without internal
+organization and modularity:</p>
+<ul class="simple">
+<li>You have to do a lot of manual work to expose the different software
+to the user via a custom runscript (and be a generally decent
+programmer).</li>
+<li>All software must share the same metadata, environment, and labels.</li>
+</ul>
+<p>Under these conditions, containers are at best block boxes with unclear
+delineation between software provided, and only one context of running
+anything. The container creator shouldn’t need to spend inordinate
+amounts of time writing custom runscripts to support multiple functions
+and inputs. Each of <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code> should be easy to define, and have its own
+runscript, environment, labels, tests and help section.</p>
+</div>
+<div class="section" id="container-transparency">
+<h3>Container Transparency<a class="headerlink" href="#container-transparency" title="Permalink to this headline">¶</a></h3>
+<p>SCI-F Apps make <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code> transparent, and solve this problem of mixed up
+modules. Our simple issue of mixed up modules could be solved if we
+could do this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Bootstrap:docker
+
+From: ubuntu:16.04
+
+
+%appenv foo
+
+    BEST_GUY=foo
+
+    export BEST_GUY
+
+
+%appenv bar
+
+    BEST_GUY=bar
+
+    export BEST_GUY
+
+
+%apprun foo
+
+    echo The best guy is $BEST_GUY
+
+
+%apprun bar
+
+    echo The best guy is $BEST_GUY
+</pre></div>
+</div>
+<p>Generate the container</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build foobar.simg Singularity
+</pre></div>
+</div>
+<p>and run it in the context of <code class="docutils literal notranslate"><span class="pre">foo</span></code> and then <code class="docutils literal notranslate"><span class="pre">bar</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run --app bar foobar.simg
+
+The best guy is bar
+
+$ singularity run --app foo foobar.simg
+
+The best guy is foo
+</pre></div>
+</div>
+<p>Using SCI-F apps, a user can easily discover both <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code> without knowing
+anything about the container:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">apps</span> <span class="n">foobar</span><span class="o">.</span><span class="n">simg</span>
+
+<span class="n">bar</span>
+
+<span class="n">foo</span>
+</pre></div>
+</div>
+<div class="line-block">
+<div class="line">and inspect each one:</div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">inspect</span> <span class="o">--</span><span class="n">app</span> <span class="n">foo</span>  <span class="n">foobar</span><span class="o">.</span><span class="n">simg</span>
+
+<span class="p">{</span>
+
+    <span class="s2">&quot;SCIF_APP_NAME&quot;</span><span class="p">:</span> <span class="s2">&quot;foo&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;SCIF_APP_SIZE&quot;</span><span class="p">:</span> <span class="s2">&quot;1MB&quot;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="container-modularity">
+<h3>Container Modularity<a class="headerlink" href="#container-modularity" title="Permalink to this headline">¶</a></h3>
+<p>What is going on, under the hood? Just a simple, clean organization that
+is tied to a set of sections in the build recipe relevant to each app.
+For example, I can specify custom install procedures (and they are
+relevant to each app’s specific base defined under <code class="docutils literal notranslate"><span class="pre">/scif/apps</span></code>), labels, tests, and
+help sections. Before I tell you about the sections, I’ll briefly show
+you what the organization looks like, for each app:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span>
+
+
+     <span class="n">foo</span><span class="o">/</span>
+
+        <span class="nb">bin</span><span class="o">/</span>
+
+        <span class="n">lib</span><span class="o">/</span>
+
+        <span class="n">scif</span><span class="o">/</span>
+
+            <span class="n">runscript</span><span class="o">.</span><span class="n">help</span>
+
+            <span class="n">runscript</span>
+
+            <span class="n">env</span><span class="o">/</span>
+
+                <span class="mi">01</span><span class="o">-</span><span class="n">base</span><span class="o">.</span><span class="n">sh</span>
+
+                <span class="mi">90</span><span class="o">-</span><span class="n">environment</span><span class="o">.</span><span class="n">sh</span>
+
+
+     <span class="n">bar</span><span class="o">/</span>
+
+     <span class="o">....</span>
+</pre></div>
+</div>
+<p>If you are familiar with Singularity, the above will look very familiar.
+It mirrors the Singularity (main container) metadata folder, except
+instead of <code class="docutils literal notranslate"><span class="pre">.singularity.d</span></code> we have <code class="docutils literal notranslate"><span class="pre">scif</span></code>. The name and base <code class="docutils literal notranslate"><span class="pre">scif</span></code> is chosen intentionally to be
+something short, and likely to be unique. On the level of organization
+and metadata, these internal apps are like little containers! Are you
+worried that you need to remember all this path nonsense? Don’t worry,
+you don’t. You can just use environment variables in your runscripts,
+etc. Here we are looking at the environment active for lolcat:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">exec</span> <span class="o">--</span><span class="n">app</span> <span class="n">foo</span> <span class="n">foobar</span><span class="o">.</span><span class="n">simg</span> <span class="n">env</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">foo</span>
+</pre></div>
+</div>
+<p>Let’s talk about the output of the above in sections, you will notice
+some interesting things! First, notice that the app’s <code class="docutils literal notranslate"><span class="pre">bin</span></code> has been added to
+the path, and it’s <code class="docutils literal notranslate"><span class="pre">lib</span></code> added to the <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> . This means that anything you drop in
+either will automatically be added. You don’t need to make these folders
+either, they are created for you.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LD_LIBRARY_PATH</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="n">lib</span><span class="p">::</span><span class="o">/.</span><span class="n">singularity</span><span class="o">.</span><span class="n">d</span><span class="o">/</span><span class="n">libs</span>
+
+<span class="n">PATH</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="nb">bin</span>
+</pre></div>
+</div>
+<p>Next, notice that we have environment variables relevant to the active
+app’s (foo) data and metadata. They look like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SCIF_APPOUTPUT</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="n">output</span>
+
+<span class="n">SCIF_APPDATA</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">foo</span>
+
+<span class="n">SCIF_APPINPUT</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="nb">input</span>
+
+<span class="n">SCIF_APPMETA</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="n">scif</span>
+
+<span class="n">SCIF_APPROOT</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span>
+
+<span class="n">SCIF_APPNAME</span><span class="o">=</span><span class="n">foo</span>
+</pre></div>
+</div>
+<p>We also have foo’s environment variables defined under <code class="docutils literal notranslate"><span class="pre">%appenv</span> <span class="pre">foo</span></code> , and
+importantly, we don’t see bar’s.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">BEST_GUY</span><span class="o">=</span><span class="n">foo</span>
+</pre></div>
+</div>
+<p>Also provided are more global paths for data and apps:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SCIF_APPS</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span>
+
+<span class="n">SCIF_DATA</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">data</span>
+</pre></div>
+</div>
+<p>Importantly, each app has its own modular location. When you do an <code class="docutils literal notranslate"><span class="pre">%appinstall</span> <span class="pre">foo</span></code>,
+the commands are all done in context of that base. The bin and lib are
+also automatically generated. So what would be a super simple app?</p>
+<p>Just add a script and name it:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">appfiles</span> <span class="n">foo</span>
+
+    <span class="n">runfoo</span><span class="o">.</span><span class="n">sh</span>   <span class="nb">bin</span><span class="o">/</span><span class="n">runfoo</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>and then maybe for install I’d make it executable</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">appinstall</span> <span class="n">foo</span>
+
+    <span class="n">chmod</span> <span class="n">u</span><span class="o">+</span><span class="n">x</span> <span class="nb">bin</span><span class="o">/</span><span class="n">runfoo</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>You don’t even need files! You could just do this.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">appinstall</span> <span class="n">foo</span>
+
+    <span class="n">echo</span> <span class="s1">&#39;echo &quot;Hello Foo.&quot;&#39;</span> <span class="o">&gt;&gt;</span> <span class="nb">bin</span><span class="o">/</span><span class="n">runfoo</span><span class="o">.</span><span class="n">sh</span>
+
+    <span class="n">chmod</span> <span class="n">u</span><span class="o">+</span><span class="n">x</span> <span class="nb">bin</span><span class="o">/</span><span class="n">runfoo</span><span class="o">.</span><span class="n">sh</span>
+</pre></div>
+</div>
+<p>We can summarize these observations about using apps:</p>
+<ul class="simple">
+<li>the specific environment (<code class="docutils literal notranslate"><span class="pre">%appenv_foo</span></code>) is active because <code class="docutils literal notranslate"><span class="pre">BEST_APP</span></code> is foo</li>
+<li>the lib folder in foo’s base is added to the LD_LIBRARY_PATH</li>
+<li>the bin folder is added to the path</li>
+<li>locations for input, output, and general data are exposed. It’s up to
+you how you use these, but you can predictably know that a well made
+app will look for inputs and outputs in it’s specific folder.</li>
+<li>environment variables are provided for the app’s root, it’s data, and
+it’s name</li>
+</ul>
+</div>
+<div class="section" id="sections">
+<h3>Sections<a class="headerlink" href="#sections" title="Permalink to this headline">¶</a></h3>
+<p>Finding the section <code class="docutils literal notranslate"><span class="pre">%appinstall</span></code> , <code class="docutils literal notranslate"><span class="pre">%apphelp</span></code> , or <code class="docutils literal notranslate"><span class="pre">%apprun</span></code> is indication of an application command.
+The following string is parsed as the name of the application, and
+this folder is created, in lowercase, under <code class="docutils literal notranslate"><span class="pre">/scif/apps</span></code> if it doesn’t exist. A
+singularity metadata folder, .singularity.d, equivalent to the
+container’s main folder, is generated inside the application. An
+application thus is like a smaller image inside of it’s parent.
+Specifically, SCI-F defines the following new sections for the build
+recipe, where each is optional for 0 or more apps:</p>
+<p><strong>%appinstall</strong> corresponds to executing commands within the folder to
+install the application. These commands would previously belong in
+%post, but are now attributable to the application.</p>
+<p><strong>%apphelp</strong> is written as a file called runscript.help in the
+application’s metadata folder, where the Singularity software knows
+where to find it. If no help section is provided, the software simply
+will alert the user and show the files provided for inspection.</p>
+<p><strong>%apprun</strong> is also written as a file called runscript.exec in the
+application’s metadata folder, and again looked for when the user asks
+to run the software. If not found, the container should default to
+shelling into that location.</p>
+<p><strong>%applabels</strong> will write a labels.json in the application’s metadata
+folder, allowing for application specific labels.</p>
+<p><strong>%appenv</strong> will write an environment file in the application’s base
+folder, allowing for definition of application specific environment
+variables.</p>
+<p><strong>%apptest</strong> will run tests specific to the application, with present
+working directory assumed to be the software module’s folder</p>
+<p><strong>%appfiles</strong> will add files to the app’s base at <code class="docutils literal notranslate"><span class="pre">/scif/apps/&lt;app&gt;</span></code></p>
+</div>
+<div class="section" id="interaction">
+<h3>Interaction<a class="headerlink" href="#interaction" title="Permalink to this headline">¶</a></h3>
+<p>I didn’t show you the complete output of a <code class="docutils literal notranslate"><span class="pre">grep</span></code> to the environment when
+running foo in the first example - because the remainder of variables
+are more fit for a discussion about app interaction. Essentially, when
+any app is active, we also have named variable that can explicitly
+reference the environment file, labels file, runscript, <code class="docutils literal notranslate"><span class="pre">lib</span></code> and <code class="docutils literal notranslate"><span class="pre">bin</span></code> folders for
+all app’s in the container. For our above Singularity Recipe, we would
+also find:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SCIF_APPDATA_bar</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">bar</span>
+
+<span class="n">SCIF_APPRUN_bar</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">bar</span><span class="o">/</span><span class="n">scif</span><span class="o">/</span><span class="n">runscript</span>
+
+<span class="n">SCIF_APPROOT_bar</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">bar</span>
+
+<span class="n">SCIF_APPLIB_bar</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">bar</span><span class="o">/</span><span class="n">lib</span>
+
+<span class="n">SCIF_APPMETA_bar</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">bar</span><span class="o">/</span><span class="n">scif</span>
+
+<span class="n">SCIF_APPBIN_bar</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">bar</span><span class="o">/</span><span class="nb">bin</span>
+
+<span class="n">SCIF_APPENV_bar</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">bar</span><span class="o">/</span><span class="n">scif</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="mi">90</span><span class="o">-</span><span class="n">environment</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="n">SCIF_APPLABELS_bar</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">bar</span><span class="o">/</span><span class="n">scif</span><span class="o">/</span><span class="n">labels</span><span class="o">.</span><span class="n">json</span>
+
+
+<span class="n">SCIF_APPENV_foo</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="n">scif</span><span class="o">/</span><span class="n">env</span><span class="o">/</span><span class="mi">90</span><span class="o">-</span><span class="n">environment</span><span class="o">.</span><span class="n">sh</span>
+
+<span class="n">SCIF_APPLABELS_foo</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="n">scif</span><span class="o">/</span><span class="n">labels</span><span class="o">.</span><span class="n">json</span>
+
+<span class="n">SCIF_APPDATA_foo</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">foo</span>
+
+<span class="n">SCIF_APPRUN_foo</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="n">scif</span><span class="o">/</span><span class="n">runscript</span>
+
+<span class="n">SCIF_APPROOT_foo</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span>
+
+<span class="n">SCIF_APPLIB_foo</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="n">lib</span>
+
+<span class="n">SCIF_APPMETA_foo</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="n">scif</span>
+
+<span class="n">SCIF_APPBIN_foo</span><span class="o">=/</span><span class="n">scif</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">foo</span><span class="o">/</span><span class="nb">bin</span>
+</pre></div>
+</div>
+<p>This is really great because it means that we can have apps interact
+with one another internally. For example, let’s modify the recipe a bit:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Bootstrap:docker
+
+From: ubuntu:16.04
+
+
+%appenv cow
+
+    ANIMAL=COW
+
+    NOISE=moo
+
+    export ANIMAL NOISE
+
+
+%appenv bird
+
+    NOISE=tweet
+
+    ANIMAL=BIRD
+
+    export ANIMAL
+
+
+%apprun moo
+
+    echo The ${ANIMAL} goes ${NOISE}
+
+
+%appenv moo
+
+    . ${APPENV_cow}
+</pre></div>
+</div>
+<p>In the above example, we have three apps. One for a cow, one for a bird,
+and a third that depends on the cow. We can’t define global functions or
+environment variables (in <code class="docutils literal notranslate"><span class="pre">%post</span></code> or  <code class="docutils literal notranslate"><span class="pre">/environment</span></code> , respectively) because they would
+interfere with the third app, bird, that has equivalently named
+variables. What we do then, is source the environment for “cow” in the
+environment for “moo” and the result is what we would want:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run --app moo /tmp/one.simg
+
+The COW goes moo
+</pre></div>
+</div>
+<p>The same is true for each of the labels, environment, runscript, bin,
+and lib. The following variables are available to you, for each app in
+the container, whenever any app is being run:</p>
+<ul class="simple">
+<li>**SCIF_APPBIN_*: the path to the bin folder, if you want to add
+an app that isn’t active to your ‘PATH‘</li>
+<li>**SCIF_APPLIB_*: the path to the lib folder, if you want to add
+an app that isn’t active to your ‘LD_LIBRARY_PATH‘</li>
+<li>**SCIF_APPRUN_*: the app’s runscript (so you can call it from
+elsewhere)</li>
+<li>**SCIF_APPMETA_*: the path to the metadata folder for the app</li>
+<li>**SCIF_APPENV_*: the path to the primary environment file (for
+sourcing) if it exists</li>
+<li>**SCIF_APPROOT_*: the app’s install folder</li>
+<li>**SCIF_APPDATA_*: the app’s data folder</li>
+<li>**SCIF_APPLABELS_*: The path to the label.json in the metadata
+folder, if it exists</li>
+</ul>
+<p>Singularity containers are already reproducible in that they package
+dependencies. This basic format adds to that by making the software
+inside of them modular, predictable, and programmatically accessible. We
+can say confidently that some set of steps, labels, or variables in the
+runscript is associated with a particular action of the container. We
+can better reveal how dependencies relate to each step in a scientific
+workflow. Making containers is not easy. When a scientist starts to
+write a recipe for his set of tools, he probably doesn’t know where to
+put it, perhaps that a help file should exist, or that metadata about
+the software should be served by the container. If container generation
+software made it easy to organize and capture container content
+automatically, we would easily meet these goals of internal modularity
+and consistency, and generate containers that easily integrate with
+external hosts, data, and other containers. These are essential
+components for (ultimately) optimizing the way we develop, understand,
+and execute our scientific containers.</p>
+</div>
+</div>
+<div class="section" id="cowsay-container">
+<h2>Cowsay Container<a class="headerlink" href="#cowsay-container" title="Permalink to this headline">¶</a></h2>
+<p>Now let’s go through the tutorial to build our <a class="reference internal" href="#cowsay-container">cowsay container</a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last"><strong>Important!</strong> This tutorial is for Singularity 2.4.</p>
+</div>
+<dl class="docutils">
+<dt>When you’ve installed 2.4, download the recipe, and save it to your</dt>
+<dd>present working directory. By the way, credit for anything and
+everything lolcat and cowsay goes to <a class="reference external" href="https://www.github.com/GodLoveD">GodLoveD</a>! Here is the recipe:</dd>
+</dl>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">wget</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">raw</span><span class="o">.</span><span class="n">githubusercontent</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">singularityware</span><span class="o">/</span><span class="n">singularity</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">examples</span><span class="o">/</span><span class="n">apps</span><span class="o">/</span><span class="n">Singularity</span><span class="o">.</span><span class="n">cowsay</span>
+
+<span class="n">sudo</span> <span class="n">singularity</span> <span class="n">build</span> <span class="n">moo</span><span class="o">.</span><span class="n">simg</span> <span class="n">Singularity</span><span class="o">.</span><span class="n">cowsay</span>
+</pre></div>
+</div>
+<p>What apps are installed?</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">apps</span> <span class="n">moo</span><span class="o">.</span><span class="n">simg</span>
+
+<span class="n">cowsay</span>
+
+<span class="n">fortune</span>
+
+<span class="n">lolcat</span>
+</pre></div>
+</div>
+<p>Ask for help for a specific app!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">help</span> <span class="o">--</span><span class="n">app</span> <span class="n">fortune</span> <span class="n">moo</span><span class="o">.</span><span class="n">simg</span>
+
+<span class="n">fortune</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">best</span> <span class="n">app</span>
+</pre></div>
+</div>
+<p>Ask for help for all apps, without knowing in advance what they are:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>for app in $(singularity apps moo.simg)
+
+   do
+
+     singularity help --app $app moo.simg
+
+done
+
+cowsay is the best app
+
+fortune is the best app
+
+lolcat is the best app
+</pre></div>
+</div>
+<p>Run a particular app</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>singularity run --app fortune moo.simg
+
+    My dear People.
+
+    My dear Bagginses and Boffins, and my dear Tooks and Brandybucks,
+
+and Grubbs, and Chubbs, and Burrowses, and Hornblowers, and Bolgers,
+
+Bracegirdles, Goodbodies, Brockhouses and Proudfoots.  Also my good
+
+Sackville Bagginses that I welcome back at last to Bag End.  Today is my
+
+one hundred and eleventh birthday: I am eleventy-one today!&quot;
+
+        -- J. R. R. Tolkien
+</pre></div>
+</div>
+<p>Advanced running - pipe the output of fortune into lolcat, and make a
+fortune that is beautifully colored!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">run</span> <span class="o">--</span><span class="n">app</span> <span class="n">fortune</span> <span class="n">moo</span><span class="o">.</span><span class="n">simg</span> <span class="o">|</span> <span class="n">singularity</span> <span class="n">run</span> <span class="o">--</span><span class="n">app</span> <span class="n">lolcat</span> <span class="n">moo</span><span class="o">.</span><span class="n">simg</span>
+
+<span class="n">You</span> <span class="n">will</span> <span class="n">be</span> <span class="n">surrounded</span> <span class="n">by</span> <span class="n">luxury</span><span class="o">.</span>
+</pre></div>
+</div>
+<p>This one might be easier to see - pipe the same fortune into the cowsay
+app:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">run</span> <span class="o">--</span><span class="n">app</span> <span class="n">fortune</span> <span class="n">moo</span><span class="o">.</span><span class="n">simg</span> <span class="o">|</span> <span class="n">singularity</span> <span class="n">run</span> <span class="o">--</span><span class="n">app</span> <span class="n">cowsay</span> <span class="n">moo</span><span class="o">.</span><span class="n">simg</span>
+
+ <span class="n">________________________________________</span>
+
+<span class="o">/</span> <span class="n">Executive</span> <span class="n">ability</span> <span class="ow">is</span> <span class="n">prominent</span> <span class="ow">in</span> <span class="n">your</span> \
+
+\ <span class="n">make</span><span class="o">-</span><span class="n">up</span><span class="o">.</span>                               <span class="o">/</span>
+
+ <span class="o">----------------------------------------</span>
+
+        \   <span class="o">^</span><span class="n">__</span><span class="o">^</span>
+
+         \  <span class="p">(</span><span class="n">oo</span><span class="p">)</span>\<span class="n">_______</span>
+
+            <span class="p">(</span><span class="n">__</span><span class="p">)</span>\       <span class="p">)</span>\<span class="o">/</span>\
+
+                <span class="o">||----</span><span class="n">w</span> <span class="o">|</span>
+
+                <span class="o">||</span>     <span class="o">||</span>
+</pre></div>
+</div>
+<p>and the final shabang - do the same, but make it colored. Let’s even get
+lazy and use an environment variable for the command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CMD=&quot;singularity run --app&quot;
+
+$CMD fortune moo.simg | $CMD cowsay moo.simg | $CMD lolcat moo.simg
+
+ _________________________________________
+
+/ Ships are safe in harbor, but they were \
+
+\ never meant to stay there.              /
+
+ -----------------------------------------
+
+        \   ^__^
+
+         \  (oo)\_______
+
+            (__)\       )\/\
+
+                ||----w |
+
+                ||     ||
+</pre></div>
+</div>
+<p>Yes, you need to watch the asciinema to see the colors. Finally, inspect
+an app:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">inspect</span> <span class="o">--</span><span class="n">app</span> <span class="n">fortune</span> <span class="n">moo</span><span class="o">.</span><span class="n">simg</span>
+
+<span class="p">{</span>
+
+    <span class="s2">&quot;SCIF_APP_NAME&quot;</span><span class="p">:</span> <span class="s2">&quot;fortune&quot;</span><span class="p">,</span>
+
+    <span class="s2">&quot;SCIF_APP_SIZE&quot;</span><span class="p">:</span> <span class="s2">&quot;1MB&quot;</span>
+
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>If you want to see the full specification or create your own
+Scientific Filesystem integration (doesn’t have to be Singularity, or
+Docker, or containers!) see the <a class="reference external" href="https://sci-f.github.io/">full documentation</a>.</p>
+<p>If you haven’t yet, <a class="reference external" href="https://asciinema.org/a/139153?speed=3">take a look at these examples</a> with the
+asciinema!</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="singularity_and_docker.html" class="btn btn-neutral float-right" title="Singularity and Docker" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="environment_and_metadata.html" class="btn btn-neutral" title="Environment and Metadata" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'1.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
