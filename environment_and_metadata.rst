@@ -1,3 +1,5 @@
+.. _environment-and-metadata:
+
 ========================
 Environment and Metadata
 ========================
@@ -18,7 +20,7 @@ If you build a container from Singularity Hub or Docker Hub, the
 environment will be included with the container at build time. You can
 also define custom environment variables in your Recipe file like so:
 
-::
+.. code-block:: none
 
     Bootstrap: shub
 
@@ -37,7 +39,7 @@ value of a variable until you have installed some software.
 To add variables to the environment during ``%post`` you can use the
 ``$SINGULARITY_ENVIRONMENT`` variable with the following syntax:
 
-::
+.. code-block:: none
 
     %post
 
@@ -56,7 +58,7 @@ transposed automatically and the prefix will be stripped. For example,
 let’s say we want to set the variable ``HELLO`` to have value ``WORLD``. We can do that
 as follows:
 
-::
+.. code-block:: none
 
     $ SINGULARITYENV_HELLO=WORLD singularity exec --cleanenv centos7.img env
 
@@ -104,7 +106,7 @@ For containers that are generated with Singularity version 2.4 and
 later, labels are represented using the `rc1 Label Schema <http://label-schema.org/rc1/>`_. For
 example:
 
-::
+.. code-block:: none
 
     $ singularity inspect dino.img
 
@@ -138,7 +140,7 @@ Singularity versions >= 2.4, the image build size is added as a label, ``org.lab
 and the label schema is used throughout. For versions earlier than 2.4,
 containers did not use the label schema, and looked like this:
 
-::
+.. code-block:: none
 
     singularity exec centos7.img cat /.singularity.d/labels.json
 
@@ -156,7 +158,7 @@ containers did not use the label schema, and looked like this:
 
 You can add custom labels to your container in a bootstrap file:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -179,7 +181,7 @@ Inside of the container, metadata is stored in the ``/.singularity.d`` directory
 probably shouldn’t edit any of these files directly but it may be
 helpful to know where they are and what they do:
 
-::
+.. code-block:: none
 
     /.singularity.d/
 

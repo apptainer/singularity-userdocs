@@ -1,3 +1,5 @@
+.. _build-a-container:
+
 =================
 Build a Container
 =================
@@ -8,7 +10,7 @@ Build a Container
 download and assemble existing containers from external resources like
 `Singularity Hub <https://singularity-hub.org/>`_ and `Docker Hub <https://hub.docker.com/>`_. You can use it to convert
 containers between the various formats supported by Singularity. And you
-can use it in conjunction with a `Singularity recipe <https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html>`_ file to
+can use it in conjunction with a :ref:`Singularity recipe <container-recipes>` file to
 create a container from scratch and customized it to fit your needs.
 
 --------
@@ -30,7 +32,7 @@ can be one of the following:
 
 -  path to an **archive** in .tar or compressed .tar.gz format
 
--  path to a `Singularity recipe file <https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html>`_
+-  path to a :ref:`Singularity recipe file <container-recipes>`
 
 In addition ``build`` can produce containers in three different formats. Formats
 types can be specified by passing the following options to build.
@@ -67,7 +69,7 @@ Downloading a existing container from Singularity Hub
 You can use the build command to download a container from Singularity
 Hub.
 
-::
+.. code-block:: none
 
     $ singularity build lolcow.simg shub://GodloveD/lolcow
 
@@ -84,7 +86,7 @@ Downloading a existing container from Docker Hub
 You can use ``build`` to download layers from Docker Hub and assemble them into
 Singularity containers.
 
-::
+.. code-block:: none
 
     $ singularity build lolcow.simg docker://godlovedc/lolcow
 
@@ -101,7 +103,7 @@ create writable containers as root.
 
 Extending the Singularity Hub example from above:
 
-::
+.. code-block:: none
 
     $ sudo singularity build --writable lolcow.img shub://GodloveD/lolcow
 
@@ -114,7 +116,7 @@ To ensure that you have the proper permissions to write to the
 container as you like, it is also a good idea to make changes as root.
 For example:
 
-::
+.. code-block:: none
 
     $ sudo singularity shell --writable lolcow.img
 
@@ -126,7 +128,7 @@ a sandbox) you could do so with the ``--sandbox`` option. It’s possible to cre
 sandbox without root privileges, but to ensure proper file permissions
 it is recommended to do so as root.
 
-::
+.. code-block:: none
 
     $ sudo singularity build --sandbox lolcow/ shub://GodloveD/lolcow
 
@@ -139,7 +141,7 @@ Once again, it’s a good idea to do this as root to ensure you have
 permission to access the files and directories that you want to
 change.
 
-::
+.. code-block:: none
 
     $ sudo singularity shell --writable lolcow/
 
@@ -153,13 +155,13 @@ one format to another. For example if you had a squashfs container
 called ``production.simg`` and wanted to convert it to a writable ext3 container called ``development.img`` you
 could:
 
-::
+.. code-block:: none
 
     $ sudo singularity build --writable development.img production.simg
 
 Similarly, to convert it to a writable directory (a sandbox):
 
-::
+.. code-block:: none
 
     $ singularity build --sandbox development/ production.simg
 
@@ -167,7 +169,7 @@ If you omit any options you can also convert your sandbox back to a
 read-only compressed squashfs image suitable for use in a production
 environment:
 
-::
+.. code-block:: none
 
     $ singularity build production2 development/
 
@@ -187,11 +189,11 @@ Building containers from Singularity recipe files
 
 Of course, Singularity recipe files can be used as the target when
 building a container. For detailed information on writing Singularity
-recipe files, please see the `Container Recipes docs <https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html>`_.
+recipe files, please see the :ref:`Container Recipes docs <container-recipes>`.
 Let’s say you already have the following container recipe file called ``Singularity``
 , and you want to use it to build a container.
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -219,7 +221,7 @@ Let’s say you already have the following container recipe file called ``Singul
 
 You can do so with the following command.
 
-::
+.. code-block:: none
 
     $ sudo singularity build lolcow.simg Singularity
 
@@ -250,7 +252,7 @@ file use the ``--section`` option. For instance, if you have edited the ``%envir
 long Singularity recipe and don’t want to completely re-build the
 container, you could re-build only the ``%environment`` section like so:
 
-::
+.. code-block:: none
 
     $ sudo singularity build --section environment image.simg Singularity
 
@@ -269,7 +271,7 @@ perhaps your local build resource does not have GPUs. You want to
 include a ``%test`` section that runs a short validation but you don’t want your
 build to exit with an error because it cannot find a GPU on your system.
 
-::
+.. code-block:: none
 
     $ sudo singularity build GPU.simg --notest Singularity
 
@@ -281,7 +283,7 @@ to define a security (or any other kind of check) to be run on demand
 for a Singularity image. They are defined (and run) via different
 tags.
 
-::
+.. code-block:: none
 
     CHECKS OPTIONS:
 
@@ -294,7 +296,7 @@ tags.
         -m|--med       Perform medium and high checks
 
         -h|--high      Perform only checks at level high
-        
+
 
 When you add the ``--checks`` option along with applicable tags to the ``build`` command
 Singularity will run the desired checks on your container at build time.
@@ -306,7 +308,7 @@ More Build topics
 
 -  If you want to **customize the cache location** (where Docker layers
    are downloaded on your system), specify Docker credentials, or any
-   custom tweaks to your build environment, see `build environment <https://singularity-userdoc.readthedocs.io/en/latest/build_environment.html>`_.
+   custom tweaks to your build environment, see :ref:`build environment <build-environment>`.
 
 -  If you want to make internally **modular containers**, check out the
    getting started guide `here <https://sci-f.github.io/tutorials>`_

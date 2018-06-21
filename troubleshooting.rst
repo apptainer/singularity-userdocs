@@ -11,7 +11,7 @@ No space left on device
 Sometimes when you are building an image, Singularity tells you that
 it runs out of space on the device:
 
-::
+.. code-block:: none
 
     sudo singularity build fatty.simg Singularity
 
@@ -24,7 +24,7 @@ using the ``$TMPDIR`` . If your ``$TMPDIR`` is overflowing (or the mount is very
 you would see this error. As a test, you can try building a sandbox. If
 this is the issue, then the sandbox should work.
 
-::
+.. code-block:: none
 
     sudo singularity build --sandbox [fatty] Singularity
 
@@ -39,7 +39,7 @@ Segfault on Bootstrap of Centos Image
 If you are bootstrapping a centos 6 docker image from a debian host,
 you might hit a segfault:
 
-::
+.. code-block:: none
 
     $ singularity shell docker://centos:6
 
@@ -58,13 +58,13 @@ The fix is on your host, you need to pass the variable ``vsyscall=emulate`` to t
 meaning in the file ``/etc/default/grub`` (note, this file is debian specific), add the
 following:
 
-::
+.. code-block:: none
 
     GRUB_CMDLINE_LINUX_DEFAULT="vsyscall=emulate"
 
 and then update grub and reboot:
 
-::
+.. code-block:: none
 
     update-grub && reboot
 
@@ -78,7 +78,7 @@ How to use Singularity with GRSecurity enabled kernels
 | To run Singularity on a GRSecurity enabled kernel, you must disable
   several security features:
 
-::
+.. code-block:: none
 
     $ sudo sysctl -w kernel.grsecurity.chroot_caps=0
 
@@ -104,7 +104,7 @@ the purpose of the -H or –home option. For example, here we are
 creating a home directory under /tmp/homie, and then telling the
 container to mount it as home:
 
-::
+.. code-block:: none
 
     rm -rf /tmp/homie && mkdir -p /tmp/homie && \
 
@@ -117,7 +117,7 @@ containers. To avoid this, in your runscript (the ``%runscript`` section of the
 bootstrap file) you should specify the path to the executable exactly.
 This means:
 
-::
+.. code-block:: none
 
     %runscript
 
@@ -146,7 +146,7 @@ Make sure that you are using the most recent Singularity release to
 mount your container to the host system, and that the ``--bind`` argument is
 placed after the execution command. An example might look like this:
 
-::
+.. code-block:: none
 
     $ singularity run -B $PWD:/data my_container.img
 
@@ -161,7 +161,7 @@ Error running Singularity with sudo
 This fix solves the following error when Singularity is installed into
 the default compiled prefix of /usr/local:
 
-::
+.. code-block:: none
 
     $ sudo singularity instance.start container.img daemon1
 
@@ -176,7 +176,7 @@ visudo which will edit the sudoers file, and search for the string
 ‘secure\_path’. Once found, append :/usr/local/bin to that line so it
 looks like this:
 
-::
+.. code-block:: none
 
     Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
 
@@ -187,20 +187,20 @@ How to resolve “Too many levels of symbolic links” error
 Running singularity failed with “Too many levels of symbolic links”
 error
 
-::
+.. code-block:: none
 
     $ singularity run -B /apps container.img
 
     ERROR : There was an error binding the path /apps: Too many levels of symbolic links
 
     ABORT : Retval = 255
-    
+
 
 You got this error because /apps directory is an autofs mount point. You
 can fix it by editing singularity.conf and adding the following
 directive with corresponding path:
 
-::
+.. code-block:: none
 
     autofs bug path = /apps
 

@@ -18,7 +18,7 @@ These instructions will build Singularity from source on your system.
 So you will need to have some development tools installed. If you run
 into missing dependencies, try installing them like so:
 
-::
+.. code-block:: none
 
     $ sudo apt-get update && \
 
@@ -33,7 +33,7 @@ into missing dependencies, try installing them like so:
         libarchive-dev
 
 
-::
+.. code-block:: none
 
     $ sudo yum update && \
 
@@ -49,7 +49,7 @@ Install the master branch
 The following commands will install the latest version of the `GitHub
 repo <https://github.com/singularityware/singularity>`_ master branch to ``/usr/local``.
 
-::
+.. code-block:: none
 
     $ git clone https://github.com/singularityware/singularity.git
 
@@ -64,7 +64,7 @@ repo <https://github.com/singularityware/singularity>`_ master branch to ``/usr/
     $ sudo make install
 
 
-.. note::
+.. note.. code-block:: none
     Note that the installation prefix is ``/usr/local`` but the configuration directory
     is ``/etc``. This ensures that the configuration file ``singularity.conf`` is placed in the
     standard location.
@@ -85,7 +85,7 @@ Install a specific release
 The following commands will install a specific release from `GitHub
 releases <https://github.com/singularityware/singularity/releases>`_ page to ``/usr/local``.
 
-::
+.. code-block:: none
 
     $ VER=2.5.1
 
@@ -109,7 +109,7 @@ Install the development branch
 If you want to test a development branch the routine above should be
 tweaked slightly:
 
-::
+.. code-block:: none
 
     $ git clone https://github.com/singularityware/singularity.git
 
@@ -135,7 +135,7 @@ Remove an old version
 Let’s say that we installed Singularity to ``/usr/local``. To remove it completely,
 you need to hit all of the following:
 
-::
+.. code-block:: none
 
     $ sudo rm -rf /usr/local/libexec/singularity
 
@@ -154,7 +154,7 @@ you need to hit all of the following:
     $ sudo rm /usr/local/etc/bash_completion.d/singularity
 
     $ sudo rm /usr/local/man/man1/singularity.1
-    
+
 
 If you modified the system configuration directory, remove the ``singularity.conf`` file
 there as well.
@@ -163,10 +163,10 @@ remove that directory to uninstall Singularity. For instance if you
 installed singularity with the ``--prefix=/some/temp/dir`` option argument pair, you can remove
 Singularity like so:
 
-::
+.. code-block:: none
 
     $ sudo rm -rf /some/temp/dir
 
-What should you do next? You can check out the `quickstart <https://singularity-userdoc.readthedocs.io/en/latest/quick_start.html#quick-start>`_ guide, or learn how to
-interact with your container via the `shell <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id36>`_ , `exec <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id25>`_ , or `run <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id30>`_ commands. Or click **next**
+What should you do next? You can check out the :ref:`quickstart <quick-start>` guide, or learn how to
+interact with your container via the :ref:`shell <shell>` , :ref:`exec <exec>` , or :ref:`run <run>` commands. Or click **next**
 below to continue reading.

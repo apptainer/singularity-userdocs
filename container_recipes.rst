@@ -1,3 +1,6 @@
+
+.. _container-recipes:
+
 =================
 Container Recipes
 =================
@@ -44,7 +47,7 @@ composed of several keywords. Specifically:
 -  ``Bootstrap``: references the kind of base you want to use (e.g., docker,
    debootstrap, shub). For example, a shub bootstrap will pull
    containers for shub as bases. A Docker bootstrap will pull docker
-   layers to start your image. For a full list see `build <https://singularity-userdoc.readthedocs.io/en/latest/build_a_container.html>`_
+   layers to start your image. For a full list see :ref:`build <build-a-container>`
 
 -  ``From``: is the named container (shub) or reference to layers (Docker) that
    you want to use (e.g., vsoch/hello-world)
@@ -54,7 +57,7 @@ composed of several keywords. Specifically:
 | For example, a very minimal Singularity Hub build might look like
   this:
 
-::
+.. code-block:: none
 
     Bootstrap: shub
 
@@ -62,7 +65,7 @@ composed of several keywords. Specifically:
 
 A build that uses a mirror to install Centos-7 might look like this:
 
-::
+.. code-block:: none
 
     Bootstrap: yum
 
@@ -75,21 +78,21 @@ A build that uses a mirror to install Centos-7 might look like this:
 Each build base requires particular details during build time. You can
 read about them and see examples at the following links:
 
--  `shub <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-shub>`_ (images hosted on Singularity Hub)
+-  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
 
--  `docker <http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-docker-module>`_ (images hosted on Docker Hub)
+-  :ref:`docker <build-docker-module>` (images hosted on Docker Hub)
 
--  `localimage <http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-localimage>`_ (images saved on your machine)
+-  :ref:`localimage <build-localimage>` (images saved on your machine)
 
--  `yum <http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-yum>`_ (yum based systems such as CentOS and Scientific Linux)
+-  :ref:`yum <build-yum>` (yum based systems such as CentOS and Scientific Linux)
 
--  `debootstrap <http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-debootstrap>`_ (apt based systems such as Debian and Ubuntu)
+-  :ref:`debootstrap <build-debootstrap>` (apt based systems such as Debian and Ubuntu)
 
--  `arch <http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-arch>`_ (Arch Linux)
+-  :ref:`arch <build-arch>` (Arch Linux)
 
--  `busybox <http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-busybox>`_ (BusyBox)
+-  :ref:`busybox <build-busybox>` (BusyBox)
 
--  `zypper <http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-zypper>`_ (zypper based systems such as Suse and OpenSuse)
+-  :ref:`zypper <build-zypper>` (zypper based systems such as Suse and OpenSuse)
 
 Sections
 ========
@@ -102,17 +105,21 @@ Let’s add each section to our container to see how it works. For each
 section, we will build the container from the recipe (a file called
 Singularity) as follows:
 
-::
+.. code-block:: none
 
     $ sudo singularity build roar.simg Singularity
+
+.. _help:
 
 %help
 -----
 
+.. _sec:help:
+
 You don’t need to do much programming to add a ``%help``
 section to your container. Just write it into a section:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -125,7 +132,7 @@ section to your container. Just write it into a section:
 
 And it will work when the user asks the container for help.
 
-::
+.. code-block:: none
 
     $ singularity help roar.simg
 
@@ -147,7 +154,7 @@ to move the file into the container, but copying during ``%post`` was not. Let�
 add a setup to our current container, just writing a file to the root
 of the image:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -169,7 +176,7 @@ Importantly, notice that the avocados file isn’t relative to
 $SINGULARITY\_ROOTFS, so we would expect it not to be in the image. Is
 tacos there?
 
-::
+.. code-block:: none
 
     $ singularity exec roar.simg ls /
 
@@ -183,7 +190,7 @@ tacos there?
 Yes! And avocados.txt isn’t inside the image, but in our present working
 directory:
 
-::
+.. code-block:: none
 
     $ ls
 
@@ -204,7 +211,7 @@ Singularity versions >2.3. If you are using a legacy version, files
 are copied after ``%post`` so you must do this via ``%setup``. Let’s add the avocado.txt
 into the container, to join tacos.txt.
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -242,7 +249,7 @@ Notice that I’m adding the same file to two different places. For the
 first, I’m adding the single file to the root of the image. For the
 second, I’m adding it to opt. Does it work?
 
-::
+.. code-block:: none
 
     $ singularity exec roar.simg ls /
 
@@ -271,7 +278,7 @@ They will be stored in the file ``/.singularity.d/labels.json`` as metadata with
 general format is a ``LABELNAME`` followed by a ``LABELVALUE``. Labels from Docker bootstraps will
 be carried forward here. Let’s add to our example:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -306,7 +313,7 @@ be carried forward here. Let’s add to our example:
 
 The easiest way to see labels is to inspect the image:
 
-::
+.. code-block:: none
 
     $ singularity inspect roar.simg
 
@@ -337,7 +344,7 @@ The easiest way to see labels is to inspect the image:
     }
 
 You’ll notice some other labels that are captured automatically from the
-build process. You can read more about labels and metadata `here <https://singularity-userdoc.readthedocs.io/en/latest/environment_and_metadata.html>`_.
+build process. You can read more about labels and metadata :ref:`here <environment-and-metadata>`.
 
 %environment
 ------------
@@ -359,7 +366,7 @@ conventions that you might use in a bashrc or profile. In the example
 below, the variables ``VADER`` and ``LUKE`` would not be available during build, but when
 the container is finished and run:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -408,7 +415,7 @@ For the rationale behind this approach and why we do not source the
 container is finished, you can easily see environment variables also
 with inspect, and this is done by showing the file produced above:
 
-::
+.. code-block:: none
 
     $ singularity inspect -e roar.simg # Custom environment shell code should follow
 
@@ -426,7 +433,7 @@ or in the case of variables generated at build time, you can add
 environment variables to your container in the ``%post`` section (see below) using
 the following syntax:
 
-::
+.. code-block:: none
 
     %post
 
@@ -435,7 +442,7 @@ the following syntax:
 
 When we rebuild, is it added to the environment?
 
-::
+.. code-block:: none
 
     singularity exec roar.simg env | grep JAWA
 
@@ -449,7 +456,7 @@ At runtime, scripts in ``/.singularity/env`` are sourced in order. This means th
 in ``$SINGULARITY_ENVIRONMENT`` take precedence over those added via ``%environment``. Note that you won’t see
 these variables in the inspect output, as inspect only shows the
 contents added from ``%environment``.
-See `Environment and Metadata <https://singularity-userdoc.readthedocs.io/en/latest/environment_and_metadata.html>`_ for more information about
+See :ref:`Environment and Metadata <environment-and-metadata>` for more information about
 the ``%labels`` and ``%environment`` sections.
 
 %post
@@ -462,7 +469,7 @@ and libraries. We will jump from our simple use case to show a more
 realistic scientific container. Here we are installing yum, openMPI, and
 other dependencies for a Centos7 bootstrap:
 
-::
+.. code-block:: none
 
     %post
 
@@ -497,6 +504,8 @@ other dependencies for a Centos7 bootstrap:
 You cannot copy files from the host to your container in this section,
 but you can of course download with commands like ``git clone`` and ``wget`` and ``curl``.
 
+.. _runscript:
+
 %runscript
 ----------
 
@@ -512,7 +521,7 @@ script at runtime, this means that you can (and should) manage
 argument processing from within your runscript. Here is an example of
 how to do that, adding to our work in progress:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -582,7 +591,7 @@ exist, and the only process running inside this container is the called
 echo command. This could easily be another program like python, or an
 analysis script. Running it, it works as expected:
 
-::
+.. code-block:: none
 
     $ singularity run roar.simg
 
@@ -611,7 +620,7 @@ can always test the validity of the container itself as you transport it
 to different hosts. Extending on the above Open MPI ``%post``, consider this real
 world example:
 
-::
+.. code-block:: none
 
     %test
 
@@ -624,7 +633,7 @@ If you want to build without running tests (for example, if the test
 needs to be done in a different environment), you can do so with the
 ``--notest`` argument:
 
-::
+.. code-block:: none
 
     $ sudo singularity build --notest mpirun.simg Singularity
 
@@ -642,12 +651,12 @@ environments? In some circumstances, it may be redundant to build
 different containers for each app with almost equivalent dependencies.
 
 Starting in Singularity 2.4 all of the above commands can also be used
-in the context of internal modules called `apps <https://singularity-userdoc.readthedocs.io/en/latest/reproducible_scif_apps.html>`_ based on the `Standard
-Container Integration Format <https://sci-f.github.io/>`_. For details on apps, see the `apps <https://singularity-userdoc.readthedocs.io/en/latest/reproducible_scif_apps.html>`_
+in the context of internal modules called :ref:`apps <reproducible-scif-apps>` based on the `Standard
+Container Integration Format <https://sci-f.github.io/>`_. For details on apps, see the :ref:`apps <reproducible-scif-apps>`
 documentation. For a quick rundown of adding an app to your container,
 here is an example runscript:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -754,7 +763,7 @@ of an app:
 
 **What apps are installed in the container?**
 
-::
+.. code-block:: none
 
     $ singularity apps roar.simg
 
@@ -765,7 +774,7 @@ of an app:
 
 **Help me with bar!**
 
-::
+.. code-block:: none
 
     $ singularity help --app bar roar.simg
 
@@ -774,7 +783,7 @@ of an app:
 
 **Run foo**
 
-::
+.. code-block:: none
 
     singularity run --app foo roar.simg
 
@@ -789,7 +798,7 @@ each of foo and bar? We can execute a command to search the list of
 active environment variables with grep to see if the variable changes
 depending on the app we specify:
 
-::
+.. code-block:: none
 
     $ singularity exec --app foo roar.simg env | grep SOFTWARE
 
@@ -816,7 +825,7 @@ Best Practices for Build Recipes
 
 When crafting your recipe, it is best to consider the following:
 
-#. To make your container internally modular, use `SCI-F apps <https://singularity-userdoc.readthedocs.io/en/latest/reproducible_scif_apps.html#reproducible-sci-f-apps>`_. Shared dependencies
+#. To make your container internally modular, use :ref:`SCI-F apps <reproducible-scif-apps>`. Shared dependencies
    (between app modules) can go under ``%post``.
 
 #. For global installs to ``%post``, install packages, programs, data, and files
@@ -841,4 +850,4 @@ When crafting your recipe, it is best to consider the following:
    possibility of reproducibility and mitigates the black box effect.
 
 Are you a recipe pro and now ready to build? Take a look at the
-`build <https://singularity-userdoc.readthedocs.io/en/latest/build_a_container.html>`_ documentation.
+:ref:`build <build-a-container>` documentation.

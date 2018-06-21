@@ -1,3 +1,5 @@
+.. _reproducible-scif-apps:
+
 =======================
 Reproducible SCI-F Apps
 =======================
@@ -28,7 +30,7 @@ integration.
 To start, let’s take a look at this series of steps to install
 dependencies for software foo and bar.
 
-::
+.. code-block:: none
 
     %post
 
@@ -63,7 +65,7 @@ Mixed up Modules
   runscript fits well. Even in the case of having two functions like ``foo`` and ``bar``
   you probably have something like this.
 
-::
+.. code-block:: none
 
     %runscript
 
@@ -80,7 +82,7 @@ Mixed up Modules
 
 and maybe your environment looks like this:
 
-::
+.. code-block:: none
 
     %environment
 
@@ -91,7 +93,7 @@ and maybe your environment looks like this:
 
 | but what if you run into this issue, with foo and bar?
 
-::
+.. code-block:: none
 
     %environment
 
@@ -128,7 +130,7 @@ SCI-F Apps make ``foo`` and ``bar`` transparent, and solve this problem of mixed
 modules. Our simple issue of mixed up modules could be solved if we
 could do this:
 
-::
+.. code-block:: none
 
     Bootstrap:docker
 
@@ -161,13 +163,13 @@ could do this:
 
 Generate the container
 
-::
+.. code-block:: none
 
     $ sudo singularity build foobar.simg Singularity
 
 and run it in the context of ``foo`` and then ``bar``
 
-::
+.. code-block:: none
 
     $ singularity run --app bar foobar.simg
 
@@ -181,7 +183,7 @@ and run it in the context of ``foo`` and then ``bar``
 Using SCI-F apps, a user can easily discover both ``foo`` and ``bar`` without knowing
 anything about the container:
 
-::
+.. code-block:: none
 
     singularity apps foobar.simg
 
@@ -191,7 +193,7 @@ anything about the container:
 
 | and inspect each one:
 
-::
+.. code-block:: none
 
     singularity inspect --app foo  foobar.simg
 
@@ -213,7 +215,7 @@ relevant to each app’s specific base defined under ``/scif/apps``), labels, te
 help sections. Before I tell you about the sections, I’ll briefly show
 you what the organization looks like, for each app:
 
-::
+.. code-block:: none
 
     /scif/apps/
 
@@ -250,7 +252,7 @@ worried that you need to remember all this path nonsense? Don’t worry,
 you don’t. You can just use environment variables in your runscripts,
 etc. Here we are looking at the environment active for lolcat:
 
-::
+.. code-block:: none
 
     singularity exec --app foo foobar.simg env | grep foo
 
@@ -260,7 +262,7 @@ the path, and it’s ``lib`` added to the ``LD_LIBRARY_PATH`` . This means that 
 either will automatically be added. You don’t need to make these folders
 either, they are created for you.
 
-::
+.. code-block:: none
 
     LD_LIBRARY_PATH=/scif/apps/foo/lib::/.singularity.d/libs
 
@@ -269,7 +271,7 @@ either, they are created for you.
 Next, notice that we have environment variables relevant to the active
 app’s (foo) data and metadata. They look like this:
 
-::
+.. code-block:: none
 
     SCIF_APPOUTPUT=/scif/data/foo/output
 
@@ -286,13 +288,13 @@ app’s (foo) data and metadata. They look like this:
 We also have foo’s environment variables defined under ``%appenv foo`` , and
 importantly, we don’t see bar’s.
 
-::
+.. code-block:: none
 
     BEST_GUY=foo
 
 Also provided are more global paths for data and apps:
 
-::
+.. code-block:: none
 
     SCIF_APPS=/scif/apps
 
@@ -304,7 +306,7 @@ also automatically generated. So what would be a super simple app?
 
 Just add a script and name it:
 
-::
+.. code-block:: none
 
     %appfiles foo
 
@@ -312,7 +314,7 @@ Just add a script and name it:
 
 and then maybe for install I’d make it executable
 
-::
+.. code-block:: none
 
     %appinstall foo
 
@@ -320,7 +322,7 @@ and then maybe for install I’d make it executable
 
 You don’t even need files! You could just do this.
 
-::
+.. code-block:: none
 
     %appinstall foo
 
@@ -392,7 +394,7 @@ reference the environment file, labels file, runscript, ``lib`` and ``bin`` fold
 all app’s in the container. For our above Singularity Recipe, we would
 also find:
 
-::
+.. code-block:: none
 
     SCIF_APPDATA_bar=/scif/data/bar
 
@@ -431,7 +433,7 @@ also find:
 This is really great because it means that we can have apps interact
 with one another internally. For example, let’s modify the recipe a bit:
 
-::
+.. code-block:: none
 
     Bootstrap:docker
 
@@ -473,7 +475,7 @@ interfere with the third app, bird, that has equivalently named
 variables. What we do then, is source the environment for “cow” in the
 environment for “moo” and the result is what we would want:
 
-::
+.. code-block:: none
 
     $ singularity run --app moo /tmp/one.simg
 
@@ -534,7 +536,7 @@ When you’ve installed 2.4, download the recipe, and save it to your
   present working directory. By the way, credit for anything and
   everything lolcat and cowsay goes to `GodLoveD <https://www.github.com/GodLoveD>`_! Here is the recipe:
 
-::
+.. code-block:: none
 
     wget https://raw.githubusercontent.com/singularityware/singularity/master/examples/apps/Singularity.cowsay
 
@@ -542,7 +544,7 @@ When you’ve installed 2.4, download the recipe, and save it to your
 
 What apps are installed?
 
-::
+.. code-block:: none
 
     singularity apps moo.simg
 
@@ -555,7 +557,7 @@ What apps are installed?
 
 Ask for help for a specific app!
 
-::
+.. code-block:: none
 
     singularity help --app fortune moo.simg
 
@@ -564,7 +566,7 @@ Ask for help for a specific app!
 
 Ask for help for all apps, without knowing in advance what they are:
 
-::
+.. code-block:: none
 
     for app in $(singularity apps moo.simg)
 
@@ -583,7 +585,7 @@ Ask for help for all apps, without knowing in advance what they are:
 
 Run a particular app
 
-::
+.. code-block:: none
 
     singularity run --app fortune moo.simg
 
@@ -605,7 +607,7 @@ Run a particular app
 Advanced running - pipe the output of fortune into lolcat, and make a
 fortune that is beautifully colored!
 
-::
+.. code-block:: none
 
     singularity run --app fortune moo.simg | singularity run --app lolcat moo.simg
 
@@ -615,7 +617,7 @@ fortune that is beautifully colored!
 This one might be easier to see - pipe the same fortune into the cowsay
 app:
 
-::
+.. code-block:: none
 
     singularity run --app fortune moo.simg | singularity run --app cowsay moo.simg
 
@@ -641,7 +643,7 @@ app:
 and the final shabang - do the same, but make it colored. Let’s even get
 lazy and use an environment variable for the command:
 
-::
+.. code-block:: none
 
     CMD="singularity run --app"
 
@@ -669,7 +671,7 @@ lazy and use an environment variable for the command:
 Yes, you need to watch the asciinema to see the colors. Finally, inspect
 an app:
 
-::
+.. code-block:: none
 
     singularity inspect --app fortune moo.simg
 
@@ -680,7 +682,7 @@ an app:
         "SCIF_APP_SIZE": "1MB"
 
     }
-    
+
 
 If you want to see the full specification or create your own
 Scientific Filesystem integration (doesn’t have to be Singularity, or

@@ -39,14 +39,14 @@ Usage
 
 To use a persistent overlay, you must first have a container.
 
-::
+.. code-block:: none
 
     $ singularity build ubuntu.simg shub://GodloveD/ubuntu
 
 Then you must create a writable, ext3 image. We can do so with the ``image.create``
 command:
 
-::
+.. code-block:: none
 
     $ singularity image.create my-overlay.img
 
@@ -54,7 +54,7 @@ Now you can use this overlay image with your container. Note that it is
 not necessary to be root to use an overlay partition, but this will
 ensure that we have write privileges where we want them.
 
-::
+.. code-block:: none
 
     $ sudo singularity shell --overlay my-overlay.img ubuntu.simg
 
@@ -72,7 +72,7 @@ ensure that we have write privileges where we want them.
 You will find that your changes persist across sessions as though you
 were using a writable container.
 
-::
+.. code-block:: none
 
     $ sudo singularity shell --overlay my-overlay.img ubuntu.simg
 
@@ -90,7 +90,7 @@ were using a writable container.
 If you mount your container without the ``--overlay`` option, your changes will be
 gone.
 
-::
+.. code-block:: none
 
     $ sudo singularity shell ubuntu.simg
 
@@ -101,4 +101,3 @@ gone.
     Singularity ubuntu.simg:~> which vim
 
     Singularity ubuntu.simg:~> exit
-    
