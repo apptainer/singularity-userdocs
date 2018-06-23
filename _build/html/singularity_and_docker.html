@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Singularity and Docker &mdash; Singularity container 1.0 documentation</title>
+  <title>Singularity and Docker &mdash; Singularity container 2.5.1 documentation</title>
   
 
   
@@ -190,7 +190,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="singularity-and-docker">
-<h1>Singularity and Docker<a class="headerlink" href="#singularity-and-docker" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Singularity and Docker<a class="headerlink" href="#singularity-and-docker" title="Permalink to this headline">¶</a></h1>
 <p>Singularity is good friends with Docker. The reason is because the
 developers use and really like using Docker, and scientists have already
 put much resources into creating Docker images. Thus, one of our early
@@ -206,16 +206,16 @@ include environment, guts, and labels</li>
 <div class="section" id="tldr-too-long-didnt-read">
 <h2>TLDR (Too Long Didn’t Read)<a class="headerlink" href="#tldr-too-long-didnt-read" title="Permalink to this headline">¶</a></h2>
 <p>You can shell, import, run, and exec.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">shell</span> <span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">ubuntu</span><span class="p">:</span><span class="n">latest</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>singularity shell docker://ubuntu:latest
 
-<span class="n">singularity</span> <span class="n">run</span> <span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">ubuntu</span><span class="p">:</span><span class="n">latest</span>
+singularity run docker://ubuntu:latest
 
-<span class="n">singularity</span> <span class="n">exec</span> <span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">ubuntu</span><span class="p">:</span><span class="n">latest</span> <span class="n">echo</span> <span class="s2">&quot;Hello Dinosaur!&quot;</span>
+singularity exec docker://ubuntu:latest echo &quot;Hello Dinosaur!&quot;
 
 
-<span class="n">singularity</span> <span class="n">pull</span> <span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">ubuntu</span><span class="p">:</span><span class="n">latest</span>
+singularity pull docker://ubuntu:latest
 
-<span class="n">singularity</span> <span class="n">build</span> <span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span> <span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">ubuntu</span><span class="p">:</span><span class="n">latest</span>
+singularity build ubuntu.img docker://ubuntu:latest
 </pre></div>
 </div>
 </div>
@@ -236,43 +236,43 @@ create an image, and then pipe a Docker image directly into it from
 the Docker Registry. You don’t need Docker installed on your machine,
 but you will need a working internet connection. Let’s create an
 ubuntu operating system, from Docker. We will pull, then build:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">pull</span> <span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">ubuntu</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>singularity pull docker://ubuntu
 
-<span class="n">WARNING</span><span class="p">:</span> <span class="n">pull</span> <span class="k">for</span> <span class="n">Docker</span> <span class="n">Hub</span> <span class="ow">is</span> <span class="ow">not</span> <span class="n">guaranteed</span> <span class="n">to</span> <span class="n">produce</span> <span class="n">the</span>
+WARNING: pull for Docker Hub is not guaranteed to produce the
 
-<span class="n">WARNING</span><span class="p">:</span> <span class="n">same</span> <span class="n">image</span> <span class="n">on</span> <span class="n">repeated</span> <span class="n">pull</span><span class="o">.</span> <span class="n">Use</span> <span class="n">Singularity</span> <span class="n">Registry</span>
+WARNING: same image on repeated pull. Use Singularity Registry
 
-<span class="n">WARNING</span><span class="p">:</span> <span class="p">(</span><span class="n">shub</span><span class="p">:</span><span class="o">//</span><span class="p">)</span> <span class="n">to</span> <span class="n">pull</span> <span class="n">exactly</span> <span class="n">equivalent</span> <span class="n">images</span><span class="o">.</span>
+WARNING: (shub://) to pull exactly equivalent images.
 
-<span class="n">Docker</span> <span class="n">image</span> <span class="n">path</span><span class="p">:</span> <span class="n">index</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">library</span><span class="o">/</span><span class="n">ubuntu</span><span class="p">:</span><span class="n">latest</span>
+Docker image path: index.docker.io/library/ubuntu:latest
 
-<span class="n">Cache</span> <span class="n">folder</span> <span class="nb">set</span> <span class="n">to</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vanessa</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span>
+Cache folder set to /home/vanessa/.singularity/docker
 
-<span class="p">[</span><span class="mi">5</span><span class="o">/</span><span class="mi">5</span><span class="p">]</span> <span class="o">|===================================|</span> <span class="mf">100.0</span><span class="o">%</span>
+[5/5] |===================================| 100.0%
 
-<span class="n">Importing</span><span class="p">:</span> <span class="n">base</span> <span class="n">Singularity</span> <span class="n">environment</span>
+Importing: base Singularity environment
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vanessa</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="mi">9</span><span class="n">fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /home/vanessa/.singularity/docker/sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118.tar.gz
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vanessa</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="mi">3</span><span class="n">b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /home/vanessa/.singularity/docker/sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a.tar.gz
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vanessa</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="mi">9</span><span class="n">d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /home/vanessa/.singularity/docker/sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2.tar.gz
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vanessa</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="n">d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /home/vanessa/.singularity/docker/sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e.tar.gz
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vanessa</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="mi">7</span><span class="n">fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /home/vanessa/.singularity/docker/sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9.tar.gz
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vanessa</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">metadata</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="mi">77</span><span class="n">cece4ce6ef220f66747bb02205a00d9ca5ad0c0a6eea1760d34c744ef7b231</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /home/vanessa/.singularity/metadata/sha256:77cece4ce6ef220f66747bb02205a00d9ca5ad0c0a6eea1760d34c744ef7b231.tar.gz
 
-<span class="n">WARNING</span><span class="p">:</span> <span class="n">Building</span> <span class="n">container</span> <span class="k">as</span> <span class="n">an</span> <span class="n">unprivileged</span> <span class="n">user</span><span class="o">.</span> <span class="n">If</span> <span class="n">you</span> <span class="n">run</span> <span class="n">this</span> <span class="n">container</span> <span class="k">as</span> <span class="n">root</span>
+WARNING: Building container as an unprivileged user. If you run this container as root
 
-<span class="n">WARNING</span><span class="p">:</span> <span class="n">it</span> <span class="n">may</span> <span class="n">be</span> <span class="n">missing</span> <span class="n">some</span> <span class="n">functionality</span><span class="o">.</span>
+WARNING: it may be missing some functionality.
 
-<span class="n">Building</span> <span class="n">Singularity</span> <span class="n">image</span><span class="o">...</span>
+Building Singularity image...
 
-<span class="n">Cleaning</span> <span class="n">up</span><span class="o">...</span>
+Cleaning up...
 
-<span class="n">Singularity</span> <span class="n">container</span> <span class="n">built</span><span class="p">:</span> <span class="o">./</span><span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span>
+Singularity container built: ./ubuntu.img
 </pre></div>
 </div>
 <p>The warnings mean well - it is to tell you that you are creating the
@@ -289,21 +289,21 @@ issue to change a container sandbox (building with <code class="docutils literal
 is by default not recorded, and your container loses its
 reproducibility. So let’s talk about how to make these files! First,
 let’s look at the absolute minimum requirement:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">docker</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
-<span class="n">From</span><span class="p">:</span> <span class="n">ubuntu</span>
+From: ubuntu
 </pre></div>
 </div>
 <p>We would save this content to a file called Singularity and then issue
 the following commands to bootstrap the image from the file</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">singularity</span> <span class="n">build</span> <span class="n">ubuntu</span><span class="o">.</span><span class="n">img</span> <span class="n">Singularity</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo singularity build ubuntu.img Singularity
 </pre></div>
 </div>
 <p>Do you want to specify a particular tag? or version? You can just add
 that to the docker uri:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">docker</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
-<span class="n">From</span><span class="p">:</span> <span class="n">ubuntu</span><span class="p">:</span><span class="n">latest</span>
+From: ubuntu:latest
 </pre></div>
 </div>
 <div class="admonition note">
@@ -311,70 +311,70 @@ that to the docker uri:</p>
 <p class="last">Note that the default is <code class="docutils literal notranslate"><span class="pre">latest</span></code> . If you want to customize the Registry or
 Namespace, just add those to the header:</p>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">docker</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
-<span class="n">From</span><span class="p">:</span> <span class="n">ubuntu</span>
+From: ubuntu
 
-<span class="n">Registry</span><span class="p">:</span> <span class="n">pancakes</span><span class="o">.</span><span class="n">registry</span><span class="o">.</span><span class="n">index</span><span class="o">.</span><span class="n">io</span>
+Registry: pancakes.registry.index.io
 
-<span class="n">Namespace</span><span class="p">:</span> <span class="n">blue</span><span class="o">/</span><span class="n">berry</span><span class="o">/</span><span class="n">cream</span>
+Namespace: blue/berry/cream
 </pre></div>
 </div>
 <p>The power of build comes with the other stuff that you can do! This
 means running specific install commands, specifying your containers
 runscript (what it does when you execute it), adding files, labels, and
 customizing the environment. Here is a full Singularity file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">docker</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
-<span class="n">From</span><span class="p">:</span> <span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span><span class="p">:</span><span class="n">latest</span>
-
-
-<span class="o">%</span><span class="n">runscript</span>
-
-    <span class="n">exec</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="s2">&quot;$@&quot;</span>
+From: tensorflow/tensorflow:latest
 
 
-<span class="o">%</span><span class="n">post</span>
+%runscript
 
-    <span class="n">echo</span> <span class="s2">&quot;Post install stuffs!&quot;</span>
-
-
-<span class="o">%</span><span class="n">files</span>
-
-<span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vanessa</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">analysis</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">analysis</span><span class="o">.</span><span class="n">py</span>
-
-<span class="n">relative_path</span><span class="o">.</span><span class="n">py</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">analysis2</span><span class="o">.</span><span class="n">py</span>
+    exec /usr/bin/python &quot;$@&quot;
 
 
-<span class="o">%</span><span class="n">environment</span>
+%post
 
-<span class="n">TOPSECRET</span><span class="o">=</span><span class="n">pancakes</span>
-
-<span class="n">HELLO</span><span class="o">=</span><span class="n">WORLD</span>
-
-<span class="n">export</span> <span class="n">HELLO</span> <span class="n">TOPSECRET</span>
+    echo &quot;Post install stuffs!&quot;
 
 
-<span class="o">%</span><span class="n">labels</span>
+%files
 
-<span class="n">AUTHOR</span> <span class="n">Vanessasaur</span>
+/home/vanessa/Desktop/analysis.py /tmp/analysis.py
+
+relative_path.py /tmp/analysis2.py
+
+
+%environment
+
+TOPSECRET=pancakes
+
+HELLO=WORLD
+
+export HELLO TOPSECRET
+
+
+%labels
+
+AUTHOR Vanessasaur
 </pre></div>
 </div>
 <p>In the example above, I am overriding any Dockerfile <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code> or <code class="docutils literal notranslate"><span class="pre">CMD</span></code> because I have
 defined a <code class="docutils literal notranslate"><span class="pre">%runscript</span></code> . If I want the Dockerfile <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code> to take preference, I would remove
 the <code class="docutils literal notranslate"><span class="pre">%runscript</span></code> section. If I want to use <code class="docutils literal notranslate"><span class="pre">CMD</span></code> instead of <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code> , I would again remove the
 runscript, and add IncludeCmd to the header:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">docker</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
-<span class="n">From</span><span class="p">:</span> <span class="n">tensorflow</span><span class="o">/</span><span class="n">tensorflow</span><span class="p">:</span><span class="n">latest</span>
+From: tensorflow/tensorflow:latest
 
-<span class="n">IncludeCmd</span><span class="p">:</span> <span class="n">yes</span>
-
-
-<span class="o">%</span><span class="n">post</span>
+IncludeCmd: yes
 
 
-    <span class="n">echo</span> <span class="s2">&quot;Post install stuffs!&quot;</span>
+%post
+
+
+    echo &quot;Post install stuffs!&quot;
 </pre></div>
 </div>
 <p>Did you know that you can commit this Singularity file to a GitHub repo
@@ -423,29 +423,29 @@ the following Docker metadata items:</p>
 <li>tag (e.g., “latest”) OR version (e.g., “&#64;sha256:1234…)</li>
 </ul>
 <p>When we put those things together, it looks like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="p">:</span><span class="o">//&lt;</span><span class="n">registry</span><span class="o">&gt;/&lt;</span><span class="n">namespace</span><span class="o">&gt;/&lt;</span><span class="n">repo_name</span><span class="o">&gt;</span><span class="p">:</span><span class="o">&lt;</span><span class="n">repo_tag</span><span class="o">&gt;</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>docker://&lt;registry&gt;/&lt;namespace&gt;/&lt;repo_name&gt;:&lt;repo_tag&gt;
 </pre></div>
 </div>
 <p>By default, the minimum requirement is that you specify a repository
 name (eg, ubuntu) and it will default to the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">index</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">library</span><span class="o">/</span><span class="n">ubuntu</span><span class="p">:</span><span class="n">latest</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>docker://index.docker.io/library/ubuntu:latest
 </pre></div>
 </div>
 <p>If you provide a version instead of a tag, that will be used instead:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">index</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">library</span><span class="o">/</span><span class="n">ubuntu</span><span class="nd">@sha256</span><span class="p">:</span><span class="mf">1235.</span><span class="o">..</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>docker://index.docker.io/library/ubuntu@sha256:1235...
 </pre></div>
 </div>
 <p>You can have one or the other, both are considered a “digest” in
 Docker speak.</p>
 <p>If you want to change any of those fields and are having trouble with
 the uri, you can also just state them explicitly:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">docker</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
-<span class="n">From</span><span class="p">:</span> <span class="n">ubuntu</span>
+From: ubuntu
 
-<span class="n">Registry</span><span class="p">:</span> <span class="n">index</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">io</span>
+Registry: index.docker.io
 
-<span class="n">Namespace</span><span class="p">:</span> <span class="n">library</span>
+Namespace: library
 </pre></div>
 </div>
 </div>
@@ -465,9 +465,9 @@ cases:</p>
 <h3>Authentication in the Singularity Build File<a class="headerlink" href="#authentication-in-the-singularity-build-file" title="Permalink to this headline">¶</a></h3>
 <p>You can simply specify your additional authentication parameters in the
 header with the labels <code class="docutils literal notranslate"><span class="pre">Username</span></code> and <code class="docutils literal notranslate"><span class="pre">Password</span></code> :</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Username</span><span class="p">:</span> <span class="n">vanessa</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Username: vanessa
 
-<span class="n">Password</span><span class="p">:</span> <span class="p">[</span><span class="n">password</span><span class="p">]</span>
+Password: [password]
 </pre></div>
 </div>
 <p>Again, this can be in addition to specification of a custom registry
@@ -476,9 +476,9 @@ with the <code class="docutils literal notranslate"><span class="pre">Registry</
 <div class="section" id="authentication-in-the-environment">
 <h3>Authentication in the Environment<a class="headerlink" href="#authentication-in-the-environment" title="Permalink to this headline">¶</a></h3>
 <p>You can export your username, and password for Singularity as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">export</span> <span class="n">SINGULARITY_DOCKER_USERNAME</span><span class="o">=</span><span class="n">vanessasaur</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>export SINGULARITY_DOCKER_USERNAME=vanessasaur
 
-<span class="n">export</span> <span class="n">SINGULARITY_DOCKER_PASSWORD</span><span class="o">=</span><span class="n">rawwwwwr</span>
+export SINGULARITY_DOCKER_PASSWORD=rawwwwwr
 </pre></div>
 </div>
 </div>
@@ -486,14 +486,14 @@ with the <code class="docutils literal notranslate"><span class="pre">Registry</
 <h3>Testing Authentication<a class="headerlink" href="#testing-authentication" title="Permalink to this headline">¶</a></h3>
 <p>If you are having trouble, you can test your token by obtaining it on
 the command line and putting it into an environmental variable, <code class="docutils literal notranslate"><span class="pre">CREDENTIAL</span></code> :</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>CREDENTIAL=$(echo -n vanessa:[password] | base64)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>CREDENTIAL=$(echo -n vanessa:[password] | base64)
 
 TOKEN=$(http &#39;https://auth.docker.io/token?service=registry.docker.io&amp;scope=repository:vanessa/code-samples:pull&#39; Authorization:&quot;Basic $CREDENTIAL&quot; | jq -r &#39;.token&#39;)
 </pre></div>
 </div>
 <p>This should place the token in the environmental variable <code class="docutils literal notranslate"><span class="pre">TOKEN</span></code> . To test that
 your token is valid, you can do the following</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">http</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">index</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">v2</span><span class="o">/</span><span class="n">vanessa</span><span class="o">/</span><span class="n">code</span><span class="o">-</span><span class="n">samples</span><span class="o">/</span><span class="n">tags</span><span class="o">/</span><span class="nb">list</span> <span class="n">Authorization</span><span class="p">:</span><span class="s2">&quot;Bearer $TOKEN&quot;</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>http https://index.docker.io/v2/vanessa/code-samples/tags/list Authorization:&quot;Bearer $TOKEN&quot;
 </pre></div>
 </div>
 <p>The above call should return the tags list as expected. And of course
@@ -588,7 +588,7 @@ see it on the site for others to benefit from, then post to us
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.5.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Container Checks &mdash; Singularity container 1.0 documentation</title>
+  <title>Container Checks &mdash; Singularity container 2.5.1 documentation</title>
   
 
   
@@ -180,13 +180,13 @@ information, to an analysis of installed binaries. A few default
 checks are installed with Singularity and others can be added by the
 administrator. Users can perform checks at build time or on demand:
 Perform all default checks, these are the same</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity check ubuntu.img
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity check ubuntu.img
 
 $ singularity check --tag default ubuntu.img
 </pre></div>
 </div>
 <p>Perform checks with tag “clean”</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity check --tag clean ubuntu.img
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity check --tag clean ubuntu.img
 </pre></div>
 </div>
 <div class="section" id="tags-and-organization">
@@ -194,7 +194,7 @@ $ singularity check --tag default ubuntu.img
 <p>Currently, checks are organized by tag and security level. If you know a
 specific tag that you want to use, for example “docker” deploys checks
 for containers with Docker imported layers, you can specify the tag:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>USAGE
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>USAGE
 
     -t/--tag       tag to filter checks. default is &quot;default&quot;
 
@@ -208,18 +208,18 @@ $ singularity check --tag docker ubuntu.img
 </div>
 <p>If you want to run checks associated with a different security level,
 you can specify with <code class="docutils literal notranslate"><span class="pre">--low</span></code> , <code class="docutils literal notranslate"><span class="pre">--med</span></code> , or <code class="docutils literal notranslate"><span class="pre">--high</span></code> :</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">USAGE</span><span class="p">:</span> <span class="n">singularity</span> <span class="p">[</span><span class="o">...</span><span class="p">]</span> <span class="n">check</span> <span class="p">[</span><span class="n">exec</span> <span class="n">options</span><span class="o">...</span><span class="p">]</span> <span class="o">&lt;</span><span class="n">container</span> <span class="n">path</span><span class="o">&gt;</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>USAGE: singularity [...] check [exec options...] &lt;container path&gt;
 
-<span class="n">This</span> <span class="n">command</span> <span class="n">will</span> <span class="n">run</span> <span class="n">security</span> <span class="n">checks</span> <span class="k">for</span> <span class="n">an</span> <span class="n">image</span><span class="o">.</span>
+This command will run security checks for an image.
 
-<span class="n">Note</span> <span class="n">that</span> <span class="n">some</span> <span class="n">checks</span> <span class="n">require</span> <span class="n">sudo</span><span class="o">.</span>
+Note that some checks require sudo.
 
 
-    <span class="o">-</span><span class="n">l</span><span class="o">/--</span><span class="n">low</span>       <span class="n">Specify</span> <span class="n">low</span> <span class="n">threshold</span> <span class="p">(</span><span class="nb">all</span> <span class="n">checks</span><span class="p">,</span> <span class="n">default</span><span class="p">)</span>
+    -l/--low       Specify low threshold (all checks, default)
 
-    <span class="o">-</span><span class="n">m</span><span class="o">/--</span><span class="n">med</span>       <span class="n">Perform</span> <span class="n">medium</span> <span class="ow">and</span> <span class="n">high</span> <span class="n">checks</span>
+    -m/--med       Perform medium and high checks
 
-    <span class="o">-</span><span class="n">h</span><span class="o">/--</span><span class="n">high</span>      <span class="n">Perform</span> <span class="n">only</span> <span class="n">checks</span> <span class="n">at</span> <span class="n">level</span> <span class="n">high</span>
+    -h/--high      Perform only checks at level high
 </pre></div>
 </div>
 <div class="admonition note">
@@ -283,7 +283,7 @@ us!</a>.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.5.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

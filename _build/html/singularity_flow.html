@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Singularity Flow &mdash; Singularity container 1.0 documentation</title>
+  <title>Singularity Flow &mdash; Singularity container 2.5.1 documentation</title>
   
 
   
@@ -185,7 +185,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="singularity-flow">
-<h1>Singularity Flow<a class="headerlink" href="#singularity-flow" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Singularity Flow<a class="headerlink" href="#singularity-flow" title="Permalink to this headline">¶</a></h1>
 <p>This document describes a suggested “best-practices” workflow for
 building, running, and managing your containers.</p>
 <p>There are generally two ways to get images. You either want to pull an
@@ -194,9 +194,9 @@ will start with talking about build, and the many different use cases
 it affords.</p>
 <div class="section" id="building-images">
 <span id="sec-singularityflow"></span><h2>Building Images<a class="headerlink" href="#building-images" title="Permalink to this headline">¶</a></h2>
-<p>If you read the <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/quick_start.html">quick start</a>, you probably remember that building images from a
-Docker base does not require a <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html">Singularity recipe</a>. However, if you do want to build and
-customize your image, you can create a <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html">Singularity recipe</a> text file, which is a simple
+<p>If you read the <a class="reference internal" href="quick_start.html#quick-start"><span class="std std-ref">quick start</span></a>, you probably remember that building images from a
+Docker base does not require a <a class="reference internal" href="container_recipes.html#container-recipes"><span class="std std-ref">Singularity recipe</span></a>. However, if you do want to build and
+customize your image, you can create a <a class="reference internal" href="container_recipes.html#container-recipes"><span class="std std-ref">Singularity recipe</span></a> text file, which is a simple
 text file that describes how the container should be made.</p>
 <div class="section" id="the-singularity-flow">
 <h3>The Singularity Flow<a class="headerlink" href="#the-singularity-flow" title="Permalink to this headline">¶</a></h3>
@@ -213,7 +213,7 @@ build your container</li>
 </div>
 <p>Singularity production images are immutable. This is a feature added as
 of Singularity 2.4, and it ensures a higher level of reproducibility and
-verification of images. To read more about the details, check out the <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/build_a_container.html">build</a>
+verification of images. To read more about the details, check out the <a class="reference internal" href="build_a_container.html#build-a-container"><span class="std std-ref">build</span></a>
 docs. However, immutability is not so great when you are testing,
 debugging, or otherwise want to quickly change your image. We will
 proceed by describing a typical workflow of developing first, building a
@@ -233,7 +233,7 @@ runtime for your changes to be persistent.</p>
 <div class="section" id="sandbox-folder">
 <h4>Sandbox Folder<a class="headerlink" href="#sandbox-folder" title="Permalink to this headline">¶</a></h4>
 <p>To build into a folder (we call this a “sandbox”) just ask for it:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build --sandbox ubuntu/ docker://ubuntu
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build --sandbox ubuntu/ docker://ubuntu
 
 Docker image path: index.docker.io/library/ubuntu:latest
 
@@ -260,7 +260,7 @@ Singularity container built: ubuntu/
 </div>
 <p>We now have a folder with the entire ubuntu OS, plus some Singularity
 metadata, plopped in our present working directory.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span> $ tree -L 1 ubuntu
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span> $ tree -L 1 ubuntu
 
 ubuntu
 
@@ -308,7 +308,7 @@ ubuntu
 </pre></div>
 </div>
 <p>And you can shell into it just like a normal container.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity shell ubuntu
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity shell ubuntu
 
 Singularity: Invoking an interactive shell within container...
 
@@ -323,7 +323,7 @@ permissions to do so) but those changes will disappear as soon as you
 exit. To make your changes persistent across sessions, use the <code class="docutils literal notranslate"><span class="pre">--writable</span></code> option.
 It’s also a good practice to shell into your container as root to
 ensure you have permissions to write where you like.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity shell ubuntu
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity shell ubuntu
 
 Singularity: Invoking an interactive shell within container...
 
@@ -338,7 +338,7 @@ Singularity ubuntu:/home/vanessa/Desktop&gt; touch /hello.txt
 directory, you can perform a similar development build and specify the <code class="docutils literal notranslate"><span class="pre">--writable</span></code>
 option. This will produce an image that is writable with an ext3 file
 system. Unlike the sandbox, it is a single image file.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build --writable ubuntu.img docker://ubuntu
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build --writable ubuntu.img docker://ubuntu
 
 Docker image path: index.docker.io/library/ubuntu:latest
 
@@ -381,7 +381,7 @@ Singularity container built: ubuntu.img
 change the image you must use the <code class="docutils literal notranslate"><span class="pre">--writable</span></code> flag. As before, it’s a good idea to
 issue these commands as root to ensure you have the proper permissions
 to write.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity shell --writable ubuntu.img
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity shell --writable ubuntu.img
 
 
 Development Tip! When building containers, it often is the case that
@@ -417,31 +417,31 @@ extended.</p>
 Squashfs is a read only, and compressed filesystem, and well suited for
 confident archive and re-use of your hello-world. To build a production
 image, just remove the extra options:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">singularity</span> <span class="n">build</span> <span class="n">ubuntu</span><span class="o">.</span><span class="n">simg</span> <span class="n">docker</span><span class="p">:</span><span class="o">//</span><span class="n">ubuntu</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo singularity build ubuntu.simg docker://ubuntu
 
-<span class="n">Docker</span> <span class="n">image</span> <span class="n">path</span><span class="p">:</span> <span class="n">index</span><span class="o">.</span><span class="n">docker</span><span class="o">.</span><span class="n">io</span><span class="o">/</span><span class="n">library</span><span class="o">/</span><span class="n">ubuntu</span><span class="p">:</span><span class="n">latest</span>
+Docker image path: index.docker.io/library/ubuntu:latest
 
-<span class="n">Cache</span> <span class="n">folder</span> <span class="nb">set</span> <span class="n">to</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span>
+Cache folder set to /root/.singularity/docker
 
-<span class="n">Importing</span><span class="p">:</span> <span class="n">base</span> <span class="n">Singularity</span> <span class="n">environment</span>
+Importing: base Singularity environment
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="mi">9</span><span class="n">fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /root/.singularity/docker/sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118.tar.gz
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="mi">3</span><span class="n">b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /root/.singularity/docker/sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a.tar.gz
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="mi">9</span><span class="n">d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /root/.singularity/docker/sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2.tar.gz
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="n">d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /root/.singularity/docker/sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e.tar.gz
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">docker</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="mi">7</span><span class="n">fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /root/.singularity/docker/sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9.tar.gz
 
-<span class="n">Importing</span><span class="p">:</span> <span class="o">/</span><span class="n">root</span><span class="o">/.</span><span class="n">singularity</span><span class="o">/</span><span class="n">metadata</span><span class="o">/</span><span class="n">sha256</span><span class="p">:</span><span class="mf">22e289880847</span><span class="n">a9a2f32c62c237d2f7e3f4eae7259bf1d5c7ec7ffa19c1a483c8</span><span class="o">.</span><span class="n">tar</span><span class="o">.</span><span class="n">gz</span>
+Importing: /root/.singularity/metadata/sha256:22e289880847a9a2f32c62c237d2f7e3f4eae7259bf1d5c7ec7ffa19c1a483c8.tar.gz
 
-<span class="n">Building</span> <span class="n">Singularity</span> <span class="n">image</span><span class="o">...</span>
+Building Singularity image...
 
-<span class="n">Cleaning</span> <span class="n">up</span><span class="o">...</span>
+Cleaning up...
 
-<span class="n">Singularity</span> <span class="n">container</span> <span class="n">built</span><span class="p">:</span> <span class="n">ubuntu</span><span class="o">.</span><span class="n">simg</span>
+Singularity container built: ubuntu.simg
 </pre></div>
 </div>
 </div>
@@ -451,7 +451,7 @@ image, just remove the extra options:</p>
 from a previous development image. While we advocate for the first
 approach, we support this use case. To do this, given our folder called
 “ubuntu/” we made above:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">singularity</span> <span class="n">build</span> <span class="n">ubuntu</span><span class="o">.</span><span class="n">simg</span> <span class="n">ubuntu</span><span class="o">/</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo singularity build ubuntu.simg ubuntu/
 </pre></div>
 </div>
 <p>It could be the case that a cluster maintains a “working” base of
@@ -507,7 +507,7 @@ can build images using <a class="reference external" href="https://github.com/si
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.5.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

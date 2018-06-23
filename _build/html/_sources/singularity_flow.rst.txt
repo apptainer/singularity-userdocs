@@ -1,3 +1,6 @@
+
+.. _singularity-flow:
+
 ================
 Singularity Flow
 ================
@@ -16,9 +19,9 @@ it affords.
 Building Images
 ---------------
 
-If you read the `quick start <https://singularity-userdoc.readthedocs.io/en/latest/quick_start.html>`_, you probably remember that building images from a
-Docker base does not require a `Singularity recipe <https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html>`_. However, if you do want to build and
-customize your image, you can create a `Singularity recipe <https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html>`_ text file, which is a simple
+If you read the :ref:`quick start <quick-start>`, you probably remember that building images from a
+Docker base does not require a :ref:`Singularity recipe <container-recipes>`. However, if you do want to build and
+customize your image, you can create a :ref:`Singularity recipe <container-recipes>` text file, which is a simple
 text file that describes how the container should be made.
 
 The Singularity Flow
@@ -39,7 +42,7 @@ to build images. The high level idea is that we have two environments:
 
 Singularity production images are immutable. This is a feature added as
 of Singularity 2.4, and it ensures a higher level of reproducibility and
-verification of images. To read more about the details, check out the `build <https://singularity-userdoc.readthedocs.io/en/latest/build_a_container.html>`_
+verification of images. To read more about the details, check out the :ref:`build <build-a-container>`
 docs. However, immutability is not so great when you are testing,
 debugging, or otherwise want to quickly change your image. We will
 proceed by describing a typical workflow of developing first, building a
@@ -64,7 +67,7 @@ Sandbox Folder
 
 To build into a folder (we call this a “sandbox”) just ask for it:
 
-::
+.. code-block:: none
 
     $ sudo singularity build --sandbox ubuntu/ docker://ubuntu
 
@@ -94,7 +97,7 @@ To build into a folder (we call this a “sandbox”) just ask for it:
 We now have a folder with the entire ubuntu OS, plus some Singularity
 metadata, plopped in our present working directory.
 
-::
+.. code-block:: none
 
      $ tree -L 1 ubuntu
 
@@ -139,12 +142,12 @@ metadata, plopped in our present working directory.
     ├── tmp
 
     ├── usr
-    
+
     └── var
 
 And you can shell into it just like a normal container.
 
-::
+.. code-block:: none
 
     $ singularity shell ubuntu
 
@@ -162,7 +165,7 @@ exit. To make your changes persistent across sessions, use the ``--writable`` op
 It’s also a good practice to shell into your container as root to
 ensure you have permissions to write where you like.
 
-::
+.. code-block:: none
 
     $ sudo singularity shell ubuntu
 
@@ -180,7 +183,7 @@ directory, you can perform a similar development build and specify the ``--writa
 option. This will produce an image that is writable with an ext3 file
 system. Unlike the sandbox, it is a single image file.
 
-::
+.. code-block:: none
 
 
     $ sudo singularity build --writable ubuntu.img docker://ubuntu
@@ -227,7 +230,7 @@ change the image you must use the ``--writable`` flag. As before, it’s a good 
 issue these commands as root to ensure you have the proper permissions
 to write.
 
-::
+.. code-block:: none
 
     $ sudo singularity shell --writable ubuntu.img
 
@@ -266,7 +269,7 @@ Squashfs is a read only, and compressed filesystem, and well suited for
 confident archive and re-use of your hello-world. To build a production
 image, just remove the extra options:
 
-::
+.. code-block:: none
 
     sudo singularity build ubuntu.simg docker://ubuntu
 
@@ -303,7 +306,7 @@ from a previous development image. While we advocate for the first
 approach, we support this use case. To do this, given our folder called
 “ubuntu/” we made above:
 
-::
+.. code-block:: none
 
     sudo singularity build ubuntu.simg ubuntu/
 

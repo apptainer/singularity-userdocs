@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Troubleshooting &mdash; Singularity container 1.0 documentation</title>
+  <title>Troubleshooting &mdash; Singularity container 2.5.1 documentation</title>
   
 
   
@@ -184,18 +184,18 @@
 <h2>No space left on device<a class="headerlink" href="#no-space-left-on-device" title="Permalink to this headline">¶</a></h2>
 <p>Sometimes when you are building an image, Singularity tells you that
 it runs out of space on the device:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">singularity</span> <span class="n">build</span> <span class="n">fatty</span><span class="o">.</span><span class="n">simg</span> <span class="n">Singularity</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo singularity build fatty.simg Singularity
 
-<span class="ne">IOError</span><span class="p">:</span> <span class="p">[</span><span class="n">Errno</span> <span class="mi">28</span><span class="p">]</span> <span class="n">No</span> <span class="n">space</span> <span class="n">left</span> <span class="n">on</span> <span class="n">device</span>
+IOError: [Errno 28] No space left on device
 
-<span class="n">ABORT</span><span class="p">:</span> <span class="n">Aborting</span> <span class="k">with</span> <span class="n">RETVAL</span><span class="o">=</span><span class="mi">255</span>
+ABORT: Aborting with RETVAL=255
 </pre></div>
 </div>
 <p>The issue here is that during build of a squashfs image, Singularity is
 using the <code class="docutils literal notranslate"><span class="pre">$TMPDIR</span></code> . If your <code class="docutils literal notranslate"><span class="pre">$TMPDIR</span></code> is overflowing (or the mount is very small!) then
 you would see this error. As a test, you can try building a sandbox. If
 this is the issue, then the sandbox should work.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sudo</span> <span class="n">singularity</span> <span class="n">build</span> <span class="o">--</span><span class="n">sandbox</span> <span class="p">[</span><span class="n">fatty</span><span class="p">]</span> <span class="n">Singularity</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo singularity build --sandbox [fatty] Singularity
 </pre></div>
 </div>
 <p><strong>Solution</strong>
@@ -206,7 +206,7 @@ room.</p>
 <h2>Segfault on Bootstrap of Centos Image<a class="headerlink" href="#segfault-on-bootstrap-of-centos-image" title="Permalink to this headline">¶</a></h2>
 <p>If you are bootstrapping a centos 6 docker image from a debian host,
 you might hit a segfault:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity shell docker://centos:6
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity shell docker://centos:6
 
 Docker image path: index.docker.io/library/centos:6
 
@@ -223,11 +223,11 @@ Segmentation fault
 <p>The fix is on your host, you need to pass the variable <code class="docutils literal notranslate"><span class="pre">vsyscall=emulate</span></code> to the kernel,
 meaning in the file <code class="docutils literal notranslate"><span class="pre">/etc/default/grub</span></code> (note, this file is debian specific), add the
 following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">GRUB_CMDLINE_LINUX_DEFAULT</span><span class="o">=</span><span class="s2">&quot;vsyscall=emulate&quot;</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>GRUB_CMDLINE_LINUX_DEFAULT=&quot;vsyscall=emulate&quot;
 </pre></div>
 </div>
 <p>and then update grub and reboot:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">update</span><span class="o">-</span><span class="n">grub</span> <span class="o">&amp;&amp;</span> <span class="n">reboot</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>update-grub &amp;&amp; reboot
 </pre></div>
 </div>
 <p>Please note that this change might have <a class="reference external" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/admin-guide/kernel-parameters.txt?h=v4.13-rc3#n4387">security implications</a> that
@@ -239,7 +239,7 @@ you should be aware of. For more information, see the <a class="reference extern
 <div class="line">To run Singularity on a GRSecurity enabled kernel, you must disable
 several security features:</div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo sysctl -w kernel.grsecurity.chroot_caps=0
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo sysctl -w kernel.grsecurity.chroot_caps=0
 
 $ sudo sysctl -w kernel.grsecurity.chroot_deny_mount=0
 
@@ -260,9 +260,9 @@ A first thing to try is to point to some “sanitized home,” which is
 the purpose of the -H or –home option. For example, here we are
 creating a home directory under /tmp/homie, and then telling the
 container to mount it as home:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">rm</span> <span class="o">-</span><span class="n">rf</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">homie</span> <span class="o">&amp;&amp;</span> <span class="n">mkdir</span> <span class="o">-</span><span class="n">p</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">homie</span> <span class="o">&amp;&amp;</span> \
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rm -rf /tmp/homie &amp;&amp; mkdir -p /tmp/homie &amp;&amp; \
 
-<span class="n">singularity</span> <span class="n">exec</span> <span class="o">-</span><span class="n">H</span> <span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">homie</span> <span class="n">analysis</span><span class="o">.</span><span class="n">img</span> <span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">bash</span>
+singularity exec -H /tmp/homie analysis.img /bin/bash
 </pre></div>
 </div>
 <p><strong>Solution 2: Specify the executable to use</strong>
@@ -271,17 +271,17 @@ environment (eg, python) that is being called in preference to the
 containers. To avoid this, in your runscript (the <code class="docutils literal notranslate"><span class="pre">%runscript</span></code> section of the
 bootstrap file) you should specify the path to the executable exactly.
 This means:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">runscript</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%runscript
 
 
-<span class="c1"># This specifies the python in the container</span>
+# This specifies the python in the container
 
-<span class="n">exec</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">python</span> <span class="s2">&quot;$@&quot;</span>
+exec /usr/bin/python &quot;$@&quot;
 
 
-<span class="c1"># This may pick up a different one</span>
+# This may pick up a different one
 
-<span class="n">exec</span> <span class="n">python</span> <span class="s2">&quot;$@&quot;</span>
+exec python &quot;$@&quot;
 </pre></div>
 </div>
 <p>This same idea would be useful if you are issuing the command to the
@@ -295,7 +295,7 @@ unknown option or Invalid argument error.
 Make sure that you are using the most recent Singularity release to
 mount your container to the host system, and that the <code class="docutils literal notranslate"><span class="pre">--bind</span></code> argument is
 placed after the execution command. An example might look like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run -B $PWD:/data my_container.img
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity run -B $PWD:/data my_container.img
 </pre></div>
 </div>
 <p>Also, make sure you are using an up-to-date Singularity to bootstrap
@@ -306,7 +306,7 @@ versions.</p>
 <h2>Error running Singularity with sudo<a class="headerlink" href="#error-running-singularity-with-sudo" title="Permalink to this headline">¶</a></h2>
 <p>This fix solves the following error when Singularity is installed into
 the default compiled prefix of /usr/local:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity instance.start container.img daemon1
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity instance.start container.img daemon1
 
 sudo: singularity: command not found
 </pre></div>
@@ -319,7 +319,7 @@ To add /usr/local/bin to the default sudo search path, run the program
 visudo which will edit the sudoers file, and search for the string
 ‘secure_path’. Once found, append :/usr/local/bin to that line so it
 looks like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Defaults</span>    <span class="n">secure_path</span> <span class="o">=</span> <span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">sbin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="p">:</span><span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
 </pre></div>
 </div>
 </div>
@@ -327,7 +327,7 @@ looks like this:</p>
 <h2>How to resolve “Too many levels of symbolic links” error<a class="headerlink" href="#how-to-resolve-too-many-levels-of-symbolic-links-error" title="Permalink to this headline">¶</a></h2>
 <p>Running singularity failed with “Too many levels of symbolic links”
 error</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run -B /apps container.img
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity run -B /apps container.img
 
 ERROR : There was an error binding the path /apps: Too many levels of symbolic links
 
@@ -337,7 +337,7 @@ ABORT : Retval = 255
 <p>You got this error because /apps directory is an autofs mount point. You
 can fix it by editing singularity.conf and adding the following
 directive with corresponding path:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">autofs</span> <span class="n">bug</span> <span class="n">path</span> <span class="o">=</span> <span class="o">/</span><span class="n">apps</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>autofs bug path = /apps
 </pre></div>
 </div>
 </div>
@@ -385,7 +385,7 @@ directive with corresponding path:</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.5.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

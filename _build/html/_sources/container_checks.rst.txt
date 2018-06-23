@@ -9,7 +9,7 @@ checks are installed with Singularity and others can be added by the
 administrator. Users can perform checks at build time or on demand:
 Perform all default checks, these are the same
 
-::
+.. code-block:: none
 
     $ singularity check ubuntu.img
 
@@ -17,7 +17,7 @@ Perform all default checks, these are the same
 
 Perform checks with tag “clean”
 
-::
+.. code-block:: none
 
     $ singularity check --tag clean ubuntu.img
 
@@ -29,7 +29,7 @@ Currently, checks are organized by tag and security level. If you know a
 specific tag that you want to use, for example “docker” deploys checks
 for containers with Docker imported layers, you can specify the tag:
 
-::
+.. code-block:: none
 
     USAGE
 
@@ -46,7 +46,7 @@ for containers with Docker imported layers, you can specify the tag:
 If you want to run checks associated with a different security level,
 you can specify with ``--low`` , ``--med`` , or ``--high`` :
 
-::
+.. code-block:: none
 
     USAGE: singularity [...] check [exec options...] <container path>
 
@@ -60,7 +60,7 @@ you can specify with ``--low`` , ``--med`` , or ``--high`` :
         -m/--med       Perform medium and high checks
 
         -h/--high      Perform only checks at level high
-        
+
 
 .. note::
 

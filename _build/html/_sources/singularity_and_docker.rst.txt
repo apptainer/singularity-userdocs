@@ -1,3 +1,5 @@
+.. _singularity-and-docker:
+
 ======================
 Singularity and Docker
 ======================
@@ -24,7 +26,7 @@ TLDR (Too Long Didn’t Read)
 
 You can shell, import, run, and exec.
 
-::
+.. code-block:: none
 
     singularity shell docker://ubuntu:latest
 
@@ -60,7 +62,7 @@ the Docker Registry. You don’t need Docker installed on your machine,
 but you will need a working internet connection. Let’s create an
 ubuntu operating system, from Docker. We will pull, then build:
 
-::
+.. code-block:: none
 
     singularity pull docker://ubuntu
 
@@ -118,7 +120,7 @@ is by default not recorded, and your container loses its
 reproducibility. So let’s talk about how to make these files! First,
 let’s look at the absolute minimum requirement:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -128,14 +130,14 @@ let’s look at the absolute minimum requirement:
 We would save this content to a file called Singularity and then issue
 the following commands to bootstrap the image from the file
 
-::
+.. code-block:: none
 
     sudo singularity build ubuntu.img Singularity
 
 Do you want to specify a particular tag? or version? You can just add
 that to the docker uri:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -147,7 +149,7 @@ that to the docker uri:
     Note that the default is ``latest`` . If you want to customize the Registry or
     Namespace, just add those to the header:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -163,7 +165,7 @@ means running specific install commands, specifying your containers
 runscript (what it does when you execute it), adding files, labels, and
 customizing the environment. Here is a full Singularity file:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -206,7 +208,7 @@ defined a ``%runscript`` . If I want the Dockerfile ``ENTRYPOINT`` to take prefe
 the ``%runscript`` section. If I want to use ``CMD`` instead of ``ENTRYPOINT`` , I would again remove the
 runscript, and add IncludeCmd to the header:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -279,20 +281,20 @@ the following Docker metadata items:
 
 When we put those things together, it looks like this:
 
-::
+.. code-block:: none
 
     docker://<registry>/<namespace>/<repo_name>:<repo_tag>
 
 By default, the minimum requirement is that you specify a repository
 name (eg, ubuntu) and it will default to the following:
 
-::
+.. code-block:: none
 
     docker://index.docker.io/library/ubuntu:latest
 
 If you provide a version instead of a tag, that will be used instead:
 
-::
+.. code-block:: none
 
     docker://index.docker.io/library/ubuntu@sha256:1235...
 
@@ -302,7 +304,7 @@ Docker speak.
 If you want to change any of those fields and are having trouble with
 the uri, you can also just state them explicitly:
 
-::
+.. code-block:: none
 
     Bootstrap: docker
 
@@ -334,7 +336,7 @@ Authentication in the Singularity Build File
 You can simply specify your additional authentication parameters in the
 header with the labels ``Username`` and ``Password`` :
 
-::
+.. code-block:: none
 
     Username: vanessa
 
@@ -349,7 +351,7 @@ Authentication in the Environment
 
 You can export your username, and password for Singularity as follows:
 
-::
+.. code-block:: none
 
     export SINGULARITY_DOCKER_USERNAME=vanessasaur
 
@@ -361,7 +363,7 @@ Testing Authentication
 If you are having trouble, you can test your token by obtaining it on
 the command line and putting it into an environmental variable, ``CREDENTIAL`` :
 
-::
+.. code-block:: none
 
     CREDENTIAL=$(echo -n vanessa:[password] | base64)
 
@@ -370,7 +372,7 @@ the command line and putting it into an environmental variable, ``CREDENTIAL`` :
 This should place the token in the environmental variable ``TOKEN`` . To test that
 your token is valid, you can do the following
 
-::
+.. code-block:: none
 
     http https://index.docker.io/v2/vanessa/code-samples/tags/list Authorization:"Bearer $TOKEN"
 

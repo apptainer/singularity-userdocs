@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Quick Start &mdash; Singularity container 1.0 documentation</title>
+  <title>Quick Start &mdash; Singularity container 2.5.1 documentation</title>
   
 
   
@@ -99,7 +99,7 @@
 <li class="toctree-l3"><a class="reference internal" href="#working-with-files">Working with Files</a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="#id2">Build images from scratch</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#build-images-from-scratch">Build images from scratch</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#sandbox-directory">Sandbox Directory</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#writable-image">Writable Image</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#converting-images-from-one-format-to-another">Converting images from one format to another</a></li>
@@ -188,7 +188,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="quick-start">
-<h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Quick Start<a class="headerlink" href="#quick-start" title="Permalink to this headline">¶</a></h1>
 <p id="sec-quickstart">This guide is intended for running Singularity on a computer where you
 have root (administrative) privileges. If you are learning about
 Singularity on a system where you lack root privileges, you can still
@@ -197,33 +197,33 @@ request an installation on your shared resource, check out our
 requesting an installation help page for information to send to your
 system administrator.</p>
 <div class="section" id="installation">
-<h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>There are many ways to <a class="reference external" href="#installation">install Singularity</a> but this quick start guide will only cover one.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">singularityware</span><span class="o">/</span><span class="n">singularity</span><span class="o">.</span><span class="n">git</span>
+<span id="id2"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
+<p>There are many ways to <a class="reference internal" href="#installation"><span class="std std-ref">install Singularity</span></a> but this quick start guide will only cover one.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/singularityware/singularity.git
 
-<span class="n">cd</span> <span class="n">singularity</span>
+cd singularity
 
-<span class="o">./</span><span class="n">autogen</span><span class="o">.</span><span class="n">sh</span>
+./autogen.sh
 
-<span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span>
+./configure --prefix=/usr/local
 
-<span class="n">make</span>
+make
 
-<span class="n">sudo</span> <span class="n">make</span> <span class="n">install</span>
+sudo make install
 </pre></div>
 </div>
 <p>Singularity must be installed as root to function properly.</p>
 </div>
 <div class="section" id="overview-of-the-singularity-interface">
 <h2>Overview of the Singularity Interface<a class="headerlink" href="#overview-of-the-singularity-interface" title="Permalink to this headline">¶</a></h2>
-<p>Singularity’s <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#command-usage">command line interface</a> allows you to build and interact with containers
+<p>Singularity’s <a class="reference internal" href="appendix.html#command-usage"><span class="std std-ref">command line interface</span></a> allows you to build and interact with containers
 transparently. You can run programs inside a container as if they were
 running on your host system. You can easily redirect IO, use pipes,
 pass arguments, and access files, sockets, and ports on the host
 system from within a container.
 The <code class="docutils literal notranslate"><span class="pre">--help</span></code> option gives an overview of Singularity options and subcommands as
 follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity --help
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity --help
 
 USAGE: singularity [global options...] &lt;command&gt; [command options...] ...
 
@@ -303,17 +303,17 @@ invocation and affect the way that Singularity runs any command. Then
 commands are passed followed by their options.
 For example, to pass the <code class="docutils literal notranslate"><span class="pre">--debug</span></code> option to the main <code class="docutils literal notranslate"><span class="pre">singularity</span></code> command and run
 Singularity with debugging messages on:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity --debug run shub://GodloveD/lolcow
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity --debug run shub://GodloveD/lolcow
 </pre></div>
 </div>
 <p>And to pass the <code class="docutils literal notranslate"><span class="pre">--containall</span></code> option to the <code class="docutils literal notranslate"><span class="pre">run</span></code> command and run a Singularity image in an
 isolated manner:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run --containall shub://GodloveD/lolcow
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity run --containall shub://GodloveD/lolcow
 </pre></div>
 </div>
 <p>To learn more about a specific Singularity command, type one of the
 following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity help &lt;command&gt;
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity help &lt;command&gt;
 
 $ singularity --help &lt;command&gt;
 
@@ -324,9 +324,9 @@ $ singularity &lt;command&gt; --help
 $ singularity &lt;command&gt; -h
 </pre></div>
 </div>
-<p>Users can also <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html#help">write help docs specific to a container</a> or for an internal module called an . If those help
+<p>Users can also <a class="reference internal" href="container_recipes.html#help"><span class="std std-ref">write help docs specific to a container</span></a> or for an internal module called an <code class="docutils literal notranslate"><span class="pre">app</span></code>. If those help
 docs exist for a particular container, you can view them like so.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity help container.simg            # See the container&#39;s help, if provided
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity help container.simg            # See the container&#39;s help, if provided
 
 $ singularity help --app foo container.simg  # See the help for foo, if provided
 </pre></div>
@@ -334,11 +334,11 @@ $ singularity help --app foo container.simg  # See the help for foo, if provided
 </div>
 <div class="section" id="download-pre-built-images">
 <h2>Download pre-built images<a class="headerlink" href="#download-pre-built-images" title="Permalink to this headline">¶</a></h2>
-<p>You can use the <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id28">pull</a> and <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id22">build</a> commands to download pre-built images from an
+<p>You can use the <a class="reference internal" href="appendix.html#pull-command"><span class="std std-ref">pull</span></a> and <a class="reference internal" href="appendix.html#build-command"><span class="std std-ref">build</span></a> commands to download pre-built images from an
 external resource like <a class="reference external" href="https://singularity-hub.org/">Singularity Hub</a> or <a class="reference external" href="https://hub.docker.com/">Docker Hub</a>. When called
 on a native Singularity images like those provided on Singularity Hub, <code class="docutils literal notranslate"><span class="pre">pull</span></code>
 simply downloads the image file to your system.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity pull shub://vsoch/hello-world   # pull with default name, vsoch-hello-world-master.simg
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity pull shub://vsoch/hello-world   # pull with default name, vsoch-hello-world-master.simg
 
 $ singularity pull --name hello.simg shub://vsoch/hello-world   # pull with custom name
 </pre></div>
@@ -349,7 +349,7 @@ You can also use <code class="docutils literal notranslate"><span class="pre">pu
 registry. In this case <code class="docutils literal notranslate"><span class="pre">pull</span></code> does not just download an image file. Docker
 images are stored in layers, so <code class="docutils literal notranslate"><span class="pre">pull</span></code> must also combine those layers into a
 usable Singularity file.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity pull docker://godlovedc/lolcow  # with default name
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity pull docker://godlovedc/lolcow  # with default name
 
 $ singularity pull --name funny.simg docker://godlovedc/lolcow # with custom name
 </pre></div>
@@ -362,7 +362,7 @@ for you, try building your images from Singularity Hub.
 You can also use the <code class="docutils literal notranslate"><span class="pre">build</span></code> command to download pre-built images from an
 external resource. When using <code class="docutils literal notranslate"><span class="pre">build</span></code> you must specify a name for your
 container like so:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity build hello-world.simg shub://vsoch/hello-world
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity build hello-world.simg shub://vsoch/hello-world
 
 $ singularity build lolcow.simg docker://godlovedc/lolcow
 </pre></div>
@@ -371,23 +371,23 @@ $ singularity build lolcow.simg docker://godlovedc/lolcow
 after downloading it.</p>
 <p><code class="docutils literal notranslate"><span class="pre">build</span></code> is like a “Swiss Army knife” for container creation. In addition to
 downloading images, you can use <code class="docutils literal notranslate"><span class="pre">build</span></code> to create images from other images or
-from scratch using a <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html">recipe file</a>. You can also use <code class="docutils literal notranslate"><span class="pre">build</span></code> to convert an image between the
+from scratch using a <cite>recipe file &lt;container-recipes&gt;</cite>. You can also use <code class="docutils literal notranslate"><span class="pre">build</span></code> to convert an image between the
 3 major container formats supported by Singularity. We discuss those
-image formats below in the <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/quick_start.html#id2">Build images from scratch</a> section.</p>
+image formats below in the <a class="reference internal" href="#build-images-from-scratch"><span class="std std-ref">Build images from scratch</span></a> section.</p>
 </div>
 <div class="section" id="interact-with-images">
 <h2>Interact with images<a class="headerlink" href="#interact-with-images" title="Permalink to this headline">¶</a></h2>
 <p>Once you have an image, you can interact with it in several ways. For
 these examples we will use a <code class="docutils literal notranslate"><span class="pre">hello-world.simg</span></code> image that can be downloaded from
 Singularity Hub like so.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity pull --name hello-world.simg shub://vsoch/hello-world
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity pull --name hello-world.simg shub://vsoch/hello-world
 </pre></div>
 </div>
 <div class="section" id="shell">
 <h3>Shell<a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id36">shell</a> command allows you to spawn a new shell within your container and
+<p>The <a class="reference internal" href="appendix.html#shell-command"><span class="std std-ref">shell</span></a> command allows you to spawn a new shell within your container and
 interact with it as though it were a small virtual machine.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity shell hello-world.simg
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity shell hello-world.simg
 
 Singularity: Invoking an interactive shell within container...
 
@@ -406,16 +406,16 @@ uid=1000(vanessa) gid=1000(vanessa) groups=1000(vanessa),4(adm),24,27,30(tape),4
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">shell</span></code> also works with the <code class="docutils literal notranslate"><span class="pre">shub://</span></code> and <code class="docutils literal notranslate"><span class="pre">docker://</span></code> URIs. This creates an ephemeral container that
 disappears when the shell is exited.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity shell shub://vsoch/hello-world
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity shell shub://vsoch/hello-world
 </pre></div>
 </div>
 </div>
 <div class="section" id="executing-commands">
 <h3>Executing Commands<a class="headerlink" href="#executing-commands" title="Permalink to this headline">¶</a></h3>
-<p>The <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id25">exec</a> command allows you to execute a custom command within a container by
+<p>The <span class="xref std std-ref">exec</span> command allows you to execute a custom command within a container by
 specifying the image file. For instance, to list the root (/) of our
 hello-world.simg image, we could do the following:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity exec hello-world.simg ls /
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity exec hello-world.simg ls /
 
 anaconda-post.log  etc   lib64       mnt   root  singularity  tmp
 
@@ -426,31 +426,31 @@ dev        lib   media       proc  sbin  sys          var
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">exec</span></code> also works with the <code class="docutils literal notranslate"><span class="pre">shub://</span></code> and <code class="docutils literal notranslate"><span class="pre">docker://</span></code> URIs. This creates an ephemeral container that
 executes a command and disappears.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity exec shub://singularityhub/ubuntu cat /etc/os-release
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity exec shub://singularityhub/ubuntu cat /etc/os-release
 </pre></div>
 </div>
 </div>
 <div class="section" id="running-a-container">
 <h3>Running a container<a class="headerlink" href="#running-a-container" title="Permalink to this headline">¶</a></h3>
-<p>Singularity containers contain “<a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html#runscript">runscripts</a>”. These are user defined scripts that
+<p>Singularity containers contain <a class="reference internal" href="container_recipes.html#runscript"><span class="std std-ref">runscripts</span></a>. These are user defined scripts that
 define the actions a container should perform when someone runs it. The
 runscript can be triggered with the run command, or simply by calling
 the container as though it were an executable.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run hello-world.simg
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity run hello-world.simg
 
 $ ./hello-world.simg
 </pre></div>
 </div>
 <p><code class="docutils literal notranslate"><span class="pre">run</span></code> also works with <code class="docutils literal notranslate"><span class="pre">shub://</span></code> and <code class="docutils literal notranslate"><span class="pre">docker://</span></code> URIs. This creates an ephemeral container that runs
 and then disappears.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run shub://GodloveD/lolcow
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity run shub://GodloveD/lolcow
 </pre></div>
 </div>
 </div>
 <div class="section" id="working-with-files">
 <h3>Working with Files<a class="headerlink" href="#working-with-files" title="Permalink to this headline">¶</a></h3>
 <p>Files on the host are reachable from within the container.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ echo &quot;Hello World&quot; &gt; $HOME/hello-kitty.txt
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo &quot;Hello World&quot; &gt; $HOME/hello-kitty.txt
 
 $ singularity exec vsoch-hello-world-master.simg cat $HOME/hello-kitty.txt
 
@@ -461,9 +461,9 @@ Hello World
 default singularity bind mounts <code class="docutils literal notranslate"><span class="pre">/home/$USER</span></code>, <code class="docutils literal notranslate"><span class="pre">/tmp</span></code>, and <code class="docutils literal notranslate"><span class="pre">$PWD</span></code> into your container at
 runtime.
 You can specify additional directories to bind mount into your
-container with the <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/bind_paths_and_mounts.html">- -bind</a> option. In this example, the <code class="docutils literal notranslate"><span class="pre">data</span></code> directory on the host
+container with the <a class="reference internal" href="bind_paths_and_mounts.html#bind-paths-and-mounts"><span class="std std-ref">- -bind</span></a> option. In this example, the <code class="docutils literal notranslate"><span class="pre">data</span></code> directory on the host
 system is bind mounted to the <code class="docutils literal notranslate"><span class="pre">/mnt</span></code> directory inside the container.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ echo &quot;I am your father&quot; &gt;/data/vader.sez
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo &quot;I am your father&quot; &gt;/data/vader.sez
 
 $ ~/sing-dev/bin/singularity exec --bind /data:/mnt hello-world.simg cat /mnt/vader.sez
 
@@ -472,8 +472,8 @@ I am your father
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h2>Build images from scratch<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="build-images-from-scratch">
+<span id="id3"></span><h2>Build images from scratch<a class="headerlink" href="#build-images-from-scratch" title="Permalink to this headline">¶</a></h2>
 <p id="sec-buildimagesfromscratch">As of Singularity v2.4 by default <code class="docutils literal notranslate"><span class="pre">build</span></code> produces immutable images in the
 squashfs file format. This ensures reproducible and verifiable images.
 However, during testing and debugging you may want an image format
@@ -484,11 +484,11 @@ other image formats: a <code class="docutils literal notranslate"><span class="p
 directory), and a <code class="docutils literal notranslate"><span class="pre">writable</span></code> format (the ext3 file system that was used in
 Singularity versions less than 2.4).</p>
 <p>For more details about the different build options and best practices,
-read about the <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/singularity_flow.html">singularity flow</a>.</p>
+read about the <a class="reference internal" href="singularity_flow.html#singularity-flow"><span class="std std-ref">singularity flow</span></a>.</p>
 <div class="section" id="sandbox-directory">
 <h3>Sandbox Directory<a class="headerlink" href="#sandbox-directory" title="Permalink to this headline">¶</a></h3>
 <p>To build into a <code class="docutils literal notranslate"><span class="pre">sandbox</span></code> (container in a directory) use the <code class="docutils literal notranslate"><span class="pre">build</span> <span class="pre">--sandbox</span></code> command and option:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build --sandbox ubuntu/ docker://ubuntu
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build --sandbox ubuntu/ docker://ubuntu
 </pre></div>
 </div>
 <p>This command creates a directory called <code class="docutils literal notranslate"><span class="pre">ubuntu/</span></code> with an entire Ubuntu
@@ -506,7 +506,7 @@ can use them the next time you use your container.</p>
 <h3>Writable Image<a class="headerlink" href="#writable-image" title="Permalink to this headline">¶</a></h3>
 <p>If you prefer to have a writable image file, you can <code class="docutils literal notranslate"><span class="pre">build</span></code> a container with
 the <code class="docutils literal notranslate"><span class="pre">--writable</span></code> option.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build --writable ubuntu.img docker://ubuntu
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build --writable ubuntu.img docker://ubuntu
 </pre></div>
 </div>
 <p>This produces an image that is writable with an ext3 file system.
@@ -515,7 +515,7 @@ file name has an “.img” extension instead of “.simg” .
 When you want to alter your image, you can use commands like <code class="docutils literal notranslate"><span class="pre">shell</span></code>, <code class="docutils literal notranslate"><span class="pre">exec</span></code>, <code class="docutils literal notranslate"><span class="pre">run</span></code>,
 with the <code class="docutils literal notranslate"><span class="pre">--writable</span></code> option. Because of permission issues it may be necessary to
 execute the container as root to modify it.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity shell --writable ubuntu.img
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity shell --writable ubuntu.img
 </pre></div>
 </div>
 </div>
@@ -528,7 +528,7 @@ one format to another. For instance, if you have already created a
 sandbox (directory) and want to convert it to the default immutable
 image format (squashfs) you can do so:</div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity build new-squashfs sandbox
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity build new-squashfs sandbox
 </pre></div>
 </div>
 <p>Doing so may break reproducibility if you have altered your sandbox
@@ -550,47 +550,47 @@ sections (called scriptlets) that do things like install software,
 setup the environment, and copy files into the container from the host
 system.
 Here is an example of a recipe file:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">shub</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: shub
 
-<span class="n">From</span><span class="p">:</span> <span class="n">singularityhub</span><span class="o">/</span><span class="n">ubuntu</span>
-
-
-<span class="o">%</span><span class="n">runscript</span>
-
-    <span class="n">exec</span> <span class="n">echo</span> <span class="s2">&quot;The runscript is the containers default runtime command!&quot;</span>
+From: singularityhub/ubuntu
 
 
-<span class="o">%</span><span class="n">files</span>
+%runscript
 
-   <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vanessa</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">hello</span><span class="o">-</span><span class="n">kitty</span><span class="o">.</span><span class="n">txt</span>        <span class="c1"># copied to root of container</span>
-
-   <span class="o">/</span><span class="n">home</span><span class="o">/</span><span class="n">vanessa</span><span class="o">/</span><span class="n">Desktop</span><span class="o">/</span><span class="n">party_dinosaur</span><span class="o">.</span><span class="n">gif</span>     <span class="o">/</span><span class="n">opt</span><span class="o">/</span><span class="n">the</span><span class="o">-</span><span class="n">party</span><span class="o">-</span><span class="n">dino</span><span class="o">.</span><span class="n">gif</span> <span class="c1">#</span>
+    exec echo &quot;The runscript is the containers default runtime command!&quot;
 
 
-<span class="o">%</span><span class="n">environment</span>
+%files
 
-    <span class="n">VARIABLE</span><span class="o">=</span><span class="n">MEATBALLVALUE</span>
+   /home/vanessa/Desktop/hello-kitty.txt        # copied to root of container
 
-    <span class="n">export</span> <span class="n">VARIABLE</span>
-
-
-<span class="o">%</span><span class="n">labels</span>
-
-   <span class="n">AUTHOR</span> <span class="n">vsochat</span><span class="nd">@stanford</span><span class="o">.</span><span class="n">edu</span>
+   /home/vanessa/Desktop/party_dinosaur.gif     /opt/the-party-dino.gif #
 
 
-<span class="o">%</span><span class="n">post</span>
+%environment
 
-    <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="n">update</span> <span class="o">&amp;&amp;</span> <span class="n">apt</span><span class="o">-</span><span class="n">get</span> <span class="o">-</span><span class="n">y</span> <span class="n">install</span> <span class="n">python3</span> <span class="n">git</span> <span class="n">wget</span>
+    VARIABLE=MEATBALLVALUE
 
-    <span class="n">mkdir</span> <span class="o">/</span><span class="n">data</span>
+    export VARIABLE
 
-    <span class="n">echo</span> <span class="s2">&quot;The post section is where you can install, and configure your container.&quot;</span>
+
+%labels
+
+   AUTHOR vsochat@stanford.edu
+
+
+%post
+
+    apt-get update &amp;&amp; apt-get -y install python3 git wget
+
+    mkdir /data
+
+    echo &quot;The post section is where you can install, and configure your container.&quot;
 </pre></div>
 </div>
 <p>To build a container from this definition file (assuming it is a file
 named Singularity), you would call build like so:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build ubuntu.simg Singularity
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build ubuntu.simg Singularity
 </pre></div>
 </div>
 <p>In this example, the header tells singularity to use a base Ubuntu
@@ -603,7 +603,7 @@ custom metadata to be added to the container. And finally the <code class="docut
 executes within the container at build time after the base OS has been
 installed. The <code class="docutils literal notranslate"><span class="pre">%post</span></code> section is therefore the place to perform installations
 of custom apps.
-This is a very small example of the things that you can do with a <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html">recipe file</a> . In
+This is a very small example of the things that you can do with a <a class="reference internal" href="container_recipes.html#container-recipes"><span class="std std-ref">recipe file</span></a> . In
 addition to building a container from Singularity Hub, you can start
 with base images from Docker Hub, use images directly from official
 repositories such as Ubuntu, Debian, Centos, Arch, and BusyBox, use an
@@ -613,7 +613,7 @@ If you want to build Singularity images without having singularity
 installed in a build environment, you can build images using
 <a class="reference external" href="https://github.com/singularityhub/singularityhub.github.io/wiki">Singularity Hub</a>
 instead. If you want a more detailed rundown and examples for
-different build options, see our <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/singularity_flow.html">singularity flow</a> page.</p>
+different build options, see our <a class="reference internal" href="singularity_flow.html#singularity-flow"><span class="std std-ref">singularity flow</span></a> page.</p>
 </div>
 </div>
 </div>
@@ -660,7 +660,7 @@ different build options, see our <a class="reference external" href="https://sin
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.5.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

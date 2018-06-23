@@ -112,6 +112,8 @@ leverage GPU resources.
 A High Level View of Singularity
 --------------------------------
 
+.. _security-and-priviledge-escalation:
+
 Security and privilege escalation
 =================================
 
@@ -147,7 +149,7 @@ or enabling themselves to have sudo access. For these reasons,
 Singularity prevents user context escalation within the container, and
 thus makes it possible to run user supplied containers on shared
 infrastructures.
-This mitigation dictates the Singularity `workflow <https://singularity-userdoc.readthedocs.io/en/latest/singularity_flow.html#singularity-flow>`_. If a user needs to be root
+This mitigation dictates the :ref:`Singularity workflow <singularity-flow>`. If a user needs to be root
 in order to make changes to their containers, then they need to have
 an endpoint (a local workstation, laptop, or server) where they have
 root access. Considering almost everybody at least has a laptop, this
@@ -196,7 +198,7 @@ copying any other file you control!
 
 If you want an automated solution for building and hosting your image,
 you can use our container registry `Singularity Hub <https://singularity-hub.org/>`_. Singularity Hub
-can automatically build `Singularity recipe files <https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html#container-recipes>`_ from
+can automatically build :ref:`Singularity recipe files <container-recipes>` from
 a GitHub repository each time that you push. It provides a simple cloud
 solution for storing and sharing your image. If you want to host your own
 Registry, then you should check out `Singularity Registry <https://www.github.com/singularityhub/sregistry>`_.
@@ -294,7 +296,7 @@ can also be executed from a batch script or other program (e.g. an HPC
 system’s resource manager) natively.
 Some usage examples of Singularity can be seen as follows:
 
-::
+.. code-block:: none
 
     $ singularity exec dummy.img xterm  # run xterm from within the container
 
@@ -303,11 +305,11 @@ Some usage examples of Singularity can be seen as follows:
     $ singularity exec dummy.img python < /path/to/python/script.py  # do the same via redirection
 
     $ cat /path/to/python/script.py | singularity exec dummy.img python  # do the same via a pipe
-    
+
 
 You can even run MPI executables within the container as simply as:
 
-::
+.. code-block:: none
 
     $ mpirun -np X singularity exec /path/to/container.img /usr/bin/mpi_program_inside_container (mpi program args)
 
@@ -358,7 +360,7 @@ to run, which is fast enough to seem instantaneous.
 The Singularity Usage Workflow
 ------------------------------
 
-The security model of Singularity (as described above, `"A user inside a Singularity container is the same user as outside the container" <https://singularity-userdoc.readthedocs.io/en/latest/introduction.html#security-and-privilege-escalation>`_) defines the
+The security model of Singularity (as described above, :ref:`"A user inside a Singularity container is the same user as outside the container" <security-and-privilege-escalation>`) defines the
 Singularity workflow. There are generally two groups of actions you
 must implement on a container; management (building your container)
 and usage.
@@ -403,38 +405,38 @@ How do the commands work?
 
 Here is where to look for more information:
 
--  `build <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id22>`_ : Build a container on your user endpoint or build environment
+-  :ref:`build <build-command>` : Build a container on your user endpoint or build environment
 
--  `exec <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id25>`_ : Execute a command to your container
+-  :ref:`exec <exec-command>` : Execute a command to your container
 
--  `inspect <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id27>`_ : See labels, run and test scripts, and environment variables
+-  :ref:`inspect <inspect-command>` : See labels, run and test scripts, and environment variables
 
--  `pull <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id28>`_ : pull an image from Docker or Singularity Hub
+-  :ref:`pull <pull-command>` : pull an image from Docker or Singularity Hub
 
--  `run <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id30>`_ : Run your image as an executable
+-  :ref:`run <run-command>` : Run your image as an executable
 
--  `shell <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id36>`_ : Shell into your image
+-  :ref:`shell <shell-command>` : Shell into your image
 
 **Image Commands**
 
--  `image.import <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id40>`_ : import layers or other file content to your image
+-  :ref:`image.import <image-import>` : import layers or other file content to your image
 
--  `image.export <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id38>`_ : export the contents of the image to tar or stream
+-  :ref:`image.export <image-export>` : export the contents of the image to tar or stream
 
--  `image.create <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id41>`_ : create a new image, using the old ext3 filesystem
+-  :ref:`image.create <image-create>` : create a new image, using the old ext3 filesystem
 
--  `image.expand <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id39>`_ : increase the size of your image (old ext3)
+-  :ref:`image.expand <image-expand>` : increase the size of your image (old ext3)
 
 | **Instance Commands**
 | Instances were added in 2.4. This list is brief, and likely to expand
   with further development.
 
--  `instances <https://singularity-userdoc.readthedocs.io/en/latest/running_services.html#why-container-instances>`_ : Start, stop, and list container instances
+-  :ref:`instances <instance-command-group>` : Start, stop, and list container instances
 
 **Deprecated Commands** The following commands are deprecated in 2.4 and
 will be removed in future releases.
 
--  `bootstrap <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id53>`_ : Bootstrap a container recipe
+-  :ref:`bootstrap <bootstrap>` : Bootstrap a container recipe
 
 -------
 Support

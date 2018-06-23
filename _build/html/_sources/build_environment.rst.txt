@@ -1,3 +1,5 @@
+.. _build-environment:
+
 =================
 Build Environment
 =================
@@ -13,12 +15,12 @@ discuss those things
 Cache Folders
 -------------
 
-To make download of layers for build and `pull <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id28>`_ faster and less redundant, we
+To make download of layers for build and :ref:`pull <pull-command>` faster and less redundant, we
 use a caching strategy. By default, the Singularity software will create
 a set of folders in your ``$HOME`` directory for docker layers, Singularity Hub
 images, and Docker metadata, respectively:
 
-::
+.. code-block:: none
 
     $HOME/.singularity
 
@@ -50,7 +52,7 @@ environment.
 
 If you are building an image on the fly, for example
 
-::
+.. code-block:: none
 
     singularity exec docker://busybox /bin/sh
 
@@ -61,14 +63,14 @@ Jetstream/OpenStack, Azure, and possibly EC2, which are very small. If
 you need to change the location of this runtime, then **export** the
 variable ``SINGULARITY_LOCALCACHEDIR``.
 
-::
+.. code-block:: none
 
     SINGULARITY_LOCALCACHEDIR=/tmp/pancakes
 
     export SINGULARITY_LOCALCACHEDIR
 
     singularity exec docker://busybox /bin/sh
-    
+
 
 The above runtime folder would be created under ``/tmp/pancakes/.singularity-runtime.xxxxxxxx``
 
@@ -76,8 +78,8 @@ The above runtime folder would be created under ``/tmp/pancakes/.singularity-run
 Pull Folder
 -----------
 
-For details about customizing the output location of `pull <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id28>`_, see the
-`pull docs <https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id28>`_. You have the similar ability to set it to be something
+For details about customizing the output location of :ref:`pull <pull-command>`, see the
+:ref:`pull docs <pull-command>`. You have the similar ability to set it to be something
 different, or to customize the name of the pulled image.
 
 ---------------------
@@ -105,7 +107,7 @@ order of operations works as follows:
 For boolean variables, the following are acceptable for True, with any
 kind of capitalization or not:
 
-::
+.. code-block:: none
 
     ("yes", "true", "t", "1","y")
 
@@ -148,7 +150,7 @@ or a ``docker://`` image. This is different from where downloaded layers are cac
 setting by running a command with ``--debug`` , and seeing the last line “Removing
 directory:”
 
-::
+.. code-block:: none
 
     singularity --debug run docker://busybox echo "pizza!"
 
@@ -219,13 +221,13 @@ so we want to prefix whatever the Docker command or entrypoint is with
 ``exec``. We also want to make sure that following arguments get passed, so we
 append ``"$@"``. Thus, some entrypoint or cmd might look like this:
 
-::
+.. code-block:: none
 
     /usr/bin/python
 
 and we would parse it into the runscript as:
 
-::
+.. code-block:: none
 
     exec /usr/bin/python "$@"
 

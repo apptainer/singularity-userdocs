@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Introduction &mdash; Singularity container 1.0 documentation</title>
+  <title>Introduction &mdash; Singularity container 2.5.1 documentation</title>
   
 
   
@@ -298,7 +298,7 @@ leverage GPU resources.</p>
 <div class="section" id="a-high-level-view-of-singularity">
 <h2>A High Level View of Singularity<a class="headerlink" href="#a-high-level-view-of-singularity" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="security-and-privilege-escalation">
-<h3>Security and privilege escalation<a class="headerlink" href="#security-and-privilege-escalation" title="Permalink to this headline">¶</a></h3>
+<span id="security-and-priviledge-escalation"></span><h3>Security and privilege escalation<a class="headerlink" href="#security-and-privilege-escalation" title="Permalink to this headline">¶</a></h3>
 <p>A user inside a Singularity container
 is the same user as outside the container
 This is one of Singularities defining characteristics. It allows a
@@ -329,7 +329,7 @@ or enabling themselves to have sudo access. For these reasons,
 Singularity prevents user context escalation within the container, and
 thus makes it possible to run user supplied containers on shared
 infrastructures.
-This mitigation dictates the Singularity <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/singularity_flow.html#singularity-flow">workflow</a>. If a user needs to be root
+This mitigation dictates the <a class="reference internal" href="singularity_flow.html#singularity-flow"><span class="std std-ref">Singularity workflow</span></a>. If a user needs to be root
 in order to make changes to their containers, then they need to have
 an endpoint (a local workstation, laptop, or server) where they have
 root access. Considering almost everybody at least has a laptop, this
@@ -370,7 +370,7 @@ create a branch, share the image and distribute the image as easily as
 copying any other file you control!</p>
 <p>If you want an automated solution for building and hosting your image,
 you can use our container registry <a class="reference external" href="https://singularity-hub.org/">Singularity Hub</a>. Singularity Hub
-can automatically build <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/container_recipes.html#container-recipes">Singularity recipe files</a> from
+can automatically build <a class="reference internal" href="container_recipes.html#container-recipes"><span class="std std-ref">Singularity recipe files</span></a> from
 a GitHub repository each time that you push. It provides a simple cloud
 solution for storing and sharing your image. If you want to host your own
 Registry, then you should check out <a class="reference external" href="https://www.github.com/singularityhub/sregistry">Singularity Registry</a>.
@@ -459,7 +459,7 @@ pipeline that is being executed on the host. Singularity containers
 can also be executed from a batch script or other program (e.g. an HPC
 system’s resource manager) natively.
 Some usage examples of Singularity can be seen as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity exec dummy.img xterm  # run xterm from within the container
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity exec dummy.img xterm  # run xterm from within the container
 
 $ singularity exec dummy.img python script.py  # run a script on the host system using container&#39;s python
 
@@ -469,7 +469,7 @@ $ cat /path/to/python/script.py | singularity exec dummy.img python  # do the sa
 </pre></div>
 </div>
 <p>You can even run MPI executables within the container as simply as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mpirun -np X singularity exec /path/to/container.img /usr/bin/mpi_program_inside_container (mpi program args)
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ mpirun -np X singularity exec /path/to/container.img /usr/bin/mpi_program_inside_container (mpi program args)
 </pre></div>
 </div>
 </div>
@@ -505,7 +505,7 @@ to run, which is fast enough to seem instantaneous.</p>
 </div>
 <div class="section" id="the-singularity-usage-workflow">
 <h2>The Singularity Usage Workflow<a class="headerlink" href="#the-singularity-usage-workflow" title="Permalink to this headline">¶</a></h2>
-<p>The security model of Singularity (as described above, <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/introduction.html#security-and-privilege-escalation">“A user inside a Singularity container is the same user as outside the container”</a>) defines the
+<p>The security model of Singularity (as described above, <span class="xref std std-ref">“A user inside a Singularity container is the same user as outside the container”</span>) defines the
 Singularity workflow. There are generally two groups of actions you
 must implement on a container; management (building your container)
 and usage.</p>
@@ -543,19 +543,19 @@ to the production system where you wish to run it.</p>
 <p>How do the commands work?</p>
 <p>Here is where to look for more information:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id22">build</a> : Build a container on your user endpoint or build environment</li>
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id25">exec</a> : Execute a command to your container</li>
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id27">inspect</a> : See labels, run and test scripts, and environment variables</li>
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id28">pull</a> : pull an image from Docker or Singularity Hub</li>
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id30">run</a> : Run your image as an executable</li>
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id36">shell</a> : Shell into your image</li>
+<li><a class="reference internal" href="appendix.html#build-command"><span class="std std-ref">build</span></a> : Build a container on your user endpoint or build environment</li>
+<li><a class="reference internal" href="appendix.html#exec-command"><span class="std std-ref">exec</span></a> : Execute a command to your container</li>
+<li><a class="reference internal" href="appendix.html#inspect-command"><span class="std std-ref">inspect</span></a> : See labels, run and test scripts, and environment variables</li>
+<li><a class="reference internal" href="appendix.html#pull-command"><span class="std std-ref">pull</span></a> : pull an image from Docker or Singularity Hub</li>
+<li><a class="reference internal" href="appendix.html#run-command"><span class="std std-ref">run</span></a> : Run your image as an executable</li>
+<li><a class="reference internal" href="appendix.html#shell-command"><span class="std std-ref">shell</span></a> : Shell into your image</li>
 </ul>
 <p><strong>Image Commands</strong></p>
 <ul class="simple">
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id40">image.import</a> : import layers or other file content to your image</li>
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id38">image.export</a> : export the contents of the image to tar or stream</li>
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id41">image.create</a> : create a new image, using the old ext3 filesystem</li>
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id39">image.expand</a> : increase the size of your image (old ext3)</li>
+<li><a class="reference internal" href="appendix.html#image-import"><span class="std std-ref">image.import</span></a> : import layers or other file content to your image</li>
+<li><a class="reference internal" href="appendix.html#image-export"><span class="std std-ref">image.export</span></a> : export the contents of the image to tar or stream</li>
+<li><a class="reference internal" href="appendix.html#image-create"><span class="std std-ref">image.create</span></a> : create a new image, using the old ext3 filesystem</li>
+<li><a class="reference internal" href="appendix.html#image-expand"><span class="std std-ref">image.expand</span></a> : increase the size of your image (old ext3)</li>
 </ul>
 <div class="line-block">
 <div class="line"><strong>Instance Commands</strong></div>
@@ -563,12 +563,12 @@ to the production system where you wish to run it.</p>
 with further development.</div>
 </div>
 <ul class="simple">
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/running_services.html#why-container-instances">instances</a> : Start, stop, and list container instances</li>
+<li><a class="reference internal" href="appendix.html#instance-command-group"><span class="std std-ref">instances</span></a> : Start, stop, and list container instances</li>
 </ul>
 <p><strong>Deprecated Commands</strong> The following commands are deprecated in 2.4 and
 will be removed in future releases.</p>
 <ul class="simple">
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#id53">bootstrap</a> : Bootstrap a container recipe</li>
+<li><a class="reference internal" href="appendix.html#bootstrap"><span class="std std-ref">bootstrap</span></a> : Bootstrap a container recipe</li>
 </ul>
 </div>
 </div>
@@ -620,7 +620,7 @@ will be removed in future releases.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.5.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

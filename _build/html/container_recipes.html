@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Container Recipes &mdash; Singularity container 1.0 documentation</title>
+  <title>Container Recipes &mdash; Singularity container 2.5.1 documentation</title>
   
 
   
@@ -189,7 +189,7 @@
            <div itemprop="articleBody">
             
   <div class="section" id="container-recipes">
-<h1>Container Recipes<a class="headerlink" href="#container-recipes" title="Permalink to this headline">¶</a></h1>
+<span id="id1"></span><h1>Container Recipes<a class="headerlink" href="#container-recipes" title="Permalink to this headline">¶</a></h1>
 <p id="sec-recipefile">A Singularity Recipe is the driver of a custom build, and the starting
 point for designing any custom container. It includes specifics about
 installation software, environment variables, files to add, and
@@ -226,7 +226,7 @@ composed of several keywords. Specifically:</p>
 <li><code class="docutils literal notranslate"><span class="pre">Bootstrap</span></code>: references the kind of base you want to use (e.g., docker,
 debootstrap, shub). For example, a shub bootstrap will pull
 containers for shub as bases. A Docker bootstrap will pull docker
-layers to start your image. For a full list see <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/build_a_container.html">build</a></li>
+layers to start your image. For a full list see <a class="reference internal" href="build_a_container.html#build-a-container"><span class="std std-ref">build</span></a></li>
 <li><code class="docutils literal notranslate"><span class="pre">From</span></code>: is the named container (shub) or reference to layers (Docker) that
 you want to use (e.g., vsoch/hello-world)</li>
 </ul>
@@ -236,13 +236,13 @@ in the header.</div>
 <div class="line">For example, a very minimal Singularity Hub build might look like
 this:</div>
 </div>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">shub</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: shub
 
-<span class="n">From</span><span class="p">:</span> <span class="n">vsoch</span><span class="o">/</span><span class="n">hello</span><span class="o">-</span><span class="n">world</span>
+From: vsoch/hello-world
 </pre></div>
 </div>
 <p>A build that uses a mirror to install Centos-7 might look like this:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Bootstrap: yum
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: yum
 
 OSVersion: 7
 
@@ -254,14 +254,14 @@ Include: yum
 <p>Each build base requires particular details during build time. You can
 read about them and see examples at the following links:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-shub">shub</a> (images hosted on Singularity Hub)</li>
-<li><a class="reference external" href="http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-docker-module">docker</a> (images hosted on Docker Hub)</li>
-<li><a class="reference external" href="http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-localimage">localimage</a> (images saved on your machine)</li>
-<li><a class="reference external" href="http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-yum">yum</a> (yum based systems such as CentOS and Scientific Linux)</li>
-<li><a class="reference external" href="http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-debootstrap">debootstrap</a> (apt based systems such as Debian and Ubuntu)</li>
-<li><a class="reference external" href="http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-arch">arch</a> (Arch Linux)</li>
-<li><a class="reference external" href="http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-busybox">busybox</a> (BusyBox)</li>
-<li><a class="reference external" href="http://singularity-userdoc.readthedocs.io/en/latest/appendix.html#build-zypper">zypper</a> (zypper based systems such as Suse and OpenSuse)</li>
+<li><a class="reference internal" href="appendix.html#build-shub"><span class="std std-ref">shub</span></a> (images hosted on Singularity Hub)</li>
+<li><a class="reference internal" href="appendix.html#build-docker-module"><span class="std std-ref">docker</span></a> (images hosted on Docker Hub)</li>
+<li><a class="reference internal" href="appendix.html#build-localimage"><span class="std std-ref">localimage</span></a> (images saved on your machine)</li>
+<li><a class="reference internal" href="appendix.html#build-yum"><span class="std std-ref">yum</span></a> (yum based systems such as CentOS and Scientific Linux)</li>
+<li><a class="reference internal" href="appendix.html#build-debootstrap"><span class="std std-ref">debootstrap</span></a> (apt based systems such as Debian and Ubuntu)</li>
+<li><a class="reference internal" href="appendix.html#build-arch"><span class="std std-ref">arch</span></a> (Arch Linux)</li>
+<li><a class="reference internal" href="appendix.html#build-busybox"><span class="std std-ref">busybox</span></a> (BusyBox)</li>
+<li><a class="reference internal" href="appendix.html#build-zypper"><span class="std std-ref">zypper</span></a> (zypper based systems such as Suse and OpenSuse)</li>
 </ul>
 </div>
 <div class="section" id="sections">
@@ -273,25 +273,25 @@ fails, the build process will halt.
 Let’s add each section to our container to see how it works. For each
 section, we will build the container from the recipe (a file called
 Singularity) as follows:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build roar.simg Singularity
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build roar.simg Singularity
 </pre></div>
 </div>
 <div class="section" id="help">
-<h4>%help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h4>
-<p>You don’t need to do much programming to add a <code class="docutils literal notranslate"><span class="pre">%help</span></code>
+<span id="id2"></span><h4>%help<a class="headerlink" href="#help" title="Permalink to this headline">¶</a></h4>
+<p id="sec-help">You don’t need to do much programming to add a <code class="docutils literal notranslate"><span class="pre">%help</span></code>
 section to your container. Just write it into a section:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">docker</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
-<span class="n">From</span><span class="p">:</span> <span class="n">ubuntu</span>
+From: ubuntu
 
 
-<span class="o">%</span><span class="n">help</span>
+%help
 
-<span class="n">Help</span> <span class="n">me</span><span class="o">.</span> <span class="n">I</span><span class="s1">&#39;m in the container.</span>
+Help me. I&#39;m in the container.
 </pre></div>
 </div>
 <p>And it will work when the user asks the container for help.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity help roar.simg
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity help roar.simg
 
 Help me. I&#39;m in the container.
 </pre></div>
@@ -310,7 +310,7 @@ container. For &gt;2.3 you can add files to the container (added before
 to move the file into the container, but copying during <code class="docutils literal notranslate"><span class="pre">%post</span></code> was not. Let’s
 add a setup to our current container, just writing a file to the root
 of the image:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
 From: ubuntu
 
@@ -330,7 +330,7 @@ Help me. I&#39;m in the container.
 <p>Importantly, notice that the avocados file isn’t relative to
 $SINGULARITY_ROOTFS, so we would expect it not to be in the image. Is
 tacos there?</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity exec roar.simg ls /
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity exec roar.simg ls /
 
 bin   environment  lib    mnt   root  scif     sys        usr
 
@@ -341,7 +341,7 @@ dev   home     media  proc  sbin  srv      tmp
 </div>
 <p>Yes! And avocados.txt isn’t inside the image, but in our present working
 directory:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ ls
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ ls
 
 avocados.txt   roar.simg   Singularity
 </pre></div>
@@ -359,7 +359,7 @@ Files are copied <strong>before</strong> any <code class="docutils literal notra
 Singularity versions &gt;2.3. If you are using a legacy version, files
 are copied after <code class="docutils literal notranslate"><span class="pre">%post</span></code> so you must do this via <code class="docutils literal notranslate"><span class="pre">%setup</span></code>. Let’s add the avocado.txt
 into the container, to join tacos.txt.</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
 From: ubuntu
 
@@ -394,7 +394,7 @@ Help me. I&#39;m in the container.
 <p>Notice that I’m adding the same file to two different places. For the
 first, I’m adding the single file to the root of the image. For the
 second, I’m adding it to opt. Does it work?</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity exec roar.simg ls /
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity exec roar.simg ls /
 
  singularity exec roar.simg ls /
 
@@ -418,7 +418,7 @@ $ singularity exec roar.simg ls /opt
 They will be stored in the file <code class="docutils literal notranslate"><span class="pre">/.singularity.d/labels.json</span></code> as metadata within your container. The
 general format is a <code class="docutils literal notranslate"><span class="pre">LABELNAME</span></code> followed by a <code class="docutils literal notranslate"><span class="pre">LABELVALUE</span></code>. Labels from Docker bootstraps will
 be carried forward here. Let’s add to our example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
 From: ubuntu
 
@@ -450,7 +450,7 @@ Help me. I&#39;m in the container.
 </pre></div>
 </div>
 <p>The easiest way to see labels is to inspect the image:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity inspect roar.simg
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity inspect roar.simg
 
 {
 
@@ -480,7 +480,7 @@ Help me. I&#39;m in the container.
 </pre></div>
 </div>
 <p>You’ll notice some other labels that are captured automatically from the
-build process. You can read more about labels and metadata <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/environment_and_metadata.html">here</a>.</p>
+build process. You can read more about labels and metadata <a class="reference internal" href="environment_and_metadata.html#environment-and-metadata"><span class="std std-ref">here</span></a>.</p>
 </div>
 <div class="section" id="environment">
 <h4>%environment<a class="headerlink" href="#environment" title="Permalink to this headline">¶</a></h4>
@@ -501,7 +501,7 @@ folder is sourced.</li>
 conventions that you might use in a bashrc or profile. In the example
 below, the variables <code class="docutils literal notranslate"><span class="pre">VADER</span></code> and <code class="docutils literal notranslate"><span class="pre">LUKE</span></code> would not be available during build, but when
 the container is finished and run:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
 From: ubuntu
 
@@ -547,7 +547,7 @@ Help me. I&#39;m in the container.
 %environment section at build time, refer to this issue. When the
 container is finished, you can easily see environment variables also
 with inspect, and this is done by showing the file produced above:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity inspect -e roar.simg # Custom environment shell code should follow
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity inspect -e roar.simg # Custom environment shell code should follow
 
 
     VADER=badguy
@@ -562,15 +562,15 @@ with inspect, and this is done by showing the file produced above:</p>
 <p>or in the case of variables generated at build time, you can add
 environment variables to your container in the <code class="docutils literal notranslate"><span class="pre">%post</span></code> section (see below) using
 the following syntax:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>%post
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%post
 
     echo &#39;export JAWA_SEZ=wutini&#39; &gt;&gt; $SINGULARITY_ENVIRONMENT
 </pre></div>
 </div>
 <p>When we rebuild, is it added to the environment?</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">exec</span> <span class="n">roar</span><span class="o">.</span><span class="n">simg</span> <span class="n">env</span> <span class="o">|</span> <span class="n">grep</span> <span class="n">JAWA</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>singularity exec roar.simg env | grep JAWA
 
-<span class="n">JAWA_SEZ</span><span class="o">=</span><span class="n">wutini</span>
+JAWA_SEZ=wutini
 </pre></div>
 </div>
 <p>Where are all these environment variables going? Inside the container
@@ -581,7 +581,7 @@ At runtime, scripts in <code class="docutils literal notranslate"><span class="p
 in <code class="docutils literal notranslate"><span class="pre">$SINGULARITY_ENVIRONMENT</span></code> take precedence over those added via <code class="docutils literal notranslate"><span class="pre">%environment</span></code>. Note that you won’t see
 these variables in the inspect output, as inspect only shows the
 contents added from <code class="docutils literal notranslate"><span class="pre">%environment</span></code>.
-See <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/environment_and_metadata.html">Environment and Metadata</a> for more information about
+See <a class="reference internal" href="environment_and_metadata.html#environment-and-metadata"><span class="std std-ref">Environment and Metadata</span></a> for more information about
 the <code class="docutils literal notranslate"><span class="pre">%labels</span></code> and <code class="docutils literal notranslate"><span class="pre">%environment</span></code> sections.</p>
 </div>
 <div class="section" id="post">
@@ -592,41 +592,41 @@ setup will live, including making directories, and installing software
 and libraries. We will jump from our simple use case to show a more
 realistic scientific container. Here we are installing yum, openMPI, and
 other dependencies for a Centos7 bootstrap:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">post</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%post
 
-    <span class="n">echo</span> <span class="s2">&quot;Installing Development Tools YUM group&quot;</span>
+    echo &quot;Installing Development Tools YUM group&quot;
 
-    <span class="n">yum</span> <span class="o">-</span><span class="n">y</span> <span class="n">groupinstall</span> <span class="s2">&quot;Development Tools&quot;</span>
+    yum -y groupinstall &quot;Development Tools&quot;
 
-    <span class="n">echo</span> <span class="s2">&quot;Installing OpenMPI into container...&quot;</span>
-
-
-    <span class="c1"># Here we are at the base, /, of the container</span>
-
-    <span class="n">git</span> <span class="n">clone</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="nb">open</span><span class="o">-</span><span class="n">mpi</span><span class="o">/</span><span class="n">ompi</span><span class="o">.</span><span class="n">git</span>
+    echo &quot;Installing OpenMPI into container...&quot;
 
 
-    <span class="c1"># Now at /ompi</span>
+    # Here we are at the base, /, of the container
 
-    <span class="n">cd</span> <span class="n">ompi</span>
-
-    <span class="o">./</span><span class="n">autogen</span><span class="o">.</span><span class="n">pl</span>
-
-    <span class="o">./</span><span class="n">configure</span> <span class="o">--</span><span class="n">prefix</span><span class="o">=/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span>
-
-    <span class="n">make</span>
-
-    <span class="n">make</span> <span class="n">install</span>
+    git clone https://github.com/open-mpi/ompi.git
 
 
-    <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mpicc</span> <span class="n">examples</span><span class="o">/</span><span class="n">ring_c</span><span class="o">.</span><span class="n">c</span> <span class="o">-</span><span class="n">o</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mpi_ring</span>
+    # Now at /ompi
+
+    cd ompi
+
+    ./autogen.pl
+
+    ./configure --prefix=/usr/local
+
+    make
+
+    make install
+
+
+    /usr/local/bin/mpicc examples/ring_c.c -o /usr/bin/mpi_ring
 </pre></div>
 </div>
 <p>You cannot copy files from the host to your container in this section,
 but you can of course download with commands like <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> and <code class="docutils literal notranslate"><span class="pre">wget</span></code> and <code class="docutils literal notranslate"><span class="pre">curl</span></code>.</p>
 </div>
 <div class="section" id="runscript">
-<h4>%runscript<a class="headerlink" href="#runscript" title="Permalink to this headline">¶</a></h4>
+<span id="id3"></span><h4>%runscript<a class="headerlink" href="#runscript" title="Permalink to this headline">¶</a></h4>
 <p id="sec-runscript">The <code class="docutils literal notranslate"><span class="pre">%runscript</span></code> is another scriptlet, but it does not get executed during
 bootstrapping. Instead it gets persisted within the container to a
 file (or symlink for later versions) called <code class="docutils literal notranslate"><span class="pre">singularity</span></code> which is the execution
@@ -636,7 +636,7 @@ When the <code class="docutils literal notranslate"><span class="pre">%runscript
 script at runtime, this means that you can (and should) manage
 argument processing from within your runscript. Here is an example of
 how to do that, adding to our work in progress:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
 From: ubuntu
 
@@ -703,7 +703,7 @@ Singularity). This makes it so the runscript shell process ceases to
 exist, and the only process running inside this container is the called
 echo command. This could easily be another program like python, or an
 analysis script. Running it, it works as expected:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity run roar.simg
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity run roar.simg
 
 Rooooar!
 
@@ -729,9 +729,9 @@ also execute this scriptlet through the container itself, such that you
 can always test the validity of the container itself as you transport it
 to different hosts. Extending on the above Open MPI <code class="docutils literal notranslate"><span class="pre">%post</span></code>, consider this real
 world example:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">%</span><span class="n">test</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%test
 
-    <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="n">local</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mpirun</span> <span class="o">--</span><span class="n">allow</span><span class="o">-</span><span class="n">run</span><span class="o">-</span><span class="k">as</span><span class="o">-</span><span class="n">root</span> <span class="o">/</span><span class="n">usr</span><span class="o">/</span><span class="nb">bin</span><span class="o">/</span><span class="n">mpi_test</span>
+    /usr/local/bin/mpirun --allow-run-as-root /usr/bin/mpi_test
 </pre></div>
 </div>
 <p>This is a simple Open MPI test to ensure that the MPI is build
@@ -739,7 +739,7 @@ properly and communicates between processes as it should.
 If you want to build without running tests (for example, if the test
 needs to be done in a different environment), you can do so with the
 <code class="docutils literal notranslate"><span class="pre">--notest</span></code> argument:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build --notest mpirun.simg Singularity
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build --notest mpirun.simg Singularity
 </pre></div>
 </div>
 <p>This argument is useful in cases where you need hardware that is
@@ -755,102 +755,102 @@ different apps that each have their own runscripts and custom
 environments? In some circumstances, it may be redundant to build
 different containers for each app with almost equivalent dependencies.</p>
 <p>Starting in Singularity 2.4 all of the above commands can also be used
-in the context of internal modules called <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/reproducible_scif_apps.html">apps</a> based on the <a class="reference external" href="https://sci-f.github.io/">Standard
-Container Integration Format</a>. For details on apps, see the <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/reproducible_scif_apps.html">apps</a>
+in the context of internal modules called <a class="reference internal" href="reproducible_scif_apps.html#reproducible-scif-apps"><span class="std std-ref">apps</span></a> based on the <a class="reference external" href="https://sci-f.github.io/">Standard
+Container Integration Format</a>. For details on apps, see the <a class="reference internal" href="reproducible_scif_apps.html#reproducible-scif-apps"><span class="std std-ref">apps</span></a>
 documentation. For a quick rundown of adding an app to your container,
 here is an example runscript:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Bootstrap</span><span class="p">:</span> <span class="n">docker</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
-<span class="n">From</span><span class="p">:</span> <span class="n">ubuntu</span>
-
-
-<span class="o">%</span><span class="n">environment</span>
-
-    <span class="n">VADER</span><span class="o">=</span><span class="n">badguy</span>
-
-    <span class="n">LUKE</span><span class="o">=</span><span class="n">goodguy</span>
-
-    <span class="n">SOLO</span><span class="o">=</span><span class="n">someguy</span>
-
-    <span class="n">export</span> <span class="n">VADER</span> <span class="n">LUKE</span> <span class="n">SOLO</span>
+From: ubuntu
 
 
-<span class="o">%</span><span class="n">labels</span>
+%environment
 
-   <span class="n">Maintainer</span> <span class="n">Vanessasaur</span>
+    VADER=badguy
 
+    LUKE=goodguy
 
-<span class="c1">##############################</span>
+    SOLO=someguy
 
-<span class="c1"># foo</span>
-
-<span class="c1">##############################</span>
-
-
-<span class="o">%</span><span class="n">apprun</span> <span class="n">foo</span>
-
-    <span class="n">exec</span> <span class="n">echo</span> <span class="s2">&quot;RUNNING FOO&quot;</span>
+    export VADER LUKE SOLO
 
 
-<span class="o">%</span><span class="n">applabels</span> <span class="n">foo</span>
+%labels
 
-   <span class="n">BESTAPP</span><span class="o">=</span><span class="n">FOO</span>
-
-   <span class="n">export</span> <span class="n">BESTAPP</span>
+   Maintainer Vanessasaur
 
 
-<span class="o">%</span><span class="n">appinstall</span> <span class="n">foo</span>
+##############################
 
-   <span class="n">touch</span> <span class="n">foo</span><span class="o">.</span><span class="n">exec</span>
+# foo
 
-
-<span class="o">%</span><span class="n">appenv</span> <span class="n">foo</span>
-
-    <span class="n">SOFTWARE</span><span class="o">=</span><span class="n">foo</span>
-
-    <span class="n">export</span> <span class="n">SOFTWARE</span>
+##############################
 
 
-<span class="o">%</span><span class="n">apphelp</span> <span class="n">foo</span>
+%apprun foo
 
-    <span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">help</span> <span class="k">for</span> <span class="n">foo</span><span class="o">.</span>
-
-
-<span class="o">%</span><span class="n">appfiles</span> <span class="n">foo</span>
-
-   <span class="n">avocados</span><span class="o">.</span><span class="n">txt</span>
+    exec echo &quot;RUNNING FOO&quot;
 
 
+%applabels foo
 
-<span class="c1">##############################</span>
+   BESTAPP=FOO
 
-<span class="c1"># bar</span>
-
-<span class="c1">##############################</span>
-
-
-<span class="o">%</span><span class="n">apphelp</span> <span class="n">bar</span>
-
-    <span class="n">This</span> <span class="ow">is</span> <span class="n">the</span> <span class="n">help</span> <span class="k">for</span> <span class="n">bar</span><span class="o">.</span>
+   export BESTAPP
 
 
-<span class="o">%</span><span class="n">applabels</span> <span class="n">bar</span>
+%appinstall foo
 
-   <span class="n">BESTAPP</span><span class="o">=</span><span class="n">BAR</span>
-
-   <span class="n">export</span> <span class="n">BESTAPP</span>
+   touch foo.exec
 
 
-<span class="o">%</span><span class="n">appinstall</span> <span class="n">bar</span>
+%appenv foo
 
-    <span class="n">touch</span> <span class="n">bar</span><span class="o">.</span><span class="n">exec</span>
+    SOFTWARE=foo
+
+    export SOFTWARE
 
 
-<span class="o">%</span><span class="n">appenv</span> <span class="n">bar</span>
+%apphelp foo
 
-    <span class="n">SOFTWARE</span><span class="o">=</span><span class="n">bar</span>
+    This is the help for foo.
 
-    <span class="n">export</span> <span class="n">SOFTWARE</span>
+
+%appfiles foo
+
+   avocados.txt
+
+
+
+##############################
+
+# bar
+
+##############################
+
+
+%apphelp bar
+
+    This is the help for bar.
+
+
+%applabels bar
+
+   BESTAPP=BAR
+
+   export BESTAPP
+
+
+%appinstall bar
+
+    touch bar.exec
+
+
+%appenv bar
+
+    SOFTWARE=bar
+
+    export SOFTWARE
 </pre></div>
 </div>
 <p>Importantly, note that the apps can exist alongside any and all of the
@@ -862,7 +862,7 @@ anywhere in the file after the header. The primary difference is now
 the container can perform any of it’s primary functions in the context
 of an app:</p>
 <p><strong>What apps are installed in the container?</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity apps roar.simg
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity apps roar.simg
 
 bar
 
@@ -870,15 +870,15 @@ foo
 </pre></div>
 </div>
 <p><strong>Help me with bar!</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity help --app bar roar.simg
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity help --app bar roar.simg
 
 This is the help for bar.
 </pre></div>
 </div>
 <p><strong>Run foo</strong></p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">singularity</span> <span class="n">run</span> <span class="o">--</span><span class="n">app</span> <span class="n">foo</span> <span class="n">roar</span><span class="o">.</span><span class="n">simg</span>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>singularity run --app foo roar.simg
 
-<span class="n">RUNNING</span> <span class="n">FOO</span>
+RUNNING FOO
 </pre></div>
 </div>
 <p><strong>Show me the custom environments</strong></p>
@@ -886,7 +886,7 @@ This is the help for bar.
 each of foo and bar? We can execute a command to search the list of
 active environment variables with grep to see if the variable changes
 depending on the app we specify:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ singularity exec --app foo roar.simg env | grep SOFTWARE
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity exec --app foo roar.simg env | grep SOFTWARE
 
 SOFTWARE=foo
 
@@ -908,7 +908,7 @@ throughs, see <a class="reference external" href="https://sci-f.github.io/">SCI-
 <h2>Best Practices for Build Recipes<a class="headerlink" href="#best-practices-for-build-recipes" title="Permalink to this headline">¶</a></h2>
 <p>When crafting your recipe, it is best to consider the following:</p>
 <ol class="arabic simple">
-<li>To make your container internally modular, use <a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/reproducible_scif_apps.html#reproducible-sci-f-apps">SCI-F apps</a>. Shared dependencies
+<li>To make your container internally modular, use <a class="reference internal" href="reproducible_scif_apps.html#reproducible-scif-apps"><span class="std std-ref">SCI-F apps</span></a>. Shared dependencies
 (between app modules) can go under <code class="docutils literal notranslate"><span class="pre">%post</span></code>.</li>
 <li>For global installs to <code class="docutils literal notranslate"><span class="pre">%post</span></code>, install packages, programs, data, and files
 into operating system locations (e.g. not <code class="docutils literal notranslate"><span class="pre">/home</span></code>, <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> , or any other
@@ -927,7 +927,7 @@ sandbox that has been manually changed. This ensures greatest
 possibility of reproducibility and mitigates the black box effect.</li>
 </ol>
 <p>Are you a recipe pro and now ready to build? Take a look at the
-<a class="reference external" href="https://singularity-userdoc.readthedocs.io/en/latest/build_a_container.html">build</a> documentation.</p>
+<a class="reference internal" href="build_a_container.html#build-a-container"><span class="std std-ref">build</span></a> documentation.</p>
 </div>
 </div>
 
@@ -973,7 +973,7 @@ possibility of reproducibility and mitigates the black box effect.</li>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'1.0',
+            VERSION:'2.5.1',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
