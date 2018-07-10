@@ -113,6 +113,13 @@ html_theme_options = {
     'style_external_links': True,
 }
 
+html_context = {
+    'display_github': True,
+    'github_user': 'singularityware',
+    'github_repo': 'singularity-userdocs',
+    'github_version': 'master',   
+}
+
 # Add any paths that contain custom themes here, relative to this directory.
 #html_theme_path = []
 
