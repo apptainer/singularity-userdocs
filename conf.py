@@ -51,7 +51,7 @@ copyright = u'2018, Singularity'
 # built documents.
 #
 # The short X.Y version.
-version = '1.0'
+version = '2.5.1'
 # The full version, including alpha/beta/rc tags.
 release = '2.5.1'
 
