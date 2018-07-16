@@ -34,7 +34,7 @@ This will generate a folder called **_build** which inside has the folder **html
 This is very similar to the previous step, you will need to execute on command line:
 
 ```
-make latex
+make latexpdf
 ```
 with this, a new folder inside **_build** will be generated, called **latex** and in there you can find the pdf file generated from RST (by default it is called "ReadTheDocsTemplate.pdf").
 
