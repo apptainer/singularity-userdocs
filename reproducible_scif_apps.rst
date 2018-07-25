@@ -117,7 +117,7 @@ organization and modularity:
 -  All software must share the same metadata, environment, and labels.
 
 Under these conditions, containers are at best black boxes with unclear
-delineation between software provided, and only one context of running
+delineation between software provided, and only one context for running
 anything. The container creator shouldn’t need to spend inordinate
 amounts of time writing custom runscripts to support multiple functions
 and inputs. Each of ``foo`` and ``bar`` should be easy to define, and have its own
