@@ -116,7 +116,7 @@ organization and modularity:
 
 -  All software must share the same metadata, environment, and labels.
 
-Under these conditions, containers are at best block boxes with unclear
+Under these conditions, containers are at best black boxes with unclear
 delineation between software provided, and only one context of running
 anything. The container creator shouldn’t need to spend inordinate
 amounts of time writing custom runscripts to support multiple functions
@@ -258,7 +258,7 @@ etc. Here we are looking at the environment active for lolcat:
 
 Let’s talk about the output of the above in sections, you will notice
 some interesting things! First, notice that the app’s ``bin`` has been added to
-the path, and it’s ``lib`` added to the ``LD_LIBRARY_PATH`` . This means that anything you drop in
+the path, and its ``lib`` added to the ``LD_LIBRARY_PATH`` . This means that anything you drop in
 either will automatically be added. You don’t need to make these folders
 either, they are created for you.
 
@@ -340,10 +340,10 @@ We can summarize these observations about using apps:
 
 -  locations for input, output, and general data are exposed. It’s up to
    you how you use these, but you can predictably know that a well made
-   app will look for inputs and outputs in it’s specific folder.
+   app will look for inputs and outputs in its specific folder.
 
--  environment variables are provided for the app’s root, it’s data, and
-   it’s name
+-  environment variables are provided for the app’s root, its data, and
+   its name
 
 Sections
 ========
@@ -353,7 +353,7 @@ The following string is parsed as the name of the application, and
 this folder is created, in lowercase, under ``/scif/apps`` if it doesn’t exist. A
 singularity metadata folder, .singularity.d, equivalent to the
 container’s main folder, is generated inside the application. An
-application thus is like a smaller image inside of it’s parent.
+application thus is like a smaller image inside of its parent.
 Specifically, SCI-F defines the following new sections for the build
 recipe, where each is optional for 0 or more apps:
 
