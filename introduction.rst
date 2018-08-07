@@ -125,7 +125,7 @@ simply run a command inside of a container image as themselves. Here
 is a scenario to help articulate this:
 
 %SERVER and %CLUSTER are large expensive systems with resources far
-exceeding those of my personal workstation. But because the are
+exceeding those of my personal workstation. But because they are
 shared systems, no users have root access. The environments are
 tightly controlled and managed by a staff of system administrators.
 To keep these systems secure, only the system administrators are
