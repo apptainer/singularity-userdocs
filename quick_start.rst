@@ -20,23 +20,7 @@ system administrator.
 Installation
 ------------
 
-There are many ways to :ref:`install Singularity <installation>` but this quick start guide will only cover one.
-
-.. code-block:: none
-
-    git clone https://github.com/singularityware/singularity.git
-
-    cd singularity
-
-    ./autogen.sh
-
-    ./configure --prefix=/usr/local
-
-    make
-
-    sudo make install
-
-Singularity must be installed as root to function properly.
+To install Singularity please follow the instructions on our github here https://github.com/singularityware/singularity/blob/master/INSTALL.md
 
 -------------------------------------
 Overview of the Singularity Interface
