@@ -20,7 +20,7 @@ system administrator.
 Installation
 ------------
 
-To install Singularity please follow the instructions on our readthedoc pages here :ref:`install Singularity <installation>` 
+To install Singularity please follow the instructions on our github here https://github.com/singularityware/singularity/blob/master/INSTALL.md
 
 -------------------------------------
 Overview of the Singularity Interface
