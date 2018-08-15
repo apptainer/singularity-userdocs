@@ -30,7 +30,7 @@ This project maintains the following structure:
 
 ### **The conf.py file**
 
-This file contains the themes, extensions and naming for files that the compilation process produces. Some important elements are the following:
+This file contains the themes, extensions, variables and naming for files that the compilation process produces. Some important elements are the following:
 
 - ``version`` : Describes the current version (This one is a short version of the release)
 - ``release``: Describes the current release (Complete or full version description. For a matter of simplicity we maintain both at the same value)
