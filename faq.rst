@@ -63,7 +63,7 @@ How do I request an installation on my resource?
 ================================================
 
 It’s important that your administrator have all of the resources available to him or her to make a decision to install Singularity.
-We’ve prepared a `helpful guide <>`_ that you can send to him or her to start a conversation. If there are any unanswered questions, we recommend
+We’ve prepared a :ref:`helpful guide <installation-request>` that you can send to him or her to start a conversation. If there are any unanswered questions, we recommend
 that you `reach out <https://www.sylabs.io/contact/>`_.
 
 -----------------------

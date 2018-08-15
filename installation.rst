@@ -171,9 +171,9 @@ What should you do next? You can check out the :ref:`quickstart <quick-start>` g
 interact with your container via the :ref:`shell <shell>` , :ref:`exec <exec>` , or :ref:`run <run>` commands. Or click **next**
 below to continue reading.
 
-------------------------------------------
-Running Singularity with Vagrant (Windows)
-------------------------------------------
+-------------------
+Install on Windows
+-------------------
 
 Setup
 =====
@@ -473,7 +473,7 @@ Note that the tests will fail if singularity is not already installed on your sy
 Install on your Cluster Resource
 ================================
 
-In the case that you want Singularity installed on a shared resource, you will need to talk to the administrator of the resource. Toward this goal, we’ve prepared a `helpful guide <>`_ that you can send to him or her. If you have unanswered questions, please `reach out <https://www.sylabs.io/contact/>`_..
+In the case that you want Singularity installed on a shared resource, you will need to talk to the administrator of the resource. Toward this goal, we’ve prepared a :ref:`helpful guide <installation-request>` that you can send to him or her. If you have unanswered questions, please `reach out <https://www.sylabs.io/contact/>`_..
 
 
 --------------
@@ -626,6 +626,10 @@ Presentations
 -------------
 
 - Contributed Content is a good source of presentations, tutorials, and links.
+
+
+
+.. _installation-request:
 
 Installation Request
 ====================
