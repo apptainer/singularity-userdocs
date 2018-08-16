@@ -124,8 +124,6 @@ this is the development for Singularity 3.0.
 
     [ Read INSTALL.md -- Some major changes from pre-3.0 ]
 
-    $ git fetch
-
     $ ./mconfig
 
     $ cd builddir
