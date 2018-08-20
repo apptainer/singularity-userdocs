@@ -19,37 +19,32 @@ Additionally, the name “Singularity” for me (Greg) also stems back from my p
 where the Linux Bootable Business Card (LNX-BBC) was developed. The BBC, was a Linux rescue disk which paved the way for all live CD bootable
 distributions using a compressed single image file system called the “singularity”.
 
-The name has **NOTHING** to do with Kurzweil’s (among others) prediction that artificial intelligence will abruptly have the ability to reprogram itself,
- surpass that of human intelligence and take control of the planet. If you are interested in this may I suggest the movie **Terminator 2: Judgment Day**.
+The name has  **NOTHING**  to do with Kurzweil’s (among others) prediction that artificial intelligence will abruptly have the ability to reprogram itself,
+surpass that of human intelligence and take control of the planet. If you are interested in this may I suggest the movie Terminator 2: Judgment Day.
 
 What is so special about Singularity?
 =====================================
 
 While Singularity is a container solution (like many others), Singularity differs in it’s primary design goals and architecture:
 
-#. **Reproducible software stacks:** These must be easily verifiable via checksum or cryptographic signature in such a manner that
- does not change formats (e.g. splatting a tarball out to disk). By default Singularity uses a container image file which can be checksummed,
-  signed, and thus easily verified and/or validated.
+#. **Reproducible software stacks:** These must be easily verifiable via checksum or cryptographic signature in such a manner that does not change formats (e.g. splatting a tarball out to disk). By default Singularity uses a container image file which can be checksummed, signed, and thus easily verified and/or validated.
 
-#. **Mobility of compute:** Singularity must be able to transfer (and store) containers in a manner that works with standard data mobility tools
-(rsync, scp, gridftp, http, NFS, etc..) and maintain software and data controls compliancy (e.g. HIPPA, nuclear, export, classified, etc..)
+#. **Mobility of compute:** Singularity must be able to transfer (and store) containers in a manner that works with standard data mobility tools (rsync, scp, gridftp, http, NFS, etc..) and maintain software and data controls compliancy (e.g. HIPPA, nuclear, export, classified, etc..)
 
-#. **Compatibility with complicated architectures:** The runtime must be immediately compatible with existing HPC, scientific, compute farm and
- even enterprise architectures any of which maybe running legacy kernel versions (including RHEL6 vintage systems) which do not support advanced
-  namespace features (e.g. the user namespace)
+#. **Compatibility with complicated architectures:** The runtime must be immediately compatible with existing HPC, scientific, compute farm and even enterprise architectures any of which maybe running legacy kernel versions (including RHEL6 vintage systems) which do not support advanced namespace features (e.g. the user namespace)
 
-#. **Security model:** Unlike many other container systems designed to support trusted users running trusted containers we must support the opposite
- model of untrusted users running untrusted containers. This changes the security paradigm considerably and increases the breadth of use cases
- we can support.
+#. **Security model:** Unlike many other container systems designed to support trusted users running trusted containers we must support the opposite model of untrusted users running untrusted containers. This changes the security paradigm considerably and increases the breadth of use cases we can support.
+
 
 Which namespaces are virtualized? Is that select-able?
 ======================================================
 
+
 That is up to you!
 
 While some namespaces, like newns (mount) and fs (file system) must be virtualized, all of the others are conditional depending on what you want to do.
- For example, if you have a workflow that relies on communication between containers (e.g. MPI), it is best to not isolate any more than absolutely
-  necessary to avoid performance regressions. While other tasks are better suited for isolation (e.g. web and data base services).
+For example, if you have a workflow that relies on communication between containers (e.g. MPI), it is best to not isolate any more than absolutely
+necessary to avoid performance regressions. While other tasks are better suited for isolation (e.g. web and data base services).
 
 Namespaces are selected via command line usage and system administration configuration.
 
@@ -73,13 +68,13 @@ Basic Singularity usage
 Do you need administrator privileges to use Singularity?
 ========================================================
 
+
 You generally do not need admin/sudo to use Singularity containers but you do however need admin/root access to install Singularity and for some
- container build functions (for example, building from a recipe, or a writable image).
+container build functions (for example, building from a recipe, or a writable image).
 
 This then defines the work-flow to some extent. If you have a container (whether Singularity or Docker) ready to go, you can run/shell/import
 without root access. If you want to build a new Singularity container image from scratch it must be built and configured on a host where you have root
-access (this can be a physical system or on a VM). And of course once the container image has been configured it can be used on a system where you do not
- have root access as long as Singularity has been installed there.
+access (this can be a physical system or on a VM). And of course once the container image has been configured it can be used on a system where you do not have root access as long as Singularity has been installed there.
 
 What if I don't want to install Singularity on my computer?
 ===========================================================
@@ -91,9 +86,13 @@ You can then interact with them easily where Singularity is installed (e.g., on 
 .. code-block:: none
 
     singularity shell shub://vsoch/hello-world
+
     singularity run shub://vsoch/hello-world
+
     singularity pull shub://vsoch/hello-world
+
     singularity build hello-world.simg shub://vsoch/hello-world # redundant, you would already get an image
+
 
 Can you edit/modify a Singularity container once it has been instantiated?
 ==========================================================================
@@ -115,8 +114,8 @@ How are external file systems and paths handled in a Singularity Container?
 ===========================================================================
 
 Because Singularity is based on container principals, when an application is run from within a Singularity container its default
- view of the file system is different from how it is on the host system. This is what allows the environment to be portable.
- This means that root (‘/’) inside the container is different from the host!
+view of the file system is different from how it is on the host system. This is what allows the environment to be portable.
+This means that root (‘/’) inside the container is different from the host!
 
 Singularity automatically tries to resolve directory mounts such that things will just work and be portable with whatever environment
 you are running on. This means that ``/tmp`` and ``/var/tmp`` are automatically shared into the container as is ``/home``.
@@ -129,6 +128,7 @@ Singularity will not create it for you! You must do that. To create custom mount
 
     singularity run --bind /home/vanessa/Desktop:/data container.img
 
+
 How does Singularity handle networking?
 =======================================
 
@@ -139,10 +139,10 @@ Can Singularity support daemon processes?
 =========================================
 
 Singularity has container “instance” support which allows one to start a container process, within its own namespaces, and use that instance
- like it was a stand alone, isolated system.
+like it was a stand alone, isolated system.
 
 At the moment (as above describes), the network (and UTS) namespace is not well supported, so if you spin up a process daemon, it will exist on
- your host’s network. This means you can run a web server, or any other daemon, from within a container and access it directly from your host.
+your host’s network. This means you can run a web server, or any other daemon, from within a container and access it directly from your host.
 
 Can a Singularity container be multi-threaded?
 ==============================================
@@ -154,8 +154,7 @@ Can a Singularity container be suspended or check-pointed?
 
 Yes and maybe respectively. Any Singularity application can be suspended using standard Linux/Unix signals. Check-pointing requires some preloaded
 libraries to be automatically loaded with the application but because Singularity escapes the hosts library stack, the checkpoint libraries would not
-be loaded. If however you wanted to make a Singularity container that can be check-pointed, you would need to install the checkpoint libraries into the
- Singularity container via the specfile.
+be loaded. If however you wanted to make a Singularity container that can be check-pointed, you would need to install the checkpoint libraries into the Singularity container via the specfile.
 
 On our roadmap is the ability to checkpoint the entire container process thread, and restart it. Keep an eye out for that feature!
 
@@ -163,8 +162,7 @@ Are there any special requirements to use Singularity through an HPC job schedul
 ===================================================================================
 
 Singularity containers can be run via any job scheduler without any modifications to the scheduler configuration or architecture.
-This is because Singularity containers are designed to be run like any application on the system, so within your job script just call Singularity
- as you would any other application!
+This is because Singularity containers are designed to be run like any application on the system, so within your job script just call Singularity as you would any other application!
 
 Does Singularity work in multi-tenant HPC cluster environments?
 ===============================================================
@@ -172,11 +170,10 @@ Does Singularity work in multi-tenant HPC cluster environments?
 Yes! HPC was one of the primary use cases in mind when Singularity was created.
 
 Most people that are currently integrating containers on HPC resources do it by creating virtual clusters within the physical host cluster.
-This precludes the virtual cluster from having access to the host cluster’s high performance fabric, file systems and other investments which make
- an HPC system high performance.
+This precludes the virtual cluster from having access to the host cluster’s high performance fabric, file systems and other investments which make an HPC system high performance.
 
 Singularity on the other hand allows one to keep the high performance in High Performance Computing by containerizing applications and supporting
- a runtime which seamlessly interfaces with the host system and existing environments.
+a runtime which seamlessly interfaces with the host system and existing environments.
 
 Can I run X11 apps through Singularity?
 =======================================
@@ -189,7 +186,7 @@ Can I containerize my MPI application with Singularity and run it properly on an
 Yes! HPC was one of the primary use cases in mind when Singularity was created.
 
 While we know for a fact that Singularity can support multiple MPI implementations, we have spent a considerable effort working with Open MPI
- as well as adding a Singularity module into Open MPI (v2) such that running at extreme scale will be as efficient as possible.
+as well as adding a Singularity module into Open MPI (v2) such that running at extreme scale will be as efficient as possible.
 
 note: We have seen no major performance impact from running a job in a Singularity container.
 
@@ -201,6 +198,7 @@ With Singularity, the MPI usage model is to call ‘mpirun’ from outside the c
 .. code-block:: none
 
     $ mpirun -np 20 singularity exec container.img /path/to/contained_mpi_prog
+
 
 By calling ‘mpirun’ outside the container, we solve several very complicated work-flow aspects. For example, if ‘mpirun’ is called from within the container it must have a method for spawning processes on remote nodes. Historically ssh is used for this which means that there must be an sshd running within the container on the remote nodes, and this sshd process must not conflict with the sshd running on that host! It is also possible for the resource manager to launch the job and (in Open MPI’s case) the Orted processes on the remote system, but that then requires resource manager modification and container awareness.
 

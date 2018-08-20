@@ -8,23 +8,12 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Troubleshooting &mdash; Singularity container 2.5.2 documentation</title>
+  <title>Troubleshooting &mdash; Singularity container 2.6.0 documentation</title>
 
 
 
 
     <link rel="shortcut icon" href="_static/favicon.png"/>
-
-
-
-
-
-
-
-
-
-
-
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -33,8 +22,8 @@
     <link rel="next" title="Appendix" href="appendix.html" />
     <link rel="prev" title="Singularity and Docker" href="singularity_and_docker.html" />
 
-
   <script src="_static/js/modernizr.min.js"></script>
+
 
 </head>
 
@@ -63,7 +52,7 @@
 
 
               <div class="version">
-                2.5.2
+                2.6.0
               </div>
 
 
@@ -113,6 +102,9 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
+
 </ul>
 
 
@@ -195,8 +187,7 @@ ABORT: Aborting with RETVAL=255
 </div>
 <p>The issue here is that during build of a squashfs image, Singularity is
 using the <code class="docutils literal notranslate"><span class="pre">$TMPDIR</span></code> . If your <code class="docutils literal notranslate"><span class="pre">$TMPDIR</span></code> is overflowing (or the mount is very small!) then
-you would see this error. As a test, you can try building a sandbox. If
-this is the issue, then the sandbox should work.</p>
+you would see this error. As a test, you can try building a sandbox. If this is the issue, then the sandbox should work.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo singularity build --sandbox [fatty] Singularity
 </pre></div>
 </div>
@@ -381,42 +372,13 @@ directive with corresponding path:</p>
   </div>
 
 
-  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
-     <span class="rst-current-version" data-toggle="rst-current-version">
-       <span class="fa fa-book"> Singularity Docs - User Guide </span>
-       v: latest
-       <span class="fa fa-caret-down"></span>
-     </span>
-     <div class="rst-other-versions">
-       <dl>
-         <dt>Versions</dt>
-           <dd><a href="https://www.sylabs.io/guides/2.5.2/user-guide/">latest</a></dd>
-           <dd><a href="https://www.sylabs.io/guides/2.5.1/user-guide/">2.5.1</a></dd>
-       </dl>
-       <dl>
-         <dt>Downloads</dt>
-         <dd>
-           <a href="https://www.sylabs.io/guides/2.5.2/user-guide.pdf">Latest PDF</a>
-         </dd>
-         <dd>
-           <a href="https://www.sylabs.io/guides/2.5.1/user-guide.pdf">2.5.1 PDF</a>
-         </dd>
-       </dl>
-       <dl>
-         <dt>Do you want to contribute? </dt>
-           <dd>
-             <a href="https://github.com/singularityware/singularity-userdocs">Find us on GitHub!</a>
-           </dd>
-       </dl>
-
-     </div>
-   </div>
+<script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.5.2',
+            VERSION:'2.6.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

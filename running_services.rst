@@ -29,8 +29,7 @@ the container what would happen?
 Orphan process within unreachable namespaces!
 You would lose control of the process. It would still be running, but
 you couldn’t easily kill or interface with it. This is a called an
-orphan process. Singularity versions less than 2.4 were not designed
-to handle running services properly.
+orphan process. Singularity versions less than 2.4 were not designed to handle running services properly.
 
 ----------------------------------
 Container Instances in Singularity

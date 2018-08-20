@@ -23,6 +23,7 @@ container. To enable this functionality, Singularity will bind
 directories back in via two primary methods: system-defined bind points
 and conditional user-defined bind points.
 
+
 System-defined bind points
 ==========================
 

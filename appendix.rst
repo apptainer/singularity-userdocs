@@ -94,6 +94,7 @@ from the same starting point. For example, you may want to build several contain
 compiler toolchain, or the same base MPI installation. Instead of building these from scratch each time, you could create a base container on
 Singularity Hub and then build new containers from that existing base container adding customizations in ``%post`` , ``%environment``, ``%runscript``, etc.
 
+
 Keywords
 ========
 

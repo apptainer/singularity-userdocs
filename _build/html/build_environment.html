@@ -8,21 +8,9 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Build Environment &mdash; Singularity container 2.5.2 documentation</title>
+  <title>Build Environment &mdash; Singularity container 2.6.0 documentation</title>
 
-
-
-
-    <link rel="shortcut icon" href="_static/favicon.png"/>
-
-
-
-
-
-
-
-
-
+<link rel="shortcut icon" href="_static/favicon.png"/>
 
 
 
@@ -63,7 +51,7 @@
 
 
               <div class="version">
-                2.5.2
+                2.6.0
               </div>
 
 
@@ -119,6 +107,8 @@
 <li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 </ul>
 
 
@@ -355,8 +345,7 @@ to change this, you can again specify the registry name in the URI.</p>
 <p><strong>SINGULARITY_PYTHREADS</strong> The Python modules use threads (workers) to
 download layer files for Docker, and change permissions. By default,
 we will use 9 workers, unless the environment variable <code class="docutils literal notranslate"><span class="pre">SINGULARITY_PYTHREADS</span></code> is defined.
-<strong>SINGULARITY_COMMAND_ASIS</strong> By default, we want to make sure the
-container running process gets passed forward as the current process,
+<strong>SINGULARITY_COMMAND_ASIS</strong> By default, we want to make sure the container running process gets passed forward as the current process,
 so we want to prefix whatever the Docker command or entrypoint is with
 <code class="docutils literal notranslate"><span class="pre">exec</span></code>. We also want to make sure that following arguments get passed, so we
 append <code class="docutils literal notranslate"><span class="pre">&quot;$&#64;&quot;</span></code>. Thus, some entrypoint or cmd might look like this:</p>
@@ -410,43 +399,13 @@ yes/y/1/True/true, etc., then the runscript will remain as <code class="docutils
   </div>
 
 
-
-  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
-     <span class="rst-current-version" data-toggle="rst-current-version">
-       <span class="fa fa-book"> Singularity Docs - User Guide </span>
-       v: latest
-       <span class="fa fa-caret-down"></span>
-     </span>
-     <div class="rst-other-versions">
-       <dl>
-         <dt>Versions</dt>
-           <dd><a href="https://www.sylabs.io/guides/2.5.2/user-guide/">latest</a></dd>
-           <dd><a href="https://www.sylabs.io/guides/2.5.1/user-guide/">2.5.1</a></dd>
-       </dl>
-       <dl>
-         <dt>Downloads</dt>
-         <dd>
-           <a href="https://www.sylabs.io/guides/2.5.2/user-guide.pdf">Latest PDF</a>
-         </dd>
-         <dd>
-           <a href="https://www.sylabs.io/guides/2.5.1/user-guide.pdf">2.5.1 PDF</a>
-         </dd>
-       </dl>
-       <dl>
-         <dt>Do you want to contribute? </dt>
-           <dd>
-             <a href="https://github.com/singularityware/singularity-userdocs">Find us on GitHub!</a>
-           </dd>
-       </dl>
-
-     </div>
-   </div>
+  <script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.5.2',
+            VERSION:'2.6.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

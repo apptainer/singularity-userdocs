@@ -90,9 +90,9 @@ Singularity containers.
 
     $ singularity build lolcow.simg docker://godlovedc/lolcow
 
-------------------------------------------------------
+------------------------------------------------------------
 Creating ``--writable`` images and ``--sandbox`` directories
-------------------------------------------------------
+------------------------------------------------------------
 
 ``--writable``
 ==============
@@ -258,8 +258,7 @@ container, you could re-build only the ``%environment`` section like so:
 
 Under normal build conditions, the Singularity recipe file is saved into
 a container’s meta-data so that there is a record showing how the
-container was built. Using the ``--section`` option may render this meta-data useless,
-so use care if you value reproducibility.
+container was built. Using the ``--section`` option may render this meta-data useless, so use care if you value reproducibility.
 
 ``--notest``
 ============

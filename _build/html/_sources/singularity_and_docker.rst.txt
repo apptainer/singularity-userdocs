@@ -6,8 +6,7 @@ Singularity and Docker
 
 Singularity is good friends with Docker. The reason is because the
 developers use and really like using Docker, and scientists have already
-put much resources into creating Docker images. Thus, one of our early
-goals was to support Docker. What can you do?
+put much resources into creating Docker images. Thus, one of our early goals was to support Docker. What can you do?
 
 -  You don’t need Docker installed
 

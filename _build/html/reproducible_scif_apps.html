@@ -8,23 +8,12 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Reproducible SCI-F Apps &mdash; Singularity container 2.5.2 documentation</title>
+  <title>Reproducible SCI-F Apps &mdash; Singularity container 2.6.0 documentation</title>
 
 
 
 
     <link rel="shortcut icon" href="_static/favicon.png"/>
-
-
-
-
-
-
-
-
-
-
-
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -63,9 +52,8 @@
 
 
               <div class="version">
-                2.5.2
+                2.6.0
               </div>
-
 
 
 
@@ -115,6 +103,8 @@
 <li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 </ul>
 
 
@@ -199,8 +189,7 @@ intended functions. This documentation will walk through some
 rationale, background, and examples of the SCIF integration for
 Singularity containers. For other examples (and a client that works
 across container technologies) see the the <a class="reference external" href="https://sci-f.github.io/">scientific filesystem</a>.
-This page will primarily cover the native Singularity SCIF
-integration.</p>
+This page will primarily cover the native Singularity SCIF integration.</p>
 <p>To start, let’s take a look at this series of steps to install
 dependencies for software foo and bar.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%post
@@ -279,8 +268,8 @@ to the user via a custom runscript (and be a generally decent
 programmer).</li>
 <li>All software must share the same metadata, environment, and labels.</li>
 </ul>
-<p>Under these conditions, containers are at best block boxes with unclear
-delineation between software provided, and only one context of running
+<p>Under these conditions, containers are at best black boxes with unclear
+delineation between software provided, and only one context for running
 anything. The container creator shouldn’t need to spend inordinate
 amounts of time writing custom runscripts to support multiple functions
 and inputs. Each of <code class="docutils literal notranslate"><span class="pre">foo</span></code> and <code class="docutils literal notranslate"><span class="pre">bar</span></code> should be easy to define, and have its own
@@ -406,7 +395,7 @@ etc. Here we are looking at the environment active for lolcat:</p>
 </div>
 <p>Let’s talk about the output of the above in sections, you will notice
 some interesting things! First, notice that the app’s <code class="docutils literal notranslate"><span class="pre">bin</span></code> has been added to
-the path, and it’s <code class="docutils literal notranslate"><span class="pre">lib</span></code> added to the <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> . This means that anything you drop in
+the path, and its <code class="docutils literal notranslate"><span class="pre">lib</span></code> added to the <code class="docutils literal notranslate"><span class="pre">LD_LIBRARY_PATH</span></code> . This means that anything you drop in
 either will automatically be added. You don’t need to make these folders
 either, they are created for you.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>LD_LIBRARY_PATH=/scif/apps/foo/lib::/.singularity.d/libs
@@ -470,9 +459,9 @@ also automatically generated. So what would be a super simple app?</p>
 <li>the bin folder is added to the path</li>
 <li>locations for input, output, and general data are exposed. It’s up to
 you how you use these, but you can predictably know that a well made
-app will look for inputs and outputs in it’s specific folder.</li>
-<li>environment variables are provided for the app’s root, it’s data, and
-it’s name</li>
+app will look for inputs and outputs in its specific folder.</li>
+<li>environment variables are provided for the app’s root, its data, and
+its name</li>
 </ul>
 </div>
 <div class="section" id="sections">
@@ -482,7 +471,7 @@ The following string is parsed as the name of the application, and
 this folder is created, in lowercase, under <code class="docutils literal notranslate"><span class="pre">/scif/apps</span></code> if it doesn’t exist. A
 singularity metadata folder, .singularity.d, equivalent to the
 container’s main folder, is generated inside the application. An
-application thus is like a smaller image inside of it’s parent.
+application thus is like a smaller image inside of its parent.
 Specifically, SCI-F defines the following new sections for the build
 recipe, where each is optional for 0 or more apps:</p>
 <p><strong>%appinstall</strong> corresponds to executing commands within the folder to
@@ -598,18 +587,18 @@ The COW goes moo
 and lib. The following variables are available to you, for each app in
 the container, whenever any app is being run:</p>
 <ul class="simple">
-<li>**SCIF_APPBIN_*: the path to the bin folder, if you want to add
+<li><strong>SCIF_APPBIN_</strong>: the path to the bin folder, if you want to add
 an app that isn’t active to your ‘PATH‘</li>
-<li>**SCIF_APPLIB_*: the path to the lib folder, if you want to add
+<li><strong>SCIF_APPLIB_</strong>: the path to the lib folder, if you want to add
 an app that isn’t active to your ‘LD_LIBRARY_PATH‘</li>
-<li>**SCIF_APPRUN_*: the app’s runscript (so you can call it from
+<li><strong>SCIF_APPRUN_</strong>: the app’s runscript (so you can call it from
 elsewhere)</li>
-<li>**SCIF_APPMETA_*: the path to the metadata folder for the app</li>
-<li>**SCIF_APPENV_*: the path to the primary environment file (for
+<li><strong>SCIF_APPMETA_</strong>: the path to the metadata folder for the app</li>
+<li><strong>SCIF_APPENV_</strong>: the path to the primary environment file (for
 sourcing) if it exists</li>
-<li>**SCIF_APPROOT_*: the app’s install folder</li>
-<li>**SCIF_APPDATA_*: the app’s data folder</li>
-<li>**SCIF_APPLABELS_*: The path to the label.json in the metadata
+<li><strong>SCIF_APPROOT_</strong>: the app’s install folder</li>
+<li><strong>SCIF_APPDATA_</strong>: the app’s data folder</li>
+<li><strong>SCIF_APPLABELS_</strong>: The path to the label.json in the metadata
 folder, if it exists</li>
 </ul>
 <p>Singularity containers are already reproducible in that they package
@@ -809,43 +798,13 @@ asciinema!</p>
   </div>
 
 
-  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
-     <span class="rst-current-version" data-toggle="rst-current-version">
-       <span class="fa fa-book"> Singularity Docs - User Guide </span>
-       v: latest
-       <span class="fa fa-caret-down"></span>
-     </span>
-     <div class="rst-other-versions">
-       <dl>
-         <dt>Versions</dt>
-           <dd><a href="https://www.sylabs.io/guides/2.5.2/user-guide/">latest</a></dd>
-           <dd><a href="https://www.sylabs.io/guides/2.5.1/user-guide/">2.5.1</a></dd>
-       </dl>
-       <dl>
-         <dt>Downloads</dt>
-         <dd>
-           <a href="https://www.sylabs.io/guides/2.5.2/user-guide.pdf">Latest PDF</a>
-         </dd>
-         <dd>
-           <a href="https://www.sylabs.io/guides/2.5.1/user-guide.pdf">2.5.1 PDF</a>
-         </dd>
-       </dl>
-       <dl>
-         <dt>Do you want to contribute? </dt>
-           <dd>
-             <a href="https://github.com/singularityware/singularity-userdocs">Find us on GitHub!</a>
-           </dd>
-       </dl>
-
-     </div>
-   </div>
-
+  <script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.5.2',
+            VERSION:'2.6.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

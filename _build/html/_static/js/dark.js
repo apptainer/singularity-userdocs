@@ -17,6 +17,7 @@ var isdark = false;
             $(".wy-breadcrumbs li a").css("color", "#d7bce1");
             $("footer a").css("color","#d7bce1");
             isdark = true;
+            window.isdark=true;
           }
           else{
             $("footer a").css("color","#9B59B6");

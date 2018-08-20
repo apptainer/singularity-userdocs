@@ -10,8 +10,7 @@ building, running, and managing your containers.
 
 There are generally two ways to get images. You either want to pull an
 image file as is, or (more likely) build your own custom image. We
-will start with talking about build, and the many different use cases
-it affords.
+will start with talking about build, and the many different use cases it affords.
 
 .. _sec:singularityflow:
 
