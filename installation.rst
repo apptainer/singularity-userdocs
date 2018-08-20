@@ -43,17 +43,24 @@ into missing dependencies, try installing them like so:
 
 
 -------------------------
-Install the master branch
+Install from a tag
 -------------------------
 
-The following commands will install the latest version of the `GitHub
-repo <https://github.com/singularityware/singularity>`_ master branch to ``/usr/local``.
+The following commands will install a tagged version of the `GitHub
+repo <https://github.com/singularityware/singularity>`_ to ``/usr/local``.
+This will work for pre 3.0 tags.
 
 .. code-block:: none
 
     $ git clone https://github.com/singularityware/singularity.git
 
     $ cd singularity
+
+    $ git fetch --all
+
+    $ git tag -l
+
+    $ git checkout [TAG]
 
     $ ./autogen.sh
 
@@ -105,8 +112,8 @@ releases <https://github.com/singularityware/singularity/releases>`_ page to ``/
 Install the development branch
 ------------------------------
 
-If you want to test a development branch the routine above should be
-tweaked slightly:
+Primary development it now being done in the master branch. As of now (2018-08-16),
+this is the development for Singularity 3.0.
 
 .. code-block:: none
 
@@ -114,13 +121,11 @@ tweaked slightly:
 
     $ cd singularity
 
-    $ git fetch
+    [ Read INSTALL.md -- Some major changes from pre-3.0 ]
 
-    $ git checkout development
+    $ ./mconfig
 
-    $ ./autogen.sh
-
-    $ ./configure --prefix=/usr/local --sysconfdir=/etc
+    $ cd builddir
 
     $ make
 
