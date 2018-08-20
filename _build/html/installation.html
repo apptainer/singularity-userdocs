@@ -14,6 +14,18 @@
 
 
     <link rel="shortcut icon" href="_static/favicon.png"/>
+
+
+
+
+
+
+
+
+
+
+
+
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -56,6 +68,7 @@
 
 
 
+
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -79,7 +92,7 @@
 <li class="toctree-l1"><a class="reference internal" href="introduction.html">Introduction</a></li>
 <li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="#before-you-begin">Before you begin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="#install-the-master-branch">Install the master branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#install-from-a-tag">Install from a tag</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install-a-specific-release">Install a specific release</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install-the-development-branch">Install the development branch</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#remove-an-old-version">Remove an old version</a></li>
@@ -238,13 +251,20 @@ into missing dependencies, try installing them like so:</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="install-the-master-branch">
-<h2>Install the master branch<a class="headerlink" href="#install-the-master-branch" title="Permalink to this headline">¶</a></h2>
-<p>The following commands will install the latest version of the <a class="reference external" href="https://github.com/singularityware/singularity">GitHub
-repo</a> master branch to <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>.</p>
+<div class="section" id="install-from-a-tag">
+<h2>Install from a tag<a class="headerlink" href="#install-from-a-tag" title="Permalink to this headline">¶</a></h2>
+<p>The following commands will install a tagged version of the <a class="reference external" href="https://github.com/singularityware/singularity">GitHub
+repo</a> to <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>.
+This will work for pre 3.0 tags.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/singularityware/singularity.git
 
 $ cd singularity
+
+$ git fetch --all
+
+$ git tag -l
+
+$ git checkout [TAG]
 
 $ ./autogen.sh
 
@@ -285,19 +305,17 @@ $ sudo make install
 </div>
 <div class="section" id="install-the-development-branch">
 <h2>Install the development branch<a class="headerlink" href="#install-the-development-branch" title="Permalink to this headline">¶</a></h2>
-<p>If you want to test a development branch the routine above should be
-tweaked slightly:</p>
+<p>Primary development it now being done in the master branch. As of now (2018-08-16),
+this is the development for Singularity 3.0.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/singularityware/singularity.git
 
 $ cd singularity
 
-$ git fetch
+[ Read INSTALL.md -- Some major changes from pre-3.0 ]
 
-$ git checkout development
+$ ./mconfig
 
-$ ./autogen.sh
-
-$ ./configure --prefix=/usr/local --sysconfdir=/etc
+$ cd builddir
 
 $ make
 
@@ -866,7 +884,8 @@ User
   </div>
 
 
-  <script type="text/javascript" src="_static/js/footer.js"></script>
+
+    <script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">
