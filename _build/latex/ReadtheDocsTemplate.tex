@@ -55,8 +55,8 @@
 
 
 \title{Singularity Container Documentation}
-\date{Jul 16, 2018}
-\release{2.5.2}
+\date{Aug 20, 2018}
+\release{2.6.0}
 \author{User Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
 \renewcommand{\releasename}{Release}
@@ -76,8 +76,7 @@ This guide is intended for running Singularity on a computer where you
 have root (administrative) privileges. If you are learning about
 Singularity on a system where you lack root privileges, you can still
 complete the steps that do not require the sudo command. If you need to
-request an installation on your shared resource, check out our
-requesting an installation help page for information to send to your
+request an installation on your shared resource, check out our requesting an installation help page for information to send to your
 system administrator.
 
 
@@ -585,7 +584,7 @@ different build options, see our {\hyperref[\detokenize{singularity_flow:singula
 \label{\detokenize{introduction:introduction}}\label{\detokenize{introduction::doc}}
 This document will introduce you to Singularity, and the links in the
 bar to the left will give you more detail on using the software. If you
-want to get a quick rundown, see our quickstart. If you want to
+want to get a quick rundown, see our {\hyperref[\detokenize{quick_start:quick-start}]{\sphinxcrossref{\DUrole{std,std-ref}{quickstart}}}}. If you want to
 understand which commands are best fit for your usecase, see our build
 flow page. There is also a separate Singularity Administration Guide
 that targets system administrators, so if you are a service provider, or
@@ -702,7 +701,7 @@ simply run a command inside of a container image as themselves. Here
 is a scenario to help articulate this:
 
 \%SERVER and \%CLUSTER are large expensive systems with resources far
-exceeding those of my personal workstation. But because the are
+exceeding those of my personal workstation. But because they are
 shared systems, no users have root access. The environments are
 tightly controlled and managed by a staff of system administrators.
 To keep these systems secure, only the system administrators are
@@ -996,7 +995,7 @@ visually as follows:
 \capstart
 
 \noindent\sphinxincludegraphics{{flow}.png}
-\caption{Singularity workflow}\label{\detokenize{introduction:id2}}\end{figure}
+\caption{Singularity workflow}\label{\detokenize{introduction:id3}}\end{figure}
 
 On the left side, you have your build environment: a laptop,
 workstation, or a server that you control. Here you will (optionally):
@@ -1086,6 +1085,224 @@ will be removed in future releases.
 Have a question, or need further information? \sphinxhref{https://www.sylabs.io/contact/}{Reach out to us}.
 
 
+\section{About}
+\label{\detokenize{introduction:about}}
+
+\subsection{Overview}
+\label{\detokenize{introduction:overview}}
+While there are many container solutions being used commonly in this day and age, what makes Singularity different stems from it’s primary design features and thus it’s architecture:
+\begin{enumerate}
+\item {} 
+\sphinxstylestrong{Reproducible software stacks:} These must be easily verifiable via checksum or cryptographic signature in such a manner that does not change formats (e.g. splatting a tarball out to disk). By default Singularity uses a container image file which can be checksummed, signed, and thus easily verified and/or validated.
+
+\item {} 
+\sphinxstylestrong{Mobility of compute:} Singularity must be able to transfer (and store) containers in a manner that works with standard data mobility tools (rsync, scp, gridftp, http, NFS, etc..) and maintain software and data controls compliancy (e.g. HIPAA, nuclear, export, classified, etc..)
+
+\item {} 
+\sphinxstylestrong{Compatibility with complicated architectures:} The runtime must be immediately compatible with existing HPC, scientific, compute farm and even enterprise architectures any of which maybe running legacy kernel versions (including RHEL6 vintage systems) which do not support advanced namespace features (e.g. the user namespace)
+
+\item {} 
+\sphinxstylestrong{Security model:} Unlike many other container systems designed to support trusted users running trusted containers we must support the opposite model of untrusted users running untrusted containers. This changes the security paradigm considerably and increases the breadth of use cases we can support.
+
+\end{enumerate}
+
+
+\subsection{Background}
+\label{\detokenize{introduction:background}}
+A Unix operating system is broken into two primary components, the kernel space, and the user space. The Kernel supports the user space by interfacing with the hardware, providing core system features and creating the software compatibility layers for the user space. The user space on the other hand is the environment that most people are most familiar with interfacing with. It is where applications, libraries and system services run.
+
+Containers are shifting the emphasis away from the runtime environment by commoditizing the user space into swappable components. This means that the entire user space portion of a Linux operating system, including programs, custom configurations, and environment can be interchanged at runtime. Singularity emphasis and simplifies the distribution vector of containers to be that of a single, verifiable file.
+
+Software developers can now build their stack onto whatever operating system base fits their needs best, and create distributable runtime encapsulated environments and the users never have to worry about dependencies, requirements, or anything else from the user space.
+
+Singularity provides the functionality of a virtual machine, without the heavyweight implementation and performance costs of emulation and redundancy!
+
+
+\subsubsection{The Singularity Solution}
+\label{\detokenize{introduction:the-singularity-solution}}
+Singularity has two primary roles:
+\begin{enumerate}
+\item {} 
+\sphinxstylestrong{Container Image Generator:} Singularity supports building different container image formats from scratch using your choice of Linux distribution bases or leveraging other container formats (e.g. Docker Hub). Container formats supported are the default compressed immutable (read only) image files, writable raw file system based images, and sandboxes (chroot style directories).
+
+\item {} 
+\sphinxstylestrong{Container Runtime:} The Singularity runtime is designed to leverage the above mentioned container formats and support the concept of untrusted users running untrusted containers. This counters the typical container runtime practice of trusted users running trusted containers and as a result of that, Singularity utilizes a very different security paradigm. This is a required feature for implementation within any multi-user environment.
+
+\end{enumerate}
+
+The Singularity containers themselves are purpose built and can include a simple application and library stack or a complicated work flow that can interface with the hosts resources directly or run isolated from the host and other containers. You can even launch a contained work flow by executing the image file directly! For example, assuming that \sphinxcode{\sphinxupquote{\textasciitilde{}/bin}} is in the user’s path as it is normally by default:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} mkdir \PYGZti{}/bin
+
+\PYGZdl{} singularity build \PYGZti{}/bin/python\PYGZhy{}latest docker://python:latest
+
+Docker image path: index.docker.io/library/python:latest
+
+Cache folder set to /home/gmk/.singularity/docker
+
+Importing: base Singularity environment
+
+Importing: /home/gmk/.singularity/docker/sha256:aa18ad1a0d334d80981104c599fa8cef9264552a265b1197af11274beba767cf.tar.gz
+
+Importing: /home/gmk/.singularity/docker/sha256:15a33158a1367c7c4103c89ae66e8f4fdec4ada6a39d4648cf254b32296d6668.tar.gz
+
+Importing: /home/gmk/.singularity/docker/sha256:f67323742a64d3540e24632f6d77dfb02e72301c00d1e9a3c28e0ef15478fff9.tar.gz
+
+Importing: /home/gmk/.singularity/docker/sha256:c4b45e832c38de44fbab83d5fcf9cbf66d069a51e6462d89ccc050051f25926d.tar.gz
+
+Importing: /home/gmk/.singularity/docker/sha256:b71152c33fd217d4408c0e7a2f308e66c0be1a58f4af9069be66b8e97f7534d2.tar.gz
+
+Importing: /home/gmk/.singularity/docker/sha256:c3eac66dc8f6ae3983a7f37e3da84a8acb828faf909be2d6649e9d7c9caffc28.tar.gz
+
+Importing: /home/gmk/.singularity/docker/sha256:494ffdf1660cdec946ae13d6b726debbcec4c393a7eecfabe97caf3961f62c36.tar.gz
+
+Importing: /home/gmk/.singularity/docker/sha256:f5ec737c23de3b1ae2b1ce3dce1fd20e0cb246e4c73584dcd4f9d2f50063324e.tar.gz
+
+Importing: /home/gmk/.singularity/metadata/sha256:5dd22488ce22f06bed1042cc03d3efa5a7d68f2a7b3dcad559df4520154ef9c2.tar.gz
+
+WARNING: Building container as an unprivileged user. If you run this container as root
+
+WARNING: it may be missing some functionality.
+
+Building Singularity image...
+
+Cleaning up...
+
+Singularity container built: /home/gmk/bin/python\PYGZhy{}latest
+
+
+\PYGZdl{} which python\PYGZhy{}latest
+
+/home/gmk/bin/python\PYGZhy{}latest
+
+
+\PYGZdl{} python\PYGZhy{}latest \PYGZhy{}\PYGZhy{}version
+
+Python 3.6.3
+
+
+\PYGZdl{} singularity exec \PYGZti{}/bin/python\PYGZhy{}latest cat /etc/debian\PYGZus{}version
+
+8.9
+
+\PYGZdl{} singularity shell \PYGZti{}/bin/python\PYGZhy{}latest
+
+Singularity: Invoking an interactive shell within container...
+
+
+Singularity python\PYGZhy{}latest:\PYGZti{}\PYGZgt{}
+\end{sphinxVerbatim}
+
+Additionally, Singularity blocks privilege escalation within the container and you are always yourself within a container! If you want to be root inside the container, you first must be root outside the container. This simple usage paradigm mitigates many of the security concerns that exists with containers on multi-user shared resources. You can directly call programs inside the container from outside the container fully incorporating pipes, standard IO, file system access, X11, and MPI. Singularity images can be seamlessly incorporated into your environment.
+
+
+\subsubsection{Portability and Reproducibility}
+\label{\detokenize{introduction:portability-and-reproducibility}}
+Singularity containers are designed to be as portable as possible, spanning many flavors and vintages of Linux. The only known limitation is binary compatibility of the kernel and container. Singularity has been ported to distributions going as far back as RHEL 5 (and compatibles) and works on all currently living versions of RHEL, Debian, Arch, Alpine, Gentoo and Slackware. Within the container, there are almost no limitations aside from basic binary compatibility.
+
+Inside the container, it is also possible to have a very old version of Linux supported. The oldest known version of Linux tested was a Red Hat Linux 8 container, that was converted by hand from a physical computer’s hard drive as the 15 year old hardware was failing. The container was transferred to a new installation of Centos7, and is still running in production!
+
+Each Singularity image includes all of the application’s necessary run-time libraries and can even include the required data and files for a particular application to run. This encapsulation of the entire user-space environment facilitates not only portability but also reproducibility.
+
+
+\subsection{Features}
+\label{\detokenize{introduction:features}}
+
+\subsubsection{Encapsulation of the environment}
+\label{\detokenize{introduction:encapsulation-of-the-environment}}
+Mobility of Compute is the encapsulation of an environment in such a manner to make it portable between systems. This operating system environment can contain the necessary applications for a particular work-flow, development tools, and/or raw data. Once this environment has been developed it can be easily copied and run from any other Linux system.
+
+This allows users to BYOE (Bring Their Own Environment) and work within that environment anywhere that Singularity is installed. From a service provider’s perspective we can easily allow users the flexibility of “cloud”-like environments enabling custom requirements and workflows.
+
+Additionally there is always a misalignment between development and production environments. The service provider can only offer a stable, secure tuned production environment which in many times will not keep up with the fast paced requirements of developers. With Singularity, you can control your own development environment and simply copy them to the production resources.
+
+
+\subsubsection{Containers are image based}
+\label{\detokenize{introduction:containers-are-image-based}}
+Using image files have several key benefits:
+
+First, this image serves as a vector for mobility while retaining permissions of the files within the image. For example, a user may own the image file so they can copy the image to and from system to system. But, files within an image must be owned by the appropriate user. For example, ‘/etc/passwd’ and ‘/’ must be owned by root to achieve appropriate access permission. These permissions are maintained within a user owned image.
+
+There is never a need to build, rebuild, or cache an image! All IO happens on an as needed basis. The overhead in starting a container is in the thousandths of a second because there is never a need to pull, build or cache anything!
+
+On HPC systems a single image file optimizes the benefits of a shared parallel file system! There is a single metadata lookup for the image itself, and the subsequent IO is all directed to the storage servers themselves. Compare this to the massive amount of metadata IO that would be required if the container’s root file system was in a directory structure. It is not uncommon for large Python jobs to DDOS (distributed denial of service) a parallel meta-data server for minutes! The Singularity image mitigates this considerably.
+
+
+\subsubsection{No user contextual changes or root escalation allowed}
+\label{\detokenize{introduction:no-user-contextual-changes-or-root-escalation-allowed}}
+When Singularity is executed, the calling user is maintained within the container. For example, if user ‘gmk’ starts a Singularity container, the same user ‘gmk’ will end up within the container. If ‘root’ starts the container, ‘root’ will be the user inside the container.
+
+Singularity also limits a user’s ability to escalate privileges within the container. Even if the user works in their own environment where they configured ‘sudo’ or even removed root’s password, they will not be able to ‘sudo’ or ‘su’ to root. If you want to be root inside the container, you must first be root outside the container.
+
+Because of this model, it becomes possible to blur the line of access between what is contained and what is on the host as Singularity does not grant the user any more access than they already have. It also enables the implementation on shared/multi-tenant resources.
+
+
+\subsubsection{No root owned daemon processes}
+\label{\detokenize{introduction:no-root-owned-daemon-processes}}
+Singularity does not utilize a daemon process to manage the containers. While daemon processes do facilitate certain types of workflows and privilege escalation, it breaks all resource controlled environments. This is because a user’s job becomes a subprocess of the daemon (rather than the user’s shell) and the daemon process is outside of the reach of a resource manager or batch scheduler.
+
+Additionally, securing a root owned daemon process which is designed to manipulate the host’s environment becomes tricky. In currently implemented models, it is possible to grant permissions to users to control the daemon, or not. There is no sense of ACL’s or access of what users can and can not do.
+
+While there are some other container implementations that do not leverage a daemon, they lack other features necessary to be considered as reasonable user facing solution without having root access. For example, there has been a standing unimplemented patch to RunC (already daemon-less) which allows for root-less usage (no root). But, user contexts are not maintained, and it will only work with chroot directories (instead of an image) where files must be owned and manipulated by the root user!
+
+
+\subsection{Use Cases}
+\label{\detokenize{introduction:use-cases}}
+
+\subsubsection{BYOE: Bring Your Own Environment}
+\label{\detokenize{introduction:byoe-bring-your-own-environment}}
+Engineering work-flows for research computing can be a complicated and iterative process, and even more so on a shared and somewhat inflexible production environment. Singularity solves this problem by making the environment flexible.
+
+Additionally, it is common (especially in education) for schools to provide a standardized pre-configured Linux distribution to the students which includes all of the necessary tools, programs, and configurations so they can immediately follow along.
+
+
+\subsubsection{Reproducible science}
+\label{\detokenize{introduction:reproducible-science}}
+Singularity containers can be built to include all of the programs, libraries, data and scripts such that an entire demonstration can be contained and either archived or distributed for others to replicate no matter what version of Linux they are presently running.
+
+Commercially supported code requiring a particular environment Some commercial applications are only certified to run on particular versions of Linux. If that application was installed into a Singularity container running the version of Linux that it is certified for, that container could run on any Linux host. The application environment, libraries, and certified stack would all continue to run exactly as it is intended.
+
+Additionally, Singularity blurs the line between container and host such that your home directory (and other directories) exist within the container. Applications within the container have full and direct access to all files you own thus you can easily incorporate the contained commercial application into your work and process flow on the host.
+
+
+\subsubsection{Static environments (software appliances)}
+\label{\detokenize{introduction:static-environments-software-appliances}}
+Fund once, update never software development model. While this is not ideal, it is a common scenario for research funding. A certain amount of money is granted for initial development, and once that has been done the interns, grad students, post-docs, or developers are reassigned to other projects. This leaves the software stack un-maintained, and even rebuilds for updated compilers or Linux distributions can not be done without unfunded effort.
+
+
+\subsubsection{Legacy code on old operating systems}
+\label{\detokenize{introduction:legacy-code-on-old-operating-systems}}
+Similar to the above example, while this is less than ideal it is a fact of the research ecosystem. As an example, I know of one Linux distribution which has been end of life for 15 years which is still in production due to the software stack which is custom built for this environment. Singularity has no problem running that operating system and application stack on a current operating system and hardware.
+
+
+\subsubsection{Complicated software stacks that are very host specific}
+\label{\detokenize{introduction:complicated-software-stacks-that-are-very-host-specific}}
+There are various software packages which are so complicated that it takes much effort in order to port, update and qualify to new operating systems or compilers. The atmospheric and weather applications are a good example of this. Porting them to a contained operating system will prolong the use-fullness of the development effort considerably.
+
+
+\subsubsection{Complicated work-flows that require custom installation and/or data}
+\label{\detokenize{introduction:complicated-work-flows-that-require-custom-installation-and-or-data}}
+Consolidating a work-flow into a Singularity container simplifies distribution and replication of scientific results. Making containers available along with published work enables other scientists to build upon (and verify) previous scientific work.
+
+
+\subsection{License}
+\label{\detokenize{introduction:license}}
+Singularity is released under a standard 3 clause BSD license.
+Please see our \sphinxhref{https://github.com/singularityware/singularity/blob/master/LICENSE.md}{LICENSE} file for more details).
+
+
+\subsection{Getting started}
+\label{\detokenize{introduction:getting-started}}
+Jump in and {\hyperref[\detokenize{quick_start:quick-start}]{\sphinxcrossref{\DUrole{std,std-ref}{get started}}}}, or find ways to get \sphinxhref{https://www.sylabs.io/contact/}{help}.
+\begin{itemize}
+\item {} 
+Project lead: \sphinxhref{https://gmkurtzer.github.io/}{Gregory M. Kurtzer}
+
+\end{itemize}
+
+
 \chapter{Installation}
 \label{\detokenize{installation:installation}}\label{\detokenize{installation::doc}}\phantomsection\label{\detokenize{installation:sec-installation}}
 This document will guide you through the process of installing
@@ -1126,16 +1343,23 @@ into missing dependencies, try installing them like so:
 \end{sphinxVerbatim}
 
 
-\section{Install the master branch}
-\label{\detokenize{installation:install-the-master-branch}}
-The following commands will install the latest version of the \sphinxhref{https://github.com/singularityware/singularity}{GitHub
-repo} master branch to \sphinxcode{\sphinxupquote{/usr/local}}.
+\section{Install from a tag}
+\label{\detokenize{installation:install-from-a-tag}}
+The following commands will install a tagged version of the \sphinxhref{https://github.com/singularityware/singularity}{GitHub
+repo} to \sphinxcode{\sphinxupquote{/usr/local}}.
+This will work for pre 3.0 tags.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYGZdl{} git clone https://github.com/singularityware/singularity.git
 
 \PYGZdl{} cd singularity
+
+\PYGZdl{} git fetch \PYGZhy{}\PYGZhy{}all
+
+\PYGZdl{} git tag \PYGZhy{}l
+
+\PYGZdl{} git checkout [TAG]
 
 \PYGZdl{} ./autogen.sh
 
@@ -1149,9 +1373,8 @@ repo} master branch to \sphinxcode{\sphinxupquote{/usr/local}}.
 If you omit the \sphinxcode{\sphinxupquote{-{-}sysconfdir}} option , the configuration file will be installed in \sphinxcode{\sphinxupquote{/usr/local/etc}}.
 If you omit the \sphinxcode{\sphinxupquote{-{-}prefix}} option, Singularity will be installed in the \sphinxcode{\sphinxupquote{/usr/local}} directory
 hierarchy by default. And if you specify a custom directory with the \sphinxcode{\sphinxupquote{-{-}prefix}}
-option, all of Singularity’s binaries and the configuration file will
-be installed within that directory. This last option can be useful if
-you want to install multiple versions of Singularity, install
+option, all of Singularity’s binaries and the configuration file will be installed within that directory.
+This last option can be useful if you want to install multiple versions of Singularity, install
 Singularity on a shared system, or if you want to remove Singularity
 easily after installing it.
 
@@ -1181,8 +1404,8 @@ releases} page to \sphinxcode{\sphinxupquote{/usr/local}}.
 
 \section{Install the development branch}
 \label{\detokenize{installation:install-the-development-branch}}
-If you want to test a development branch the routine above should be
-tweaked slightly:
+Primary development it now being done in the master branch. As of now (2018-08-16),
+this is the development for Singularity 3.0.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -1190,13 +1413,11 @@ tweaked slightly:
 
 \PYGZdl{} cd singularity
 
-\PYGZdl{} git fetch
+[ Read INSTALL.md \PYGZhy{}\PYGZhy{} Some major changes from pre\PYGZhy{}3.0 ]
 
-\PYGZdl{} git checkout development
+\PYGZdl{} ./mconfig
 
-\PYGZdl{} ./autogen.sh
-
-\PYGZdl{} ./configure \PYGZhy{}\PYGZhy{}prefix=/usr/local \PYGZhy{}\PYGZhy{}sysconfdir=/etc
+\PYGZdl{} cd builddir
 
 \PYGZdl{} make
 
@@ -1245,6 +1466,636 @@ Singularity like so:
 What should you do next? You can check out the {\hyperref[\detokenize{quick_start:quick-start}]{\sphinxcrossref{\DUrole{std,std-ref}{quickstart}}}} guide, or learn how to
 interact with your container via the \DUrole{xref,std,std-ref}{shell} , \DUrole{xref,std,std-ref}{exec} , or \DUrole{xref,std,std-ref}{run} commands. Or click \sphinxstylestrong{next}
 below to continue reading.
+
+
+\section{Install on Windows}
+\label{\detokenize{installation:install-on-windows}}
+
+\subsection{Setup}
+\label{\detokenize{installation:setup}}
+First, install the following software:
+\begin{itemize}
+\item {} 
+install \sphinxhref{https://git-for-windows.github.io/}{Git for Windows}
+
+\item {} 
+install \sphinxhref{https://www.virtualbox.org/wiki/Downloads}{VirtualBox for Windows}
+
+\item {} 
+install \sphinxhref{https://www.vagrantup.com/downloads.html}{Vagrant for Windows}
+
+\item {} 
+install \sphinxhref{http://vagrantmanager.com/downloads/}{Vagrant Manager for Windows}
+
+\end{itemize}
+
+
+\subsection{Singularityware Vagrant Box}
+\label{\detokenize{installation:singularityware-vagrant-box}}
+We are maintaining a set of Vagrant Boxes via \sphinxhref{https://www.vagrantup.com/}{Vagrant Cloud}, one of \sphinxhref{https://www.hashicorp.com/\#open-source-tools}{Hashicorp} many tools that likely you’ve used and haven’t known it. The current stable version of Singularity is available here:
+\begin{itemize}
+\item {} 
+\sphinxhref{https://app.vagrantup.com/singularityware/boxes/singularity-2.4/versions/2.4}{singularityware/singularity-2.4}
+
+\end{itemize}
+
+For other versions of Singularity see \sphinxhref{https://app.vagrantup.com/singularityware}{our Vagrant Cloud repository}
+
+Run GitBash. The default home directory will be C:Usersyour\_username
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+mkdir singularity\PYGZhy{}2.4
+
+cd singularity\PYGZhy{}2.4
+\end{sphinxVerbatim}
+
+Note that if you had installed a previous version of the vm (and are using the same folder), you must destroy it first. In our example we create a new folder. To destroy a previous vm:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant destroy
+\end{sphinxVerbatim}
+
+Then issue the following commands to bring up the Virtual Machine:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant init singularityware/singularity\PYGZhy{}2.4
+
+vagrant up
+
+vagrant ssh
+\end{sphinxVerbatim}
+
+You are then ready to go with Singularity 2.4!
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant@vagrant:\PYGZti{}\PYGZdl{} which singularity
+
+/usr/local/bin/singularity
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} singularity \PYGZhy{}\PYGZhy{}version
+
+2.4\PYGZhy{}dist
+
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} sudo singularity build growl\PYGZhy{}llo\PYGZhy{}world.simg shub://vsoch/hello\PYGZhy{}world
+
+Cache folder set to /root/.singularity/shub
+
+Progress \textbar{}===================================\textbar{} 100.0\PYGZpc{}
+
+Building from local image: /root/.singularity/shub/vsoch\PYGZhy{}hello\PYGZhy{}world\PYGZhy{}master.simg
+
+Building Singularity image...
+
+Singularity container built: growl\PYGZhy{}llo\PYGZhy{}world.simg
+
+Cleaning up...
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} ./growl\PYGZhy{}llo\PYGZhy{}world.simg
+
+RaawwWWWWWRRRR!!
+\end{sphinxVerbatim}
+
+Note that when you do \sphinxcode{\sphinxupquote{vagrant up}} you can also select the provider, if you use vagrant for multiple providers. For example:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant up \PYGZhy{}\PYGZhy{}provider virtualbox
+\end{sphinxVerbatim}
+
+although this isn’t entirely necessary if you only have it configured for virtualbox.
+
+
+\section{Install on Linux}
+\label{\detokenize{installation:install-on-linux}}
+
+\subsection{Installation from Source}
+\label{\detokenize{installation:installation-from-source}}
+You can try the following two options:
+
+
+\subsubsection{Option 1: Download latest stable release}
+\label{\detokenize{installation:option-1-download-latest-stable-release}}
+You can always download the latest tarball release from \sphinxhref{https://github.com/singularityware/singularity/releases}{GitHub}
+
+For example, here is how to download version \sphinxcode{\sphinxupquote{2.5.2}} and install:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+VERSION=2.5.2
+
+wget https://github.com/singularityware/singularity/releases/download/\PYGZdl{}VERSION/singularity\PYGZhy{}\PYGZdl{}VERSION.tar.gz
+
+tar xvf singularity\PYGZhy{}\PYGZdl{}VERSION.tar.gz
+
+cd singularity\PYGZhy{}\PYGZdl{}VERSION
+
+./configure \PYGZhy{}\PYGZhy{}prefix=/usr/local
+
+make
+
+sudo make install
+\end{sphinxVerbatim}
+
+Note that when you configure, \sphinxcode{\sphinxupquote{squashfs-tools}} is \sphinxstylestrong{not} required, however it is required for full functionality. You will see this message after the configuration:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+mksquashfs from squash\PYGZhy{}tools is required for full functionality
+\end{sphinxVerbatim}
+
+If you choose not to install \sphinxcode{\sphinxupquote{squashfs-tools}}, you will hit an error when you try a pull from Docker Hub, for example.
+
+
+\subsubsection{Option 2: Download the latest development code}
+\label{\detokenize{installation:option-2-download-the-latest-development-code}}
+To download the most recent development code, you should use Git and do the following:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+git clone https://github.com/singularityware/singularity.git
+
+cd singularity
+
+./autogen.sh
+
+./configure \PYGZhy{}\PYGZhy{}prefix=/usr/local
+
+make
+
+sudo make install
+\end{sphinxVerbatim}
+
+\begin{sphinxadmonition}{note}{Note:}
+The ‘make install’ is required to be run as root to get a properly installed Singularity implementation. If you do not run it as root, you will only be able to launch Singularity as root due to permission limitations.
+\end{sphinxadmonition}
+
+
+\subsubsection{Prefix in special characters}
+\label{\detokenize{installation:prefix-in-special-characters}}
+If you build Singularity with a non-standard \sphinxcode{\sphinxupquote{-{-}prefix}} argument, please be sure to review the \sphinxhref{https://www.sylabs.io/guides/2.5.2/admin-guide/}{admin guide} for details regarding the \sphinxcode{\sphinxupquote{-{-}localstatedir}} variable. This is especially important in environments utilizing shared filesystems.
+
+
+\subsubsection{Updating}
+\label{\detokenize{installation:updating}}
+To update your Singularity version, you might want to first delete the executables for the old version:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+sudo rm \PYGZhy{}rf /usr/local/libexec/singularity
+\end{sphinxVerbatim}
+
+And then install using one of the methods above.
+
+
+\subsection{Debian Ubuntu Package}
+\label{\detokenize{installation:debian-ubuntu-package}}
+Singularity is available on Debian (and Ubuntu) systems starting with Debian stretch and the Ubuntu 16.10 yakkety releases.
+The package is called \sphinxcode{\sphinxupquote{singularity-container}}. For recent releases of singularity and backports for older Debian and Ubuntu releases,
+we recommend that you use the \sphinxhref{http://neuro.debian.net/pkgs/singularity-container.html}{NeuroDebian repository}.
+
+
+\subsubsection{Testing first with Docker}
+\label{\detokenize{installation:testing-first-with-docker}}
+If you want a quick preview of the NeuroDebian mirror, you can do this most easily with the NeuroDebian Docker image (and if you don’t, skip to the next section). Obviously you should have \sphinxhref{https://docs.docker.com/engine/installation/linux/ubuntu/}{Docker installed} before you do this.
+
+First we run the \sphinxcode{\sphinxupquote{neurodebian}} Docker image:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} docker run \PYGZhy{}it \PYGZhy{}\PYGZhy{}rm neurodebian
+\end{sphinxVerbatim}
+
+Then we update the cache (very quietly), and look at the \sphinxcode{\sphinxupquote{singularity-container}} policy provided:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} apt\PYGZhy{}get update \PYGZhy{}qqq
+
+\PYGZdl{} apt\PYGZhy{}cache policy singularity\PYGZhy{}container
+
+singularity\PYGZhy{}container:
+
+  Installed: (none)
+
+  Candidate: 2.3\PYGZhy{}1\PYGZti{}nd80+1
+
+  Version table:
+
+    2.3\PYGZhy{}1\PYGZti{}nd80+1 0
+
+      500 http://neuro.debian.net/debian/ jessie/main amd64 Packages
+\end{sphinxVerbatim}
+
+You can continue working in Docker, or go back to your host and install Singularity.
+
+
+\subsubsection{Adding the Mirror and installing}
+\label{\detokenize{installation:adding-the-mirror-and-installing}}
+You should first enable the NeuroDebian repository following instructions on the \sphinxhref{http://neuro.debian.net/}{NeuroDebian} site. This means using the dropdown menus to find the correct mirror for your operating system and location. For example, after selecting Ubuntu 16.04 and selecting a mirror in CA, I am instructed to add these lists:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+sudo wget \PYGZhy{}O\PYGZhy{} http://neuro.debian.net/lists/xenial.us\PYGZhy{}ca.full \textbar{} sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
+
+sudo apt\PYGZhy{}key adv \PYGZhy{}\PYGZhy{}recv\PYGZhy{}keys \PYGZhy{}\PYGZhy{}keyserver hkp://pool.sks\PYGZhy{}keyservers.net:80 0xA5D32F012649A5A9
+\end{sphinxVerbatim}
+
+and then update
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+sudo apt\PYGZhy{}get update
+\end{sphinxVerbatim}
+
+then singularity can be installed as follows:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+sudo apt\PYGZhy{}get install \PYGZhy{}y singularity\PYGZhy{}container
+\end{sphinxVerbatim}
+
+During the above, if you have a previously installed configuration, you might be asked if you want to define a custom configuration/init, or just use the default provided by the package, eg:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Configuration file \PYGZsq{}/etc/singularity/init\PYGZsq{}
+
+  ==\PYGZgt{} File on system created by you or by a script.
+
+  ==\PYGZgt{} File also in package provided by package maintainer.
+
+    What would you like to do about it ?  Your options are:
+
+      Y or I  : install the package maintainer\PYGZsq{}s version
+
+      N or O  : keep your currently\PYGZhy{}installed version
+
+        D     : show the differences between the versions
+
+        Z     : start a shell to examine the situation
+
+The default action is to keep your current version.
+
+*** init (Y/I/N/O/D/Z) [default=N] ? Y
+
+
+Configuration file \PYGZsq{}/etc/singularity/singularity.conf\PYGZsq{}
+
+  ==\PYGZgt{} File on system created by you or by a script.
+
+  ==\PYGZgt{} File also in package provided by package maintainer.
+
+    What would you like to do about it ?  Your options are:
+
+      Y or I  : install the package maintainer\PYGZsq{}s version
+
+      N or O  : keep your currently\PYGZhy{}installed version
+
+        D     : show the differences between the versions
+
+        Z     : start a shell to examine the situation
+
+The default action is to keep your current version.
+
+*** singularity.conf (Y/I/N/O/D/Z) [default=N] ? Y
+\end{sphinxVerbatim}
+
+And for a user, it’s probably well suited to use the defaults. For a cluster admin, we recommend that you read the \sphinxhref{https://www.sylabs.io/guides/2.5.2/admin-guide/}{admin docs} to get a better understanding of the configuration file options available to you. Remember that you can always tweak the files at \sphinxcode{\sphinxupquote{/etc/singularity/singularity.conf}} and \sphinxcode{\sphinxupquote{/etc/singularity/init}} if you want to make changes.
+
+After this install, you should confirm that \sphinxcode{\sphinxupquote{2.3-dist}} is the version installed:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity \PYGZhy{}\PYGZhy{}version
+
+  2.4\PYGZhy{}dist
+\end{sphinxVerbatim}
+
+Note that if you don’t add the NeuroDebian lists, the version provided will be old (e.g., 2.2.1). If you need a backport build of the recent release of Singularity on those or older releases of Debian and Ubuntu, you can \sphinxhref{http://neuro.debian.net/pkgs/singularity-container.html}{see all the various builds and other information here}.
+
+
+\subsection{Build an RPM from source}
+\label{\detokenize{installation:build-an-rpm-from-source}}
+Like the above, you can build an RPM of Singularity so it can be more easily managed, upgraded and removed. From the base Singularity source directory do the following:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+./autogen.sh
+
+./configure
+
+make dist
+
+rpmbuild \PYGZhy{}ta singularity\PYGZhy{}*.tar.gz
+
+sudo yum install \PYGZti{}/rpmbuild/RPMS/*/singularity\PYGZhy{}[0\PYGZhy{}9]*.rpm
+\end{sphinxVerbatim}
+
+\begin{sphinxadmonition}{note}{Note:}
+If you want to have the RPM install the files to an alternative location, you should define the environment variable ‘PREFIX’ to suit your needs, and use the following command to build:
+\end{sphinxadmonition}
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+PREFIX=/opt/singularity
+
+rpmbuild \PYGZhy{}ta \PYGZhy{}\PYGZhy{}define=\PYGZdq{}\PYGZus{}prefix \PYGZdl{}PREFIX\PYGZdq{} \PYGZhy{}\PYGZhy{}define \PYGZdq{}\PYGZus{}sysconfdir \PYGZdl{}PREFIX/etc\PYGZdq{} \PYGZhy{}\PYGZhy{}define \PYGZdq{}\PYGZus{}defaultdocdir \PYGZdl{}PREFIX/share\PYGZdq{} singularity\PYGZhy{}*.tar.gz
+\end{sphinxVerbatim}
+
+When using \sphinxcode{\sphinxupquote{autogen.sh}} If you get an error that you have packages missing, for example on Ubuntu 16.04:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+./autogen.sh
+
++libtoolize \PYGZhy{}c
+
+./autogen.sh: 13: ./autogen.sh: libtoolize: not found
+
++aclocal
+
+./autogen.sh: 14: ./autogen.sh: aclocal: not found
+
++autoheader
+
+./autogen.sh: 15: ./autogen.sh: autoheader: not found
+
++autoconf
+
+./autogen.sh: 16: ./autogen.sh: autoconf: not found
+
++automake \PYGZhy{}ca \PYGZhy{}Wno\PYGZhy{}portability
+
+./autogen.sh: 17: ./autogen.sh: automake: not found
+\end{sphinxVerbatim}
+
+then you need to install dependencies:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+sudo apt\PYGZhy{}get install \PYGZhy{}y build\PYGZhy{}essential libtool autotools\PYGZhy{}dev automake autoconf
+\end{sphinxVerbatim}
+
+
+\subsection{Build an DEB from source}
+\label{\detokenize{installation:build-an-deb-from-source}}
+To build a deb package for Debian/Ubuntu/LinuxMint invoke the following commands:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} fakeroot dpkg\PYGZhy{}buildpackage \PYGZhy{}b \PYGZhy{}us \PYGZhy{}uc \PYGZsh{} sudo will ask for a password to run the tests
+
+\PYGZdl{} sudo dpkg \PYGZhy{}i ../singularity\PYGZhy{}container\PYGZus{}2.3\PYGZus{}amd64.deb
+\end{sphinxVerbatim}
+
+Note that the tests will fail if singularity is not already installed on your system. This is the case when you run this procedure for the first time. In that case run the following sequence:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} echo \PYGZdq{}echo SKIPPING TESTS THEYRE BROKEN\PYGZdq{} \PYGZgt{} ./test.sh
+
+\PYGZdl{} fakeroot dpkg\PYGZhy{}buildpackage \PYGZhy{}nc \PYGZhy{}b \PYGZhy{}us \PYGZhy{}uc \PYGZsh{} this will continue the previous build without an initial \PYGZsq{}make clean\PYGZsq{}
+\end{sphinxVerbatim}
+
+
+\subsection{Install on your Cluster Resource}
+\label{\detokenize{installation:install-on-your-cluster-resource}}
+In the case that you want Singularity installed on a shared resource, you will need to talk to the administrator of the resource. Toward this goal, we’ve prepared a {\hyperref[\detokenize{installation:installation-request}]{\sphinxcrossref{\DUrole{std,std-ref}{helpful guide}}}} that you can send to him or her. If you have unanswered questions, please \sphinxhref{https://www.sylabs.io/contact/}{reach out}..
+
+
+\section{Install on Mac}
+\label{\detokenize{installation:install-on-mac}}
+This recipe demonstrates how to run Singularity on your Mac via Vagrant and Ubuntu. The recipe requires access to \sphinxcode{\sphinxupquote{brew}} which is a package installation subsystem for OS X. This recipe may take anywhere from 5-20 minutes to complete.
+
+
+\subsection{Setup}
+\label{\detokenize{installation:id1}}
+First, install brew if you do not have it already.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+/usr/bin/ruby \PYGZhy{}e \PYGZdq{}\PYGZdl{}(curl \PYGZhy{}fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\PYGZdq{}
+\end{sphinxVerbatim}
+
+Next, install Vagrant and the necessary bits.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+brew cask install virtualbox
+
+brew cask install vagrant
+
+brew cask install vagrant\PYGZhy{}manager
+\end{sphinxVerbatim}
+
+
+\subsection{Option 1: Singularityware Vagrant Box}
+\label{\detokenize{installation:option-1-singularityware-vagrant-box}}
+We are maintaining a set of Vagrant Boxes via \sphinxhref{https://www.vagrantup.com/}{Vagrant Cloud}, one of \sphinxhref{https://www.hashicorp.com/\#open-source-tools}{Hashicorp} many tools that likely you’ve used and haven’t known it. The current stable version of Singularity is available here:
+\begin{itemize}
+\item {} 
+\sphinxhref{https://app.vagrantup.com/singularityware/boxes/singularity-2.4/versions/2.4}{singularityware/singularity-2.4}
+
+\end{itemize}
+
+For other versions of Singularity see \sphinxhref{https://app.vagrantup.com/singularityware}{our Vagrant Cloud repository}.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+mkdir singularity\PYGZhy{}vm
+
+cd singularity\PYGZhy{}vm
+\end{sphinxVerbatim}
+
+Note that if you have installed a previous version of the vm, you can either destroy it first, or create a new directory.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant destroy
+\end{sphinxVerbatim}
+
+Then issue the following commands to bring up the Virtual Machine:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant init singularityware/singularity\PYGZhy{}2.4
+
+vagrant up
+
+vagrant ssh
+\end{sphinxVerbatim}
+
+You are then ready to go with Singularity 2.4!
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant@vagrant:\PYGZti{}\PYGZdl{} which singularity
+
+/usr/local/bin/singularity
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} singularity \PYGZhy{}\PYGZhy{}version
+
+2.4\PYGZhy{}dist
+
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} sudo singularity build growl\PYGZhy{}llo\PYGZhy{}world.simg shub://vsoch/hello\PYGZhy{}world
+
+Cache folder set to /root/.singularity/shub
+
+Progress \textbar{}===================================\textbar{} 100.0\PYGZpc{}
+
+Building from local image: /root/.singularity/shub/vsoch\PYGZhy{}hello\PYGZhy{}world\PYGZhy{}master.simg
+
+Building Singularity image...
+
+Singularity container built: growl\PYGZhy{}llo\PYGZhy{}world.simg
+
+Cleaning up...
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} ./growl\PYGZhy{}llo\PYGZhy{}world.simg
+
+RaawwWWWWWRRRR!!
+\end{sphinxVerbatim}
+
+Note that when you do \sphinxcode{\sphinxupquote{vagrant up}} you can also select the provider, if you use vagrant for multiple providers. For example:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant up \PYGZhy{}\PYGZhy{}provider virtualbox
+\end{sphinxVerbatim}
+
+although this isn’t entirely necessary if you only have it configured for virtualbox.
+
+
+\subsection{Option 2: Vagrant Box from Scratch (more advanced alternative)}
+\label{\detokenize{installation:option-2-vagrant-box-from-scratch-more-advanced-alternative}}
+If you want to get more familiar with how Vagrant and VirtualBox work, you can instead build your own Vagrant Box from scratch. In this case, we will use the Vagrantfile for \sphinxcode{\sphinxupquote{bento/ubuntu-16.04}}, however you could also try any of the \sphinxhref{https://atlas.hashicorp.com/bento}{other bento boxes} that are equally delicious. As before, you should first make a separate directory for your Vagrantfile, and then init a base image.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+mkdir singularity\PYGZhy{}2.4
+
+cd singularity\PYGZhy{}2.4
+
+vagrant init bento/ubuntu\PYGZhy{}16.04
+\end{sphinxVerbatim}
+
+Next, build and start the vagrant hosted VM, and you will install Singularity by sending the entire install script as a command (with the \sphinxcode{\sphinxupquote{-c}} argument). You could just as easily shell into the box first with vagrant ssh, and then run these commands on your own. To each bento, his own.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant up \PYGZhy{}\PYGZhy{}provider virtualbox
+
+
+\PYGZsh{} Run the necessary commands within the VM to install Singularity
+
+vagrant ssh \PYGZhy{}c /bin/sh \PYGZlt{}\PYGZlt{}EOF
+
+    sudo apt\PYGZhy{}get update
+
+    sudo apt\PYGZhy{}get \PYGZhy{}y install build\PYGZhy{}essential curl git sudo man vim autoconf libtool
+
+    git clone https://github.com/singularityware/singularity.git
+
+    cd singularity
+
+    ./autogen.sh
+
+    ./configure \PYGZhy{}\PYGZhy{}prefix=/usr/local
+
+    make
+
+    sudo make install
+
+EOF
+\end{sphinxVerbatim}
+
+At this point, Singularity is installed in your Vagrant Ubuntu VM! Now you can use Singularity as you would normally by logging into the VM directly
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant ssh
+\end{sphinxVerbatim}
+
+Remember that the VM is running in the background because we started it via the command \sphinxcode{\sphinxupquote{vagrant up}}. You can shut the VM down using the command \sphinxcode{\sphinxupquote{vagrant halt}} when you no longer need it.
+
+
+\section{Requesting an Installation}
+\label{\detokenize{installation:requesting-an-installation}}
+
+\subsection{How do I ask for Singularity on my local resource?}
+\label{\detokenize{installation:how-do-i-ask-for-singularity-on-my-local-resource}}
+Installation of a new software is no small feat for a shared cluster resource. Whether you are an administrator reading this, or a user that wants a few talking points and background to share with your administrator, this document is for you. Here we provide you with some background and resources to learn about Singularity. We hope that this information will be useful to you in making the decision to build reproducible containers with Singularity
+
+
+\subsection{Information Resources}
+\label{\detokenize{installation:information-resources}}
+
+\subsubsection{Background}
+\label{\detokenize{installation:background}}\begin{itemize}
+\item {} 
+Frequently Asked Questions is a good first place to start for quick question and answer format.
+
+\item {} 
+Singularity Publication: Reviews the history and rationale for development of the Software, along with comparison to other container software available at the time.
+
+\item {} 
+Documentation Background is useful to read about use cases, and goals of the Software.
+
+\end{itemize}
+
+
+\subsubsection{Security}
+\label{\detokenize{installation:security}}\begin{itemize}
+\item {} 
+Administrator Control: The configuration file template is the best source to learn about the configuration options that are under the administrator’s control.
+
+\item {} 
+Security Overview discusses common security concerns
+
+\end{itemize}
+
+
+\subsubsection{Presentations}
+\label{\detokenize{installation:presentations}}\begin{itemize}
+\item {} 
+Contributed Content is a good source of presentations, tutorials, and links.
+
+\end{itemize}
+
+
+\subsection{Installation Request}
+\label{\detokenize{installation:installation-request}}\label{\detokenize{installation:id6}}
+Putting all of the above together, a request might look like the following:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Dear Research Computing,
+
+
+We are interested in having an installation of the Singularity software (https://singularityware.github.io) installed on our cluster. Singularity containers will allow us to build encapsulated environments, meaning that our work is reproducible and we are empowered to choose all dependencies including libraries, operating system, and custom software. Singularity is already installed on over 50 centers internationally (http://singularity.lbl.gov/citation\PYGZhy{}registration) including TACC, NIH,
+
+and several National Labs, Universities, Hospitals. Importantly, it has a vibrant team of developers, scientists, and HPC administrators that invest heavily in the security and development of the software, and are quick to respond to the needs of the community. To help learn more about Singularity, I thought these items might be of interest:
+
+
+  \PYGZhy{} Security: A discussion of security concerns is discussed at https://www.sylabs.io/guides/2.5.2/user\PYGZhy{}guide/introduction.html\PYGZsh{}security\PYGZhy{}and\PYGZhy{}privilege\PYGZhy{}escalation
+
+  \PYGZhy{} Installation: https://www.sylabs.io/guides/2.5.2/admin\PYGZhy{}guide/
+
+
+If you have questions about any of the above, you can email the list (singularity@lbl.gov) or join the slack channel (singularity\PYGZhy{}container.slack.com) to get a human response. I can do my best to facilitate this interaction if help is needed. Thank you kindly for considering this request!
+
+Best,
+
+User
+\end{sphinxVerbatim}
+
+As is stated in the letter above, you can always \sphinxhref{https://www.sylabs.io/contact/}{reach out} to us for additional questions or support.
 
 
 \chapter{Build a Container}
@@ -1521,8 +2372,7 @@ container, you could re-build only the \sphinxcode{\sphinxupquote{\%environment}
 
 Under normal build conditions, the Singularity recipe file is saved into
 a container’s meta-data so that there is a record showing how the
-container was built. Using the \sphinxcode{\sphinxupquote{-{-}section}} option may render this meta-data useless,
-so use care if you value reproducibility.
+container was built. Using the \sphinxcode{\sphinxupquote{-{-}section}} option may render this meta-data useless, so use care if you value reproducibility.
 
 
 \subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}notest}}}
@@ -1801,8 +2651,7 @@ to change this, you can again specify the registry name in the URI.
 \sphinxstylestrong{SINGULARITY\_PYTHREADS} The Python modules use threads (workers) to
 download layer files for Docker, and change permissions. By default,
 we will use 9 workers, unless the environment variable \sphinxcode{\sphinxupquote{SINGULARITY\_PYTHREADS}} is defined.
-\sphinxstylestrong{SINGULARITY\_COMMAND\_ASIS} By default, we want to make sure the
-container running process gets passed forward as the current process,
+\sphinxstylestrong{SINGULARITY\_COMMAND\_ASIS} By default, we want to make sure the container running process gets passed forward as the current process,
 so we want to prefix whatever the Docker command or entrypoint is with
 \sphinxcode{\sphinxupquote{exec}}. We also want to make sure that following arguments get passed, so we
 append \sphinxcode{\sphinxupquote{"\$@"}}. Thus, some entrypoint or cmd might look like this:
@@ -1828,8 +2677,7 @@ yes/y/1/True/true, etc., then the runscript will remain as \sphinxcode{\sphinxup
 \label{\detokenize{container_recipes:container-recipes}}\label{\detokenize{container_recipes:id1}}\label{\detokenize{container_recipes::doc}}\phantomsection\label{\detokenize{container_recipes:sec-recipefile}}
 A Singularity Recipe is the driver of a custom build, and the starting
 point for designing any custom container. It includes specifics about
-installation software, environment variables, files to add, and
-container metadata. You can even write a help section, or define modular
+installation software, environment variables, files to add, and container metadata. You can even write a help section, or define modular
 components in the container called based on the \sphinxhref{https://sci-f.github.io/}{Scientific
 Filesystem}.
 
@@ -2712,8 +3560,7 @@ building, running, and managing your containers.
 
 There are generally two ways to get images. You either want to pull an
 image file as is, or (more likely) build your own custom image. We
-will start with talking about build, and the many different use cases
-it affords.
+will start with talking about build, and the many different use cases it affords.
 
 
 \section{Building Images}
@@ -3190,8 +4037,7 @@ changes.
 In Singularity versions 2.4 and later an overlay file system is
 automatically added to your squashfs or sandbox container when it is
 mounted. This means you can install new software and create and modify
-files even though your container is read-only. But your changes will
-disappear as soon as you exit the container.
+files even though your container is read-only. But your changes will disappear as soon as you exit the container.
 
 If you want your changes to persist in your container across uses, you
 can create a writable image to use as a persistent overlay. Then you
@@ -3312,8 +4158,7 @@ the container what would happen?
 Orphan process within unreachable namespaces!
 You would lose control of the process. It would still be running, but
 you couldn’t easily kill or interface with it. This is a called an
-orphan process. Singularity versions less than 2.4 were not designed
-to handle running services properly.
+orphan process. Singularity versions less than 2.4 were not designed to handle running services properly.
 
 
 \section{Container Instances in Singularity}
@@ -3808,8 +4653,7 @@ running instances.
 \label{\detokenize{container_checks:container-checks}}\label{\detokenize{container_checks::doc}}
 New to Singularity 2.4 is the ability to run container “checks” on
 demand. Checks can be anything from a filter for sensitive
-information, to an analysis of installed binaries. A few default
-checks are installed with Singularity and others can be added by the
+information, to an analysis of installed binaries. A few default checks are installed with Singularity and others can be added by the
 administrator. Users can perform checks at build time or on demand:
 Perform all default checks, these are the same
 
@@ -3889,8 +4733,7 @@ us!}.
 \label{\detokenize{environment_and_metadata:environment-and-metadata}}\label{\detokenize{environment_and_metadata:id1}}\label{\detokenize{environment_and_metadata::doc}}\phantomsection\label{\detokenize{environment_and_metadata:sec-envandmetadata}}
 Singularity containers support environment variables and labels that you
 can add to your container during the build process. This page details
-general information about defining environments and labels. If you are
-looking for specific environment variables for build time, see build
+general information about defining environments and labels. If you are looking for specific environment variables for build time, see build
 environment.
 
 
@@ -4162,8 +5005,7 @@ intended functions. This documentation will walk through some
 rationale, background, and examples of the SCIF integration for
 Singularity containers. For other examples (and a client that works
 across container technologies) see the the \sphinxhref{https://sci-f.github.io/}{scientific filesystem}.
-This page will primarily cover the native Singularity SCIF
-integration.
+This page will primarily cover the native Singularity SCIF integration.
 
 To start, let’s take a look at this series of steps to install
 dependencies for software foo and bar.
@@ -4262,8 +5104,8 @@ All software must share the same metadata, environment, and labels.
 
 \end{itemize}
 
-Under these conditions, containers are at best block boxes with unclear
-delineation between software provided, and only one context of running
+Under these conditions, containers are at best black boxes with unclear
+delineation between software provided, and only one context for running
 anything. The container creator shouldn’t need to spend inordinate
 amounts of time writing custom runscripts to support multiple functions
 and inputs. Each of \sphinxcode{\sphinxupquote{foo}} and \sphinxcode{\sphinxupquote{bar}} should be easy to define, and have its own
@@ -4411,7 +5253,7 @@ singularity exec \PYGZhy{}\PYGZhy{}app foo foobar.simg env \textbar{} grep foo
 
 Let’s talk about the output of the above in sections, you will notice
 some interesting things! First, notice that the app’s \sphinxcode{\sphinxupquote{bin}} has been added to
-the path, and it’s \sphinxcode{\sphinxupquote{lib}} added to the \sphinxcode{\sphinxupquote{LD\_LIBRARY\_PATH}} . This means that anything you drop in
+the path, and its \sphinxcode{\sphinxupquote{lib}} added to the \sphinxcode{\sphinxupquote{LD\_LIBRARY\_PATH}} . This means that anything you drop in
 either will automatically be added. You don’t need to make these folders
 either, they are created for you.
 
@@ -4504,11 +5346,11 @@ the bin folder is added to the path
 \item {} 
 locations for input, output, and general data are exposed. It’s up to
 you how you use these, but you can predictably know that a well made
-app will look for inputs and outputs in it’s specific folder.
+app will look for inputs and outputs in its specific folder.
 
 \item {} 
-environment variables are provided for the app’s root, it’s data, and
-it’s name
+environment variables are provided for the app’s root, its data, and
+its name
 
 \end{itemize}
 
@@ -4520,7 +5362,7 @@ The following string is parsed as the name of the application, and
 this folder is created, in lowercase, under \sphinxcode{\sphinxupquote{/scif/apps}} if it doesn’t exist. A
 singularity metadata folder, .singularity.d, equivalent to the
 container’s main folder, is generated inside the application. An
-application thus is like a smaller image inside of it’s parent.
+application thus is like a smaller image inside of its parent.
 Specifically, SCI-F defines the following new sections for the build
 recipe, where each is optional for 0 or more apps:
 
@@ -4654,32 +5496,32 @@ and lib. The following variables are available to you, for each app in
 the container, whenever any app is being run:
 \begin{itemize}
 \item {} 
-**SCIF\_APPBIN\_*: the path to the bin folder, if you want to add
+\sphinxstylestrong{SCIF\_APPBIN\_}: the path to the bin folder, if you want to add
 an app that isn’t active to your ‘PATH‘
 
 \item {} 
-**SCIF\_APPLIB\_*: the path to the lib folder, if you want to add
+\sphinxstylestrong{SCIF\_APPLIB\_}: the path to the lib folder, if you want to add
 an app that isn’t active to your ‘LD\_LIBRARY\_PATH‘
 
 \item {} 
-**SCIF\_APPRUN\_*: the app’s runscript (so you can call it from
+\sphinxstylestrong{SCIF\_APPRUN\_}: the app’s runscript (so you can call it from
 elsewhere)
 
 \item {} 
-**SCIF\_APPMETA\_*: the path to the metadata folder for the app
+\sphinxstylestrong{SCIF\_APPMETA\_}: the path to the metadata folder for the app
 
 \item {} 
-**SCIF\_APPENV\_*: the path to the primary environment file (for
+\sphinxstylestrong{SCIF\_APPENV\_}: the path to the primary environment file (for
 sourcing) if it exists
 
 \item {} 
-**SCIF\_APPROOT\_*: the app’s install folder
+\sphinxstylestrong{SCIF\_APPROOT\_}: the app’s install folder
 
 \item {} 
-**SCIF\_APPDATA\_*: the app’s data folder
+\sphinxstylestrong{SCIF\_APPDATA\_}: the app’s data folder
 
 \item {} 
-**SCIF\_APPLABELS\_*: The path to the label.json in the metadata
+\sphinxstylestrong{SCIF\_APPLABELS\_}: The path to the label.json in the metadata
 folder, if it exists
 
 \end{itemize}
@@ -4877,8 +5719,7 @@ asciinema!
 \label{\detokenize{singularity_and_docker:singularity-and-docker}}\label{\detokenize{singularity_and_docker:id1}}\label{\detokenize{singularity_and_docker::doc}}
 Singularity is good friends with Docker. The reason is because the
 developers use and really like using Docker, and scientists have already
-put much resources into creating Docker images. Thus, one of our early
-goals was to support Docker. What can you do?
+put much resources into creating Docker images. Thus, one of our early goals was to support Docker. What can you do?
 \begin{itemize}
 \item {} 
 You don’t need Docker installed
@@ -5348,8 +6189,7 @@ ABORT: Aborting with RETVAL=255
 
 The issue here is that during build of a squashfs image, Singularity is
 using the \sphinxcode{\sphinxupquote{\$TMPDIR}} . If your \sphinxcode{\sphinxupquote{\$TMPDIR}} is overflowing (or the mount is very small!) then
-you would see this error. As a test, you can try building a sandbox. If
-this is the issue, then the sandbox should work.
+you would see this error. As a test, you can try building a sandbox. If this is the issue, then the sandbox should work.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -8126,6 +8966,561 @@ Importing: /home/vanessa/.singularity/metadata/sha256:fe44851d529f465f9aa107b323
 \end{sphinxVerbatim}
 
 For details and best practices for creating your Singularity recipe, {\hyperref[\detokenize{container_recipes:container-recipes}]{\sphinxcrossref{\DUrole{std,std-ref}{read about them here}}}}.
+
+
+\chapter{Contributing}
+\label{\detokenize{contributing:contributing}}\label{\detokenize{contributing::doc}}
+
+\section{Support Singularity}
+\label{\detokenize{contributing:support-singularity}}
+Singularity is an open source project, meaning we have the challenge of limited resources.
+We are grateful for any support that you might offer to other users in the way of helping with issues, documentation,
+or code! If you haven’t already, check out some of the ways to contribute to code and docs:
+\begin{itemize}
+\item {} 
+contribute code
+
+\item {} 
+contribute docs
+
+\end{itemize}
+
+
+\subsection{Singularity Google Group}
+\label{\detokenize{contributing:singularity-google-group}}
+This is a huge endeavor, and it is greatly appreciated! If you have been using Singularity and having good luck with it,
+join our \sphinxhref{https://groups.google.com/a/lbl.gov/forum/\#!forum/singularity}{Google Group}  and help out other users! Post to online communities about Singularity, and request that your distribution vendor,
+service provider, and system administrators include Singularity for you!
+
+
+\subsection{Singularity on Slack}
+\label{\detokenize{contributing:singularity-on-slack}}
+Many of our users come to slack for quick help with an issue. You can find us at \sphinxhref{https://singularity-container.slack.com/}{singularity-container}.
+
+
+\section{Contribute to the code}
+\label{\detokenize{contributing:contribute-to-the-code}}
+To contribute to the development of Singularity, you must:
+\begin{itemize}
+\item {} 
+Own the code and/or have the right to contribute it
+
+\item {} 
+Be able to submit software under the 3 clause BSD (or equivalent) license (while other licenses are allowed to be submitted by the license, acceptance of any contribution is up to the project lead)
+
+\item {} 
+Read, understand and agree to the license
+
+\item {} 
+Have a GitHub account (this just makes it easier on me)
+
+\end{itemize}
+
+We use the traditional \sphinxhref{https://guides.github.com/introduction/flow/}{GitHub Flow} to develop. This means that you fork the repo and checkout a branch to make changes, you submit a pull request (PR) to the development branch with your changes, and the development branch gets merged with master for official releases.
+We also have an official \sphinxhref{https://github.com/singularityware/singularity/blob/master/CONTRIBUTING.md}{CONTRIBUTING} document, which also includes a \sphinxhref{https://github.com/singularityware/singularity/blob/master/CONTRIBUTING.md\#code-of-conduct}{code of conduct}  .
+
+
+\subsection{Step 1. Fork the repo}
+\label{\detokenize{contributing:step-1-fork-the-repo}}
+To contribute to the web based documentation, you should obtain a GitHub account and fork the \sphinxhref{https://github.com/singularityware/singularity}{Singularity} repository.
+Once forked, you will want to clone the fork of the repo to your computer. Let’s say my GitHub username is vsoch, and I am using ssh:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+git clone git@github.com:vsoch/singularity.git
+
+cd singularity/
+\end{sphinxVerbatim}
+
+
+\subsection{Step 2. Set up your config}
+\label{\detokenize{contributing:step-2-set-up-your-config}}
+The GitHub config file, located at .git/config, is the best way to keep track of many different forks of a repository.
+I usually open it up right after cloning my fork to add the repository that I forked as a \sphinxhref{https://help.github.com/articles/adding-a-remote/}{remote}, so I can easily get updated from it.
+Let’s say my \sphinxcode{\sphinxupquote{.git/config}} first looks like this, after I clone my own branch:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[core]
+
+    repositoryformatversion = 0
+
+    filemode = true
+
+    bare = false
+
+    logallrefupdates = true
+
+[remote \PYGZdq{}origin\PYGZdq{}]
+
+    url = git@github.com:vsoch/singularity
+
+    fetch = +refs/heads/*:refs/remotes/origin/*
+
+[branch \PYGZdq{}master\PYGZdq{}]
+
+    remote = origin
+
+    merge = refs/heads/master
+\end{sphinxVerbatim}
+
+I would want to add the upstream repository, which is where I forked from.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[core]
+
+    repositoryformatversion = 0
+
+    filemode = true
+
+    bare = false
+
+    logallrefupdates = true
+
+[remote \PYGZdq{}origin\PYGZdq{}]
+
+    url = git@github.com:vsoch/singularity
+
+    fetch = +refs/heads/*:refs/remotes/origin/*
+
+[remote \PYGZdq{}upstream\PYGZdq{}]
+
+    url = https://github.com/singularityware/singularity
+
+    fetch = +refs/heads/*:refs/remotes/origin/*
+
+[branch \PYGZdq{}master\PYGZdq{}]
+
+    remote = origin
+
+    merge = refs/heads/master
+\end{sphinxVerbatim}
+
+I can also add some of my colleagues, if I want to pull from their branches:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[core]
+
+    repositoryformatversion = 0
+
+    filemode = true
+
+    bare = false
+
+    logallrefupdates = true
+
+[remote \PYGZdq{}origin\PYGZdq{}]
+
+    url = git@github.com:vsoch/singularity
+
+    fetch = +refs/heads/*:refs/remotes/origin/*
+
+[remote \PYGZdq{}upstream\PYGZdq{}]
+
+    url = https://github.com/singularityware/singularity
+
+    fetch = +refs/heads/*:refs/remotes/origin/*
+
+[remote \PYGZdq{}greg\PYGZdq{}]
+
+    url = https://github.com/gmkurtzer/singularity
+
+    fetch = +refs/heads/*:refs/remotes/origin/*
+
+[branch \PYGZdq{}master\PYGZdq{}]
+
+    remote = origin
+
+    merge = refs/heads/master
+\end{sphinxVerbatim}
+
+In the GitHub flow, the master branch is the frozen, current version of the software.
+Your master branch is always in sync with the upstream (our singularityware master), and the singularityware master is always the latest release of
+
+This would mean that I can update my master branch as follows:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+git checkout master
+
+git pull upstream master
+
+git push origin master
+\end{sphinxVerbatim}
+
+and then I would return to working on the branch for my feature. How to do that exactly? Read on!
+
+
+\subsection{Step 3. Checkout a new branch}
+\label{\detokenize{contributing:step-3-checkout-a-new-branch}}
+\sphinxhref{https://guides.github.com/introduction/flow//}{Branches} are a way of isolating your features. For example, if I am working on several features, I would want to keep them separate, and “submit them” (in what is called a \sphinxhref{https://help.github.com/articles/about-pull-requests/}{pull request} ) to be added to the main repository codebase. Each repository, including your fork, has a main branch, which is usually called “master”. As mentioned earlier, the master branch of a fork should always be in sync with the repository it is forked from (which I usually refer to as “upstream”) and then branches of the fork consistently updated with that master. Given that we’ve just cloned the repo, we probably want to work off of the current development branch, which has the most up to date “next version” of the software. So we can start by checking out that branch:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+git checkout \PYGZhy{}b development
+
+git pull origin development
+\end{sphinxVerbatim}
+
+At this point, you can either choose to work on this branch, push to your origin development and pull request to singularityware development, or you can checkout another branch specific to your feature. We recommend always working from, and staying in sync with development. The command below would checkout a branch called \sphinxcode{\sphinxupquote{add/my-awesome-new-feature}} from development.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZsh{} Checkout a new branch called add/my\PYGZhy{}awesome\PYGZhy{}feature
+
+git checkout \PYGZhy{}b add/my\PYGZhy{}awesome\PYGZhy{}feature development
+\end{sphinxVerbatim}
+
+The addition of the \sphinxcode{\sphinxupquote{-b}} argument tells git that we want to make a new branch. If I want to just change branches (for example back to master) I can do the same command without \sphinxcode{\sphinxupquote{-b}}:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZsh{} Change back to master
+
+git checkout master
+\end{sphinxVerbatim}
+
+Note that you should commit changes to the branch you are working on before changing branches, otherwise they would be lost. GitHub will give you a warning and prevent you from changing branches if this is the case, so don’t worry too much about it.
+
+
+\subsection{Step 4. Make your changes}
+\label{\detokenize{contributing:step-4-make-your-changes}}
+On your new branch, go nuts! Make changes, test them, and when you are happy with a bit of progress, commit the changes to the branch:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+git commit \PYGZhy{}a
+\end{sphinxVerbatim}
+
+This will open up a little window in your default text editor that you can write a message in the first line. This commit message is important - it should describe exactly the changes that you have made. Bad commit messages are like:
+\begin{itemize}
+\item {} 
+changed code
+
+\item {} 
+updated files
+
+\end{itemize}
+
+Good commit messages are like:
+\begin{itemize}
+\item {} 
+changed function “get\_config” in functions.py to output csv to fix \#2
+
+\item {} 
+updated docs about shell to close \#10
+
+\end{itemize}
+
+The tags “close \#10” and “fix \#2” are referencing issues that are posted on the main repo you are going to do a pull request to. Given that your fix is merged into the master branch, these messages will automatically close the issues, and further, it will link your commits directly to the issues they intended to fix. This is very important down the line if someone wants to understand your contribution, or (hopefully not) revert the code back to a previous version.
+
+
+\subsection{Step 5. Push your branch to your fork}
+\label{\detokenize{contributing:step-5-push-your-branch-to-your-fork}}
+When you are done with your commits, you should push your branch to your fork (and you can also continuously push commits here as you work):
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+git push origin add/my\PYGZhy{}awesome\PYGZhy{}feature
+\end{sphinxVerbatim}
+
+Note that you should always check the status of your branches to see what has been pushed (or not):
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+git status
+\end{sphinxVerbatim}
+
+
+\subsection{Step 6. Submit a Pull Request}
+\label{\detokenize{contributing:step-6-submit-a-pull-request}}
+Once you have pushed your branch, then you can go to either fork and (in the GUI) \sphinxhref{https://help.github.com/articles/creating-a-pull-request/}{submit a Pull Request}. Regardless of the name of your branch, your PR should be submit to the singularityware development branch. This will open up a nice conversation interface / forum for the developers of Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the Pull Request.
+
+
+\subsection{Support, helping and spreading the word!}
+\label{\detokenize{contributing:support-helping-and-spreading-the-word}}
+This is a huge endeavor, and it is greatly appreciated! If you have been using Singularity and having good luck with it, join our \sphinxhref{https://groups.google.com/a/lbl.gov/forum/\#!forum/singularity}{Google Group} and help out other users! Post to online communities about Singularity, and request that your distribution vendor, service provider, and system administrators include Singularity for you!
+
+
+\section{Contributing to Documentation}
+\label{\detokenize{contributing:contributing-to-documentation}}
+We (like almost all open source software providers) have a documentation dilemma… We tend to focus on the code features and functionality before working on documentation. And there is very good reason for this, we want to share the love so nobody feels left out!
+
+You can contribute to the documentation, by sending a \sphinxhref{https://help.github.com/articles/about-pull-requests/}{pull request} on our repository for documentation.
+
+The current documentation is generated with:
+\begin{itemize}
+\item {} 
+\sphinxhref{http://docutils.sourceforge.net/rst.html}{reStructured Text (RST)} and \sphinxhref{https://readthedocs.org/}{ReadTheDocs}
+
+\end{itemize}
+
+Other dependencies include:
+\begin{itemize}
+\item {} 
+\sphinxhref{https://www.python.org/download/releases/2.7/}{Python 2.7}
+
+\item {} 
+\sphinxhref{https://pypi.org/project/Sphinx/}{Sphinx}
+
+\end{itemize}
+
+More information about contributing to the documentation and the instructions on how to install the dependencies and how to generate the files can be obtained \sphinxhref{https://github.com/singularityware/singularity-userdocs\#singularity-user-docs}{here}.
+
+
+\chapter{FAQ}
+\label{\detokenize{faq:faq}}\label{\detokenize{faq::doc}}
+
+\section{General Singularity Info}
+\label{\detokenize{faq:general-singularity-info}}\label{\detokenize{faq:sec-faq}}
+
+\subsection{Why the name “Singularity”?}
+\label{\detokenize{faq:why-the-name-singularity}}
+A “Singularity” is an astrophysics phenomenon in which a single point becomes infinitely dense.
+This type of a singularity can thus contain massive quantities of universe within it and thus encapsulating an infinite amount of data within it.
+
+Additionally, the name “Singularity” for me (Greg) also stems back from my past experience working at a company called \sphinxhref{https://en.wikipedia.org/wiki/Linuxcare}{Linuxcare}
+where the Linux Bootable Business Card (LNX-BBC) was developed. The BBC, was a Linux rescue disk which paved the way for all live CD bootable
+distributions using a compressed single image file system called the “singularity”.
+
+The name has  \sphinxstylestrong{NOTHING}  to do with Kurzweil’s (among others) prediction that artificial intelligence will abruptly have the ability to reprogram itself,
+surpass that of human intelligence and take control of the planet. If you are interested in this may I suggest the movie Terminator 2: Judgment Day.
+
+
+\subsection{What is so special about Singularity?}
+\label{\detokenize{faq:what-is-so-special-about-singularity}}
+While Singularity is a container solution (like many others), Singularity differs in it’s primary design goals and architecture:
+\begin{enumerate}
+\item {} 
+\sphinxstylestrong{Reproducible software stacks:} These must be easily verifiable via checksum or cryptographic signature in such a manner that does not change formats (e.g. splatting a tarball out to disk). By default Singularity uses a container image file which can be checksummed, signed, and thus easily verified and/or validated.
+
+\item {} 
+\sphinxstylestrong{Mobility of compute:} Singularity must be able to transfer (and store) containers in a manner that works with standard data mobility tools (rsync, scp, gridftp, http, NFS, etc..) and maintain software and data controls compliancy (e.g. HIPPA, nuclear, export, classified, etc..)
+
+\item {} 
+\sphinxstylestrong{Compatibility with complicated architectures:} The runtime must be immediately compatible with existing HPC, scientific, compute farm and even enterprise architectures any of which maybe running legacy kernel versions (including RHEL6 vintage systems) which do not support advanced namespace features (e.g. the user namespace)
+
+\item {} 
+\sphinxstylestrong{Security model:} Unlike many other container systems designed to support trusted users running trusted containers we must support the opposite model of untrusted users running untrusted containers. This changes the security paradigm considerably and increases the breadth of use cases we can support.
+
+\end{enumerate}
+
+
+\subsection{Which namespaces are virtualized? Is that select-able?}
+\label{\detokenize{faq:which-namespaces-are-virtualized-is-that-select-able}}
+That is up to you!
+
+While some namespaces, like newns (mount) and fs (file system) must be virtualized, all of the others are conditional depending on what you want to do.
+For example, if you have a workflow that relies on communication between containers (e.g. MPI), it is best to not isolate any more than absolutely
+necessary to avoid performance regressions. While other tasks are better suited for isolation (e.g. web and data base services).
+
+Namespaces are selected via command line usage and system administration configuration.
+
+
+\subsection{What Linux distributions are you trying to get on-board?}
+\label{\detokenize{faq:what-linux-distributions-are-you-trying-to-get-on-board}}
+All of them! Help us out by letting them know you want Singularity to be included!
+
+
+\subsection{How do I request an installation on my resource?}
+\label{\detokenize{faq:how-do-i-request-an-installation-on-my-resource}}
+It’s important that your administrator have all of the resources available to him or her to make a decision to install Singularity.
+We’ve prepared a {\hyperref[\detokenize{installation:installation-request}]{\sphinxcrossref{\DUrole{std,std-ref}{helpful guide}}}} that you can send to him or her to start a conversation. If there are any unanswered questions, we recommend
+that you \sphinxhref{https://www.sylabs.io/contact/}{reach out}.
+
+
+\section{Basic Singularity usage}
+\label{\detokenize{faq:basic-singularity-usage}}
+
+\subsection{Do you need administrator privileges to use Singularity?}
+\label{\detokenize{faq:do-you-need-administrator-privileges-to-use-singularity}}
+You generally do not need admin/sudo to use Singularity containers but you do however need admin/root access to install Singularity and for some
+container build functions (for example, building from a recipe, or a writable image).
+
+This then defines the work-flow to some extent. If you have a container (whether Singularity or Docker) ready to go, you can run/shell/import
+without root access. If you want to build a new Singularity container image from scratch it must be built and configured on a host where you have root
+access (this can be a physical system or on a VM). And of course once the container image has been configured it can be used on a system where you do not have root access as long as Singularity has been installed there.
+
+
+\subsection{What if I don’t want to install Singularity on my computer?}
+\label{\detokenize{faq:what-if-i-don-t-want-to-install-singularity-on-my-computer}}
+If you don’t want to build your own images, \sphinxhref{https://singularity-hub.org/}{Singularity Hub} will connect to your GitHub repos with build specification files, and build the containers automatically for you.
+You can then interact with them easily where Singularity is installed (e.g., on your cluster):
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+singularity shell shub://vsoch/hello\PYGZhy{}world
+
+singularity run shub://vsoch/hello\PYGZhy{}world
+
+singularity pull shub://vsoch/hello\PYGZhy{}world
+
+singularity build hello\PYGZhy{}world.simg shub://vsoch/hello\PYGZhy{}world \PYGZsh{} redundant, you would already get an image
+\end{sphinxVerbatim}
+
+
+\subsection{Can you edit/modify a Singularity container once it has been instantiated?}
+\label{\detokenize{faq:can-you-edit-modify-a-singularity-container-once-it-has-been-instantiated}}\begin{description}
+\item[{We strongly advocate for reproducibility, so if you build a squashfs container, it is immutable. However, if you build with}] \leavevmode
+\sphinxcode{\sphinxupquote{-{-}sandbox}} or \sphinxcode{\sphinxupquote{-{-}writable}} you can produce a writable sandbox folder or a writable ext3 image, respectively.
+From a sandbox you can develop, test, and make changes, and then build or convert it into a standard image.
+
+\end{description}
+
+We recommend to use the default compressed, immutable format for production containers.
+
+
+\subsection{Can multiple applications be packaged into one Singularity Container?}
+\label{\detokenize{faq:can-multiple-applications-be-packaged-into-one-singularity-container}}
+Yes! You can even create entire pipe lines and work flows using many applications, binaries, scripts, etc..
+The \sphinxcode{\sphinxupquote{\%runscript}} bootstrap section is where you can define what happens when a Singularity container is run,
+and with the introduction of {\hyperref[\detokenize{reproducible_scif_apps:reproducible-scif-apps}]{\sphinxcrossref{\DUrole{std,std-ref}{modular apps}}}}  you can now even define \sphinxcode{\sphinxupquote{\%apprun}} sections for different entrypoints to your container.
+
+
+\subsection{How are external file systems and paths handled in a Singularity Container?}
+\label{\detokenize{faq:how-are-external-file-systems-and-paths-handled-in-a-singularity-container}}
+Because Singularity is based on container principals, when an application is run from within a Singularity container its default
+view of the file system is different from how it is on the host system. This is what allows the environment to be portable.
+This means that root (‘/’) inside the container is different from the host!
+
+Singularity automatically tries to resolve directory mounts such that things will just work and be portable with whatever environment
+you are running on. This means that \sphinxcode{\sphinxupquote{/tmp}} and \sphinxcode{\sphinxupquote{/var/tmp}} are automatically shared into the container as is \sphinxcode{\sphinxupquote{/home}}.
+Additionally, if you are in a current directory that is not a system directory, Singularity will also try to bind that to your container.
+
+There is a caveat in that a directory must already exist within your container to serve as a mount point. If that directory does not exist,
+Singularity will not create it for you! You must do that. To create custom mounts at runtime, you should use the \sphinxcode{\sphinxupquote{-B}} or \sphinxcode{\sphinxupquote{-{-}bind}} argument:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+singularity run \PYGZhy{}\PYGZhy{}bind /home/vanessa/Desktop:/data container.img
+\end{sphinxVerbatim}
+
+
+\subsection{How does Singularity handle networking?}
+\label{\detokenize{faq:how-does-singularity-handle-networking}}
+As of 2.4, Singularity can support the network namespace to a limited degree. At present, we just use it for isolation,
+but it will soon be more featurefull.
+
+
+\subsection{Can Singularity support daemon processes?}
+\label{\detokenize{faq:can-singularity-support-daemon-processes}}
+Singularity has container “instance” support which allows one to start a container process, within its own namespaces, and use that instance
+like it was a stand alone, isolated system.
+
+At the moment (as above describes), the network (and UTS) namespace is not well supported, so if you spin up a process daemon, it will exist on
+your host’s network. This means you can run a web server, or any other daemon, from within a container and access it directly from your host.
+
+
+\subsection{Can a Singularity container be multi-threaded?}
+\label{\detokenize{faq:can-a-singularity-container-be-multi-threaded}}
+Yes. Singularity imposes no limitations on forks, threads or processes in general.
+
+
+\subsection{Can a Singularity container be suspended or check-pointed?}
+\label{\detokenize{faq:can-a-singularity-container-be-suspended-or-check-pointed}}
+Yes and maybe respectively. Any Singularity application can be suspended using standard Linux/Unix signals. Check-pointing requires some preloaded
+libraries to be automatically loaded with the application but because Singularity escapes the hosts library stack, the checkpoint libraries would not
+be loaded. If however you wanted to make a Singularity container that can be check-pointed, you would need to install the checkpoint libraries into the Singularity container via the specfile.
+
+On our roadmap is the ability to checkpoint the entire container process thread, and restart it. Keep an eye out for that feature!
+
+
+\subsection{Are there any special requirements to use Singularity through an HPC job scheduler?}
+\label{\detokenize{faq:are-there-any-special-requirements-to-use-singularity-through-an-hpc-job-scheduler}}
+Singularity containers can be run via any job scheduler without any modifications to the scheduler configuration or architecture.
+This is because Singularity containers are designed to be run like any application on the system, so within your job script just call Singularity as you would any other application!
+
+
+\subsection{Does Singularity work in multi-tenant HPC cluster environments?}
+\label{\detokenize{faq:does-singularity-work-in-multi-tenant-hpc-cluster-environments}}
+Yes! HPC was one of the primary use cases in mind when Singularity was created.
+
+Most people that are currently integrating containers on HPC resources do it by creating virtual clusters within the physical host cluster.
+This precludes the virtual cluster from having access to the host cluster’s high performance fabric, file systems and other investments which make an HPC system high performance.
+
+Singularity on the other hand allows one to keep the high performance in High Performance Computing by containerizing applications and supporting
+a runtime which seamlessly interfaces with the host system and existing environments.
+
+
+\subsection{Can I run X11 apps through Singularity?}
+\label{\detokenize{faq:can-i-run-x11-apps-through-singularity}}
+Yes. This works exactly as you would expect it to.
+
+
+\subsection{Can I containerize my MPI application with Singularity and run it properly on an HPC system?}
+\label{\detokenize{faq:can-i-containerize-my-mpi-application-with-singularity-and-run-it-properly-on-an-hpc-system}}
+Yes! HPC was one of the primary use cases in mind when Singularity was created.
+
+While we know for a fact that Singularity can support multiple MPI implementations, we have spent a considerable effort working with Open MPI
+as well as adding a Singularity module into Open MPI (v2) such that running at extreme scale will be as efficient as possible.
+
+note: We have seen no major performance impact from running a job in a Singularity container.
+
+
+\subsection{Why do we call ‘mpirun’ from outside the container (rather than inside)?}
+\label{\detokenize{faq:why-do-we-call-mpirun-from-outside-the-container-rather-than-inside}}
+With Singularity, the MPI usage model is to call ‘mpirun’ from outside the container, and reference the container from your ‘mpirun’ command. Usage would look like this:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} mpirun \PYGZhy{}np 20 singularity exec container.img /path/to/contained\PYGZus{}mpi\PYGZus{}prog
+\end{sphinxVerbatim}
+
+By calling ‘mpirun’ outside the container, we solve several very complicated work-flow aspects. For example, if ‘mpirun’ is called from within the container it must have a method for spawning processes on remote nodes. Historically ssh is used for this which means that there must be an sshd running within the container on the remote nodes, and this sshd process must not conflict with the sshd running on that host! It is also possible for the resource manager to launch the job and (in Open MPI’s case) the Orted processes on the remote system, but that then requires resource manager modification and container awareness.
+
+In the end, we do not gain anything by calling ‘mpirun’ from within the container except for increasing the complexity levels and possibly losing out on some added performance benefits (e.g. if a container wasn’t built with the proper OFED as the host).
+
+See the Singularity on HPC page for more details.
+
+
+\subsection{Does Singularity support containers that require GPUs?}
+\label{\detokenize{faq:does-singularity-support-containers-that-require-gpus}}
+Yes. Many users run GPU-dependent code within Singularity containers. The experimental \sphinxcode{\sphinxupquote{-{-}nv}} option allows you to leverage host GPUs without installing system level drivers into your container. See the {\hyperref[\detokenize{appendix:exec-command}]{\sphinxcrossref{\DUrole{std,std-ref}{exec}}}} command for an example.
+
+
+\section{Container portability}
+\label{\detokenize{faq:container-portability}}
+
+\subsection{Are Singularity containers kernel-dependent?}
+\label{\detokenize{faq:are-singularity-containers-kernel-dependent}}
+No, never. But sometimes yes.
+
+Singularity is using standard container principals and methods so if you are leveraging any kernel version specific or external patches/module functionality (e.g. OFED), then yes there maybe kernel dependencies you will need to consider.
+
+Luckily most people that would hit this are people that are using Singularity to inter-operate with an HPC (High Performance Computing) system where there are highly tuned interconnects and file systems you wish to make efficient use of. In this case, See the documentation of MPI with Singularity.
+
+There is also some level of glibc forward compatibility that must be taken into consideration for any container system. For example, I can take a Centos-5 container and run it on Centos-7, but I can not take a Centos-7 container and run it on Centos-5.
+
+note: If you require kernel-dependent features, a container platform is probably not the right solution for you.
+
+
+\subsection{Can a Singularity container resolve GLIBC version mismatches?}
+\label{\detokenize{faq:can-a-singularity-container-resolve-glibc-version-mismatches}}
+Yes. Singularity containers contain their own library stack (including the Glibc version that they require to run).
+
+
+\subsection{What is the performance trade off when running an application native or through Singularity?}
+\label{\detokenize{faq:what-is-the-performance-trade-off-when-running-an-application-native-or-through-singularity}}
+So far we have not identified any appreciable regressions of performance (even in parallel applications running across nodes with InfiniBand).
+There is a small start-up cost to create and tear-down the container, which has been measured to be anywhere from 10 - 20 thousandths of a second.
+
+
+\section{Misc}
+\label{\detokenize{faq:misc}}
+The following are miscellaneous questions.
+
+
+\subsection{Are there any special security concerns that Singularity introduces?}
+\label{\detokenize{faq:are-there-any-special-security-concerns-that-singularity-introduces}}
+No and yes.
+
+While Singularity containers always run as the user launching them, there are some aspects of the container execution which requires escalation of privileges. This escalation is achieved via a SUID portion of code. Once the container environment has been instantiated, all escalated privileges are dropped completely, before running any programs within the container.
+
+Additionally, there are precautions within the container context to mitigate any escalation of privileges. This limits a user’s ability to gain root control once inside the container.
+
+You can read more about the Singularity {\hyperref[\detokenize{introduction:security-and-priviledge-escalation}]{\sphinxcrossref{\DUrole{std,std-ref}{security overview here}}}}.
 
 
 
