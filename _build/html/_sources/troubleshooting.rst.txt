@@ -21,8 +21,7 @@ it runs out of space on the device:
 
 The issue here is that during build of a squashfs image, Singularity is
 using the ``$TMPDIR`` . If your ``$TMPDIR`` is overflowing (or the mount is very small!) then
-you would see this error. As a test, you can try building a sandbox. If
-this is the issue, then the sandbox should work.
+you would see this error. As a test, you can try building a sandbox. If this is the issue, then the sandbox should work.
 
 .. code-block:: none
 

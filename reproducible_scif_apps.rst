@@ -24,8 +24,7 @@ intended functions. This documentation will walk through some
 rationale, background, and examples of the SCIF integration for
 Singularity containers. For other examples (and a client that works
 across container technologies) see the the `scientific filesystem <https://sci-f.github.io/>`_.
-This page will primarily cover the native Singularity SCIF
-integration.
+This page will primarily cover the native Singularity SCIF integration.
 
 To start, let’s take a look at this series of steps to install
 dependencies for software foo and bar.
@@ -485,25 +484,25 @@ The same is true for each of the labels, environment, runscript, bin,
 and lib. The following variables are available to you, for each app in
 the container, whenever any app is being run:
 
--  \*\*SCIF\_APPBIN\_\*: the path to the bin folder, if you want to add
+-  **SCIF\_APPBIN\_**: the path to the bin folder, if you want to add
    an app that isn’t active to your ‘PATH‘
 
--  \*\*SCIF\_APPLIB\_\*: the path to the lib folder, if you want to add
+-  **SCIF\_APPLIB\_**: the path to the lib folder, if you want to add
    an app that isn’t active to your ‘LD\_LIBRARY\_PATH‘
 
--  \*\*SCIF\_APPRUN\_\*: the app’s runscript (so you can call it from
+-  **SCIF\_APPRUN\_**: the app’s runscript (so you can call it from
    elsewhere)
 
--  \*\*SCIF\_APPMETA\_\*: the path to the metadata folder for the app
+-  **SCIF\_APPMETA\_**: the path to the metadata folder for the app
 
--  \*\*SCIF\_APPENV\_\*: the path to the primary environment file (for
+-  **SCIF\_APPENV\_**: the path to the primary environment file (for
    sourcing) if it exists
 
--  \*\*SCIF\_APPROOT\_\*: the app’s install folder
+-  **SCIF\_APPROOT\_**: the app’s install folder
 
--  \*\*SCIF\_APPDATA\_\*: the app’s data folder
+-  **SCIF\_APPDATA\_**: the app’s data folder
 
--  \*\*SCIF\_APPLABELS\_\*: The path to the label.json in the metadata
+-  **SCIF\_APPLABELS\_**: The path to the label.json in the metadata
    folder, if it exists
 
 Singularity containers are already reproducible in that they package

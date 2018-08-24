@@ -8,23 +8,12 @@
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Persistent Overlays &mdash; Singularity container 2.5.2 documentation</title>
-
-
-
+  <title>Persistent Overlays &mdash; Singularity container 2.6.0 documentation</title>
 
     <link rel="shortcut icon" href="_static/favicon.png"/>
 
-
-
-
-
-
-
-
-
-
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script type="text/javascript" src="_static/js/dark.js"></script>
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -63,9 +52,8 @@
 
 
               <div class="version">
-                2.5.2
+                2.6.0
               </div>
-
 
 
 
@@ -108,6 +96,8 @@
 <li class="toctree-l1"><a class="reference internal" href="singularity_and_docker.html">Singularity and Docker</a></li>
 <li class="toctree-l1"><a class="reference internal" href="troubleshooting.html">Troubleshooting</a></li>
 <li class="toctree-l1"><a class="reference internal" href="appendix.html">Appendix</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing</a></li>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">FAQ</a></li>
 </ul>
 
 
@@ -188,8 +178,7 @@ changes.</p>
 <p>In Singularity versions 2.4 and later an overlay file system is
 automatically added to your squashfs or sandbox container when it is
 mounted. This means you can install new software and create and modify
-files even though your container is read-only. But your changes will
-disappear as soon as you exit the container.</p>
+files even though your container is read-only. But your changes will disappear as soon as you exit the container.</p>
 <p>If you want your changes to persist in your container across uses, you
 can create a writable image to use as a persistent overlay. Then you
 can specify that you want to use the image as an overlay at runtime
@@ -296,43 +285,13 @@ Singularity ubuntu.simg:~&gt; exit
   </div>
 
 
-  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
-     <span class="rst-current-version" data-toggle="rst-current-version">
-       <span class="fa fa-book"> Singularity Docs - User Guide </span>
-       v: latest
-       <span class="fa fa-caret-down"></span>
-     </span>
-     <div class="rst-other-versions">
-       <dl>
-         <dt>Versions</dt>
-           <dd><a href="https://www.sylabs.io/guides/2.5.2/user-guide/">latest</a></dd>
-           <dd><a href="https://www.sylabs.io/guides/2.5.1/user-guide/">2.5.1</a></dd>
-       </dl>
-       <dl>
-         <dt>Downloads</dt>
-         <dd>
-           <a href="https://www.sylabs.io/guides/2.5.2/user-guide.pdf">Latest PDF</a>
-         </dd>
-         <dd>
-           <a href="https://www.sylabs.io/guides/2.5.1/user-guide.pdf">2.5.1 PDF</a>
-         </dd>
-       </dl>
-       <dl>
-         <dt>Do you want to contribute? </dt>
-           <dd>
-             <a href="https://github.com/singularityware/singularity-userdocs">Find us on GitHub!</a>
-           </dd>
-       </dl>
-
-     </div>
-   </div>
-
+  <script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.5.2',
+            VERSION:'2.6.0',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

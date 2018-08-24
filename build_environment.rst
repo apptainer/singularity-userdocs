@@ -87,7 +87,7 @@ Environment Variables
 ---------------------
 
 All environmental variables are parsed by Singularity python helper
-functions, and specifically the file `defaults.py <https://github.com/singularityware/singularity/blob/master/libexec/python/defaults.py>`_ is a gateway
+functions, and specifically the file `defaults.py <https://github.com/singularityware/singularity/blob/2.6.0/libexec/python/defaults.py>`_ is a gateway
 between variables defined at runtime, and pre-defined defaults. By way
 of import from the file, variables set at runtime do not change if
 re-imported. This was done intentionally to prevent changes during the
@@ -215,8 +215,7 @@ General
 **SINGULARITY_PYTHREADS** The Python modules use threads (workers) to
 download layer files for Docker, and change permissions. By default,
 we will use 9 workers, unless the environment variable ``SINGULARITY_PYTHREADS`` is defined.
-**SINGULARITY_COMMAND_ASIS** By default, we want to make sure the
-container running process gets passed forward as the current process,
+**SINGULARITY_COMMAND_ASIS** By default, we want to make sure the container running process gets passed forward as the current process,
 so we want to prefix whatever the Docker command or entrypoint is with
 ``exec``. We also want to make sure that following arguments get passed, so we
 append ``"$@"``. Thus, some entrypoint or cmd might look like this:

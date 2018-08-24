@@ -18,8 +18,7 @@ changes.
 In Singularity versions 2.4 and later an overlay file system is
 automatically added to your squashfs or sandbox container when it is
 mounted. This means you can install new software and create and modify
-files even though your container is read-only. But your changes will
-disappear as soon as you exit the container.
+files even though your container is read-only. But your changes will disappear as soon as you exit the container.
 
 If you want your changes to persist in your container across uses, you
 can create a writable image to use as a persistent overlay. Then you

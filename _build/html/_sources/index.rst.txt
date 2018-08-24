@@ -21,3 +21,5 @@ User Guide
    Singularity and Docker <singularity_and_docker>
    Troubleshooting <troubleshooting>
    Appendix <appendix>
+   Contributing <contributing>
+   FAQ <faq>

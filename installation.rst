@@ -43,12 +43,12 @@ into missing dependencies, try installing them like so:
 
 
 -------------------------
-Install the master branch
+Install from a tag
 -------------------------
 
-The following commands will install the latest version of the `GitHub
-repo <https://github.com/singularityware/singularity>`_ master branch to ``/usr/local``.
-NOTE: Please see INSTALL.md for more instructions with the Go change.
+The following commands will install a tagged version of the `GitHub
+repo <https://github.com/singularityware/singularity>`_ to ``/usr/local``.
+This will work for pre 3.0 tags.
 
 .. code-block:: none
 
@@ -56,9 +56,13 @@ NOTE: Please see INSTALL.md for more instructions with the Go change.
 
     $ cd singularity
 
-    $ ./mconfig
+    $ git fetch --all
 
-    $ cd builddir
+    $ git tag -l
+
+    $ git checkout [TAG]
+
+    $ ./autogen.sh
 
     $ make
 
@@ -66,11 +70,16 @@ NOTE: Please see INSTALL.md for more instructions with the Go change.
 
 
 Singularity will be installed in the ``/usr/local`` directory hierarchy by default. 
-And if you specify a custom directory with the ``-p`` option, all of 
+And if you specify a custom directory with the ``--prefix`` option, all of 
 Singularity's binaries and the configuration file will be installed within that 
 directory. This last option can be useful if you want to install multiple versions 
 of Singularity, install Singularity on a shared system, or if you want to remove 
 Singularity easily after installing it.
+
+If you omit the ``--sysconfdir`` option , the configuration file will be installed in ``/usr/local/etc``.
+If you omit the ``--prefix`` option, Singularity will be installed in the ``/usr/local`` directory
+hierarchy by default. And if you specify a custom directory with the ``--prefix``
+option, all of Singularity’s binaries and the configuration file will be installed within that directory.
 
 --------------------------
 Install a specific release
@@ -178,7 +187,9 @@ Run GitBash. The default home directory will be C:\Users\your_username
 .. code-block:: none
 
     mkdir singularity-2.4
+
     cd singularity-2.4
+
 
 Note that if you had installed a previous version of the vm (and are using the same folder), you must destroy it first. In our example we create a new folder. To destroy a previous vm:
 
@@ -191,33 +202,50 @@ Then issue the following commands to bring up the Virtual Machine:
 .. code-block:: none
 
     vagrant init singularityware/singularity-2.4
+
     vagrant up
+
     vagrant ssh
+
 
 You are then ready to go with Singularity 2.4!
 
 .. code-block:: none
 
     vagrant@vagrant:~$ which singularity
+
     /usr/local/bin/singularity
+
     vagrant@vagrant:~$ singularity --version
+
     2.4-dist
 
+
     vagrant@vagrant:~$ sudo singularity build growl-llo-world.simg shub://vsoch/hello-world
+
     Cache folder set to /root/.singularity/shub
+
     Progress |===================================| 100.0%
+
     Building from local image: /root/.singularity/shub/vsoch-hello-world-master.simg
+
     Building Singularity image...
+
     Singularity container built: growl-llo-world.simg
+
     Cleaning up...
+
     vagrant@vagrant:~$ ./growl-llo-world.simg
+
     RaawwWWWWWRRRR!!
+
 
 Note that when you do ``vagrant up`` you can also select the provider, if you use vagrant for multiple providers. For example:
 
 .. code-block:: none
 
     vagrant up --provider virtualbox
+
 
 although this isn’t entirely necessary if you only have it configured for virtualbox.
 
@@ -241,12 +269,19 @@ For example, here is how to download version ``2.5.2`` and install:
 .. code-block:: none
 
     VERSION=2.5.2
+
     wget https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
+
     tar xvf singularity-$VERSION.tar.gz
+
     cd singularity-$VERSION
+
     ./configure --prefix=/usr/local
+
     make
+
     sudo make install
+
 
 Note that when you configure, ``squashfs-tools`` is **not** required, however it is required for full functionality. You will see this message after the configuration:
 
@@ -264,11 +299,17 @@ To download the most recent development code, you should use Git and do the foll
 .. code-block:: none
 
     git clone https://github.com/singularityware/singularity.git
+
     cd singularity
+
     ./autogen.sh
+
     ./configure --prefix=/usr/local
+
     make
+
     sudo make install
+
 
 
 .. note::
@@ -314,13 +355,21 @@ Then we update the cache (very quietly), and look at the ``singularity-container
 .. code-block:: none
 
     $ apt-get update -qqq
+
     $ apt-cache policy singularity-container
+
     singularity-container:
+
       Installed: (none)
+
       Candidate: 2.3-1~nd80+1
+
       Version table:
+
         2.3-1~nd80+1 0
+
           500 http://neuro.debian.net/debian/ jessie/main amd64 Packages
+
 
 
 You can continue working in Docker, or go back to your host and install Singularity.
@@ -333,7 +382,9 @@ You should first enable the NeuroDebian repository following instructions on the
 .. code-block:: none
 
     sudo wget -O- http://neuro.debian.net/lists/xenial.us-ca.full | sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
+
     sudo apt-key adv --recv-keys --keyserver hkp://pool.sks-keyservers.net:80 0xA5D32F012649A5A9
+
 
 and then update
 
@@ -352,26 +403,46 @@ During the above, if you have a previously installed configuration, you might be
 .. code-block:: none
 
     Configuration file '/etc/singularity/init'
+
       ==> File on system created by you or by a script.
+
       ==> File also in package provided by package maintainer.
+
         What would you like to do about it ?  Your options are:
+
           Y or I  : install the package maintainer's version
+
           N or O  : keep your currently-installed version
+
             D     : show the differences between the versions
+
             Z     : start a shell to examine the situation
+
     The default action is to keep your current version.
+
     *** init (Y/I/N/O/D/Z) [default=N] ? Y
 
+
     Configuration file '/etc/singularity/singularity.conf'
+
       ==> File on system created by you or by a script.
+
       ==> File also in package provided by package maintainer.
+
         What would you like to do about it ?  Your options are:
+
           Y or I  : install the package maintainer's version
+
           N or O  : keep your currently-installed version
+
             D     : show the differences between the versions
+
             Z     : start a shell to examine the situation
+
     The default action is to keep your current version.
+
     *** singularity.conf (Y/I/N/O/D/Z) [default=N] ? Y
+
 
 And for a user, it’s probably well suited to use the defaults. For a cluster admin, we recommend that you read the `admin docs <https://www.sylabs.io/guides/2.5.2/admin-guide/>`_ to get a better understanding of the configuration file options available to you. Remember that you can always tweak the files at ``/etc/singularity/singularity.conf`` and ``/etc/singularity/init`` if you want to make changes.
 
@@ -380,7 +451,9 @@ After this install, you should confirm that ``2.3-dist`` is the version installe
 .. code-block:: none
 
     $ singularity --version
+
       2.4-dist
+
 
 Note that if you don’t add the NeuroDebian lists, the version provided will be old (e.g., 2.2.1). If you need a backport build of the recent release of Singularity on those or older releases of Debian and Ubuntu, you can `see all the various builds and other information here <http://neuro.debian.net/pkgs/singularity-container.html>`_.
 
@@ -392,10 +465,15 @@ Like the above, you can build an RPM of Singularity so it can be more easily man
 .. code-block:: none
 
     ./autogen.sh
+
     ./configure
+
     make dist
+
     rpmbuild -ta singularity-*.tar.gz
+
     sudo yum install ~/rpmbuild/RPMS/*/singularity-[0-9]*.rpm
+
 
 .. note::
 
@@ -404,7 +482,9 @@ Like the above, you can build an RPM of Singularity so it can be more easily man
 .. code-block:: none
 
     PREFIX=/opt/singularity
+
     rpmbuild -ta --define="_prefix $PREFIX" --define "_sysconfdir $PREFIX/etc" --define "_defaultdocdir $PREFIX/share" singularity-*.tar.gz
+
 
 
 When using ``autogen.sh`` If you get an error that you have packages missing, for example on Ubuntu 16.04:
@@ -412,16 +492,27 @@ When using ``autogen.sh`` If you get an error that you have packages missing, fo
 .. code-block:: none
 
     ./autogen.sh
+
     +libtoolize -c
+
     ./autogen.sh: 13: ./autogen.sh: libtoolize: not found
+
     +aclocal
+
     ./autogen.sh: 14: ./autogen.sh: aclocal: not found
+
     +autoheader
+
     ./autogen.sh: 15: ./autogen.sh: autoheader: not found
+
     +autoconf
+
     ./autogen.sh: 16: ./autogen.sh: autoconf: not found
+
     +automake -ca -Wno-portability
+
     ./autogen.sh: 17: ./autogen.sh: automake: not found
+
 
 then you need to install dependencies:
 
@@ -437,14 +528,18 @@ To build a deb package for Debian/Ubuntu/LinuxMint invoke the following commands
 .. code-block:: none
 
     $ fakeroot dpkg-buildpackage -b -us -uc # sudo will ask for a password to run the tests
+
     $ sudo dpkg -i ../singularity-container_2.3_amd64.deb
+
 
 Note that the tests will fail if singularity is not already installed on your system. This is the case when you run this procedure for the first time. In that case run the following sequence:
 
 .. code-block:: none
 
     $ echo "echo SKIPPING TESTS THEYRE BROKEN" > ./test.sh
+
     $ fakeroot dpkg-buildpackage -nc -b -us -uc # this will continue the previous build without an initial 'make clean'
+
 
 Install on your Cluster Resource
 ================================
@@ -467,13 +562,17 @@ First, install brew if you do not have it already.
 
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
+
 Next, install Vagrant and the necessary bits.
 
 .. code-block:: none
 
     brew cask install virtualbox
+
     brew cask install vagrant
+
     brew cask install vagrant-manager
+
 
 Option 1: Singularityware Vagrant Box
 =====================================
@@ -487,7 +586,9 @@ For other versions of Singularity see `our Vagrant Cloud repository <https://app
 .. code-block:: none
 
     mkdir singularity-vm
+
     cd singularity-vm
+
 
 Note that if you have installed a previous version of the vm, you can either destroy it first, or create a new directory.
 
@@ -500,27 +601,43 @@ Then issue the following commands to bring up the Virtual Machine:
 .. code-block:: none
 
     vagrant init singularityware/singularity-2.4
+
     vagrant up
+
     vagrant ssh
+
 
 You are then ready to go with Singularity 2.4!
 
 .. code-block:: none
 
     vagrant@vagrant:~$ which singularity
+
     /usr/local/bin/singularity
+
     vagrant@vagrant:~$ singularity --version
+
     2.4-dist
 
+
     vagrant@vagrant:~$ sudo singularity build growl-llo-world.simg shub://vsoch/hello-world
+
     Cache folder set to /root/.singularity/shub
+
     Progress |===================================| 100.0%
+
     Building from local image: /root/.singularity/shub/vsoch-hello-world-master.simg
+
     Building Singularity image...
+
     Singularity container built: growl-llo-world.simg
+
     Cleaning up...
+
     vagrant@vagrant:~$ ./growl-llo-world.simg
+
     RaawwWWWWWRRRR!!
+
 
 
 Note that when you do ``vagrant up`` you can also select the provider, if you use vagrant for multiple providers. For example:
@@ -528,6 +645,7 @@ Note that when you do ``vagrant up`` you can also select the provider, if you us
 .. code-block:: none
 
     vagrant up --provider virtualbox
+
 
 although this isn’t entirely necessary if you only have it configured for virtualbox.
 
@@ -540,8 +658,11 @@ If you want to get more familiar with how Vagrant and VirtualBox work, you can i
 .. code-block:: none
 
     mkdir singularity-2.4
+
     cd singularity-2.4
+
     vagrant init bento/ubuntu-16.04
+
 
 Next, build and start the vagrant hosted VM, and you will install Singularity by sending the entire install script as a command (with the ``-c`` argument). You could just as easily shell into the box first with vagrant ssh, and then run these commands on your own. To each bento, his own.
 
@@ -549,17 +670,29 @@ Next, build and start the vagrant hosted VM, and you will install Singularity by
 
     vagrant up --provider virtualbox
 
+
     # Run the necessary commands within the VM to install Singularity
+
     vagrant ssh -c /bin/sh <<EOF
+
         sudo apt-get update
+
         sudo apt-get -y install build-essential curl git sudo man vim autoconf libtool
+
         git clone https://github.com/singularityware/singularity.git
+
         cd singularity
+
         ./autogen.sh
+
         ./configure --prefix=/usr/local
+
         make
+
         sudo make install
+
     EOF
+
 
 
 At this point, Singularity is installed in your Vagrant Ubuntu VM! Now you can use Singularity as you would normally by logging into the VM directly
@@ -616,10 +749,16 @@ Putting all of the above together, a request might look like the following:
 
     Dear Research Computing,
 
-    We are interested in having an installation of the Singularity software (https://singularityware.github.io) installed on our cluster. Singularity containers will allow us to build encapsulated environments, meaning that our work is reproducible and we are empowered to choose all dependencies including libraries, operating system, and custom software. Singularity is already installed on over 50 centers internationally (http://singularity.lbl.gov/citation-registration) including TACC, NIH, and several National Labs, Universities, Hospitals. Importantly, it has a vibrant team of developers, scientists, and HPC administrators that invest heavily in the security and development of the software, and are quick to respond to the needs of the community. To help learn more about Singularity, I thought these items might be of interest:
 
-      - Security: A discussion of security concerns is discussed at http://singularity.lbl.gov/docs-security
-      - Installation: http://singularity.lbl.gov/admin-guide
+    We are interested in having an installation of the Singularity software (https://singularityware.github.io) installed on our cluster. Singularity containers will allow us to build encapsulated environments, meaning that our work is reproducible and we are empowered to choose all dependencies including libraries, operating system, and custom software. Singularity is already installed on over 50 centers internationally (http://singularity.lbl.gov/citation-registration) including TACC, NIH,
+
+    and several National Labs, Universities, Hospitals. Importantly, it has a vibrant team of developers, scientists, and HPC administrators that invest heavily in the security and development of the software, and are quick to respond to the needs of the community. To help learn more about Singularity, I thought these items might be of interest:
+
+
+      - Security: A discussion of security concerns is discussed at https://www.sylabs.io/guides/2.5.2/user-guide/introduction.html#security-and-privilege-escalation
+
+      - Installation: https://www.sylabs.io/guides/2.5.2/admin-guide/
+
 
     If you have questions about any of the above, you can email the list (singularity@lbl.gov) or join the slack channel (singularity-container.slack.com) to get a human response. I can do my best to facilitate this interaction if help is needed. Thank you kindly for considering this request!
 

@@ -488,37 +488,63 @@ The Singularity containers themselves are purpose built and can include a simple
     $ mkdir ~/bin
 
     $ singularity build ~/bin/python-latest docker://python:latest
+
     Docker image path: index.docker.io/library/python:latest
+
     Cache folder set to /home/gmk/.singularity/docker
+
     Importing: base Singularity environment
+
     Importing: /home/gmk/.singularity/docker/sha256:aa18ad1a0d334d80981104c599fa8cef9264552a265b1197af11274beba767cf.tar.gz
+
     Importing: /home/gmk/.singularity/docker/sha256:15a33158a1367c7c4103c89ae66e8f4fdec4ada6a39d4648cf254b32296d6668.tar.gz
+
     Importing: /home/gmk/.singularity/docker/sha256:f67323742a64d3540e24632f6d77dfb02e72301c00d1e9a3c28e0ef15478fff9.tar.gz
+
     Importing: /home/gmk/.singularity/docker/sha256:c4b45e832c38de44fbab83d5fcf9cbf66d069a51e6462d89ccc050051f25926d.tar.gz
+
     Importing: /home/gmk/.singularity/docker/sha256:b71152c33fd217d4408c0e7a2f308e66c0be1a58f4af9069be66b8e97f7534d2.tar.gz
+
     Importing: /home/gmk/.singularity/docker/sha256:c3eac66dc8f6ae3983a7f37e3da84a8acb828faf909be2d6649e9d7c9caffc28.tar.gz
+
     Importing: /home/gmk/.singularity/docker/sha256:494ffdf1660cdec946ae13d6b726debbcec4c393a7eecfabe97caf3961f62c36.tar.gz
+
     Importing: /home/gmk/.singularity/docker/sha256:f5ec737c23de3b1ae2b1ce3dce1fd20e0cb246e4c73584dcd4f9d2f50063324e.tar.gz
+
     Importing: /home/gmk/.singularity/metadata/sha256:5dd22488ce22f06bed1042cc03d3efa5a7d68f2a7b3dcad559df4520154ef9c2.tar.gz
+
     WARNING: Building container as an unprivileged user. If you run this container as root
+
     WARNING: it may be missing some functionality.
+
     Building Singularity image...
+
     Cleaning up...
+
     Singularity container built: /home/gmk/bin/python-latest
 
+
     $ which python-latest
+
     /home/gmk/bin/python-latest
 
+
     $ python-latest --version
+
     Python 3.6.3
 
+
     $ singularity exec ~/bin/python-latest cat /etc/debian_version
+
     8.9
 
     $ singularity shell ~/bin/python-latest
+
     Singularity: Invoking an interactive shell within container...
 
+
     Singularity python-latest:~>
+    
 
 Additionally, Singularity blocks privilege escalation within the container and you are always yourself within a container! If you want to be root inside the container, you first must be root outside the container. This simple usage paradigm mitigates many of the security concerns that exists with containers on multi-user shared resources. You can directly call programs inside the container from outside the container fully incorporating pipes, standard IO, file system access, X11, and MPI. Singularity images can be seamlessly incorporated into your environment.
 
@@ -615,7 +641,8 @@ Consolidating a work-flow into a Singularity container simplifies distribution a
 License
 =======
 
-Singularity is released under a standard 3 clause BSD license. Please see our `LICENSE <https://github.com/singularityware/singularity/blob/master/LICENSE.md>`_ file for more details).
+Singularity is released under a standard 3 clause BSD license.
+Please see our `LICENSE <https://github.com/singularityware/singularity/blob/master/LICENSE.md>`_ file for more details).
 
 Getting started
 ===============
