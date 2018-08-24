@@ -27,6 +27,10 @@ There are many ways to :ref:`install Singularity <installation>` but this quick 
 
     cd singularity
 
+    git fetch --all
+
+    git checkout 2.6.0
+
     ./autogen.sh
 
     ./configure --prefix=/usr/local
