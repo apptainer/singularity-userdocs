@@ -48,6 +48,7 @@ Install the master branch
 
 The following commands will install the latest version of the `GitHub
 repo <https://github.com/singularityware/singularity>`_ master branch to ``/usr/local``.
+NOTE: Please see INSTALL.md for more instructions with the Go change.
 
 .. code-block:: none
 
@@ -55,28 +56,21 @@ repo <https://github.com/singularityware/singularity>`_ master branch to ``/usr/
 
     $ cd singularity
 
-    $ ./autogen.sh
+    $ ./mconfig
 
-    $ ./configure --prefix=/usr/local --sysconfdir=/etc
+    $ cd builddir
 
     $ make
 
     $ sudo make install
 
 
-.. note.. code-block:: none
-    Note that the installation prefix is ``/usr/local`` but the configuration directory
-    is ``/etc``. This ensures that the configuration file ``singularity.conf`` is placed in the
-    standard location.
-
-If you omit the ``--sysconfdir`` option , the configuration file will be installed in ``/usr/local/etc``.
-If you omit the ``--prefix`` option, Singularity will be installed in the ``/usr/local`` directory
-hierarchy by default. And if you specify a custom directory with the ``--prefix``
-option, all of Singularity’s binaries and the configuration file will
-be installed within that directory. This last option can be useful if
-you want to install multiple versions of Singularity, install
-Singularity on a shared system, or if you want to remove Singularity
-easily after installing it.
+Singularity will be installed in the ``/usr/local`` directory hierarchy by default. 
+And if you specify a custom directory with the ``-p`` option, all of 
+Singularity's binaries and the configuration file will be installed within that 
+directory. This last option can be useful if you want to install multiple versions 
+of Singularity, install Singularity on a shared system, or if you want to remove 
+Singularity easily after installing it.
 
 --------------------------
 Install a specific release
@@ -106,33 +100,15 @@ releases <https://github.com/singularityware/singularity/releases>`_ page to ``/
 Install the development branch
 ------------------------------
 
-If you want to test a development branch the routine above should be
-tweaked slightly:
-
-.. code-block:: none
-
-    $ git clone https://github.com/singularityware/singularity.git
-
-    $ cd singularity
-
-    $ git fetch
-
-    $ git checkout development
-
-    $ ./autogen.sh
-
-    $ ./configure --prefix=/usr/local --sysconfdir=/etc
-
-    $ make
-
-    $ sudo make install
+The primary development of Singularity now happens on the ``master`` branch.
+Please see the ``INSTALL.md`` file in a copy of the repository.
 
 
 ---------------------
 Remove an old version
 ---------------------
 
-Let’s say that we installed Singularity to ``/usr/local``. To remove it completely,
+Let's say that we installed Singularity to ``/usr/local``. To remove it completely,
 you need to hit all of the following:
 
 .. code-block:: none
