@@ -64,6 +64,8 @@ This will work for pre 3.0 tags.
 
     $ ./autogen.sh
 
+    $ ./configure --prefix=/usr/local --sysconfdir=/etc
+
     $ make
 
     $ sudo make install
