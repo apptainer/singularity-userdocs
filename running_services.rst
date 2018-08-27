@@ -13,8 +13,7 @@ isolated version of the container image that runs in the background.
 Why container instances?
 ------------------------
 
-.. _sec:instances: Let’s say I want to run a web server. With nginx,
-that is pretty simple, I install nginx and start the service:
+Let’s say I want to run a web server. With nginx, that is pretty simple, I install nginx and start the service:
 
 .. code-block:: none
 
@@ -51,7 +50,7 @@ file like so:
 
 Now let’s say we build a container with that startscript into an image
 called ``nginx.img`` and we want to run an nginx service. All we need to do is start
-the instance with the :ref:`instance.start <instance-start>` command, and the
+the instance with the :ref:`instance start <instance-start>` command, and the
 startscript will run inside the container automatically:
 
 .. code-block:: none
@@ -107,6 +106,7 @@ If the service you want to run in your instance requires a bind mount,
 then you must pass the ``-B`` option when calling ``instance.start``. For example, if you wish to
 capture the output of the ``web1`` container instance which is placed at ``/output/`` inside
 the container you could do:
+
 
 .. code-block:: none
 

@@ -220,7 +220,6 @@ directive with corresponding path:
 .. _examples: https://github.com/singularityware/singularity/tree/master/examples
 .. _Singularity source code: https://github.com/singularityware/singularity
 .. _shub: http://singularity-userdoc.readthedocs.io/en/latest/#build-shub
-.. _docker: http://singularity-userdoc.readthedocs.io/en/latest/#build-docker-module
 .. _localimage: http://singularity-userdoc.readthedocs.io/en/latest/#build-localimage
 .. _yum: http://singularity-userdoc.readthedocs.io/en/latest/#build-yum
 .. _debootstrap: http://singularity-userdoc.readthedocs.io/en/latest/#build-debootstrap
@@ -231,7 +230,6 @@ directive with corresponding path:
 .. _Standard Container Integration Format: https://sci-f.github.io/
 .. _SCI-F Apps Home: https://sci-f.github.io/
 .. _squashfs image: https://en.wikipedia.org/wiki/SquashFS
-.. _singularity hub: https://github.com/singularityhub/singularityhub.github.io/wiki
 .. _enabled by the system administrator: https://singularity-admindoc.readthedocs.io/en/latest/quickstart.html#user-bind-control-boolean-default-yes
 .. _enabled user control of binds: https://singularity-admindoc.readthedocs.io/en/latest/quickstart.html#user-bind-control-boolean-default-yes
 .. _overlay in the Singularity configuration file: https://singularity-admindoc.readthedocs.io/en/latest/quickstart.html#enable-overlay-boolean-default-no

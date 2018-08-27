@@ -190,7 +190,7 @@ Singularity. A container instance, simply put, is a persistent and
 isolated version of the container image that runs in the background.</p>
 <div class="section" id="why-container-instances">
 <h2>Why container instances?<a class="headerlink" href="#why-container-instances" title="Permalink to this headline">¶</a></h2>
-<p>that is pretty simple, I install nginx and start the service:</p>
+<p>Let’s say I want to run a web server. With nginx, that is pretty simple, I install nginx and start the service:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>apt-get update &amp;&amp; apt-get install -y nginx
 
 service nginx start
@@ -221,7 +221,7 @@ service nginx start
 </div>
 <p>Now let’s say we build a container with that startscript into an image
 called <code class="docutils literal notranslate"><span class="pre">nginx.img</span></code> and we want to run an nginx service. All we need to do is start
-the instance with the <span class="xref std std-ref">instance.start</span> command, and the
+the instance with the <a class="reference internal" href="appendix.html#instance-start"><span class="std std-ref">instance start</span></a> command, and the
 startscript will run inside the container automatically:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>              [command]        [image]    [name of instance]
 
@@ -289,7 +289,7 @@ $ singularity exec instance://web1 ps -ef
 instance. Similarly with <code class="docutils literal notranslate"><span class="pre">exec</span></code>, it will execute the given command in the
 instance.</p>
 <p>When you are finished with your instance you can clean it up with the
-<span class="xref std std-ref">instance.stop</span> command like so:</p>
+<a class="reference internal" href="appendix.html#instance-stop"><span class="std std-ref">instance.stop</span></a> command like so:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity instance.stop web1
 </pre></div>
 </div>
@@ -651,7 +651,7 @@ running instances.</p>
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.5.1',
+            VERSION:'2.5',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

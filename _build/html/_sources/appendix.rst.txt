@@ -60,9 +60,7 @@ The Namespace keyword is optional. It will default to ``library``.
     IncludeCmd: yes
 
 The IncludeCmd keyword is optional. If included, and if a ``%runscript`` is not specified, a Docker ``CMD`` will take precedence over ``ENTRYPOINT``
-and will be used as a runscript. Note that the ``IncludeCmd`` keyword is considered valid if it is not empty! This means that
- ``IncludeCmd: yes`` and ``IncludeCmd: no`` are identical. In both cases the ``IncludeCmd`` keyword is not empty, so the Docker ``CMD`` will take precedence
- over an ``ENTRYPOINT``.
+and will be used as a runscript. Note that the ``IncludeCmd`` keyword is considered valid if it is not empty! This means that ``IncludeCmd: yes`` and ``IncludeCmd: no`` are identical. In both cases the ``IncludeCmd`` keyword is not empty, so the Docker ``CMD`` will take precedence over an ``ENTRYPOINT``.
 
  See :ref:`Singularity and Docker <singularity-and-docker>` for more info on order of operations for determining a runscript.
 
@@ -401,8 +399,7 @@ For each of ``exec``, ``run``, and ``shell``, there are a few important flags th
 your container. While we won’t include the complete list of run options (for this complete list see ``singularity run --help`` or more generally
 ``singularity <action> --help``) we will review some highly useful flags that you can add to these actions.
 
--  **--contain**: Contain suggests that we want to better isolate the container runtime from the host. Adding the ``--contain`` flag will use minimal
-``/dev`` and empty other directories (e.g., ``/tmp``).
+-  **--contain**: Contain suggests that we want to better isolate the container runtime from the host. Adding the ``--contain`` flag will use minimal ``/dev`` and empty other directories (e.g., ``/tmp``).
 
 -  **--containall**: In addition to what is provided with ``--contain`` (filesystems) also contain PID, IPC, and environment.
 
@@ -1674,20 +1671,15 @@ Defining the Runscript
 When you first create a container, the runscript is defined using the
 following order of operations:
 
-#. A user defined runscript in the ``%runscript`` section of a bootstrap takes
-   preference over all
+#. A user defined runscript in the ``%runscript`` section of a bootstrap takes preference over all
 
-#. If the user has not defined a runscript and is importing a Docker
-   container, the Docker ``ENTRYPOINT`` is used.
+#. If the user has not defined a runscript and is importing a Docker container, the Docker ``ENTRYPOINT`` is used.
 
-#. If a user has not defined a runscript and adds ``IncludeCmd: yes`` to the bootstrap file,
-   the ``CMD`` is used over the ``ENTRYPOINT``
+#. If a user has not defined a runscript and adds ``IncludeCmd: yes`` to the bootstrap file, the ``CMD`` is used over the ``ENTRYPOINT``
 
-#. If the user has not defined a runscript and the Docker container
-  doesn’t have an ``ENTRYPOINT``, we look for ``CMD``, even if the user hasn’t asked for it.
+#. If the user has not defined a runscript and the Docker container doesn’t have an ``ENTRYPOINT``, we look for ``CMD``, even if the user hasn’t asked for it.
 
-#. If the user has not defined a runscript, and there is no ``ENTRYPOINT`` or ``CMD`` (or we
-   aren’t importing Docker at all) then we default to ``/bin/bash``
+#. If the user has not defined a runscript, and there is no ``ENTRYPOINT`` or ``CMD`` (or we aren’t importing Docker at all) then we default to ``/bin/bash``
 
 Here is how you would define the runscript section when you :ref:`build <build-a-container>` an image:
 
@@ -1720,8 +1712,8 @@ you want to use run instead of exec, you could also just do:
     exec "$@"`
 
 
-If you want different entrypoints for your image, we recommend using the
-%apprun syntax (see :ref:`apps <reproducible-sci-f-apps>`). Here we have two entrypoints for foo and bar:
+
+If you want different entrypoints for your image, we recommend using the %apprun syntax (see :ref:`apps <reproducible-scif-apps>`). Here we have two entrypoints for foo and bar:
 
 .. code-block:: none
 
@@ -2208,11 +2200,10 @@ Instance Command Group
 
 .. _sec:instances:
 
+.. _instance-start:
 
 instance.start
 ==============
-
-.. _sec:instancestart:
 
 New in Singularity version 2.4 you can use the ``instance`` command group to run
 instances of containers in the background. This is useful for running
@@ -2332,10 +2323,10 @@ Run a command within a running instance
 
 
 
+.. _instance-list:
+
 instance.list
 =============
-
-.. _sec:instancelist:
 
 New in Singularity version 2.4 you can use the ``instance`` command group to run
 instances of containers in the background. This is useful for running
@@ -2383,11 +2374,10 @@ List running instances
     hiya             20595    /home/ubuntu/vsoch-hello-world-master.img
 
 
+.. _instance-stop:
 
 instance.stop
 =============
-
-.. _sec:instancestop:
 
 New in Singularity version 2.4 you can use the ``instance`` command group to run
 instances of containers in the background. This is useful for running

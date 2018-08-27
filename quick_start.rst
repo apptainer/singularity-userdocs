@@ -10,8 +10,7 @@ This guide is intended for running Singularity on a computer where you
 have root (administrative) privileges. If you are learning about
 Singularity on a system where you lack root privileges, you can still
 complete the steps that do not require the sudo command. If you need to
-request an installation on your shared resource, check out our
-requesting an installation help page for information to send to your
+request an installation on your shared resource, check out our requesting an installation help page for information to send to your
 system administrator.
 
 .. _installation:
@@ -27,6 +26,10 @@ There are many ways to :ref:`install Singularity <installation>` but this quick 
     git clone https://github.com/singularityware/singularity.git
 
     cd singularity
+
+    git fetch --all
+
+    git checkout 2.6.0
 
     ./autogen.sh
 
@@ -265,7 +268,7 @@ disappears when the shell is exited.
 Executing Commands
 ==================
 
-The :ref:`exec <exec>` command allows you to execute a custom command within a container by
+The :ref:`exec <exec-command>` command allows you to execute a custom command within a container by
 specifying the image file. For instance, to list the root (/) of our
 hello-world.simg image, we could do the following:
 

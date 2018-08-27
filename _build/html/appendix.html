@@ -252,8 +252,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#instance-command-group">Instance Command Group</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#instance-start">instance.start</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id43">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id44">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id44">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id45">Examples</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="#start-an-instance-called-cow1-from-a-container-on-singularity-hub">Start an instance called cow1 from a container on Singularity Hub</a></li>
 <li class="toctree-l5"><a class="reference internal" href="#start-an-interactive-shell-within-the-instance-that-you-just-started">Start an interactive shell within the instance that you just started</a></li>
 <li class="toctree-l5"><a class="reference internal" href="#execute-the-runscript-within-the-instance">Execute the runscript within the instance</a></li>
@@ -263,8 +263,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#instance-list">instance.list</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id45">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id46">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id47">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id48">Examples</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="#start-a-few-named-instances-from-containers-on-singularity-hub">Start a few named instances from containers on Singularity Hub</a></li>
 <li class="toctree-l5"><a class="reference internal" href="#list-running-instances">List running instances</a></li>
 </ul>
@@ -272,9 +272,9 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="#instance-stop">instance.stop</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="#id47">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="#id48">Examples</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="#id49">Start a few named instances from containers on Singularity Hub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id50">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#id51">Examples</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="#id52">Start a few named instances from containers on Singularity Hub</a></li>
 <li class="toctree-l5"><a class="reference internal" href="#stop-a-single-instance">Stop a single instance</a></li>
 <li class="toctree-l5"><a class="reference internal" href="#stop-all-running-instances">Stop all running instances</a></li>
 </ul>
@@ -398,12 +398,9 @@ Singularity with the <code class="docutils literal notranslate"><span class="pre
 </pre></div>
 </div>
 <p>The IncludeCmd keyword is optional. If included, and if a <code class="docutils literal notranslate"><span class="pre">%runscript</span></code> is not specified, a Docker <code class="docutils literal notranslate"><span class="pre">CMD</span></code> will take precedence over <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code>
-and will be used as a runscript. Note that the <code class="docutils literal notranslate"><span class="pre">IncludeCmd</span></code> keyword is considered valid if it is not empty! This means that</p>
+and will be used as a runscript. Note that the <code class="docutils literal notranslate"><span class="pre">IncludeCmd</span></code> keyword is considered valid if it is not empty! This means that <code class="docutils literal notranslate"><span class="pre">IncludeCmd:</span> <span class="pre">yes</span></code> and <code class="docutils literal notranslate"><span class="pre">IncludeCmd:</span> <span class="pre">no</span></code> are identical. In both cases the <code class="docutils literal notranslate"><span class="pre">IncludeCmd</span></code> keyword is not empty, so the Docker <code class="docutils literal notranslate"><span class="pre">CMD</span></code> will take precedence over an <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code>.</p>
 <blockquote>
-<div><p><code class="docutils literal notranslate"><span class="pre">IncludeCmd:</span> <span class="pre">yes</span></code> and <code class="docutils literal notranslate"><span class="pre">IncludeCmd:</span> <span class="pre">no</span></code> are identical. In both cases the <code class="docutils literal notranslate"><span class="pre">IncludeCmd</span></code> keyword is not empty, so the Docker <code class="docutils literal notranslate"><span class="pre">CMD</span></code> will take precedence
-over an <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code>.</p>
-<p>See <a class="reference internal" href="singularity_and_docker.html#singularity-and-docker"><span class="std std-ref">Singularity and Docker</span></a> for more info on order of operations for determining a runscript.</p>
-</div></blockquote>
+<div>See <a class="reference internal" href="singularity_and_docker.html#singularity-and-docker"><span class="std std-ref">Singularity and Docker</span></a> for more info on order of operations for determining a runscript.</div></blockquote>
 </div>
 <div class="section" id="notes">
 <h3>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h3>
@@ -635,10 +632,7 @@ One common package you may want to install when using the zypper build module is
 your container. While we won’t include the complete list of run options (for this complete list see <code class="docutils literal notranslate"><span class="pre">singularity</span> <span class="pre">run</span> <span class="pre">--help</span></code> or more generally
 <code class="docutils literal notranslate"><span class="pre">singularity</span> <span class="pre">&lt;action&gt;</span> <span class="pre">--help</span></code>) we will review some highly useful flags that you can add to these actions.</p>
 <ul class="simple">
-<li><strong>–contain</strong>: Contain suggests that we want to better isolate the container runtime from the host. Adding the <code class="docutils literal notranslate"><span class="pre">--contain</span></code> flag will use minimal</li>
-</ul>
-<p><code class="docutils literal notranslate"><span class="pre">/dev</span></code> and empty other directories (e.g., <code class="docutils literal notranslate"><span class="pre">/tmp</span></code>).</p>
-<ul class="simple">
+<li><strong>–contain</strong>: Contain suggests that we want to better isolate the container runtime from the host. Adding the <code class="docutils literal notranslate"><span class="pre">--contain</span></code> flag will use minimal <code class="docutils literal notranslate"><span class="pre">/dev</span></code> and empty other directories (e.g., <code class="docutils literal notranslate"><span class="pre">/tmp</span></code>).</li>
 <li><strong>–containall</strong>: In addition to what is provided with <code class="docutils literal notranslate"><span class="pre">--contain</span></code> (filesystems) also contain PID, IPC, and environment.</li>
 <li><strong>–cleanenv</strong>: Clean the environment before running the container.</li>
 <li><strong>–pwd</strong>: Initial working directory for payload process inside the container.</li>
@@ -1736,19 +1730,11 @@ motorbot
 <p>When you first create a container, the runscript is defined using the
 following order of operations:</p>
 <ol class="arabic simple">
-<li>A user defined runscript in the <code class="docutils literal notranslate"><span class="pre">%runscript</span></code> section of a bootstrap takes
-preference over all</li>
-<li>If the user has not defined a runscript and is importing a Docker
-container, the Docker <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code> is used.</li>
-<li>If a user has not defined a runscript and adds <code class="docutils literal notranslate"><span class="pre">IncludeCmd:</span> <span class="pre">yes</span></code> to the bootstrap file,
-the <code class="docutils literal notranslate"><span class="pre">CMD</span></code> is used over the <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code></li>
-<li>If the user has not defined a runscript and the Docker container</li>
-</ol>
-<blockquote>
-<div>doesn’t have an <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code>, we look for <code class="docutils literal notranslate"><span class="pre">CMD</span></code>, even if the user hasn’t asked for it.</div></blockquote>
-<ol class="arabic simple">
-<li>If the user has not defined a runscript, and there is no <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code> or <code class="docutils literal notranslate"><span class="pre">CMD</span></code> (or we
-aren’t importing Docker at all) then we default to <code class="docutils literal notranslate"><span class="pre">/bin/bash</span></code></li>
+<li>A user defined runscript in the <code class="docutils literal notranslate"><span class="pre">%runscript</span></code> section of a bootstrap takes preference over all</li>
+<li>If the user has not defined a runscript and is importing a Docker container, the Docker <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code> is used.</li>
+<li>If a user has not defined a runscript and adds <code class="docutils literal notranslate"><span class="pre">IncludeCmd:</span> <span class="pre">yes</span></code> to the bootstrap file, the <code class="docutils literal notranslate"><span class="pre">CMD</span></code> is used over the <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code></li>
+<li>If the user has not defined a runscript and the Docker container doesn’t have an <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code>, we look for <code class="docutils literal notranslate"><span class="pre">CMD</span></code>, even if the user hasn’t asked for it.</li>
+<li>If the user has not defined a runscript, and there is no <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code> or <code class="docutils literal notranslate"><span class="pre">CMD</span></code> (or we aren’t importing Docker at all) then we default to <code class="docutils literal notranslate"><span class="pre">/bin/bash</span></code></li>
 </ol>
 <p>Here is how you would define the runscript section when you <a class="reference internal" href="build_a_container.html#build-a-container"><span class="std std-ref">build</span></a> an image:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
@@ -1775,8 +1761,7 @@ From: ubuntu:latest
 exec &quot;$@&quot;`
 </pre></div>
 </div>
-<p>If you want different entrypoints for your image, we recommend using the
-%apprun syntax (see <span class="xref std std-ref">apps</span>). Here we have two entrypoints for foo and bar:</p>
+<p>If you want different entrypoints for your image, we recommend using the %apprun syntax (see <a class="reference internal" href="reproducible_scif_apps.html#reproducible-scif-apps"><span class="std std-ref">apps</span></a>). Here we have two entrypoints for foo and bar:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%runscript
 
 exec echo &quot;Try running with --app dog/cat&quot;
@@ -2185,13 +2170,13 @@ Image is done: container.img
 <div class="section" id="instance-command-group">
 <span id="id42"></span><h2>Instance Command Group<a class="headerlink" href="#instance-command-group" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="instance-start">
-<span id="sec-instances"></span><h3>instance.start<a class="headerlink" href="#instance-start" title="Permalink to this headline">¶</a></h3>
-<p id="sec-instancestart">New in Singularity version 2.4 you can use the <code class="docutils literal notranslate"><span class="pre">instance</span></code> command group to run
+<span id="sec-instances"></span><span id="id43"></span><h3>instance.start<a class="headerlink" href="#instance-start" title="Permalink to this headline">¶</a></h3>
+<p>New in Singularity version 2.4 you can use the <code class="docutils literal notranslate"><span class="pre">instance</span></code> command group to run
 instances of containers in the background. This is useful for running
 services like databases and web servers. The <code class="docutils literal notranslate"><span class="pre">instance.start</span></code> command lets you initiate a
 named instance in the background.</p>
-<div class="section" id="id43">
-<h4>Overview<a class="headerlink" href="#id43" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id44">
+<h4>Overview<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h4>
 <p>To initiate a named instance of a container, you must call the <code class="docutils literal notranslate"><span class="pre">instance.start</span></code> command
 with 2 arguments: the name of the container that you want to start and a
 unique name for an instance of that container. Once the new instance is
@@ -2209,8 +2194,8 @@ runs.</p>
 </pre></div>
 </div>
 </div>
-<div class="section" id="id44">
-<h4>Examples<a class="headerlink" href="#id44" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id45">
+<h4>Examples<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h4>
 <p>These examples use a container from Singularity Hub, but you can use
 local containers or containers from Docker Hub as well. For a more
 detailed look at <code class="docutils literal notranslate"><span class="pre">instance</span></code> usage see <a class="reference internal" href="running_services.html#running-services"><span class="std std-ref">Running Instances</span></a>.</p>
@@ -2291,18 +2276,18 @@ Singularity GodloveD-lolcow-master.img:~&gt; exit
 </div>
 </div>
 <div class="section" id="instance-list">
-<h3>instance.list<a class="headerlink" href="#instance-list" title="Permalink to this headline">¶</a></h3>
-<p id="sec-instancelist">New in Singularity version 2.4 you can use the <code class="docutils literal notranslate"><span class="pre">instance</span></code> command group to run
+<span id="id46"></span><h3>instance.list<a class="headerlink" href="#instance-list" title="Permalink to this headline">¶</a></h3>
+<p>New in Singularity version 2.4 you can use the <code class="docutils literal notranslate"><span class="pre">instance</span></code> command group to run
 instances of containers in the background. This is useful for running
 services like databases and web servers. The <code class="docutils literal notranslate"><span class="pre">instance.list</span></code> command lets you keep track
 of the named instances running in the background.</p>
-<div class="section" id="id45">
-<h4>Overview<a class="headerlink" href="#id45" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id47">
+<h4>Overview<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h4>
 <p>After initiating one or more named instances to run in the background
 with the <code class="docutils literal notranslate"><span class="pre">instance.start</span></code> command you can list them with the <code class="docutils literal notranslate"><span class="pre">instance.list</span></code> command.</p>
 </div>
-<div class="section" id="id46">
-<h4>Examples<a class="headerlink" href="#id46" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id48">
+<h4>Examples<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h4>
 <p>These examples use a container from Singularity Hub, but you can use
 local containers or containers from Docker Hub as well. For a more
 detailed look at <code class="docutils literal notranslate"><span class="pre">instance</span></code> usage see <a class="reference internal" href="running_services.html#running-services"><span class="std std-ref">Running Instances</span></a>.</p>
@@ -2333,23 +2318,23 @@ hiya             20595    /home/ubuntu/vsoch-hello-world-master.img
 </div>
 </div>
 <div class="section" id="instance-stop">
-<h3>instance.stop<a class="headerlink" href="#instance-stop" title="Permalink to this headline">¶</a></h3>
-<p id="sec-instancestop">New in Singularity version 2.4 you can use the <code class="docutils literal notranslate"><span class="pre">instance</span></code> command group to run
+<span id="id49"></span><h3>instance.stop<a class="headerlink" href="#instance-stop" title="Permalink to this headline">¶</a></h3>
+<p>New in Singularity version 2.4 you can use the <code class="docutils literal notranslate"><span class="pre">instance</span></code> command group to run
 instances of containers in the background. This is useful for running
 services like databases and web servers. The <code class="docutils literal notranslate"><span class="pre">instance.stop</span></code> command lets you stop
 instances once you are finished using them</p>
-<div class="section" id="id47">
-<h4>Overview<a class="headerlink" href="#id47" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id50">
+<h4>Overview<a class="headerlink" href="#id50" title="Permalink to this headline">¶</a></h4>
 <p>After initiating one or more named instances to run in the background
 with the <code class="docutils literal notranslate"><span class="pre">instance.start</span></code> command you can stop them with the <code class="docutils literal notranslate"><span class="pre">instance.stop</span></code> command.</p>
 </div>
-<div class="section" id="id48">
-<h4>Examples<a class="headerlink" href="#id48" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id51">
+<h4>Examples<a class="headerlink" href="#id51" title="Permalink to this headline">¶</a></h4>
 <p>These examples use a container from Singularity Hub, but you can use
 local containers or containers from Docker Hub as well. For a more
 detailed look at <code class="docutils literal notranslate"><span class="pre">instance</span></code> usage see <a class="reference internal" href="running_services.html#running-services"><span class="std std-ref">Running Instances</span></a>.</p>
-<div class="section" id="id49">
-<h5>Start a few named instances from containers on Singularity Hub<a class="headerlink" href="#id49" title="Permalink to this headline">¶</a></h5>
+<div class="section" id="id52">
+<h5>Start a few named instances from containers on Singularity Hub<a class="headerlink" href="#id52" title="Permalink to this headline">¶</a></h5>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity instance.start shub://GodloveD/lolcow cow1
 
 $ singularity instance.start shub://GodloveD/lolcow cow2
@@ -2382,7 +2367,7 @@ Stopping hiya instance of /home/ubuntu/vsoch-hello-world-master.img (PID=20595)
 <div class="section" id="deprecated">
 <h2>Deprecated<a class="headerlink" href="#deprecated" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="bootstrap">
-<span id="id50"></span><h3>bootstrap<a class="headerlink" href="#bootstrap" title="Permalink to this headline">¶</a></h3>
+<span id="id53"></span><h3>bootstrap<a class="headerlink" href="#bootstrap" title="Permalink to this headline">¶</a></h3>
 <p id="sec-bootstrap">Bootstrapping was the original way (for Singularity versions prior to
 2.4) to install an operating system and then configure it appropriately
 for a specified need. Bootstrap is very similar to build, except that it
@@ -2527,14 +2512,14 @@ Importing: /home/vanessa/.singularity/metadata/sha256:fe44851d529f465f9aa107b323
 
   </div>
 
-
 <script type="text/javascript" src="_static/js/footer.js"></script>
+
 
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.5.1',
+            VERSION:'2.5',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

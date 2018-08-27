@@ -223,10 +223,50 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#before-you-begin">Before you begin</a></li>
-<li class="toctree-l2"><a class="reference internal" href="installation.html#install-the-master-branch">Install the master branch</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-from-a-tag">Install from a tag</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#install-a-specific-release">Install a specific release</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#install-the-development-branch">Install the development branch</a></li>
 <li class="toctree-l2"><a class="reference internal" href="installation.html#remove-an-old-version">Remove an old version</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-on-windows">Install on Windows</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#setup">Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#singularityware-vagrant-box">Singularityware Vagrant Box</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-on-linux">Install on Linux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#installation-from-source">Installation from Source</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#option-1-download-latest-stable-release">Option 1: Download latest stable release</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#option-2-download-the-latest-development-code">Option 2: Download the latest development code</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#prefix-in-special-characters">Prefix in special characters</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#updating">Updating</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#debian-ubuntu-package">Debian Ubuntu Package</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#testing-first-with-docker">Testing first with Docker</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#adding-the-mirror-and-installing">Adding the Mirror and installing</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#build-an-rpm-from-source">Build an RPM from source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#build-an-deb-from-source">Build an DEB from source</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#install-on-your-cluster-resource">Install on your Cluster Resource</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-on-mac">Install on Mac</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#id1">Setup</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#option-1-singularityware-vagrant-box">Option 1: Singularityware Vagrant Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#option-2-vagrant-box-from-scratch-more-advanced-alternative">Option 2: Vagrant Box from Scratch (more advanced alternative)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#requesting-an-installation">Requesting an Installation</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#how-do-i-ask-for-singularity-on-my-local-resource">How do I ask for Singularity on my local resource?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#information-resources">Information Resources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#background">Background</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#security">Security</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#presentations">Presentations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#installation-request">Installation Request</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a Container</a><ul>
@@ -538,8 +578,8 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="appendix.html#instance-command-group">Instance Command Group</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="appendix.html#instance-start">instance.start</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="appendix.html#id43">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="appendix.html#id44">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id44">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id45">Examples</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="appendix.html#start-an-instance-called-cow1-from-a-container-on-singularity-hub">Start an instance called cow1 from a container on Singularity Hub</a></li>
 <li class="toctree-l5"><a class="reference internal" href="appendix.html#start-an-interactive-shell-within-the-instance-that-you-just-started">Start an interactive shell within the instance that you just started</a></li>
 <li class="toctree-l5"><a class="reference internal" href="appendix.html#execute-the-runscript-within-the-instance">Execute the runscript within the instance</a></li>
@@ -549,8 +589,8 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="appendix.html#instance-list">instance.list</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="appendix.html#id45">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="appendix.html#id46">Examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id47">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id48">Examples</a><ul>
 <li class="toctree-l5"><a class="reference internal" href="appendix.html#start-a-few-named-instances-from-containers-on-singularity-hub">Start a few named instances from containers on Singularity Hub</a></li>
 <li class="toctree-l5"><a class="reference internal" href="appendix.html#list-running-instances">List running instances</a></li>
 </ul>
@@ -558,9 +598,9 @@
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="appendix.html#instance-stop">instance.stop</a><ul>
-<li class="toctree-l4"><a class="reference internal" href="appendix.html#id47">Overview</a></li>
-<li class="toctree-l4"><a class="reference internal" href="appendix.html#id48">Examples</a><ul>
-<li class="toctree-l5"><a class="reference internal" href="appendix.html#id49">Start a few named instances from containers on Singularity Hub</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id50">Overview</a></li>
+<li class="toctree-l4"><a class="reference internal" href="appendix.html#id51">Examples</a><ul>
+<li class="toctree-l5"><a class="reference internal" href="appendix.html#id52">Start a few named instances from containers on Singularity Hub</a></li>
 <li class="toctree-l5"><a class="reference internal" href="appendix.html#stop-a-single-instance">Stop a single instance</a></li>
 <li class="toctree-l5"><a class="reference internal" href="appendix.html#stop-all-running-instances">Stop all running instances</a></li>
 </ul>
@@ -615,13 +655,14 @@
 
   </div>
 
+
 <script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.5.1',
+            VERSION:'2.5',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

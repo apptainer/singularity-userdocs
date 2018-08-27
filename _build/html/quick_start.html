@@ -195,8 +195,7 @@
 have root (administrative) privileges. If you are learning about
 Singularity on a system where you lack root privileges, you can still
 complete the steps that do not require the sudo command. If you need to
-request an installation on your shared resource, check out our
-requesting an installation help page for information to send to your
+request an installation on your shared resource, check out our requesting an installation help page for information to send to your
 system administrator.</p>
 <div class="section" id="installation">
 <span id="id2"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
@@ -204,6 +203,10 @@ system administrator.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/singularityware/singularity.git
 
 cd singularity
+
+git fetch --all
+
+git checkout 2.6.0
 
 ./autogen.sh
 
@@ -414,7 +417,7 @@ disappears when the shell is exited.</p>
 </div>
 <div class="section" id="executing-commands">
 <h3>Executing Commands<a class="headerlink" href="#executing-commands" title="Permalink to this headline">¶</a></h3>
-<p>The <span class="xref std std-ref">exec</span> command allows you to execute a custom command within a container by
+<p>The <a class="reference internal" href="appendix.html#exec-command"><span class="std std-ref">exec</span></a> command allows you to execute a custom command within a container by
 specifying the image file. For instance, to list the root (/) of our
 hello-world.simg image, we could do the following:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity exec hello-world.simg ls /
@@ -662,7 +665,7 @@ different build options, see our <a class="reference internal" href="singularity
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.5.1',
+            VERSION:'2.5',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

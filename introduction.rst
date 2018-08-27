@@ -112,7 +112,7 @@ leverage GPU resources.
 A High Level View of Singularity
 --------------------------------
 
-.. _security-and-priviledge-escalation:
+.. _security-and-privilege-escalation:
 
 Security and privilege escalation
 =================================

@@ -55,8 +55,8 @@
 
 
 \title{Singularity Container Documentation}
-\date{Jun 23, 2018}
-\release{2.5.1}
+\date{Aug 27, 2018}
+\release{2.5}
 \author{User Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
 \renewcommand{\releasename}{Release}
@@ -76,8 +76,7 @@ This guide is intended for running Singularity on a computer where you
 have root (administrative) privileges. If you are learning about
 Singularity on a system where you lack root privileges, you can still
 complete the steps that do not require the sudo command. If you need to
-request an installation on your shared resource, check out our
-requesting an installation help page for information to send to your
+request an installation on your shared resource, check out our requesting an installation help page for information to send to your
 system administrator.
 
 
@@ -90,6 +89,10 @@ There are many ways to {\hyperref[\detokenize{quick_start:installation}]{\sphinx
 git clone https://github.com/singularityware/singularity.git
 
 cd singularity
+
+git fetch \PYGZhy{}\PYGZhy{}all
+
+git checkout 2.6.0
 
 ./autogen.sh
 
@@ -337,7 +340,7 @@ disappears when the shell is exited.
 
 \subsection{Executing Commands}
 \label{\detokenize{quick_start:executing-commands}}
-The \DUrole{xref,std,std-ref}{exec} command allows you to execute a custom command within a container by
+The {\hyperref[\detokenize{appendix:exec-command}]{\sphinxcrossref{\DUrole{std,std-ref}{exec}}}} command allows you to execute a custom command within a container by
 specifying the image file. For instance, to list the root (/) of our
 hello-world.simg image, we could do the following:
 
@@ -693,7 +696,7 @@ leverage GPU resources.
 \label{\detokenize{introduction:a-high-level-view-of-singularity}}
 
 \subsection{Security and privilege escalation}
-\label{\detokenize{introduction:security-and-privilege-escalation}}\label{\detokenize{introduction:security-and-priviledge-escalation}}
+\label{\detokenize{introduction:security-and-privilege-escalation}}\label{\detokenize{introduction:id1}}
 A user inside a Singularity container
 is the same user as outside the container
 This is one of Singularities defining characteristics. It allows a
@@ -974,7 +977,7 @@ to run, which is fast enough to seem instantaneous.
 
 \section{The Singularity Usage Workflow}
 \label{\detokenize{introduction:the-singularity-usage-workflow}}
-The security model of Singularity (as described above, \DUrole{xref,std,std-ref}{“A user inside a Singularity container is the same user as outside the container”}) defines the
+The security model of Singularity (as described above, {\hyperref[\detokenize{introduction:security-and-privilege-escalation}]{\sphinxcrossref{\DUrole{std,std-ref}{“A user inside a Singularity container is the same user as outside the container”}}}}) defines the
 Singularity workflow. There are generally two groups of actions you
 must implement on a container; management (building your container)
 and usage.
@@ -996,7 +999,7 @@ visually as follows:
 \capstart
 
 \noindent\sphinxincludegraphics{{flow}.png}
-\caption{Singularity workflow}\label{\detokenize{introduction:id2}}\end{figure}
+\caption{Singularity workflow}\label{\detokenize{introduction:id3}}\end{figure}
 
 On the left side, you have your build environment: a laptop,
 workstation, or a server that you control. Here you will (optionally):
@@ -1126,16 +1129,23 @@ into missing dependencies, try installing them like so:
 \end{sphinxVerbatim}
 
 
-\section{Install the master branch}
-\label{\detokenize{installation:install-the-master-branch}}
-The following commands will install the latest version of the \sphinxhref{https://github.com/singularityware/singularity}{GitHub
-repo} master branch to \sphinxcode{\sphinxupquote{/usr/local}}.
+\section{Install from a tag}
+\label{\detokenize{installation:install-from-a-tag}}
+The following commands will install a tagged version of the \sphinxhref{https://github.com/singularityware/singularity}{GitHub
+repo} to \sphinxcode{\sphinxupquote{/usr/local}}.
+This will work for pre 3.0 tags.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYGZdl{} git clone https://github.com/singularityware/singularity.git
 
 \PYGZdl{} cd singularity
+
+\PYGZdl{} git fetch \PYGZhy{}\PYGZhy{}all
+
+\PYGZdl{} git tag \PYGZhy{}l
+
+\PYGZdl{} git checkout [TAG]
 
 \PYGZdl{} ./autogen.sh
 
@@ -1146,14 +1156,17 @@ repo} master branch to \sphinxcode{\sphinxupquote{/usr/local}}.
 \PYGZdl{} sudo make install
 \end{sphinxVerbatim}
 
+Singularity will be installed in the \sphinxcode{\sphinxupquote{/usr/local}} directory hierarchy by default.
+And if you specify a custom directory with the \sphinxcode{\sphinxupquote{-{-}prefix}} option, all of
+Singularity’s binaries and the configuration file will be installed within that
+directory. This last option can be useful if you want to install multiple versions
+of Singularity, install Singularity on a shared system, or if you want to remove
+Singularity easily after installing it.
+
 If you omit the \sphinxcode{\sphinxupquote{-{-}sysconfdir}} option , the configuration file will be installed in \sphinxcode{\sphinxupquote{/usr/local/etc}}.
 If you omit the \sphinxcode{\sphinxupquote{-{-}prefix}} option, Singularity will be installed in the \sphinxcode{\sphinxupquote{/usr/local}} directory
 hierarchy by default. And if you specify a custom directory with the \sphinxcode{\sphinxupquote{-{-}prefix}}
-option, all of Singularity’s binaries and the configuration file will
-be installed within that directory. This last option can be useful if
-you want to install multiple versions of Singularity, install
-Singularity on a shared system, or if you want to remove Singularity
-easily after installing it.
+option, all of Singularity’s binaries and the configuration file will be installed within that directory.
 
 
 \section{Install a specific release}
@@ -1181,27 +1194,8 @@ releases} page to \sphinxcode{\sphinxupquote{/usr/local}}.
 
 \section{Install the development branch}
 \label{\detokenize{installation:install-the-development-branch}}
-If you want to test a development branch the routine above should be
-tweaked slightly:
-
-\fvset{hllines={, ,}}%
-\begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYGZdl{} git clone https://github.com/singularityware/singularity.git
-
-\PYGZdl{} cd singularity
-
-\PYGZdl{} git fetch
-
-\PYGZdl{} git checkout development
-
-\PYGZdl{} ./autogen.sh
-
-\PYGZdl{} ./configure \PYGZhy{}\PYGZhy{}prefix=/usr/local \PYGZhy{}\PYGZhy{}sysconfdir=/etc
-
-\PYGZdl{} make
-
-\PYGZdl{} sudo make install
-\end{sphinxVerbatim}
+The primary development of Singularity now happens on the \sphinxcode{\sphinxupquote{master}} branch.
+Please see the \sphinxcode{\sphinxupquote{INSTALL.md}} file in a copy of the repository.
 
 
 \section{Remove an old version}
@@ -1243,8 +1237,638 @@ Singularity like so:
 \end{sphinxVerbatim}
 
 What should you do next? You can check out the {\hyperref[\detokenize{quick_start:quick-start}]{\sphinxcrossref{\DUrole{std,std-ref}{quickstart}}}} guide, or learn how to
-interact with your container via the \DUrole{xref,std,std-ref}{shell} , \DUrole{xref,std,std-ref}{exec} , or \DUrole{xref,std,std-ref}{run} commands. Or click \sphinxstylestrong{next}
+interact with your container via the {\hyperref[\detokenize{appendix:shell-command}]{\sphinxcrossref{\DUrole{std,std-ref}{shell}}}} , {\hyperref[\detokenize{appendix:exec-command}]{\sphinxcrossref{\DUrole{std,std-ref}{exec}}}} , or {\hyperref[\detokenize{appendix:run-command}]{\sphinxcrossref{\DUrole{std,std-ref}{run}}}} commands. Or click \sphinxstylestrong{next}
 below to continue reading.
+
+
+\section{Install on Windows}
+\label{\detokenize{installation:install-on-windows}}
+
+\subsection{Setup}
+\label{\detokenize{installation:setup}}
+First, install the following software:
+\begin{itemize}
+\item {} 
+install \sphinxhref{https://git-for-windows.github.io/}{Git for Windows}
+
+\item {} 
+install \sphinxhref{https://www.virtualbox.org/wiki/Downloads}{VirtualBox for Windows}
+
+\item {} 
+install \sphinxhref{https://www.vagrantup.com/downloads.html}{Vagrant for Windows}
+
+\item {} 
+install \sphinxhref{http://vagrantmanager.com/downloads/}{Vagrant Manager for Windows}
+
+\end{itemize}
+
+
+\subsection{Singularityware Vagrant Box}
+\label{\detokenize{installation:singularityware-vagrant-box}}
+We are maintaining a set of Vagrant Boxes via \sphinxhref{https://www.vagrantup.com/}{Vagrant Cloud}, one of \sphinxhref{https://www.hashicorp.com/\#open-source-tools}{Hashicorp} many tools that likely you’ve used and haven’t known it. The current stable version of Singularity is available here:
+\begin{itemize}
+\item {} 
+\sphinxhref{https://app.vagrantup.com/singularityware/boxes/singularity-2.4/versions/2.4}{singularityware/singularity-2.4}
+
+\end{itemize}
+
+For other versions of Singularity see \sphinxhref{https://app.vagrantup.com/singularityware}{our Vagrant Cloud repository}
+
+Run GitBash. The default home directory will be C:Usersyour\_username
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+mkdir singularity\PYGZhy{}2.4
+
+cd singularity\PYGZhy{}2.4
+\end{sphinxVerbatim}
+
+Note that if you had installed a previous version of the vm (and are using the same folder), you must destroy it first. In our example we create a new folder. To destroy a previous vm:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant destroy
+\end{sphinxVerbatim}
+
+Then issue the following commands to bring up the Virtual Machine:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant init singularityware/singularity\PYGZhy{}2.4
+
+vagrant up
+
+vagrant ssh
+\end{sphinxVerbatim}
+
+You are then ready to go with Singularity 2.4!
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant@vagrant:\PYGZti{}\PYGZdl{} which singularity
+
+/usr/local/bin/singularity
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} singularity \PYGZhy{}\PYGZhy{}version
+
+2.4\PYGZhy{}dist
+
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} sudo singularity build growl\PYGZhy{}llo\PYGZhy{}world.simg shub://vsoch/hello\PYGZhy{}world
+
+Cache folder set to /root/.singularity/shub
+
+Progress \textbar{}===================================\textbar{} 100.0\PYGZpc{}
+
+Building from local image: /root/.singularity/shub/vsoch\PYGZhy{}hello\PYGZhy{}world\PYGZhy{}master.simg
+
+Building Singularity image...
+
+Singularity container built: growl\PYGZhy{}llo\PYGZhy{}world.simg
+
+Cleaning up...
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} ./growl\PYGZhy{}llo\PYGZhy{}world.simg
+
+RaawwWWWWWRRRR!!
+\end{sphinxVerbatim}
+
+Note that when you do \sphinxcode{\sphinxupquote{vagrant up}} you can also select the provider, if you use vagrant for multiple providers. For example:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant up \PYGZhy{}\PYGZhy{}provider virtualbox
+\end{sphinxVerbatim}
+
+although this isn’t entirely necessary if you only have it configured for virtualbox.
+
+
+\section{Install on Linux}
+\label{\detokenize{installation:install-on-linux}}
+
+\subsection{Installation from Source}
+\label{\detokenize{installation:installation-from-source}}
+You can try the following two options:
+
+
+\subsubsection{Option 1: Download latest stable release}
+\label{\detokenize{installation:option-1-download-latest-stable-release}}
+You can always download the latest tarball release from \sphinxhref{https://github.com/singularityware/singularity/releases}{GitHub}
+
+For example, here is how to download version \sphinxcode{\sphinxupquote{2.5.2}} and install:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+VERSION=2.5.2
+
+wget https://github.com/singularityware/singularity/releases/download/\PYGZdl{}VERSION/singularity\PYGZhy{}\PYGZdl{}VERSION.tar.gz
+
+tar xvf singularity\PYGZhy{}\PYGZdl{}VERSION.tar.gz
+
+cd singularity\PYGZhy{}\PYGZdl{}VERSION
+
+./configure \PYGZhy{}\PYGZhy{}prefix=/usr/local
+
+make
+
+sudo make install
+\end{sphinxVerbatim}
+
+Note that when you configure, \sphinxcode{\sphinxupquote{squashfs-tools}} is \sphinxstylestrong{not} required, however it is required for full functionality. You will see this message after the configuration:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+mksquashfs from squash\PYGZhy{}tools is required for full functionality
+\end{sphinxVerbatim}
+
+If you choose not to install \sphinxcode{\sphinxupquote{squashfs-tools}}, you will hit an error when you try a pull from Docker Hub, for example.
+
+
+\subsubsection{Option 2: Download the latest development code}
+\label{\detokenize{installation:option-2-download-the-latest-development-code}}
+To download the most recent development code, you should use Git and do the following:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+git clone https://github.com/singularityware/singularity.git
+
+cd singularity
+
+./autogen.sh
+
+./configure \PYGZhy{}\PYGZhy{}prefix=/usr/local
+
+make
+
+sudo make install
+\end{sphinxVerbatim}
+
+\begin{sphinxadmonition}{note}{Note:}
+The ‘make install’ is required to be run as root to get a properly installed Singularity implementation. If you do not run it as root, you will only be able to launch Singularity as root due to permission limitations.
+\end{sphinxadmonition}
+
+
+\subsubsection{Prefix in special characters}
+\label{\detokenize{installation:prefix-in-special-characters}}
+If you build Singularity with a non-standard \sphinxcode{\sphinxupquote{-{-}prefix}} argument, please be sure to review the \sphinxhref{https://www.sylabs.io/guides/2.5.2/admin-guide/}{admin guide} for details regarding the \sphinxcode{\sphinxupquote{-{-}localstatedir}} variable. This is especially important in environments utilizing shared filesystems.
+
+
+\subsubsection{Updating}
+\label{\detokenize{installation:updating}}
+To update your Singularity version, you might want to first delete the executables for the old version:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+sudo rm \PYGZhy{}rf /usr/local/libexec/singularity
+\end{sphinxVerbatim}
+
+And then install using one of the methods above.
+
+
+\subsection{Debian Ubuntu Package}
+\label{\detokenize{installation:debian-ubuntu-package}}
+Singularity is available on Debian (and Ubuntu) systems starting with Debian stretch and the Ubuntu 16.10 yakkety releases.
+The package is called \sphinxcode{\sphinxupquote{singularity-container}}. For recent releases of singularity and backports for older Debian and Ubuntu releases,
+we recommend that you use the \sphinxhref{http://neuro.debian.net/pkgs/singularity-container.html}{NeuroDebian repository}.
+
+
+\subsubsection{Testing first with Docker}
+\label{\detokenize{installation:testing-first-with-docker}}
+If you want a quick preview of the NeuroDebian mirror, you can do this most easily with the NeuroDebian Docker image (and if you don’t, skip to the next section). Obviously you should have \sphinxhref{https://docs.docker.com/engine/installation/linux/ubuntu/}{Docker installed} before you do this.
+
+First we run the \sphinxcode{\sphinxupquote{neurodebian}} Docker image:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} docker run \PYGZhy{}it \PYGZhy{}\PYGZhy{}rm neurodebian
+\end{sphinxVerbatim}
+
+Then we update the cache (very quietly), and look at the \sphinxcode{\sphinxupquote{singularity-container}} policy provided:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} apt\PYGZhy{}get update \PYGZhy{}qqq
+
+\PYGZdl{} apt\PYGZhy{}cache policy singularity\PYGZhy{}container
+
+singularity\PYGZhy{}container:
+
+  Installed: (none)
+
+  Candidate: 2.3\PYGZhy{}1\PYGZti{}nd80+1
+
+  Version table:
+
+    2.3\PYGZhy{}1\PYGZti{}nd80+1 0
+
+      500 http://neuro.debian.net/debian/ jessie/main amd64 Packages
+\end{sphinxVerbatim}
+
+You can continue working in Docker, or go back to your host and install Singularity.
+
+
+\subsubsection{Adding the Mirror and installing}
+\label{\detokenize{installation:adding-the-mirror-and-installing}}
+You should first enable the NeuroDebian repository following instructions on the \sphinxhref{http://neuro.debian.net/}{NeuroDebian} site. This means using the dropdown menus to find the correct mirror for your operating system and location. For example, after selecting Ubuntu 16.04 and selecting a mirror in CA, I am instructed to add these lists:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+sudo wget \PYGZhy{}O\PYGZhy{} http://neuro.debian.net/lists/xenial.us\PYGZhy{}ca.full \textbar{} sudo tee /etc/apt/sources.list.d/neurodebian.sources.list
+
+sudo apt\PYGZhy{}key adv \PYGZhy{}\PYGZhy{}recv\PYGZhy{}keys \PYGZhy{}\PYGZhy{}keyserver hkp://pool.sks\PYGZhy{}keyservers.net:80 0xA5D32F012649A5A9
+\end{sphinxVerbatim}
+
+and then update
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+sudo apt\PYGZhy{}get update
+\end{sphinxVerbatim}
+
+then singularity can be installed as follows:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+sudo apt\PYGZhy{}get install \PYGZhy{}y singularity\PYGZhy{}container
+\end{sphinxVerbatim}
+
+During the above, if you have a previously installed configuration, you might be asked if you want to define a custom configuration/init, or just use the default provided by the package, eg:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Configuration file \PYGZsq{}/etc/singularity/init\PYGZsq{}
+
+  ==\PYGZgt{} File on system created by you or by a script.
+
+  ==\PYGZgt{} File also in package provided by package maintainer.
+
+    What would you like to do about it ?  Your options are:
+
+      Y or I  : install the package maintainer\PYGZsq{}s version
+
+      N or O  : keep your currently\PYGZhy{}installed version
+
+        D     : show the differences between the versions
+
+        Z     : start a shell to examine the situation
+
+The default action is to keep your current version.
+
+*** init (Y/I/N/O/D/Z) [default=N] ? Y
+
+
+Configuration file \PYGZsq{}/etc/singularity/singularity.conf\PYGZsq{}
+
+  ==\PYGZgt{} File on system created by you or by a script.
+
+  ==\PYGZgt{} File also in package provided by package maintainer.
+
+    What would you like to do about it ?  Your options are:
+
+      Y or I  : install the package maintainer\PYGZsq{}s version
+
+      N or O  : keep your currently\PYGZhy{}installed version
+
+        D     : show the differences between the versions
+
+        Z     : start a shell to examine the situation
+
+The default action is to keep your current version.
+
+*** singularity.conf (Y/I/N/O/D/Z) [default=N] ? Y
+\end{sphinxVerbatim}
+
+And for a user, it’s probably well suited to use the defaults. For a cluster admin, we recommend that you read the \sphinxhref{https://www.sylabs.io/guides/2.5.2/admin-guide/}{admin docs} to get a better understanding of the configuration file options available to you. Remember that you can always tweak the files at \sphinxcode{\sphinxupquote{/etc/singularity/singularity.conf}} and \sphinxcode{\sphinxupquote{/etc/singularity/init}} if you want to make changes.
+
+After this install, you should confirm that \sphinxcode{\sphinxupquote{2.3-dist}} is the version installed:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity \PYGZhy{}\PYGZhy{}version
+
+  2.4\PYGZhy{}dist
+\end{sphinxVerbatim}
+
+Note that if you don’t add the NeuroDebian lists, the version provided will be old (e.g., 2.2.1). If you need a backport build of the recent release of Singularity on those or older releases of Debian and Ubuntu, you can \sphinxhref{http://neuro.debian.net/pkgs/singularity-container.html}{see all the various builds and other information here}.
+
+
+\subsection{Build an RPM from source}
+\label{\detokenize{installation:build-an-rpm-from-source}}
+Like the above, you can build an RPM of Singularity so it can be more easily managed, upgraded and removed. From the base Singularity source directory do the following:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+./autogen.sh
+
+./configure
+
+make dist
+
+rpmbuild \PYGZhy{}ta singularity\PYGZhy{}*.tar.gz
+
+sudo yum install \PYGZti{}/rpmbuild/RPMS/*/singularity\PYGZhy{}[0\PYGZhy{}9]*.rpm
+\end{sphinxVerbatim}
+
+\begin{sphinxadmonition}{note}{Note:}
+If you want to have the RPM install the files to an alternative location, you should define the environment variable ‘PREFIX’ to suit your needs, and use the following command to build:
+\end{sphinxadmonition}
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+PREFIX=/opt/singularity
+
+rpmbuild \PYGZhy{}ta \PYGZhy{}\PYGZhy{}define=\PYGZdq{}\PYGZus{}prefix \PYGZdl{}PREFIX\PYGZdq{} \PYGZhy{}\PYGZhy{}define \PYGZdq{}\PYGZus{}sysconfdir \PYGZdl{}PREFIX/etc\PYGZdq{} \PYGZhy{}\PYGZhy{}define \PYGZdq{}\PYGZus{}defaultdocdir \PYGZdl{}PREFIX/share\PYGZdq{} singularity\PYGZhy{}*.tar.gz
+\end{sphinxVerbatim}
+
+When using \sphinxcode{\sphinxupquote{autogen.sh}} If you get an error that you have packages missing, for example on Ubuntu 16.04:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+./autogen.sh
+
++libtoolize \PYGZhy{}c
+
+./autogen.sh: 13: ./autogen.sh: libtoolize: not found
+
++aclocal
+
+./autogen.sh: 14: ./autogen.sh: aclocal: not found
+
++autoheader
+
+./autogen.sh: 15: ./autogen.sh: autoheader: not found
+
++autoconf
+
+./autogen.sh: 16: ./autogen.sh: autoconf: not found
+
++automake \PYGZhy{}ca \PYGZhy{}Wno\PYGZhy{}portability
+
+./autogen.sh: 17: ./autogen.sh: automake: not found
+\end{sphinxVerbatim}
+
+then you need to install dependencies:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+sudo apt\PYGZhy{}get install \PYGZhy{}y build\PYGZhy{}essential libtool autotools\PYGZhy{}dev automake autoconf
+\end{sphinxVerbatim}
+
+
+\subsection{Build an DEB from source}
+\label{\detokenize{installation:build-an-deb-from-source}}
+To build a deb package for Debian/Ubuntu/LinuxMint invoke the following commands:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} fakeroot dpkg\PYGZhy{}buildpackage \PYGZhy{}b \PYGZhy{}us \PYGZhy{}uc \PYGZsh{} sudo will ask for a password to run the tests
+
+\PYGZdl{} sudo dpkg \PYGZhy{}i ../singularity\PYGZhy{}container\PYGZus{}2.3\PYGZus{}amd64.deb
+\end{sphinxVerbatim}
+
+Note that the tests will fail if singularity is not already installed on your system. This is the case when you run this procedure for the first time. In that case run the following sequence:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} echo \PYGZdq{}echo SKIPPING TESTS THEYRE BROKEN\PYGZdq{} \PYGZgt{} ./test.sh
+
+\PYGZdl{} fakeroot dpkg\PYGZhy{}buildpackage \PYGZhy{}nc \PYGZhy{}b \PYGZhy{}us \PYGZhy{}uc \PYGZsh{} this will continue the previous build without an initial \PYGZsq{}make clean\PYGZsq{}
+\end{sphinxVerbatim}
+
+
+\subsection{Install on your Cluster Resource}
+\label{\detokenize{installation:install-on-your-cluster-resource}}
+In the case that you want Singularity installed on a shared resource, you will need to talk to the administrator of the resource. Toward this goal, we’ve prepared a {\hyperref[\detokenize{installation:installation-request}]{\sphinxcrossref{\DUrole{std,std-ref}{helpful guide}}}} that you can send to him or her. If you have unanswered questions, please \sphinxhref{https://www.sylabs.io/contact/}{reach out}..
+
+
+\section{Install on Mac}
+\label{\detokenize{installation:install-on-mac}}
+This recipe demonstrates how to run Singularity on your Mac via Vagrant and Ubuntu. The recipe requires access to \sphinxcode{\sphinxupquote{brew}} which is a package installation subsystem for OS X. This recipe may take anywhere from 5-20 minutes to complete.
+
+
+\subsection{Setup}
+\label{\detokenize{installation:id1}}
+First, install brew if you do not have it already.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+/usr/bin/ruby \PYGZhy{}e \PYGZdq{}\PYGZdl{}(curl \PYGZhy{}fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\PYGZdq{}
+\end{sphinxVerbatim}
+
+Next, install Vagrant and the necessary bits.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+brew cask install virtualbox
+
+brew cask install vagrant
+
+brew cask install vagrant\PYGZhy{}manager
+\end{sphinxVerbatim}
+
+
+\subsection{Option 1: Singularityware Vagrant Box}
+\label{\detokenize{installation:option-1-singularityware-vagrant-box}}
+We are maintaining a set of Vagrant Boxes via \sphinxhref{https://www.vagrantup.com/}{Vagrant Cloud}, one of \sphinxhref{https://www.hashicorp.com/\#open-source-tools}{Hashicorp} many tools that likely you’ve used and haven’t known it. The current stable version of Singularity is available here:
+\begin{itemize}
+\item {} 
+\sphinxhref{https://app.vagrantup.com/singularityware/boxes/singularity-2.4/versions/2.4}{singularityware/singularity-2.4}
+
+\end{itemize}
+
+For other versions of Singularity see \sphinxhref{https://app.vagrantup.com/singularityware}{our Vagrant Cloud repository}.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+mkdir singularity\PYGZhy{}vm
+
+cd singularity\PYGZhy{}vm
+\end{sphinxVerbatim}
+
+Note that if you have installed a previous version of the vm, you can either destroy it first, or create a new directory.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant destroy
+\end{sphinxVerbatim}
+
+Then issue the following commands to bring up the Virtual Machine:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant init singularityware/singularity\PYGZhy{}2.4
+
+vagrant up
+
+vagrant ssh
+\end{sphinxVerbatim}
+
+You are then ready to go with Singularity 2.4!
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant@vagrant:\PYGZti{}\PYGZdl{} which singularity
+
+/usr/local/bin/singularity
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} singularity \PYGZhy{}\PYGZhy{}version
+
+2.4\PYGZhy{}dist
+
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} sudo singularity build growl\PYGZhy{}llo\PYGZhy{}world.simg shub://vsoch/hello\PYGZhy{}world
+
+Cache folder set to /root/.singularity/shub
+
+Progress \textbar{}===================================\textbar{} 100.0\PYGZpc{}
+
+Building from local image: /root/.singularity/shub/vsoch\PYGZhy{}hello\PYGZhy{}world\PYGZhy{}master.simg
+
+Building Singularity image...
+
+Singularity container built: growl\PYGZhy{}llo\PYGZhy{}world.simg
+
+Cleaning up...
+
+vagrant@vagrant:\PYGZti{}\PYGZdl{} ./growl\PYGZhy{}llo\PYGZhy{}world.simg
+
+RaawwWWWWWRRRR!!
+\end{sphinxVerbatim}
+
+Note that when you do \sphinxcode{\sphinxupquote{vagrant up}} you can also select the provider, if you use vagrant for multiple providers. For example:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant up \PYGZhy{}\PYGZhy{}provider virtualbox
+\end{sphinxVerbatim}
+
+although this isn’t entirely necessary if you only have it configured for virtualbox.
+
+
+\subsection{Option 2: Vagrant Box from Scratch (more advanced alternative)}
+\label{\detokenize{installation:option-2-vagrant-box-from-scratch-more-advanced-alternative}}
+If you want to get more familiar with how Vagrant and VirtualBox work, you can instead build your own Vagrant Box from scratch. In this case, we will use the Vagrantfile for \sphinxcode{\sphinxupquote{bento/ubuntu-16.04}}, however you could also try any of the \sphinxhref{https://atlas.hashicorp.com/bento}{other bento boxes} that are equally delicious. As before, you should first make a separate directory for your Vagrantfile, and then init a base image.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+mkdir singularity\PYGZhy{}2.4
+
+cd singularity\PYGZhy{}2.4
+
+vagrant init bento/ubuntu\PYGZhy{}16.04
+\end{sphinxVerbatim}
+
+Next, build and start the vagrant hosted VM, and you will install Singularity by sending the entire install script as a command (with the \sphinxcode{\sphinxupquote{-c}} argument). You could just as easily shell into the box first with vagrant ssh, and then run these commands on your own. To each bento, his own.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant up \PYGZhy{}\PYGZhy{}provider virtualbox
+
+
+\PYGZsh{} Run the necessary commands within the VM to install Singularity
+
+vagrant ssh \PYGZhy{}c /bin/sh \PYGZlt{}\PYGZlt{}EOF
+
+    sudo apt\PYGZhy{}get update
+
+    sudo apt\PYGZhy{}get \PYGZhy{}y install build\PYGZhy{}essential curl git sudo man vim autoconf libtool
+
+    git clone https://github.com/singularityware/singularity.git
+
+    cd singularity
+
+    ./autogen.sh
+
+    ./configure \PYGZhy{}\PYGZhy{}prefix=/usr/local
+
+    make
+
+    sudo make install
+
+EOF
+\end{sphinxVerbatim}
+
+At this point, Singularity is installed in your Vagrant Ubuntu VM! Now you can use Singularity as you would normally by logging into the VM directly
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant ssh
+\end{sphinxVerbatim}
+
+Remember that the VM is running in the background because we started it via the command \sphinxcode{\sphinxupquote{vagrant up}}. You can shut the VM down using the command \sphinxcode{\sphinxupquote{vagrant halt}} when you no longer need it.
+
+
+\section{Requesting an Installation}
+\label{\detokenize{installation:requesting-an-installation}}
+
+\subsection{How do I ask for Singularity on my local resource?}
+\label{\detokenize{installation:how-do-i-ask-for-singularity-on-my-local-resource}}
+Installation of a new software is no small feat for a shared cluster resource. Whether you are an administrator reading this, or a user that wants a few talking points and background to share with your administrator, this document is for you. Here we provide you with some background and resources to learn about Singularity. We hope that this information will be useful to you in making the decision to build reproducible containers with Singularity
+
+
+\subsection{Information Resources}
+\label{\detokenize{installation:information-resources}}
+
+\subsubsection{Background}
+\label{\detokenize{installation:background}}\begin{itemize}
+\item {} 
+Frequently Asked Questions is a good first place to start for quick question and answer format.
+
+\item {} 
+Singularity Publication: Reviews the history and rationale for development of the Software, along with comparison to other container software available at the time.
+
+\item {} 
+Documentation Background is useful to read about use cases, and goals of the Software.
+
+\end{itemize}
+
+
+\subsubsection{Security}
+\label{\detokenize{installation:security}}\begin{itemize}
+\item {} 
+Administrator Control: The configuration file template is the best source to learn about the configuration options that are under the administrator’s control.
+
+\item {} 
+Security Overview discusses common security concerns
+
+\end{itemize}
+
+
+\subsubsection{Presentations}
+\label{\detokenize{installation:presentations}}\begin{itemize}
+\item {} 
+Contributed Content is a good source of presentations, tutorials, and links.
+
+\end{itemize}
+
+
+\subsection{Installation Request}
+\label{\detokenize{installation:installation-request}}\label{\detokenize{installation:id6}}
+Putting all of the above together, a request might look like the following:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Dear Research Computing,
+
+
+We are interested in having an installation of the Singularity software (https://singularityware.github.io) installed on our cluster. Singularity containers will allow us to build encapsulated environments, meaning that our work is reproducible and we are empowered to choose all dependencies including libraries, operating system, and custom software. Singularity is already installed on over 50 centers internationally (http://singularity.lbl.gov/citation\PYGZhy{}registration) including TACC, NIH,
+
+and several National Labs, Universities, Hospitals. Importantly, it has a vibrant team of developers, scientists, and HPC administrators that invest heavily in the security and development of the software, and are quick to respond to the needs of the community. To help learn more about Singularity, I thought these items might be of interest:
+
+
+  \PYGZhy{} Security: A discussion of security concerns is discussed at https://www.sylabs.io/guides/2.5.2/user\PYGZhy{}guide/introduction.html\PYGZsh{}security\PYGZhy{}and\PYGZhy{}privilege\PYGZhy{}escalation
+
+  \PYGZhy{} Installation: https://www.sylabs.io/guides/2.5.2/admin\PYGZhy{}guide/
+
+
+If you have questions about any of the above, you can email the list (singularity@lbl.gov) or join the slack channel (singularity\PYGZhy{}container.slack.com) to get a human response. I can do my best to facilitate this interaction if help is needed. Thank you kindly for considering this request!
+
+Best,
+
+User
+\end{sphinxVerbatim}
+
+As is stated in the letter above, you can always \sphinxhref{https://www.sylabs.io/contact/}{reach out} to us for additional questions or support.
 
 
 \chapter{Build a Container}
@@ -3296,7 +3920,7 @@ isolated version of the container image that runs in the background.
 
 \section{Why container instances?}
 \label{\detokenize{running_services:why-container-instances}}
-that is pretty simple, I install nginx and start the service:
+Let’s say I want to run a web server. With nginx, that is pretty simple, I install nginx and start the service:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -3334,7 +3958,7 @@ service nginx start
 
 Now let’s say we build a container with that startscript into an image
 called \sphinxcode{\sphinxupquote{nginx.img}} and we want to run an nginx service. All we need to do is start
-the instance with the \DUrole{xref,std,std-ref}{instance.start} command, and the
+the instance with the {\hyperref[\detokenize{appendix:instance-start}]{\sphinxcrossref{\DUrole{std,std-ref}{instance start}}}} command, and the
 startscript will run inside the container automatically:
 
 \fvset{hllines={, ,}}%
@@ -3424,7 +4048,7 @@ instance. Similarly with \sphinxcode{\sphinxupquote{exec}}, it will execute the 
 instance.
 
 When you are finished with your instance you can clean it up with the
-\DUrole{xref,std,std-ref}{instance.stop} command like so:
+{\hyperref[\detokenize{appendix:instance-stop}]{\sphinxcrossref{\DUrole{std,std-ref}{instance.stop}}}} command like so:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5597,11 +6221,8 @@ IncludeCmd: yes
 \end{sphinxVerbatim}
 
 The IncludeCmd keyword is optional. If included, and if a \sphinxcode{\sphinxupquote{\%runscript}} is not specified, a Docker \sphinxcode{\sphinxupquote{CMD}} will take precedence over \sphinxcode{\sphinxupquote{ENTRYPOINT}}
-and will be used as a runscript. Note that the \sphinxcode{\sphinxupquote{IncludeCmd}} keyword is considered valid if it is not empty! This means that
+and will be used as a runscript. Note that the \sphinxcode{\sphinxupquote{IncludeCmd}} keyword is considered valid if it is not empty! This means that \sphinxcode{\sphinxupquote{IncludeCmd: yes}} and \sphinxcode{\sphinxupquote{IncludeCmd: no}} are identical. In both cases the \sphinxcode{\sphinxupquote{IncludeCmd}} keyword is not empty, so the Docker \sphinxcode{\sphinxupquote{CMD}} will take precedence over an \sphinxcode{\sphinxupquote{ENTRYPOINT}}.
 \begin{quote}
-
-\sphinxcode{\sphinxupquote{IncludeCmd: yes}} and \sphinxcode{\sphinxupquote{IncludeCmd: no}} are identical. In both cases the \sphinxcode{\sphinxupquote{IncludeCmd}} keyword is not empty, so the Docker \sphinxcode{\sphinxupquote{CMD}} will take precedence
-over an \sphinxcode{\sphinxupquote{ENTRYPOINT}}.
 
 See {\hyperref[\detokenize{singularity_and_docker:singularity-and-docker}]{\sphinxcrossref{\DUrole{std,std-ref}{Singularity and Docker}}}} for more info on order of operations for determining a runscript.
 \end{quote}
@@ -5922,12 +6543,8 @@ your container. While we won’t include the complete list of run options (for t
 \sphinxcode{\sphinxupquote{singularity \textless{}action\textgreater{} -{-}help}}) we will review some highly useful flags that you can add to these actions.
 \begin{itemize}
 \item {} 
-\sphinxstylestrong{\textendash{}contain}: Contain suggests that we want to better isolate the container runtime from the host. Adding the \sphinxcode{\sphinxupquote{-{-}contain}} flag will use minimal
+\sphinxstylestrong{\textendash{}contain}: Contain suggests that we want to better isolate the container runtime from the host. Adding the \sphinxcode{\sphinxupquote{-{-}contain}} flag will use minimal \sphinxcode{\sphinxupquote{/dev}} and empty other directories (e.g., \sphinxcode{\sphinxupquote{/tmp}}).
 
-\end{itemize}
-
-\sphinxcode{\sphinxupquote{/dev}} and empty other directories (e.g., \sphinxcode{\sphinxupquote{/tmp}}).
-\begin{itemize}
 \item {} 
 \sphinxstylestrong{\textendash{}containall}: In addition to what is provided with \sphinxcode{\sphinxupquote{-{-}contain}} (filesystems) also contain PID, IPC, and environment.
 
@@ -7230,29 +7847,19 @@ When you first create a container, the runscript is defined using the
 following order of operations:
 \begin{enumerate}
 \item {} 
-A user defined runscript in the \sphinxcode{\sphinxupquote{\%runscript}} section of a bootstrap takes
-preference over all
+A user defined runscript in the \sphinxcode{\sphinxupquote{\%runscript}} section of a bootstrap takes preference over all
 
 \item {} 
-If the user has not defined a runscript and is importing a Docker
-container, the Docker \sphinxcode{\sphinxupquote{ENTRYPOINT}} is used.
+If the user has not defined a runscript and is importing a Docker container, the Docker \sphinxcode{\sphinxupquote{ENTRYPOINT}} is used.
 
 \item {} 
-If a user has not defined a runscript and adds \sphinxcode{\sphinxupquote{IncludeCmd: yes}} to the bootstrap file,
-the \sphinxcode{\sphinxupquote{CMD}} is used over the \sphinxcode{\sphinxupquote{ENTRYPOINT}}
+If a user has not defined a runscript and adds \sphinxcode{\sphinxupquote{IncludeCmd: yes}} to the bootstrap file, the \sphinxcode{\sphinxupquote{CMD}} is used over the \sphinxcode{\sphinxupquote{ENTRYPOINT}}
 
 \item {} 
-If the user has not defined a runscript and the Docker container
+If the user has not defined a runscript and the Docker container doesn’t have an \sphinxcode{\sphinxupquote{ENTRYPOINT}}, we look for \sphinxcode{\sphinxupquote{CMD}}, even if the user hasn’t asked for it.
 
-\end{enumerate}
-\begin{quote}
-
-doesn’t have an \sphinxcode{\sphinxupquote{ENTRYPOINT}}, we look for \sphinxcode{\sphinxupquote{CMD}}, even if the user hasn’t asked for it.
-\end{quote}
-\begin{enumerate}
 \item {} 
-If the user has not defined a runscript, and there is no \sphinxcode{\sphinxupquote{ENTRYPOINT}} or \sphinxcode{\sphinxupquote{CMD}} (or we
-aren’t importing Docker at all) then we default to \sphinxcode{\sphinxupquote{/bin/bash}}
+If the user has not defined a runscript, and there is no \sphinxcode{\sphinxupquote{ENTRYPOINT}} or \sphinxcode{\sphinxupquote{CMD}} (or we aren’t importing Docker at all) then we default to \sphinxcode{\sphinxupquote{/bin/bash}}
 
 \end{enumerate}
 
@@ -7287,8 +7894,7 @@ From: ubuntu:latest
 exec \PYGZdq{}\PYGZdl{}@\PYGZdq{}{}`
 \end{sphinxVerbatim}
 
-If you want different entrypoints for your image, we recommend using the
-\%apprun syntax (see \DUrole{xref,std,std-ref}{apps}). Here we have two entrypoints for foo and bar:
+If you want different entrypoints for your image, we recommend using the \%apprun syntax (see {\hyperref[\detokenize{reproducible_scif_apps:reproducible-scif-apps}]{\sphinxcrossref{\DUrole{std,std-ref}{apps}}}}). Here we have two entrypoints for foo and bar:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -7768,10 +8374,10 @@ Image is done: container.img
 
 
 \section{Instance Command Group}
-\label{\detokenize{appendix:instance-command-group}}\label{\detokenize{appendix:id42}}
+\label{\detokenize{appendix:instance-command-group}}\label{\detokenize{appendix:id42}}\phantomsection\label{\detokenize{appendix:sec-instances}}
 
 \subsection{instance.start}
-\label{\detokenize{appendix:instance-start}}\label{\detokenize{appendix:sec-instances}}\phantomsection\label{\detokenize{appendix:sec-instancestart}}
+\label{\detokenize{appendix:instance-start}}\label{\detokenize{appendix:sec-instances}}\label{\detokenize{appendix:id43}}
 New in Singularity version 2.4 you can use the \sphinxcode{\sphinxupquote{instance}} command group to run
 instances of containers in the background. This is useful for running
 services like databases and web servers. The \sphinxcode{\sphinxupquote{instance.start}} command lets you initiate a
@@ -7779,7 +8385,7 @@ named instance in the background.
 
 
 \subsubsection{Overview}
-\label{\detokenize{appendix:id43}}
+\label{\detokenize{appendix:id44}}
 To initiate a named instance of a container, you must call the \sphinxcode{\sphinxupquote{instance.start}} command
 with 2 arguments: the name of the container that you want to start and a
 unique name for an instance of that container. Once the new instance is
@@ -7805,7 +8411,7 @@ singularity help instance.start
 
 
 \subsubsection{Examples}
-\label{\detokenize{appendix:id44}}
+\label{\detokenize{appendix:id45}}
 These examples use a container from Singularity Hub, but you can use
 local containers or containers from Docker Hub as well. For a more
 detailed look at \sphinxcode{\sphinxupquote{instance}} usage see {\hyperref[\detokenize{running_services:running-services}]{\sphinxcrossref{\DUrole{std,std-ref}{Running Instances}}}}.
@@ -7894,7 +8500,7 @@ Singularity GodloveD\PYGZhy{}lolcow\PYGZhy{}master.img:\PYGZti{}\PYGZgt{} exit
 
 
 \subsection{instance.list}
-\label{\detokenize{appendix:instance-list}}\phantomsection\label{\detokenize{appendix:sec-instancelist}}
+\label{\detokenize{appendix:instance-list}}\label{\detokenize{appendix:id46}}
 New in Singularity version 2.4 you can use the \sphinxcode{\sphinxupquote{instance}} command group to run
 instances of containers in the background. This is useful for running
 services like databases and web servers. The \sphinxcode{\sphinxupquote{instance.list}} command lets you keep track
@@ -7902,13 +8508,13 @@ of the named instances running in the background.
 
 
 \subsubsection{Overview}
-\label{\detokenize{appendix:id45}}
+\label{\detokenize{appendix:id47}}
 After initiating one or more named instances to run in the background
 with the \sphinxcode{\sphinxupquote{instance.start}} command you can list them with the \sphinxcode{\sphinxupquote{instance.list}} command.
 
 
 \subsubsection{Examples}
-\label{\detokenize{appendix:id46}}
+\label{\detokenize{appendix:id48}}
 These examples use a container from Singularity Hub, but you can use
 local containers or containers from Docker Hub as well. For a more
 detailed look at \sphinxcode{\sphinxupquote{instance}} usage see {\hyperref[\detokenize{running_services:running-services}]{\sphinxcrossref{\DUrole{std,std-ref}{Running Instances}}}}.
@@ -7943,7 +8549,7 @@ hiya             20595    /home/ubuntu/vsoch\PYGZhy{}hello\PYGZhy{}world\PYGZhy{
 
 
 \subsection{instance.stop}
-\label{\detokenize{appendix:instance-stop}}\phantomsection\label{\detokenize{appendix:sec-instancestop}}
+\label{\detokenize{appendix:instance-stop}}\label{\detokenize{appendix:id49}}
 New in Singularity version 2.4 you can use the \sphinxcode{\sphinxupquote{instance}} command group to run
 instances of containers in the background. This is useful for running
 services like databases and web servers. The \sphinxcode{\sphinxupquote{instance.stop}} command lets you stop
@@ -7951,20 +8557,20 @@ instances once you are finished using them
 
 
 \subsubsection{Overview}
-\label{\detokenize{appendix:id47}}
+\label{\detokenize{appendix:id50}}
 After initiating one or more named instances to run in the background
 with the \sphinxcode{\sphinxupquote{instance.start}} command you can stop them with the \sphinxcode{\sphinxupquote{instance.stop}} command.
 
 
 \subsubsection{Examples}
-\label{\detokenize{appendix:id48}}
+\label{\detokenize{appendix:id51}}
 These examples use a container from Singularity Hub, but you can use
 local containers or containers from Docker Hub as well. For a more
 detailed look at \sphinxcode{\sphinxupquote{instance}} usage see {\hyperref[\detokenize{running_services:running-services}]{\sphinxcrossref{\DUrole{std,std-ref}{Running Instances}}}}.
 
 
 \paragraph{Start a few named instances from containers on Singularity Hub}
-\label{\detokenize{appendix:id49}}
+\label{\detokenize{appendix:id52}}
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYGZdl{} singularity instance.start shub://GodloveD/lolcow cow1
@@ -8001,7 +8607,7 @@ Stopping hiya instance of /home/ubuntu/vsoch\PYGZhy{}hello\PYGZhy{}world\PYGZhy{
 \label{\detokenize{appendix:deprecated}}
 
 \subsection{bootstrap}
-\label{\detokenize{appendix:bootstrap}}\label{\detokenize{appendix:id50}}\phantomsection\label{\detokenize{appendix:sec-bootstrap}}
+\label{\detokenize{appendix:bootstrap}}\label{\detokenize{appendix:id53}}\phantomsection\label{\detokenize{appendix:sec-bootstrap}}
 Bootstrapping was the original way (for Singularity versions prior to
 2.4) to install an operating system and then configure it appropriately
 for a specified need. Bootstrap is very similar to build, except that it
