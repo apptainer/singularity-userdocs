@@ -71,18 +71,17 @@ This will work for pre 3.0 tags.
     $ sudo make install
 
 
-.. note.. code-block:: none
-    Note that the installation prefix is ``/usr/local`` but the configuration directory
-    is ``/etc``. This ensures that the configuration file ``singularity.conf`` is placed in the
-    standard location.
+Singularity will be installed in the ``/usr/local`` directory hierarchy by default.
+And if you specify a custom directory with the ``--prefix`` option, all of
+Singularity's binaries and the configuration file will be installed within that
+directory. This last option can be useful if you want to install multiple versions
+of Singularity, install Singularity on a shared system, or if you want to remove
+Singularity easily after installing it.
 
 If you omit the ``--sysconfdir`` option , the configuration file will be installed in ``/usr/local/etc``.
 If you omit the ``--prefix`` option, Singularity will be installed in the ``/usr/local`` directory
 hierarchy by default. And if you specify a custom directory with the ``--prefix``
 option, all of Singularity’s binaries and the configuration file will be installed within that directory.
-This last option can be useful if you want to install multiple versions of Singularity, install
-Singularity on a shared system, or if you want to remove Singularity
-easily after installing it.
 
 --------------------------
 Install a specific release
@@ -112,31 +111,15 @@ releases <https://github.com/singularityware/singularity/releases>`_ page to ``/
 Install the development branch
 ------------------------------
 
-Primary development it now being done in the master branch. As of now (2018-08-16),
-this is the development for Singularity 3.0.
-
-.. code-block:: none
-
-    $ git clone https://github.com/singularityware/singularity.git
-
-    $ cd singularity
-
-    [ Read INSTALL.md -- Some major changes from pre-3.0 ]
-
-    $ ./mconfig
-
-    $ cd builddir
-
-    $ make
-
-    $ sudo make install
+The primary development of Singularity now happens on the ``master`` branch.
+Please see the ``INSTALL.md`` file in a copy of the repository.
 
 
 ---------------------
 Remove an old version
 ---------------------
 
-Let’s say that we installed Singularity to ``/usr/local``. To remove it completely,
+Let's say that we installed Singularity to ``/usr/local``. To remove it completely,
 you need to hit all of the following:
 
 .. code-block:: none
@@ -172,7 +155,7 @@ Singularity like so:
     $ sudo rm -rf /some/temp/dir
 
 What should you do next? You can check out the :ref:`quickstart <quick-start>` guide, or learn how to
-interact with your container via the :ref:`shell <shell>` , :ref:`exec <exec>` , or :ref:`run <run>` commands. Or click **next**
+interact with your container via the :ref:`shell <shell-command>` , :ref:`exec <exec-command>` , or :ref:`run <run-command>` commands. Or click **next**
 below to continue reading.
 
 -------------------

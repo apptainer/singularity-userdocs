@@ -275,13 +275,16 @@ $ make
 $ sudo make install
 </pre></div>
 </div>
+<p>Singularity will be installed in the <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> directory hierarchy by default.
+And if you specify a custom directory with the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> option, all of
+Singularity’s binaries and the configuration file will be installed within that
+directory. This last option can be useful if you want to install multiple versions
+of Singularity, install Singularity on a shared system, or if you want to remove
+Singularity easily after installing it.</p>
 <p>If you omit the <code class="docutils literal notranslate"><span class="pre">--sysconfdir</span></code> option , the configuration file will be installed in <code class="docutils literal notranslate"><span class="pre">/usr/local/etc</span></code>.
 If you omit the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code> option, Singularity will be installed in the <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code> directory
 hierarchy by default. And if you specify a custom directory with the <code class="docutils literal notranslate"><span class="pre">--prefix</span></code>
-option, all of Singularity’s binaries and the configuration file will be installed within that directory.
-This last option can be useful if you want to install multiple versions of Singularity, install
-Singularity on a shared system, or if you want to remove Singularity
-easily after installing it.</p>
+option, all of Singularity’s binaries and the configuration file will be installed within that directory.</p>
 </div>
 <div class="section" id="install-a-specific-release">
 <h2>Install a specific release<a class="headerlink" href="#install-a-specific-release" title="Permalink to this headline">¶</a></h2>
@@ -305,23 +308,8 @@ $ sudo make install
 </div>
 <div class="section" id="install-the-development-branch">
 <h2>Install the development branch<a class="headerlink" href="#install-the-development-branch" title="Permalink to this headline">¶</a></h2>
-<p>Primary development it now being done in the master branch. As of now (2018-08-16),
-this is the development for Singularity 3.0.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/singularityware/singularity.git
-
-$ cd singularity
-
-[ Read INSTALL.md -- Some major changes from pre-3.0 ]
-
-$ ./mconfig
-
-$ cd builddir
-
-$ make
-
-$ sudo make install
-</pre></div>
-</div>
+<p>The primary development of Singularity now happens on the <code class="docutils literal notranslate"><span class="pre">master</span></code> branch.
+Please see the <code class="docutils literal notranslate"><span class="pre">INSTALL.md</span></code> file in a copy of the repository.</p>
 </div>
 <div class="section" id="remove-an-old-version">
 <h2>Remove an old version<a class="headerlink" href="#remove-an-old-version" title="Permalink to this headline">¶</a></h2>
@@ -356,7 +344,7 @@ Singularity like so:</p>
 </pre></div>
 </div>
 <p>What should you do next? You can check out the <a class="reference internal" href="quick_start.html#quick-start"><span class="std std-ref">quickstart</span></a> guide, or learn how to
-interact with your container via the <span class="xref std std-ref">shell</span> , <span class="xref std std-ref">exec</span> , or <span class="xref std std-ref">run</span> commands. Or click <strong>next</strong>
+interact with your container via the <a class="reference internal" href="appendix.html#shell-command"><span class="std std-ref">shell</span></a> , <a class="reference internal" href="appendix.html#exec-command"><span class="std std-ref">exec</span></a> , or <a class="reference internal" href="appendix.html#run-command"><span class="std std-ref">run</span></a> commands. Or click <strong>next</strong>
 below to continue reading.</p>
 </div>
 <div class="section" id="install-on-windows">
@@ -884,14 +872,13 @@ User
   </div>
 
 
-
-    <script type="text/javascript" src="_static/js/footer.js"></script>
+<script type="text/javaScript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.6.0',
+            VERSION:'2.6',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',

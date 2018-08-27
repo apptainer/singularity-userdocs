@@ -17,6 +17,15 @@
 
 
 
+
+
+
+
+
+
+
+
+
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
@@ -56,6 +65,7 @@
               <div class="version">
                 2.6
               </div>
+
 
 
 
@@ -195,6 +205,10 @@ system administrator.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/singularityware/singularity.git
 
 cd singularity
+
+git fetch --all
+
+git checkout 2.6.0
 
 ./autogen.sh
 
@@ -405,7 +419,7 @@ disappears when the shell is exited.</p>
 </div>
 <div class="section" id="executing-commands">
 <h3>Executing Commands<a class="headerlink" href="#executing-commands" title="Permalink to this headline">¶</a></h3>
-<p>The <span class="xref std std-ref">exec</span> command allows you to execute a custom command within a container by
+<p>The <a class="reference internal" href="appendix.html#exec-command"><span class="std std-ref">exec</span></a> command allows you to execute a custom command within a container by
 specifying the image file. For instance, to list the root (/) of our
 hello-world.simg image, we could do the following:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity exec hello-world.simg ls /
@@ -647,13 +661,13 @@ different build options, see our <a class="reference internal" href="singularity
   </div>
 
 
-  <script type="text/javascript" src="_static/js/footer.js"></script>
 
+  <script type="text/javaScript" src="_static/js/footer.js"></script>
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
             URL_ROOT:'./',
-            VERSION:'2.6.0',
+            VERSION:'2.6',
             LANGUAGE:'None',
             COLLAPSE_INDEX:false,
             FILE_SUFFIX:'.html',
