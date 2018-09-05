@@ -372,10 +372,10 @@ to a system on which they have root privileges. This could be a
 server, workstation, a laptop, virtual machine, or even a cloud
 instance. If you are using OS X or Windows on your laptop, it is
 recommended to setup Vagrant, and run Singularity from there (there
-are recipes for this which can be found at Once you have Singularity
-installed on your endpoint of choice, this is where you will do the
-bulk of your container development. This workflow can be described
-visually as follows:
+are recipes for this which can be found at the Singularity website. 
+Once you have Singularity installed on your endpoint of choice, this 
+is where you will do the bulk of your container development. This 
+workflow can be described visually as follows:
 
 .. figure:: flow.png
    :alt: Singularity workflow
