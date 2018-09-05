@@ -50,7 +50,7 @@ file like so:
 
 Now let’s say we build a container with that startscript into an image
 called ``nginx.img`` and we want to run an nginx service. All we need to do is start
-the instance with the :ref:`instance.start <instance-start>` command, and the
+the instance with the :ref:`instance start <instance-start>` command, and the
 startscript will run inside the container automatically:
 
 .. code-block:: none

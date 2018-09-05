@@ -55,24 +55,24 @@
 \contentsline {section}{\numberline {3.2}Install from a tag}{21}{section.3.2}
 \contentsline {section}{\numberline {3.3}Install a specific release}{22}{section.3.3}
 \contentsline {section}{\numberline {3.4}Install the development branch}{22}{section.3.4}
-\contentsline {section}{\numberline {3.5}Remove an old version}{23}{section.3.5}
+\contentsline {section}{\numberline {3.5}Remove an old version}{22}{section.3.5}
 \contentsline {section}{\numberline {3.6}Install on Windows}{23}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}Setup}{23}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}Singularityware Vagrant Box}{24}{subsection.3.6.2}
-\contentsline {section}{\numberline {3.7}Install on Linux}{25}{section.3.7}
-\contentsline {subsection}{\numberline {3.7.1}Installation from Source}{25}{subsection.3.7.1}
+\contentsline {subsection}{\numberline {3.6.2}Singularityware Vagrant Box}{23}{subsection.3.6.2}
+\contentsline {section}{\numberline {3.7}Install on Linux}{24}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Installation from Source}{24}{subsection.3.7.1}
 \contentsline {subsubsection}{\numberline {3.7.1.1}Option 1: Download latest stable release}{25}{subsubsection.3.7.1.1}
 \contentsline {subsubsection}{\numberline {3.7.1.2}Option 2: Download the latest development code}{25}{subsubsection.3.7.1.2}
-\contentsline {subsubsection}{\numberline {3.7.1.3}Prefix in special characters}{26}{subsubsection.3.7.1.3}
+\contentsline {subsubsection}{\numberline {3.7.1.3}Prefix in special characters}{25}{subsubsection.3.7.1.3}
 \contentsline {subsubsection}{\numberline {3.7.1.4}Updating}{26}{subsubsection.3.7.1.4}
 \contentsline {subsection}{\numberline {3.7.2}Debian Ubuntu Package}{26}{subsection.3.7.2}
 \contentsline {subsubsection}{\numberline {3.7.2.1}Testing first with Docker}{26}{subsubsection.3.7.2.1}
-\contentsline {subsubsection}{\numberline {3.7.2.2}Adding the Mirror and installing}{27}{subsubsection.3.7.2.2}
+\contentsline {subsubsection}{\numberline {3.7.2.2}Adding the Mirror and installing}{26}{subsubsection.3.7.2.2}
 \contentsline {subsection}{\numberline {3.7.3}Build an RPM from source}{28}{subsection.3.7.3}
 \contentsline {subsection}{\numberline {3.7.4}Build an DEB from source}{29}{subsection.3.7.4}
 \contentsline {subsection}{\numberline {3.7.5}Install on your Cluster Resource}{29}{subsection.3.7.5}
-\contentsline {section}{\numberline {3.8}Install on Mac}{30}{section.3.8}
-\contentsline {subsection}{\numberline {3.8.1}Setup}{30}{subsection.3.8.1}
+\contentsline {section}{\numberline {3.8}Install on Mac}{29}{section.3.8}
+\contentsline {subsection}{\numberline {3.8.1}Setup}{29}{subsection.3.8.1}
 \contentsline {subsection}{\numberline {3.8.2}Option 1: Singularityware Vagrant Box}{30}{subsection.3.8.2}
 \contentsline {subsection}{\numberline {3.8.3}Option 2: Vagrant Box from Scratch (more advanced alternative)}{31}{subsection.3.8.3}
 \contentsline {section}{\numberline {3.9}Requesting an Installation}{32}{section.3.9}
@@ -80,8 +80,8 @@
 \contentsline {subsection}{\numberline {3.9.2}Information Resources}{32}{subsection.3.9.2}
 \contentsline {subsubsection}{\numberline {3.9.2.1}Background}{32}{subsubsection.3.9.2.1}
 \contentsline {subsubsection}{\numberline {3.9.2.2}Security}{32}{subsubsection.3.9.2.2}
-\contentsline {subsubsection}{\numberline {3.9.2.3}Presentations}{33}{subsubsection.3.9.2.3}
-\contentsline {subsection}{\numberline {3.9.3}Installation Request}{33}{subsection.3.9.3}
+\contentsline {subsubsection}{\numberline {3.9.2.3}Presentations}{32}{subsubsection.3.9.2.3}
+\contentsline {subsection}{\numberline {3.9.3}Installation Request}{32}{subsection.3.9.3}
 \contentsline {chapter}{\numberline {4}Build a Container}{35}{chapter.4}
 \contentsline {section}{\numberline {4.1}Overview}{35}{section.4.1}
 \contentsline {section}{\numberline {4.2}Downloading a existing container from Singularity Hub}{35}{section.4.2}

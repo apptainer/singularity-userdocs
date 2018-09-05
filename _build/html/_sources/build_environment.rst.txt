@@ -87,7 +87,7 @@ Environment Variables
 ---------------------
 
 All environmental variables are parsed by Singularity python helper
-functions, and specifically the file `defaults.py <https://github.com/singularityware/singularity/blob/master/libexec/python/defaults.py>`_ is a gateway
+functions, and specifically the file `defaults.py <https://github.com/singularityware/singularity/blob/2.6.0/libexec/python/defaults.py>`_ is a gateway
 between variables defined at runtime, and pre-defined defaults. By way
 of import from the file, variables set at runtime do not change if
 re-imported. This was done intentionally to prevent changes during the

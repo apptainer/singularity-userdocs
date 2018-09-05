@@ -27,6 +27,10 @@ There are many ways to :ref:`install Singularity <installation>` but this quick 
 
     cd singularity
 
+    git fetch --all
+
+    git checkout 2.6.0
+
     ./autogen.sh
 
     ./configure --prefix=/usr/local
@@ -264,7 +268,7 @@ disappears when the shell is exited.
 Executing Commands
 ==================
 
-The :ref:`exec <exec>` command allows you to execute a custom command within a container by
+The :ref:`exec <exec-command>` command allows you to execute a custom command within a container by
 specifying the image file. For instance, to list the root (/) of our
 hello-world.simg image, we could do the following:
 
