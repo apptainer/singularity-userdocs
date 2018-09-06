@@ -29,7 +29,7 @@ There are many ways to :ref:`install Singularity <installation>` but this quick 
 
     git fetch --all
 
-    git checkout 2.6.0
+    git checkout 2.5.0
 
     ./autogen.sh
 
