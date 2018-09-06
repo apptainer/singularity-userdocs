@@ -10,21 +10,18 @@ Reproducible SCI-F Apps
 Why do we need SCI-F?
 ---------------------
 
-The Scientific Filesystem (SCIF) provides internal modularity of
-containers, and it makes it easy for the creator to give the container
-implied metadata about software. For example, installing a set of
-libraries, defining environment variables, or adding labels that
-belong to app ``foo`` makes a strong assertion that those dependencies belong
-to ``foo`` . When I run foo, I can be confident that the container is running
+The Scientific Filesystem (SCIF) provides a consistent and modular method to create containers.
+The SCI-F makes some assumptions about how the container will be created. By adhering to with the SCI-F format containers can become more reproducible.
+For example, installing a set of libraries, defining environment variables, or adding labels that
+belong to application ``foo`` makes a strong assertion that those dependencies belong
+to ``foo``. When I run ``foo``, I can be confident that the container is running
 in this context, meaning with ``foo's`` custom environment, and with ``foo's`` libraries
-and executables on the path. This is drastically different from
-serving many executables in a single container, because there is no
-way to know which are associated with which of the container’s
+and executables on the path. This approach is different from
+serving many executables in a single container, that may have no way to know which application is associated with the container’s
 intended functions. This documentation will walk through some
-rationale, background, and examples of the SCIF integration for
+rationale, background, and examples of the SCI-F integration for
 Singularity containers. For other examples (and a client that works
 across container technologies) see the the `scientific filesystem <https://sci-f.github.io/>`_.
-This page will primarily cover the native Singularity SCIF integration.
 
 To start, let’s take a look at this series of steps to install
 dependencies for software foo and bar.
@@ -105,9 +102,9 @@ and maybe your environment looks like this:
 
 You obviously can’t have them at separate times. You’d have to source
 some custom environment file (that you make on your own) and it gets
-hard easily with issues of using shell and sourcing. We don’t know who
-the best guy is! You probably get the general idea. Without internal
-organization and modularity:
+confusing with issues of using shell and sourcing the container. We don’t know who
+the best guy is! You probably get the general idea. Without consistent internal
+organization and modularity the following may result:
 
 -  You have to do a lot of manual work to expose the different software
    to the user via a custom runscript (and be a generally decent
@@ -116,7 +113,7 @@ organization and modularity:
 -  All software must share the same metadata, environment, and labels.
 
 Under these conditions, containers are at best black boxes with unclear
-delineation between software provided, and only one context for running
+delineation between software provided, and only one context of running
 anything. The container creator shouldn’t need to spend inordinate
 amounts of time writing custom runscripts to support multiple functions
 and inputs. Each of ``foo`` and ``bar`` should be easy to define, and have its own
@@ -125,7 +122,7 @@ runscript, environment, labels, tests and help section.
 Container Transparency
 ======================
 
-SCI-F Apps make ``foo`` and ``bar`` transparent, and solve this problem of mixed up
+Applications that use the SCI-F make ``foo`` and ``bar`` transparent, and solve the problem of mixed up
 modules. Our simple issue of mixed up modules could be solved if we
 could do this:
 
@@ -160,13 +157,13 @@ could do this:
         echo The best guy is $BEST_GUY
 
 
-Generate the container
+and generate the container as follows:
 
 .. code-block:: none
 
     $ sudo singularity build foobar.simg Singularity
 
-and run it in the context of ``foo`` and then ``bar``
+and finally, run the container with the context of ``foo`` and then ``bar``
 
 .. code-block:: none
 
@@ -190,7 +187,7 @@ anything about the container:
 
     foo
 
-| and inspect each one:
+Each applications can be inspected individually:
 
 .. code-block:: none
 
@@ -207,12 +204,11 @@ anything about the container:
 Container Modularity
 ====================
 
-What is going on, under the hood? Just a simple, clean organization that
+This behavior is made possible by a simple, clean organization that
 is tied to a set of sections in the build recipe relevant to each app.
 For example, I can specify custom install procedures (and they are
 relevant to each app’s specific base defined under ``/scif/apps``), labels, tests, and
-help sections. Before I tell you about the sections, I’ll briefly show
-you what the organization looks like, for each app:
+help sections. Before we examine the sections, consider what the organization looks like, for each app:
 
 .. code-block:: none
 
@@ -242,22 +238,22 @@ you what the organization looks like, for each app:
 
          ....
 
-If you are familiar with Singularity, the above will look very familiar.
+If you are familiar with Singularity, the above should look similar to other environments.
 It mirrors the Singularity (main container) metadata folder, except
 instead of ``.singularity.d`` we have ``scif``. The name and base ``scif`` is chosen intentionally to be
 something short, and likely to be unique. On the level of organization
-and metadata, these internal apps are like little containers! Are you
-worried that you need to remember all this path nonsense? Don’t worry,
-you don’t. You can just use environment variables in your runscripts,
+and metadata, these internal apps are like little containers.
+
+You need to remember all the path details because you can environment variables in your runscripts,
 etc. Here we are looking at the environment active for lolcat:
 
 .. code-block:: none
 
     singularity exec --app foo foobar.simg env | grep foo
 
-Let’s talk about the output of the above in sections, you will notice
-some interesting things! First, notice that the app’s ``bin`` has been added to
-the path, and its ``lib`` added to the ``LD_LIBRARY_PATH`` . This means that anything you drop in
+Consider the output of the above in sections, you will notice
+some interesting things. First, notice that the app’s ``bin`` has been added to
+the path, and its ``lib`` folder is added to the ``LD_LIBRARY_PATH`` . This means that anything you drop in
 either will automatically be added. You don’t need to make these folders
 either, they are created for you.
 
@@ -267,8 +263,8 @@ either, they are created for you.
 
     PATH=/scif/apps/foo/bin:/scif/apps/foo:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-Next, notice that we have environment variables relevant to the active
-app’s (foo) data and metadata. They look like this:
+Next, notice the environment variables relevant to the active
+app’s (foo) data and metadata. They will look like the following:
 
 .. code-block:: none
 
@@ -299,9 +295,9 @@ Also provided are more global paths for data and apps:
 
     SCIF_DATA=/scif/data
 
-Importantly, each app has its own modular location. When you do an ``%appinstall foo``,
+Note, each application has its own modular location. When you do an ``%appinstall foo``,
 the commands are all done in context of that base. The bin and lib are
-also automatically generated. So what would be a super simple app?
+also automatically generated. Consider a simple application:
 
 Just add a script and name it:
 
@@ -339,7 +335,7 @@ We can summarize these observations about using apps:
 
 -  locations for input, output, and general data are exposed. It’s up to
    you how you use these, but you can predictably know that a well made
-   app will look for inputs and outputs in its specific folder.
+   application will look for inputs and outputs in its specific folder.
 
 -  environment variables are provided for the app’s root, its data, and
    its name
@@ -354,7 +350,7 @@ singularity metadata folder, .singularity.d, equivalent to the
 container’s main folder, is generated inside the application. An
 application thus is like a smaller image inside of its parent.
 Specifically, SCI-F defines the following new sections for the build
-recipe, where each is optional for 0 or more apps:
+recipe, where each is optional for zero or more apps:
 
 **%appinstall** corresponds to executing commands within the folder to
 install the application. These commands would previously belong in
@@ -385,10 +381,10 @@ working directory assumed to be the software module’s folder
 Interaction
 ===========
 
-I didn’t show you the complete output of a ``grep`` to the environment when
-running foo in the first example - because the remainder of variables
-are more fit for a discussion about app interaction. Essentially, when
-any app is active, we also have named variable that can explicitly
+The complete output of a ``grep`` to the environment when
+running foo in the first example was not shown because the remainder of variables
+are more germane to a discussion about app interaction. Essentially, when
+any application is active, we also have named variable that can explicitly
 reference the environment file, labels file, runscript, ``lib`` and ``bin`` folders for
 all app’s in the container. For our above Singularity Recipe, we would
 also find:
@@ -429,8 +425,7 @@ also find:
     SCIF_APPBIN_foo=/scif/apps/foo/bin
 
 
-This is really great because it means that we can have apps interact
-with one another internally. For example, let’s modify the recipe a bit:
+This design means that we can have apps interact with one another internally. For example, let’s modify the recipe a bit:
 
 .. code-block:: none
 
@@ -481,59 +476,54 @@ environment for “moo” and the result is what we would want:
     The COW goes moo
 
 The same is true for each of the labels, environment, runscript, bin,
-and lib. The following variables are available to you, for each app in
-the container, whenever any app is being run:
+and lib. The following variables are available to you, for each application in
+the container, whenever any application is run:
 
 -  **SCIF\_APPBIN\_**: the path to the bin folder, if you want to add
-   an app that isn’t active to your ‘PATH‘
+   an application that isn’t active to your ``PATH``
 
 -  **SCIF\_APPLIB\_**: the path to the lib folder, if you want to add
-   an app that isn’t active to your ‘LD\_LIBRARY\_PATH‘
+   an application that isn’t active to your ``LD\_LIBRARY\_PATH``
 
--  **SCIF\_APPRUN\_**: the app’s runscript (so you can call it from
+-  **SCIF\_APPRUN\_**: the application’s runscript (so you can call it from
    elsewhere)
 
--  **SCIF\_APPMETA\_**: the path to the metadata folder for the app
+-  **SCIF\_APPMETA\_**: the path to the metadata folder for the application
 
 -  **SCIF\_APPENV\_**: the path to the primary environment file (for
    sourcing) if it exists
 
--  **SCIF\_APPROOT\_**: the app’s install folder
+-  **SCIF\_APPROOT\_**: the application’s install folder
 
--  **SCIF\_APPDATA\_**: the app’s data folder
+-  **SCIF\_APPDATA\_**: the application’s data folder
 
 -  **SCIF\_APPLABELS\_**: The path to the label.json in the metadata
    folder, if it exists
 
 Singularity containers are already reproducible in that they package
-dependencies. This basic format adds to that by making the software
-inside of them modular, predictable, and programmatically accessible. We
-can say confidently that some set of steps, labels, or variables in the
-runscript is associated with a particular action of the container. We
-can better reveal how dependencies relate to each step in a scientific
-workflow. Making containers is not easy. When a scientist starts to
-write a recipe for his set of tools, he probably doesn’t know where to
-put it, perhaps that a help file should exist, or that metadata about
-the software should be served by the container. If container generation
-software made it easy to organize and capture container content
-automatically, we would easily meet these goals of internal modularity
-and consistency, and generate containers that easily integrate with
-external hosts, data, and other containers. These are essential
-components for (ultimately) optimizing the way we develop, understand,
-and execute our scientific containers.
+dependencies. The basic format of SCI-F adds to that by making the software
+inside of containers modular, predictable, and programmatically accessible.
 
-----------------
-Cowsay Container
-----------------
+By pre-setting some set of steps, labels, or variables in the
+runscript is associated with a particular action of the container, users can better encapsulate how dependencies relate to each step in a scientific
+work-flow.
 
-Now let’s go through the tutorial to build our `cowsay container`_.
+Making containers can be challenging. When a scientist starts to
+write a recipe for his set of tools, she probably doesn’t know where to
+put various tags and data. The SCI-F file system makes it easy to build consistent maintainable containers.
+
+-------------------------------
+SCI-F Example: Cowsay Container
+-------------------------------
+
+As an example, we will use the `cowsay container`_. ``cowsay`` is a program that generates ASCII pictures of a cow with a message.
+It also uses the ``fortune```program to produce random "fortunes" and the ``lolcat`` applications that add rainbow color to an ASCII string.
 
 .. warning::
-    **Important!** This tutorial is for Singularity 2.4.
+    **Important!** This example has been developed for Singularity 2.4.
 
-When you’ve installed 2.4, download the recipe, and save it to your
-  present working directory. By the way, credit for anything and
-  everything lolcat and cowsay goes to `GodLoveD <https://www.github.com/GodLoveD>`_! Here is the recipe:
+Download the recipe, and save it to your
+present working directory.
 
 .. code-block:: none
 
@@ -541,7 +531,7 @@ When you’ve installed 2.4, download the recipe, and save it to your
 
     sudo singularity build moo.simg Singularity.cowsay
 
-What apps are installed?
+Determine what applications are installed using the following command:
 
 .. code-block:: none
 
@@ -554,7 +544,7 @@ What apps are installed?
     lolcat
 
 
-Ask for help for a specific app!
+Ask for help for a specific application as follows:
 
 .. code-block:: none
 
@@ -563,7 +553,7 @@ Ask for help for a specific app!
     fortune is the best app
 
 
-Ask for help for all apps, without knowing in advance what they are:
+A simple loop can be used to ask for help from all apps (without asking in advance what they are):
 
 .. code-block:: none
 
@@ -582,7 +572,7 @@ Ask for help for all apps, without knowing in advance what they are:
     lolcat is the best app
 
 
-Run a particular app
+To run the ``fortune`` application, enter the following (the actual fortune is random, so your display may differ):
 
 .. code-block:: none
 
@@ -603,8 +593,7 @@ Run a particular app
             -- J. R. R. Tolkien
 
 
-Advanced running - pipe the output of fortune into lolcat, and make a
-fortune that is beautifully colored!
+Next, pipe the output of ``fortune`` into ``lolcat`` to add color to the fortune.
 
 .. code-block:: none
 
@@ -613,8 +602,7 @@ fortune that is beautifully colored!
     You will be surrounded by luxury.
 
 
-This one might be easier to see - pipe the same fortune into the cowsay
-app:
+Send the output of ``fortune```to the ``cowsay`` application.
 
 .. code-block:: none
 
@@ -639,8 +627,7 @@ app:
                     ||     ||
 
 
-and the final shabang - do the same, but make it colored. Let’s even get
-lazy and use an environment variable for the command:
+Finally use all three applications and demonstrate how to use an environment variable for the command:
 
 .. code-block:: none
 
@@ -667,8 +654,7 @@ lazy and use an environment variable for the command:
                     ||     ||
 
 
-Yes, you need to watch the asciinema to see the colors. Finally, inspect
-an app:
+The application can be inspected with the following command:
 
 .. code-block:: none
 
@@ -687,5 +673,4 @@ If you want to see the full specification or create your own
 Scientific Filesystem integration (doesn’t have to be Singularity, or
 Docker, or containers!) see the `full documentation <https://sci-f.github.io/>`_.
 
-If you haven’t yet, `take a look at these examples <https://asciinema.org/a/139153?speed=3>`_ with the
-asciinema!
+Also, you can follow along with this example by going to: `take a look at these examples <https://asciinema.org/a/139153?speed=3>`_

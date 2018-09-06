@@ -4,8 +4,8 @@
 Singularity and Docker
 ======================
 
-Singularity is good friends with Docker. The reason is because the
-developers use and really like using Docker, and scientists have already
+Singularity can be used with Docker images. This feature was included because
+developers use and really like using Docker and scientists have already
 put much resources into creating Docker images. Thus, one of our early goals was to support Docker. What can you do?
 
 -  You don’t need Docker installed
@@ -23,7 +23,7 @@ put much resources into creating Docker images. Thus, one of our early goals was
 TLDR (Too Long Didn’t Read)
 ---------------------------
 
-You can shell, import, run, and exec.
+You can shell, import, run, and exec Docker images directly from the Docker Registry.
 
 .. code-block:: none
 
@@ -45,7 +45,7 @@ Import a Docker image into a Singularity Image
 
 The core of a Docker image is basically a compressed set of files, a set
 of ``.tar.gz`` that (if you look in your `Docker image folder <http://stackoverflow.com/questions/19234831/where-are-docker-images-stored-on-the-host-machine>`_ on your host
-machine, you will see. The Docker Registry, which you probably interact
+machine, you will see the files. The Docker Registry, which you probably interact
 with via `Docker Hub <https://hub.docker.com/>`_, serves these layers. These are the layers that
 you see downloading when you interact with the docker daemon. We are
 going to use these same layers for Singularity!
@@ -55,10 +55,10 @@ Quick Start: The Docker Registry
 --------------------------------
 
 The Docker engine communicates with the Docker Hub via the `Docker
-Remote API <https://docs.docker.com/engine/reference/api/docker_remote_api/>`_, and guess what, we can too! The easiest thing to do is
+Remote API <https://docs.docker.com/engine/reference/api/docker_remote_api/>`_, and so can Singularity. The easiest thing to do is
 create an image, and then pipe a Docker image directly into it from
 the Docker Registry. You don’t need Docker installed on your machine,
-but you will need a working internet connection. Let’s create an
+but you will need a working Internet connection. Let’s create an
 ubuntu operating system, from Docker. We will pull, then build:
 
 .. code-block:: none
@@ -102,7 +102,7 @@ ubuntu operating system, from Docker. We will pull, then build:
     Singularity container built: ./ubuntu.img
 
 
-The warnings mean well - it is to tell you that you are creating the
+The warnings are reminding you that you are creating the
 image on the fly from layers, and if one of those layers changes, you
 won’t produce the same image next time.
 
@@ -112,11 +112,11 @@ The Build Specification file, Singularity
 
 Just like Docker has the Dockerfile, Singularity has a file called
 Singularity that (currently) applications like Singularity Hub know to
-sniff for. For reproducibility of your containers, our strong
+find. For reproducibility of your containers, our strong
 recommendation is that you build from these files. Any command that you
 issue to change a container sandbox (building with ``--sandbox`` ) or to a build with ``--writable``
 is by default not recorded, and your container loses its
-reproducibility. So let’s talk about how to make these files! First,
+reproducibility. The following are steps to these files. First,
 let’s look at the absolute minimum requirement:
 
 .. code-block:: none
@@ -126,15 +126,14 @@ let’s look at the absolute minimum requirement:
     From: ubuntu
 
 
-We would save this content to a file called Singularity and then issue
-the following commands to bootstrap the image from the file
+We save this content to a file called Singularity and then issue
+the following commands to bootstrap the image from the file:
 
 .. code-block:: none
 
     sudo singularity build ubuntu.img Singularity
 
-Do you want to specify a particular tag? or version? You can just add
-that to the docker uri:
+A particular tag or version can be added to the docker uri:
 
 .. code-block:: none
 
@@ -159,7 +158,7 @@ that to the docker uri:
     Namespace: blue/berry/cream
 
 
-The power of build comes with the other stuff that you can do! This
+The power of build comes with the other things that you can do. This
 means running specific install commands, specifying your containers
 runscript (what it does when you execute it), adding files, labels, and
 customizing the environment. Here is a full Singularity file:
@@ -222,17 +221,16 @@ runscript, and add IncludeCmd to the header:
         echo "Post install stuffs!"
 
 
-Did you know that you can commit this Singularity file to a GitHub repo
+You can commit this Singularity file to a GitHub repo
 and it will automatically build for you when you push to `Singularity
-Hub <https://singularity-hub.org/>`_?. This will ensure maximum reproducibility of your work.
+Hub <https://singularity-hub.org/>`_?. This step will ensure maximum reproducibility of your work.
 
 ----------------------------
 How does the runscript work?
 ----------------------------
 
 Docker has two commands in the ``Dockerfile`` that have something to do with
-execution, ``CMD`` and ``ENTRYPOINT``. The differences are subtle, but the best description
-I’ve found is the following:
+execution, ``CMD`` and ``ENTRYPOINT``. The differences are subtle, but the a good description is the following:
 
     A ``CMD`` is to provide defaults for an executing container.
 
@@ -376,7 +374,7 @@ your token is valid, you can do the following
     http https://index.docker.io/v2/vanessa/code-samples/tags/list Authorization:"Bearer $TOKEN"
 
 The above call should return the tags list as expected. And of course
-you should change the repo name to be one that actually exists that you
+you should change the repository (repo) name to be one that actually exists that you
 have credentials for.
 
 --------------
@@ -392,9 +390,9 @@ ventures please `let us know <https://www.github.com/singularityware/singularity
 =======================
 
 When using Docker, you typically run as root, meaning that root’s home
-at ``/root`` is where things will install given a specification of home. This is
+at ``/root`` is where things will install given a specification of home. This situation is
 fine when you stay in Docker, or if the content at ``/root`` doesn’t need any
-kind of write access, but generally can lead to a lot of bugs because
+kind of write access, but generally it can lead to a lot of bugs because
 it is, after all, root’s home. This leads us to best practice #1.
 
 Don’t install anything to root’s home, ``/root``.
@@ -428,7 +426,7 @@ Have any more best practices? Please `let us know <https://www.github.com/singul
 Troubleshooting
 ---------------
 
-Why won’t my image build work? If you can’t find an answer on this site,
-please `ping us an issue <https://www.github.com/singularityware/singularity/issues>`_. If you’ve found an answer and you’d like to
+Why won’t my image build work? If you can’t find an answer on this documentation,
+please `send us an issue <https://www.github.com/singularityware/singularity/issues>`_. If you’ve found an answer and you’d like to
 see it on the site for others to benefit from, then post to us
 `here <https://www.github.com/singularityware/singularityware.github.io/issues>`__.
