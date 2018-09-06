@@ -8,8 +8,7 @@ Build Environment
 
 It’s commonly the case that you want to customize your build
 environment, such as specifying a custom cache directory for layers, or
-sending your Docker Credentials to the registry endpoint. Here we will
-discuss those things
+sending your Docker Credentials to the registry endpoint. Here we will discuss those topics.
 
 -------------
 Cache Folders

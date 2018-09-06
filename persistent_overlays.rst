@@ -2,7 +2,7 @@
 Persistent Overlays
 ===================
 
-Persistent overlay images are new to version 2.4! This feature allows
+Persistent overlay images were added in version 2.4. This feature allows
 you to overlay a writable file system on an immutable read-only
 container for the illusion of read-write access.
 
