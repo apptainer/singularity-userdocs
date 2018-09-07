@@ -2,11 +2,12 @@
 Introduction
 ============
 
-This document will introduce you to Singularity, and the links in the
-bar to the left will give you more detail on using the software. If you
-want to get a quick rundown, see our quickstart. If you want to
-understand which commands are best fit for your usecase, see our build
-flow page. There is also a separate Singularity Administration Guide
+This document will introduce you to Singularity.
+If you are viewing this on the web there should be links in the bar to the left
+that will direct you to other important topics. If you
+want to get a quick overview, see the quick start section. If you want to
+understand which commands are a best fit for your use case, see our build
+flow section. There is also a separate Singularity Administration Guide
 that targets system administrators, so if you are a service provider, or
 an interested user, it is encouraged that you read that document as
 well.
@@ -62,8 +63,8 @@ Reproducibility
 As mentioned above, Singularity containers utilize a single file which is the complete
 representation of all the files within the container. The same
 features which facilitate mobility also facilitate reproducibility.
-Once a contained workflow has been defined, the container image can be
-snapshotted, archived, and locked down such that it can be used later
+Once a contained workflow has been defined, a snapshot image can be taken of a container.
+The image then can be archived and locked down such that it can be used later
 and you can be confident that the code within the container has not
 changed.
 
@@ -121,8 +122,8 @@ A user inside a Singularity container
 is the same user as outside the container
 This is one of Singularities defining characteristics. It allows a
 user (that may already have shell access to a particular host) to
-simply run a command inside of a container image as themselves. Here
-is a scenario to help articulate this:
+simply run a command inside of a container image as themselves.
+The following example scenario will help illustrate a Singularity container.
 
 %SERVER and %CLUSTER are large expensive systems with resources far
 exceeding those of my personal workstation. But because the are
@@ -144,7 +145,7 @@ semi-antagonistic to Singularity’s 3rd tenant; allowing the users to
 have freedom of their own environments. Because if a user has the
 freedom to create and manipulate their own container environment,
 surely they know how to escalate their privileges to root within that
-container. Possible means could be setting the root user’s password,
+container. Possible means to escalation could include setting the root user’s password,
 or enabling themselves to have sudo access. For these reasons,
 Singularity prevents user context escalation within the container, and
 thus makes it possible to run user supplied containers on shared
@@ -160,11 +161,11 @@ The Singularity container image
 ===============================
 
 Singularity makes use of a container image
-file, which physically contains the container. This file is a physical
+file, which physically includes the container. This file is a physical
 representation of the container environment itself. If you obtain an
 interactive shell within a Singularity container, you are literally
 running within that file.
-This simplifies management of files to the element of least surprise,
+This design simplifies management of files to the element of least surprise,
 basic file permission. If you either own a container image, or have
 read access to that container image, you can start a shell inside that
 image. If you wish to disable or limit access to a shared image, you
@@ -225,8 +226,8 @@ reproducible science, please `reach out! <https://www.sylabs.io/contact/>`_.
 
 -  **tar**: uncompressed tar archive
 
-*Supported URIs*
-----------------
+*Supported Unified Resource Identifiers (URIs)*
+-----------------------------------------------
 
 Singularity also supports several different mechanisms for obtaining the
 images using a standard URI format.
@@ -249,7 +250,7 @@ Name-spaces and isolation
 =========================
 
 When asked, “What namespaces does Singularity virtualize?”, the most
-appropriate response from a Singularity use case is “As few as
+appropriate response from a Singularity point of view is “As few as
 possible!”. This is because the goals of Singularity are mobility,
 reproducibility and freedom, not full isolation (as you would expect
 from industry driven container technologies). Singularity only
@@ -259,31 +260,34 @@ Coupling incomplete isolation with the fact that a user inside a
 container is the same user outside the container, allows Singularity
 to blur the lines between a container and the underlying host system.
 Using Singularity feels like running in a parallel universe, where
-there are two timelines. In one timeline, the system administrators
+there are two time lines. In one time line, the system administrators
 installed their operating system of choice. But on an alternate
-timeline, we bribed the system administrators and they installed our
+time line, we bribed the system administrators and they installed our
 favorite operating system and apps, and gave us full control but
 configured the rest of the system identically. And Singularity gives
-us the power to pick between these two timelines.
+us the power to pick between these two time lines.
+
 In other words, Singularity allows you to virtually swap out the
 underlying operating system for one that you’ve defined without
 affecting anything else on the system and still having all of the host
-resources available to us.
-It’s like ssh’ing into another identical host running a different
-operating system. One moment you are on Centos-6 and the next minute
+resources available to you.
+
+The container is similar to logging into another identical host running a different operating system.
+One moment you are on Centos-6 and the next minute
 you are on the latest version of Ubuntu that has Tensorflow installed,
 or Debian with the latest OpenFoam, or a custom workflow that you
 installed. But you are still the same user with the same files running
 the same PIDs.
+
 Additionally, the selection of name-space virtualization can be
 dynamic or conditional. For example, the PID namespace is not
 separated from the host by default, but if you want to separate it,
 you can with a command line (or environment variable) setting. You can
-also decide you want to contain a process so it can not reach out to
+also decide if you want to contain a process so it can not reach out to
 the host file system if you don’t know if you trust the image. But by
 default, you are allowed to interface with all of the resources,
 devices and network inside the container as you are outside the
-container.
+container (given your level of permissions).
 
 Compatibility with standard work-flows, pipes and IO
 ====================================================
@@ -353,8 +357,7 @@ generalized as follows:
 #. When the process inside the container exits, all namespaces collapse
    with that process, leaving a clean system
 
-All of the above steps take approximately 15-25 thousandths of a second
-to run, which is fast enough to seem instantaneous.
+All of the above steps are fast and seem instantaneous to the user (i.e there is a little run-time overhead, when measured on a standard server the overhead was approximately 15-25 thousandths of a second).
 
 ------------------------------
 The Singularity Usage Workflow
@@ -372,10 +375,10 @@ to a system on which they have root privileges. This could be a
 server, workstation, a laptop, virtual machine, or even a cloud
 instance. If you are using OS X or Windows on your laptop, it is
 recommended to setup Vagrant, and run Singularity from there (there
-are recipes for this which can be found at Once you have Singularity
-installed on your endpoint of choice, this is where you will do the
-bulk of your container development. This workflow can be described
-visually as follows:
+are recipes for this which can be found at the Singularity website.
+Once you have Singularity installed on your endpoint of choice, this
+is where you will do the bulk of your container development. This
+workflow can be described visually as follows:
 
 .. figure:: flow.png
    :alt: Singularity workflow
@@ -403,7 +406,7 @@ Singularity Commands
 
 How do the commands work?
 
-Here is where to look for more information:
+The following is a list of the Singularity commands. Click on each command for more information.
 
 -  :ref:`build <build-command>` : Build a container on your user endpoint or build environment
 

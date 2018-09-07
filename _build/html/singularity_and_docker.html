@@ -193,7 +193,7 @@
 
   <div class="section" id="singularity-and-docker">
 <span id="id1"></span><h1>Singularity and Docker<a class="headerlink" href="#singularity-and-docker" title="Permalink to this headline">¶</a></h1>
-<p>Singularity is good friends with Docker. The reason is because the
+<p>Singularity can be used with Docker images. This feature was included because
 developers use and really like using Docker, and scientists have already
 put much resources into creating Docker images. Thus, one of our early
 goals was to support Docker. What can you do?</p>
@@ -207,7 +207,7 @@ include environment, guts, and labels</li>
 </ul>
 <div class="section" id="tldr-too-long-didnt-read">
 <h2>TLDR (Too Long Didn’t Read)<a class="headerlink" href="#tldr-too-long-didnt-read" title="Permalink to this headline">¶</a></h2>
-<p>You can shell, import, run, and exec.</p>
+<p>You can shell, import, run, and exec Docker images directly from the Docker Registry.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>singularity shell docker://ubuntu:latest
 
 singularity run docker://ubuntu:latest
@@ -225,7 +225,7 @@ singularity build ubuntu.img docker://ubuntu:latest
 <h2>Import a Docker image into a Singularity Image<a class="headerlink" href="#import-a-docker-image-into-a-singularity-image" title="Permalink to this headline">¶</a></h2>
 <p>The core of a Docker image is basically a compressed set of files, a set
 of <code class="docutils literal notranslate"><span class="pre">.tar.gz</span></code> that (if you look in your <a class="reference external" href="http://stackoverflow.com/questions/19234831/where-are-docker-images-stored-on-the-host-machine">Docker image folder</a> on your host
-machine, you will see. The Docker Registry, which you probably interact
+machine, you will see the files). The Docker Registry, which you probably interact
 with via <a class="reference external" href="https://hub.docker.com/">Docker Hub</a>, serves these layers. These are the layers that
 you see downloading when you interact with the docker daemon. We are
 going to use these same layers for Singularity!</p>
@@ -233,10 +233,10 @@ going to use these same layers for Singularity!</p>
 <div class="section" id="quick-start-the-docker-registry">
 <h2>Quick Start: The Docker Registry<a class="headerlink" href="#quick-start-the-docker-registry" title="Permalink to this headline">¶</a></h2>
 <p>The Docker engine communicates with the Docker Hub via the <a class="reference external" href="https://docs.docker.com/engine/reference/api/docker_remote_api/">Docker
-Remote API</a>, and guess what, we can too! The easiest thing to do is
+Remote API</a>, and so can Singularity. The easiest thing to do is
 create an image, and then pipe a Docker image directly into it from
 the Docker Registry. You don’t need Docker installed on your machine,
-but you will need a working internet connection. Let’s create an
+but you will need a working Internet connection. Let’s create an
 ubuntu operating system, from Docker. We will pull, then build:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>singularity pull docker://ubuntu
 
@@ -277,7 +277,7 @@ Cleaning up...
 Singularity container built: ./ubuntu.img
 </pre></div>
 </div>
-<p>The warnings mean well - it is to tell you that you are creating the
+<p>The warnings are reminding you that you are creating the
 image on the fly from layers, and if one of those layers changes, you
 won’t produce the same image next time.</p>
 </div>
@@ -285,24 +285,23 @@ won’t produce the same image next time.</p>
 <h2>The Build Specification file, Singularity<a class="headerlink" href="#the-build-specification-file-singularity" title="Permalink to this headline">¶</a></h2>
 <p>Just like Docker has the Dockerfile, Singularity has a file called
 Singularity that (currently) applications like Singularity Hub know to
-sniff for. For reproducibility of your containers, our strong
+find. For reproducibility of your containers, our strong
 recommendation is that you build from these files. Any command that you
 issue to change a container sandbox (building with <code class="docutils literal notranslate"><span class="pre">--sandbox</span></code> ) or to a build with <code class="docutils literal notranslate"><span class="pre">--writable</span></code>
 is by default not recorded, and your container loses its
-reproducibility. So let’s talk about how to make these files! First,
+reproducibility. So let’s talk about how to make these files. First,
 let’s look at the absolute minimum requirement:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
 From: ubuntu
 </pre></div>
 </div>
-<p>We would save this content to a file called Singularity and then issue
-the following commands to bootstrap the image from the file</p>
+<p>We save this content to a file called Singularity and then issue
+the following commands to bootstrap the image from the file:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>sudo singularity build ubuntu.img Singularity
 </pre></div>
 </div>
-<p>Do you want to specify a particular tag? or version? You can just add
-that to the docker uri:</p>
+<p>A particular tag or version can be added to the docker uri:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
 
 From: ubuntu:latest
@@ -322,7 +321,7 @@ Registry: pancakes.registry.index.io
 Namespace: blue/berry/cream
 </pre></div>
 </div>
-<p>The power of build comes with the other stuff that you can do! This
+<p>The power of build comes with the other things that you can do. This
 means running specific install commands, specifying your containers
 runscript (what it does when you execute it), adding files, labels, and
 customizing the environment. Here is a full Singularity file:</p>
@@ -379,14 +378,13 @@ IncludeCmd: yes
     echo &quot;Post install stuffs!&quot;
 </pre></div>
 </div>
-<p>Did you know that you can commit this Singularity file to a GitHub repo
-and it will automatically build for you when you push to <a class="reference external" href="https://singularity-hub.org/">Singularity
+<p>You can commit this Singularity file to a GitHub repo and it will automatically build for you when you push to <a class="reference external" href="https://singularity-hub.org/">Singularity
 Hub</a>?. This will ensure maximum reproducibility of your work.</p>
 </div>
 <div class="section" id="how-does-the-runscript-work">
 <h2>How does the runscript work?<a class="headerlink" href="#how-does-the-runscript-work" title="Permalink to this headline">¶</a></h2>
 <p>Docker has two commands in the <code class="docutils literal notranslate"><span class="pre">Dockerfile</span></code> that have something to do with
-execution, <code class="docutils literal notranslate"><span class="pre">CMD</span></code> and <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code>. The differences are subtle, but the best description
+execution, <code class="docutils literal notranslate"><span class="pre">CMD</span></code> and <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code>. The differences are subtle, but a good description
 I’ve found is the following:</p>
 <blockquote>
 <div>A <code class="docutils literal notranslate"><span class="pre">CMD</span></code> is to provide defaults for an executing container.</div></blockquote>
@@ -499,7 +497,7 @@ your token is valid, you can do the following</p>
 </pre></div>
 </div>
 <p>The above call should return the tags list as expected. And of course
-you should change the repo name to be one that actually exists that you
+you should change the repository(repo) name to be one that actually exists that you
 have credentials for.</p>
 </div>
 </div>
@@ -512,9 +510,9 @@ ventures please <a class="reference external" href="https://www.github.com/singu
 <div class="section" id="installation-to-root">
 <h3>1. Installation to Root<a class="headerlink" href="#installation-to-root" title="Permalink to this headline">¶</a></h3>
 <p>When using Docker, you typically run as root, meaning that root’s home
-at <code class="docutils literal notranslate"><span class="pre">/root</span></code> is where things will install given a specification of home. This is
+at <code class="docutils literal notranslate"><span class="pre">/root</span></code> is where things will install given a specification of home. This situation is
 fine when you stay in Docker, or if the content at <code class="docutils literal notranslate"><span class="pre">/root</span></code> doesn’t need any
-kind of write access, but generally can lead to a lot of bugs because
+kind of write access, but generally it can lead to a lot of bugs because
 it is, after all, root’s home. This leads us to best practice #1.</p>
 <p>Don’t install anything to root’s home, <code class="docutils literal notranslate"><span class="pre">/root</span></code>.</p>
 </div>
@@ -542,7 +540,7 @@ practice #3 we suggest the following:</p>
 <div class="section" id="troubleshooting">
 <h2>Troubleshooting<a class="headerlink" href="#troubleshooting" title="Permalink to this headline">¶</a></h2>
 <p>Why won’t my image build work? If you can’t find an answer on this site,
-please <a class="reference external" href="https://www.github.com/singularityware/singularity/issues">ping us an issue</a>. If you’ve found an answer and you’d like to
+please <a class="reference external" href="https://www.github.com/singularityware/singularity/issues">send us an issue</a>. If you’ve found an answer and you’d like to
 see it on the site for others to benefit from, then post to us
 <a class="reference external" href="https://www.github.com/singularityware/singularityware.github.io/issues">here</a>.</p>
 </div>
@@ -584,8 +582,8 @@ see it on the site for others to benefit from, then post to us
   </div>
 
 
+<script type="text/javascript" src="_static/js/footer.js"></script>
 
-  <script type="text/javascript" src="_static/js/footer.js"></script>
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {

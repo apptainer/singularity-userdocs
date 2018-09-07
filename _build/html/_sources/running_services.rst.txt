@@ -4,7 +4,7 @@
 Running Services
 ================
 
-Singularity 2.4 introduces the ability to run “container instances”,
+Singularity 2.4 introduced the ability to run “container instances”,
 allowing you to run services (e.g. Nginx, MySQL, etc…) using
 Singularity. A container instance, simply put, is a persistent and
 isolated version of the container image that runs in the background.
@@ -13,7 +13,7 @@ isolated version of the container image that runs in the background.
 Why container instances?
 ------------------------
 
-Let’s say I want to run a web server. With nginx, that is pretty simple, I install nginx and start the service:
+Suppose you want to run a web server. With nginx, that is pretty simple, I install nginx and start the service:
 
 .. code-block:: none
 
@@ -39,7 +39,7 @@ With Singularity 2.4 and the addition of container instances, the
 ability to cleanly, reliably, and safely run services in a container is
 here. First, let’s put some commands that we want our instance to
 execute into a script. Let’s call it a ``startscript``. This fits into a definition
-file like so:
+file as follows:
 
 .. code-block:: none
 
@@ -50,7 +50,7 @@ file like so:
 
 Now let’s say we build a container with that startscript into an image
 called ``nginx.img`` and we want to run an nginx service. All we need to do is start
-the instance with the :ref:`instance start <instance-start>` command, and the
+the instance with the :ref:`instance.start <instance-start>` command, and the
 startscript will run inside the container automatically:
 
 .. code-block:: none
@@ -511,7 +511,7 @@ running instances.
 Important Notes
 ---------------
 
-.. note.. code-block:: none
+.. note::
     The instances are linked with your user. So if you start an instance
     with sudo, that is going to go under root, and you will need to call ``sudo singularity instance.list``
     in order to see it.

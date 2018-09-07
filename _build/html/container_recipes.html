@@ -306,8 +306,7 @@ of the container after the base OS has been installed. For versions
 earlier than 2.3 if you need files during %post, you should copy files
 from your host to <code class="docutils literal notranslate"><span class="pre">$SINGULARITY_ROOTFS</span></code> to move them into the
 container. For &gt;2.3 you can add files to the container (added before
-%post) using the %files section. We can see the difference between
-%setup and %post in the following asciicast:</p>
+%post) using the %files section.</p>
 <p>In the above, we see that copying something to <code class="docutils literal notranslate"><span class="pre">$SINGULARITY_ROOTFS</span></code> during <code class="docutils literal notranslate"><span class="pre">%setup</span></code> was successful
 to move the file into the container, but copying during <code class="docutils literal notranslate"><span class="pre">%post</span></code> was not. Let’s
 add a setup to our current container, just writing a file to the root
