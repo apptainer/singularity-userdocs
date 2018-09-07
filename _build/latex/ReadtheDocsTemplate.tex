@@ -55,7 +55,7 @@
 
 
 \title{Singularity Container Documentation}
-\date{Aug 27, 2018}
+\date{Sep 07, 2018}
 \release{2.5}
 \author{User Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -83,6 +83,7 @@ system administrator.
 \section{Installation}
 \label{\detokenize{quick_start:installation}}\label{\detokenize{quick_start:id2}}
 There are many ways to {\hyperref[\detokenize{quick_start:installation}]{\sphinxcrossref{\DUrole{std,std-ref}{install Singularity}}}} but this quick start guide will only cover one.
+You will need \sphinxcode{\sphinxupquote{git}} to download the source code and the appropriate tools and libraries. Create and move to a working directory and enter the following steps.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -92,7 +93,7 @@ cd singularity
 
 git fetch \PYGZhy{}\PYGZhy{}all
 
-git checkout 2.6.0
+git checkout 2.5.0
 
 ./autogen.sh
 
@@ -193,7 +194,7 @@ website: https://github.com/singularityware/singularity
 
 For any additional help or support visit the Singularity website:
 \sphinxurl{https://www.sylabs.io/contact/}
-Singularity uses positional syntax. Global options follow the \sphinxcode{\sphinxupquote{singularity}}
+Singularity uses positional syntax (i.e. where the option is on the command line matters). Global options follow the \sphinxcode{\sphinxupquote{singularity}}
 invocation and affect the way that Singularity runs any command. Then
 commands are passed followed by their options.
 For example, to pass the \sphinxcode{\sphinxupquote{-{-}debug}} option to the main \sphinxcode{\sphinxupquote{singularity}} command and run
@@ -574,7 +575,7 @@ of custom apps.
 This is a very small example of the things that you can do with a {\hyperref[\detokenize{container_recipes:container-recipes}]{\sphinxcrossref{\DUrole{std,std-ref}{recipe file}}}} . In
 addition to building a container from Singularity Hub, you can start
 with base images from Docker Hub, use images directly from official
-repositories such as Ubuntu, Debian, Centos, Arch, and BusyBox, use an
+repositories such as Ubuntu, Debian, CentOS, Arch, and BusyBox, use an
 existing container on your host system as a base, or even take a
 snapshot of the host system itself and use that as a base image.
 If you want to build Singularity images without having singularity
@@ -586,11 +587,12 @@ different build options, see our {\hyperref[\detokenize{singularity_flow:singula
 
 \chapter{Introduction}
 \label{\detokenize{introduction:introduction}}\label{\detokenize{introduction::doc}}
-This document will introduce you to Singularity, and the links in the
-bar to the left will give you more detail on using the software. If you
-want to get a quick rundown, see our quickstart. If you want to
-understand which commands are best fit for your usecase, see our build
-flow page. There is also a separate Singularity Administration Guide
+This document will introduce you to Singularity.
+If you are viewing this on the web there should be links in the bar to the left
+that will direct you to other important topics. If you
+want to get a quick overview, see the quick start section. If you want to
+understand which commands are a best fit for your use case, see our build
+flow section. There is also a separate Singularity Administration Guide
 that targets system administrators, so if you are a service provider, or
 an interested user, it is encouraged that you read that document as
 well.
@@ -645,8 +647,8 @@ sharing and copying an image as easy as \sphinxcode{\sphinxupquote{cp}} or \sphi
 As mentioned above, Singularity containers utilize a single file which is the complete
 representation of all the files within the container. The same
 features which facilitate mobility also facilitate reproducibility.
-Once a contained workflow has been defined, the container image can be
-snapshotted, archived, and locked down such that it can be used later
+Once a contained workflow has been defined, a snapshot image can be taken of a container.
+The image then can be archived and locked down such that it can be used later
 and you can be confident that the code within the container has not
 changed.
 
@@ -701,8 +703,8 @@ A user inside a Singularity container
 is the same user as outside the container
 This is one of Singularities defining characteristics. It allows a
 user (that may already have shell access to a particular host) to
-simply run a command inside of a container image as themselves. Here
-is a scenario to help articulate this:
+simply run a command inside of a container image as themselves.
+The following example scenario will help illustrate a Singularity container.
 
 \%SERVER and \%CLUSTER are large expensive systems with resources far
 exceeding those of my personal workstation. But because the are
@@ -724,7 +726,7 @@ semi-antagonistic to Singularity’s 3rd tenant; allowing the users to
 have freedom of their own environments. Because if a user has the
 freedom to create and manipulate their own container environment,
 surely they know how to escalate their privileges to root within that
-container. Possible means could be setting the root user’s password,
+container. Possible means to escalation could include setting the root user’s password,
 or enabling themselves to have sudo access. For these reasons,
 Singularity prevents user context escalation within the container, and
 thus makes it possible to run user supplied containers on shared
@@ -740,11 +742,11 @@ defined and articulated.
 \subsection{The Singularity container image}
 \label{\detokenize{introduction:the-singularity-container-image}}
 Singularity makes use of a container image
-file, which physically contains the container. This file is a physical
+file, which physically includes the container. This file is a physical
 representation of the container environment itself. If you obtain an
 interactive shell within a Singularity container, you are literally
 running within that file.
-This simplifies management of files to the element of least surprise,
+This design simplifies management of files to the element of least surprise,
 basic file permission. If you either own a container image, or have
 read access to that container image, you can start a shell inside that
 image. If you wish to disable or limit access to a shared image, you
@@ -822,8 +824,8 @@ root container image
 \end{itemize}
 
 
-\subsubsection{\sphinxstyleemphasis{Supported URIs}}
-\label{\detokenize{introduction:supported-uris}}
+\subsubsection{\sphinxstyleemphasis{Supported Unified Resource Identifiers (URIs)}}
+\label{\detokenize{introduction:supported-unified-resource-identifiers-uris}}
 Singularity also supports several different mechanisms for obtaining the
 images using a standard URI format.
 \begin{itemize}
@@ -850,7 +852,7 @@ instance, can be referenced with this URI.
 \subsection{Name-spaces and isolation}
 \label{\detokenize{introduction:name-spaces-and-isolation}}
 When asked, “What namespaces does Singularity virtualize?”, the most
-appropriate response from a Singularity use case is “As few as
+appropriate response from a Singularity point of view is “As few as
 possible!”. This is because the goals of Singularity are mobility,
 reproducibility and freedom, not full isolation (as you would expect
 from industry driven container technologies). Singularity only
@@ -860,31 +862,34 @@ Coupling incomplete isolation with the fact that a user inside a
 container is the same user outside the container, allows Singularity
 to blur the lines between a container and the underlying host system.
 Using Singularity feels like running in a parallel universe, where
-there are two timelines. In one timeline, the system administrators
+there are two time lines. In one time line, the system administrators
 installed their operating system of choice. But on an alternate
-timeline, we bribed the system administrators and they installed our
+time line, we bribed the system administrators and they installed our
 favorite operating system and apps, and gave us full control but
 configured the rest of the system identically. And Singularity gives
-us the power to pick between these two timelines.
+us the power to pick between these two time lines.
+
 In other words, Singularity allows you to virtually swap out the
 underlying operating system for one that you’ve defined without
 affecting anything else on the system and still having all of the host
-resources available to us.
-It’s like ssh’ing into another identical host running a different
-operating system. One moment you are on Centos-6 and the next minute
+resources available to you.
+
+The container is similar to logging into another identical host running a different operating system.
+One moment you are on Centos-6 and the next minute
 you are on the latest version of Ubuntu that has Tensorflow installed,
 or Debian with the latest OpenFoam, or a custom workflow that you
 installed. But you are still the same user with the same files running
 the same PIDs.
+
 Additionally, the selection of name-space virtualization can be
 dynamic or conditional. For example, the PID namespace is not
 separated from the host by default, but if you want to separate it,
 you can with a command line (or environment variable) setting. You can
-also decide you want to contain a process so it can not reach out to
+also decide if you want to contain a process so it can not reach out to
 the host file system if you don’t know if you trust the image. But by
 default, you are allowed to interface with all of the resources,
 devices and network inside the container as you are outside the
-container.
+container (given your level of permissions).
 
 
 \subsection{Compatibility with standard work-flows, pipes and IO}
@@ -971,8 +976,7 @@ with that process, leaving a clean system
 
 \end{enumerate}
 
-All of the above steps take approximately 15-25 thousandths of a second
-to run, which is fast enough to seem instantaneous.
+All of the above steps are fast and seem instantaneous to the user (i.e there is a little run-time overhead, when measured on a standard server the overhead was approximately 15-25 thousandths of a second).
 
 
 \section{The Singularity Usage Workflow}
@@ -989,10 +993,10 @@ to a system on which they have root privileges. This could be a
 server, workstation, a laptop, virtual machine, or even a cloud
 instance. If you are using OS X or Windows on your laptop, it is
 recommended to setup Vagrant, and run Singularity from there (there
-are recipes for this which can be found at Once you have Singularity
-installed on your endpoint of choice, this is where you will do the
-bulk of your container development. This workflow can be described
-visually as follows:
+are recipes for this which can be found at the Singularity website.
+Once you have Singularity installed on your endpoint of choice, this
+is where you will do the bulk of your container development. This
+workflow can be described visually as follows:
 
 \begin{figure}[htbp]
 \centering
@@ -1026,7 +1030,7 @@ to the production system where you wish to run it.
 \label{\detokenize{introduction:singularity-commands}}
 How do the commands work?
 
-Here is where to look for more information:
+The following is a list of the Singularity commands. Click on each command for more information.
 \begin{itemize}
 \item {} 
 {\hyperref[\detokenize{appendix:build-command}]{\sphinxcrossref{\DUrole{std,std-ref}{build}}}} : Build a container on your user endpoint or build environment
@@ -1102,7 +1106,7 @@ remove it before executing the installation commands.
 
 These instructions will build Singularity from source on your system.
 So you will need to have some development tools installed. If you run
-into missing dependencies, try installing them like so:
+into missing dependencies, try installing them with \sphinxcode{\sphinxupquote{apt-get}} or \sphinxcode{\sphinxupquote{yum/rpm}} as shown below.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -2215,7 +2219,7 @@ container on the cloud) check out \sphinxhref{https://github.com/singularityhub/
 It’s commonly the case that you want to customize your build
 environment, such as specifying a custom cache directory for layers, or
 sending your Docker Credentials to the registry endpoint. Here we will
-discuss those things
+discuss those topics.
 
 
 \section{Cache Folders}
@@ -2611,8 +2615,7 @@ of the container after the base OS has been installed. For versions
 earlier than 2.3 if you need files during \%post, you should copy files
 from your host to \sphinxcode{\sphinxupquote{\$SINGULARITY\_ROOTFS}} to move them into the
 container. For \textgreater{}2.3 you can add files to the container (added before
-\%post) using the \%files section. We can see the difference between
-\%setup and \%post in the following asciicast:
+\%post) using the \%files section.
 
 In the above, we see that copying something to \sphinxcode{\sphinxupquote{\$SINGULARITY\_ROOTFS}} during \sphinxcode{\sphinxupquote{\%setup}} was successful
 to move the file into the container, but copying during \sphinxcode{\sphinxupquote{\%post}} was not. Let’s
@@ -3331,12 +3334,12 @@ Are you a recipe pro and now ready to build? Take a look at the
 
 \chapter{Singularity Flow}
 \label{\detokenize{singularity_flow:singularity-flow}}\label{\detokenize{singularity_flow:id1}}\label{\detokenize{singularity_flow::doc}}
-This document describes a suggested “best-practices” workflow for
+This document describes a suggested “best-practices” work-flow for
 building, running, and managing your containers.
 
 There are generally two ways to get images. You either want to pull an
 image file as is, or (more likely) build your own custom image. We
-will start with talking about build, and the many different use cases
+will start with talking about build and the many different use cases
 it affords.
 
 
@@ -3374,7 +3377,7 @@ of Singularity 2.4, and it ensures a higher level of reproducibility and
 verification of images. To read more about the details, check out the {\hyperref[\detokenize{build_a_container:build-a-container}]{\sphinxcrossref{\DUrole{std,std-ref}{build}}}}
 docs. However, immutability is not so great when you are testing,
 debugging, or otherwise want to quickly change your image. We will
-proceed by describing a typical workflow of developing first, building a
+proceed by describing a typical work-flow of developing first, building a
 final image, and using it in production.
 
 
@@ -3799,7 +3802,7 @@ create the \sphinxcode{\sphinxupquote{/global}} directory inside your container.
 
 \chapter{Persistent Overlays}
 \label{\detokenize{persistent_overlays:persistent-overlays}}\label{\detokenize{persistent_overlays::doc}}
-Persistent overlay images are new to version 2.4! This feature allows
+Persistent overlay images were added in version 2.4. This feature allows
 you to overlay a writable file system on an immutable read-only
 container for the illusion of read-write access.
 
@@ -3912,7 +3915,7 @@ Singularity ubuntu.simg:\PYGZti{}\PYGZgt{} exit
 
 \chapter{Running Services}
 \label{\detokenize{running_services:running-services}}\label{\detokenize{running_services:id1}}\label{\detokenize{running_services::doc}}
-Singularity 2.4 introduces the ability to run “container instances”,
+Singularity 2.4 introduced the ability to run “container instances”,
 allowing you to run services (e.g. Nginx, MySQL, etc…) using
 Singularity. A container instance, simply put, is a persistent and
 isolated version of the container image that runs in the background.
@@ -3920,7 +3923,7 @@ isolated version of the container image that runs in the background.
 
 \section{Why container instances?}
 \label{\detokenize{running_services:why-container-instances}}
-Let’s say I want to run a web server. With nginx, that is pretty simple, I install nginx and start the service:
+Suppose you want to run a web server. With nginx, that is pretty simple, I install nginx and start the service:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -3946,7 +3949,7 @@ With Singularity 2.4 and the addition of container instances, the
 ability to cleanly, reliably, and safely run services in a container is
 here. First, let’s put some commands that we want our instance to
 execute into a script. Let’s call it a \sphinxcode{\sphinxupquote{startscript}}. This fits into a definition
-file like so:
+file as follows:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -3958,7 +3961,7 @@ service nginx start
 
 Now let’s say we build a container with that startscript into an image
 called \sphinxcode{\sphinxupquote{nginx.img}} and we want to run an nginx service. All we need to do is start
-the instance with the {\hyperref[\detokenize{appendix:instance-start}]{\sphinxcrossref{\DUrole{std,std-ref}{instance start}}}} command, and the
+the instance with the {\hyperref[\detokenize{appendix:instance-start}]{\sphinxcrossref{\DUrole{std,std-ref}{instance.start}}}} command, and the
 startscript will run inside the container automatically:
 
 \fvset{hllines={, ,}}%
@@ -4427,10 +4430,16 @@ running instances.
 
 \section{Important Notes}
 \label{\detokenize{running_services:important-notes}}
+\begin{sphinxadmonition}{note}{Note:}
+The instances are linked with your user. So if you start an instance
+with sudo, that is going to go under root, and you will need to call \sphinxcode{\sphinxupquote{sudo singularity instance.list}}
+in order to see it.
+\end{sphinxadmonition}
+
 
 \chapter{Container Checks}
 \label{\detokenize{container_checks:container-checks}}\label{\detokenize{container_checks::doc}}
-New to Singularity 2.4 is the ability to run container “checks” on
+Singularity 2.4 introduced the ability to run container “checks” on
 demand. Checks can be anything from a filter for sensitive
 information, to an analysis of installed binaries. A few default
 checks are installed with Singularity and others can be added by the
@@ -4522,7 +4531,7 @@ environment.
 \label{\detokenize{environment_and_metadata:environment}}
 If you build a container from Singularity Hub or Docker Hub, the
 environment will be included with the container at build time. You can
-also define custom environment variables in your Recipe file like so:
+also define custom environment variables in your Recipe file as follows:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -4558,7 +4567,7 @@ Because files in \sphinxcode{\sphinxupquote{/.singularity.d/env}} are sourced in
 variables added using \sphinxcode{\sphinxupquote{\$SINGULARITY\_ENVIRONMENT}} take precedence over those added via the \sphinxcode{\sphinxupquote{\%environment}}
 section.
 
-Need to define a variable at runtime? You can set variables inside the
+If you need to define a variable at runtime, set variables inside the
 container by prefixing them with \sphinxcode{\sphinxupquote{SINGULARITYENV\_}}. They will be
 transposed automatically and the prefix will be stripped. For example,
 let’s say we want to set the variable \sphinxcode{\sphinxupquote{HELLO}} to have value \sphinxcode{\sphinxupquote{WORLD}}. We can do that
@@ -4596,10 +4605,10 @@ If you need to change the \$PATH of your container at runtime there are
 a few environmental variables you can use:
 \begin{itemize}
 \item {} 
-\sphinxcode{\sphinxupquote{SINGULARITYENV\_PREPEND\_PATH=/good/stuff/at/beginning}} to prepend directories to the beginning of the
+\sphinxcode{\sphinxupquote{SINGULARITYENV\_PREPEND\_PATH=/good/stuff/at/beginning}} to prepend directories to the beginning of the \sphinxcode{\sphinxupquote{\$PATH}}
 
 \item {} 
-\sphinxcode{\sphinxupquote{SINGULARITYENV\_APPEND\_PATH=/good/stuff/at/end}} to append directories to the end of the
+\sphinxcode{\sphinxupquote{SINGULARITYENV\_APPEND\_PATH=/good/stuff/at/end}} to append directories to the end of the \sphinxcode{\sphinxupquote{\$PATH}}
 
 \item {} 
 \sphinxcode{\sphinxupquote{SINGULARITYENV\_PATH=/a/new/path}} to override the \sphinxcode{\sphinxupquote{\$PATH}} within the container
@@ -4772,22 +4781,19 @@ container is invoked with the \sphinxcode{\sphinxupquote{instance.start}} comman
 
 \section{Why do we need SCI-F?}
 \label{\detokenize{reproducible_scif_apps:why-do-we-need-sci-f}}\label{\detokenize{reproducible_scif_apps:sec-scifapps}}
-The Scientific Filesystem (SCIF) provides internal modularity of
-containers, and it makes it easy for the creator to give the container
-implied metadata about software. For example, installing a set of
+The Scientific Filesystem (SCI-F) provides a consistent and modular method to create
+containers. The SCI-F makes some assumptions about how the container will be created. By adhering to with the SCI-F format containers can bemore more reproducible.
+For example, installing a set of
 libraries, defining environment variables, or adding labels that
-belong to app \sphinxcode{\sphinxupquote{foo}} makes a strong assertion that those dependencies belong
-to \sphinxcode{\sphinxupquote{foo}} . When I run foo, I can be confident that the container is running
-in this context, meaning with \sphinxcode{\sphinxupquote{foo's}} custom environment, and with \sphinxcode{\sphinxupquote{foo's}} libraries
-and executables on the path. This is drastically different from
-serving many executables in a single container, because there is no
-way to know which are associated with which of the container’s
+belong to application \sphinxcode{\sphinxupquote{foo}} makes a strong assertion that those dependencies belong
+to \sphinxcode{\sphinxupquote{foo}}. When I run \sphinxcode{\sphinxupquote{foo}}, I can be confident that the container is running
+in this context, meaning with \sphinxcode{\sphinxupquote{foo}}’s custom environment, and with \sphinxcode{\sphinxupquote{foo}}’s libraries
+and executables on the path. This approach is different from
+serving many executables in a single container that may have no way to know which application is associated with the container’s
 intended functions. This documentation will walk through some
-rationale, background, and examples of the SCIF integration for
+rationale, background, and examples of the SCI-F integration for
 Singularity containers. For other examples (and a client that works
 across container technologies) see the the \sphinxhref{https://sci-f.github.io/}{scientific filesystem}.
-This page will primarily cover the native Singularity SCIF
-integration.
 
 To start, let’s take a look at this series of steps to install
 dependencies for software foo and bar.
@@ -4823,11 +4829,9 @@ intended.
 
 \subsection{Mixed up Modules}
 \label{\detokenize{reproducible_scif_apps:mixed-up-modules}}
-\begin{DUlineblock}{0em}
-\item[] If your container truly runs one script, the traditional model of a
+If your container truly runs one script, the traditional model of a
 runscript fits well. Even in the case of having two functions like \sphinxcode{\sphinxupquote{foo}} and \sphinxcode{\sphinxupquote{bar}}
 you probably have something like this.
-\end{DUlineblock}
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -4870,11 +4874,11 @@ and maybe your environment looks like this:
     export BEST\PYGZus{}GUY
 \end{sphinxVerbatim}
 
-You obviously can’t have them at separate times. You’d have to source
+You obviously can’t have them at separate times. You would have to source
 some custom environment file (that you make on your own) and it gets
-hard easily with issues of using shell and sourcing. We don’t know who
-the best guy is! You probably get the general idea. Without internal
-organization and modularity:
+confusing with issues of using shell and sourcing for the container. We don’t know who
+the best guy is! You probably get the general idea. Without consistent internal
+organization and modularity the following may result:
 \begin{itemize}
 \item {} 
 You have to do a lot of manual work to expose the different software
@@ -4886,7 +4890,7 @@ All software must share the same metadata, environment, and labels.
 
 \end{itemize}
 
-Under these conditions, containers are at best block boxes with unclear
+Under these conditions, containers are at best black boxes with unclear
 delineation between software provided, and only one context of running
 anything. The container creator shouldn’t need to spend inordinate
 amounts of time writing custom runscripts to support multiple functions
@@ -4896,7 +4900,7 @@ runscript, environment, labels, tests and help section.
 
 \subsection{Container Transparency}
 \label{\detokenize{reproducible_scif_apps:container-transparency}}
-SCI-F Apps make \sphinxcode{\sphinxupquote{foo}} and \sphinxcode{\sphinxupquote{bar}} transparent, and solve this problem of mixed up
+Applications that use the SCI-F make \sphinxcode{\sphinxupquote{foo}} and \sphinxcode{\sphinxupquote{bar}} transparent, and solve the problem of mixed up
 modules. Our simple issue of mixed up modules could be solved if we
 could do this:
 
@@ -4931,14 +4935,14 @@ From: ubuntu:16.04
     echo The best guy is \PYGZdl{}BEST\PYGZus{}GUY
 \end{sphinxVerbatim}
 
-Generate the container
+and generate the container as follows:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYGZdl{} sudo singularity build foobar.simg Singularity
 \end{sphinxVerbatim}
 
-and run it in the context of \sphinxcode{\sphinxupquote{foo}} and then \sphinxcode{\sphinxupquote{bar}}
+and finally, run the container with the context of \sphinxcode{\sphinxupquote{foo}} and then \sphinxcode{\sphinxupquote{bar}}
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -4963,9 +4967,7 @@ bar
 foo
 \end{sphinxVerbatim}
 
-\begin{DUlineblock}{0em}
-\item[] and inspect each one:
-\end{DUlineblock}
+Each application can be inspected individually:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -4983,12 +4985,11 @@ singularity inspect \PYGZhy{}\PYGZhy{}app foo  foobar.simg
 
 \subsection{Container Modularity}
 \label{\detokenize{reproducible_scif_apps:container-modularity}}
-What is going on, under the hood? Just a simple, clean organization that
+This behavior is made possible by a simple, clean organization that
 is tied to a set of sections in the build recipe relevant to each app.
 For example, I can specify custom install procedures (and they are
 relevant to each app’s specific base defined under \sphinxcode{\sphinxupquote{/scif/apps}}), labels, tests, and
-help sections. Before I tell you about the sections, I’ll briefly show
-you what the organization looks like, for each app:
+help sections. Before we examine the sections, consider what the organization looks like, for each app:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5019,13 +5020,11 @@ you what the organization looks like, for each app:
      ....
 \end{sphinxVerbatim}
 
-If you are familiar with Singularity, the above will look very familiar.
+If you are familiar with Singularity, the above should be very similar to other environments.
 It mirrors the Singularity (main container) metadata folder, except
 instead of \sphinxcode{\sphinxupquote{.singularity.d}} we have \sphinxcode{\sphinxupquote{scif}}. The name and base \sphinxcode{\sphinxupquote{scif}} is chosen intentionally to be
 something short, and likely to be unique. On the level of organization
-and metadata, these internal apps are like little containers! Are you
-worried that you need to remember all this path nonsense? Don’t worry,
-you don’t. You can just use environment variables in your runscripts,
+and metadata, these internal apps are like little containers. You need to remember all the path details because you can use environment variables in your runscripts,
 etc. Here we are looking at the environment active for lolcat:
 
 \fvset{hllines={, ,}}%
@@ -5033,9 +5032,9 @@ etc. Here we are looking at the environment active for lolcat:
 singularity exec \PYGZhy{}\PYGZhy{}app foo foobar.simg env \textbar{} grep foo
 \end{sphinxVerbatim}
 
-Let’s talk about the output of the above in sections, you will notice
-some interesting things! First, notice that the app’s \sphinxcode{\sphinxupquote{bin}} has been added to
-the path, and it’s \sphinxcode{\sphinxupquote{lib}} added to the \sphinxcode{\sphinxupquote{LD\_LIBRARY\_PATH}} . This means that anything you drop in
+Consider the output of the above in sections, you will notice
+some interesting things. First, notice that the app’s \sphinxcode{\sphinxupquote{bin}} has been added to
+the path, and its \sphinxcode{\sphinxupquote{lib}} folder added to the \sphinxcode{\sphinxupquote{LD\_LIBRARY\_PATH}} . This means that anything you drop in
 either will automatically be added. You don’t need to make these folders
 either, they are created for you.
 
@@ -5046,8 +5045,8 @@ LD\PYGZus{}LIBRARY\PYGZus{}PATH=/scif/apps/foo/lib::/.singularity.d/libs
 PATH=/scif/apps/foo/bin:/scif/apps/foo:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 \end{sphinxVerbatim}
 
-Next, notice that we have environment variables relevant to the active
-app’s (foo) data and metadata. They look like this:
+Next, notice the environment variables relevant to the active
+app’s (foo) data and metadata. They look like the following:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5081,9 +5080,9 @@ SCIF\PYGZus{}APPS=/scif/apps
 SCIF\PYGZus{}DATA=/scif/data
 \end{sphinxVerbatim}
 
-Importantly, each app has its own modular location. When you do an \sphinxcode{\sphinxupquote{\%appinstall foo}},
-the commands are all done in context of that base. The bin and lib are
-also automatically generated. So what would be a super simple app?
+Note, each application has its own modular location. When you do an \sphinxcode{\sphinxupquote{\%appinstall foo}},
+the commands are all done in context of that base. The \sphinxcode{\sphinxupquote{bin}} and \sphinxcode{\sphinxupquote{lib}} directories are
+also automatically generated. Consider a simple application.
 
 Just add a script and name it:
 
@@ -5128,7 +5127,7 @@ the bin folder is added to the path
 \item {} 
 locations for input, output, and general data are exposed. It’s up to
 you how you use these, but you can predictably know that a well made
-app will look for inputs and outputs in it’s specific folder.
+application will look for inputs and outputs in it’s specific folder.
 
 \item {} 
 environment variables are provided for the app’s root, it’s data, and
@@ -5146,7 +5145,7 @@ singularity metadata folder, .singularity.d, equivalent to the
 container’s main folder, is generated inside the application. An
 application thus is like a smaller image inside of it’s parent.
 Specifically, SCI-F defines the following new sections for the build
-recipe, where each is optional for 0 or more apps:
+recipe, where each is optional for zero or more apps:
 
 \sphinxstylestrong{\%appinstall} corresponds to executing commands within the folder to
 install the application. These commands would previously belong in
@@ -5177,10 +5176,10 @@ working directory assumed to be the software module’s folder
 
 \subsection{Interaction}
 \label{\detokenize{reproducible_scif_apps:interaction}}
-I didn’t show you the complete output of a \sphinxcode{\sphinxupquote{grep}} to the environment when
-running foo in the first example - because the remainder of variables
-are more fit for a discussion about app interaction. Essentially, when
-any app is active, we also have named variable that can explicitly
+The complete output of a \sphinxcode{\sphinxupquote{grep}} to the environment when
+running \sphinxcode{\sphinxupquote{foo}} in the first example was not shown because the remainder of variables
+are more germane to a discussion about application interaction. Essentially, when
+any application is active, we also have named variable that can explicitly
 reference the environment file, labels file, runscript, \sphinxcode{\sphinxupquote{lib}} and \sphinxcode{\sphinxupquote{bin}} folders for
 all app’s in the container. For our above Singularity Recipe, we would
 also find:
@@ -5221,7 +5220,7 @@ SCIF\PYGZus{}APPMETA\PYGZus{}foo=/scif/apps/foo/scif
 SCIF\PYGZus{}APPBIN\PYGZus{}foo=/scif/apps/foo/bin
 \end{sphinxVerbatim}
 
-This is really great because it means that we can have apps interact
+This design means that we can have apps interact
 with one another internally. For example, let’s modify the recipe a bit:
 
 \fvset{hllines={, ,}}%
@@ -5274,16 +5273,16 @@ The COW goes moo
 \end{sphinxVerbatim}
 
 The same is true for each of the labels, environment, runscript, bin,
-and lib. The following variables are available to you, for each app in
-the container, whenever any app is being run:
+and lib. The following variables are available to you, for each application in
+the container, whenever any application is run:
 \begin{itemize}
 \item {} 
 **SCIF\_APPBIN\_*: the path to the bin folder, if you want to add
-an app that isn’t active to your ‘PATH‘
+an application that isn’t active to your \sphinxcode{\sphinxupquote{PATH}}
 
 \item {} 
 **SCIF\_APPLIB\_*: the path to the lib folder, if you want to add
-an app that isn’t active to your ‘LD\_LIBRARY\_PATH‘
+an application that isn’t active to your ‘LD\_LIBRARY\_PATH‘
 
 \item {} 
 **SCIF\_APPRUN\_*: the app’s runscript (so you can call it from
@@ -5297,10 +5296,10 @@ elsewhere)
 sourcing) if it exists
 
 \item {} 
-**SCIF\_APPROOT\_*: the app’s install folder
+**SCIF\_APPROOT\_*: the application’s install folder
 
 \item {} 
-**SCIF\_APPDATA\_*: the app’s data folder
+**SCIF\_APPDATA\_*: the application’s data folder
 
 \item {} 
 **SCIF\_APPLABELS\_*: The path to the label.json in the metadata
@@ -5309,36 +5308,26 @@ folder, if it exists
 \end{itemize}
 
 Singularity containers are already reproducible in that they package
-dependencies. This basic format adds to that by making the software
-inside of them modular, predictable, and programmatically accessible. We
-can say confidently that some set of steps, labels, or variables in the
-runscript is associated with a particular action of the container. We
-can better reveal how dependencies relate to each step in a scientific
-workflow. Making containers is not easy. When a scientist starts to
-write a recipe for his set of tools, he probably doesn’t know where to
-put it, perhaps that a help file should exist, or that metadata about
-the software should be served by the container. If container generation
-software made it easy to organize and capture container content
-automatically, we would easily meet these goals of internal modularity
-and consistency, and generate containers that easily integrate with
-external hosts, data, and other containers. These are essential
-components for (ultimately) optimizing the way we develop, understand,
-and execute our scientific containers.
+dependencies. The basic format of SCI-F adds to that by making the software
+inside of containers modular, predictable, and programmatically accessible.
+By pre-setting some set of steps, labels, or variables in the
+runscript is associated with a particular action of the container, users
+can better encapsulate how dependencies relate to each step in a scientific
+work-flow. Making containers can be challenging. When a scientist starts to
+write a recipe for his set of tools, she probably doesn’t know where to
+put various tags and data. The SCI-F file system makes it easy to build consistent maintainable containers.
 
 
-\section{Cowsay Container}
-\label{\detokenize{reproducible_scif_apps:cowsay-container}}
-Now let’s go through the tutorial to build our {\hyperref[\detokenize{reproducible_scif_apps:cowsay-container}]{\sphinxcrossref{cowsay container}}}.
+\section{SCI-F Example: Cowsay Container}
+\label{\detokenize{reproducible_scif_apps:sci-f-example-cowsay-container}}
+As an example, we will use the {\color{red}\bfseries{}{}`cowsay container{}`\_}. \sphinxcode{\sphinxupquote{cowsay}} is a program that generates ASCII pictures of a cow with a message.
+It also uses the \sphinxcode{\sphinxupquote{fortune}} program to produce random “fortunes” and the \sphinxcode{\sphinxupquote{lolcat}} application that adds rainbow color to an ASCII string.
 
 \begin{sphinxadmonition}{warning}{Warning:}
-\sphinxstylestrong{Important!} This tutorial is for Singularity 2.4.
+\sphinxstylestrong{Important!} This example has been developed for Singularity 2.4.
 \end{sphinxadmonition}
-\begin{description}
-\item[{When you’ve installed 2.4, download the recipe, and save it to your}] \leavevmode
-present working directory. By the way, credit for anything and
-everything lolcat and cowsay goes to \sphinxhref{https://www.github.com/GodLoveD}{GodLoveD}! Here is the recipe:
 
-\end{description}
+Download the recipe, and save it to your present working directory.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5347,7 +5336,7 @@ wget https://raw.githubusercontent.com/singularityware/singularity/master/exampl
 sudo singularity build moo.simg Singularity.cowsay
 \end{sphinxVerbatim}
 
-What apps are installed?
+Determine what apps are installed using the following command:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5360,7 +5349,7 @@ fortune
 lolcat
 \end{sphinxVerbatim}
 
-Ask for help for a specific app!
+Ask for help for a specific application as follows:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5369,7 +5358,7 @@ singularity help \PYGZhy{}\PYGZhy{}app fortune moo.simg
 fortune is the best app
 \end{sphinxVerbatim}
 
-Ask for help for all apps, without knowing in advance what they are:
+A simple loop can be used to ask for help from all apps (without knowing in advance what they are):
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5388,7 +5377,7 @@ fortune is the best app
 lolcat is the best app
 \end{sphinxVerbatim}
 
-Run a particular app
+To run the \sphinxcode{\sphinxupquote{fortune}} application enter the following (the actual fortune is random, so your display may differ):
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5409,8 +5398,7 @@ one hundred and eleventh birthday: I am eleventy\PYGZhy{}one today!\PYGZdq{}
         \PYGZhy{}\PYGZhy{} J. R. R. Tolkien
 \end{sphinxVerbatim}
 
-Advanced running - pipe the output of fortune into lolcat, and make a
-fortune that is beautifully colored!
+Next, pipe the output of \sphinxcode{\sphinxupquote{fortune}} into \sphinxcode{\sphinxupquote{lolcat}} to add color to the fortune.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5419,8 +5407,7 @@ singularity run \PYGZhy{}\PYGZhy{}app fortune moo.simg \textbar{} singularity ru
 You will be surrounded by luxury.
 \end{sphinxVerbatim}
 
-This one might be easier to see - pipe the same fortune into the cowsay
-app:
+Send the output of \sphinxcode{\sphinxupquote{fortune}} to the \sphinxcode{\sphinxupquote{cowsay}} application.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5445,8 +5432,7 @@ singularity run \PYGZhy{}\PYGZhy{}app fortune moo.simg \textbar{} singularity ru
                 \textbar{}\textbar{}     \textbar{}\textbar{}
 \end{sphinxVerbatim}
 
-and the final shabang - do the same, but make it colored. Let’s even get
-lazy and use an environment variable for the command:
+Finally use all three applications and demonstrate how to use an environment variable for the command:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5473,8 +5459,7 @@ CMD=\PYGZdq{}singularity run \PYGZhy{}\PYGZhy{}app\PYGZdq{}
                 \textbar{}\textbar{}     \textbar{}\textbar{}
 \end{sphinxVerbatim}
 
-Yes, you need to watch the asciinema to see the colors. Finally, inspect
-an app:
+The application can be inspected with the following command:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5493,13 +5478,12 @@ If you want to see the full specification or create your own
 Scientific Filesystem integration (doesn’t have to be Singularity, or
 Docker, or containers!) see the \sphinxhref{https://sci-f.github.io/}{full documentation}.
 
-If you haven’t yet, \sphinxhref{https://asciinema.org/a/139153?speed=3}{take a look at these examples} with the
-asciinema!
+Also, you can follow along with this example by going to: \sphinxhref{https://asciinema.org/a/139153?speed=3}{take a look at these examples}
 
 
 \chapter{Singularity and Docker}
 \label{\detokenize{singularity_and_docker:singularity-and-docker}}\label{\detokenize{singularity_and_docker:id1}}\label{\detokenize{singularity_and_docker::doc}}
-Singularity is good friends with Docker. The reason is because the
+Singularity can be used with Docker images. This feature was included because
 developers use and really like using Docker, and scientists have already
 put much resources into creating Docker images. Thus, one of our early
 goals was to support Docker. What can you do?
@@ -5525,7 +5509,7 @@ include environment, guts, and labels
 
 \section{TLDR (Too Long Didn’t Read)}
 \label{\detokenize{singularity_and_docker:tldr-too-long-didnt-read}}
-You can shell, import, run, and exec.
+You can shell, import, run, and exec Docker images directly from the Docker Registry.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5546,7 +5530,7 @@ singularity build ubuntu.img docker://ubuntu:latest
 \label{\detokenize{singularity_and_docker:import-a-docker-image-into-a-singularity-image}}
 The core of a Docker image is basically a compressed set of files, a set
 of \sphinxcode{\sphinxupquote{.tar.gz}} that (if you look in your \sphinxhref{http://stackoverflow.com/questions/19234831/where-are-docker-images-stored-on-the-host-machine}{Docker image folder} on your host
-machine, you will see. The Docker Registry, which you probably interact
+machine, you will see the files). The Docker Registry, which you probably interact
 with via \sphinxhref{https://hub.docker.com/}{Docker Hub}, serves these layers. These are the layers that
 you see downloading when you interact with the docker daemon. We are
 going to use these same layers for Singularity!
@@ -5555,10 +5539,10 @@ going to use these same layers for Singularity!
 \section{Quick Start: The Docker Registry}
 \label{\detokenize{singularity_and_docker:quick-start-the-docker-registry}}
 The Docker engine communicates with the Docker Hub via the \sphinxhref{https://docs.docker.com/engine/reference/api/docker\_remote\_api/}{Docker
-Remote API}, and guess what, we can too! The easiest thing to do is
+Remote API}, and so can Singularity. The easiest thing to do is
 create an image, and then pipe a Docker image directly into it from
 the Docker Registry. You don’t need Docker installed on your machine,
-but you will need a working internet connection. Let’s create an
+but you will need a working Internet connection. Let’s create an
 ubuntu operating system, from Docker. We will pull, then build:
 
 \fvset{hllines={, ,}}%
@@ -5602,7 +5586,7 @@ Cleaning up...
 Singularity container built: ./ubuntu.img
 \end{sphinxVerbatim}
 
-The warnings mean well - it is to tell you that you are creating the
+The warnings are reminding you that you are creating the
 image on the fly from layers, and if one of those layers changes, you
 won’t produce the same image next time.
 
@@ -5611,11 +5595,11 @@ won’t produce the same image next time.
 \label{\detokenize{singularity_and_docker:the-build-specification-file-singularity}}
 Just like Docker has the Dockerfile, Singularity has a file called
 Singularity that (currently) applications like Singularity Hub know to
-sniff for. For reproducibility of your containers, our strong
+find. For reproducibility of your containers, our strong
 recommendation is that you build from these files. Any command that you
 issue to change a container sandbox (building with \sphinxcode{\sphinxupquote{-{-}sandbox}} ) or to a build with \sphinxcode{\sphinxupquote{-{-}writable}}
 is by default not recorded, and your container loses its
-reproducibility. So let’s talk about how to make these files! First,
+reproducibility. So let’s talk about how to make these files. First,
 let’s look at the absolute minimum requirement:
 
 \fvset{hllines={, ,}}%
@@ -5625,16 +5609,15 @@ Bootstrap: docker
 From: ubuntu
 \end{sphinxVerbatim}
 
-We would save this content to a file called Singularity and then issue
-the following commands to bootstrap the image from the file
+We save this content to a file called Singularity and then issue
+the following commands to bootstrap the image from the file:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 sudo singularity build ubuntu.img Singularity
 \end{sphinxVerbatim}
 
-Do you want to specify a particular tag? or version? You can just add
-that to the docker uri:
+A particular tag or version can be added to the docker uri:
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -5659,7 +5642,7 @@ Registry: pancakes.registry.index.io
 Namespace: blue/berry/cream
 \end{sphinxVerbatim}
 
-The power of build comes with the other stuff that you can do! This
+The power of build comes with the other things that you can do. This
 means running specific install commands, specifying your containers
 runscript (what it does when you execute it), adding files, labels, and
 customizing the environment. Here is a full Singularity file:
@@ -5722,15 +5705,14 @@ IncludeCmd: yes
     echo \PYGZdq{}Post install stuffs!\PYGZdq{}
 \end{sphinxVerbatim}
 
-Did you know that you can commit this Singularity file to a GitHub repo
-and it will automatically build for you when you push to \sphinxhref{https://singularity-hub.org/}{Singularity
+You can commit this Singularity file to a GitHub repo and it will automatically build for you when you push to \sphinxhref{https://singularity-hub.org/}{Singularity
 Hub}?. This will ensure maximum reproducibility of your work.
 
 
 \section{How does the runscript work?}
 \label{\detokenize{singularity_and_docker:how-does-the-runscript-work}}
 Docker has two commands in the \sphinxcode{\sphinxupquote{Dockerfile}} that have something to do with
-execution, \sphinxcode{\sphinxupquote{CMD}} and \sphinxcode{\sphinxupquote{ENTRYPOINT}}. The differences are subtle, but the best description
+execution, \sphinxcode{\sphinxupquote{CMD}} and \sphinxcode{\sphinxupquote{ENTRYPOINT}}. The differences are subtle, but a good description
 I’ve found is the following:
 \begin{quote}
 
@@ -5895,7 +5877,7 @@ http https://index.docker.io/v2/vanessa/code\PYGZhy{}samples/tags/list Authoriza
 \end{sphinxVerbatim}
 
 The above call should return the tags list as expected. And of course
-you should change the repo name to be one that actually exists that you
+you should change the repository(repo) name to be one that actually exists that you
 have credentials for.
 
 
@@ -5910,9 +5892,9 @@ ventures please \sphinxhref{https://www.github.com/singularityware/singularitywa
 \subsection{1. Installation to Root}
 \label{\detokenize{singularity_and_docker:installation-to-root}}
 When using Docker, you typically run as root, meaning that root’s home
-at \sphinxcode{\sphinxupquote{/root}} is where things will install given a specification of home. This is
+at \sphinxcode{\sphinxupquote{/root}} is where things will install given a specification of home. This situation is
 fine when you stay in Docker, or if the content at \sphinxcode{\sphinxupquote{/root}} doesn’t need any
-kind of write access, but generally can lead to a lot of bugs because
+kind of write access, but generally it can lead to a lot of bugs because
 it is, after all, root’s home. This leads us to best practice \#1.
 
 Don’t install anything to root’s home, \sphinxcode{\sphinxupquote{/root}}.
@@ -5946,7 +5928,7 @@ Have any more best practices? Please \sphinxhref{https://www.github.com/singular
 \section{Troubleshooting}
 \label{\detokenize{singularity_and_docker:troubleshooting}}
 Why won’t my image build work? If you can’t find an answer on this site,
-please \sphinxhref{https://www.github.com/singularityware/singularity/issues}{ping us an issue}. If you’ve found an answer and you’d like to
+please \sphinxhref{https://www.github.com/singularityware/singularity/issues}{send us an issue}. If you’ve found an answer and you’d like to
 see it on the site for others to benefit from, then post to us
 \sphinxhref{https://www.github.com/singularityware/singularityware.github.io/issues}{here}.
 
@@ -6067,7 +6049,7 @@ singularity exec \PYGZhy{}H /tmp/homie analysis.img /bin/bash
 
 \sphinxstylestrong{Solution 2: Specify the executable to use}
 It may be the issue that there is an executable in your host
-environment (eg, python) that is being called in preference to the
+environment (e.g. python) that is being called in preference to the
 containers. To avoid this, in your runscript (the \sphinxcode{\sphinxupquote{\%runscript}} section of the
 bootstrap file) you should specify the path to the executable exactly.
 This means:
@@ -6088,8 +6070,7 @@ exec python \PYGZdq{}\PYGZdl{}@\PYGZdq{}
 \end{sphinxVerbatim}
 
 This same idea would be useful if you are issuing the command to the
-container using \sphinxcode{\sphinxupquote{exec}}. Thanks to \sphinxhref{https://github.com/yarikoptic}{yarikoptic} for the suggestions on this
-issue.
+container using \sphinxcode{\sphinxupquote{exec}}.
 
 
 \section{Invalid Argument or Unknown Option}
@@ -6123,12 +6104,12 @@ sudo: singularity: command not found
 \end{sphinxVerbatim}
 
 The cause of the problem is that \sphinxcode{\sphinxupquote{sudo}} sanitizes the PATH environment
-variable and does not include /usr/local/bin in the default search
+variable and does not include \sphinxcode{\sphinxupquote{/usr/local/bin}} in the default search
 path. Considering this program path is by default owned by root, it is
 reasonable to extend the default sudo PATH to include this directory.
-To add /usr/local/bin to the default sudo search path, run the program
+To add \sphinxcode{\sphinxupquote{/usr/local/bin}} to the default sudo search path, run the program
 visudo which will edit the sudoers file, and search for the string
-‘secure\_path’. Once found, append :/usr/local/bin to that line so it
+‘secure\_path’. Once found, append \sphinxcode{\sphinxupquote{:/usr/local/bin}} to that line so it
 looks like this:
 
 \fvset{hllines={, ,}}%
@@ -6151,7 +6132,7 @@ ERROR : There was an error binding the path /apps: Too many levels of symbolic l
 ABORT : Retval = 255
 \end{sphinxVerbatim}
 
-You got this error because /apps directory is an autofs mount point. You
+You got this error because \sphinxcode{\sphinxupquote{/apps}} directory is an autofs mount point. You
 can fix it by editing singularity.conf and adding the following
 directive with corresponding path:
 
@@ -6365,7 +6346,7 @@ RPM library and Berkeley DB implementation that exists on the host system. If th
 the RPM database that was used to create the container, RPM and YUM commands inside the container may fail. This issue can be easily demonstrated
 by bootstrapping an older RHEL compatible image by a newer one (e.g. bootstrap a Centos 5 or 6 container from a Centos 7 host).
 
-In order to use the \sphinxcode{\sphinxupquote{debootstrap}} build module, you must have \sphinxcode{\sphinxupquote{yum}} installed on your system. It may seem counter-intuitive to install YUM on a system
+In order to use the \sphinxcode{\sphinxupquote{yum}} build module, you must have \sphinxcode{\sphinxupquote{yum}} installed on your system. It may seem counter-intuitive to install YUM on a system
 that uses a different package manager, but you can do so. For instance, on Ubuntu you can install it like so:
 
 \fvset{hllines={, ,}}%
