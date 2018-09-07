@@ -187,7 +187,7 @@ environment.</p>
 <h2>Environment<a class="headerlink" href="#environment" title="Permalink to this headline">¶</a></h2>
 <p>If you build a container from Singularity Hub or Docker Hub, the
 environment will be included with the container at build time. You can
-also define custom environment variables in your Recipe file like so:</p>
+also define custom environment variables in your Recipe file as follows:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: shub
 
 From: vsoch/hello-world
@@ -215,7 +215,7 @@ to <code class="docutils literal notranslate"><span class="pre">$SINGULARITY_ENV
 <p>Because files in <code class="docutils literal notranslate"><span class="pre">/.singularity.d/env</span></code> are sourced in alpha-numerical order, this means that
 variables added using <code class="docutils literal notranslate"><span class="pre">$SINGULARITY_ENVIRONMENT</span></code> take precedence over those added via the <code class="docutils literal notranslate"><span class="pre">%environment</span></code>
 section.</p>
-<p>Need to define a variable at runtime? You can set variables inside the
+<p>If you need to define a variable at runtime, set variables inside the
 container by prefixing them with <code class="docutils literal notranslate"><span class="pre">SINGULARITYENV_</span></code>. They will be
 transposed automatically and the prefix will be stripped. For example,
 let’s say we want to set the variable <code class="docutils literal notranslate"><span class="pre">HELLO</span></code> to have value <code class="docutils literal notranslate"><span class="pre">WORLD</span></code>. We can do that
@@ -248,8 +248,8 @@ also pass forward all the other environment variables from the host.</p>
 <p>If you need to change the $PATH of your container at runtime there are
 a few environmental variables you can use:</p>
 <ul class="simple">
-<li><code class="docutils literal notranslate"><span class="pre">SINGULARITYENV_PREPEND_PATH=/good/stuff/at/beginning</span></code> to prepend directories to the beginning of the</li>
-<li><code class="docutils literal notranslate"><span class="pre">SINGULARITYENV_APPEND_PATH=/good/stuff/at/end</span></code> to append directories to the end of the</li>
+<li><code class="docutils literal notranslate"><span class="pre">SINGULARITYENV_PREPEND_PATH=/good/stuff/at/beginning</span></code> to prepend directories to the beginning of the <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">SINGULARITYENV_APPEND_PATH=/good/stuff/at/end</span></code> to append directories to the end of the <code class="docutils literal notranslate"><span class="pre">$PATH</span></code></li>
 <li><code class="docutils literal notranslate"><span class="pre">SINGULARITYENV_PATH=/a/new/path</span></code> to override the <code class="docutils literal notranslate"><span class="pre">$PATH</span></code> within the container</li>
 </ul>
 </div>
@@ -423,7 +423,7 @@ container is invoked with the <code class="docutils literal notranslate"><span c
   </div>
 
 
-<script type="text/javaScript" src="_static/js/footer.js"></script>
+<script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">

@@ -270,7 +270,7 @@ singularity exec -H /tmp/homie analysis.img /bin/bash
 </div>
 <p><strong>Solution 2: Specify the executable to use</strong>
 It may be the issue that there is an executable in your host
-environment (eg, python) that is being called in preference to the
+environment (e.g. python) that is being called in preference to the
 containers. To avoid this, in your runscript (the <code class="docutils literal notranslate"><span class="pre">%runscript</span></code> section of the
 bootstrap file) you should specify the path to the executable exactly.
 This means:</p>
@@ -288,8 +288,7 @@ exec python &quot;$@&quot;
 </pre></div>
 </div>
 <p>This same idea would be useful if you are issuing the command to the
-container using <code class="docutils literal notranslate"><span class="pre">exec</span></code>. Thanks to <a class="reference external" href="https://github.com/yarikoptic">yarikoptic</a> for the suggestions on this
-issue.</p>
+container using <code class="docutils literal notranslate"><span class="pre">exec</span></code>.</p>
 </div>
 <div class="section" id="invalid-argument-or-unknown-option">
 <h2>Invalid Argument or Unknown Option<a class="headerlink" href="#invalid-argument-or-unknown-option" title="Permalink to this headline">¶</a></h2>
@@ -315,12 +314,12 @@ sudo: singularity: command not found
 </pre></div>
 </div>
 <p>The cause of the problem is that <code class="docutils literal notranslate"><span class="pre">sudo</span></code> sanitizes the PATH environment
-variable and does not include /usr/local/bin in the default search
+variable and does not include <code class="docutils literal notranslate"><span class="pre">/usr/local/bin</span></code> in the default search
 path. Considering this program path is by default owned by root, it is
 reasonable to extend the default sudo PATH to include this directory.
-To add /usr/local/bin to the default sudo search path, run the program
-visudo which will edit the sudoers file, and search for the string
-‘secure_path’. Once found, append :/usr/local/bin to that line so it
+To add <code class="docutils literal notranslate"><span class="pre">/usr/local/bin</span></code> to the default sudo search path, run the program
+<code class="docutils literal notranslate"><span class="pre">visudo</span></code> which will edit the sudoers file, and search for the string
+‘secure_path’. Once found, append <code class="docutils literal notranslate"><span class="pre">:/usr/local/bin</span></code> to that line so it
 looks like this:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Defaults    secure_path = /sbin:/bin:/usr/sbin:/usr/bin:/usr/local/bin
 </pre></div>
@@ -337,7 +336,7 @@ ERROR : There was an error binding the path /apps: Too many levels of symbolic l
 ABORT : Retval = 255
 </pre></div>
 </div>
-<p>You got this error because /apps directory is an autofs mount point. You
+<p>You got this error because <code class="docutils literal notranslate"><span class="pre">/apps</span></code> directory is an autofs mount point. You
 can fix it by editing singularity.conf and adding the following
 directive with corresponding path:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>autofs bug path = /apps
@@ -382,7 +381,7 @@ directive with corresponding path:</p>
   </div>
 
 
-<script type="text/javaScript" src="_static/js/footer.js"></script>
+<script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">
