@@ -16,7 +16,7 @@ remove it before executing the installation commands.
 
 These instructions will build Singularity from source on your system.
 So you will need to have some development tools installed. If you run
-into missing dependencies, try installing them like so:
+into missing dependencies, try installing them with ``apt-get`` or ``yum/rpm`` as shown below.
 
 .. code-block:: none
 

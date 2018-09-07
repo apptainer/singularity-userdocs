@@ -18,7 +18,7 @@ Environment
 
 If you build a container from Singularity Hub or Docker Hub, the
 environment will be included with the container at build time. You can
-also define custom environment variables in your Recipe file like so:
+also define custom environment variables in your Recipe file as follows:
 
 .. code-block:: none
 
@@ -52,7 +52,7 @@ Because files in ``/.singularity.d/env`` are sourced in alpha-numerical order, t
 variables added using ``$SINGULARITY_ENVIRONMENT`` take precedence over those added via the ``%environment``
 section.
 
-Need to define a variable at runtime? You can set variables inside the
+If you need to define a variable at runtime, set variables inside the
 container by prefixing them with ``SINGULARITYENV_``. They will be
 transposed automatically and the prefix will be stripped. For example,
 let’s say we want to set the variable ``HELLO`` to have value ``WORLD``. We can do that
@@ -89,9 +89,9 @@ also pass forward all the other environment variables from the host.
 If you need to change the $PATH of your container at runtime there are
 a few environmental variables you can use:
 
--  ``SINGULARITYENV_PREPEND_PATH=/good/stuff/at/beginning`` to prepend directories to the beginning of the
+-  ``SINGULARITYENV_PREPEND_PATH=/good/stuff/at/beginning`` to prepend directories to the beginning of the ``$PATH``
 
--  ``SINGULARITYENV_APPEND_PATH=/good/stuff/at/end`` to append directories to the end of the
+-  ``SINGULARITYENV_APPEND_PATH=/good/stuff/at/end`` to append directories to the end of the ``$PATH``
 
 -  ``SINGULARITYENV_PATH=/a/new/path`` to override the ``$PATH`` within the container
 

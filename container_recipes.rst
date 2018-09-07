@@ -146,8 +146,7 @@ of the container after the base OS has been installed. For versions
 earlier than 2.3 if you need files during %post, you should copy files
 from your host to ``$SINGULARITY_ROOTFS`` to move them into the
 container. For >2.3 you can add files to the container (added before
-%post) using the %files section. We can see the difference between
-%setup and %post in the following asciicast:
+%post) using the %files section. 
 
 In the above, we see that copying something to ``$SINGULARITY_ROOTFS`` during ``%setup`` was successful
 to move the file into the container, but copying during ``%post`` was not. Let’s

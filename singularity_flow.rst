@@ -5,12 +5,12 @@
 Singularity Flow
 ================
 
-This document describes a suggested “best-practices” workflow for
+This document describes a suggested “best-practices” work-flow for
 building, running, and managing your containers.
 
 There are generally two ways to get images. You either want to pull an
 image file as is, or (more likely) build your own custom image. We
-will start with talking about build, and the many different use cases
+will start with talking about build and the many different use cases
 it affords.
 
 .. _sec:singularityflow:
@@ -45,7 +45,7 @@ of Singularity 2.4, and it ensures a higher level of reproducibility and
 verification of images. To read more about the details, check out the :ref:`build <build-a-container>`
 docs. However, immutability is not so great when you are testing,
 debugging, or otherwise want to quickly change your image. We will
-proceed by describing a typical workflow of developing first, building a
+proceed by describing a typical work-flow of developing first, building a
 final image, and using it in production.
 
 1. Development Commands

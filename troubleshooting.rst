@@ -112,7 +112,7 @@ container to mount it as home:
 
 **Solution 2: Specify the executable to use**
 It may be the issue that there is an executable in your host
-environment (eg, python) that is being called in preference to the
+environment (e.g. python) that is being called in preference to the
 containers. To avoid this, in your runscript (the ``%runscript`` section of the
 bootstrap file) you should specify the path to the executable exactly.
 This means:
@@ -133,8 +133,7 @@ This means:
 
 
 This same idea would be useful if you are issuing the command to the
-container using ``exec``. Thanks to `yarikoptic <https://github.com/yarikoptic>`_ for the suggestions on this
-issue.
+container using ``exec``.
 
 ----------------------------------
 Invalid Argument or Unknown Option
@@ -168,12 +167,12 @@ the default compiled prefix of /usr/local:
     sudo: singularity: command not found
 
 The cause of the problem is that ``sudo`` sanitizes the PATH environment
-variable and does not include /usr/local/bin in the default search
+variable and does not include ``/usr/local/bin`` in the default search
 path. Considering this program path is by default owned by root, it is
 reasonable to extend the default sudo PATH to include this directory.
-To add /usr/local/bin to the default sudo search path, run the program
+To add ``/usr/local/bin`` to the default sudo search path, run the program
 visudo which will edit the sudoers file, and search for the string
-‘secure\_path’. Once found, append :/usr/local/bin to that line so it
+‘secure\_path’. Once found, append ``:/usr/local/bin`` to that line so it
 looks like this:
 
 .. code-block:: none
@@ -196,7 +195,7 @@ error
     ABORT : Retval = 255
 
 
-You got this error because /apps directory is an autofs mount point. You
+You got this error because ``/apps`` directory is an autofs mount point. You
 can fix it by editing singularity.conf and adding the following
 directive with corresponding path:
 

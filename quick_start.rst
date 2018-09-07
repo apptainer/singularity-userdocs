@@ -20,6 +20,7 @@ Installation
 ------------
 
 There are many ways to :ref:`install Singularity <installation>` but this quick start guide will only cover one.
+You will need ``git`` to download the source code and the appropriate tools and libraries. Create and move to a working directory and enter the following steps.
 
 .. code-block:: none
 
@@ -129,7 +130,7 @@ follows:
 
 For any additional help or support visit the Singularity website:
 https://www.sylabs.io/contact/
-Singularity uses positional syntax. Global options follow the ``singularity``
+Singularity uses positional syntax (i.e. where the option is on the command line matters). Global options follow the ``singularity``
 invocation and affect the way that Singularity runs any command. Then
 commands are passed followed by their options.
 For example, to pass the ``--debug`` option to the main ``singularity`` command and run
@@ -495,7 +496,7 @@ of custom apps.
 This is a very small example of the things that you can do with a :ref:`recipe file <container-recipes>` . In
 addition to building a container from Singularity Hub, you can start
 with base images from Docker Hub, use images directly from official
-repositories such as Ubuntu, Debian, Centos, Arch, and BusyBox, use an
+repositories such as Ubuntu, Debian, CentOS, Arch, and BusyBox, use an
 existing container on your host system as a base, or even take a
 snapshot of the host system itself and use that as a base image.
 If you want to build Singularity images without having singularity
