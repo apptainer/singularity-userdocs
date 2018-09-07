@@ -24,7 +24,7 @@
 \contentsline {subsection}{\numberline {2.2.2}The Singularity container image}{11}{subsection.2.2.2}
 \contentsline {subsubsection}{\numberline {2.2.2.1}\sphinxstyleemphasis {Copying, sharing, branching, and distributing your image}}{11}{subsubsection.2.2.2.1}
 \contentsline {subsubsection}{\numberline {2.2.2.2}\sphinxstyleemphasis {Supported container formats}}{11}{subsubsection.2.2.2.2}
-\contentsline {subsubsection}{\numberline {2.2.2.3}\sphinxstyleemphasis {Supported URIs}}{11}{subsubsection.2.2.2.3}
+\contentsline {subsubsection}{\numberline {2.2.2.3}\sphinxstyleemphasis {Supported Uniform Resource Identifiers (URI)}}{11}{subsubsection.2.2.2.3}
 \contentsline {subsection}{\numberline {2.2.3}Name-spaces and isolation}{12}{subsection.2.2.3}
 \contentsline {subsection}{\numberline {2.2.4}Compatibility with standard work-flows, pipes and IO}{12}{subsection.2.2.4}
 \contentsline {subsection}{\numberline {2.2.5}The Singularity Process Flow}{13}{subsection.2.2.5}
@@ -162,7 +162,7 @@
 \contentsline {subsection}{\numberline {13.1.3}Container Modularity}{88}{subsection.13.1.3}
 \contentsline {subsection}{\numberline {13.1.4}Sections}{90}{subsection.13.1.4}
 \contentsline {subsection}{\numberline {13.1.5}Interaction}{90}{subsection.13.1.5}
-\contentsline {section}{\numberline {13.2}Cowsay Container}{92}{section.13.2}
+\contentsline {section}{\numberline {13.2}SCI-F Example: Cowsay Container}{92}{section.13.2}
 \contentsline {chapter}{\numberline {14}Singularity and Docker}{95}{chapter.14}
 \contentsline {section}{\numberline {14.1}TLDR (Too Long Didn\IeC {\textquoteright }t Read)}{95}{section.14.1}
 \contentsline {section}{\numberline {14.2}Import a Docker image into a Singularity Image}{95}{section.14.2}

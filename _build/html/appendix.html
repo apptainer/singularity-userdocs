@@ -509,7 +509,7 @@ when using the <code class="docutils literal notranslate"><span class="pre">yum<
 RPM library and Berkeley DB implementation that exists on the host system. If the RPM implementation inside the container is not compatible with
 the RPM database that was used to create the container, RPM and YUM commands inside the container may fail. This issue can be easily demonstrated
 by bootstrapping an older RHEL compatible image by a newer one (e.g. bootstrap a Centos 5 or 6 container from a Centos 7 host).</p>
-<p>In order to use the <code class="docutils literal notranslate"><span class="pre">debootstrap</span></code> build module, you must have <code class="docutils literal notranslate"><span class="pre">yum</span></code> installed on your system. It may seem counter-intuitive to install YUM on a system
+<p>In order to use the <code class="docutils literal notranslate"><span class="pre">yum</span></code> build module, you must have <code class="docutils literal notranslate"><span class="pre">yum</span></code> installed on your system. It may seem counter-intuitive to install YUM on a system
 that uses a different package manager, but you can do so. For instance, on Ubuntu you can install it like so:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update &amp;&amp; sudo apt-get install yum
 </pre></div>
@@ -2524,7 +2524,7 @@ Importing: /home/vanessa/.singularity/metadata/sha256:fe44851d529f465f9aa107b323
   </div>
 
 
-<script type="text/javaScript" src="_static/js/footer.js"></script>
+<script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">

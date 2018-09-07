@@ -2,7 +2,7 @@
 Container Checks
 ================
 
-New to Singularity 2.4 is the ability to run container “checks” on
+Singularity 2.4 introduced the ability to run container “checks” on
 demand. Checks can be anything from a filter for sensitive
 information, to an analysis of installed binaries. A few default checks are installed with Singularity and others can be added by the
 administrator. Users can perform checks at build time or on demand:

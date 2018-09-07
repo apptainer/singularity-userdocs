@@ -186,7 +186,7 @@
 
   <div class="section" id="running-services">
 <span id="id1"></span><h1>Running Services<a class="headerlink" href="#running-services" title="Permalink to this headline">¶</a></h1>
-<p>Singularity 2.4 introduces the ability to run “container instances”,
+<p>Singularity 2.4 introduced the ability to run “container instances”,
 allowing you to run services (e.g. Nginx, MySQL, etc…) using
 Singularity. A container instance, simply put, is a persistent and
 isolated version of the container image that runs in the background.</p>
@@ -213,7 +213,7 @@ orphan process. Singularity versions less than 2.4 were not designed to handle r
 ability to cleanly, reliably, and safely run services in a container is
 here. First, let’s put some commands that we want our instance to
 execute into a script. Let’s call it a <code class="docutils literal notranslate"><span class="pre">startscript</span></code>. This fits into a definition
-file like so:</p>
+file as follows:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>%startscript
 
 
@@ -222,7 +222,7 @@ service nginx start
 </div>
 <p>Now let’s say we build a container with that startscript into an image
 called <code class="docutils literal notranslate"><span class="pre">nginx.img</span></code> and we want to run an nginx service. All we need to do is start
-the instance with the <span class="xref std std-ref">instance start</span> command, and the
+the instance with the <a class="reference internal" href="appendix.html#instance-start"><span class="std std-ref">instance.start</span></a> command, and the
 startscript will run inside the container automatically:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>              [command]        [image]    [name of instance]
 
@@ -290,7 +290,7 @@ $ singularity exec instance://web1 ps -ef
 instance. Similarly with <code class="docutils literal notranslate"><span class="pre">exec</span></code>, it will execute the given command in the
 instance.</p>
 <p>When you are finished with your instance you can clean it up with the
-<span class="xref std std-ref">instance.stop</span> command like so:</p>
+<a class="reference internal" href="appendix.html#instance-stop"><span class="std std-ref">instance.stop</span></a> command as follows:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ singularity instance.stop web1
 </pre></div>
 </div>
@@ -607,6 +607,12 @@ running instances.</p>
 </div>
 <div class="section" id="important-notes">
 <h2>Important Notes<a class="headerlink" href="#important-notes" title="Permalink to this headline">¶</a></h2>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The instances are linked with your user. So if you start an instance
+with sudo, that is going to go under root, and you will need to call <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">singularity</span> <span class="pre">instance.list</span></code>
+in order to see it.</p>
+</div>
 </div>
 </div>
 
@@ -646,7 +652,7 @@ running instances.</p>
   </div>
 
 
-<script type="text/javaScript" src="_static/js/footer.js"></script>
+<script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">

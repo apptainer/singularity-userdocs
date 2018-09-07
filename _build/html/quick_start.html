@@ -196,12 +196,13 @@
 <p id="sec-quickstart">This guide is intended for running Singularity on a computer where you
 have root (administrative) privileges. If you are learning about
 Singularity on a system where you lack root privileges, you can still
-complete the steps that do not require the sudo command. If you need to
+complete the steps that do not require the <code class="docutils literal notranslate"><span class="pre">sudo</span></code> command. If you need to
 request an installation on your shared resource, check out our requesting an installation help page for information to send to your
 system administrator.</p>
 <div class="section" id="installation">
 <span id="id2"></span><h2>Installation<a class="headerlink" href="#installation" title="Permalink to this headline">¶</a></h2>
-<p>There are many ways to <a class="reference internal" href="#installation"><span class="std std-ref">install Singularity</span></a> but this quick start guide will only cover one.</p>
+<p>There are many ways to <a class="reference internal" href="#installation"><span class="std std-ref">install Singularity</span></a> but this quick start guide will only cover one.
+You will need <code class="docutils literal notranslate"><span class="pre">git</span></code> to download the source code and the appropriate tools and libraries. Create and move to a working directory and enter the following steps.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/singularityware/singularity.git
 
 cd singularity
@@ -305,7 +306,7 @@ website: https://github.com/singularityware/singularity
 </div>
 <p>For any additional help or support visit the Singularity website:
 <a class="reference external" href="https://www.sylabs.io/contact/">https://www.sylabs.io/contact/</a>
-Singularity uses positional syntax. Global options follow the <code class="docutils literal notranslate"><span class="pre">singularity</span></code>
+Singularity uses positional syntax (i.e. where the option is on the command line matters). Global options follow the <code class="docutils literal notranslate"><span class="pre">singularity</span></code>
 invocation and affect the way that Singularity runs any command. Then
 commands are passed followed by their options.
 For example, to pass the <code class="docutils literal notranslate"><span class="pre">--debug</span></code> option to the main <code class="docutils literal notranslate"><span class="pre">singularity</span></code> command and run
@@ -613,7 +614,7 @@ of custom apps.
 This is a very small example of the things that you can do with a <a class="reference internal" href="container_recipes.html#container-recipes"><span class="std std-ref">recipe file</span></a> . In
 addition to building a container from Singularity Hub, you can start
 with base images from Docker Hub, use images directly from official
-repositories such as Ubuntu, Debian, Centos, Arch, and BusyBox, use an
+repositories such as Ubuntu, Debian, CentOS, Arch, and BusyBox, use an
 existing container on your host system as a base, or even take a
 snapshot of the host system itself and use that as a base image.
 If you want to build Singularity images without having singularity
@@ -661,8 +662,8 @@ different build options, see our <a class="reference internal" href="singularity
   </div>
 
 
+<script type="text/javascript" src="_static/js/footer.js"></script>
 
-  <script type="text/javaScript" src="_static/js/footer.js"></script>
 
     <script type="text/javascript">
         var DOCUMENTATION_OPTIONS = {
