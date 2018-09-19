@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.20)  7 SEP 2018 12:05
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.20)  19 SEP 2018 17:42
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1190,7 +1190,7 @@ LaTeX Font Info:    Try loading font information for TS1+ptm on input line 756.
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [11]
 [12]
-<flow.png, id=1872, 3539.2225pt x 1258.7025pt>
+<flow.png, id=1874, 3539.2225pt x 1258.7025pt>
 File: flow.png Graphic file (type png)
 <use flow.png>
 Package pdftex.def Info: flow.png  used on input line 1002.
@@ -1203,7 +1203,7 @@ Chapter 3.
 
 ]
 Chapter 4.
-<build_input_output.png, id=2044, 417.56pt x 400.49625pt>
+<build_input_output.png, id=2046, 417.56pt x 400.49625pt>
 File: build_input_output.png Graphic file (type png)
 <use build_input_output.png>
 Package pdftex.def Info: build_input_output.png  used on input line 2162.
@@ -1347,7 +1347,7 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 9491.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 9491.
 
 Package rerunfilecheck Info: File `ReadtheDocsTemplate.out' has not changed.
-(rerunfilecheck)             Checksum: B83144B1B8C99E8A313242ED542D5205;64179.
+(rerunfilecheck)             Checksum: 3286D850152E3FEE73EAABC78B8BA128;64245.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -1355,10 +1355,10 @@ LaTeX Warning: There were multiply-defined labels.
 Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 9491.
  ) 
 Here is how much of TeX's memory you used:
- 14986 strings out of 494880
- 217365 string characters out of 6179601
- 381834 words of memory out of 5000000
- 17398 multiletter control sequences out of 15000+600000
+ 14987 strings out of 494880
+ 217410 string characters out of 6179601
+ 381894 words of memory out of 5000000
+ 17399 multiletter control sequences out of 15000+600000
  53496 words of font info for 75 fonts, out of 8000000 for 9000
  37 hyphenation exceptions out of 8191
  37i,12n,51p,1006b,568s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1371,10 +1371,10 @@ vb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on ReadtheDocsTemplate.pdf (168 pages, 698267 bytes).
+Output written on ReadtheDocsTemplate.pdf (168 pages, 698680 bytes).
 PDF statistics:
- 2919 PDF objects out of 2984 (max. 8388607)
- 2701 compressed objects within 28 object streams
+ 2921 PDF objects out of 2984 (max. 8388607)
+ 2703 compressed objects within 28 object streams
  594 named destinations out of 1000 (max. 500000)
  2788 words of extra memory for PDF output out of 10000 (max. 10000000)
 
