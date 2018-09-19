@@ -13,11 +13,11 @@ complete the steps that do not require the sudo command. If you need to
 request an installation on your shared resource, check out our requesting an installation help page for information to send to your
 system administrator.
 
-.. _installation:
+.. _quick-installation:
 
-------------
-Installation
-------------
+------------------------
+Quick Installation Steps
+------------------------
 
 There are many ways to :ref:`install Singularity <installation>` but this quick start guide will only cover one.
 You will need ``git`` to download the source code and the appropriate tools and libraries. Create and move to a working directory and enter the following steps.

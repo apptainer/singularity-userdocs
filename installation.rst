@@ -1,8 +1,8 @@
+.. _installation:
+
 ============
 Installation
 ============
-
-.. _sec:installation:
 
 This document will guide you through the process of installing
 Singularity from source with the version and location of your choice.
