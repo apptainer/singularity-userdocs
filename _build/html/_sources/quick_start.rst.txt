@@ -10,14 +10,14 @@ This guide is intended for running Singularity on a computer where you
 have root (administrative) privileges. If you are learning about
 Singularity on a system where you lack root privileges, you can still
 complete the steps that do not require the ``sudo`` command. If you need to
-request an installation on your shared resource, check out our requesting an installation help page for information to send to your
+request an installation on your shared resource, check out our :ref:`requesting an installation help page <installation-request>` for information to send to your
 system administrator.
 
-.. _installation:
+.. _quick-installation:
 
-------------
-Installation
-------------
+------------------------
+Quick Installation Steps
+------------------------
 
 There are many ways to :ref:`install Singularity <installation>` but this quick start guide will only cover one.
 You will need ``git`` to download the source code and the appropriate tools and libraries. Create and move to a working directory and enter the following steps.
