@@ -49,12 +49,12 @@ Install from a tag
 -------------------------
 
 The following commands will install a tagged version of the `GitHub
-repo <https://github.com/singularityware/singularity>`_ to ``/usr/local``.
+repo <https://github.com/sylabs/singularity>`_ to ``/usr/local``.
 This will work for pre 3.0 tags.
 
 .. code-block:: none
 
-    $ git clone https://github.com/singularityware/singularity.git
+    $ git clone https://github.com/sylabs/singularity.git
 
     $ cd singularity
 
@@ -90,13 +90,13 @@ Install a specific release
 --------------------------
 
 The following commands will install a specific release from `GitHub
-releases <https://github.com/singularityware/singularity/releases>`_ page to ``/usr/local``.
+releases <https://github.com/sylabs/singularity/releases>`_ page to ``/usr/local``.
 
 .. code-block:: none
 
     $ VER=2.5.1
 
-    $ wget https://github.com/singularityware/singularity/releases/download/$VER/singularity-$VER.tar.gz
+    $ wget https://github.com/sylabs/singularity/releases/download/$VER/singularity-$VER.tar.gz
 
     $ tar xvf singularity-$VER.tar.gz
 
@@ -177,12 +177,12 @@ First, install the following software:
 
 - install `Vagrant Manager for Windows <http://vagrantmanager.com/downloads/>`_
 
-Singularityware Vagrant Box
-===========================
+Singularity Vagrant Box
+=======================
 
 We are maintaining a set of Vagrant Boxes via `Vagrant Cloud <https://www.vagrantup.com/>`_, one of `Hashicorp <https://www.hashicorp.com/#open-source-tools>`_ many tools that likely you’ve used and haven’t known it. The current stable version of Singularity is available here:
 
-- `singularityware/singularity-2.4 <https://app.vagrantup.com/singularityware/boxes/singularity-2.4/versions/2.4>`_
+- `sylabs/singularity-2.4 <https://app.vagrantup.com/singularityware/boxes/singularity-2.4/versions/2.4>`_
 
 For other versions of Singularity see `our Vagrant Cloud repository <https://app.vagrantup.com/singularityware>`_
 
@@ -266,7 +266,7 @@ You can try the following two options:
 Option 1: Download latest stable release
 ----------------------------------------
 
-You can always download the latest tarball release from `GitHub <https://github.com/singularityware/singularity/releases>`_
+You can always download the latest tarball release from `GitHub <https://github.com/sylabs/singularity/releases>`_
 
 For example, here is how to download version ``2.5.2`` and install:
 
@@ -274,7 +274,7 @@ For example, here is how to download version ``2.5.2`` and install:
 
     VERSION=2.5.2
 
-    wget https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
+    wget https://github.com/sylabs/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
 
     tar xvf singularity-$VERSION.tar.gz
 
@@ -302,7 +302,7 @@ To download the most recent development code, you should use Git and do the foll
 
 .. code-block:: none
 
-    git clone https://github.com/singularityware/singularity.git
+    git clone https://github.com/sylabs/singularity.git
 
     cd singularity
 
@@ -578,7 +578,7 @@ Next, install Vagrant and the necessary bits.
     brew cask install vagrant-manager
 
 
-Option 1: Singularityware Vagrant Box
+Option 1: Singularity Vagrant Box
 =====================================
 
 We are maintaining a set of Vagrant Boxes via `Vagrant Cloud <https://www.vagrantup.com/>`_, one of `Hashicorp <https://www.hashicorp.com/#open-source-tools>`_ many tools that likely you’ve used and haven’t known it. The current stable version of Singularity is available here:
@@ -683,7 +683,7 @@ Next, build and start the vagrant hosted VM, and you will install Singularity by
 
         sudo apt-get -y install build-essential curl git sudo man vim autoconf libtool
 
-        git clone https://github.com/singularityware/singularity.git
+        git clone https://github.com/sylabs/singularity.git
 
         cd singularity
 
@@ -754,7 +754,7 @@ Putting all of the above together, a request might look like the following:
     Dear Research Computing,
 
 
-    We are interested in having an installation of the Singularity software (https://singularityware.github.io) installed on our cluster. Singularity containers will allow us to build encapsulated environments, meaning that our work is reproducible and we are empowered to choose all dependencies including libraries, operating system, and custom software. Singularity is already installed on over 50 centers internationally (http://singularity.lbl.gov/citation-registration) including TACC, NIH,
+    We are interested in having an installation of the Singularity software (https://sylabs.github.io) installed on our cluster. Singularity containers will allow us to build encapsulated environments, meaning that our work is reproducible and we are empowered to choose all dependencies including libraries, operating system, and custom software. Singularity is already installed on over 50 centers internationally (http://singularity.lbl.gov/citation-registration) including TACC, NIH,
 
     and several National Labs, Universities, Hospitals. Importantly, it has a vibrant team of developers, scientists, and HPC administrators that invest heavily in the security and development of the software, and are quick to respond to the needs of the community. To help learn more about Singularity, I thought these items might be of interest:
 

@@ -55,7 +55,7 @@
 
 
 \title{Singularity Container Documentation}
-\date{Sep 19, 2018}
+\date{Sep 20, 2018}
 \release{2.6}
 \author{User Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -87,7 +87,7 @@ You will need \sphinxcode{\sphinxupquote{git}} to download the source code and t
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-git clone https://github.com/singularityware/singularity.git
+git clone https://github.com/sylabs/singularity.git
 
 cd singularity
 
@@ -189,7 +189,7 @@ CONTAINER USAGE OPTIONS:
 
 For any additional help or support visit the Singularity
 
-website: https://github.com/singularityware/singularity
+website: https://github.com/sylabs/singularity
 \end{sphinxVerbatim}
 
 For any additional help or support visit the Singularity website:
@@ -1295,7 +1295,7 @@ Consolidating a work-flow into a Singularity container simplifies distribution a
 \subsection{License}
 \label{\detokenize{introduction:license}}
 Singularity is released under a standard 3 clause BSD license.
-Please see our \sphinxhref{https://github.com/singularityware/singularity/blob/master/LICENSE.md}{LICENSE} file for more details).
+Please see our \sphinxhref{https://github.com/sylabs/singularity/blob/master/LICENSE.md}{LICENSE} file for more details).
 
 
 \subsection{Getting started}
@@ -1350,13 +1350,13 @@ into missing dependencies, try installing them WITH \sphinxcode{\sphinxupquote{a
 
 \section{Install from a tag}
 \label{\detokenize{installation:install-from-a-tag}}
-The following commands will install a tagged version of the \sphinxhref{https://github.com/singularityware/singularity}{GitHub
+The following commands will install a tagged version of the \sphinxhref{https://github.com/sylabs/singularity}{GitHub
 repo} to \sphinxcode{\sphinxupquote{/usr/local}}.
 This will work for pre 3.0 tags.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-\PYGZdl{} git clone https://github.com/singularityware/singularity.git
+\PYGZdl{} git clone https://github.com/sylabs/singularity.git
 
 \PYGZdl{} cd singularity
 
@@ -1390,14 +1390,14 @@ option, all of Singularity’s binaries and the configuration file will be insta
 
 \section{Install a specific release}
 \label{\detokenize{installation:install-a-specific-release}}
-The following commands will install a specific release from \sphinxhref{https://github.com/singularityware/singularity/releases}{GitHub
+The following commands will install a specific release from \sphinxhref{https://github.com/sylabs/singularity/releases}{GitHub
 releases} page to \sphinxcode{\sphinxupquote{/usr/local}}.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 \PYGZdl{} VER=2.5.1
 
-\PYGZdl{} wget https://github.com/singularityware/singularity/releases/download/\PYGZdl{}VER/singularity\PYGZhy{}\PYGZdl{}VER.tar.gz
+\PYGZdl{} wget https://github.com/sylabs/singularity/releases/download/\PYGZdl{}VER/singularity\PYGZhy{}\PYGZdl{}VER.tar.gz
 
 \PYGZdl{} tar xvf singularity\PYGZhy{}\PYGZdl{}VER.tar.gz
 
@@ -1482,12 +1482,12 @@ install \sphinxhref{http://vagrantmanager.com/downloads/}{Vagrant Manager for Wi
 \end{itemize}
 
 
-\subsection{Singularityware Vagrant Box}
-\label{\detokenize{installation:singularityware-vagrant-box}}
+\subsection{Singularity Vagrant Box}
+\label{\detokenize{installation:singularity-vagrant-box}}
 We are maintaining a set of Vagrant Boxes via \sphinxhref{https://www.vagrantup.com/}{Vagrant Cloud}, one of \sphinxhref{https://www.hashicorp.com/\#open-source-tools}{Hashicorp} many tools that likely you’ve used and haven’t known it. The current stable version of Singularity is available here:
 \begin{itemize}
 \item {} 
-\sphinxhref{https://app.vagrantup.com/singularityware/boxes/singularity-2.4/versions/2.4}{singularityware/singularity-2.4}
+\sphinxhref{https://app.vagrantup.com/singularityware/boxes/singularity-2.4/versions/2.4}{sylabs/singularity-2.4}
 
 \end{itemize}
 
@@ -1572,7 +1572,7 @@ You can try the following two options:
 
 \subsubsection{Option 1: Download latest stable release}
 \label{\detokenize{installation:option-1-download-latest-stable-release}}
-You can always download the latest tarball release from \sphinxhref{https://github.com/singularityware/singularity/releases}{GitHub}
+You can always download the latest tarball release from \sphinxhref{https://github.com/sylabs/singularity/releases}{GitHub}
 
 For example, here is how to download version \sphinxcode{\sphinxupquote{2.5.2}} and install:
 
@@ -1580,7 +1580,7 @@ For example, here is how to download version \sphinxcode{\sphinxupquote{2.5.2}} 
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
 VERSION=2.5.2
 
-wget https://github.com/singularityware/singularity/releases/download/\PYGZdl{}VERSION/singularity\PYGZhy{}\PYGZdl{}VERSION.tar.gz
+wget https://github.com/sylabs/singularity/releases/download/\PYGZdl{}VERSION/singularity\PYGZhy{}\PYGZdl{}VERSION.tar.gz
 
 tar xvf singularity\PYGZhy{}\PYGZdl{}VERSION.tar.gz
 
@@ -1609,7 +1609,7 @@ To download the most recent development code, you should use Git and do the foll
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-git clone https://github.com/singularityware/singularity.git
+git clone https://github.com/sylabs/singularity.git
 
 cd singularity
 
@@ -1886,8 +1886,8 @@ brew cask install vagrant\PYGZhy{}manager
 \end{sphinxVerbatim}
 
 
-\subsection{Option 1: Singularityware Vagrant Box}
-\label{\detokenize{installation:option-1-singularityware-vagrant-box}}
+\subsection{Option 1: Singularity Vagrant Box}
+\label{\detokenize{installation:option-1-singularity-vagrant-box}}
 We are maintaining a set of Vagrant Boxes via \sphinxhref{https://www.vagrantup.com/}{Vagrant Cloud}, one of \sphinxhref{https://www.hashicorp.com/\#open-source-tools}{Hashicorp} many tools that likely you’ve used and haven’t known it. The current stable version of Singularity is available here:
 \begin{itemize}
 \item {} 
@@ -1992,7 +1992,7 @@ vagrant ssh \PYGZhy{}c /bin/sh \PYGZlt{}\PYGZlt{}EOF
 
     sudo apt\PYGZhy{}get \PYGZhy{}y install build\PYGZhy{}essential curl git sudo man vim autoconf libtool
 
-    git clone https://github.com/singularityware/singularity.git
+    git clone https://github.com/sylabs/singularity.git
 
     cd singularity
 
@@ -2062,7 +2062,7 @@ Contributed Content is a good source of presentations, tutorials, and links.
 
 
 \subsection{Installation Request}
-\label{\detokenize{installation:installation-request}}\label{\detokenize{installation:id7}}
+\label{\detokenize{installation:installation-request}}\label{\detokenize{installation:id6}}
 Putting all of the above together, a request might look like the following:
 
 \fvset{hllines={, ,}}%
@@ -2070,7 +2070,7 @@ Putting all of the above together, a request might look like the following:
 Dear Research Computing,
 
 
-We are interested in having an installation of the Singularity software (https://singularityware.github.io) installed on our cluster. Singularity containers will allow us to build encapsulated environments, meaning that our work is reproducible and we are empowered to choose all dependencies including libraries, operating system, and custom software. Singularity is already installed on over 50 centers internationally (http://singularity.lbl.gov/citation\PYGZhy{}registration) including TACC, NIH,
+We are interested in having an installation of the Singularity software (https://sylabs.github.io) installed on our cluster. Singularity containers will allow us to build encapsulated environments, meaning that our work is reproducible and we are empowered to choose all dependencies including libraries, operating system, and custom software. Singularity is already installed on over 50 centers internationally (http://singularity.lbl.gov/citation\PYGZhy{}registration) including TACC, NIH,
 
 and several National Labs, Universities, Hospitals. Importantly, it has a vibrant team of developers, scientists, and HPC administrators that invest heavily in the security and development of the software, and are quick to respond to the needs of the community. To help learn more about Singularity, I thought these items might be of interest:
 
@@ -2507,7 +2507,7 @@ different, or to customize the name of the pulled image.
 \section{Environment Variables}
 \label{\detokenize{build_environment:environment-variables}}
 All environmental variables are parsed by Singularity python helper
-functions, and specifically the file \sphinxhref{https://github.com/singularityware/singularity/blob/2.6.0/libexec/python/defaults.py}{defaults.py} is a gateway
+functions, and specifically the file \sphinxhref{https://github.com/sylabs/singularity/blob/2.6.0/libexec/python/defaults.py}{defaults.py} is a gateway
 between variables defined at runtime, and pre-defined defaults. By way
 of import from the file, variables set at runtime do not change if
 re-imported. This was done intentionally to prevent changes during the
@@ -2696,7 +2696,7 @@ options intended for \sphinxcode{\sphinxupquote{/bin/sh}}
 \end{enumerate}
 
 \begin{DUlineblock}{0em}
-\item[] Please see the {\hyperref[\detokenize{container_recipes:examples}]{\sphinxcrossref{examples}}} directory in the \sphinxhref{https://github.com/singularityware/singularity}{Singularity source code}
+\item[] Please see the {\hyperref[\detokenize{container_recipes:examples}]{\sphinxcrossref{examples}}} directory in the \sphinxhref{https://github.com/sylabs/singularity}{Singularity source code}
 for some ideas on how to get started.
 \end{DUlineblock}
 
@@ -4717,11 +4717,11 @@ default checks, just don’t specify a tag or level.
 \section{What checks are available?}
 \label{\detokenize{container_checks:what-checks-are-available}}
 Currently, you can view all installable checks
-\sphinxhref{https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh\#L49}{here},
+\sphinxhref{https://github.com/sylabs/singularity/blob/release-2.6/libexec/helpers/check.sh\#L49}{here},
 and we anticipate adding an ability to view tags that are available,
 along with your own custom checks. You should also ask your
 administration if new checks have been added not supported by
-Singularity. If you want to request adding a new check, please \sphinxhref{https://github.com/singularityware/singularity/issues}{tell
+Singularity. If you want to request adding a new check, please \sphinxhref{https://github.com/sylabs/singularity/issues}{tell
 us!}.
 
 
@@ -5542,7 +5542,7 @@ present working directory.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
-wget https://raw.githubusercontent.com/singularityware/singularity/master/examples/apps/Singularity.cowsay
+wget https://raw.githubusercontent.com/sylabs/singularity/master/examples/apps/Singularity.cowsay
 
 sudo singularity build moo.simg Singularity.cowsay
 \end{sphinxVerbatim}
@@ -6096,7 +6096,7 @@ have credentials for.
 While most docker images can import and run without a hitch, there are
 some special cases for which things can go wrong. Here is a general list
 of suggested practices, and if you discover a new one in your building
-ventures please \sphinxhref{https://www.github.com/singularityware/singularityware.github.io/issues}{let us know}.
+ventures please \sphinxhref{https://github.com/sylabs/singularity/issues}{let us know}.
 
 
 \subsection{1. Installation to Root}
@@ -6132,15 +6132,15 @@ practice \#3 we suggest the following:
 
 Don’t put container valuables in \sphinxcode{\sphinxupquote{\$TMP}} or \sphinxcode{\sphinxupquote{\$HOME}}
 
-Have any more best practices? Please \sphinxhref{https://www.github.com/singularityware/singularityware.github.io/issues}{let us know}!
+Have any more best practices? Please \sphinxhref{https://github.com/sylabs/singularity/issues}{let us know}!
 
 
 \section{Troubleshooting}
 \label{\detokenize{singularity_and_docker:troubleshooting}}
 Why won’t my image build work? If you can’t find an answer on this documentation,
-please \sphinxhref{https://www.github.com/singularityware/singularity/issues}{send us an issue}. If you’ve found an answer and you’d like to
+please \sphinxhref{https://github.com/sylabs/singularity/issues}{send us an issue}. If you’ve found an answer and you’d like to
 see it on the site for others to benefit from, then post to us
-\sphinxhref{https://www.github.com/singularityware/singularityware.github.io/issues}{here}.
+\sphinxhref{https://github.com/sylabs/singularity/issues}{here}.
 
 
 \chapter{Troubleshooting}
@@ -6214,7 +6214,7 @@ update\PYGZhy{}grub \PYGZam{}\PYGZam{} reboot
 \end{sphinxVerbatim}
 
 Please note that this change might have \sphinxhref{https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/admin-guide/kernel-parameters.txt?h=v4.13-rc3\#n4387}{security implications} that
-you should be aware of. For more information, see the \sphinxhref{https://github.com/singularityware/singularity/issues/845}{original issue}.
+you should be aware of. For more information, see the \sphinxhref{https://github.com/sylabs/singularity/issues/845}{original issue}.
 
 
 \section{How to use Singularity with GRSecurity enabled kernels}
@@ -6241,7 +6241,7 @@ several security features:
 Singularity by default mounts your home directory. While this is great
 for seamless communication between your host and the container, it can
 introduce issues if you have software modules installed at \sphinxcode{\sphinxupquote{\$HOME}}. For
-example, we had a user \sphinxhref{https://github.com/singularityware/singularity/issues/476}{run into this issue}.
+example, we had a user \sphinxhref{https://github.com/sylabs/singularity/issues/476}{run into this issue}.
 
 \sphinxstylestrong{Solution 1: Specify the home to mount}
 A first thing to try is to point to some “sanitized home,” which is
@@ -6654,8 +6654,8 @@ information necessary for that particular bootstrap module to build a core opera
 \subsection{Notes}
 \label{\detokenize{appendix:id21}}
 Arch Linux is, by design, a very stripped down, light-weight OS. You may need to perform a fair amount of configuration to get a usable OS. Please refer
-to this \sphinxhref{https://github.com/singularityware/singularity/blob/master/examples/arch/README.md}{README.md} and
-the \sphinxhref{https://github.com/singularityware/singularity/blob/master/examples/arch/Singularity}{Arch Linux example} for more info.
+to this \sphinxhref{https://github.com/sylabs/singularity/blob/master/examples/arch/README.md}{README.md} and
+the \sphinxhref{https://github.com/sylabs/singularity/blob/master/examples/arch/Singularity}{Arch Linux example} for more info.
 
 
 \section{build-busybox}
@@ -7702,7 +7702,7 @@ or with \sphinxcode{\sphinxupquote{-{-}json}} output.
 The goal of these commands is to bring more transparency to containers,
 and to help better integrate them into common workflows by having them
 expose their guts to the world! If you have feedback for how we can
-improve or amend this, \sphinxhref{https://github.com/singularityware/singularity/issues}{please let us know}!
+improve or amend this, \sphinxhref{https://github.com/sylabs/singularity/issues}{please let us know}!
 
 
 \subsection{pull}
@@ -8979,12 +8979,12 @@ Have a GitHub account (this just makes it easier on me)
 \end{itemize}
 
 We use the traditional \sphinxhref{https://guides.github.com/introduction/flow/}{GitHub Flow} to develop. This means that you fork the repo and checkout a branch to make changes, you submit a pull request (PR) to the development branch with your changes, and the development branch gets merged with master for official releases.
-We also have an official \sphinxhref{https://github.com/singularityware/singularity/blob/master/CONTRIBUTING.md}{CONTRIBUTING} document, which also includes a \sphinxhref{https://github.com/singularityware/singularity/blob/master/CONTRIBUTING.md\#code-of-conduct}{code of conduct}  .
+We also have an official \sphinxhref{https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md}{CONTRIBUTING} document, which also includes a \sphinxhref{https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md\#code-of-conduct}{code of conduct}  .
 
 
 \subsection{Step 1. Fork the repo}
 \label{\detokenize{contributing:step-1-fork-the-repo}}
-To contribute to the web based documentation, you should obtain a GitHub account and fork the \sphinxhref{https://github.com/singularityware/singularity}{Singularity} repository.
+To contribute to the web based documentation, you should obtain a GitHub account and fork the \sphinxhref{https://github.com/sylabs/singularity}{Singularity} repository.
 Once forked, you will want to clone the fork of the repo to your computer. Let’s say my GitHub username is vsoch, and I am using ssh:
 
 \fvset{hllines={, ,}}%
@@ -9048,7 +9048,7 @@ I would want to add the upstream repository, which is where I forked from.
 
 [remote \PYGZdq{}upstream\PYGZdq{}]
 
-    url = https://github.com/singularityware/singularity
+    url = https://github.com/sylabs/singularity
 
     fetch = +refs/heads/*:refs/remotes/origin/*
 
@@ -9081,7 +9081,7 @@ I can also add some of my colleagues, if I want to pull from their branches:
 
 [remote \PYGZdq{}upstream\PYGZdq{}]
 
-    url = https://github.com/singularityware/singularity
+    url = https://github.com/sylabs/singularity
 
     fetch = +refs/heads/*:refs/remotes/origin/*
 
@@ -9099,7 +9099,7 @@ I can also add some of my colleagues, if I want to pull from their branches:
 \end{sphinxVerbatim}
 
 In the GitHub flow, the master branch is the frozen, current version of the software.
-Your master branch is always in sync with the upstream (our singularityware master), and the singularityware master is always the latest release of
+Your master branch is always in sync with the upstream (our sylabs master), and the sylabs master is always the latest release of Singularity.
 
 This would mean that I can update my master branch as follows:
 
@@ -9126,7 +9126,7 @@ git checkout \PYGZhy{}b development
 git pull origin development
 \end{sphinxVerbatim}
 
-At this point, you can either choose to work on this branch, push to your origin development and pull request to singularityware development, or you can checkout another branch specific to your feature. We recommend always working from, and staying in sync with development. The command below would checkout a branch called \sphinxcode{\sphinxupquote{add/my-awesome-new-feature}} from development.
+At this point, you can either choose to work on this branch, push to your origin development and pull request to sylabs development, or you can checkout another branch specific to your feature. We recommend always working from, and staying in sync with development. The command below would checkout a branch called \sphinxcode{\sphinxupquote{add/my-awesome-new-feature}} from development.
 
 \fvset{hllines={, ,}}%
 \begin{sphinxVerbatim}[commandchars=\\\{\}]
@@ -9198,7 +9198,7 @@ git status
 
 \subsection{Step 6. Submit a Pull Request}
 \label{\detokenize{contributing:step-6-submit-a-pull-request}}
-Once you have pushed your branch, then you can go to either fork and (in the GUI) \sphinxhref{https://help.github.com/articles/creating-a-pull-request/}{submit a Pull Request}. Regardless of the name of your branch, your PR should be submit to the singularityware development branch. This will open up a nice conversation interface / forum for the developers of Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the Pull Request.
+Once you have pushed your branch, then you can go to either fork and (in the GUI) \sphinxhref{https://help.github.com/articles/creating-a-pull-request/}{submit a Pull Request}. Regardless of the name of your branch, your PR should be submit to the sylabs development branch. This will open up a nice conversation interface / forum for the developers of Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the Pull Request.
 
 
 \subsection{Support, helping and spreading the word!}
@@ -9229,7 +9229,7 @@ Other dependencies include:
 
 \end{itemize}
 
-More information about contributing to the documentation and the instructions on how to install the dependencies and how to generate the files can be obtained \sphinxhref{https://github.com/singularityware/singularity-userdocs\#singularity-user-docs}{here}.
+More information about contributing to the documentation and the instructions on how to install the dependencies and how to generate the files can be obtained \sphinxhref{https://github.com/sylabs/singularity-userdocs\#singularity-user-docs}{here}.
 
 
 \chapter{FAQ}

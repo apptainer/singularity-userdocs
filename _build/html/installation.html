@@ -98,7 +98,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#remove-an-old-version">Remove an old version</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#install-on-windows">Install on Windows</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#setup">Setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#singularityware-vagrant-box">Singularityware Vagrant Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#singularity-vagrant-box">Singularity Vagrant Box</a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#install-on-linux">Install on Linux</a><ul>
@@ -121,7 +121,7 @@
 </li>
 <li class="toctree-l2"><a class="reference internal" href="#install-on-mac">Install on Mac</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#id2">Setup</a></li>
-<li class="toctree-l3"><a class="reference internal" href="#option-1-singularityware-vagrant-box">Option 1: Singularityware Vagrant Box</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#option-1-singularity-vagrant-box">Option 1: Singularity Vagrant Box</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#option-2-vagrant-box-from-scratch-more-advanced-alternative">Option 2: Vagrant Box from Scratch (more advanced alternative)</a></li>
 </ul>
 </li>
@@ -205,7 +205,7 @@
 
 
 
-              <a href="https://github.com/singularityware/singularity-userdocs/blob/master/installation.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/sylabs/singularity-userdocs/blob/master/installation.rst" class="fa fa-github"> Edit on GitHub</a>
 
 
 
@@ -253,10 +253,10 @@ into missing dependencies, try installing them WITH <code class="docutils litera
 </div>
 <div class="section" id="install-from-a-tag">
 <h2>Install from a tag<a class="headerlink" href="#install-from-a-tag" title="Permalink to this headline">¶</a></h2>
-<p>The following commands will install a tagged version of the <a class="reference external" href="https://github.com/singularityware/singularity">GitHub
+<p>The following commands will install a tagged version of the <a class="reference external" href="https://github.com/sylabs/singularity">GitHub
 repo</a> to <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>.
 This will work for pre 3.0 tags.</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/singularityware/singularity.git
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ git clone https://github.com/sylabs/singularity.git
 
 $ cd singularity
 
@@ -288,11 +288,11 @@ option, all of Singularity’s binaries and the configuration file will be insta
 </div>
 <div class="section" id="install-a-specific-release">
 <h2>Install a specific release<a class="headerlink" href="#install-a-specific-release" title="Permalink to this headline">¶</a></h2>
-<p>The following commands will install a specific release from <a class="reference external" href="https://github.com/singularityware/singularity/releases">GitHub
+<p>The following commands will install a specific release from <a class="reference external" href="https://github.com/sylabs/singularity/releases">GitHub
 releases</a> page to <code class="docutils literal notranslate"><span class="pre">/usr/local</span></code>.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ VER=2.5.1
 
-$ wget https://github.com/singularityware/singularity/releases/download/$VER/singularity-$VER.tar.gz
+$ wget https://github.com/sylabs/singularity/releases/download/$VER/singularity-$VER.tar.gz
 
 $ tar xvf singularity-$VER.tar.gz
 
@@ -359,11 +359,11 @@ below to continue reading.</p>
 <li>install <a class="reference external" href="http://vagrantmanager.com/downloads/">Vagrant Manager for Windows</a></li>
 </ul>
 </div>
-<div class="section" id="singularityware-vagrant-box">
-<h3>Singularityware Vagrant Box<a class="headerlink" href="#singularityware-vagrant-box" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="singularity-vagrant-box">
+<h3>Singularity Vagrant Box<a class="headerlink" href="#singularity-vagrant-box" title="Permalink to this headline">¶</a></h3>
 <p>We are maintaining a set of Vagrant Boxes via <a class="reference external" href="https://www.vagrantup.com/">Vagrant Cloud</a>, one of <a class="reference external" href="https://www.hashicorp.com/#open-source-tools">Hashicorp</a> many tools that likely you’ve used and haven’t known it. The current stable version of Singularity is available here:</p>
 <ul class="simple">
-<li><a class="reference external" href="https://app.vagrantup.com/singularityware/boxes/singularity-2.4/versions/2.4">singularityware/singularity-2.4</a></li>
+<li><a class="reference external" href="https://app.vagrantup.com/singularityware/boxes/singularity-2.4/versions/2.4">sylabs/singularity-2.4</a></li>
 </ul>
 <p>For other versions of Singularity see <a class="reference external" href="https://app.vagrantup.com/singularityware">our Vagrant Cloud repository</a></p>
 <p>Run GitBash. The default home directory will be C:Usersyour_username</p>
@@ -427,11 +427,11 @@ RaawwWWWWWRRRR!!
 <p>You can try the following two options:</p>
 <div class="section" id="option-1-download-latest-stable-release">
 <h4>Option 1: Download latest stable release<a class="headerlink" href="#option-1-download-latest-stable-release" title="Permalink to this headline">¶</a></h4>
-<p>You can always download the latest tarball release from <a class="reference external" href="https://github.com/singularityware/singularity/releases">GitHub</a></p>
+<p>You can always download the latest tarball release from <a class="reference external" href="https://github.com/sylabs/singularity/releases">GitHub</a></p>
 <p>For example, here is how to download version <code class="docutils literal notranslate"><span class="pre">2.5.2</span></code> and install:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>VERSION=2.5.2
 
-wget https://github.com/singularityware/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
+wget https://github.com/sylabs/singularity/releases/download/$VERSION/singularity-$VERSION.tar.gz
 
 tar xvf singularity-$VERSION.tar.gz
 
@@ -453,7 +453,7 @@ sudo make install
 <div class="section" id="option-2-download-the-latest-development-code">
 <h4>Option 2: Download the latest development code<a class="headerlink" href="#option-2-download-the-latest-development-code" title="Permalink to this headline">¶</a></h4>
 <p>To download the most recent development code, you should use Git and do the following:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/singularityware/singularity.git
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone https://github.com/sylabs/singularity.git
 
 cd singularity
 
@@ -675,8 +675,8 @@ brew cask install vagrant-manager
 </pre></div>
 </div>
 </div>
-<div class="section" id="option-1-singularityware-vagrant-box">
-<h3>Option 1: Singularityware Vagrant Box<a class="headerlink" href="#option-1-singularityware-vagrant-box" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="option-1-singularity-vagrant-box">
+<h3>Option 1: Singularity Vagrant Box<a class="headerlink" href="#option-1-singularity-vagrant-box" title="Permalink to this headline">¶</a></h3>
 <p>We are maintaining a set of Vagrant Boxes via <a class="reference external" href="https://www.vagrantup.com/">Vagrant Cloud</a>, one of <a class="reference external" href="https://www.hashicorp.com/#open-source-tools">Hashicorp</a> many tools that likely you’ve used and haven’t known it. The current stable version of Singularity is available here:</p>
 <ul class="simple">
 <li><a class="reference external" href="https://app.vagrantup.com/singularityware/boxes/singularity-2.4/versions/2.4">singularityware/singularity-2.4</a></li>
@@ -756,7 +756,7 @@ vagrant ssh -c /bin/sh &lt;&lt;EOF
 
     sudo apt-get -y install build-essential curl git sudo man vim autoconf libtool
 
-    git clone https://github.com/singularityware/singularity.git
+    git clone https://github.com/sylabs/singularity.git
 
     cd singularity
 
@@ -809,12 +809,12 @@ EOF
 </div>
 </div>
 <div class="section" id="installation-request">
-<span id="id7"></span><h3>Installation Request<a class="headerlink" href="#installation-request" title="Permalink to this headline">¶</a></h3>
+<span id="id6"></span><h3>Installation Request<a class="headerlink" href="#installation-request" title="Permalink to this headline">¶</a></h3>
 <p>Putting all of the above together, a request might look like the following:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Dear Research Computing,
 
 
-We are interested in having an installation of the Singularity software (https://singularityware.github.io) installed on our cluster. Singularity containers will allow us to build encapsulated environments, meaning that our work is reproducible and we are empowered to choose all dependencies including libraries, operating system, and custom software. Singularity is already installed on over 50 centers internationally (http://singularity.lbl.gov/citation-registration) including TACC, NIH,
+We are interested in having an installation of the Singularity software (https://sylabs.github.io) installed on our cluster. Singularity containers will allow us to build encapsulated environments, meaning that our work is reproducible and we are empowered to choose all dependencies including libraries, operating system, and custom software. Singularity is already installed on over 50 centers internationally (http://singularity.lbl.gov/citation-registration) including TACC, NIH,
 
 and several National Labs, Universities, Hospitals. Importantly, it has a vibrant team of developers, scientists, and HPC administrators that invest heavily in the security and development of the software, and are quick to respond to the needs of the community. To help learn more about Singularity, I thought these items might be of interest:
 
