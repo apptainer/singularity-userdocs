@@ -313,8 +313,8 @@ Notes
 =====
 
 Arch Linux is, by design, a very stripped down, light-weight OS. You may need to perform a fair amount of configuration to get a usable OS. Please refer
-to this `README.md <https://github.com/singularityware/singularity/blob/master/examples/arch/README.md>`_ and
-the `Arch Linux example <https://github.com/singularityware/singularity/blob/master/examples/arch/Singularity>`_ for more info.
+to this `README.md <https://github.com/sylabs/singularity/blob/master/examples/arch/README.md>`_ and
+the `Arch Linux example <https://github.com/sylabs/singularity/blob/master/examples/arch/Singularity>`_ for more info.
 
 .. _build-busybox:
 
@@ -1339,7 +1339,7 @@ or with ``--json`` output.
 The goal of these commands is to bring more transparency to containers,
 and to help better integrate them into common workflows by having them
 expose their guts to the world! If you have feedback for how we can
-improve or amend this, `please let us know <https://github.com/singularityware/singularity/issues>`_!
+improve or amend this, `please let us know <https://github.com/sylabs/singularity/issues>`_!
 
 .. _pull-command:
 

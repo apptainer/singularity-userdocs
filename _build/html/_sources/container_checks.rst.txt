@@ -72,9 +72,9 @@ What checks are available?
 --------------------------
 
 Currently, you can view all installable checks
-`here <https://github.com/singularityware/singularity/blob/development/libexec/helpers/check.sh#L49>`__,
+`here <https://github.com/sylabs/singularity/blob/release-2.6/libexec/helpers/check.sh#L49>`__,
 and we anticipate adding an ability to view tags that are available,
 along with your own custom checks. You should also ask your
 administration if new checks have been added not supported by
 Singularity. If you want to request adding a new check, please `tell
-us! <https://github.com/singularityware/singularity/issues>`_.
+us! <https://github.com/sylabs/singularity/issues>`_.

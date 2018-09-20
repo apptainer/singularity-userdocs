@@ -24,7 +24,7 @@ You will need ``git`` to download the source code and the appropriate tools and 
 
 .. code-block:: none
 
-    git clone https://github.com/singularityware/singularity.git
+    git clone https://github.com/sylabs/singularity.git
 
     cd singularity
 
@@ -126,7 +126,7 @@ follows:
 
     For any additional help or support visit the Singularity
 
-    website: https://github.com/singularityware/singularity
+    website: https://github.com/sylabs/singularity
 
 For any additional help or support visit the Singularity website:
 https://www.sylabs.io/contact/

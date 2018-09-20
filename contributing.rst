@@ -42,13 +42,13 @@ To contribute to the development of Singularity, you must:
 -  Have a GitHub account (this just makes it easier on me)
 
 We use the traditional `GitHub Flow <https://guides.github.com/introduction/flow/>`_ to develop. This means that you fork the repo and checkout a branch to make changes, you submit a pull request (PR) to the development branch with your changes, and the development branch gets merged with master for official releases.
-We also have an official `CONTRIBUTING <https://github.com/singularityware/singularity/blob/master/CONTRIBUTING.md>`_ document, which also includes a `code of conduct <https://github.com/singularityware/singularity/blob/master/CONTRIBUTING.md#code-of-conduct>`_  .
+We also have an official `CONTRIBUTING <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md>`_ document, which also includes a `code of conduct <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md#code-of-conduct>`_  .
 
 
 Step 1. Fork the repo
 =====================
 
-To contribute to the web based documentation, you should obtain a GitHub account and fork the `Singularity <https://github.com/singularityware/singularity>`_ repository.
+To contribute to the web based documentation, you should obtain a GitHub account and fork the `Singularity <https://github.com/sylabs/singularity>`_ repository.
 Once forked, you will want to clone the fork of the repo to your computer. Let’s say my GitHub username is vsoch, and I am using ssh:
 
 .. code-block:: none
@@ -112,7 +112,7 @@ I would want to add the upstream repository, which is where I forked from.
 
     [remote "upstream"]
 
-        url = https://github.com/singularityware/singularity
+        url = https://github.com/sylabs/singularity
 
         fetch = +refs/heads/*:refs/remotes/origin/*
 
@@ -145,7 +145,7 @@ I can also add some of my colleagues, if I want to pull from their branches:
 
     [remote "upstream"]
 
-        url = https://github.com/singularityware/singularity
+        url = https://github.com/sylabs/singularity
 
         fetch = +refs/heads/*:refs/remotes/origin/*
 
@@ -163,7 +163,7 @@ I can also add some of my colleagues, if I want to pull from their branches:
 
 
 In the GitHub flow, the master branch is the frozen, current version of the software.
-Your master branch is always in sync with the upstream (our singularityware master), and the singularityware master is always the latest release of
+Your master branch is always in sync with the upstream (our sylabs master), and the sylabs master is always the latest release of Singularity.
 
 This would mean that I can update my master branch as follows:
 
@@ -190,7 +190,7 @@ Step 3. Checkout a new branch
     git pull origin development
 
 
-At this point, you can either choose to work on this branch, push to your origin development and pull request to singularityware development, or you can checkout another branch specific to your feature. We recommend always working from, and staying in sync with development. The command below would checkout a branch called ``add/my-awesome-new-feature`` from development.
+At this point, you can either choose to work on this branch, push to your origin development and pull request to sylabs development, or you can checkout another branch specific to your feature. We recommend always working from, and staying in sync with development. The command below would checkout a branch called ``add/my-awesome-new-feature`` from development.
 
 .. code-block:: none
 
@@ -255,7 +255,7 @@ Note that you should always check the status of your branches to see what has be
 Step 6. Submit a Pull Request
 =============================
 
-Once you have pushed your branch, then you can go to either fork and (in the GUI) `submit a Pull Request <https://help.github.com/articles/creating-a-pull-request/>`_. Regardless of the name of your branch, your PR should be submit to the singularityware development branch. This will open up a nice conversation interface / forum for the developers of Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the Pull Request.
+Once you have pushed your branch, then you can go to either fork and (in the GUI) `submit a Pull Request <https://help.github.com/articles/creating-a-pull-request/>`_. Regardless of the name of your branch, your PR should be submit to the sylabs development branch. This will open up a nice conversation interface / forum for the developers of Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the Pull Request.
 
 Support, helping and spreading the word!
 ========================================
@@ -280,4 +280,4 @@ Other dependencies include:
 
 - `Sphinx <https://pypi.org/project/Sphinx/>`_
 
-More information about contributing to the documentation and the instructions on how to install the dependencies and how to generate the files can be obtained `here <https://github.com/singularityware/singularity-userdocs#singularity-user-docs>`_.
+More information about contributing to the documentation and the instructions on how to install the dependencies and how to generate the files can be obtained `here <https://github.com/sylabs/singularity-userdocs#singularity-user-docs>`_.

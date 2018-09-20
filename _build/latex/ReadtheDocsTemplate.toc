@@ -58,7 +58,7 @@
 \contentsline {section}{\numberline {3.5}Remove an old version}{22}{section.3.5}
 \contentsline {section}{\numberline {3.6}Install on Windows}{23}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}Setup}{23}{subsection.3.6.1}
-\contentsline {subsection}{\numberline {3.6.2}Singularityware Vagrant Box}{23}{subsection.3.6.2}
+\contentsline {subsection}{\numberline {3.6.2}Singularity Vagrant Box}{23}{subsection.3.6.2}
 \contentsline {section}{\numberline {3.7}Install on Linux}{24}{section.3.7}
 \contentsline {subsection}{\numberline {3.7.1}Installation from Source}{24}{subsection.3.7.1}
 \contentsline {subsubsection}{\numberline {3.7.1.1}Option 1: Download latest stable release}{25}{subsubsection.3.7.1.1}
@@ -73,7 +73,7 @@
 \contentsline {subsection}{\numberline {3.7.5}Install on your Cluster Resource}{29}{subsection.3.7.5}
 \contentsline {section}{\numberline {3.8}Install on Mac}{29}{section.3.8}
 \contentsline {subsection}{\numberline {3.8.1}Setup}{29}{subsection.3.8.1}
-\contentsline {subsection}{\numberline {3.8.2}Option 1: Singularityware Vagrant Box}{30}{subsection.3.8.2}
+\contentsline {subsection}{\numberline {3.8.2}Option 1: Singularity Vagrant Box}{30}{subsection.3.8.2}
 \contentsline {subsection}{\numberline {3.8.3}Option 2: Vagrant Box from Scratch (more advanced alternative)}{31}{subsection.3.8.3}
 \contentsline {section}{\numberline {3.9}Requesting an Installation}{32}{section.3.9}
 \contentsline {subsection}{\numberline {3.9.1}How do I ask for Singularity on my local resource?}{32}{subsection.3.9.1}

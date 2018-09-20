@@ -33,7 +33,7 @@ A Singularity Recipe file is divided into several parts:
    sections that produce scripts to be executed at runtime can accept
    options intended for ``/bin/sh``
 
-| Please see the `examples`_ directory in the `Singularity source code <https://github.com/singularityware/singularity>`_
+| Please see the `examples`_ directory in the `Singularity source code <https://github.com/sylabs/singularity>`_
   for some ideas on how to get started.
 
 Header

@@ -642,7 +642,7 @@ License
 =======
 
 Singularity is released under a standard 3 clause BSD license.
-Please see our `LICENSE <https://github.com/singularityware/singularity/blob/master/LICENSE.md>`_ file for more details).
+Please see our `LICENSE <https://github.com/sylabs/singularity/blob/master/LICENSE.md>`_ file for more details).
 
 Getting started
 ===============

@@ -527,7 +527,7 @@ present working directory.
 
 .. code-block:: none
 
-    wget https://raw.githubusercontent.com/singularityware/singularity/master/examples/apps/Singularity.cowsay
+    wget https://raw.githubusercontent.com/sylabs/singularity/master/examples/apps/Singularity.cowsay
 
     sudo singularity build moo.simg Singularity.cowsay
 

@@ -176,7 +176,7 @@
 
 
 
-              <a href="https://github.com/singularityware/singularity-userdocs/blob/master/contributing.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/sylabs/singularity-userdocs/blob/master/contributing.rst" class="fa fa-github"> Edit on GitHub</a>
 
 
 
@@ -222,10 +222,10 @@ service provider, and system administrators include Singularity for you!</p>
 <li>Have a GitHub account (this just makes it easier on me)</li>
 </ul>
 <p>We use the traditional <a class="reference external" href="https://guides.github.com/introduction/flow/">GitHub Flow</a> to develop. This means that you fork the repo and checkout a branch to make changes, you submit a pull request (PR) to the development branch with your changes, and the development branch gets merged with master for official releases.
-We also have an official <a class="reference external" href="https://github.com/singularityware/singularity/blob/master/CONTRIBUTING.md">CONTRIBUTING</a> document, which also includes a <a class="reference external" href="https://github.com/singularityware/singularity/blob/master/CONTRIBUTING.md#code-of-conduct">code of conduct</a>  .</p>
+We also have an official <a class="reference external" href="https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md">CONTRIBUTING</a> document, which also includes a <a class="reference external" href="https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md#code-of-conduct">code of conduct</a>  .</p>
 <div class="section" id="step-1-fork-the-repo">
 <h3>Step 1. Fork the repo<a class="headerlink" href="#step-1-fork-the-repo" title="Permalink to this headline">¶</a></h3>
-<p>To contribute to the web based documentation, you should obtain a GitHub account and fork the <a class="reference external" href="https://github.com/singularityware/singularity">Singularity</a> repository.
+<p>To contribute to the web based documentation, you should obtain a GitHub account and fork the <a class="reference external" href="https://github.com/sylabs/singularity">Singularity</a> repository.
 Once forked, you will want to clone the fork of the repo to your computer. Let’s say my GitHub username is vsoch, and I am using ssh:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git clone git@github.com:vsoch/singularity.git
 
@@ -280,7 +280,7 @@ Let’s say my <code class="docutils literal notranslate"><span class="pre">.git
 
 [remote &quot;upstream&quot;]
 
-    url = https://github.com/singularityware/singularity
+    url = https://github.com/sylabs/singularity
 
     fetch = +refs/heads/*:refs/remotes/origin/*
 
@@ -310,7 +310,7 @@ Let’s say my <code class="docutils literal notranslate"><span class="pre">.git
 
 [remote &quot;upstream&quot;]
 
-    url = https://github.com/singularityware/singularity
+    url = https://github.com/sylabs/singularity
 
     fetch = +refs/heads/*:refs/remotes/origin/*
 
@@ -328,7 +328,7 @@ Let’s say my <code class="docutils literal notranslate"><span class="pre">.git
 </pre></div>
 </div>
 <p>In the GitHub flow, the master branch is the frozen, current version of the software.
-Your master branch is always in sync with the upstream (our singularityware master), and the singularityware master is always the latest release of</p>
+Your master branch is always in sync with the upstream (our sylabs master), and the sylabs master is always the latest release of Singularity.</p>
 <p>This would mean that I can update my master branch as follows:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>git checkout master
 
@@ -347,7 +347,7 @@ git push origin master
 git pull origin development
 </pre></div>
 </div>
-<p>At this point, you can either choose to work on this branch, push to your origin development and pull request to singularityware development, or you can checkout another branch specific to your feature. We recommend always working from, and staying in sync with development. The command below would checkout a branch called <code class="docutils literal notranslate"><span class="pre">add/my-awesome-new-feature</span></code> from development.</p>
+<p>At this point, you can either choose to work on this branch, push to your origin development and pull request to sylabs development, or you can checkout another branch specific to your feature. We recommend always working from, and staying in sync with development. The command below would checkout a branch called <code class="docutils literal notranslate"><span class="pre">add/my-awesome-new-feature</span></code> from development.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span># Checkout a new branch called add/my-awesome-feature
 
 git checkout -b add/my-awesome-feature development
@@ -392,7 +392,7 @@ git checkout master
 </div>
 <div class="section" id="step-6-submit-a-pull-request">
 <h3>Step 6. Submit a Pull Request<a class="headerlink" href="#step-6-submit-a-pull-request" title="Permalink to this headline">¶</a></h3>
-<p>Once you have pushed your branch, then you can go to either fork and (in the GUI) <a class="reference external" href="https://help.github.com/articles/creating-a-pull-request/">submit a Pull Request</a>. Regardless of the name of your branch, your PR should be submit to the singularityware development branch. This will open up a nice conversation interface / forum for the developers of Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the Pull Request.</p>
+<p>Once you have pushed your branch, then you can go to either fork and (in the GUI) <a class="reference external" href="https://help.github.com/articles/creating-a-pull-request/">submit a Pull Request</a>. Regardless of the name of your branch, your PR should be submit to the sylabs development branch. This will open up a nice conversation interface / forum for the developers of Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the Pull Request.</p>
 </div>
 <div class="section" id="support-helping-and-spreading-the-word">
 <h3>Support, helping and spreading the word!<a class="headerlink" href="#support-helping-and-spreading-the-word" title="Permalink to this headline">¶</a></h3>
@@ -412,7 +412,7 @@ git checkout master
 <li><a class="reference external" href="https://www.python.org/download/releases/2.7/">Python 2.7</a></li>
 <li><a class="reference external" href="https://pypi.org/project/Sphinx/">Sphinx</a></li>
 </ul>
-<p>More information about contributing to the documentation and the instructions on how to install the dependencies and how to generate the files can be obtained <a class="reference external" href="https://github.com/singularityware/singularity-userdocs#singularity-user-docs">here</a>.</p>
+<p>More information about contributing to the documentation and the instructions on how to install the dependencies and how to generate the files can be obtained <a class="reference external" href="https://github.com/sylabs/singularity-userdocs#singularity-user-docs">here</a>.</p>
 </div>
 </div>
 

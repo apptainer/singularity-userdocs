@@ -167,7 +167,7 @@
 
 
 
-              <a href="https://github.com/singularityware/singularity-userdocs/blob/master/troubleshooting.rst" class="fa fa-github"> Edit on GitHub</a>
+              <a href="https://github.com/sylabs/singularity-userdocs/blob/master/troubleshooting.rst" class="fa fa-github"> Edit on GitHub</a>
 
 
 
@@ -234,7 +234,7 @@ following:</p>
 </pre></div>
 </div>
 <p>Please note that this change might have <a class="reference external" href="https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/admin-guide/kernel-parameters.txt?h=v4.13-rc3#n4387">security implications</a> that
-you should be aware of. For more information, see the <a class="reference external" href="https://github.com/singularityware/singularity/issues/845">original issue</a>.</p>
+you should be aware of. For more information, see the <a class="reference external" href="https://github.com/sylabs/singularity/issues/845">original issue</a>.</p>
 </div>
 <div class="section" id="how-to-use-singularity-with-grsecurity-enabled-kernels">
 <h2>How to use Singularity with GRSecurity enabled kernels<a class="headerlink" href="#how-to-use-singularity-with-grsecurity-enabled-kernels" title="Permalink to this headline">¶</a></h2>
@@ -257,7 +257,7 @@ $ sudo sysctl -w kernel.grsecurity.chroot_deny_fchdir=0
 <p>Singularity by default mounts your home directory. While this is great
 for seamless communication between your host and the container, it can
 introduce issues if you have software modules installed at <code class="docutils literal notranslate"><span class="pre">$HOME</span></code>. For
-example, we had a user <a class="reference external" href="https://github.com/singularityware/singularity/issues/476">run into this issue</a>.</p>
+example, we had a user <a class="reference external" href="https://github.com/sylabs/singularity/issues/476">run into this issue</a>.</p>
 <p><strong>Solution 1: Specify the home to mount</strong>
 A first thing to try is to point to some “sanitized home,” which is
 the purpose of the -H or –home option. For example, here we are
