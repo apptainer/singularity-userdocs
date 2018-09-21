@@ -69,7 +69,7 @@ and then update grub and reboot:
     update-grub && reboot
 
 Please note that this change might have `security implications <https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/admin-guide/kernel-parameters.txt?h=v4.13-rc3#n4387>`_ that
-you should be aware of. For more information, see the `original issue <https://github.com/singularityware/singularity/issues/845>`_.
+you should be aware of. For more information, see the `original issue <https://github.com/sylabs/singularity/issues/845>`_.
 
 ------------------------------------------------------
 How to use Singularity with GRSecurity enabled kernels
@@ -96,7 +96,7 @@ The container isn’t working on a different host!
 Singularity by default mounts your home directory. While this is great
 for seamless communication between your host and the container, it can
 introduce issues if you have software modules installed at ``$HOME``. For
-example, we had a user `run into this issue <https://github.com/singularityware/singularity/issues/476>`_.
+example, we had a user `run into this issue <https://github.com/sylabs/singularity/issues/476>`_.
 
 **Solution 1: Specify the home to mount**
 A first thing to try is to point to some “sanitized home,” which is
@@ -209,15 +209,15 @@ directive with corresponding path:
 .. _Singularity Registry: https://www.github.com/singularityhub/sregistry
 .. _reach out!: https://www.sylabs.io/contact/
 .. _Reach out to us: https://www.sylabs.io/bug-report/
-.. _GitHub repo: https://github.com/singularityware/singularity
-.. _GitHub releases: https://github.com/singularityware/singularity/releases
+.. _GitHub repo: https://github.com/sylabs/singularity
+.. _GitHub releases: https://github.com/sylabs/singularity/releases
 .. _here: https://sci-f.github.io/tutorials
 .. _this guide: https://github.com/singularityhub/singularityhub.github.io/wiki
-.. _defaults.py: https://github.com/singularityware/singularity/blob/master/libexec/python/defaults.py
+.. _defaults.py: https://github.com/sylabs/singularity/blob/2.5.0/libexec/python/defaults.py
 .. _manifest list: https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list
 .. _Scientific Filesystem: https://sci-f.github.io/
-.. _examples: https://github.com/singularityware/singularity/tree/master/examples
-.. _Singularity source code: https://github.com/singularityware/singularity
+.. _examples: https://github.com/sylabs/singularity/tree/master/examples
+.. _Singularity source code: https://github.com/sylabs/singularity
 .. _shub: http://singularity-userdoc.readthedocs.io/en/latest/#build-shub
 .. _localimage: http://singularity-userdoc.readthedocs.io/en/latest/#build-localimage
 .. _yum: http://singularity-userdoc.readthedocs.io/en/latest/#build-yum
@@ -235,24 +235,24 @@ directive with corresponding path:
 .. _here on GitHub: https://github.com/bauerm97/instance-example
 .. _here on SingularityHub: https://singularity-hub.org/collections/bauerm97/instance-example/
 .. _Puppeteer: https://github.com/GoogleChrome/puppeteer
-.. _tell us!: https://github.com/singularityware/singularity/issues
+.. _tell us!: https://github.com/sylabs/singularity/issues
 .. _rc1 Label Schema: http://label-schema.org/rc1/
 .. _scientific filesystem: https://sci-f.github.io/
-.. _cowsay container: https://github.com/singularityware/singularity/blob/development/examples/apps/Singularity.cowsay
+.. _cowsay container: https://github.com/sylabs/singularity/blob/development/examples/apps/Singularity.cowsay
 .. _GodLoveD: https://www.github.com/GodLoveD
 .. _full documentation: https://sci-f.github.io/
 .. _take a look at these examples: https://asciinema.org/a/139153?speed=3
 .. _Docker image folder: http://stackoverflow.com/questions/19234831/where-are-docker-images-stored-on-the-host-machine
 .. _Docker Remote API: https://docs.docker.com/engine/reference/api/docker_remote_api/
-.. _let us know: https://www.github.com/singularityware/singularityware.github.io/issues
+.. _let us know: https://www.github.com/sylabs/singularity/issues
 .. _ldconfig: https://codeyarns.com/2014/01/14/how-to-add-library-directory-to-ldconfig-cache/
-.. _ping us an issue: https://www.github.com/singularityware/singularity/issues
+.. _ping us an issue: https://www.github.com/sylabs/singularity/issues
 .. _security implications: https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/Documentation/admin-guide/kernel-parameters.txt?h=v4.13-rc3#n4387
-.. _original issue: https://github.com/singularityware/singularity/issues/845
-.. _run into this issue: https://github.com/singularityware/singularity/issues/476
+.. _original issue: https://github.com/sylabs/singularity/issues/845
+.. _run into this issue: https://github.com/sylabs/singularity/issues/476
 .. _yarikoptic: https://github.com/yarikoptic
 .. _flags: http://singularity-userdoc.readthedocs.io/en/latest/#singularity-action-flags
-.. _please let us know: https://github.com/singularityware/singularity/issues
+.. _please let us know: https://github.com/sylabs/singularity/issues
 .. _Docker: https://hub.docker.com/
 .. _Singularity Hub images: https://singularity-hub.org/
 .. _Singularity Hub docs: https://singularity-hub.org/faq

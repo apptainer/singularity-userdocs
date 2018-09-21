@@ -34,7 +34,7 @@ A Singularity Recipe file is divided into several parts:
    sections that produce scripts to be executed at runtime can accept
    options intended for ``/bin/sh``
 
-| Please see the `examples`_ directory in the `Singularity source code <https://github.com/singularityware/singularity>`_
+| Please see the `examples`_ directory in the `Singularity source code <https://github.com/sylabs/singularity>`_
   for some ideas on how to get started.
 
 Header
@@ -146,7 +146,7 @@ of the container after the base OS has been installed. For versions
 earlier than 2.3 if you need files during %post, you should copy files
 from your host to ``$SINGULARITY_ROOTFS`` to move them into the
 container. For >2.3 you can add files to the container (added before
-%post) using the %files section. 
+%post) using the %files section.
 
 In the above, we see that copying something to ``$SINGULARITY_ROOTFS`` during ``%setup`` was successful
 to move the file into the container, but copying during ``%post`` was not. Let’s

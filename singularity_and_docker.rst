@@ -385,7 +385,7 @@ Best Practices
 While most docker images can import and run without a hitch, there are
 some special cases for which things can go wrong. Here is a general list
 of suggested practices, and if you discover a new one in your building
-ventures please `let us know <https://www.github.com/singularityware/singularityware.github.io/issues>`_.
+ventures please `let us know <https://www.github.com/sylabs/singularity/issues>`_.
 
 1. Installation to Root
 =======================
@@ -421,13 +421,13 @@ practice #3 we suggest the following:
 
 Don’t put container valuables in ``$TMP`` or ``$HOME``
 
-Have any more best practices? Please `let us know <https://www.github.com/singularityware/singularityware.github.io/issues>`_!
+Have any more best practices? Please `let us know <https://www.github.com/sylabs/singularity/issues>`_!
 
 ---------------
 Troubleshooting
 ---------------
 
 Why won’t my image build work? If you can’t find an answer on this site,
-please `send us an issue <https://www.github.com/singularityware/singularity/issues>`_. If you’ve found an answer and you’d like to
+please `send us an issue <https://www.github.com/sylabs/singularity/issues>`_. If you’ve found an answer and you’d like to
 see it on the site for others to benefit from, then post to us
-`here <https://www.github.com/singularityware/singularityware.github.io/issues>`__.
+`here <https://www.github.com/sylabs/singularity/issues>`__.

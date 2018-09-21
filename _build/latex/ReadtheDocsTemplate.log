@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.20)  19 SEP 2018 20:39
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.20)  21 SEP 2018 10:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1333,7 +1333,7 @@ Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 8721.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 8721.
 
 Package rerunfilecheck Info: File `ReadtheDocsTemplate.out' has not changed.
-(rerunfilecheck)             Checksum: 2CBCB6CF2D9B54FD2B36DD4F19B9AE90;47792.
+(rerunfilecheck)             Checksum: 9160350912EE399AD38913D4A162DD1A;47752.
 
 
 LaTeX Warning: There were multiply-defined labels.
@@ -1342,8 +1342,8 @@ Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 8721.
  ) 
 Here is how much of TeX's memory you used:
  14771 strings out of 494880
- 211994 string characters out of 6179601
- 376859 words of memory out of 5000000
+ 211986 string characters out of 6179601
+ 376851 words of memory out of 5000000
  17273 multiletter control sequences out of 15000+600000
  53496 words of font info for 75 fonts, out of 8000000 for 9000
  37 hyphenation exceptions out of 8191
@@ -1357,7 +1357,7 @@ vb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on ReadtheDocsTemplate.pdf (150 pages, 646173 bytes).
+Output written on ReadtheDocsTemplate.pdf (150 pages, 646141 bytes).
 PDF statistics:
  2476 PDF objects out of 2487 (max. 8388607)
  2281 compressed objects within 23 object streams

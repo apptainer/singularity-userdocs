@@ -524,7 +524,7 @@ Download the recipe, and save it to your present working directory.
 
 .. code-block:: none
 
-    wget https://raw.githubusercontent.com/singularityware/singularity/master/examples/apps/Singularity.cowsay
+    wget https://raw.githubusercontent.com/sylabs/singularity/master/examples/apps/Singularity.cowsay
 
     sudo singularity build moo.simg Singularity.cowsay
 
@@ -670,4 +670,4 @@ If you want to see the full specification or create your own
 Scientific Filesystem integration (doesn’t have to be Singularity, or
 Docker, or containers!) see the `full documentation <https://sci-f.github.io/>`_.
 
-Also, you can follow along with this example by going to: `take a look at these examples <https://asciinema.org/a/139153?speed=3>`_ 
+Also, you can follow along with this example by going to: `take a look at these examples <https://asciinema.org/a/139153?speed=3>`_
