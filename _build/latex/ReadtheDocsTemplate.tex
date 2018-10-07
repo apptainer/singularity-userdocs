@@ -552,11 +552,11 @@ Hello from inside the container
 \end{sphinxVerbatim}
 
 This example works because \sphinxcode{\sphinxupquote{hostfile.txt}} exists in the user’s home directory.
-By default singularity bind mounts \sphinxcode{\sphinxupquote{/home/\$USER}}, \sphinxcode{\sphinxupquote{/tmp}}, and \sphinxcode{\sphinxupquote{\$PWD}} into
+By default Singularity bind mounts \sphinxcode{\sphinxupquote{/home/\$USER}}, \sphinxcode{\sphinxupquote{/tmp}}, and \sphinxcode{\sphinxupquote{\$PWD}} into
 your container at runtime.
 
 You can specify additional directories to bind mount into your container with
-the \DUrole{xref,std,std-ref}{- -bind} option. In this example, the \sphinxcode{\sphinxupquote{data}}
+the \sphinxcode{\sphinxupquote{-{-}bind}} option. In this example, the \sphinxcode{\sphinxupquote{data}}
 directory on the host system is bind mounted to the \sphinxcode{\sphinxupquote{/mnt}} directory inside
 the container.
 
@@ -598,7 +598,7 @@ needs. For these scenarios, Singularity also supports the \sphinxcode{\sphinxupq
 (which is really just a directory).
 
 For more details about the different build options and best practices,
-read about the \DUrole{xref,std,std-ref}{singularity flow}.
+read about the \DUrole{xref,std,std-ref}{Singularity flow}.
 
 
 \subsection{Sandbox Directories}
@@ -688,7 +688,7 @@ named lolcow.def), you would call build like so:
 \PYGZdl{} sudo singularity build lolcow.sif lolcow.def
 \end{sphinxVerbatim}
 
-In this example, the header tells singularity to use a base Ubuntu 16.04 image
+In this example, the header tells Singularity to use a base Ubuntu 16.04 image
 from the Container Library.
 
 The \sphinxcode{\sphinxupquote{\%post}} section executes within the container at build time after the base

@@ -469,11 +469,11 @@ Files on the host are reachable from within the container.
     Hello from inside the container
 
 This example works because ``hostfile.txt`` exists in the user’s home directory.
-By default singularity bind mounts ``/home/$USER``, ``/tmp``, and ``$PWD`` into
+By default Singularity bind mounts ``/home/$USER``, ``/tmp``, and ``$PWD`` into
 your container at runtime.
 
 You can specify additional directories to bind mount into your container with
-the :ref:`- -bind <bind-paths-and-mounts>` option. In this example, the ``data``
+the ``--bind`` option. In this example, the ``data``
 directory on the host system is bind mounted to the ``/mnt`` directory inside
 the container.
 
@@ -518,7 +518,7 @@ needs. For these scenarios, Singularity also supports the ``sandbox`` format
 (which is really just a directory).
 
 For more details about the different build options and best practices,
-read about the :ref:`singularity flow <singularity-flow>`.
+read about the :ref:`Singularity flow <singularity-flow>`.
 
 Sandbox Directories
 ===================
@@ -604,7 +604,7 @@ named lolcow.def), you would call build like so:
 
     $ sudo singularity build lolcow.sif lolcow.def
 
-In this example, the header tells singularity to use a base Ubuntu 16.04 image
+In this example, the header tells Singularity to use a base Ubuntu 16.04 image
 from the Container Library.
 
 The ``%post`` section executes within the container at build time after the base

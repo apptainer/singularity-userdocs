@@ -564,10 +564,10 @@ Hello from inside the container
 </pre></div>
 </div>
 <p>This example works because <code class="docutils literal notranslate"><span class="pre">hostfile.txt</span></code> exists in the user’s home directory.
-By default singularity bind mounts <code class="docutils literal notranslate"><span class="pre">/home/$USER</span></code>, <code class="docutils literal notranslate"><span class="pre">/tmp</span></code>, and <code class="docutils literal notranslate"><span class="pre">$PWD</span></code> into
+By default Singularity bind mounts <code class="docutils literal notranslate"><span class="pre">/home/$USER</span></code>, <code class="docutils literal notranslate"><span class="pre">/tmp</span></code>, and <code class="docutils literal notranslate"><span class="pre">$PWD</span></code> into
 your container at runtime.</p>
 <p>You can specify additional directories to bind mount into your container with
-the <span class="xref std std-ref">- -bind</span> option. In this example, the <code class="docutils literal notranslate"><span class="pre">data</span></code>
+the <code class="docutils literal notranslate"><span class="pre">--bind</span></code> option. In this example, the <code class="docutils literal notranslate"><span class="pre">data</span></code>
 directory on the host system is bind mounted to the <code class="docutils literal notranslate"><span class="pre">/mnt</span></code> directory inside
 the container.</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ echo &quot;Drink milk (and never eat hamburgers).&quot; &gt; /data/cow_advice.txt
@@ -602,7 +602,7 @@ dependencies until you are satisfied that your container will fulfill your
 needs. For these scenarios, Singularity also supports the <code class="docutils literal notranslate"><span class="pre">sandbox</span></code> format
 (which is really just a directory).</p>
 <p>For more details about the different build options and best practices,
-read about the <span class="xref std std-ref">singularity flow</span>.</p>
+read about the <span class="xref std std-ref">Singularity flow</span>.</p>
 <div class="section" id="sandbox-directories">
 <h3>Sandbox Directories<a class="headerlink" href="#sandbox-directories" title="Permalink to this headline">¶</a></h3>
 <p>To build into a <code class="docutils literal notranslate"><span class="pre">sandbox</span></code> (container in a directory) use the
@@ -671,7 +671,7 @@ named lolcow.def), you would call build like so:</p>
 <div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build lolcow.sif lolcow.def
 </pre></div>
 </div>
-<p>In this example, the header tells singularity to use a base Ubuntu 16.04 image
+<p>In this example, the header tells Singularity to use a base Ubuntu 16.04 image
 from the Container Library.</p>
 <p>The <code class="docutils literal notranslate"><span class="pre">%post</span></code> section executes within the container at build time after the base
 OS has been installed. The <code class="docutils literal notranslate"><span class="pre">%post</span></code> section is therefore the place to perform
