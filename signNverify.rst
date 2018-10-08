@@ -8,15 +8,15 @@ signing and verifying containers
 
 Singularity 3.0 introduces the abilities to create and manage PGP keys and use
 them to sign and verify containers. This provides a trusted method for 
-Singularity users to share a container ensuring a bit-for-bit reproduction of 
-the original container as the author intended it.
+Singularity users to share containers. It ensures a bit-for-bit reproduction 
+of the original container as the author intended it.
 
 -----------------------------------------------
 Verifying containers from the Container Library
 -----------------------------------------------
 
-The ``verify`` command will allow you verify that a container has been signed 
-using a PGP key.  To use this feature with images that you pull from the
+The ``verify`` command will allow you to verify that a container has been 
+signed using a PGP key. To use this feature with images that you pull from the
 container library, you must first generate an access token to the Sylabs Cloud.
 If you don't already have a valid access token, follow these steps:
 
@@ -30,7 +30,7 @@ If you don't already have a valid access token, follow these steps:
   8) Paste the token string into your ~/.singularity/sylabs-token file.
 
 Now you can verify containers that you pull from the library, ensuring they are 
-bit-for-bit reproductions if the original image.
+bit-for-bit reproductions of the original image.
 
 .. code-block:: none
 
@@ -41,7 +41,7 @@ bit-for-bit reproductions if the original image.
     Data integrity checked, authentic and signed by:
     	Sylabs Admin <support@sylabs.io>, KeyID 51BE5020C508C7E9
 
-In this example you can see that Sylabs Admin has signed the container.
+In this example you can see that **Sylabs Admin** has signed the container.
 
 ---------------------------
 Signing your own containers
@@ -80,7 +80,7 @@ like so:
 
 This will allow others to verify images that you have signed. 
 
-If you delete your local public PGP key, you can always locate and download  it 
+If you delete your local public PGP key, you can always locate and download it 
 again like so.
 
 .. code-block:: none
@@ -137,8 +137,8 @@ then try to use the ``verify`` command again.
     Data integrity checked, authentic and signed by:
     	Dave Godlove (demo) <d@sylabs.io>, KeyID FED5BBA38EE0DC4A
 
-Answering yes at the interactive prompt will store the Public key locally so you 
-will not have to contact the Keystore again the next time you verify your 
+Answering yes at the interactive prompt will store the Public key locally so 
+you will not have to contact the Keystore again the next time you verify your 
 container.   
 
 
