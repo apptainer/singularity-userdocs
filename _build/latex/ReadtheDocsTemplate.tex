@@ -55,7 +55,7 @@
 
 
 \title{Singularity Container Documentation}
-\date{Oct 07, 2018}
+\date{Oct 09, 2018}
 \release{3.0}
 \author{User Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -718,6 +718,193 @@ do with Singularity!
 
 If you need additional help or support, contact the Sylabs team:
 \sphinxurl{https://www.sylabs.io/contact/}
+
+
+\chapter{Signing and Verifying Containers}
+\label{\detokenize{signNverify:signing-and-verifying-containers}}\label{\detokenize{signNverify:signnverify}}\label{\detokenize{signNverify::doc}}\phantomsection\label{\detokenize{signNverify:sec-signnverify}}
+Singularity 3.0 introduces the abilities to create and manage PGP keys and use
+them to sign and verify containers. This provides a trusted method for
+Singularity users to share containers. It ensures a bit-for-bit reproduction
+of the original container as the author intended it.
+
+
+\section{Verifying containers from the Container Library}
+\label{\detokenize{signNverify:verifying-containers-from-the-container-library}}
+The \sphinxcode{\sphinxupquote{verify}} command will allow you to verify that a container has been
+signed using a PGP key. To use this feature with images that you pull from the
+container library, you must first generate an access token to the Sylabs Cloud.
+If you don’t already have a valid access token, follow these steps:
+\begin{enumerate}
+\item {} 
+Go to : \sphinxurl{https://cloud.sylabs.io/}
+
+\item {} 
+Click “Sign in to Sylabs” and follow the sign in steps.
+
+\item {} 
+Click on your login id (same and updated button as the Sign in one).
+
+\item {} 
+Select “Access Tokens” from the drop down menu.
+
+\item {} 
+Click the “Manage my API tokens” button from the “Account Management” page.
+
+\item {} 
+Click “Create”.
+
+\item {} 
+Click “Copy token to Clipboard” from the “New API Token” page.
+
+\item {} 
+Paste the token string into your \sphinxcode{\sphinxupquote{\textasciitilde{}/.singularity/sylabs-token}} file.
+
+\end{enumerate}
+
+Now you can verify containers that you pull from the library, ensuring they are
+bit-for-bit reproductions of the original image.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity pull library://alpine
+
+\PYGZdl{} singularity verify alpine\PYGZus{}latest.sif
+Verifying image: alpine\PYGZus{}latest.sif
+Data integrity checked, authentic and signed by:
+    Sylabs Admin \PYGZlt{}support@sylabs.io\PYGZgt{}, KeyID 51BE5020C508C7E9
+\end{sphinxVerbatim}
+
+In this example you can see that \sphinxstylestrong{Sylabs Admin} has signed the container.
+
+
+\section{Signing your own containers}
+\label{\detokenize{signNverify:signing-your-own-containers}}
+
+\subsection{Generating and managing PGP keys}
+\label{\detokenize{signNverify:generating-and-managing-pgp-keys}}
+To sign your own containers you first need to generate one or more keys.
+
+If you attempt to sign a container before you have generated any keys,
+Singularity will guide you through the interactive process of creating a new
+key. Or you can use the \sphinxcode{\sphinxupquote{newpair}} subcommand in the \sphinxcode{\sphinxupquote{key}} command group
+like so:.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity keys newpair
+Enter your name (e.g., John Doe) : Dave Godlove
+Enter your email address (e.g., john.doe@example.com) : d@sylabs.io
+Enter optional comment (e.g., development keys) : demo
+Generating Entity and OpenPGP Key Pair... Done
+Enter encryption passphrase :
+\end{sphinxVerbatim}
+
+The \sphinxcode{\sphinxupquote{list}} subcommand will show you all of the keys you have created or saved
+locally.{}`
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity keys list
+Public key listing (/home/david/.singularity/sypgp/pgp\PYGZhy{}public):
+
+0) U: Dave Godlove (demo) \PYGZlt{}d@sylabs.io\PYGZgt{}
+   C: 2018\PYGZhy{}10\PYGZhy{}08 15:25:30 \PYGZhy{}0400 EDT
+   F: 135E426D67D8416DE1D6AC7FFED5BBA38EE0DC4A
+   L: 4096
+   \PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}
+\end{sphinxVerbatim}
+
+In the output above, the letters stand for the following:
+\begin{itemize}
+\item {} 
+U: User
+
+\item {} 
+C: Creation date and time
+
+\item {} 
+F: Fingerprint
+
+\item {} 
+L: Key length
+
+\end{itemize}
+
+After generating your key you can optionally push it to the \sphinxhref{https://cloud.sylabs.io/keystore}{Keystore}
+using the fingerprint like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity keys push 135E426D67D8416DE1D6AC7FFED5BBA38EE0DC4A
+public key {}`135E426D67D8416DE1D6AC7FFED5BBA38EE0DC4A{}` pushed to server successfully
+\end{sphinxVerbatim}
+
+This will allow others to verify images that you have signed.
+
+If you delete your local public PGP key, you can always locate and download it
+again like so.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity keys search Godlove
+Search results for \PYGZsq{}Godlove\PYGZsq{}
+
+Type bits/keyID     Date       User ID
+\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}
+pub  4096R/8EE0DC4A 2018\PYGZhy{}10\PYGZhy{}08 Dave Godlove (demo) \PYGZlt{}d@sylabs.io\PYGZgt{}
+\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}\PYGZhy{}
+
+\PYGZdl{} singularity keys pull 8EE0DC4A
+1 key(s) fetched and stored in local cache /home/david/.singularity/sypgp/pgp\PYGZhy{}public
+\end{sphinxVerbatim}
+
+But note that this only restores the \sphinxstyleemphasis{public} key (used for verifying) to your
+local machine and does not restore the \sphinxstyleemphasis{private} key (used for signing).
+
+
+\subsection{Signing and validating your own containers}
+\label{\detokenize{signNverify:signing-and-validating-your-own-containers}}
+Now that you have a key generated, you can use it to sign images like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity sign my\PYGZus{}container.sif
+Signing image: my\PYGZus{}container.sif
+Enter key passphrase:
+Signature created and applied to my\PYGZus{}container.sif
+\end{sphinxVerbatim}
+
+Because your public PGP key is saved locally you can verify the image without
+needing to contact the Keystore.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity verify my\PYGZus{}container.sif
+Verifying image: my\PYGZus{}container.sif
+Data integrity checked, authentic and signed by:
+    Dave Godlove (demo) \PYGZlt{}d@sylabs.io\PYGZgt{}, KeyID FED5BBA38EE0DC4A
+\end{sphinxVerbatim}
+
+If you’ve pushed your key to the Keystore you can also verify this image in the
+absence of a local key.  To demonstrate this, first delete your local keys, and
+then try to use the \sphinxcode{\sphinxupquote{verify}} command again.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} rm \PYGZti{}/.singularity/sypgp/*
+
+\PYGZdl{} singularity verify my\PYGZus{}container.sif
+Verifying image: my\PYGZus{}container.sif
+INFO:    key missing, searching key server for KeyID: FED5BBA38EE0DC4A...
+INFO:    key retreived successfully!
+Store new public key 135E426D67D8416DE1D6AC7FFED5BBA38EE0DC4A? [Y/n] y
+Data integrity checked, authentic and signed by:
+    Dave Godlove (demo) \PYGZlt{}d@sylabs.io\PYGZgt{}, KeyID FED5BBA38EE0DC4A
+\end{sphinxVerbatim}
+
+Answering yes at the interactive prompt will store the Public key locally so
+you will not have to contact the Keystore again the next time you verify your
+container.
 
 
 

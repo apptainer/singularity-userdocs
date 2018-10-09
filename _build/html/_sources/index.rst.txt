@@ -6,3 +6,4 @@ User Guide
    :maxdepth: 5
 
    Quick Start <quick_start>
+   Sign and Verify <signNverify>
