@@ -52,6 +52,11 @@ Generating and managing PGP keys
 
 To sign your own containers you first need to generate one or more keys.
 
+If you attempt to sign a container before you have generated any keys,
+Singularity will guide you through the interactive process of creating a new
+key. Or you can use the ``newpair`` subcommand in the ``key`` command group 
+like so:.  
+
 .. code-block:: none
 
     $ singularity keys newpair 
@@ -61,6 +66,11 @@ To sign your own containers you first need to generate one or more keys.
     Generating Entity and OpenPGP Key Pair... Done
     Enter encryption passphrase : 
 
+The ``list`` subcommand will show you all of the keys you have created or saved
+locally.`
+
+.. code-block:: none
+
     $ singularity keys list 
     Public key listing (/home/david/.singularity/sypgp/pgp-public):
 
@@ -69,9 +79,16 @@ To sign your own containers you first need to generate one or more keys.
        F: 135E426D67D8416DE1D6AC7FFED5BBA38EE0DC4A
        L: 4096
        --------
+       
+In the output above, the letters stand for the following:
+
+       - U: User
+       - C: Creation date and time
+       - F: Fingerprint
+       - L: Key length
 
 After generating your key you can optionally push it to the `Keystore <https://cloud.sylabs.io/keystore>`_ 
-like so:
+using the fingerprint like so:
 
 .. code-block:: none
 
