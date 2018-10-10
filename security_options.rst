@@ -78,10 +78,10 @@ user by an administrator using the ``capability add`` command.
 
 The SetUID bit allows a program to be executed as the user that owns the binary.
 The most well-known SetUID binaries are owned by root and allow a user to
-execute a command with elevated priviledges.  But other SetUID binaries may 
+execute a command with elevated privileges.  But other SetUID binaries may 
 allow a user to execute a command as a service account.  
 
-By defualt SetUID is disallowed within Singularity containers as a security 
+By default SetUID is disallowed within Singularity containers as a security 
 precaution.  But the root user can override this precaution and allow SetUID
 binaries to behave as expected within a Singularity container with the 
 ``--allow-setuid`` option like so:
@@ -93,7 +93,7 @@ binaries to behave as expected within a Singularity container with the
 ``--keep-privs``
 ================
 
-It is possible for an admin to set a different set of default capablities or to
+It is possible for an admin to set a different set of default capabilities or to
 reduce the default capabilities to zero for the root user by setting the ``root 
 default capabilities`` parameter in the ``singularity.conf`` file to ``file`` or
 ``no`` respectively.  If this change is in effect, the root user can override 
@@ -115,7 +115,7 @@ using the ``--keep-privs`` option.
 ================
 
 By default, the root user has a full set of capabilities when they enter the 
-container. You may choose to drop specific capabilites when you initiate a
+container. You may choose to drop specific capabilities when you initiate a
 container as root to enhance security.  
 
 For instance, to drop the ability for the root user to open a raw socket inside
@@ -133,7 +133,7 @@ The ``--security`` flag allows the root user to leverage security modules such
 as SELinux, AppArmor, and seccomp within your Singularity container. You can 
 also change the UID and GID of the user within the container at runtime. 
 
-For intance:
+For instance:
 
 .. code-block:: none 
 
@@ -147,7 +147,7 @@ To use seccomp to blacklist a command follow this procedure. (It is actually
 preferable from a security standpoint to whitelist commands but this will
 suffice for a simple example.)  Note that this example was run on Ubuntu and 
 that Singularity was installed with the ``libseccomp-dev`` and ``pkg-config``
-packages as dependancies.
+packages as dependencies.
 
 First write a configuration file.  An example configuration file is installed 
 with Singularity, normally at ``/usr/local/etc/singularity/seccomp-profiles/default.json``.
