@@ -29,6 +29,14 @@ To do so, the admin would issue a command such as this:
 This means the user ``david`` has just been granted permissions (through Linux
 capabilities) to open raw sockets within Singularity containers.
 
+The admin can check that this change is in effect with the ``capability list``
+command.
+
+.. code-block:: none
+
+    $ sudo singularity capability list --user david
+    CAP_NET_RAW
+
 To take advantage of this new capability, the user ``david`` must also request
 the capability when executing a container with the ``--add-caps`` flag like so:
 
@@ -55,8 +63,8 @@ Security related action options
 -------------------------------
 
 Singularity 3.0 introduces many new flags that can be passed to the action
-commands; ``shell``, ``exec``, and ``run`` allowed fine grained control of
-security related considerations.  
+commands; ``shell``, ``exec``, and ``run`` allowing fine grained control of
+security.  
 
 ``--add-caps``
 ==============
@@ -82,14 +90,117 @@ binaries to behave as expected within a Singularity container with the
 
     $ sudo singularity shell --allow-setuid some_container.sif 
 
-``--apply-cgroups``
-===================
-
 ``--keep-privs``
 ================
+
+It is possible for an admin to set a different set of default capablities or to
+reduce the default capabilities to zero for the root user by setting the ``root 
+default capabilities`` parameter in the ``singularity.conf`` file to ``file`` or
+``no`` respectively.  If this change is in effect, the root user can override 
+the ``singularity.conf`` file and enter the container with full capabilities 
+using the ``--keep-privs`` option.
+
+.. code-block:: none
+
+    $ sudo singularity exec --keep-privs library://centos ping -c 1 8.8.8.8
+    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+    64 bytes from 8.8.8.8: icmp_seq=1 ttl=128 time=18.8 ms
+
+    --- 8.8.8.8 ping statistics ---
+    1 packets transmitted, 1 received, 0% packet loss, time 0ms
+    rtt min/avg/max/mdev = 18.838/18.838/18.838/0.000 ms
+
 
 ``--drop-privs``
 ================
 
+By default, the root user has a full set of capabilities when they enter the 
+container. You may choose to drop specific capabilites when you initiate a
+container as root to enhance security.  
+
+For instance, to drop the ability for the root user to open a raw socket inside
+the container:
+
+.. code-block:: none
+
+    $ sudo singularity exec --drop-caps CAP_NET_RAW library://centos ping -c 1 8.8.8.8
+    ping: socket: Operation not permitted
+
 ``--security``
 ==============
+
+The ``--security`` flag allows the root user to leverage security modules such 
+as SELinux, AppArmor, and seccomp within your Singularity container. You can 
+also change the UID and GID of the user within the container at runtime. 
+
+For intance:
+
+.. code-block:: none 
+
+    $ sudo whoami
+    root
+
+    $ sudo singularity exec --security uid:1000 my_container.sif whoami
+    david
+
+To use seccomp to blacklist a command follow this procedure. (It is actually 
+preferable from a security standpoint to whitelist commands but this will
+suffice for a simple example.)  Note that this example was run on Ubuntu and 
+that Singularity was installed with the ``libseccomp-dev`` and ``pkg-config``
+packages as dependancies.
+
+First write a configuration file.  An example configuration file is installed 
+with Singularity, normally at ``/usr/local/etc/singularity/seccomp-profiles/default.json``.
+For this example, we will use a much simpler configuration file to blacklist the
+``mkdir`` command.
+
+.. code-block:: none
+
+    {
+        "defaultAction": "SCMP_ACT_ALLOW",
+        "archMap": [
+            {
+                "architecture": "SCMP_ARCH_X86_64",
+                "subArchitectures": [
+                    "SCMP_ARCH_X86",
+                    "SCMP_ARCH_X32"
+                ]
+            }
+        ],
+        "syscalls": [
+            {
+                "names": [
+                    "mkdir"
+                ],
+                "action": "SCMP_ACT_KILL",
+                "args": [],
+                "comment": "",
+                "includes": {},
+                "excludes": {}
+            }
+        ]
+    }
+
+We'll save the file at ``/home/david/no_mkdir.json``. Then we can invoke the 
+container like so:
+
+.. code-block:: none
+
+    $ sudo singularity shell --security seccomp:/home/david/no_mkdir.json my_container.sif
+
+    Singularity> mkdir /tmp/foo
+    Bad system call (core dumped)
+
+Note that attempting to use the blacklisted ``mkdir`` command resulted in a 
+core dump.  
+
+The full list of arguments accepted by the ``--security`` option are as follows:
+
+.. code-block:: none
+
+    --security="seccomp:/usr/local/etc/singularity/seccomp-profiles/default.json"
+    --security="apparmor:/usr/bin/man"
+    --security="selinux:context"
+    --security="uid:1000"
+    --security="gid:1000"
+    --security="gid:1000:1:0" (multiple gids, first is always the primary group)
