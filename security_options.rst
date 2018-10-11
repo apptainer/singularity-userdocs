@@ -58,6 +58,11 @@ appropriate Linux capability like so:
 
     $ sudo singularity capability drop --user david CAP_NET_RAW
 
+The ``capabiltiy add`` and ``drop`` subcommands will also accept the case
+insensitive keyword ``all`` to grant or revoke all Linux capabilities to a user
+or group.  Of course appropriate caution should be exercised when using this
+keyword.  
+
 -------------------------------
 Security related action options
 -------------------------------
