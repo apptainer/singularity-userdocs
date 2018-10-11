@@ -60,8 +60,8 @@ appropriate Linux capability like so:
 
 The ``capabiltiy add`` and ``drop`` subcommands will also accept the case
 insensitive keyword ``all`` to grant or revoke all Linux capabilities to a user
-or group.  Of course appropriate caution should be exercised when using this
-keyword.  
+or group.  Similarly, the ``--add-caps`` option will accept the ``all`` keyword.
+Of course appropriate caution should be exercised when using this keyword.  
 
 -------------------------------
 Security related action options
@@ -76,7 +76,9 @@ security.
 
 As explained above, ``--add-caps`` will "activate" Linux capabilities when a 
 container is initiated, providing those capabilities have been granted to the 
-user by an administrator using the ``capability add`` command.
+user by an administrator using the ``capability add`` command. This option will 
+also accept the case insensitive keyword ``all`` to add every capability
+granted by the administrator.  
 
 ``--allow-setuid``
 ==================
@@ -121,7 +123,7 @@ using the ``--keep-privs`` option.
 
 By default, the root user has a full set of capabilities when they enter the 
 container. You may choose to drop specific capabilities when you initiate a
-container as root to enhance security.  
+container as root to enhance security. 
 
 For instance, to drop the ability for the root user to open a raw socket inside
 the container:
@@ -130,6 +132,9 @@ the container:
 
     $ sudo singularity exec --drop-caps CAP_NET_RAW library://centos ping -c 1 8.8.8.8
     ping: socket: Operation not permitted
+
+The ``drop-privs`` option will also accept the case insensitive keyword ``all``
+as an option to drop all capabilities when entering the container. 
 
 ``--security``
 ==============
