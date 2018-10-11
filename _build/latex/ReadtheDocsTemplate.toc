@@ -22,3 +22,11 @@
 \contentsline {section}{\numberline {2.2}Signing your own containers}{11}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Generating and managing PGP keys}{11}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Signing and validating your own containers}{12}{subsection.2.2.2}
+\contentsline {chapter}{\numberline {3}Security Options}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}Linux Capabilities}{15}{section.3.1}
+\contentsline {section}{\numberline {3.2}Security related action options}{16}{section.3.2}
+\contentsline {subsection}{\numberline {3.2.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}add-caps}}}{16}{subsection.3.2.1}
+\contentsline {subsection}{\numberline {3.2.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}allow-setuid}}}{16}{subsection.3.2.2}
+\contentsline {subsection}{\numberline {3.2.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}keep-privs}}}{16}{subsection.3.2.3}
+\contentsline {subsection}{\numberline {3.2.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}drop-caps}}}{16}{subsection.3.2.4}
+\contentsline {subsection}{\numberline {3.2.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}security}}}{17}{subsection.3.2.5}
