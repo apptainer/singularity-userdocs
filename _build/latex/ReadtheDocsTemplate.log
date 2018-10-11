@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.20)  20 SEP 2018 20:26
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.20)  11 OCT 2018 14:20
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1102,7 +1102,7 @@ LaTeX Info: Redefining \nameref on input line 65.
 \openout5 = `ReadtheDocsTemplate.out'.
 
 Package hyperref Info: Option `pageanchor' set `false' on input line 68.
-<logo.png, id=1387, 501.875pt x 501.875pt>
+<logo.png, id=1387, 119.2455pt x 120.45pt>
 LaTeX Font Info:    Try loading font information for T1+pcr on input line 68.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
@@ -1111,7 +1111,7 @@ File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
 File: logo.png Graphic file (type png)
 <use logo.png>
 Package pdftex.def Info: logo.png  used on input line 68.
-(pdftex.def)             Requested size: 469.75502pt x 469.77914pt.
+(pdftex.def)             Requested size: 119.2452pt x 120.44969pt.
 LaTeX Font Info:    Try loading font information for T1+phv on input line 68.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1phv.fd
@@ -1371,7 +1371,7 @@ vb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on ReadtheDocsTemplate.pdf (168 pages, 698670 bytes).
+Output written on ReadtheDocsTemplate.pdf (168 pages, 696186 bytes).
 PDF statistics:
  2921 PDF objects out of 2984 (max. 8388607)
  2703 compressed objects within 28 object streams
