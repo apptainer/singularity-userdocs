@@ -118,7 +118,7 @@ using the ``--keep-privs`` option.
     rtt min/avg/max/mdev = 18.838/18.838/18.838/0.000 ms
 
 
-``--drop-privs``
+``--drop-caps``
 ================
 
 By default, the root user has a full set of capabilities when they enter the 
@@ -133,7 +133,7 @@ the container:
     $ sudo singularity exec --drop-caps CAP_NET_RAW library://centos ping -c 1 8.8.8.8
     ping: socket: Operation not permitted
 
-The ``drop-privs`` option will also accept the case insensitive keyword ``all``
+The ``drop-caps`` option will also accept the case insensitive keyword ``all``
 as an option to drop all capabilities when entering the container. 
 
 ``--security``
