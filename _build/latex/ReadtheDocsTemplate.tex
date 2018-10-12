@@ -55,7 +55,7 @@
 
 
 \title{Singularity Container Documentation}
-\date{Oct 09, 2018}
+\date{Oct 11, 2018}
 \release{3.0}
 \author{User Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -905,6 +905,226 @@ Data integrity checked, authentic and signed by:
 Answering yes at the interactive prompt will store the Public key locally so
 you will not have to contact the Keystore again the next time you verify your
 container.
+
+
+\chapter{Security Options}
+\label{\detokenize{security_options:security-options}}\label{\detokenize{security_options:id1}}\label{\detokenize{security_options::doc}}\phantomsection\label{\detokenize{security_options:sec-security-options}}
+Singularity 3.0 introduces many new security related options to the container
+runtime.  This document will describe the new methods users have for specifying
+the security scope and context when running Singularity containers.
+
+
+\section{Linux Capabilities}
+\label{\detokenize{security_options:linux-capabilities}}
+Singularity provides full support for granting and revoking Linux capabilities
+on a user or group basis.  For example, let us suppose that an admin has
+decided to grant a user capabilities to open raw sockets so that they can use
+\sphinxcode{\sphinxupquote{ping}} in a container where the binary is controlled via capabilities (i.e. a
+recent version of CentOS).
+
+To do so, the admin would issue a command such as this:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity capability add \PYGZhy{}\PYGZhy{}user david CAP\PYGZus{}NET\PYGZus{}RAW
+\end{sphinxVerbatim}
+
+This means the user \sphinxcode{\sphinxupquote{david}} has just been granted permissions (through Linux
+capabilities) to open raw sockets within Singularity containers.
+
+The admin can check that this change is in effect with the \sphinxcode{\sphinxupquote{capability list}}
+command.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity capability list \PYGZhy{}\PYGZhy{}user david
+CAP\PYGZus{}NET\PYGZus{}RAW
+\end{sphinxVerbatim}
+
+To take advantage of this new capability, the user \sphinxcode{\sphinxupquote{david}} must also request
+the capability when executing a container with the \sphinxcode{\sphinxupquote{-{-}add-caps}} flag like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity exec \PYGZhy{}\PYGZhy{}add\PYGZhy{}caps CAP\PYGZus{}NET\PYGZus{}RAW library://centos ping \PYGZhy{}c 1 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp\PYGZus{}seq=1 ttl=128 time=18.3 ms
+
+\PYGZhy{}\PYGZhy{}\PYGZhy{} 8.8.8.8 ping statistics \PYGZhy{}\PYGZhy{}\PYGZhy{}
+1 packets transmitted, 1 received, 0\PYGZpc{} packet loss, time 0ms
+rtt min/avg/max/mdev = 18.320/18.320/18.320/0.000 ms
+\end{sphinxVerbatim}
+
+If the admin decides that it is no longer necessary to allow the user \sphinxcode{\sphinxupquote{dave}}
+to open raw sockets within Singularity containers, they can revoke the
+appropriate Linux capability like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity capability drop \PYGZhy{}\PYGZhy{}user david CAP\PYGZus{}NET\PYGZus{}RAW
+\end{sphinxVerbatim}
+
+The \sphinxcode{\sphinxupquote{capabiltiy add}} and \sphinxcode{\sphinxupquote{drop}} subcommands will also accept the case
+insensitive keyword \sphinxcode{\sphinxupquote{all}} to grant or revoke all Linux capabilities to a user
+or group.  Similarly, the \sphinxcode{\sphinxupquote{-{-}add-caps}} option will accept the \sphinxcode{\sphinxupquote{all}} keyword.
+Of course appropriate caution should be exercised when using this keyword.
+
+
+\section{Security related action options}
+\label{\detokenize{security_options:security-related-action-options}}
+Singularity 3.0 introduces many new flags that can be passed to the action
+commands; \sphinxcode{\sphinxupquote{shell}}, \sphinxcode{\sphinxupquote{exec}}, and \sphinxcode{\sphinxupquote{run}} allowing fine grained control of
+security.
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}add-caps}}}
+\label{\detokenize{security_options:add-caps}}
+As explained above, \sphinxcode{\sphinxupquote{-{-}add-caps}} will “activate” Linux capabilities when a
+container is initiated, providing those capabilities have been granted to the
+user by an administrator using the \sphinxcode{\sphinxupquote{capability add}} command. This option will
+also accept the case insensitive keyword \sphinxcode{\sphinxupquote{all}} to add every capability
+granted by the administrator.
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}allow-setuid}}}
+\label{\detokenize{security_options:allow-setuid}}
+The SetUID bit allows a program to be executed as the user that owns the binary.
+The most well-known SetUID binaries are owned by root and allow a user to
+execute a command with elevated privileges.  But other SetUID binaries may
+allow a user to execute a command as a service account.
+
+By default SetUID is disallowed within Singularity containers as a security
+precaution.  But the root user can override this precaution and allow SetUID
+binaries to behave as expected within a Singularity container with the
+\sphinxcode{\sphinxupquote{-{-}allow-setuid}} option like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity shell \PYGZhy{}\PYGZhy{}allow\PYGZhy{}setuid some\PYGZus{}container.sif
+\end{sphinxVerbatim}
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}keep-privs}}}
+\label{\detokenize{security_options:keep-privs}}
+It is possible for an admin to set a different set of default capabilities or to
+reduce the default capabilities to zero for the root user by setting the \sphinxcode{\sphinxupquote{root
+default capabilities}} parameter in the \sphinxcode{\sphinxupquote{singularity.conf}} file to \sphinxcode{\sphinxupquote{file}} or
+\sphinxcode{\sphinxupquote{no}} respectively.  If this change is in effect, the root user can override
+the \sphinxcode{\sphinxupquote{singularity.conf}} file and enter the container with full capabilities
+using the \sphinxcode{\sphinxupquote{-{-}keep-privs}} option.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity exec \PYGZhy{}\PYGZhy{}keep\PYGZhy{}privs library://centos ping \PYGZhy{}c 1 8.8.8.8
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp\PYGZus{}seq=1 ttl=128 time=18.8 ms
+
+\PYGZhy{}\PYGZhy{}\PYGZhy{} 8.8.8.8 ping statistics \PYGZhy{}\PYGZhy{}\PYGZhy{}
+1 packets transmitted, 1 received, 0\PYGZpc{} packet loss, time 0ms
+rtt min/avg/max/mdev = 18.838/18.838/18.838/0.000 ms
+\end{sphinxVerbatim}
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}drop-caps}}}
+\label{\detokenize{security_options:drop-caps}}
+By default, the root user has a full set of capabilities when they enter the
+container. You may choose to drop specific capabilities when you initiate a
+container as root to enhance security.
+
+For instance, to drop the ability for the root user to open a raw socket inside
+the container:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity exec \PYGZhy{}\PYGZhy{}drop\PYGZhy{}caps CAP\PYGZus{}NET\PYGZus{}RAW library://centos ping \PYGZhy{}c 1 8.8.8.8
+ping: socket: Operation not permitted
+\end{sphinxVerbatim}
+
+The \sphinxcode{\sphinxupquote{drop-caps}} option will also accept the case insensitive keyword \sphinxcode{\sphinxupquote{all}}
+as an option to drop all capabilities when entering the container.
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}security}}}
+\label{\detokenize{security_options:security}}
+The \sphinxcode{\sphinxupquote{-{-}security}} flag allows the root user to leverage security modules such
+as SELinux, AppArmor, and seccomp within your Singularity container. You can
+also change the UID and GID of the user within the container at runtime.
+
+For instance:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo whoami
+root
+
+\PYGZdl{} sudo singularity exec \PYGZhy{}\PYGZhy{}security uid:1000 my\PYGZus{}container.sif whoami
+david
+\end{sphinxVerbatim}
+
+To use seccomp to blacklist a command follow this procedure. (It is actually
+preferable from a security standpoint to whitelist commands but this will
+suffice for a simple example.)  Note that this example was run on Ubuntu and
+that Singularity was installed with the \sphinxcode{\sphinxupquote{libseccomp-dev}} and \sphinxcode{\sphinxupquote{pkg-config}}
+packages as dependencies.
+
+First write a configuration file.  An example configuration file is installed
+with Singularity, normally at \sphinxcode{\sphinxupquote{/usr/local/etc/singularity/seccomp-profiles/default.json}}.
+For this example, we will use a much simpler configuration file to blacklist the
+\sphinxcode{\sphinxupquote{mkdir}} command.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZob{}
+    \PYGZdq{}defaultAction\PYGZdq{}: \PYGZdq{}SCMP\PYGZus{}ACT\PYGZus{}ALLOW\PYGZdq{},
+    \PYGZdq{}archMap\PYGZdq{}: [
+        \PYGZob{}
+            \PYGZdq{}architecture\PYGZdq{}: \PYGZdq{}SCMP\PYGZus{}ARCH\PYGZus{}X86\PYGZus{}64\PYGZdq{},
+            \PYGZdq{}subArchitectures\PYGZdq{}: [
+                \PYGZdq{}SCMP\PYGZus{}ARCH\PYGZus{}X86\PYGZdq{},
+                \PYGZdq{}SCMP\PYGZus{}ARCH\PYGZus{}X32\PYGZdq{}
+            ]
+        \PYGZcb{}
+    ],
+    \PYGZdq{}syscalls\PYGZdq{}: [
+        \PYGZob{}
+            \PYGZdq{}names\PYGZdq{}: [
+                \PYGZdq{}mkdir\PYGZdq{}
+            ],
+            \PYGZdq{}action\PYGZdq{}: \PYGZdq{}SCMP\PYGZus{}ACT\PYGZus{}KILL\PYGZdq{},
+            \PYGZdq{}args\PYGZdq{}: [],
+            \PYGZdq{}comment\PYGZdq{}: \PYGZdq{}\PYGZdq{},
+            \PYGZdq{}includes\PYGZdq{}: \PYGZob{}\PYGZcb{},
+            \PYGZdq{}excludes\PYGZdq{}: \PYGZob{}\PYGZcb{}
+        \PYGZcb{}
+    ]
+\PYGZcb{}
+\end{sphinxVerbatim}
+
+We’ll save the file at \sphinxcode{\sphinxupquote{/home/david/no\_mkdir.json}}. Then we can invoke the
+container like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity shell \PYGZhy{}\PYGZhy{}security seccomp:/home/david/no\PYGZus{}mkdir.json my\PYGZus{}container.sif
+
+Singularity\PYGZgt{} mkdir /tmp/foo
+Bad system call (core dumped)
+\end{sphinxVerbatim}
+
+Note that attempting to use the blacklisted \sphinxcode{\sphinxupquote{mkdir}} command resulted in a
+core dump.
+
+The full list of arguments accepted by the \sphinxcode{\sphinxupquote{-{-}security}} option are as follows:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZhy{}\PYGZhy{}security=\PYGZdq{}seccomp:/usr/local/etc/singularity/seccomp\PYGZhy{}profiles/default.json\PYGZdq{}
+\PYGZhy{}\PYGZhy{}security=\PYGZdq{}apparmor:/usr/bin/man\PYGZdq{}
+\PYGZhy{}\PYGZhy{}security=\PYGZdq{}selinux:context\PYGZdq{}
+\PYGZhy{}\PYGZhy{}security=\PYGZdq{}uid:1000\PYGZdq{}
+\PYGZhy{}\PYGZhy{}security=\PYGZdq{}gid:1000\PYGZdq{}
+\PYGZhy{}\PYGZhy{}security=\PYGZdq{}gid:1000:1:0\PYGZdq{} (multiple gids, first is always the primary group)
+\end{sphinxVerbatim}
 
 
 
