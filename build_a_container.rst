@@ -161,9 +161,10 @@ Build options
 =============
 
 Singularity 3.0 introduces the option to perform a remote build. The 
-``--builddir`` option allows you to specify a URL to a different build service.
+``--builder`` option allows you to specify a URL to a different build service.
 For instance, you may need to specify a URL to build to an on premises
-installation of the remote builder.
+installation of the remote builder.  This option must be used in conjunction 
+with ``--remote``.
 
 ``--detached``
 ==============
@@ -217,8 +218,9 @@ Build a sandbox (chroot directory) instead of the default SIF format.
 
 Instead of running the entire definition file, only run a specific section or 
 sections.  This option accepts a comma delimited string of definition file
-sections.  Acceptable arguments are: ``setup``, ``post``, ``files``, 
-``environment``, ``test``, ``labels``, and ``none``.
+sections.  Acceptable arguments includ ``all``, ``none`` or any combination of
+the following: ``setup``, ``post``, ``files``, ``environment``, ``test``, 
+``labels``.
 
 Under normal build conditions, the Singularity definition file is saved into
 a container’s meta-data so that there is a record showing how the container was 
@@ -228,16 +230,17 @@ care if you value reproducibility.
 ``--update``
 ===========
 
-You can build into the same container multiple times (though the
-results may be unpredictable and it is generally better to delete your
-container and start from scratch).
+You can build into the same sandbox container multiple times (though the results 
+may be unpredictable and it is generally better to delete your container and 
+start from scratch).
 
-By default if you build using an existing container name container, the 
-``build`` command prompt you to decide whether or not to overwrite the 
-container. Instead of this behavior you can use the ``--update`` option to build
-_into_ an existing container. This will prompt Singularity to skip the header
-and build any sections that are in the definition file into the existing
-container.
+By default if you build into an existing sandbox container, the  ``build`` 
+command will prompt you to decide whether or not to overwrite the container. 
+Instead of this behavior you can use the ``--update`` option to build _into_ an 
+existing container. This will cause Singularity to skip the header and build 
+any sections that are in the definition file into the existing container.
+
+The ``--update`` option is only valid when used with sandbox containers.
 
 -----------------
 More Build topics
