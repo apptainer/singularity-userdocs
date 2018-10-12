@@ -55,7 +55,7 @@
 
 
 \title{Singularity Container Documentation}
-\date{Oct 11, 2018}
+\date{Oct 13, 2018}
 \release{3.0}
 \author{User Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -905,6 +905,276 @@ Data integrity checked, authentic and signed by:
 Answering yes at the interactive prompt will store the Public key locally so
 you will not have to contact the Keystore again the next time you verify your
 container.
+
+
+\chapter{Build a Container}
+\label{\detokenize{build_a_container:build-a-container}}\label{\detokenize{build_a_container:id1}}\label{\detokenize{build_a_container::doc}}\phantomsection\label{\detokenize{build_a_container:sec-build-a-container}}
+\sphinxcode{\sphinxupquote{build}} is the “Swiss army knife” of container creation. You can use it to
+download and assemble existing containers from external resources like the
+\sphinxhref{https://cloud.sylabs.io/library}{Container Library} and
+\sphinxhref{https://hub.docker.com/}{Docker Hub}. You can use it to convert containers
+between the formats supported by Singularity. And you can use it in conjunction
+with a \DUrole{xref,std,std-ref}{Singularity definition} file to create a
+container from scratch and customized it to fit your needs.
+
+
+\section{Overview}
+\label{\detokenize{build_a_container:overview}}
+The \sphinxcode{\sphinxupquote{build}} command accepts a target as input and produces a container as
+output.
+
+The target defines the method that \sphinxcode{\sphinxupquote{build}} uses to create the container. It
+can be one of the following:
+\begin{itemize}
+\item {} 
+URI beginning with \sphinxstylestrong{library://} to build from the Container Library
+
+\item {} 
+URI beginning with \sphinxstylestrong{docker://} to build from Docker Hub
+
+\item {} 
+URI beginning with \sphinxstylestrong{shub://} to build from Singularity Hub
+
+\item {} 
+path to a \sphinxstylestrong{existing container} on your local machine
+
+\item {} 
+path to a \sphinxstylestrong{directory} to build from a sandbox
+
+\item {} 
+path to a \DUrole{xref,std,std-ref}{Singularity definition file}
+
+\end{itemize}
+
+\sphinxcode{\sphinxupquote{build}} can produce containers in two different formats that can be specified
+as follows.
+\begin{itemize}
+\item {} 
+compressed read-only \sphinxstylestrong{Singularity Image File (SIF)} format suitable for
+production (default)
+
+\item {} 
+writable \sphinxstylestrong{(ch)root directory} called a sandbox for interactive development
+( \sphinxcode{\sphinxupquote{-{-}sandbox}} option)
+
+\end{itemize}
+
+Because \sphinxcode{\sphinxupquote{build}} can accept an existing container as a target and create a
+container in either supported format you can convert existing containers from
+one format to another.
+
+
+\section{Downloading an existing container from the Container Library}
+\label{\detokenize{build_a_container:downloading-an-existing-container-from-the-container-library}}
+You can use the build command to download a container from the Container
+Library.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity build lolcow.simg library://sylabs\PYGZhy{}jms/testing/lolcow
+\end{sphinxVerbatim}
+
+The first argument (\sphinxcode{\sphinxupquote{lolcow.simg}}) specifies a path and name for your
+container. The second argument (\sphinxcode{\sphinxupquote{library://sylabs-jms/testing/lolcow}}) gives
+the Container Library URI from which to download. By default the container will
+be converted to a compressed, read-only SIF. If you want your container in a
+writable format use the \sphinxcode{\sphinxupquote{-{-}sandbox}} option.
+
+
+\section{Downloading an existing container from Docker Hub}
+\label{\detokenize{build_a_container:downloading-an-existing-container-from-docker-hub}}
+You can use \sphinxcode{\sphinxupquote{build}} to download layers from Docker Hub and assemble them into
+Singularity containers.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity build lolcow.sif docker://godlovedc/lolcow
+\end{sphinxVerbatim}
+
+
+\section{Creating writable \sphinxstyleliteralintitle{\sphinxupquote{-{-}sandbox}} directories}
+\label{\detokenize{build_a_container:creating-writable-sandbox-directories}}
+If you wanted to create a container within a writable directory (called a
+sandbox) you can do so with the \sphinxcode{\sphinxupquote{-{-}sandbox}} option. It’s possible to create a
+sandbox without root privileges, but to ensure proper file permissions it is
+recommended to do so as root.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity build \PYGZhy{}\PYGZhy{}sandbox lolcow/ library://sylabs\PYGZhy{}jms/testing/lolcow
+\end{sphinxVerbatim}
+
+The resulting directory operates just like a container in a SIF file. To make
+changes within the container, use the \sphinxcode{\sphinxupquote{-{-}writable}} flag when you invoke your
+container.  It’s a good idea to do this as root to ensure you have permission to
+access the files and directories that you want to change.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity shell \PYGZhy{}\PYGZhy{}writable lolcow/
+\end{sphinxVerbatim}
+
+
+\section{Converting containers from one format to another}
+\label{\detokenize{build_a_container:converting-containers-from-one-format-to-another}}
+If you already have a container saved locally, you can use it as a target to
+build a new container. This allows you convert containers from one format to
+another. For example if you had a sandbox container called \sphinxcode{\sphinxupquote{development/}} and
+you wanted to convert it to SIF container called \sphinxcode{\sphinxupquote{production.sif}} you could:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity build production.sif development/
+\end{sphinxVerbatim}
+
+Use care when converting a sandbox directory to the default SIF format. If
+changes were made to the writable container before conversion, there is no
+record of those changes in the Singularity definition file rendering your
+container non-reproducible. It is a best practice to build your immutable
+production containers directly from a Singularity definition file instead.
+
+
+\section{Building containers from Singularity definition files}
+\label{\detokenize{build_a_container:building-containers-from-singularity-definition-files}}
+Of course, Singularity definition files can be used as the target when building
+a container. For detailed information on writing Singularity definition files,
+please see the \DUrole{xref,std,std-ref}{Container Definition docs}. Let’s say
+you already have the following container definition file called \sphinxcode{\sphinxupquote{lolcow.def}},
+and you want to use it to build a SIF container.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: docker
+From: ubuntu:16.04
+
+\PYGZpc{}post
+    apt\PYGZhy{}get \PYGZhy{}y update
+    apt\PYGZhy{}get \PYGZhy{}y install fortune cowsay lolcat
+
+\PYGZpc{}environment
+    export LC\PYGZus{}ALL=C
+    export PATH=/usr/games:\PYGZdl{}PATH
+
+\PYGZpc{}runscript
+    fortune \textbar{} cowsay \textbar{} lolcat
+\end{sphinxVerbatim}
+
+You can do so with the following command.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity build lolcow.sif lolcow.def
+\end{sphinxVerbatim}
+
+The command requires \sphinxcode{\sphinxupquote{sudo}} just as installing software on your local machine
+requires root privileges.
+
+
+\section{Build options}
+\label{\detokenize{build_a_container:build-options}}
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}builder}}}
+\label{\detokenize{build_a_container:builder}}
+Singularity 3.0 introduces the option to perform a remote build. The
+\sphinxcode{\sphinxupquote{-{-}builder}} option allows you to specify a URL to a different build service.
+For instance, you may need to specify a URL to build to an on premises
+installation of the remote builder.  This option must be used in conjunction
+with \sphinxcode{\sphinxupquote{-{-}remote}}.
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}detached}}}
+\label{\detokenize{build_a_container:detached}}
+When used in combination with the \sphinxcode{\sphinxupquote{-{-}remote}} option, the \sphinxcode{\sphinxupquote{-{-}detached}} option
+will detach the build from your terminal and allow it to build in the background
+without echoing any output to your terminal.
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}force}}}
+\label{\detokenize{build_a_container:force}}
+The \sphinxcode{\sphinxupquote{-{-}force}} option will delete and overwrite an existing Singularity image
+without presenting the normal interactive prompt.
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}json}}}
+\label{\detokenize{build_a_container:json}}
+The \sphinxcode{\sphinxupquote{-{-}json}} option will force Singularity to interpret a given definition
+file as a json.
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}library}}}
+\label{\detokenize{build_a_container:library}}
+This command allows you to set a different library.  (The default library is
+“\sphinxurl{https://library.sylabs.io}”)
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}notest}}}
+\label{\detokenize{build_a_container:notest}}
+If you don’t want to run the \sphinxcode{\sphinxupquote{\%test}} section during the container build, you can
+skip it with the \sphinxcode{\sphinxupquote{-{-}notest}} option. For instance, maybe you are building a
+container intended to run in a production environment with GPUs. But
+perhaps your local build resource does not have GPUs. You want to
+include a \sphinxcode{\sphinxupquote{\%test}} section that runs a short validation but you don’t want your
+build to exit with an error because it cannot find a GPU on your system.
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}remote}}}
+\label{\detokenize{build_a_container:remote}}
+Singularity 3.0 introduces the ability to build a container on an external
+resource running a remote builder.  (The default remote builder is located at
+“\sphinxurl{https://build.sylabs.io}”.)
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}sandbox}}}
+\label{\detokenize{build_a_container:sandbox}}
+Build a sandbox (chroot directory) instead of the default SIF format.
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}section}}}
+\label{\detokenize{build_a_container:section}}
+Instead of running the entire definition file, only run a specific section or
+sections.  This option accepts a comma delimited string of definition file
+sections.  Acceptable arguments include \sphinxcode{\sphinxupquote{all}}, \sphinxcode{\sphinxupquote{none}} or any combination of
+the following: \sphinxcode{\sphinxupquote{setup}}, \sphinxcode{\sphinxupquote{post}}, \sphinxcode{\sphinxupquote{files}}, \sphinxcode{\sphinxupquote{environment}}, \sphinxcode{\sphinxupquote{test}},
+\sphinxcode{\sphinxupquote{labels}}.
+
+Under normal build conditions, the Singularity definition file is saved into
+a container’s meta-data so that there is a record showing how the container was
+built. Using the \sphinxcode{\sphinxupquote{-{-}section}} option may render this meta-data useless, so use
+care if you value reproducibility.
+
+
+\subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}update}}}
+\label{\detokenize{build_a_container:update}}
+You can build into the same sandbox container multiple times (though the results
+may be unpredictable and it is generally better to delete your container and
+start from scratch).
+
+By default if you build into an existing sandbox container, the  \sphinxcode{\sphinxupquote{build}}
+command will prompt you to decide whether or not to overwrite the container.
+Instead of this behavior you can use the \sphinxcode{\sphinxupquote{-{-}update}} option to build \_into\_ an
+existing container. This will cause Singularity to skip the header and build
+any sections that are in the definition file into the existing container.
+
+The \sphinxcode{\sphinxupquote{-{-}update}} option is only valid when used with sandbox containers.
+
+
+\section{More Build topics}
+\label{\detokenize{build_a_container:more-build-topics}}\begin{itemize}
+\item {} 
+If you want to \sphinxstylestrong{customize the cache location} (where Docker layers are
+downloaded on your system), specify Docker credentials, or any custom tweaks
+to your build environment, see \DUrole{xref,std,std-ref}{build environment}.
+
+\item {} 
+If you want to make internally \sphinxstylestrong{modular containers}, check out the getting
+started guide \sphinxhref{https://sci-f.github.io/tutorials}{here}
+
+\item {} 
+If you want to \sphinxstylestrong{build your containers} on the Remote Builder, (because you
+don’t have root access on a Linux machine or want to host your container on
+the cloud) check out \sphinxhref{https://cloud.sylabs.io/builder}{this site}
+
+\end{itemize}
 
 
 \chapter{Security Options}

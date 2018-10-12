@@ -6,7 +6,7 @@ Security Options
 
 .. _sec:security_options:
 
-Singularity 3.0 introduces many new security related options to the container 
+Singularity 3.0 introduces many new security related options to the container
 runtime.  This document will describe the new methods users have for specifying
 the security scope and context when running Singularity containers.
 
@@ -14,11 +14,11 @@ the security scope and context when running Singularity containers.
 Linux Capabilities
 ------------------
 
-Singularity provides full support for granting and revoking Linux capabilities 
-on a user or group basis.  For example, let us suppose that an admin has 
+Singularity provides full support for granting and revoking Linux capabilities
+on a user or group basis.  For example, let us suppose that an admin has
 decided to grant a user capabilities to open raw sockets so that they can use
 ``ping`` in a container where the binary is controlled via capabilities (i.e. a
-recent version of CentOS).  
+recent version of CentOS).
 
 To do so, the admin would issue a command such as this:
 
@@ -51,7 +51,7 @@ the capability when executing a container with the ``--add-caps`` flag like so:
     rtt min/avg/max/mdev = 18.320/18.320/18.320/0.000 ms
 
 If the admin decides that it is no longer necessary to allow the user ``dave``
-to open raw sockets within Singularity containers, they can revoke the 
+to open raw sockets within Singularity containers, they can revoke the
 appropriate Linux capability like so:
 
 .. code-block:: none
@@ -61,7 +61,7 @@ appropriate Linux capability like so:
 The ``capabiltiy add`` and ``drop`` subcommands will also accept the case
 insensitive keyword ``all`` to grant or revoke all Linux capabilities to a user
 or group.  Similarly, the ``--add-caps`` option will accept the ``all`` keyword.
-Of course appropriate caution should be exercised when using this keyword.  
+Of course appropriate caution should be exercised when using this keyword.
 
 -------------------------------
 Security related action options
@@ -69,42 +69,42 @@ Security related action options
 
 Singularity 3.0 introduces many new flags that can be passed to the action
 commands; ``shell``, ``exec``, and ``run`` allowing fine grained control of
-security.  
+security.
 
 ``--add-caps``
 ==============
 
-As explained above, ``--add-caps`` will "activate" Linux capabilities when a 
-container is initiated, providing those capabilities have been granted to the 
-user by an administrator using the ``capability add`` command. This option will 
+As explained above, ``--add-caps`` will "activate" Linux capabilities when a
+container is initiated, providing those capabilities have been granted to the
+user by an administrator using the ``capability add`` command. This option will
 also accept the case insensitive keyword ``all`` to add every capability
-granted by the administrator.  
+granted by the administrator.
 
 ``--allow-setuid``
 ==================
 
 The SetUID bit allows a program to be executed as the user that owns the binary.
 The most well-known SetUID binaries are owned by root and allow a user to
-execute a command with elevated privileges.  But other SetUID binaries may 
-allow a user to execute a command as a service account.  
+execute a command with elevated privileges.  But other SetUID binaries may
+allow a user to execute a command as a service account.
 
-By default SetUID is disallowed within Singularity containers as a security 
+By default SetUID is disallowed within Singularity containers as a security
 precaution.  But the root user can override this precaution and allow SetUID
-binaries to behave as expected within a Singularity container with the 
+binaries to behave as expected within a Singularity container with the
 ``--allow-setuid`` option like so:
 
 .. code-block:: none
 
-    $ sudo singularity shell --allow-setuid some_container.sif 
+    $ sudo singularity shell --allow-setuid some_container.sif
 
 ``--keep-privs``
 ================
 
 It is possible for an admin to set a different set of default capabilities or to
-reduce the default capabilities to zero for the root user by setting the ``root 
+reduce the default capabilities to zero for the root user by setting the ``root
 default capabilities`` parameter in the ``singularity.conf`` file to ``file`` or
-``no`` respectively.  If this change is in effect, the root user can override 
-the ``singularity.conf`` file and enter the container with full capabilities 
+``no`` respectively.  If this change is in effect, the root user can override
+the ``singularity.conf`` file and enter the container with full capabilities
 using the ``--keep-privs`` option.
 
 .. code-block:: none
@@ -121,9 +121,9 @@ using the ``--keep-privs`` option.
 ``--drop-caps``
 ================
 
-By default, the root user has a full set of capabilities when they enter the 
+By default, the root user has a full set of capabilities when they enter the
 container. You may choose to drop specific capabilities when you initiate a
-container as root to enhance security. 
+container as root to enhance security.
 
 For instance, to drop the ability for the root user to open a raw socket inside
 the container:
@@ -134,18 +134,18 @@ the container:
     ping: socket: Operation not permitted
 
 The ``drop-caps`` option will also accept the case insensitive keyword ``all``
-as an option to drop all capabilities when entering the container. 
+as an option to drop all capabilities when entering the container.
 
 ``--security``
 ==============
 
-The ``--security`` flag allows the root user to leverage security modules such 
-as SELinux, AppArmor, and seccomp within your Singularity container. You can 
-also change the UID and GID of the user within the container at runtime. 
+The ``--security`` flag allows the root user to leverage security modules such
+as SELinux, AppArmor, and seccomp within your Singularity container. You can
+also change the UID and GID of the user within the container at runtime.
 
 For instance:
 
-.. code-block:: none 
+.. code-block:: none
 
     $ sudo whoami
     root
@@ -153,13 +153,13 @@ For instance:
     $ sudo singularity exec --security uid:1000 my_container.sif whoami
     david
 
-To use seccomp to blacklist a command follow this procedure. (It is actually 
+To use seccomp to blacklist a command follow this procedure. (It is actually
 preferable from a security standpoint to whitelist commands but this will
-suffice for a simple example.)  Note that this example was run on Ubuntu and 
+suffice for a simple example.)  Note that this example was run on Ubuntu and
 that Singularity was installed with the ``libseccomp-dev`` and ``pkg-config``
 packages as dependencies.
 
-First write a configuration file.  An example configuration file is installed 
+First write a configuration file.  An example configuration file is installed
 with Singularity, normally at ``/usr/local/etc/singularity/seccomp-profiles/default.json``.
 For this example, we will use a much simpler configuration file to blacklist the
 ``mkdir`` command.
@@ -191,7 +191,7 @@ For this example, we will use a much simpler configuration file to blacklist the
         ]
     }
 
-We'll save the file at ``/home/david/no_mkdir.json``. Then we can invoke the 
+We'll save the file at ``/home/david/no_mkdir.json``. Then we can invoke the
 container like so:
 
 .. code-block:: none
@@ -201,8 +201,8 @@ container like so:
     Singularity> mkdir /tmp/foo
     Bad system call (core dumped)
 
-Note that attempting to use the blacklisted ``mkdir`` command resulted in a 
-core dump.  
+Note that attempting to use the blacklisted ``mkdir`` command resulted in a
+core dump.
 
 The full list of arguments accepted by the ``--security`` option are as follows:
 

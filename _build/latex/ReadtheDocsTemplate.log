@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.8.20)  11 OCT 2018 23:27
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.12)  13 OCT 2018 01:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1099,7 +1099,7 @@ LaTeX Info: Redefining \nameref on input line 65.
 \openout5 = `ReadtheDocsTemplate.out'.
 
 Package hyperref Info: Option `pageanchor' set `false' on input line 68.
-<logo.png, id=129, 119.2455pt x 120.45pt>
+<logo.png, id=206, 119.2455pt x 120.45pt>
 LaTeX Font Info:    Try loading font information for T1+pcr on input line 68.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
@@ -1151,17 +1151,17 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
  (./ReadtheDocsTemplate.toc
 LaTeX Font Info:    Font shape `T1/ptm/bx/n' in size <10> not available
 (Font)              Font shape `T1/ptm/b/n' tried instead on input line 2.
-)
+
+[1
+
+])
 \tf@toc=\write6
 \openout6 = `ReadtheDocsTemplate.toc'.
 
-[1
-
-] [2
-
-]
+ [2]
 Chapter 1.
 [1
+
 
 ]
 LaTeX Font Info:    Try loading font information for TS1+pcr on input line 138.
@@ -1187,28 +1187,35 @@ File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ]
 Chapter 3.
 [15]
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <14.4> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 995.
+ [16]
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <12> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 980.
- [16] [17] (./ReadtheDocsTemplate.ind)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1133.
- [18]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1133.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1076.
+ [17] [18]
+Chapter 4.
+[19
+
+] [20] [21] (./ReadtheDocsTemplate.ind)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1403.
+ [22]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1403.
  (./ReadtheDocsTemplate.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1133.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1133.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1403.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1403.
 
 Package rerunfilecheck Info: File `ReadtheDocsTemplate.out' has not changed.
-(rerunfilecheck)             Checksum: 5B9F3A474A603E0397C68913E2732AE7;5573.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1133.
+(rerunfilecheck)             Checksum: 49486A54F7FF88C97ADEC06D6437653E;8709.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1403.
  ) 
 Here is how much of TeX's memory you used:
- 13718 strings out of 494880
- 190625 string characters out of 6179601
- 357796 words of memory out of 5000000
- 16663 multiletter control sequences out of 15000+600000
- 51422 words of font info for 71 fonts, out of 8000000 for 9000
+ 13787 strings out of 494880
+ 192103 string characters out of 6179600
+ 358995 words of memory out of 5000000
+ 16706 multiletter control sequences out of 15000+600000
+ 52043 words of font info for 73 fonts, out of 8000000 for 9000
  37 hyphenation exceptions out of 8191
- 37i,12n,49p,763b,488s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,12n,51p,763b,524s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/f
@@ -1218,10 +1225,10 @@ vb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on ReadtheDocsTemplate.pdf (22 pages, 174299 bytes).
+Output written on ReadtheDocsTemplate.pdf (26 pages, 189927 bytes).
 PDF statistics:
- 341 PDF objects out of 1000 (max. 8388607)
- 298 compressed objects within 3 object streams
- 66 named destinations out of 1000 (max. 500000)
- 274 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 467 PDF objects out of 1000 (max. 8388607)
+ 418 compressed objects within 5 object streams
+ 90 named destinations out of 1000 (max. 500000)
+ 426 words of extra memory for PDF output out of 10000 (max. 10000000)
 

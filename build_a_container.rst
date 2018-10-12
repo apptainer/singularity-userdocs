@@ -7,18 +7,18 @@ Build a Container
 .. _sec:build_a_container:
 
 ``build`` is the “Swiss army knife” of container creation. You can use it to
-download and assemble existing containers from external resources like the 
-`Container Library <https://cloud.sylabs.io/library>`_ and 
-`Docker Hub <https://hub.docker.com/>`_. You can use it to convert containers 
-between the formats supported by Singularity. And you can use it in conjunction 
-with a :ref:`Singularity definition <container-recipes>` file to create a 
+download and assemble existing containers from external resources like the
+`Container Library <https://cloud.sylabs.io/library>`_ and
+`Docker Hub <https://hub.docker.com/>`_. You can use it to convert containers
+between the formats supported by Singularity. And you can use it in conjunction
+with a :ref:`Singularity definition <container-recipes>` file to create a
 container from scratch and customized it to fit your needs.
 
 --------
 Overview
 --------
 
-The ``build`` command accepts a target as input and produces a container as 
+The ``build`` command accepts a target as input and produces a container as
 output.
 
 The target defines the method that ``build`` uses to create the container. It
@@ -36,34 +36,34 @@ can be one of the following:
 
 -  path to a :ref:`Singularity definition file <container-recipes>`
 
-``build`` can produce containers in two different formats that can be specified 
+``build`` can produce containers in two different formats that can be specified
 as follows.
 
--  compressed read-only **Singularity Image File (SIF)** format suitable for 
+-  compressed read-only **Singularity Image File (SIF)** format suitable for
    production (default)
 
--  writable **(ch)root directory** called a sandbox for interactive development 
+-  writable **(ch)root directory** called a sandbox for interactive development
    ( ``--sandbox`` option)
 
 Because ``build`` can accept an existing container as a target and create a
-container in either supported format you can convert existing containers from 
+container in either supported format you can convert existing containers from
 one format to another.
 
 ------------------------------------------------------------
 Downloading an existing container from the Container Library
 ------------------------------------------------------------
 
-You can use the build command to download a container from the Container 
+You can use the build command to download a container from the Container
 Library.
 
 .. code-block:: none
 
     $ sudo singularity build lolcow.simg library://sylabs-jms/testing/lolcow
 
-The first argument (``lolcow.simg``) specifies a path and name for your 
-container. The second argument (``library://sylabs-jms/testing/lolcow``) gives 
-the Container Library URI from which to download. By default the container will 
-be converted to a compressed, read-only SIF. If you want your container in a 
+The first argument (``lolcow.simg``) specifies a path and name for your
+container. The second argument (``library://sylabs-jms/testing/lolcow``) gives
+the Container Library URI from which to download. By default the container will
+be converted to a compressed, read-only SIF. If you want your container in a
 writable format use the ``--sandbox`` option.
 
 -------------------------------------------------
@@ -81,18 +81,18 @@ Singularity containers.
 Creating writable ``--sandbox`` directories
 -------------------------------------------
 
-If you wanted to create a container within a writable directory (called a 
+If you wanted to create a container within a writable directory (called a
 sandbox) you can do so with the ``--sandbox`` option. It’s possible to create a
-sandbox without root privileges, but to ensure proper file permissions it is 
+sandbox without root privileges, but to ensure proper file permissions it is
 recommended to do so as root.
 
 .. code-block:: none
 
     $ sudo singularity build --sandbox lolcow/ library://sylabs-jms/testing/lolcow
 
-The resulting directory operates just like a container in a SIF file. To make 
-changes within the container, use the ``--writable`` flag when you invoke your 
-container.  It’s a good idea to do this as root to ensure you have permission to 
+The resulting directory operates just like a container in a SIF file. To make
+changes within the container, use the ``--writable`` flag when you invoke your
+container.  It’s a good idea to do this as root to ensure you have permission to
 access the files and directories that you want to change.
 
 .. code-block:: none
@@ -103,18 +103,18 @@ access the files and directories that you want to change.
 Converting containers from one format to another
 ------------------------------------------------
 
-If you already have a container saved locally, you can use it as a target to 
-build a new container. This allows you convert containers from one format to 
-another. For example if you had a sandbox container called ``development/`` and 
+If you already have a container saved locally, you can use it as a target to
+build a new container. This allows you convert containers from one format to
+another. For example if you had a sandbox container called ``development/`` and
 you wanted to convert it to SIF container called ``production.sif`` you could:
 
 .. code-block:: none
 
     $ sudo singularity build production.sif development/
 
-Use care when converting a sandbox directory to the default SIF format. If 
-changes were made to the writable container before conversion, there is no 
-record of those changes in the Singularity definition file rendering your 
+Use care when converting a sandbox directory to the default SIF format. If
+changes were made to the writable container before conversion, there is no
+record of those changes in the Singularity definition file rendering your
 container non-reproducible. It is a best practice to build your immutable
 production containers directly from a Singularity definition file instead.
 
@@ -122,10 +122,10 @@ production containers directly from a Singularity definition file instead.
 Building containers from Singularity definition files
 -----------------------------------------------------
 
-Of course, Singularity definition files can be used as the target when building 
-a container. For detailed information on writing Singularity definition files, 
-please see the :ref:`Container Definition docs <container-recipes>`. Let’s say 
-you already have the following container definition file called ``lolcow.def``, 
+Of course, Singularity definition files can be used as the target when building
+a container. For detailed information on writing Singularity definition files,
+please see the :ref:`Container Definition docs <container-recipes>`. Let’s say
+you already have the following container definition file called ``lolcow.def``,
 and you want to use it to build a SIF container.
 
 .. code-block:: none
@@ -160,10 +160,10 @@ Build options
 ``--builder``
 =============
 
-Singularity 3.0 introduces the option to perform a remote build. The 
+Singularity 3.0 introduces the option to perform a remote build. The
 ``--builder`` option allows you to specify a URL to a different build service.
 For instance, you may need to specify a URL to build to an on premises
-installation of the remote builder.  This option must be used in conjunction 
+installation of the remote builder.  This option must be used in conjunction
 with ``--remote``.
 
 ``--detached``
@@ -171,7 +171,7 @@ with ``--remote``.
 
 When used in combination with the ``--remote`` option, the ``--detached`` option
 will detach the build from your terminal and allow it to build in the background
-without echoing any output to your terminal. 
+without echoing any output to your terminal.
 
 ``--force``
 ===========
@@ -182,13 +182,13 @@ without presenting the normal interactive prompt.
 ``--json``
 ==========
 
-The ``--json`` option will force Singularity to interpret a given definition 
+The ``--json`` option will force Singularity to interpret a given definition
 file as a json.
 
 ``--library``
 =============
 
-This command allows you to set a different library.  (The default library is 
+This command allows you to set a different library.  (The default library is
 "https://library.sylabs.io")
 
 ``--notest``
@@ -204,7 +204,7 @@ build to exit with an error because it cannot find a GPU on your system.
 ``--remote``
 ============
 
-Singularity 3.0 introduces the ability to build a container on an external 
+Singularity 3.0 introduces the ability to build a container on an external
 resource running a remote builder.  (The default remote builder is located at
 "https://build.sylabs.io".)
 
@@ -216,28 +216,28 @@ Build a sandbox (chroot directory) instead of the default SIF format.
 ``--section``
 =============
 
-Instead of running the entire definition file, only run a specific section or 
+Instead of running the entire definition file, only run a specific section or
 sections.  This option accepts a comma delimited string of definition file
-sections.  Acceptable arguments includ ``all``, ``none`` or any combination of
-the following: ``setup``, ``post``, ``files``, ``environment``, ``test``, 
+sections.  Acceptable arguments include ``all``, ``none`` or any combination of
+the following: ``setup``, ``post``, ``files``, ``environment``, ``test``,
 ``labels``.
 
 Under normal build conditions, the Singularity definition file is saved into
-a container’s meta-data so that there is a record showing how the container was 
-built. Using the ``--section`` option may render this meta-data useless, so use 
+a container’s meta-data so that there is a record showing how the container was
+built. Using the ``--section`` option may render this meta-data useless, so use
 care if you value reproducibility.
 
 ``--update``
-===========
+============
 
-You can build into the same sandbox container multiple times (though the results 
-may be unpredictable and it is generally better to delete your container and 
+You can build into the same sandbox container multiple times (though the results
+may be unpredictable and it is generally better to delete your container and
 start from scratch).
 
-By default if you build into an existing sandbox container, the  ``build`` 
-command will prompt you to decide whether or not to overwrite the container. 
-Instead of this behavior you can use the ``--update`` option to build _into_ an 
-existing container. This will cause Singularity to skip the header and build 
+By default if you build into an existing sandbox container, the  ``build``
+command will prompt you to decide whether or not to overwrite the container.
+Instead of this behavior you can use the ``--update`` option to build _into_ an
+existing container. This will cause Singularity to skip the header and build
 any sections that are in the definition file into the existing container.
 
 The ``--update`` option is only valid when used with sandbox containers.
@@ -246,13 +246,13 @@ The ``--update`` option is only valid when used with sandbox containers.
 More Build topics
 -----------------
 
--  If you want to **customize the cache location** (where Docker layers are 
-   downloaded on your system), specify Docker credentials, or any custom tweaks 
+-  If you want to **customize the cache location** (where Docker layers are
+   downloaded on your system), specify Docker credentials, or any custom tweaks
    to your build environment, see :ref:`build environment <build-environment>`.
 
--  If you want to make internally **modular containers**, check out the getting 
+-  If you want to make internally **modular containers**, check out the getting
    started guide `here <https://sci-f.github.io/tutorials>`_
 
--  If you want to **build your containers** on the Remote Builder, (because you 
-   don’t have root access on a Linux machine or want to host your container on 
+-  If you want to **build your containers** on the Remote Builder, (because you
+   don’t have root access on a Linux machine or want to host your container on
    the cloud) check out `this site <https://cloud.sylabs.io/builder>`_

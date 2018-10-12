@@ -1,0 +1,455 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Build a Container &mdash; Singularity container 3.0 documentation</title>
+
+
+
+
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Security Options" href="security_options.html" />
+    <link rel="prev" title="Signing and Verifying Containers" href="signNverify.html" />
+
+
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+
+  <div class="wy-grid-for-nav">
+
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+
+
+
+            <a href="index.html" class="icon icon-home"> Singularity container
+
+
+
+
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+
+          </a>
+
+
+
+
+              <div class="version">
+                3.0
+              </div>
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signNverify.html">Sign and Verify</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Build a container</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#downloading-an-existing-container-from-the-container-library">Downloading an existing container from the Container Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#downloading-an-existing-container-from-docker-hub">Downloading an existing container from Docker Hub</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#creating-writable-sandbox-directories">Creating writable <code class="docutils literal notranslate"><span class="pre">--sandbox</span></code> directories</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#converting-containers-from-one-format-to-another">Converting containers from one format to another</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#building-containers-from-singularity-definition-files">Building containers from Singularity definition files</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#build-options">Build options</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#builder"><code class="docutils literal notranslate"><span class="pre">--builder</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#detached"><code class="docutils literal notranslate"><span class="pre">--detached</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#force"><code class="docutils literal notranslate"><span class="pre">--force</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json"><code class="docutils literal notranslate"><span class="pre">--json</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#library"><code class="docutils literal notranslate"><span class="pre">--library</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notest"><code class="docutils literal notranslate"><span class="pre">--notest</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#remote"><code class="docutils literal notranslate"><span class="pre">--remote</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#sandbox"><code class="docutils literal notranslate"><span class="pre">--sandbox</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#section"><code class="docutils literal notranslate"><span class="pre">--section</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update"><code class="docutils literal notranslate"><span class="pre">--update</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#more-build-topics">More Build topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="security_options.html">Security Options</a></li>
+</ul>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+        <div class="rst-content style-external-links">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="index.html">Docs</a> &raquo;</li>
+
+      <li>Build a Container</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+
+
+              <a href="https://github.com/sylabs/singularity-userdocs/blob/master/build_a_container.rst" class="fa fa-github"> Edit on GitHub</a>
+
+
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <div class="section" id="build-a-container">
+<span id="id1"></span><h1>Build a Container<a class="headerlink" href="#build-a-container" title="Permalink to this headline">¶</a></h1>
+<p id="sec-build-a-container"><code class="docutils literal notranslate"><span class="pre">build</span></code> is the “Swiss army knife” of container creation. You can use it to
+download and assemble existing containers from external resources like the
+<a class="reference external" href="https://cloud.sylabs.io/library">Container Library</a> and
+<a class="reference external" href="https://hub.docker.com/">Docker Hub</a>. You can use it to convert containers
+between the formats supported by Singularity. And you can use it in conjunction
+with a <span class="xref std std-ref">Singularity definition</span> file to create a
+container from scratch and customized it to fit your needs.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">build</span></code> command accepts a target as input and produces a container as
+output.</p>
+<p>The target defines the method that <code class="docutils literal notranslate"><span class="pre">build</span></code> uses to create the container. It
+can be one of the following:</p>
+<ul class="simple">
+<li>URI beginning with <strong>library://</strong> to build from the Container Library</li>
+<li>URI beginning with <strong>docker://</strong> to build from Docker Hub</li>
+<li>URI beginning with <strong>shub://</strong> to build from Singularity Hub</li>
+<li>path to a <strong>existing container</strong> on your local machine</li>
+<li>path to a <strong>directory</strong> to build from a sandbox</li>
+<li>path to a <span class="xref std std-ref">Singularity definition file</span></li>
+</ul>
+<p><code class="docutils literal notranslate"><span class="pre">build</span></code> can produce containers in two different formats that can be specified
+as follows.</p>
+<ul class="simple">
+<li>compressed read-only <strong>Singularity Image File (SIF)</strong> format suitable for
+production (default)</li>
+<li>writable <strong>(ch)root directory</strong> called a sandbox for interactive development
+( <code class="docutils literal notranslate"><span class="pre">--sandbox</span></code> option)</li>
+</ul>
+<p>Because <code class="docutils literal notranslate"><span class="pre">build</span></code> can accept an existing container as a target and create a
+container in either supported format you can convert existing containers from
+one format to another.</p>
+</div>
+<div class="section" id="downloading-an-existing-container-from-the-container-library">
+<h2>Downloading an existing container from the Container Library<a class="headerlink" href="#downloading-an-existing-container-from-the-container-library" title="Permalink to this headline">¶</a></h2>
+<p>You can use the build command to download a container from the Container
+Library.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build lolcow.simg library://sylabs-jms/testing/lolcow
+</pre></div>
+</div>
+<p>The first argument (<code class="docutils literal notranslate"><span class="pre">lolcow.simg</span></code>) specifies a path and name for your
+container. The second argument (<code class="docutils literal notranslate"><span class="pre">library://sylabs-jms/testing/lolcow</span></code>) gives
+the Container Library URI from which to download. By default the container will
+be converted to a compressed, read-only SIF. If you want your container in a
+writable format use the <code class="docutils literal notranslate"><span class="pre">--sandbox</span></code> option.</p>
+</div>
+<div class="section" id="downloading-an-existing-container-from-docker-hub">
+<h2>Downloading an existing container from Docker Hub<a class="headerlink" href="#downloading-an-existing-container-from-docker-hub" title="Permalink to this headline">¶</a></h2>
+<p>You can use <code class="docutils literal notranslate"><span class="pre">build</span></code> to download layers from Docker Hub and assemble them into
+Singularity containers.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build lolcow.sif docker://godlovedc/lolcow
+</pre></div>
+</div>
+</div>
+<div class="section" id="creating-writable-sandbox-directories">
+<h2>Creating writable <code class="docutils literal notranslate"><span class="pre">--sandbox</span></code> directories<a class="headerlink" href="#creating-writable-sandbox-directories" title="Permalink to this headline">¶</a></h2>
+<p>If you wanted to create a container within a writable directory (called a
+sandbox) you can do so with the <code class="docutils literal notranslate"><span class="pre">--sandbox</span></code> option. It’s possible to create a
+sandbox without root privileges, but to ensure proper file permissions it is
+recommended to do so as root.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build --sandbox lolcow/ library://sylabs-jms/testing/lolcow
+</pre></div>
+</div>
+<p>The resulting directory operates just like a container in a SIF file. To make
+changes within the container, use the <code class="docutils literal notranslate"><span class="pre">--writable</span></code> flag when you invoke your
+container.  It’s a good idea to do this as root to ensure you have permission to
+access the files and directories that you want to change.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity shell --writable lolcow/
+</pre></div>
+</div>
+</div>
+<div class="section" id="converting-containers-from-one-format-to-another">
+<h2>Converting containers from one format to another<a class="headerlink" href="#converting-containers-from-one-format-to-another" title="Permalink to this headline">¶</a></h2>
+<p>If you already have a container saved locally, you can use it as a target to
+build a new container. This allows you convert containers from one format to
+another. For example if you had a sandbox container called <code class="docutils literal notranslate"><span class="pre">development/</span></code> and
+you wanted to convert it to SIF container called <code class="docutils literal notranslate"><span class="pre">production.sif</span></code> you could:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build production.sif development/
+</pre></div>
+</div>
+<p>Use care when converting a sandbox directory to the default SIF format. If
+changes were made to the writable container before conversion, there is no
+record of those changes in the Singularity definition file rendering your
+container non-reproducible. It is a best practice to build your immutable
+production containers directly from a Singularity definition file instead.</p>
+</div>
+<div class="section" id="building-containers-from-singularity-definition-files">
+<h2>Building containers from Singularity definition files<a class="headerlink" href="#building-containers-from-singularity-definition-files" title="Permalink to this headline">¶</a></h2>
+<p>Of course, Singularity definition files can be used as the target when building
+a container. For detailed information on writing Singularity definition files,
+please see the <span class="xref std std-ref">Container Definition docs</span>. Let’s say
+you already have the following container definition file called <code class="docutils literal notranslate"><span class="pre">lolcow.def</span></code>,
+and you want to use it to build a SIF container.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
+From: ubuntu:16.04
+
+%post
+    apt-get -y update
+    apt-get -y install fortune cowsay lolcat
+
+%environment
+    export LC_ALL=C
+    export PATH=/usr/games:$PATH
+
+%runscript
+    fortune | cowsay | lolcat
+</pre></div>
+</div>
+<p>You can do so with the following command.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity build lolcow.sif lolcow.def
+</pre></div>
+</div>
+<p>The command requires <code class="docutils literal notranslate"><span class="pre">sudo</span></code> just as installing software on your local machine
+requires root privileges.</p>
+</div>
+<div class="section" id="build-options">
+<h2>Build options<a class="headerlink" href="#build-options" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="builder">
+<h3><code class="docutils literal notranslate"><span class="pre">--builder</span></code><a class="headerlink" href="#builder" title="Permalink to this headline">¶</a></h3>
+<p>Singularity 3.0 introduces the option to perform a remote build. The
+<code class="docutils literal notranslate"><span class="pre">--builder</span></code> option allows you to specify a URL to a different build service.
+For instance, you may need to specify a URL to build to an on premises
+installation of the remote builder.  This option must be used in conjunction
+with <code class="docutils literal notranslate"><span class="pre">--remote</span></code>.</p>
+</div>
+<div class="section" id="detached">
+<h3><code class="docutils literal notranslate"><span class="pre">--detached</span></code><a class="headerlink" href="#detached" title="Permalink to this headline">¶</a></h3>
+<p>When used in combination with the <code class="docutils literal notranslate"><span class="pre">--remote</span></code> option, the <code class="docutils literal notranslate"><span class="pre">--detached</span></code> option
+will detach the build from your terminal and allow it to build in the background
+without echoing any output to your terminal.</p>
+</div>
+<div class="section" id="force">
+<h3><code class="docutils literal notranslate"><span class="pre">--force</span></code><a class="headerlink" href="#force" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">--force</span></code> option will delete and overwrite an existing Singularity image
+without presenting the normal interactive prompt.</p>
+</div>
+<div class="section" id="json">
+<h3><code class="docutils literal notranslate"><span class="pre">--json</span></code><a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal notranslate"><span class="pre">--json</span></code> option will force Singularity to interpret a given definition
+file as a json.</p>
+</div>
+<div class="section" id="library">
+<h3><code class="docutils literal notranslate"><span class="pre">--library</span></code><a class="headerlink" href="#library" title="Permalink to this headline">¶</a></h3>
+<p>This command allows you to set a different library.  (The default library is
+“<a class="reference external" href="https://library.sylabs.io">https://library.sylabs.io</a>”)</p>
+</div>
+<div class="section" id="notest">
+<h3><code class="docutils literal notranslate"><span class="pre">--notest</span></code><a class="headerlink" href="#notest" title="Permalink to this headline">¶</a></h3>
+<p>If you don’t want to run the <code class="docutils literal notranslate"><span class="pre">%test</span></code> section during the container build, you can
+skip it with the <code class="docutils literal notranslate"><span class="pre">--notest</span></code> option. For instance, maybe you are building a
+container intended to run in a production environment with GPUs. But
+perhaps your local build resource does not have GPUs. You want to
+include a <code class="docutils literal notranslate"><span class="pre">%test</span></code> section that runs a short validation but you don’t want your
+build to exit with an error because it cannot find a GPU on your system.</p>
+</div>
+<div class="section" id="remote">
+<h3><code class="docutils literal notranslate"><span class="pre">--remote</span></code><a class="headerlink" href="#remote" title="Permalink to this headline">¶</a></h3>
+<p>Singularity 3.0 introduces the ability to build a container on an external
+resource running a remote builder.  (The default remote builder is located at
+“<a class="reference external" href="https://build.sylabs.io">https://build.sylabs.io</a>”.)</p>
+</div>
+<div class="section" id="sandbox">
+<h3><code class="docutils literal notranslate"><span class="pre">--sandbox</span></code><a class="headerlink" href="#sandbox" title="Permalink to this headline">¶</a></h3>
+<p>Build a sandbox (chroot directory) instead of the default SIF format.</p>
+</div>
+<div class="section" id="section">
+<h3><code class="docutils literal notranslate"><span class="pre">--section</span></code><a class="headerlink" href="#section" title="Permalink to this headline">¶</a></h3>
+<p>Instead of running the entire definition file, only run a specific section or
+sections.  This option accepts a comma delimited string of definition file
+sections.  Acceptable arguments include <code class="docutils literal notranslate"><span class="pre">all</span></code>, <code class="docutils literal notranslate"><span class="pre">none</span></code> or any combination of
+the following: <code class="docutils literal notranslate"><span class="pre">setup</span></code>, <code class="docutils literal notranslate"><span class="pre">post</span></code>, <code class="docutils literal notranslate"><span class="pre">files</span></code>, <code class="docutils literal notranslate"><span class="pre">environment</span></code>, <code class="docutils literal notranslate"><span class="pre">test</span></code>,
+<code class="docutils literal notranslate"><span class="pre">labels</span></code>.</p>
+<p>Under normal build conditions, the Singularity definition file is saved into
+a container’s meta-data so that there is a record showing how the container was
+built. Using the <code class="docutils literal notranslate"><span class="pre">--section</span></code> option may render this meta-data useless, so use
+care if you value reproducibility.</p>
+</div>
+<div class="section" id="update">
+<h3><code class="docutils literal notranslate"><span class="pre">--update</span></code><a class="headerlink" href="#update" title="Permalink to this headline">¶</a></h3>
+<p>You can build into the same sandbox container multiple times (though the results
+may be unpredictable and it is generally better to delete your container and
+start from scratch).</p>
+<p>By default if you build into an existing sandbox container, the  <code class="docutils literal notranslate"><span class="pre">build</span></code>
+command will prompt you to decide whether or not to overwrite the container.
+Instead of this behavior you can use the <code class="docutils literal notranslate"><span class="pre">--update</span></code> option to build _into_ an
+existing container. This will cause Singularity to skip the header and build
+any sections that are in the definition file into the existing container.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">--update</span></code> option is only valid when used with sandbox containers.</p>
+</div>
+</div>
+<div class="section" id="more-build-topics">
+<h2>More Build topics<a class="headerlink" href="#more-build-topics" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>If you want to <strong>customize the cache location</strong> (where Docker layers are
+downloaded on your system), specify Docker credentials, or any custom tweaks
+to your build environment, see <span class="xref std std-ref">build environment</span>.</li>
+<li>If you want to make internally <strong>modular containers</strong>, check out the getting
+started guide <a class="reference external" href="https://sci-f.github.io/tutorials">here</a></li>
+<li>If you want to <strong>build your containers</strong> on the Remote Builder, (because you
+don’t have root access on a Linux machine or want to host your container on
+the cloud) check out <a class="reference external" href="https://cloud.sylabs.io/builder">this site</a></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+
+          </div>
+          <footer>
+
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+
+        <a href="security_options.html" class="btn btn-neutral float-right" title="Security Options" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+
+
+        <a href="signNverify.html" class="btn btn-neutral" title="Signing and Verifying Containers" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+
+    </div>
+
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+<script type="text/javascript" src="_static/js/footer.js"></script>
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'3.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>
