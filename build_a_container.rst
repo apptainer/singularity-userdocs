@@ -75,7 +75,7 @@ Singularity containers.
 
 .. code-block:: none
 
-    $ singularity build lolcow.sif docker://godlovedc/lolcow
+    $ sudo singularity build lolcow.sif docker://godlovedc/lolcow
 
 -------------------------------------------
 Creating writable ``--sandbox`` directories
