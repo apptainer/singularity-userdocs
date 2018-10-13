@@ -154,6 +154,7 @@ then try to use the ``verify`` command again.
     Data integrity checked, authentic and signed by:
     	Dave Godlove (demo) <d@sylabs.io>, KeyID FED5BBA38EE0DC4A
 
+
 Answering yes at the interactive prompt will store the Public key locally so
 you will not have to contact the Keystore again the next time you verify your
 container.
