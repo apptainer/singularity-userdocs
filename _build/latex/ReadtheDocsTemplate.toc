@@ -22,3 +22,30 @@
 \contentsline {section}{\numberline {2.2}Signing your own containers}{11}{section.2.2}
 \contentsline {subsection}{\numberline {2.2.1}Generating and managing PGP keys}{11}{subsection.2.2.1}
 \contentsline {subsection}{\numberline {2.2.2}Signing and validating your own containers}{12}{subsection.2.2.2}
+\contentsline {chapter}{\numberline {3}Build a Container}{15}{chapter.3}
+\contentsline {section}{\numberline {3.1}Overview}{15}{section.3.1}
+\contentsline {section}{\numberline {3.2}Downloading an existing container from the Container Library}{15}{section.3.2}
+\contentsline {section}{\numberline {3.3}Downloading an existing container from Docker Hub}{16}{section.3.3}
+\contentsline {section}{\numberline {3.4}Creating writable \sphinxstyleliteralintitle {\sphinxupquote {-{-}sandbox}} directories}{16}{section.3.4}
+\contentsline {section}{\numberline {3.5}Converting containers from one format to another}{16}{section.3.5}
+\contentsline {section}{\numberline {3.6}Building containers from Singularity definition files}{16}{section.3.6}
+\contentsline {section}{\numberline {3.7}Build options}{17}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}builder}}}{17}{subsection.3.7.1}
+\contentsline {subsection}{\numberline {3.7.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}detached}}}{17}{subsection.3.7.2}
+\contentsline {subsection}{\numberline {3.7.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}force}}}{17}{subsection.3.7.3}
+\contentsline {subsection}{\numberline {3.7.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}json}}}{17}{subsection.3.7.4}
+\contentsline {subsection}{\numberline {3.7.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}library}}}{17}{subsection.3.7.5}
+\contentsline {subsection}{\numberline {3.7.6}\sphinxstyleliteralintitle {\sphinxupquote {-{-}notest}}}{17}{subsection.3.7.6}
+\contentsline {subsection}{\numberline {3.7.7}\sphinxstyleliteralintitle {\sphinxupquote {-{-}remote}}}{17}{subsection.3.7.7}
+\contentsline {subsection}{\numberline {3.7.8}\sphinxstyleliteralintitle {\sphinxupquote {-{-}sandbox}}}{18}{subsection.3.7.8}
+\contentsline {subsection}{\numberline {3.7.9}\sphinxstyleliteralintitle {\sphinxupquote {-{-}section}}}{18}{subsection.3.7.9}
+\contentsline {subsection}{\numberline {3.7.10}\sphinxstyleliteralintitle {\sphinxupquote {-{-}update}}}{18}{subsection.3.7.10}
+\contentsline {section}{\numberline {3.8}More Build topics}{18}{section.3.8}
+\contentsline {chapter}{\numberline {4}Security Options}{19}{chapter.4}
+\contentsline {section}{\numberline {4.1}Linux Capabilities}{19}{section.4.1}
+\contentsline {section}{\numberline {4.2}Security related action options}{20}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}add-caps}}}{20}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}allow-setuid}}}{20}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}keep-privs}}}{20}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}drop-caps}}}{20}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}security}}}{21}{subsection.4.2.5}
