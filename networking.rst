@@ -96,32 +96,33 @@ the same directory for the benefit of users.
 ``--network-args``
 ==================
 
-The ``--network-args``option provides a convenient way to specify arguments to 
+The ``--network-args`` option provides a convenient way to specify arguments to 
 pass directly to the cni plugins.  It must be used in conjuction with the 
 ``--net`` flag.
 
-For instance, let's say you want to start an nginx server on port 80 inside of 
-the container, but you want to map it to port 8080 outside of the container:
+For instance, let's say you want to start an `NGINX <https://www.nginx.com/>`_ 
+server on port 80 inside of the container, but you want to map it to port 8080 
+outside of the container:
 
 .. code-block:: none
 
     $ sudo singularity instance start --writable-tmpfs \
         --net --network-args "portmap=8080:80/tcp" docker://nginx web2
 
-The above command will start the Docker Hub official nginx image running in a 
-background instance called ``web2``.  The nginx instance will need to be able to 
+The above command will start the Docker Hub official NGINX image running in a 
+background instance called ``web2``.  The NGINX instance will need to be able to 
 write to disk, so we've used the ``--writable-tmpfs`` argument to allocate some 
 space in memory.  The ``--net`` flag is necessary when using the 
 ``--network-args`` option, and specifying the ``portmap=8080:80/tcp`` argument
 which will map port 80 inside of the container to 8080 on the host. 
 
-Now we can start nginx inside of the container:
+Now we can start NGINX inside of the container:
 
 .. code-block:: none
 
     $ sudo singularity exec instance://web2 nginx
 
-And the ``curl`` command can be used to verify that nginx is running on the host
+And the ``curl`` command can be used to verify that NGINX is running on the host
 port 8080 as expected. 
 
 .. code-block:: none
@@ -153,3 +154,6 @@ port 8080 as expected.
     <p><em>Thank you for using nginx.</em></p>
     </body>
     </html>
+
+For more information about cni, check the 
+`cni specification <https://github.com/containernetworking/cni/blob/master/SPEC.md>`_.
