@@ -8,7 +8,7 @@ Network virtualization
 
 Singularity 3.0 introduces full integration with 
 `cni <https://github.com/containernetworking/cni>`_, and several new features to
-make network virtualisation easy.  
+make network virtualization easy.  
 
 A few new options have been added to the action commands (``exec``, ``run``, 
 and ``shell``) to facilitate these features, and the ``--net`` option has been
@@ -18,8 +18,8 @@ updated as well.  These options can only be used by root.
 =========
 
 Passing the ``--net`` flag will cause the container to join a new network
-network namespace when it initiates.  New in Singularity 3.0, a bridge  
-interface will also be set up by default.
+namespace when it initiates.  New in Singularity 3.0, a bridge interface will 
+also be set up by default.
 
 .. code-block:: none
 
@@ -64,7 +64,7 @@ within the container.
 =============
 
 The ``--network`` option can only be invoked in combination with the ``--net``
-flag.  It accepts a comma delimited string of network types. Each  entry will 
+flag.  It accepts a comma delimited string of network types. Each entry will 
 bring up a dedicated interface inside container.
 
 .. code-block:: none
