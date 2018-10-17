@@ -298,6 +298,9 @@ INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/courier/pcrb8t.vf
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrb8r.tfm
 INPUT ReadtheDocsTemplate.ind
 INPUT ReadtheDocsTemplate.ind
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrb8t.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/vf/adobe/courier/pcrb8t.vf
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/adobe/courier/pcrb8r.tfm
 INPUT ReadtheDocsTemplate.aux
 INPUT ./ReadtheDocsTemplate.out
 INPUT ./ReadtheDocsTemplate.out

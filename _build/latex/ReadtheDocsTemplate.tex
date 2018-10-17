@@ -55,7 +55,7 @@
 
 
 \title{Singularity Container Documentation}
-\date{Oct 13, 2018}
+\date{Oct 17, 2018}
 \release{3.0}
 \author{User Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -1395,6 +1395,176 @@ The full list of arguments accepted by the \sphinxcode{\sphinxupquote{-{-}securi
 \PYGZhy{}\PYGZhy{}security=\PYGZdq{}gid:1000\PYGZdq{}
 \PYGZhy{}\PYGZhy{}security=\PYGZdq{}gid:1000:1:0\PYGZdq{} (multiple gids, first is always the primary group)
 \end{sphinxVerbatim}
+
+
+\chapter{Network virtualization}
+\label{\detokenize{networking:network-virtualization}}\label{\detokenize{networking:networking}}\label{\detokenize{networking::doc}}\phantomsection\label{\detokenize{networking:sec-networking}}
+Singularity 3.0 introduces full integration with
+\sphinxhref{https://github.com/containernetworking/cni}{cni} , and several new features to
+make network virtualization easy.
+
+A few new options have been added to the action commands (\sphinxcode{\sphinxupquote{exec}}, \sphinxcode{\sphinxupquote{run}},
+and \sphinxcode{\sphinxupquote{shell}}) to facilitate these features, and the \sphinxcode{\sphinxupquote{-{-}net}} option has been
+updated as well.  These options can only be used by root.
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{-{-}dns}}}
+\label{\detokenize{networking:dns}}
+The \sphinxcode{\sphinxupquote{-{-}dns}} option allows you to specify a comma separated list of DNS servers
+to add to the \sphinxcode{\sphinxupquote{/etc/resolv.conf}} file.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} nslookup sylabs.io \textbar{} grep Server
+Server:             127.0.0.53
+
+\PYGZdl{} sudo singularity exec \PYGZhy{}\PYGZhy{}dns 8.8.8.8 ubuntu.sif nslookup sylabs.io \textbar{} grep Server
+Server:             8.8.8.8
+
+\PYGZdl{} sudo singularity exec \PYGZhy{}\PYGZhy{}dns 8.8.8.8 ubuntu.sif cat /etc/resolv.conf
+nameserver 8.8.8.8
+\end{sphinxVerbatim}
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{-{-}hostname}}}
+\label{\detokenize{networking:hostname}}
+The \sphinxcode{\sphinxupquote{-{-}hostname}} option accepts a string argument to change the hostname
+within the container.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} hostname
+ubuntu\PYGZhy{}bionic
+
+\PYGZdl{} sudo singularity exec \PYGZhy{}\PYGZhy{}hostname hal\PYGZhy{}9000 my\PYGZus{}container.sif hostname
+hal\PYGZhy{}9000
+\end{sphinxVerbatim}
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{-{-}net}}}
+\label{\detokenize{networking:net}}
+Passing the \sphinxcode{\sphinxupquote{-{-}net}} flag will cause the container to join a new network
+namespace when it initiates.  New in Singularity 3.0, a bridge interface will
+also be set up by default.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} hostname \PYGZhy{}I
+10.0.2.15
+
+\PYGZdl{} sudo singularity exec \PYGZhy{}\PYGZhy{}net my\PYGZus{}container.sif hostname \PYGZhy{}I
+10.22.0.4
+\end{sphinxVerbatim}
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{-{-}network}}}
+\label{\detokenize{networking:network}}
+The \sphinxcode{\sphinxupquote{-{-}network}} option can only be invoked in combination with the \sphinxcode{\sphinxupquote{-{-}net}}
+flag.  It accepts a comma delimited string of network types. Each entry will
+bring up a dedicated interface inside container.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} hostname \PYGZhy{}I
+172.16.107.251 10.22.0.1
+
+\PYGZdl{} sudo singularity exec \PYGZhy{}\PYGZhy{}net \PYGZhy{}\PYGZhy{}network ptp ubuntu.sif hostname \PYGZhy{}I
+10.23.0.6
+
+\PYGZdl{} sudo singularity exec \PYGZhy{}\PYGZhy{}net \PYGZhy{}\PYGZhy{}network bridge,ptp ubuntu.sif hostname \PYGZhy{}I
+10.22.0.14 10.23.0.7
+\end{sphinxVerbatim}
+
+When invoked, the \sphinxcode{\sphinxupquote{-{-}network}} option searches the singularity configuration
+directory (commonly \sphinxcode{\sphinxupquote{/usr/local/etc/singularity/network/}}) for the cni
+configuration file corresponding to the requested network type(s). Several
+configuration files are installed with Singularity by default corresponding to
+the following network types:
+\begin{itemize}
+\item {} 
+bridge
+
+\item {} 
+ptp
+
+\item {} 
+ipvlan
+
+\item {} 
+macvlan
+
+\end{itemize}
+
+Administrators can also define custom network configurations and place them in
+the same directory for the benefit of users.
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{-{-}network-args}}}
+\label{\detokenize{networking:network-args}}
+The \sphinxcode{\sphinxupquote{-{-}network-args}} option provides a convenient way to specify arguments to
+pass directly to the cni plugins.  It must be used in conjuction with the
+\sphinxcode{\sphinxupquote{-{-}net}} flag.
+
+For instance, let’s say you want to start an \sphinxhref{https://www.nginx.com/}{NGINX}
+server on port 80 inside of the container, but you want to map it to port 8080
+outside of the container:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity instance start \PYGZhy{}\PYGZhy{}writable\PYGZhy{}tmpfs \PYGZbs{}
+    \PYGZhy{}\PYGZhy{}net \PYGZhy{}\PYGZhy{}network\PYGZhy{}args \PYGZdq{}portmap=8080:80/tcp\PYGZdq{} docker://nginx web2
+\end{sphinxVerbatim}
+
+The above command will start the Docker Hub official NGINX image running in a
+background instance called \sphinxcode{\sphinxupquote{web2}}.  The NGINX instance will need to be able to
+write to disk, so we’ve used the \sphinxcode{\sphinxupquote{-{-}writable-tmpfs}} argument to allocate some
+space in memory.  The \sphinxcode{\sphinxupquote{-{-}net}} flag is necessary when using the
+\sphinxcode{\sphinxupquote{-{-}network-args}} option, and specifying the \sphinxcode{\sphinxupquote{portmap=8080:80/tcp}} argument
+which will map port 80 inside of the container to 8080 on the host.
+
+Now we can start NGINX inside of the container:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity exec instance://web2 nginx
+\end{sphinxVerbatim}
+
+And the \sphinxcode{\sphinxupquote{curl}} command can be used to verify that NGINX is running on the host
+port 8080 as expected.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} curl localhost:8080
+10.22.0.1 \PYGZhy{} \PYGZhy{} [16/Oct/2018:09:34:25 \PYGZhy{}0400] \PYGZdq{}GET / HTTP/1.1\PYGZdq{} 200 612 \PYGZdq{}\PYGZhy{}\PYGZdq{} \PYGZdq{}curl/7.58.0\PYGZdq{} \PYGZdq{}\PYGZhy{}\PYGZdq{}
+\PYGZlt{}!DOCTYPE html\PYGZgt{}
+\PYGZlt{}html\PYGZgt{}
+\PYGZlt{}head\PYGZgt{}
+\PYGZlt{}title\PYGZgt{}Welcome to nginx!\PYGZlt{}/title\PYGZgt{}
+\PYGZlt{}style\PYGZgt{}
+    body \PYGZob{}
+        width: 35em;
+        margin: 0 auto;
+        font\PYGZhy{}family: Tahoma, Verdana, Arial, sans\PYGZhy{}serif;
+    \PYGZcb{}
+\PYGZlt{}/style\PYGZgt{}
+\PYGZlt{}/head\PYGZgt{}
+\PYGZlt{}body\PYGZgt{}
+\PYGZlt{}h1\PYGZgt{}Welcome to nginx!\PYGZlt{}/h1\PYGZgt{}
+\PYGZlt{}p\PYGZgt{}If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.\PYGZlt{}/p\PYGZgt{}
+
+\PYGZlt{}p\PYGZgt{}For online documentation and support please refer to
+\PYGZlt{}a href=\PYGZdq{}http://nginx.org/\PYGZdq{}\PYGZgt{}nginx.org\PYGZlt{}/a\PYGZgt{}.\PYGZlt{}br/\PYGZgt{}
+Commercial support is available at
+\PYGZlt{}a href=\PYGZdq{}http://nginx.com/\PYGZdq{}\PYGZgt{}nginx.com\PYGZlt{}/a\PYGZgt{}.\PYGZlt{}/p\PYGZgt{}
+
+\PYGZlt{}p\PYGZgt{}\PYGZlt{}em\PYGZgt{}Thank you for using nginx.\PYGZlt{}/em\PYGZgt{}\PYGZlt{}/p\PYGZgt{}
+\PYGZlt{}/body\PYGZgt{}
+\PYGZlt{}/html\PYGZgt{}
+\end{sphinxVerbatim}
+
+For more information about cni, check the
+\sphinxhref{https://github.com/containernetworking/cni/blob/master/SPEC.md}{cni specification}.
 
 
 

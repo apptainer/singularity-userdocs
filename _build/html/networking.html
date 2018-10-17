@@ -1,0 +1,367 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Network virtualization &mdash; Singularity container 3.0 documentation</title>
+
+
+
+
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Security Options" href="security_options.html" />
+
+
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+
+  <div class="wy-grid-for-nav">
+
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+
+
+
+            <a href="index.html" class="icon icon-home"> Singularity container
+
+
+
+
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+
+          </a>
+
+
+
+
+              <div class="version">
+                3.0
+              </div>
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signNverify.html">Sign and Verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security_options.html">Security Options</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Network Options</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#dns"><code class="docutils literal notranslate"><span class="pre">--dns</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#hostname"><code class="docutils literal notranslate"><span class="pre">--hostname</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#net"><code class="docutils literal notranslate"><span class="pre">--net</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#network"><code class="docutils literal notranslate"><span class="pre">--network</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#network-args"><code class="docutils literal notranslate"><span class="pre">--network-args</span></code></a></li>
+</ul>
+</li>
+</ul>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+        <div class="rst-content style-external-links">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="index.html">Docs</a> &raquo;</li>
+
+      <li>Network virtualization</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+
+
+              <a href="https://github.com/sylabs/singularity-userdocs/blob/master/networking.rst" class="fa fa-github"> Edit on GitHub</a>
+
+
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <div class="section" id="network-virtualization">
+<span id="networking"></span><h1>Network virtualization<a class="headerlink" href="#network-virtualization" title="Permalink to this headline">¶</a></h1>
+<p id="sec-networking">Singularity 3.0 introduces full integration with
+<a class="reference external" href="https://github.com/containernetworking/cni">cni</a> , and several new features to
+make network virtualization easy.</p>
+<p>A few new options have been added to the action commands (<code class="docutils literal notranslate"><span class="pre">exec</span></code>, <code class="docutils literal notranslate"><span class="pre">run</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">shell</span></code>) to facilitate these features, and the <code class="docutils literal notranslate"><span class="pre">--net</span></code> option has been
+updated as well.  These options can only be used by root.</p>
+<div class="section" id="dns">
+<h2><code class="docutils literal notranslate"><span class="pre">--dns</span></code><a class="headerlink" href="#dns" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">--dns</span></code> option allows you to specify a comma separated list of DNS servers
+to add to the <code class="docutils literal notranslate"><span class="pre">/etc/resolv.conf</span></code> file.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ nslookup sylabs.io | grep Server
+Server:             127.0.0.53
+
+$ sudo singularity exec --dns 8.8.8.8 ubuntu.sif nslookup sylabs.io | grep Server
+Server:             8.8.8.8
+
+$ sudo singularity exec --dns 8.8.8.8 ubuntu.sif cat /etc/resolv.conf
+nameserver 8.8.8.8
+</pre></div>
+</div>
+</div>
+<div class="section" id="hostname">
+<h2><code class="docutils literal notranslate"><span class="pre">--hostname</span></code><a class="headerlink" href="#hostname" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">--hostname</span></code> option accepts a string argument to change the hostname
+within the container.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ hostname
+ubuntu-bionic
+
+$ sudo singularity exec --hostname hal-9000 my_container.sif hostname
+hal-9000
+</pre></div>
+</div>
+</div>
+<div class="section" id="net">
+<h2><code class="docutils literal notranslate"><span class="pre">--net</span></code><a class="headerlink" href="#net" title="Permalink to this headline">¶</a></h2>
+<p>Passing the <code class="docutils literal notranslate"><span class="pre">--net</span></code> flag will cause the container to join a new network
+namespace when it initiates.  New in Singularity 3.0, a bridge interface will
+also be set up by default.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ hostname -I
+10.0.2.15
+
+$ sudo singularity exec --net my_container.sif hostname -I
+10.22.0.4
+</pre></div>
+</div>
+</div>
+<div class="section" id="network">
+<h2><code class="docutils literal notranslate"><span class="pre">--network</span></code><a class="headerlink" href="#network" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">--network</span></code> option can only be invoked in combination with the <code class="docutils literal notranslate"><span class="pre">--net</span></code>
+flag.  It accepts a comma delimited string of network types. Each entry will
+bring up a dedicated interface inside container.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ hostname -I
+172.16.107.251 10.22.0.1
+
+$ sudo singularity exec --net --network ptp ubuntu.sif hostname -I
+10.23.0.6
+
+$ sudo singularity exec --net --network bridge,ptp ubuntu.sif hostname -I
+10.22.0.14 10.23.0.7
+</pre></div>
+</div>
+<p>When invoked, the <code class="docutils literal notranslate"><span class="pre">--network</span></code> option searches the singularity configuration
+directory (commonly <code class="docutils literal notranslate"><span class="pre">/usr/local/etc/singularity/network/</span></code>) for the cni
+configuration file corresponding to the requested network type(s). Several
+configuration files are installed with Singularity by default corresponding to
+the following network types:</p>
+<blockquote>
+<div><ul class="simple">
+<li>bridge</li>
+<li>ptp</li>
+<li>ipvlan</li>
+<li>macvlan</li>
+</ul>
+</div></blockquote>
+<p>Administrators can also define custom network configurations and place them in
+the same directory for the benefit of users.</p>
+</div>
+<div class="section" id="network-args">
+<h2><code class="docutils literal notranslate"><span class="pre">--network-args</span></code><a class="headerlink" href="#network-args" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">--network-args</span></code> option provides a convenient way to specify arguments to
+pass directly to the cni plugins.  It must be used in conjuction with the
+<code class="docutils literal notranslate"><span class="pre">--net</span></code> flag.</p>
+<p>For instance, let’s say you want to start an <a class="reference external" href="https://www.nginx.com/">NGINX</a>
+server on port 80 inside of the container, but you want to map it to port 8080
+outside of the container:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity instance start --writable-tmpfs \
+    --net --network-args &quot;portmap=8080:80/tcp&quot; docker://nginx web2
+</pre></div>
+</div>
+<p>The above command will start the Docker Hub official NGINX image running in a
+background instance called <code class="docutils literal notranslate"><span class="pre">web2</span></code>.  The NGINX instance will need to be able to
+write to disk, so we’ve used the <code class="docutils literal notranslate"><span class="pre">--writable-tmpfs</span></code> argument to allocate some
+space in memory.  The <code class="docutils literal notranslate"><span class="pre">--net</span></code> flag is necessary when using the
+<code class="docutils literal notranslate"><span class="pre">--network-args</span></code> option, and specifying the <code class="docutils literal notranslate"><span class="pre">portmap=8080:80/tcp</span></code> argument
+which will map port 80 inside of the container to 8080 on the host.</p>
+<p>Now we can start NGINX inside of the container:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity exec instance://web2 nginx
+</pre></div>
+</div>
+<p>And the <code class="docutils literal notranslate"><span class="pre">curl</span></code> command can be used to verify that NGINX is running on the host
+port 8080 as expected.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ curl localhost:8080
+10.22.0.1 - - [16/Oct/2018:09:34:25 -0400] &quot;GET / HTTP/1.1&quot; 200 612 &quot;-&quot; &quot;curl/7.58.0&quot; &quot;-&quot;
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;Welcome to nginx!&lt;/title&gt;
+&lt;style&gt;
+    body {
+        width: 35em;
+        margin: 0 auto;
+        font-family: Tahoma, Verdana, Arial, sans-serif;
+    }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;Welcome to nginx!&lt;/h1&gt;
+&lt;p&gt;If you see this page, the nginx web server is successfully installed and
+working. Further configuration is required.&lt;/p&gt;
+
+&lt;p&gt;For online documentation and support please refer to
+&lt;a href=&quot;http://nginx.org/&quot;&gt;nginx.org&lt;/a&gt;.&lt;br/&gt;
+Commercial support is available at
+&lt;a href=&quot;http://nginx.com/&quot;&gt;nginx.com&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;em&gt;Thank you for using nginx.&lt;/em&gt;&lt;/p&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>For more information about cni, check the
+<a class="reference external" href="https://github.com/containernetworking/cni/blob/master/SPEC.md">cni specification</a>.</p>
+</div>
+</div>
+
+
+           </div>
+
+          </div>
+          <footer>
+
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+
+
+        <a href="security_options.html" class="btn btn-neutral" title="Security Options" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+
+    </div>
+
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+  <script type="text/javascript" src="_static/js/footer.js"></script>
+
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'3.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>
