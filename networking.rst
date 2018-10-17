@@ -14,21 +14,6 @@ A few new options have been added to the action commands (``exec``, ``run``,
 and ``shell``) to facilitate these features, and the ``--net`` option has been
 updated as well.  These options can only be used by root.
 
-``--net``
-=========
-
-Passing the ``--net`` flag will cause the container to join a new network
-namespace when it initiates.  New in Singularity 3.0, a bridge interface will 
-also be set up by default.
-
-.. code-block:: none
-
-    $ hostname -I
-    10.0.2.15
-
-    $ sudo singularity exec --net my_container.sif hostname -I
-    10.22.0.4
-
 ``--dns``
 =========
 
@@ -59,6 +44,21 @@ within the container.
 
     $ sudo singularity exec --hostname hal-9000 my_container.sif hostname
     hal-9000
+
+``--net``
+=========
+
+Passing the ``--net`` flag will cause the container to join a new network
+namespace when it initiates.  New in Singularity 3.0, a bridge interface will 
+also be set up by default.
+
+.. code-block:: none
+
+    $ hostname -I
+    10.0.2.15
+
+    $ sudo singularity exec --net my_container.sif hostname -I
+    10.22.0.4
 
 ``--network``
 =============
