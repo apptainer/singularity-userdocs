@@ -228,7 +228,7 @@ built. Using the ``--section`` option may render this meta-data useless, so use
 care if you value reproducibility.
 
 ``--update``
-===========
+============
 
 You can build into the same sandbox container multiple times (though the results
 may be unpredictable and it is generally better to delete your container and
@@ -236,7 +236,7 @@ start from scratch).
 
 By default if you build into an existing sandbox container, the  ``build``
 command will prompt you to decide whether or not to overwrite the container.
-Instead of this behavior you can use the ``--update`` option to build _into_ an 
+Instead of this behavior you can use the ``--update`` option to build _into_ an
 existing container. This will cause Singularity to skip the header and build
 any sections that are in the definition file into the existing container.
 
