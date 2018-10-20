@@ -42,7 +42,6 @@ You must first install development libraries to your host. Assuming Ubuntu
         libgpgme11-dev
 
 
-
 Install Go
 ==========
 

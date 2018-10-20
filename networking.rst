@@ -59,6 +59,7 @@ also be set up by default.
 
     $ sudo singularity exec --net my_container.sif hostname -I
     10.22.0.4
+    
 
 ``--network``
 =============

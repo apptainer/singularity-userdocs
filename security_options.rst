@@ -71,6 +71,7 @@ Singularity 3.0 introduces many new flags that can be passed to the action
 commands; ``shell``, ``exec``, and ``run`` allowing fine grained control of
 security.
 
+
 ``--add-caps``
 ==============
 
@@ -79,6 +80,7 @@ container is initiated, providing those capabilities have been granted to the
 user by an administrator using the ``capability add`` command. This option will
 also accept the case insensitive keyword ``all`` to add every capability
 granted by the administrator.
+
 
 ``--allow-setuid``
 ==================
@@ -96,6 +98,7 @@ binaries to behave as expected within a Singularity container with the
 .. code-block:: none
 
     $ sudo singularity shell --allow-setuid some_container.sif
+
 
 ``--keep-privs``
 ================
@@ -135,6 +138,7 @@ the container:
 
 The ``drop-caps`` option will also accept the case insensitive keyword ``all``
 as an option to drop all capabilities when entering the container.
+
 
 ``--security``
 ==============
