@@ -88,8 +88,10 @@
 
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
-<li class="toctree-l1"><a class="reference internal" href="signNverify.html">Sign and Verify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signNverify.html">Sign and Verify</a></li>
 <li class="toctree-l1"><a class="reference internal" href="security_options.html">Security Options</a></li>
 <li class="toctree-l1"><a class="reference internal" href="networking.html">Network Options</a></li>
 </ul>
@@ -188,15 +190,6 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="signNverify.html">Sign and Verify</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="signNverify.html#verifying-containers-from-the-container-library">Verifying containers from the Container Library</a></li>
-<li class="toctree-l2"><a class="reference internal" href="signNverify.html#signing-your-own-containers">Signing your own containers</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="signNverify.html#generating-and-managing-pgp-keys">Generating and managing PGP keys</a></li>
-<li class="toctree-l3"><a class="reference internal" href="signNverify.html#signing-and-validating-your-own-containers">Signing and validating your own containers</a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a container</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="build_a_container.html#overview">Overview</a></li>
 <li class="toctree-l2"><a class="reference internal" href="build_a_container.html#downloading-an-existing-container-from-the-container-library">Downloading an existing container from the Container Library</a></li>
@@ -218,6 +211,30 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="build_a_container.html#more-build-topics">More Build topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="bind_paths_and_mounts.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bind_paths_and_mounts.html#system-defined-bind-paths">System-defined bind paths</a></li>
+<li class="toctree-l2"><a class="reference internal" href="bind_paths_and_mounts.html#user-defined-bind-paths">User-defined bind paths</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="bind_paths_and_mounts.html#specifying-bind-paths">Specifying bind paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="bind_paths_and_mounts.html#a-note-on-using-bind-with-the-writable-flag">A note on using <code class="docutils literal notranslate"><span class="pre">--bind</span></code> with the <code class="docutils literal notranslate"><span class="pre">--writable</span></code> flag</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="persistent_overlays.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="persistent_overlays.html#usage">Usage</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="signNverify.html">Sign and Verify</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="signNverify.html#verifying-containers-from-the-container-library">Verifying containers from the Container Library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signNverify.html#signing-your-own-containers">Signing your own containers</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signNverify.html#generating-and-managing-pgp-keys">Generating and managing PGP keys</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signNverify.html#signing-and-validating-your-own-containers">Signing and validating your own containers</a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="security_options.html">Security Options</a><ul>
@@ -278,8 +295,7 @@
   </div>
 
 
-
-  <script type="text/javascript" src="_static/js/footer.js"></script>
+<script type="text/javascript" src="_static/js/footer.js"></script>
 
 
     <script type="text/javascript">

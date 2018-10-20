@@ -137,6 +137,7 @@ needing to contact the Keystore.
     Verifying image: my_container.sif
     Data integrity checked, authentic and signed by:
 	Dave Godlove (demo) <d@sylabs.io>, KeyID FED5BBA38EE0DC4A
+  
 
 If you've pushed your key to the Keystore you can also verify this image in the
 absence of a local key.  To demonstrate this, first delete your local keys, and

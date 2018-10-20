@@ -17,41 +17,50 @@
 \contentsline {subsection}{\numberline {1.5.1}Sandbox Directories}{8}{subsection.1.5.1}
 \contentsline {subsection}{\numberline {1.5.2}Converting images from one format to another}{8}{subsection.1.5.2}
 \contentsline {subsection}{\numberline {1.5.3}Singularity Definition Files}{9}{subsection.1.5.3}
-\contentsline {chapter}{\numberline {2}Signing and Verifying Containers}{11}{chapter.2}
-\contentsline {section}{\numberline {2.1}Verifying containers from the Container Library}{11}{section.2.1}
-\contentsline {section}{\numberline {2.2}Signing your own containers}{11}{section.2.2}
-\contentsline {subsection}{\numberline {2.2.1}Generating and managing PGP keys}{11}{subsection.2.2.1}
-\contentsline {subsection}{\numberline {2.2.2}Signing and validating your own containers}{12}{subsection.2.2.2}
-\contentsline {chapter}{\numberline {3}Build a Container}{15}{chapter.3}
+\contentsline {chapter}{\numberline {2}Build a Container}{11}{chapter.2}
+\contentsline {section}{\numberline {2.1}Overview}{11}{section.2.1}
+\contentsline {section}{\numberline {2.2}Downloading an existing container from the Container Library}{11}{section.2.2}
+\contentsline {section}{\numberline {2.3}Downloading an existing container from Docker Hub}{12}{section.2.3}
+\contentsline {section}{\numberline {2.4}Creating writable \sphinxstyleliteralintitle {\sphinxupquote {-{-}sandbox}} directories}{12}{section.2.4}
+\contentsline {section}{\numberline {2.5}Converting containers from one format to another}{12}{section.2.5}
+\contentsline {section}{\numberline {2.6}Building containers from Singularity definition files}{12}{section.2.6}
+\contentsline {section}{\numberline {2.7}Build options}{13}{section.2.7}
+\contentsline {subsection}{\numberline {2.7.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}builder}}}{13}{subsection.2.7.1}
+\contentsline {subsection}{\numberline {2.7.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}detached}}}{13}{subsection.2.7.2}
+\contentsline {subsection}{\numberline {2.7.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}force}}}{13}{subsection.2.7.3}
+\contentsline {subsection}{\numberline {2.7.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}json}}}{13}{subsection.2.7.4}
+\contentsline {subsection}{\numberline {2.7.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}library}}}{13}{subsection.2.7.5}
+\contentsline {subsection}{\numberline {2.7.6}\sphinxstyleliteralintitle {\sphinxupquote {-{-}notest}}}{13}{subsection.2.7.6}
+\contentsline {subsection}{\numberline {2.7.7}\sphinxstyleliteralintitle {\sphinxupquote {-{-}remote}}}{13}{subsection.2.7.7}
+\contentsline {subsection}{\numberline {2.7.8}\sphinxstyleliteralintitle {\sphinxupquote {-{-}sandbox}}}{14}{subsection.2.7.8}
+\contentsline {subsection}{\numberline {2.7.9}\sphinxstyleliteralintitle {\sphinxupquote {-{-}section}}}{14}{subsection.2.7.9}
+\contentsline {subsection}{\numberline {2.7.10}\sphinxstyleliteralintitle {\sphinxupquote {-{-}update}}}{14}{subsection.2.7.10}
+\contentsline {section}{\numberline {2.8}More Build topics}{14}{section.2.8}
+\contentsline {chapter}{\numberline {3}Bind Paths and Mounts}{15}{chapter.3}
 \contentsline {section}{\numberline {3.1}Overview}{15}{section.3.1}
-\contentsline {section}{\numberline {3.2}Downloading an existing container from the Container Library}{15}{section.3.2}
-\contentsline {section}{\numberline {3.3}Downloading an existing container from Docker Hub}{16}{section.3.3}
-\contentsline {section}{\numberline {3.4}Creating writable \sphinxstyleliteralintitle {\sphinxupquote {-{-}sandbox}} directories}{16}{section.3.4}
-\contentsline {section}{\numberline {3.5}Converting containers from one format to another}{16}{section.3.5}
-\contentsline {section}{\numberline {3.6}Building containers from Singularity definition files}{16}{section.3.6}
-\contentsline {section}{\numberline {3.7}Build options}{17}{section.3.7}
-\contentsline {subsection}{\numberline {3.7.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}builder}}}{17}{subsection.3.7.1}
-\contentsline {subsection}{\numberline {3.7.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}detached}}}{17}{subsection.3.7.2}
-\contentsline {subsection}{\numberline {3.7.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}force}}}{17}{subsection.3.7.3}
-\contentsline {subsection}{\numberline {3.7.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}json}}}{17}{subsection.3.7.4}
-\contentsline {subsection}{\numberline {3.7.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}library}}}{17}{subsection.3.7.5}
-\contentsline {subsection}{\numberline {3.7.6}\sphinxstyleliteralintitle {\sphinxupquote {-{-}notest}}}{17}{subsection.3.7.6}
-\contentsline {subsection}{\numberline {3.7.7}\sphinxstyleliteralintitle {\sphinxupquote {-{-}remote}}}{17}{subsection.3.7.7}
-\contentsline {subsection}{\numberline {3.7.8}\sphinxstyleliteralintitle {\sphinxupquote {-{-}sandbox}}}{18}{subsection.3.7.8}
-\contentsline {subsection}{\numberline {3.7.9}\sphinxstyleliteralintitle {\sphinxupquote {-{-}section}}}{18}{subsection.3.7.9}
-\contentsline {subsection}{\numberline {3.7.10}\sphinxstyleliteralintitle {\sphinxupquote {-{-}update}}}{18}{subsection.3.7.10}
-\contentsline {section}{\numberline {3.8}More Build topics}{18}{section.3.8}
-\contentsline {chapter}{\numberline {4}Security Options}{19}{chapter.4}
-\contentsline {section}{\numberline {4.1}Linux Capabilities}{19}{section.4.1}
-\contentsline {section}{\numberline {4.2}Security related action options}{20}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}add-caps}}}{20}{subsection.4.2.1}
-\contentsline {subsection}{\numberline {4.2.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}allow-setuid}}}{20}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}keep-privs}}}{20}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}drop-caps}}}{20}{subsection.4.2.4}
-\contentsline {subsection}{\numberline {4.2.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}security}}}{21}{subsection.4.2.5}
-\contentsline {chapter}{\numberline {5}Network virtualization}{23}{chapter.5}
-\contentsline {section}{\numberline {5.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}dns}}}{23}{section.5.1}
-\contentsline {section}{\numberline {5.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}hostname}}}{23}{section.5.2}
-\contentsline {section}{\numberline {5.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}net}}}{23}{section.5.3}
-\contentsline {section}{\numberline {5.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}network}}}{24}{section.5.4}
-\contentsline {section}{\numberline {5.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}network-args}}}{24}{section.5.5}
+\contentsline {section}{\numberline {3.2}System-defined bind paths}{15}{section.3.2}
+\contentsline {section}{\numberline {3.3}User-defined bind paths}{15}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Specifying bind paths}{15}{subsection.3.3.1}
+\contentsline {subsection}{\numberline {3.3.2}A note on using \sphinxstyleliteralintitle {\sphinxupquote {-{-}bind}} with the \sphinxstyleliteralintitle {\sphinxupquote {-{-}writable}} flag}{16}{subsection.3.3.2}
+\contentsline {chapter}{\numberline {4}Persistent Overlays}{17}{chapter.4}
+\contentsline {section}{\numberline {4.1}Overview}{17}{section.4.1}
+\contentsline {section}{\numberline {4.2}Usage}{17}{section.4.2}
+\contentsline {chapter}{\numberline {5}Signing and Verifying Containers}{19}{chapter.5}
+\contentsline {section}{\numberline {5.1}Verifying containers from the Container Library}{19}{section.5.1}
+\contentsline {section}{\numberline {5.2}Signing your own containers}{19}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}Generating and managing PGP keys}{19}{subsection.5.2.1}
+\contentsline {subsection}{\numberline {5.2.2}Signing and validating your own containers}{20}{subsection.5.2.2}
+\contentsline {chapter}{\numberline {6}Security Options}{23}{chapter.6}
+\contentsline {section}{\numberline {6.1}Linux Capabilities}{23}{section.6.1}
+\contentsline {section}{\numberline {6.2}Security related action options}{24}{section.6.2}
+\contentsline {subsection}{\numberline {6.2.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}add-caps}}}{24}{subsection.6.2.1}
+\contentsline {subsection}{\numberline {6.2.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}allow-setuid}}}{24}{subsection.6.2.2}
+\contentsline {subsection}{\numberline {6.2.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}keep-privs}}}{24}{subsection.6.2.3}
+\contentsline {subsection}{\numberline {6.2.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}drop-caps}}}{24}{subsection.6.2.4}
+\contentsline {subsection}{\numberline {6.2.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}security}}}{25}{subsection.6.2.5}
+\contentsline {chapter}{\numberline {7}Network virtualization}{27}{chapter.7}
+\contentsline {section}{\numberline {7.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}dns}}}{27}{section.7.1}
+\contentsline {section}{\numberline {7.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}hostname}}}{27}{section.7.2}
+\contentsline {section}{\numberline {7.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}net}}}{27}{section.7.3}
+\contentsline {section}{\numberline {7.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}network}}}{28}{section.7.4}
+\contentsline {section}{\numberline {7.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}network-args}}}{28}{section.7.5}

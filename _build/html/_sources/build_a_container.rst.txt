@@ -56,6 +56,7 @@ Downloading an existing container from the Container Library
 You can use the build command to download a container from the Container
 Library.
 
+
 .. code-block:: none
 
     $ sudo singularity build lolcow.simg library://sylabs-jms/testing/lolcow
