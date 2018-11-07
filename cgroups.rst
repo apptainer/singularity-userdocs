@@ -117,8 +117,11 @@ using ``cpus/mems`` fields:
         cpus = "0-1"
         mems = "0-1"
 
-Where container has limited access to CPU 0 and CPU 1. **It's important to set 
-identical values for both cpus and mems**
+Where container has limited access to CPU 0 and CPU 1. 
+
+.. note::
+
+    It's important to set identical values for both ``cpus`` and ``mems``.
 
 For more information about limiting CPU with cgroups, see the following external
 links:
