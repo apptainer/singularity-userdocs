@@ -64,3 +64,13 @@
 \contentsline {section}{\numberline {7.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}net}}}{27}{section.7.3}
 \contentsline {section}{\numberline {7.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}network}}}{28}{section.7.4}
 \contentsline {section}{\numberline {7.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}network-args}}}{28}{section.7.5}
+\contentsline {chapter}{\numberline {8}Limiting container resources with cgroups}{31}{chapter.8}
+\contentsline {section}{\numberline {8.1}Overview}{31}{section.8.1}
+\contentsline {section}{\numberline {8.2}Examples}{31}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}Limiting memory}{31}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}Limiting CPU}{32}{subsection.8.2.2}
+\contentsline {subsubsection}{\numberline {8.2.2.1}shares}{32}{subsubsection.8.2.2.1}
+\contentsline {subsubsection}{\numberline {8.2.2.2}quota/period}{32}{subsubsection.8.2.2.2}
+\contentsline {subsubsection}{\numberline {8.2.2.3}cpus/mems}{32}{subsubsection.8.2.2.3}
+\contentsline {subsection}{\numberline {8.2.3}Limiting IO}{33}{subsection.8.2.3}
+\contentsline {subsubsection}{\numberline {8.2.3.1}Limiting device access}{34}{subsubsection.8.2.3.1}

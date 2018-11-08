@@ -31,6 +31,7 @@ to add to the ``/etc/resolv.conf`` file.
     $ sudo singularity exec --dns 8.8.8.8 ubuntu.sif cat /etc/resolv.conf
     nameserver 8.8.8.8
 
+
 ``--hostname``
 ==============
 
@@ -59,7 +60,7 @@ also be set up by default.
 
     $ sudo singularity exec --net my_container.sif hostname -I
     10.22.0.4
-    
+
 
 ``--network``
 =============

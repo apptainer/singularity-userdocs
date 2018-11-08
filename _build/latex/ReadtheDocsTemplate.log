@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.12)  20 OCT 2018 13:00
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.12)  8 NOV 2018 12:43
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1099,7 +1099,7 @@ LaTeX Info: Redefining \nameref on input line 65.
 \openout5 = `ReadtheDocsTemplate.out'.
 
 Package hyperref Info: Option `pageanchor' set `false' on input line 68.
-<logo.png, id=266, 119.2455pt x 120.45pt>
+<logo.png, id=306, 119.2455pt x 120.45pt>
 LaTeX Font Info:    Try loading font information for T1+pcr on input line 68.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/t1pcr.fd
@@ -1207,28 +1207,33 @@ Chapter 6.
 Chapter 7.
 [27
 
-] [28] (./ReadtheDocsTemplate.ind)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1778.
+] [28]
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1778.
- [29]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 1778.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1775.
+ [29] [30
+
+]
+Chapter 8.
+[31] [32] [33] (./ReadtheDocsTemplate.ind)
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2026.
+ [34]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2026.
  (./ReadtheDocsTemplate.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1778.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1778.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2026.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2026.
 
 Package rerunfilecheck Info: File `ReadtheDocsTemplate.out' has not changed.
-(rerunfilecheck)             Checksum: A0B36FF99315A9B210A84FFE2F2E1E49;10782.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1778.
+(rerunfilecheck)             Checksum: 40235D170E722E7DD42EEDCD2DECA59D;12157.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2026.
  ) 
 Here is how much of TeX's memory you used:
- 13852 strings out of 494880
- 193290 string characters out of 6179600
- 360033 words of memory out of 5000000
- 16745 multiletter control sequences out of 15000+600000
+ 13897 strings out of 494880
+ 194118 string characters out of 6179600
+ 360660 words of memory out of 5000000
+ 16775 multiletter control sequences out of 15000+600000
  52664 words of font info for 75 fonts, out of 8000000 for 9000
  37 hyphenation exceptions out of 8191
- 38i,12n,51p,763b,524s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 37i,12n,51p,763b,524s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texliv
 e/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/share/texlive/texmf
 -dist/fonts/type1/public/amsfonts/cm/cmsy5.pfb></usr/share/texlive/texmf-dist/f
@@ -1238,10 +1243,10 @@ vb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on ReadtheDocsTemplate.pdf (33 pages, 207500 bytes).
+Output written on ReadtheDocsTemplate.pdf (38 pages, 218384 bytes).
 PDF statistics:
- 584 PDF objects out of 1000 (max. 8388607)
- 527 compressed objects within 6 object streams
- 114 named destinations out of 1000 (max. 500000)
- 546 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 668 PDF objects out of 1000 (max. 8388607)
+ 605 compressed objects within 7 object streams
+ 129 named destinations out of 1000 (max. 500000)
+ 626 words of extra memory for PDF output out of 10000 (max. 10000000)
 

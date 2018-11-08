@@ -91,6 +91,7 @@ you bind many directories into your Singularity containers and they don’t
 change, you could even benefit by setting this variable in your ``.bashrc``
 file.
 
+
 A note on using ``--bind`` with the ``--writable`` flag
 =======================================================
 

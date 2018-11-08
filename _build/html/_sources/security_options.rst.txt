@@ -10,6 +10,7 @@ Singularity 3.0 introduces many new security related options to the container
 runtime.  This document will describe the new methods users have for specifying
 the security scope and context when running Singularity containers.
 
+
 ------------------
 Linux Capabilities
 ------------------
