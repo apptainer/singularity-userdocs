@@ -20,7 +20,7 @@ apply the settings in the TOML file by using the path as an argument to the
 
 .. code-block:: none
 
-    $ singularity shell --apply-cgroups /path/to/cgroups.toml
+    $ sudo singularity shell --apply-cgroups /path/to/cgroups.toml my_container.sif
 
 The ``--apply-cgroups`` option can only be used with root privileges.
 
@@ -31,9 +31,9 @@ Examples
 Limiting memory
 ===============
 
-Limit the amount of memory that your container uses to 500MB (524288000 bytes).
-First, create a ``cgroups.toml`` file like this and save it in your home
-directory.
+To limit the amount of memory that your container uses to 500MB (524288000 
+bytes), follow this example.  First, create a ``cgroups.toml`` file like this 
+and save it in your home directory.
 
 .. code-block:: none
 
@@ -63,14 +63,14 @@ the following command.
 
     $ sudo singularity instance stop instance1
 
-The remaining examples can be tested by starting instances and examining the 
-contents of the appropriate subdirectories of ``/sys/fs/cgroup/``.
+Similarly, the remaining examples can be tested by starting instances and 
+examining the contents of the appropriate subdirectories of ``/sys/fs/cgroup/``.
 
 Limiting CPU
 ============
 
 Limit CPU resources using one of the following strategies. The ``cpu`` section 
-of the configuration file can limit memoroy wit the following:
+of the configuration file can limit memory with the following:
 
 shares
 ------
@@ -86,7 +86,7 @@ single CPU, you will set ``512`` as value.
 
 A cgroup can get more than its share of CPU if there are enough idle CPU cycles 
 available in the system, due to the work conserving nature of the scheduler, so 
-a container process can consume all CPU cycles even with a ratio of 50%, the 
+a contained process can consume all CPU cycles even with a ratio of 50%. The 
 ratio is only applied when two or more processes conflicts with their needs of 
 CPU cycles.
 
@@ -94,7 +94,7 @@ quota/period
 ------------
 
 You can enforce hard limits on the CPU cycles a cgroup can consume, so 
-container processes can't use more than the amount of CPU time set for the 
+contained processes can't use more than the amount of CPU time set for the 
 cgroup. ``quota`` allows you to configure the amount of CPU time that a cgroup 
 can use per period. The default is 100ms (100000us). So if you want to limit 
 amount of CPU time to 20ms during period of 100ms:
@@ -144,7 +144,7 @@ You can limit and monitor access to I/O for block devices.  Use the
         weight = 1000
         leafWeight = 1000
 
-``weight`` and ``leafWeight`` accept values between 10 and 1000.
+``weight`` and ``leafWeight`` accept values between ``10`` and ``1000``.
 
 ``weight`` is the default weight of the group on all the devices until and 
 unless overridden by a per device rule.
