@@ -24,6 +24,7 @@ output.
 The target defines the method that ``build`` uses to create the container. It
 can be one of the following:
 
+
 -  URI beginning with **library://** to build from the Container Library
 
 -  URI beginning with **docker://** to build from Docker Hub

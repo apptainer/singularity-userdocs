@@ -24,6 +24,7 @@ You can use a persistent overlays with the following commands:
 - ``shell``
 - ``instance.start``
 
+
 -----
 Usage
 -----
@@ -87,4 +88,3 @@ will be gone.
     Singularity ubuntu.sif:~> which vim
 
     Singularity ubuntu.sif:~> exit
-    

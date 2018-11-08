@@ -40,7 +40,7 @@ User-defined bind paths
 If the system administrator has `enabled user control of binds <https://singularity-admindoc.readthedocs.io/en/latest/the_singularity_config_file.html#user-bind-control-boolean-default-yes>`_,
 you will be able to request your own bind paths within your container.
 
-The Singularity action commands (``run``, ``exec`` ,``shell``, and
+The Singularity action commands (``run``, ``exec``, ``shell``, and
 ``instance start`` will accept the ``--bind/-B`` command-line option to specify
 bind paths, and will also honor the ``$SINGULARITY_BIND`` (or
 ``$SINGULARITY_BINDPATH``) environment variable. The argument for this option is
@@ -90,6 +90,7 @@ when you are running your container as an executable file with a runscript. If
 you bind many directories into your Singularity containers and they don’t
 change, you could even benefit by setting this variable in your ``.bashrc``
 file.
+
 
 A note on using ``--bind`` with the ``--writable`` flag
 =======================================================

@@ -1,0 +1,430 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Limiting container resources with cgroups &mdash; Singularity container 3.0 documentation</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Network virtualization" href="networking.html" /> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Singularity container
+          
+
+          
+            
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                3.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signNverify.html">Sign and Verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security_options.html">Security Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="networking.html">Network Options</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Cgroups Support</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#examples">Examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#limiting-memory">Limiting memory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#limiting-cpu">Limiting CPU</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#shares">shares</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#quota-period">quota/period</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cpus-mems">cpus/mems</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#limiting-io">Limiting IO</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#limiting-device-access">Limiting device access</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content style-external-links">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Limiting container resources with cgroups</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/sylabs/singularity-userdocs/blob/master/cgroups.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="limiting-container-resources-with-cgroups">
+<span id="cgroups"></span><h1>Limiting container resources with cgroups<a class="headerlink" href="#limiting-container-resources-with-cgroups" title="Permalink to this headline">¶</a></h1>
+<p>Starting in Singularity 3.0, users have the ability to limit container resources
+using cgroups.</p>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Singularity cgroups support can be configured and utilized via a TOML file. An
+example file is typically installed at
+<code class="docutils literal notranslate"><span class="pre">/usr/local/etc/singularity/cgroups/cgroups.toml</span></code>.  You can copy and edit this
+file to suit your needs.  Then when you need to limit your container resources,
+apply the settings in the TOML file by using the path as an argument to the
+<code class="docutils literal notranslate"><span class="pre">--apply-cgroups</span></code> option like so:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity shell --apply-cgroups /path/to/cgroups.toml my_container.sif
+</pre></div>
+</div>
+<p>The <code class="docutils literal notranslate"><span class="pre">--apply-cgroups</span></code> option can only be used with root privileges.</p>
+</div>
+<div class="section" id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="limiting-memory">
+<h3>Limiting memory<a class="headerlink" href="#limiting-memory" title="Permalink to this headline">¶</a></h3>
+<p>To limit the amount of memory that your container uses to 500MB (524288000
+bytes), follow this example.  First, create a <code class="docutils literal notranslate"><span class="pre">cgroups.toml</span></code> file like this
+and save it in your home directory.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[memory]
+    limit = 524288000
+</pre></div>
+</div>
+<p>Start your container like so:</p>
+<div class="highlight-code notranslate"><div class="highlight"><pre><span></span>$ sudo singularity instance start --apply-cgroups /home/$USER/cgroups.toml \
+    my_container.sif instance1
+</pre></div>
+</div>
+<p>After that, you can verify that the container is only using 500MB of memory.
+(This example assumes that <code class="docutils literal notranslate"><span class="pre">instance1</span></code> is the only running instance.)</p>
+<div class="highlight-code notranslate"><div class="highlight"><pre><span></span>$ cat /sys/fs/cgroup/memory/singularity/*/memory.limit_in_bytes
+524288000
+</pre></div>
+</div>
+<p>After you are finished with this example, be sure to cleanup your instance with
+the following command.</p>
+<div class="highlight-code notranslate"><div class="highlight"><pre><span></span>$ sudo singularity instance stop instance1
+</pre></div>
+</div>
+<p>Similarly, the remaining examples can be tested by starting instances and
+examining the contents of the appropriate subdirectories of <code class="docutils literal notranslate"><span class="pre">/sys/fs/cgroup/</span></code>.</p>
+</div>
+<div class="section" id="limiting-cpu">
+<h3>Limiting CPU<a class="headerlink" href="#limiting-cpu" title="Permalink to this headline">¶</a></h3>
+<p>Limit CPU resources using one of the following strategies. The <code class="docutils literal notranslate"><span class="pre">cpu</span></code> section
+of the configuration file can limit memory with the following:</p>
+<div class="section" id="shares">
+<h4>shares<a class="headerlink" href="#shares" title="Permalink to this headline">¶</a></h4>
+<p>This corresponds to a ratio versus other cgroups with cpu shares. Usually the
+default value is <code class="docutils literal notranslate"><span class="pre">1024</span></code>. That means if you want to allow to use 50% of a
+single CPU, you will set <code class="docutils literal notranslate"><span class="pre">512</span></code> as value.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[cpu]
+    shares = 512
+</pre></div>
+</div>
+<p>A cgroup can get more than its share of CPU if there are enough idle CPU cycles
+available in the system, due to the work conserving nature of the scheduler, so
+a contained process can consume all CPU cycles even with a ratio of 50%. The
+ratio is only applied when two or more processes conflicts with their needs of
+CPU cycles.</p>
+</div>
+<div class="section" id="quota-period">
+<h4>quota/period<a class="headerlink" href="#quota-period" title="Permalink to this headline">¶</a></h4>
+<p>You can enforce hard limits on the CPU cycles a cgroup can consume, so
+contained processes can’t use more than the amount of CPU time set for the
+cgroup. <code class="docutils literal notranslate"><span class="pre">quota</span></code> allows you to configure the amount of CPU time that a cgroup
+can use per period. The default is 100ms (100000us). So if you want to limit
+amount of CPU time to 20ms during period of 100ms:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[cpu]
+    period = 100000
+    quota = 20000
+</pre></div>
+</div>
+</div>
+<div class="section" id="cpus-mems">
+<h4>cpus/mems<a class="headerlink" href="#cpus-mems" title="Permalink to this headline">¶</a></h4>
+<p>You can also restrict access to specific CPUs and associated memory nodes by
+using <code class="docutils literal notranslate"><span class="pre">cpus/mems</span></code> fields:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[cpu]
+    cpus = &quot;0-1&quot;
+    mems = &quot;0-1&quot;
+</pre></div>
+</div>
+<p>Where container has limited access to CPU 0 and CPU 1.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">It’s important to set identical values for both <code class="docutils literal notranslate"><span class="pre">cpus</span></code> and <code class="docutils literal notranslate"><span class="pre">mems</span></code>.</p>
+</div>
+<p>For more information about limiting CPU with cgroups, see the following external
+links:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/sec-cpu/">Red Hat resource management guide section 3.2 CPU</a></li>
+<li><a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/sec-cpuset">Red Hat resource management guide section 3.4 CPUSET</a></li>
+<li><a class="reference external" href="https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt">Kernel scheduler documentation</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="limiting-io">
+<h3>Limiting IO<a class="headerlink" href="#limiting-io" title="Permalink to this headline">¶</a></h3>
+<p>You can limit and monitor access to I/O for block devices.  Use the
+<code class="docutils literal notranslate"><span class="pre">[blockIO]</span></code> section of the configuration file to do this like so:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[blockIO]
+    weight = 1000
+    leafWeight = 1000
+</pre></div>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">weight</span></code> and <code class="docutils literal notranslate"><span class="pre">leafWeight</span></code> accept values between <code class="docutils literal notranslate"><span class="pre">10</span></code> and <code class="docutils literal notranslate"><span class="pre">1000</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">weight</span></code> is the default weight of the group on all the devices until and
+unless overridden by a per device rule.</p>
+<p><code class="docutils literal notranslate"><span class="pre">leafWeight</span></code> relates to weight for the purpose of deciding how heavily to
+weigh tasks in the given cgroup while competing with the cgroup’s child cgroups.</p>
+<p>To override <code class="docutils literal notranslate"><span class="pre">weight/leafWeight</span></code> for <code class="docutils literal notranslate"><span class="pre">/dev/loop0</span></code> and <code class="docutils literal notranslate"><span class="pre">/dev/loop1</span></code> block
+devices you would do something like this:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[blockIO]
+    [[blockIO.weightDevice]]
+        major = 7
+        minor = 0
+        weight = 100
+        leafWeight = 50
+    [[blockIO.weightDevice]]
+        major = 7
+        minor = 1
+        weight = 100
+        leafWeight = 50
+</pre></div>
+</div>
+<p>You could limit the IO read/write rate to 16MB per second for the <code class="docutils literal notranslate"><span class="pre">/dev/loop0</span></code>
+block device with the following configuration.  The rate is specified in bytes
+per second.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[blockIO]
+    [[blockIO.throttleReadBpsDevice]]
+        major = 7
+        minor = 0
+        rate = 16777216
+    [[blockIO.throttleWriteBpsDevice]]
+        major = 7
+        minor = 0
+        rate = 16777216
+</pre></div>
+</div>
+<p>To limit the IO read/write rate to 1000 IO per second (IOPS) on <code class="docutils literal notranslate"><span class="pre">/dev/loop0</span></code>
+block device, you can do the following. The rate is specified in IOPS.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[blockIO]
+    [[blockIO.throttleReadIOPSDevice]]
+        major = 7
+        minor = 0
+        rate = 1000
+    [[blockIO.throttleWriteIOPSDevice]]
+        major = 7
+        minor = 0
+        rate = 1000
+</pre></div>
+</div>
+<p>For more information about limiting IO, see the following external links:</p>
+<ul class="simple">
+<li><a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/ch-subsystems_and_tunable_parameters#sec-blkio">Red Hat resource management guide section 3.1 blkio</a></li>
+<li><a class="reference external" href="https://www.kernel.org/doc/Documentation/cgroup-v1/blkio-controller.txt">Kernel block IO controller documentation</a></li>
+<li><a class="reference external" href="https://www.kernel.org/doc/Documentation/block/cfq-iosched.txt">Kernel CFQ scheduler documentation</a></li>
+</ul>
+<div class="section" id="limiting-device-access">
+<h4>Limiting device access<a class="headerlink" href="#limiting-device-access" title="Permalink to this headline">¶</a></h4>
+<p>You can limit read, write, or creation of devices. In this example, a container
+is configured to only be able to read from or write to <code class="docutils literal notranslate"><span class="pre">/dev/null</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[[devices]]
+    access = &quot;rwm&quot;
+    allow = false
+[[devices]]
+    access = &quot;rw&quot;
+    allow = true
+    major = 1
+    minor = 3
+    type = &quot;c&quot;
+</pre></div>
+</div>
+<p>For more information on limiting access to devices the <a class="reference external" href="https://access.redhat.com/documentation/en-us/red_hat_enterprise_linux/6/html/resource_management_guide/sec-devices">Red Hat resource
+management guide section 3.5 DEVICES</a>.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+      
+        <a href="networking.html" class="btn btn-neutral" title="Network virtualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'3.0',
+            LANGUAGE:'None',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+
+  
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

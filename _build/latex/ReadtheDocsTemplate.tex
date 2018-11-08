@@ -55,7 +55,7 @@
 
 
 \title{Singularity Container Documentation}
-\date{Oct 20, 2018}
+\date{Nov 08, 2018}
 \release{3.0}
 \author{User Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -1022,7 +1022,7 @@ configuration, the directories \sphinxcode{\sphinxupquote{\$HOME}} , \sphinxcode
 If the system administrator has \sphinxhref{https://singularity-admindoc.readthedocs.io/en/latest/the\_singularity\_config\_file.html\#user-bind-control-boolean-default-yes}{enabled user control of binds},
 you will be able to request your own bind paths within your container.
 
-The Singularity action commands (\sphinxcode{\sphinxupquote{run}}, \sphinxcode{\sphinxupquote{exec}} ,{}`{}`shell{}`{}`, and
+The Singularity action commands (\sphinxcode{\sphinxupquote{run}}, \sphinxcode{\sphinxupquote{exec}}, \sphinxcode{\sphinxupquote{shell}}, and
 \sphinxcode{\sphinxupquote{instance start}} will accept the \sphinxcode{\sphinxupquote{-{-}bind/-B}} command-line option to specify
 bind paths, and will also honor the \sphinxcode{\sphinxupquote{\$SINGULARITY\_BIND}} (or
 \sphinxcode{\sphinxupquote{\$SINGULARITY\_BINDPATH}}) environment variable. The argument for this option is
@@ -1770,6 +1770,254 @@ Commercial support is available at
 
 For more information about cni, check the
 \sphinxhref{https://github.com/containernetworking/cni/blob/master/SPEC.md}{cni specification}.
+
+
+\chapter{Limiting container resources with cgroups}
+\label{\detokenize{cgroups:limiting-container-resources-with-cgroups}}\label{\detokenize{cgroups:cgroups}}\label{\detokenize{cgroups::doc}}
+Starting in Singularity 3.0, users have the ability to limit container resources
+using cgroups.
+
+
+\section{Overview}
+\label{\detokenize{cgroups:overview}}
+Singularity cgroups support can be configured and utilized via a TOML file. An
+example file is typically installed at
+\sphinxcode{\sphinxupquote{/usr/local/etc/singularity/cgroups/cgroups.toml}}.  You can copy and edit this
+file to suit your needs.  Then when you need to limit your container resources,
+apply the settings in the TOML file by using the path as an argument to the
+\sphinxcode{\sphinxupquote{-{-}apply-cgroups}} option like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity shell \PYGZhy{}\PYGZhy{}apply\PYGZhy{}cgroups /path/to/cgroups.toml my\PYGZus{}container.sif
+\end{sphinxVerbatim}
+
+The \sphinxcode{\sphinxupquote{-{-}apply-cgroups}} option can only be used with root privileges.
+
+
+\section{Examples}
+\label{\detokenize{cgroups:examples}}
+
+\subsection{Limiting memory}
+\label{\detokenize{cgroups:limiting-memory}}
+To limit the amount of memory that your container uses to 500MB (524288000
+bytes), follow this example.  First, create a \sphinxcode{\sphinxupquote{cgroups.toml}} file like this
+and save it in your home directory.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[memory]
+    limit = 524288000
+\end{sphinxVerbatim}
+
+Start your container like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity instance start \PYGZhy{}\PYGZhy{}apply\PYGZhy{}cgroups /home/\PYGZdl{}USER/cgroups.toml \PYGZbs{}
+    my\PYGZus{}container.sif instance1
+\end{sphinxVerbatim}
+
+After that, you can verify that the container is only using 500MB of memory.
+(This example assumes that \sphinxcode{\sphinxupquote{instance1}} is the only running instance.)
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} cat /sys/fs/cgroup/memory/singularity/*/memory.limit\PYGZus{}in\PYGZus{}bytes
+524288000
+\end{sphinxVerbatim}
+
+After you are finished with this example, be sure to cleanup your instance with
+the following command.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity instance stop instance1
+\end{sphinxVerbatim}
+
+Similarly, the remaining examples can be tested by starting instances and
+examining the contents of the appropriate subdirectories of \sphinxcode{\sphinxupquote{/sys/fs/cgroup/}}.
+
+
+\subsection{Limiting CPU}
+\label{\detokenize{cgroups:limiting-cpu}}
+Limit CPU resources using one of the following strategies. The \sphinxcode{\sphinxupquote{cpu}} section
+of the configuration file can limit memory with the following:
+
+
+\subsubsection{shares}
+\label{\detokenize{cgroups:shares}}
+This corresponds to a ratio versus other cgroups with cpu shares. Usually the
+default value is \sphinxcode{\sphinxupquote{1024}}. That means if you want to allow to use 50\% of a
+single CPU, you will set \sphinxcode{\sphinxupquote{512}} as value.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[cpu]
+    shares = 512
+\end{sphinxVerbatim}
+
+A cgroup can get more than its share of CPU if there are enough idle CPU cycles
+available in the system, due to the work conserving nature of the scheduler, so
+a contained process can consume all CPU cycles even with a ratio of 50\%. The
+ratio is only applied when two or more processes conflicts with their needs of
+CPU cycles.
+
+
+\subsubsection{quota/period}
+\label{\detokenize{cgroups:quota-period}}
+You can enforce hard limits on the CPU cycles a cgroup can consume, so
+contained processes can’t use more than the amount of CPU time set for the
+cgroup. \sphinxcode{\sphinxupquote{quota}} allows you to configure the amount of CPU time that a cgroup
+can use per period. The default is 100ms (100000us). So if you want to limit
+amount of CPU time to 20ms during period of 100ms:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[cpu]
+    period = 100000
+    quota = 20000
+\end{sphinxVerbatim}
+
+
+\subsubsection{cpus/mems}
+\label{\detokenize{cgroups:cpus-mems}}
+You can also restrict access to specific CPUs and associated memory nodes by
+using \sphinxcode{\sphinxupquote{cpus/mems}} fields:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[cpu]
+    cpus = \PYGZdq{}0\PYGZhy{}1\PYGZdq{}
+    mems = \PYGZdq{}0\PYGZhy{}1\PYGZdq{}
+\end{sphinxVerbatim}
+
+Where container has limited access to CPU 0 and CPU 1.
+
+\begin{sphinxadmonition}{note}{Note:}
+It’s important to set identical values for both \sphinxcode{\sphinxupquote{cpus}} and \sphinxcode{\sphinxupquote{mems}}.
+\end{sphinxadmonition}
+
+For more information about limiting CPU with cgroups, see the following external
+links:
+\begin{itemize}
+\item {} 
+\sphinxhref{https://access.redhat.com/documentation/en-us/red\_hat\_enterprise\_linux/6/html/resource\_management\_guide/sec-cpu/}{Red Hat resource management guide section 3.2 CPU}
+
+\item {} 
+\sphinxhref{https://access.redhat.com/documentation/en-us/red\_hat\_enterprise\_linux/6/html/resource\_management\_guide/sec-cpuset}{Red Hat resource management guide section 3.4 CPUSET}
+
+\item {} 
+\sphinxhref{https://www.kernel.org/doc/Documentation/scheduler/sched-bwc.txt}{Kernel scheduler documentation}
+
+\end{itemize}
+
+
+\subsection{Limiting IO}
+\label{\detokenize{cgroups:limiting-io}}
+You can limit and monitor access to I/O for block devices.  Use the
+\sphinxcode{\sphinxupquote{{[}blockIO{]}}} section of the configuration file to do this like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[blockIO]
+    weight = 1000
+    leafWeight = 1000
+\end{sphinxVerbatim}
+
+\sphinxcode{\sphinxupquote{weight}} and \sphinxcode{\sphinxupquote{leafWeight}} accept values between \sphinxcode{\sphinxupquote{10}} and \sphinxcode{\sphinxupquote{1000}}.
+
+\sphinxcode{\sphinxupquote{weight}} is the default weight of the group on all the devices until and
+unless overridden by a per device rule.
+
+\sphinxcode{\sphinxupquote{leafWeight}} relates to weight for the purpose of deciding how heavily to
+weigh tasks in the given cgroup while competing with the cgroup’s child cgroups.
+
+To override \sphinxcode{\sphinxupquote{weight/leafWeight}} for \sphinxcode{\sphinxupquote{/dev/loop0}} and \sphinxcode{\sphinxupquote{/dev/loop1}} block
+devices you would do something like this:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[blockIO]
+    [[blockIO.weightDevice]]
+        major = 7
+        minor = 0
+        weight = 100
+        leafWeight = 50
+    [[blockIO.weightDevice]]
+        major = 7
+        minor = 1
+        weight = 100
+        leafWeight = 50
+\end{sphinxVerbatim}
+
+You could limit the IO read/write rate to 16MB per second for the \sphinxcode{\sphinxupquote{/dev/loop0}}
+block device with the following configuration.  The rate is specified in bytes
+per second.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[blockIO]
+    [[blockIO.throttleReadBpsDevice]]
+        major = 7
+        minor = 0
+        rate = 16777216
+    [[blockIO.throttleWriteBpsDevice]]
+        major = 7
+        minor = 0
+        rate = 16777216
+\end{sphinxVerbatim}
+
+To limit the IO read/write rate to 1000 IO per second (IOPS) on \sphinxcode{\sphinxupquote{/dev/loop0}}
+block device, you can do the following. The rate is specified in IOPS.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[blockIO]
+    [[blockIO.throttleReadIOPSDevice]]
+        major = 7
+        minor = 0
+        rate = 1000
+    [[blockIO.throttleWriteIOPSDevice]]
+        major = 7
+        minor = 0
+        rate = 1000
+\end{sphinxVerbatim}
+
+For more information about limiting IO, see the following external links:
+\begin{itemize}
+\item {} 
+\sphinxhref{https://access.redhat.com/documentation/en-us/red\_hat\_enterprise\_linux/6/html/resource\_management\_guide/ch-subsystems\_and\_tunable\_parameters\#sec-blkio}{Red Hat resource management guide section 3.1 blkio}
+
+\item {} 
+\sphinxhref{https://www.kernel.org/doc/Documentation/cgroup-v1/blkio-controller.txt}{Kernel block IO controller documentation}
+
+\item {} 
+\sphinxhref{https://www.kernel.org/doc/Documentation/block/cfq-iosched.txt}{Kernel CFQ scheduler documentation}
+
+\end{itemize}
+
+
+\subsubsection{Limiting device access}
+\label{\detokenize{cgroups:limiting-device-access}}
+You can limit read, write, or creation of devices. In this example, a container
+is configured to only be able to read from or write to \sphinxcode{\sphinxupquote{/dev/null}}.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+[[devices]]
+    access = \PYGZdq{}rwm\PYGZdq{}
+    allow = false
+[[devices]]
+    access = \PYGZdq{}rw\PYGZdq{}
+    allow = true
+    major = 1
+    minor = 3
+    type = \PYGZdq{}c\PYGZdq{}
+\end{sphinxVerbatim}
+
+For more information on limiting access to devices the \sphinxhref{https://access.redhat.com/documentation/en-us/red\_hat\_enterprise\_linux/6/html/resource\_management\_guide/sec-devices}{Red Hat resource
+management guide section 3.5 DEVICES}.
 
 
 

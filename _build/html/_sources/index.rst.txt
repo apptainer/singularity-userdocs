@@ -12,3 +12,4 @@ User Guide
    Sign and Verify <signNverify>
    Security Options <security_options>
    Network Options <networking>
+   Cgroups Support <cgroups>
