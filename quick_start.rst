@@ -40,7 +40,8 @@ You must first install development libraries to your host. Assuming Ubuntu
         build-essential \
         libssl-dev \
         uuid-dev \
-        libgpgme11-dev
+        libgpgme11-dev \
+        squashfs-tools
 
 
 Install Go
