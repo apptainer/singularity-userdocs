@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.12)  8 NOV 2018 12:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/Debian) (preloaded format=pdflatex 2018.10.12)  15 NOV 2018 10:00
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1164,28 +1164,28 @@ Chapter 1.
 
 
 ]
-LaTeX Font Info:    Try loading font information for TS1+pcr on input line 138.
+LaTeX Font Info:    Try loading font information for TS1+pcr on input line 143.
 
  (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1pcr.fd
 File: ts1pcr.fd 2001/06/04 font definitions for TS1/pcr.
 ) [2]
-Overfull \vbox (2.68167pt too high) detected at line 280
+Overfull \vbox (2.68167pt too high) detected at line 285
  []
 
 [3] [4] [5] [6] [7] [8] [9] [10
 
 ]
 Chapter 2.
-LaTeX Font Info:    Try loading font information for TS1+ptm on input line 742.
+LaTeX Font Info:    Try loading font information for TS1+ptm on input line 747.
 
 (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ts1ptm.fd
 File: ts1ptm.fd 2001/06/04 font definitions for TS1/ptm.
 ) [11]
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 808.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 813.
  [12]
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <12> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 889.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 894.
  [13]
 [14]
 Chapter 3.
@@ -1209,27 +1209,27 @@ Chapter 7.
 
 ] [28]
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1775.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 1780.
  [29] [30
 
 ]
 Chapter 8.
 [31] [32] [33] (./ReadtheDocsTemplate.ind)
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2026.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 2031.
  [34]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 2026.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 2031.
  (./ReadtheDocsTemplate.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2026.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2026.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 2031.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 2031.
 
 Package rerunfilecheck Info: File `ReadtheDocsTemplate.out' has not changed.
 (rerunfilecheck)             Checksum: 40235D170E722E7DD42EEDCD2DECA59D;12157.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2026.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 2031.
  ) 
 Here is how much of TeX's memory you used:
  13897 strings out of 494880
  194118 string characters out of 6179600
- 360660 words of memory out of 5000000
+ 366660 words of memory out of 5000000
  16775 multiletter control sequences out of 15000+600000
  52664 words of font info for 75 fonts, out of 8000000 for 9000
  37 hyphenation exceptions out of 8191
@@ -1243,7 +1243,7 @@ vb8a.pfb></usr/share/texlive/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></
 usr/share/texlive/texmf-dist/fonts/type1/urw/times/utmb8a.pfb></usr/share/texli
 ve/texmf-dist/fonts/type1/urw/times/utmr8a.pfb></usr/share/texlive/texmf-dist/f
 onts/type1/urw/times/utmri8a.pfb>
-Output written on ReadtheDocsTemplate.pdf (38 pages, 218378 bytes).
+Output written on ReadtheDocsTemplate.pdf (38 pages, 218532 bytes).
 PDF statistics:
  668 PDF objects out of 1000 (max. 8388607)
  605 compressed objects within 7 object streams
