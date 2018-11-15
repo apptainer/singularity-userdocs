@@ -43,6 +43,9 @@ You must first install development libraries to your host. Assuming Ubuntu
         libgpgme11-dev \
         squashfs-tools
 
+.. note::
+  Note that ``squashfs-tools`` is an image build dependency only and is not required for Singularity ``build`` and ``run`` commands.
+
 
 Install Go
 ==========
