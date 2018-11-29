@@ -279,7 +279,7 @@ Distribution packages of Singularity
 
 .. note::
 
-    Packaged versions of Singularity in Linux distrubution repos are maintained 
+    Packaged versions of Singularity in Linux distribution repos are maintained 
     by community members. They (necessarily) tend to be older releases of 
     Singularity. For the latest upstream versions of Singularity it is 
     recommended that you build from source using one of the methods detailed 
@@ -292,8 +292,8 @@ Install the Debian/Ubuntu package using ``apt``
 Singularity is available on Debian and derivative distributions starting with 
 Debian stretch and the Ubuntu 16.10 releases. The package is called 
 ``singularity-container``.  For more recent releases of singularity and 
-backports for older Debian and Ubuntu releases, it is recommend that you use the 
-`NeuroDebian repository 
+backports for older Debian and Ubuntu releases, it is recommended that you use 
+the `NeuroDebian repository 
 <http://neuro.debian.net/pkgs/singularity-container.html>`_. 
 
 
@@ -365,7 +365,7 @@ other information here
 Install the CentOS/RHEL package using ``yum``
 ---------------------------------------------
 
-The epel (Extra Packages for Enterprise Linux) repos contains Singularity. The 
+The epel (Extra Packages for Enterprise Linux) repos contain Singularity. The 
 singularity package is actually split into two packages called 
 ``singularity-runtime`` (which simply contains the necessary bits to run 
 singularity containers) and ``singularity`` (which also gives you the ability to
@@ -500,7 +500,7 @@ to this:
 
 .. code-block:: none
 
-    Dear shared resource admininstrator, 
+    Dear shared resource administrator, 
 
     We are interested in having Singularity (https://www.sylabs.io/docs/) 
     installed on our shared resource. Singularity containers will allow us to 
