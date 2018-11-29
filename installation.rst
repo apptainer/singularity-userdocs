@@ -218,7 +218,7 @@ build and install the RPM.
 
 .. code-block:: none
 
-    $ export VERSION=3.0.1 # adjust this as necessary && \
+    $ export VERSION=3.0.1 && # adjust this as necessary \
         wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         rpmbuild -tb singularity-${VERSION}.tar.gz && \
         sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-$VERSION-1.el7.x86_64.rpm && \
@@ -245,45 +245,33 @@ of the default ``/var``) you can do the following:
 Remove an old version
 =====================
 
-The ``make install`` command lists the files that are installed with 
-Singularity. For instance, by default Singularity 3.0.1 installs the following 
-files. They must all be removed in order to completely remove Singularity. 
+When you run ``sudo make install``, the command lists files as they are 
+installed. They must all be removed in order to completely remove Singularity.
+
+For example, in a standard installation of Singularity 3.0.1 (when building from
+source) you must remove all of these files and directories to completely remove
+Singularity. 
+
+Obviously, this list of files may differ depending on how you install 
+Singularity or with newer versions of Singularity released following the writing
+of this document. 
 
 .. code-block:: none
 
-    $ sudo rm -rf 
+    $ sudo rm -rf \
+        /usr/local/libexec/singularity \
+        /usr/local/var/singularity \
+        /usr/local/etc/singularity \
         /usr/local/bin/singularity \
-        /usr/local/libexec/singularity/bin/starter \
-        /usr/local/libexec/singularity/bin/starter-suid \
-        /usr/local/var/singularity/mnt/session \
-        /usr/local/etc/singularity/singularity.conf \
-        /usr/local/bin/run-singularity \
-        /usr/local/etc/singularity/capability.json \
-        /usr/local/etc/singularity/ecl.toml \
-        /usr/local/etc/bash_completion.d/singularity \
-        /usr/local/etc/singularity/actions \
-        /usr/local/libexec/singularity/cni/bandwidth \
-        /usr/local/libexec/singularity/cni/bridge \
-        /usr/local/libexec/singularity/cni/dhcp \
-        /usr/local/libexec/singularity/cni/flannel \
-        /usr/local/libexec/singularity/cni/host-device \
-        /usr/local/libexec/singularity/cni/host-local \
-        /usr/local/libexec/singularity/cni/ipvlan \
-        /usr/local/libexec/singularity/cni/macvlan \
-        /usr/local/libexec/singularity/cni/portmap \
-        /usr/local/libexec/singularity/cni/ptp \
-        /usr/local/libexec/singularity/cni/static \
-        /usr/local/libexec/singularity/cni/tuning \
-        /usr/local/libexec/singularity/cni/vlan \
-        /usr/local/etc/singularity/seccomp-profiles/default.json \
-        /usr/local/etc/singularity/nvliblist.conf \
-        /usr/local/etc/singularity/cgroups/cgroups.toml
+        /usr/local/bin/run-singularity \ 
+        /etc/bash_completion.d/singularity
 
 If you anticipate needing to remove Singularity, it might be easier to install 
 it in a custom directory using the ``--prefix`` option to ``mconfig``.  In that 
 case Singularity can be uninstalled simply by deleting the parent directory. Or 
 it may be useful to install Singularity :ref:`using a package manager 
-<install-rpm>` so that it can be uninstalled with ease.   
+<install-rpm>` so that it can be updated and/or uninstalled with ease in the
+future.   
 
 ====================================
 Distribution packages of Singularity
