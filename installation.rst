@@ -183,17 +183,18 @@ from source.
 
 - ``-b``: Build Singularity in a given directory. By default this is ``./builddir``.
 
--------------------------
-Copy bash completion file
--------------------------
+---------------------------
+Source bash completion file
+---------------------------
 
-To enjoy bash completion with Singularity commands and options, copy and source
-the bash completion file like so:
+To enjoy bash completion with Singularity commands and options, source the bash 
+completion file like so. Add this command to your `~/.bashrc` file so that bash
+completion continues to work in new shells.  (Obviously adjust this path if you 
+installed the bash completion file in a different location.) 
 
 .. code-block:: none 
 
-    $ sudo cp $GOPATH/src/github.com/sylabs/singularity/builddir/etc/bash_completion.d/singularity /etc/bash_completion.d/ && \
-        . /etc/bash_completion.d/singularity
+    $ . /usr/local/etc/bash_completion.d/singularity
 
 .. _install-rpm:
 
@@ -264,7 +265,7 @@ of this document.
         /usr/local/etc/singularity \
         /usr/local/bin/singularity \
         /usr/local/bin/run-singularity \ 
-        /etc/bash_completion.d/singularity
+        /usr/local/etc/bash_completion.d/singularity
 
 If you anticipate needing to remove Singularity, it might be easier to install 
 it in a custom directory using the ``--prefix`` option to ``mconfig``.  In that 
