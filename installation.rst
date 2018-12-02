@@ -223,7 +223,7 @@ build and install the RPM.
         wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         rpmbuild -tb singularity-${VERSION}.tar.gz && \
         sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-$VERSION-1.el7.x86_64.rpm && \
-        rm -rf ~/rpmbuild singularity-$VERSION.tar.gz
+        rm -rf ~/rpmbuild singularity-$VERSION*.tar.gz
 
 Options to ``mconfig`` can be passed using the familiar syntax to ``rpmbuild``.
 For example, if you want to force the local state directory to ``/mnt`` (instead
