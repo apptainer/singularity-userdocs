@@ -5,34 +5,34 @@ Installation
 
 .. _sec:installation:
 
-This document will guide you through the process of installing Singularity >= 
-3.0.0 via several different methods. (For instructions on installing earlier 
-versions of Singularity please see `earlier versions of the 
-docs <https://www.sylabs.io/docs/>`_.)  
+This document will guide you through the process of installing Singularity >=
+3.0.0 via several different methods. (For instructions on installing earlier
+versions of Singularity please see `earlier versions of the
+docs <https://www.sylabs.io/docs/>`_.)
 
 Overview
 --------
 
 Singularity runs on Linux natively and can also be run on Windows and Mac
-through virtual machines (VMs). Here we cover several different methods of 
+through virtual machines (VMs). Here we cover several different methods of
 installing Singularity (>=v3.0.0) on Linux and also give methods for downloading
-and running VMs with singularity pre-installed from `Vagrant Cloud 
+and running VMs with singularity pre-installed from `Vagrant Cloud
 <https://app.vagrantup.com/sylabs>`_.
 
 Install on Linux
 ----------------
 
-Linux is the only operating system that can support containers because of 
+Linux is the only operating system that can support containers because of
 kernel features like namespaces.  You can use these methods to install
-Singularity on bare metal Linux or a Linux VM.  
+Singularity on bare metal Linux or a Linux VM.
 
 ================
 Before you begin
 ================
 
 If you have an earlier version of Singularity installed, you should :ref:`remove
-it <remove-an-old-version>` before executing the installation commands.  You 
-will also need to install some dependencies and install `Go 
+it <remove-an-old-version>` before executing the installation commands.  You
+will also need to install some dependencies and install `Go
 <https://golang.org/>`_.
 
 .. _install-dependencies:
@@ -41,7 +41,7 @@ will also need to install some dependencies and install `Go
 Install Dependencies
 --------------------
 
-Install these dependencies with ``apt-get`` or ``yum/rpm`` as shown below or 
+Install these dependencies with ``apt-get`` or ``yum/rpm`` as shown below or
 similar with other package managers.
 
 ``apt-get``
@@ -73,15 +73,15 @@ similar with other package managers.
 .. _install-go:
 
 ----------
-Install Go 
+Install Go
 ----------
 
-This is one of several ways to `install and configure Go 
+This is one of several ways to `install and configure Go
 <https://golang.org/doc/install>`_.
 
-Visit the `Go download page <https://golang.org/dl/>`_ and pick a package 
-archive to download. Copy the link address and download with wget.  Then extract 
-the archive to ``/usr/local`` (or use other instructions on go installation 
+Visit the `Go download page <https://golang.org/dl/>`_ and pick a package
+archive to download. Copy the link address and download with wget.  Then extract
+the archive to ``/usr/local`` (or use other instructions on go installation
 page).
 
 .. code-block:: none
@@ -91,7 +91,7 @@ page).
         sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \
         rm go$VERSION.$OS-$ARCH.tar.gz
 
-Then, set up your environment for Go. 
+Then, set up your environment for Go.
 
 .. code-block:: none
 
@@ -99,7 +99,7 @@ Then, set up your environment for Go.
         echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
         source ~/.bashrc
 
-If you are installing Singularity v3.0.0 you will also need to install ``dep`` 
+If you are installing Singularity v3.0.0 you will also need to install ``dep``
 for dependency resolution.
 
 .. code-block:: none
@@ -110,33 +110,33 @@ for dependency resolution.
 Install from source
 ===================
 
-The following commands will install Singularity from the `GitHub repo 
-<https://github.com/sylabs/singularity>`_ to ``/usr/local``. This method will 
-work for >=v3.0.0. To install an older tagged release see `older versions of the 
+The following commands will install Singularity from the `GitHub repo
+<https://github.com/sylabs/singularity>`_ to ``/usr/local``. This method will
+work for >=v3.0.0. To install an older tagged release see `older versions of the
 docs <https://www.sylabs.io/docs/>`_.
 
-When installing from source, you can decide to install from either a **tag**, a 
+When installing from source, you can decide to install from either a **tag**, a
 **release branch**, or from the **master branch**.
 
-- **tag**: GitHub tags form the basis for releases, so installing from a tag is the same as downloading and installing a `specific release <https://github.com/sylabs/singularity/releases>`_.  Tags are expected to be relatively stable and well-tested.  
+- **tag**: GitHub tags form the basis for releases, so installing from a tag is the same as downloading and installing a `specific release <https://github.com/sylabs/singularity/releases>`_.  Tags are expected to be relatively stable and well-tested.
 
 - **release branch**: A release branch represents the latest version of a minor release with all the newest bug fixes and enhancements (even those that have not yet made it into a point release).  For instance, to install v3.0 with the latest bug fixes and enhancements checkout ``release-3.0``.  Release branches may be less stable than code in a tagged point release.
 
-- **master branch**: The ``master`` branch contains the latest, bleeding edge version of Singularity. This is the default branch when you clone the source code, so you don't have to check out any new branches to install it. The ``master`` branch changes quickly and may be unstable.  
+- **master branch**: The ``master`` branch contains the latest, bleeding edge version of Singularity. This is the default branch when you clone the source code, so you don't have to check out any new branches to install it. The ``master`` branch changes quickly and may be unstable.
 
 --------------------------------------------------------------------
 Download Singularity repo (and optionally check out a tag or branch)
 --------------------------------------------------------------------
 
-To ensure that the Singularity source code is downloaded to the appropriate 
+To ensure that the Singularity source code is downloaded to the appropriate
 directory use these commands.
 
 .. code-block:: none
 
     $ go get -d github.com/sylabs/singularity
 
-Go will complain that there are no Go files, but it will still  download the 
-Singularity source code to the appropriate directory within the ``$GOPATH``.  
+Go will complain that there are no Go files, but it will still  download the
+Singularity source code to the appropriate directory within the ``$GOPATH``.
 
 Now checkout the version of Singularity you want to install.
 
@@ -152,34 +152,34 @@ Compile Singularity
 -------------------
 
 Singularity uses a custom build system called ``makeit``.  ``mconfig`` is called
-to generate a ``Makefile`` and then ``make`` is used to compile and install. 
+to generate a ``Makefile`` and then ``make`` is used to compile and install.
 
-.. code-block:: none 
+.. code-block:: none
 
     $ ./mconfig && \
         make -C ./builddir && \
-        sudo make -C ./builddir install 
+        sudo make -C ./builddir install
 
 
-By default Singularity will be installed in the ``/usr/local`` directory hierarchy. 
-You can specify a custom directory with the ``--prefix`` option, to ``mconfig`` 
+By default Singularity will be installed in the ``/usr/local`` directory hierarchy.
+You can specify a custom directory with the ``--prefix`` option, to ``mconfig``
 like so:
 
-.. code-block:: none 
+.. code-block:: none
 
     $ ./mconfig --prefix=/opt/singularity
 
-This option can be useful if you want to install multiple versions of 
-Singularity, install a personal version of Singularity on a shared system, or if 
+This option can be useful if you want to install multiple versions of
+Singularity, install a personal version of Singularity on a shared system, or if
 you want to remove Singularity easily after installing it.
 
 For a full list of ``mconfig`` options, run ``mconfig --help``.  Here are some
-of the most common options that you may need to use when building Singularity 
+of the most common options that you may need to use when building Singularity
 from source.
 
-- ``--sysconfdir``: Install read-only config files in sysconfdir.  This option is important if you need the ``singularity.conf`` file or other configuration files in a custom location. 
+- ``--sysconfdir``: Install read-only config files in sysconfdir.  This option is important if you need the ``singularity.conf`` file or other configuration files in a custom location.
 
-- ``--localstatedir``: Set the state directory where containers are mounted. This is a particularly important option for administrators installing Singularity on a shared file system.  The ``--localstatedir`` should be set to a directory that is present on each individual node. 
+- ``--localstatedir``: Set the state directory where containers are mounted. This is a particularly important option for administrators installing Singularity on a shared file system.  The ``--localstatedir`` should be set to a directory that is present on each individual node.
 
 - ``-b``: Build Singularity in a given directory. By default this is ``./builddir``.
 
@@ -187,12 +187,12 @@ from source.
 Source bash completion file
 ---------------------------
 
-To enjoy bash completion with Singularity commands and options, source the bash 
+To enjoy bash completion with Singularity commands and options, source the bash
 completion file like so. Add this command to your `~/.bashrc` file so that bash
-completion continues to work in new shells.  (Obviously adjust this path if you 
-installed the bash completion file in a different location.) 
+completion continues to work in new shells.  (Obviously adjust this path if you
+installed the bash completion file in a different location.)
 
-.. code-block:: none 
+.. code-block:: none
 
     $ . /usr/local/etc/bash_completion.d/singularity
 
@@ -202,19 +202,19 @@ installed the bash completion file in a different location.)
 Build and install an RPM
 ========================
 
-Building and installing a Singularty RPM allows the installation be more easily 
-managed, upgraded and removed. In Singularity >=v3.0.1 you can build an RPM 
-directly from the `release tarball 
+Building and installing a Singularty RPM allows the installation be more easily
+managed, upgraded and removed. In Singularity >=v3.0.1 you can build an RPM
+directly from the `release tarball
 <https://github.com/sylabs/singularity/releases>`_.
 
 .. note::
 
-    Be sure to download the correct asset from the `GitHub releases page 
-    <https://github.com/sylabs/singularity/releases>`_.  It 
+    Be sure to download the correct asset from the `GitHub releases page
+    <https://github.com/sylabs/singularity/releases>`_.  It
     should be named `singularity-<version>.tar.gz`.
 
-After installing the :ref:`dependencies <install-dependencies>` and installing 
-:ref:`Go <install-go>` as detailed above, you are ready download the tarball and 
+After installing the :ref:`dependencies <install-dependencies>` and installing
+:ref:`Go <install-go>` as detailed above, you are ready download the tarball and
 build and install the RPM.
 
 .. code-block:: none
@@ -230,15 +230,15 @@ For example, if you want to force the local state directory to ``/mnt`` (instead
 of the default ``/var``) you can do the following:
 
 .. code-block:: none
-    
+
     rpmbuild -tb --define='_localstatedir /mnt' singularity-$VERSION.tar.gz'
 
 .. note::
 
-     It is very important to set the local state directory to a directory that 
-     physically exists on nodes within a cluster when installing Singularity in 
+     It is very important to set the local state directory to a directory that
+     physically exists on nodes within a cluster when installing Singularity in
      an HPC environment with a shared file system.  Thus the ``_localstatedir``
-     option should be of considerable interest to HPC admins. 
+     option should be of considerable interest to HPC admins.
 
 .. _remove-an-old-version:
 
@@ -246,16 +246,16 @@ of the default ``/var``) you can do the following:
 Remove an old version
 =====================
 
-When you run ``sudo make install``, the command lists files as they are 
+When you run ``sudo make install``, the command lists files as they are
 installed. They must all be removed in order to completely remove Singularity.
 
 For example, in a standard installation of Singularity 3.0.1 (when building from
 source) you must remove all of these files and directories to completely remove
-Singularity. 
+Singularity.
 
-Obviously, this list of files may differ depending on how you install 
+Obviously, this list of files may differ depending on how you install
 Singularity or with newer versions of Singularity released following the writing
-of this document. 
+of this document.
 
 .. code-block:: none
 
@@ -264,15 +264,15 @@ of this document.
         /usr/local/var/singularity \
         /usr/local/etc/singularity \
         /usr/local/bin/singularity \
-        /usr/local/bin/run-singularity \ 
+        /usr/local/bin/run-singularity \
         /usr/local/etc/bash_completion.d/singularity
 
-If you anticipate needing to remove Singularity, it might be easier to install 
-it in a custom directory using the ``--prefix`` option to ``mconfig``.  In that 
-case Singularity can be uninstalled simply by deleting the parent directory. Or 
-it may be useful to install Singularity :ref:`using a package manager 
+If you anticipate needing to remove Singularity, it might be easier to install
+it in a custom directory using the ``--prefix`` option to ``mconfig``.  In that
+case Singularity can be uninstalled simply by deleting the parent directory. Or
+it may be useful to install Singularity :ref:`using a package manager
 <install-rpm>` so that it can be updated and/or uninstalled with ease in the
-future.   
+future.
 
 ====================================
 Distribution packages of Singularity
@@ -280,28 +280,28 @@ Distribution packages of Singularity
 
 .. note::
 
-    Packaged versions of Singularity in Linux distribution repos are maintained 
-    by community members. They (necessarily) tend to be older releases of 
-    Singularity. For the latest upstream versions of Singularity it is 
-    recommended that you build from source using one of the methods detailed 
+    Packaged versions of Singularity in Linux distribution repos are maintained
+    by community members. They (necessarily) tend to be older releases of
+    Singularity. For the latest upstream versions of Singularity it is
+    recommended that you build from source using one of the methods detailed
     above.
 
 -----------------------------------------------
 Install the Debian/Ubuntu package using ``apt``
 -----------------------------------------------
 
-Singularity is available on Debian and derivative distributions starting with 
-Debian stretch and the Ubuntu 16.10 releases. The package is called 
-``singularity-container``.  For more recent releases of singularity and 
-backports for older Debian and Ubuntu releases, it is recommended that you use 
-the `NeuroDebian repository 
-<http://neuro.debian.net/pkgs/singularity-container.html>`_. 
+Singularity is available on Debian and derivative distributions starting with
+Debian stretch and the Ubuntu 16.10 releases. The package is called
+``singularity-container``.  For more recent releases of singularity and
+backports for older Debian and Ubuntu releases, it is recommended that you use
+the `NeuroDebian repository
+<http://neuro.debian.net/pkgs/singularity-container.html>`_.
 
 
-Enable the NeuroDebian repository following instructions on the `NeuroDebian 
-<http://neuro.debian.net/>`_ site. Use the dropdown menus to find the best 
-mirror for your operating system and location. For example, after selecting 
-Ubuntu 16.04 and selecting a mirror in CA, you are instructed to add these 
+Enable the NeuroDebian repository following instructions on the `NeuroDebian
+<http://neuro.debian.net/>`_ site. Use the dropdown menus to find the best
+mirror for your operating system and location. For example, after selecting
+Ubuntu 16.04 and selecting a mirror in CA, you are instructed to add these
 lists:
 
 .. code-block:: none
@@ -316,8 +316,8 @@ Now singularity can be installed like so:
 
     sudo apt-get install -y singularity-container
 
-During the above, if you have a previously installed configuration, you might be 
-asked if you want to define a custom configuration/init, or just use the default 
+During the above, if you have a previously installed configuration, you might be
+asked if you want to define a custom configuration/init, or just use the default
 provided by the package, eg:
 
 .. code-block:: none
@@ -346,9 +346,9 @@ provided by the package, eg:
     *** singularity.conf (Y/I/N/O/D/Z) [default=N] ? Y
 
 
-Most users should accept these defaults. For cluster admins, we recommend that 
-you read the `admin docs <https://www.sylabs.io/guides/2.5.2/admin-guide/>`_ to 
-get a better understanding of the configuration file options available to you. 
+Most users should accept these defaults. For cluster admins, we recommend that
+you read the `admin docs <https://www.sylabs.io/guides/2.6/admin-guide/>`_ to
+get a better understanding of the configuration file options available to you.
 
 After following this procedure, you can check the Singularity version like so:
 
@@ -357,27 +357,27 @@ After following this procedure, you can check the Singularity version like so:
     $ singularity --version
         2.5.2-dist
 
-If you need a backport build of the recent release of Singularity on those or 
-older releases of Debian and Ubuntu, you can `see all the various builds and 
-other information here 
+If you need a backport build of the recent release of Singularity on those or
+older releases of Debian and Ubuntu, you can `see all the various builds and
+other information here
 <http://neuro.debian.net/pkgs/singularity-container.html>`_.
 
 ---------------------------------------------
 Install the CentOS/RHEL package using ``yum``
 ---------------------------------------------
 
-The epel (Extra Packages for Enterprise Linux) repos contain Singularity. The 
-singularity package is actually split into two packages called 
-``singularity-runtime`` (which simply contains the necessary bits to run 
+The epel (Extra Packages for Enterprise Linux) repos contain Singularity. The
+singularity package is actually split into two packages called
+``singularity-runtime`` (which simply contains the necessary bits to run
 singularity containers) and ``singularity`` (which also gives you the ability to
-build Singularity containers).  
+build Singularity containers).
 
 To install Singularity from the epel repos, first install the repos and then
 install Singularity.  For instance, on CentOS6/7 do the following:
 
 .. code-block:: none
 
-    $ sudo yum update -y && \ 
+    $ sudo yum update -y && \
         sudo yum install -y epel-release && \
         sudo yum update -y && \
         sudo yum install -y singularity-runtime singularity
@@ -392,15 +392,15 @@ After following this procedure, you can check the Singularity version like so:
 Install on Windows or Mac
 -------------------------
 
-Linux containers like Singularity cannot run natively on Windows or Mac because 
-of basic incompatibilities with the host kernel. (Contrary to a popular 
+Linux containers like Singularity cannot run natively on Windows or Mac because
+of basic incompatibilities with the host kernel. (Contrary to a popular
 misconception, Mac does not run on a Linux kernel.  It runs on a kernel called
 Darwin originally forked from BSD.)
 
-For this reason, the Singularity community maintains a set of Vagrant Boxes via 
-`Vagrant Cloud <https://www.vagrantup.com/>`_, one of `Hashicorp's 
-<https://www.hashicorp.com/#open-source-tools>`_ open source tools. The current 
-versions can be found under the `sylabs <https://app.vagrantup.com/sylabs>`_ 
+For this reason, the Singularity community maintains a set of Vagrant Boxes via
+`Vagrant Cloud <https://www.vagrantup.com/>`_, one of `Hashicorp's
+<https://www.hashicorp.com/#open-source-tools>`_ open source tools. The current
+versions can be found under the `sylabs <https://app.vagrantup.com/sylabs>`_
 organization.
 
 =====
@@ -427,8 +427,8 @@ Install the following programs:
 Mac
 ---
 
-You need to install several programs. This example uses `Homebrew 
-<https://brew.sh/>`_ but you can also install these tools using the GUI. 
+You need to install several programs. This example uses `Homebrew
+<https://brew.sh/>`_ but you can also install these tools using the GUI.
 
 First, optionally install Homebrew.
 
@@ -436,7 +436,7 @@ First, optionally install Homebrew.
 
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-Next, install Vagrant and the necessary bits (either using this method or by 
+Next, install Vagrant and the necessary bits (either using this method or by
 downloading and installing the tools manually).
 
 .. code-block:: none
@@ -450,8 +450,8 @@ downloading and installing the tools manually).
 Singularity Vagrant Box
 =======================
 
-Run GitBash (Windows) or open a terminal (Mac) and create and enter a directory 
-to be used with your Vagrant VM. 
+Run GitBash (Windows) or open a terminal (Mac) and create and enter a directory
+to be used with your Vagrant VM.
 
 .. code-block:: none
 
@@ -459,14 +459,14 @@ to be used with your Vagrant VM.
         cd vm-singularity
 
 If you have already created and used this folder for another VM, you will need
-to destroy the VM and delete the Vagrantfile.  
+to destroy the VM and delete the Vagrantfile.
 
 .. code-block:: none
 
     $ vagrant destroy && \
         rm Vagrantfile
 
-Then issue the following commands to bring up the Virtual Machine. (Substitute a 
+Then issue the following commands to bring up the Virtual Machine. (Substitute a
 different value for the ``$VM`` variable if you like.)
 
 .. code-block:: none
@@ -482,32 +482,33 @@ You can check the installed version of Singularity with the following:
 
     vagrant@ubuntu-bionic:~$ singularity version
         3.0.1
+        
 
 Of course, you can also start with a plain OS Vagrant box as a base and then
-install Singularity using one of the above methods for Linux.  
+install Singularity using one of the above methods for Linux.
 
 Singularity on a shared resource
 --------------------------------
 
-Perhaps you are a user who wants a few talking points and background to share 
-with your administrator.  Or maybe you are an administrator who needs to decide 
-whether to install Singularity.  
+Perhaps you are a user who wants a few talking points and background to share
+with your administrator.  Or maybe you are an administrator who needs to decide
+whether to install Singularity.
 
 This document, and the accompanying administrator documentation provides answers
 to many common questions.
 
-If you need to request an installation you may decide to draft a message similar 
+If you need to request an installation you may decide to draft a message similar
 to this:
 
 .. code-block:: none
 
-    Dear shared resource administrator, 
+    Dear shared resource administrator,
 
-    We are interested in having Singularity (https://www.sylabs.io/docs/) 
-    installed on our shared resource. Singularity containers will allow us to 
-    build encapsulated environments, meaning that our work is reproducible and 
-    we are empowered to choose all dependencies including libraries, operating 
-    system, and custom software. Singularity is already in use on many of the 
+    We are interested in having Singularity (https://www.sylabs.io/docs/)
+    installed on our shared resource. Singularity containers will allow us to
+    build encapsulated environments, meaning that our work is reproducible and
+    we are empowered to choose all dependencies including libraries, operating
+    system, and custom software. Singularity is already in use on many of the
     top HPC centers around the world. Examples include:
 
         Texas Advanced Computing Center
@@ -524,28 +525,28 @@ to this:
         Sandia National Lab
         Argonne National Lab
 
-    Importantly, it has a vibrant team of developers, scientists, and HPC 
-    administrators that invest heavily in the security and development of the 
-    software, and are quick to respond to the needs of the community. To help 
+    Importantly, it has a vibrant team of developers, scientists, and HPC
+    administrators that invest heavily in the security and development of the
+    software, and are quick to respond to the needs of the community. To help
     learn more about Singularity, I thought these items might be of interest:
 
-        - Security: A discussion of security concerns is discussed at 
+        - Security: A discussion of security concerns is discussed at
         https://www.sylabs.io/guides/2.5.2/user-guide/introduction.html#security-and-privilege-escalation
 
-        - Installation: 
+        - Installation:
         https://www.sylabs.io/guides/3.0/user-guide/installation.html
 
-    If you have questions about any of the above, you can email the open source 
-    list (singularity@lbl.gov), join the open source slack channel 
+    If you have questions about any of the above, you can email the open source
+    list (singularity@lbl.gov), join the open source slack channel
     (singularity-container.slack.com), or contact the organization that supports
-    Singularity directly to get a human response (sylabs.io/contact). I can do 
-    my best to facilitate this interaction if help is needed. 
-    
+    Singularity directly to get a human response (sylabs.io/contact). I can do
+    my best to facilitate this interaction if help is needed.
+
     Thank you kindly for considering this request!
 
     Best,
 
     User
 
-As is stated in the sample message above, you can always `reach out 
+As is stated in the sample message above, you can always `reach out
 <https://www.sylabs.io/contact/>`_ to us for additional questions or support.

@@ -88,6 +88,7 @@
             
               <ul>
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
@@ -189,6 +190,41 @@
 <li class="toctree-l3"><a class="reference internal" href="quick_start.html#singularity-definition-files">Singularity Definition Files</a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-on-linux">Install on Linux</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#before-you-begin">Before you begin</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#install-dependencies">Install Dependencies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#install-go">Install Go</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#install-from-source">Install from source</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#download-singularity-repo-and-optionally-check-out-a-tag-or-branch">Download Singularity repo (and optionally check out a tag or branch)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#compile-singularity">Compile Singularity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#source-bash-completion-file">Source bash completion file</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#build-and-install-an-rpm">Build and install an RPM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#remove-an-old-version">Remove an old version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#distribution-packages-of-singularity">Distribution packages of Singularity</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#install-the-debian-ubuntu-package-using-apt">Install the Debian/Ubuntu package using <code class="docutils literal notranslate"><span class="pre">apt</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#install-the-centos-rhel-package-using-yum">Install the CentOS/RHEL package using <code class="docutils literal notranslate"><span class="pre">yum</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#install-on-windows-or-mac">Install on Windows or Mac</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#setup">Setup</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#windows">Windows</a></li>
+<li class="toctree-l4"><a class="reference internal" href="installation.html#mac">Mac</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="installation.html#singularity-vagrant-box">Singularity Vagrant Box</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="installation.html#singularity-on-a-shared-resource">Singularity on a shared resource</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a container</a><ul>
@@ -298,7 +334,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Singularity.
+        &copy; Copyright 2018, Singularity
 
     </p>
   </div>
@@ -317,20 +353,23 @@
 
   
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'3.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'3.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+    
 
   
 

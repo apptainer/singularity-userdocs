@@ -6,6 +6,7 @@ User Guide
    :maxdepth: 5
 
    Quick Start <quick_start>
+   Installation <installation>
    Build a container <build_a_container>
    Bind Paths and Mounts <bind_paths_and_mounts>
    Persistent Overlays <persistent_overlays>

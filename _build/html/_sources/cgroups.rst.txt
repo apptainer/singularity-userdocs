@@ -43,7 +43,7 @@ and save it in your home directory.
 
 Start your container like so:
 
-.. code-block:: code
+.. code-block:: none
 
     $ sudo singularity instance start --apply-cgroups /home/$USER/cgroups.toml \
         my_container.sif instance1
@@ -51,7 +51,7 @@ Start your container like so:
 After that, you can verify that the container is only using 500MB of memory.
 (This example assumes that ``instance1`` is the only running instance.)
 
-.. code-block:: code
+.. code-block:: none
 
     $ cat /sys/fs/cgroup/memory/singularity/*/memory.limit_in_bytes
     524288000
@@ -60,7 +60,7 @@ After that, you can verify that the container is only using 500MB of memory.
 After you are finished with this example, be sure to cleanup your instance with
 the following command.
 
-.. code-block:: code
+.. code-block:: none
 
     $ sudo singularity instance stop instance1
 

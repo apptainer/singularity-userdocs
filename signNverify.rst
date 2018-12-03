@@ -11,7 +11,6 @@ them to sign and verify containers. This provides a trusted method for
 Singularity users to share containers. It ensures a bit-for-bit reproduction
 of the original container as the author intended it.
 
-
 -----------------------------------------------
 Verifying containers from the Container Library
 -----------------------------------------------

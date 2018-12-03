@@ -4,6 +4,7 @@
 Network virtualization
 ======================
 
+
 .. _sec:networking:
 
 Singularity 3.0 introduces full integration with
