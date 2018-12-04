@@ -209,7 +209,7 @@ build to exit with an error because it cannot find a GPU on your system.
 
 Singularity 3.0 introduces the ability to build a container on an external
 resource running a remote builder.  (The default remote builder is located at
-"https://build.sylabs.io".)
+"https://cloud.sylabs.io/builder".)
 
 ``--sandbox``
 =============
