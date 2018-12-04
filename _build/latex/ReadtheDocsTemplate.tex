@@ -55,7 +55,7 @@
 
 
 \title{Singularity Container Documentation}
-\date{Nov 15, 2018}
+\date{Dec 04, 2018}
 \release{3.0}
 \author{User Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -87,7 +87,7 @@ For any additional help or support contact the Sylabs team:
 \label{\detokenize{quick_start:quick-installation-steps}}\label{\detokenize{quick_start:quick-installation}}
 You will need a Linux system to run Singularity.
 
-See the \DUrole{xref,std,std-ref}{installation page} for information about installing
+See the {\hyperref[\detokenize{installation:installation}]{\sphinxcrossref{\DUrole{std,std-ref}{installation page}}}} for information about installing
 older versions of Singularity.
 
 
@@ -725,6 +725,557 @@ If you need additional help or support, contact the Sylabs team:
 \sphinxurl{https://www.sylabs.io/contact/}
 
 
+\chapter{Installation}
+\label{\detokenize{installation:installation}}\label{\detokenize{installation:id1}}\label{\detokenize{installation::doc}}\phantomsection\label{\detokenize{installation:sec-installation}}
+This document will guide you through the process of installing Singularity \textgreater{}=
+3.0.0 via several different methods. (For instructions on installing earlier
+versions of Singularity please see \sphinxhref{https://www.sylabs.io/docs/}{earlier versions of the
+docs}.)
+
+
+\section{Overview}
+\label{\detokenize{installation:overview}}
+Singularity runs on Linux natively and can also be run on Windows and Mac
+through virtual machines (VMs). Here we cover several different methods of
+installing Singularity (\textgreater{}=v3.0.0) on Linux and also give methods for downloading
+and running VMs with singularity pre-installed from \sphinxhref{https://app.vagrantup.com/sylabs}{Vagrant Cloud}.
+
+
+\section{Install on Linux}
+\label{\detokenize{installation:install-on-linux}}
+Linux is the only operating system that can support containers because of
+kernel features like namespaces.  You can use these methods to install
+Singularity on bare metal Linux or a Linux VM.
+
+
+\subsection{Before you begin}
+\label{\detokenize{installation:before-you-begin}}
+If you have an earlier version of Singularity installed, you should {\hyperref[\detokenize{installation:remove-an-old-version}]{\sphinxcrossref{\DUrole{std,std-ref}{remove
+it}}}} before executing the installation commands.  You
+will also need to install some dependencies and install \sphinxhref{https://golang.org/}{Go}.
+
+
+\subsubsection{Install Dependencies}
+\label{\detokenize{installation:install-dependencies}}\label{\detokenize{installation:id2}}
+Install these dependencies with \sphinxcode{\sphinxupquote{apt-get}} or \sphinxcode{\sphinxupquote{yum/rpm}} as shown below or
+similar with other package managers.
+
+\sphinxcode{\sphinxupquote{apt-get}}
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo apt\PYGZhy{}get update \PYGZam{}\PYGZam{} sudo apt\PYGZhy{}get install \PYGZhy{}y \PYGZbs{}
+    build\PYGZhy{}essential \PYGZbs{}
+    libssl\PYGZhy{}dev \PYGZbs{}
+    uuid\PYGZhy{}dev \PYGZbs{}
+    libgpgme11\PYGZhy{}dev \PYGZbs{}
+    squashfs\PYGZhy{}tools \PYGZbs{}
+    libseccomp\PYGZhy{}dev \PYGZbs{}
+    pkg\PYGZhy{}config
+\end{sphinxVerbatim}
+
+\sphinxcode{\sphinxupquote{yum}}
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo yum update \PYGZhy{}y \PYGZam{}\PYGZam{} \PYGZbs{}
+    sudo yum groupinstall \PYGZhy{}y \PYGZsq{}Development Tools\PYGZsq{} \PYGZam{}\PYGZam{} \PYGZbs{}
+    sudo yum install \PYGZhy{}y \PYGZbs{}
+    openssl\PYGZhy{}devel \PYGZbs{}
+    libuuid\PYGZhy{}devel \PYGZbs{}
+    libseccomp\PYGZhy{}devel \PYGZbs{}
+    wget \PYGZbs{}
+    squashfs\PYGZhy{}tools
+\end{sphinxVerbatim}
+
+
+\subsubsection{Install Go}
+\label{\detokenize{installation:install-go}}\label{\detokenize{installation:id3}}
+This is one of several ways to \sphinxhref{https://golang.org/doc/install}{install and configure Go}.
+
+Visit the \sphinxhref{https://golang.org/dl/}{Go download page} and pick a package
+archive to download. Copy the link address and download with wget.  Then extract
+the archive to \sphinxcode{\sphinxupquote{/usr/local}} (or use other instructions on go installation
+page).
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} export VERSION=1.11 OS=linux ARCH=amd64 \PYGZam{}\PYGZam{} \PYGZbs{}
+    wget https://dl.google.com/go/go\PYGZdl{}VERSION.\PYGZdl{}OS\PYGZhy{}\PYGZdl{}ARCH.tar.gz \PYGZam{}\PYGZam{} \PYGZbs{}
+    sudo tar \PYGZhy{}C /usr/local \PYGZhy{}xzvf go\PYGZdl{}VERSION.\PYGZdl{}OS\PYGZhy{}\PYGZdl{}ARCH.tar.gz \PYGZam{}\PYGZam{} \PYGZbs{}
+    rm go\PYGZdl{}VERSION.\PYGZdl{}OS\PYGZhy{}\PYGZdl{}ARCH.tar.gz
+\end{sphinxVerbatim}
+
+Then, set up your environment for Go.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} echo \PYGZsq{}export GOPATH=\PYGZdl{}\PYGZob{}HOME\PYGZcb{}/go\PYGZsq{} \PYGZgt{}\PYGZgt{} \PYGZti{}/.bashrc \PYGZam{}\PYGZam{} \PYGZbs{}
+    echo \PYGZsq{}export PATH=/usr/local/go/bin:\PYGZdl{}\PYGZob{}PATH\PYGZcb{}:\PYGZdl{}\PYGZob{}GOPATH\PYGZcb{}/bin\PYGZsq{} \PYGZgt{}\PYGZgt{} \PYGZti{}/.bashrc \PYGZam{}\PYGZam{} \PYGZbs{}
+    source \PYGZti{}/.bashrc
+\end{sphinxVerbatim}
+
+If you are installing Singularity v3.0.0 you will also need to install \sphinxcode{\sphinxupquote{dep}}
+for dependency resolution.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} go get \PYGZhy{}u github.com/golang/dep/cmd/dep
+\end{sphinxVerbatim}
+
+
+\subsection{Install from source}
+\label{\detokenize{installation:install-from-source}}
+The following commands will install Singularity from the \sphinxhref{https://github.com/sylabs/singularity}{GitHub repo} to \sphinxcode{\sphinxupquote{/usr/local}}. This method will
+work for \textgreater{}=v3.0.0. To install an older tagged release see \sphinxhref{https://www.sylabs.io/docs/}{older versions of the
+docs}.
+
+When installing from source, you can decide to install from either a \sphinxstylestrong{tag}, a
+\sphinxstylestrong{release branch}, or from the \sphinxstylestrong{master branch}.
+\begin{itemize}
+\item {} 
+\sphinxstylestrong{tag}: GitHub tags form the basis for releases, so installing from a tag is the same as downloading and installing a \sphinxhref{https://github.com/sylabs/singularity/releases}{specific release}.  Tags are expected to be relatively stable and well-tested.
+
+\item {} 
+\sphinxstylestrong{release branch}: A release branch represents the latest version of a minor release with all the newest bug fixes and enhancements (even those that have not yet made it into a point release).  For instance, to install v3.0 with the latest bug fixes and enhancements checkout \sphinxcode{\sphinxupquote{release-3.0}}.  Release branches may be less stable than code in a tagged point release.
+
+\item {} 
+\sphinxstylestrong{master branch}: The \sphinxcode{\sphinxupquote{master}} branch contains the latest, bleeding edge version of Singularity. This is the default branch when you clone the source code, so you don’t have to check out any new branches to install it. The \sphinxcode{\sphinxupquote{master}} branch changes quickly and may be unstable.
+
+\end{itemize}
+
+
+\subsubsection{Download Singularity repo (and optionally check out a tag or branch)}
+\label{\detokenize{installation:download-singularity-repo-and-optionally-check-out-a-tag-or-branch}}
+To ensure that the Singularity source code is downloaded to the appropriate
+directory use these commands.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} go get \PYGZhy{}d github.com/sylabs/singularity
+\end{sphinxVerbatim}
+
+Go will complain that there are no Go files, but it will still  download the
+Singularity source code to the appropriate directory within the \sphinxcode{\sphinxupquote{\$GOPATH}}.
+
+Now checkout the version of Singularity you want to install.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} export VERSION=v3.0.1 \PYGZsh{} or another tag or branch if you like \PYGZam{}\PYGZam{} \PYGZbs{}
+    cd \PYGZdl{}GOPATH/src/github.com/sylabs/singularity \PYGZam{}\PYGZam{} \PYGZbs{}
+    git fetch \PYGZam{}\PYGZam{} \PYGZbs{}
+    git checkout \PYGZdl{}VERSION \PYGZsh{} omit this command to install the latest bleeding edge code from master
+\end{sphinxVerbatim}
+
+
+\subsubsection{Compile Singularity}
+\label{\detokenize{installation:compile-singularity}}
+Singularity uses a custom build system called \sphinxcode{\sphinxupquote{makeit}}.  \sphinxcode{\sphinxupquote{mconfig}} is called
+to generate a \sphinxcode{\sphinxupquote{Makefile}} and then \sphinxcode{\sphinxupquote{make}} is used to compile and install.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} ./mconfig \PYGZam{}\PYGZam{} \PYGZbs{}
+    make \PYGZhy{}C ./builddir \PYGZam{}\PYGZam{} \PYGZbs{}
+    sudo make \PYGZhy{}C ./builddir install
+\end{sphinxVerbatim}
+
+By default Singularity will be installed in the \sphinxcode{\sphinxupquote{/usr/local}} directory hierarchy.
+You can specify a custom directory with the \sphinxcode{\sphinxupquote{-{-}prefix}} option, to \sphinxcode{\sphinxupquote{mconfig}}
+like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} ./mconfig \PYGZhy{}\PYGZhy{}prefix=/opt/singularity
+\end{sphinxVerbatim}
+
+This option can be useful if you want to install multiple versions of
+Singularity, install a personal version of Singularity on a shared system, or if
+you want to remove Singularity easily after installing it.
+
+For a full list of \sphinxcode{\sphinxupquote{mconfig}} options, run \sphinxcode{\sphinxupquote{mconfig -{-}help}}.  Here are some
+of the most common options that you may need to use when building Singularity
+from source.
+\begin{itemize}
+\item {} 
+\sphinxcode{\sphinxupquote{-{-}sysconfdir}}: Install read-only config files in sysconfdir.  This option is important if you need the \sphinxcode{\sphinxupquote{singularity.conf}} file or other configuration files in a custom location.
+
+\item {} 
+\sphinxcode{\sphinxupquote{-{-}localstatedir}}: Set the state directory where containers are mounted. This is a particularly important option for administrators installing Singularity on a shared file system.  The \sphinxcode{\sphinxupquote{-{-}localstatedir}} should be set to a directory that is present on each individual node.
+
+\item {} 
+\sphinxcode{\sphinxupquote{-b}}: Build Singularity in a given directory. By default this is \sphinxcode{\sphinxupquote{./builddir}}.
+
+\end{itemize}
+
+
+\subsubsection{Source bash completion file}
+\label{\detokenize{installation:source-bash-completion-file}}
+To enjoy bash completion with Singularity commands and options, source the bash
+completion file like so. Add this command to your \sphinxtitleref{\textasciitilde{}/.bashrc} file so that bash
+completion continues to work in new shells.  (Obviously adjust this path if you
+installed the bash completion file in a different location.)
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} . /usr/local/etc/bash\PYGZus{}completion.d/singularity
+\end{sphinxVerbatim}
+
+
+\subsection{Build and install an RPM}
+\label{\detokenize{installation:build-and-install-an-rpm}}\label{\detokenize{installation:install-rpm}}
+Building and installing a Singularty RPM allows the installation be more easily
+managed, upgraded and removed. In Singularity \textgreater{}=v3.0.1 you can build an RPM
+directly from the \sphinxhref{https://github.com/sylabs/singularity/releases}{release tarball}.
+
+\begin{sphinxadmonition}{note}{Note:}
+Be sure to download the correct asset from the \sphinxhref{https://github.com/sylabs/singularity/releases}{GitHub releases page}.  It
+should be named \sphinxtitleref{singularity-\textless{}version\textgreater{}.tar.gz}.
+\end{sphinxadmonition}
+
+After installing the {\hyperref[\detokenize{installation:install-dependencies}]{\sphinxcrossref{\DUrole{std,std-ref}{dependencies}}}} and installing
+{\hyperref[\detokenize{installation:install-go}]{\sphinxcrossref{\DUrole{std,std-ref}{Go}}}} as detailed above, you are ready download the tarball and
+build and install the RPM.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} export VERSION=3.0.1 \PYGZam{}\PYGZam{} \PYGZsh{} adjust this as necessary \PYGZbs{}
+    wget https://github.com/sylabs/singularity/releases/download/v\PYGZdl{}\PYGZob{}VERSION\PYGZcb{}/singularity\PYGZhy{}\PYGZdl{}\PYGZob{}VERSION\PYGZcb{}.tar.gz \PYGZam{}\PYGZam{} \PYGZbs{}
+    rpmbuild \PYGZhy{}tb singularity\PYGZhy{}\PYGZdl{}\PYGZob{}VERSION\PYGZcb{}.tar.gz \PYGZam{}\PYGZam{} \PYGZbs{}
+    sudo rpm \PYGZhy{}ivh \PYGZti{}/rpmbuild/RPMS/x86\PYGZus{}64/singularity\PYGZhy{}\PYGZdl{}VERSION\PYGZhy{}1.el7.x86\PYGZus{}64.rpm \PYGZam{}\PYGZam{} \PYGZbs{}
+    rm \PYGZhy{}rf \PYGZti{}/rpmbuild singularity\PYGZhy{}\PYGZdl{}VERSION*.tar.gz
+\end{sphinxVerbatim}
+
+Options to \sphinxcode{\sphinxupquote{mconfig}} can be passed using the familiar syntax to \sphinxcode{\sphinxupquote{rpmbuild}}.
+For example, if you want to force the local state directory to \sphinxcode{\sphinxupquote{/mnt}} (instead
+of the default \sphinxcode{\sphinxupquote{/var}}) you can do the following:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+rpmbuild \PYGZhy{}tb \PYGZhy{}\PYGZhy{}define=\PYGZsq{}\PYGZus{}localstatedir /mnt\PYGZsq{} singularity\PYGZhy{}\PYGZdl{}VERSION.tar.gz\PYGZsq{}
+\end{sphinxVerbatim}
+
+\begin{sphinxadmonition}{note}{Note:}
+It is very important to set the local state directory to a directory that
+physically exists on nodes within a cluster when installing Singularity in
+an HPC environment with a shared file system.  Thus the \sphinxcode{\sphinxupquote{\_localstatedir}}
+option should be of considerable interest to HPC admins.
+\end{sphinxadmonition}
+
+
+\subsection{Remove an old version}
+\label{\detokenize{installation:remove-an-old-version}}\label{\detokenize{installation:id4}}
+When you run \sphinxcode{\sphinxupquote{sudo make install}}, the command lists files as they are
+installed. They must all be removed in order to completely remove Singularity.
+
+For example, in a standard installation of Singularity 3.0.1 (when building from
+source) you must remove all of these files and directories to completely remove
+Singularity.
+
+Obviously, this list of files may differ depending on how you install
+Singularity or with newer versions of Singularity released following the writing
+of this document.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo rm \PYGZhy{}rf \PYGZbs{}
+    /usr/local/libexec/singularity \PYGZbs{}
+    /usr/local/var/singularity \PYGZbs{}
+    /usr/local/etc/singularity \PYGZbs{}
+    /usr/local/bin/singularity \PYGZbs{}
+    /usr/local/bin/run\PYGZhy{}singularity \PYGZbs{}
+    /usr/local/etc/bash\PYGZus{}completion.d/singularity
+\end{sphinxVerbatim}
+
+If you anticipate needing to remove Singularity, it might be easier to install
+it in a custom directory using the \sphinxcode{\sphinxupquote{-{-}prefix}} option to \sphinxcode{\sphinxupquote{mconfig}}.  In that
+case Singularity can be uninstalled simply by deleting the parent directory. Or
+it may be useful to install Singularity {\hyperref[\detokenize{installation:install-rpm}]{\sphinxcrossref{\DUrole{std,std-ref}{using a package manager}}}} so that it can be updated and/or uninstalled with ease in the
+future.
+
+
+\subsection{Distribution packages of Singularity}
+\label{\detokenize{installation:distribution-packages-of-singularity}}
+\begin{sphinxadmonition}{note}{Note:}
+Packaged versions of Singularity in Linux distribution repos are maintained
+by community members. They (necessarily) tend to be older releases of
+Singularity. For the latest upstream versions of Singularity it is
+recommended that you build from source using one of the methods detailed
+above.
+\end{sphinxadmonition}
+
+
+\subsubsection{Install the Debian/Ubuntu package using \sphinxstyleliteralintitle{\sphinxupquote{apt}}}
+\label{\detokenize{installation:install-the-debian-ubuntu-package-using-apt}}
+Singularity is available on Debian and derivative distributions starting with
+Debian stretch and the Ubuntu 16.10 releases. The package is called
+\sphinxcode{\sphinxupquote{singularity-container}}.  For more recent releases of singularity and
+backports for older Debian and Ubuntu releases, it is recommended that you use
+the \sphinxhref{http://neuro.debian.net/pkgs/singularity-container.html}{NeuroDebian repository}.
+
+Enable the NeuroDebian repository following instructions on the \sphinxhref{http://neuro.debian.net/}{NeuroDebian} site. Use the dropdown menus to find the best
+mirror for your operating system and location. For example, after selecting
+Ubuntu 16.04 and selecting a mirror in CA, you are instructed to add these
+lists:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo wget \PYGZhy{}O\PYGZhy{} http://neuro.debian.net/lists/xenial.us\PYGZhy{}ca.full \textbar{} sudo tee /etc/apt/sources.list.d/neurodebian.sources.list \PYGZam{}\PYGZam{} \PYGZbs{}
+    sudo apt\PYGZhy{}key adv \PYGZhy{}\PYGZhy{}recv\PYGZhy{}keys \PYGZhy{}\PYGZhy{}keyserver hkp://pool.sks\PYGZhy{}keyservers.net:80 0xA5D32F012649A5A9 \PYGZam{}\PYGZam{} \PYGZbs{}
+    sudo apt\PYGZhy{}get update
+\end{sphinxVerbatim}
+
+Now singularity can be installed like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+sudo apt\PYGZhy{}get install \PYGZhy{}y singularity\PYGZhy{}container
+\end{sphinxVerbatim}
+
+During the above, if you have a previously installed configuration, you might be
+asked if you want to define a custom configuration/init, or just use the default
+provided by the package, eg:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Configuration file \PYGZsq{}/etc/singularity/init\PYGZsq{}
+
+  ==\PYGZgt{} File on system created by you or by a script.
+  ==\PYGZgt{} File also in package provided by package maintainer.
+    What would you like to do about it ?  Your options are:
+      Y or I  : install the package maintainer\PYGZsq{}s version
+      N or O  : keep your currently\PYGZhy{}installed version
+        D     : show the differences between the versions
+        Z     : start a shell to examine the situation
+The default action is to keep your current version.
+*** init (Y/I/N/O/D/Z) [default=N] ? Y
+
+Configuration file \PYGZsq{}/etc/singularity/singularity.conf\PYGZsq{}
+  ==\PYGZgt{} File on system created by you or by a script.
+  ==\PYGZgt{} File also in package provided by package maintainer.
+    What would you like to do about it ?  Your options are:
+      Y or I  : install the package maintainer\PYGZsq{}s version
+      N or O  : keep your currently\PYGZhy{}installed version
+        D     : show the differences between the versions
+        Z     : start a shell to examine the situation
+The default action is to keep your current version.
+*** singularity.conf (Y/I/N/O/D/Z) [default=N] ? Y
+\end{sphinxVerbatim}
+
+Most users should accept these defaults. For cluster admins, we recommend that
+you read the \sphinxhref{https://www.sylabs.io/guides/2.6/admin-guide/}{admin docs} to
+get a better understanding of the configuration file options available to you.
+
+After following this procedure, you can check the Singularity version like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity \PYGZhy{}\PYGZhy{}version
+    2.5.2\PYGZhy{}dist
+\end{sphinxVerbatim}
+
+If you need a backport build of the recent release of Singularity on those or
+older releases of Debian and Ubuntu, you can \sphinxhref{http://neuro.debian.net/pkgs/singularity-container.html}{see all the various builds and
+other information here}.
+
+
+\subsubsection{Install the CentOS/RHEL package using \sphinxstyleliteralintitle{\sphinxupquote{yum}}}
+\label{\detokenize{installation:install-the-centos-rhel-package-using-yum}}
+The epel (Extra Packages for Enterprise Linux) repos contain Singularity. The
+singularity package is actually split into two packages called
+\sphinxcode{\sphinxupquote{singularity-runtime}} (which simply contains the necessary bits to run
+singularity containers) and \sphinxcode{\sphinxupquote{singularity}} (which also gives you the ability to
+build Singularity containers).
+
+To install Singularity from the epel repos, first install the repos and then
+install Singularity.  For instance, on CentOS6/7 do the following:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo yum update \PYGZhy{}y \PYGZam{}\PYGZam{} \PYGZbs{}
+    sudo yum install \PYGZhy{}y epel\PYGZhy{}release \PYGZam{}\PYGZam{} \PYGZbs{}
+    sudo yum update \PYGZhy{}y \PYGZam{}\PYGZam{} \PYGZbs{}
+    sudo yum install \PYGZhy{}y singularity\PYGZhy{}runtime singularity
+\end{sphinxVerbatim}
+
+After following this procedure, you can check the Singularity version like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity \PYGZhy{}\PYGZhy{}version
+    2.6.0\PYGZhy{}dist
+\end{sphinxVerbatim}
+
+
+\section{Install on Windows or Mac}
+\label{\detokenize{installation:install-on-windows-or-mac}}
+Linux containers like Singularity cannot run natively on Windows or Mac because
+of basic incompatibilities with the host kernel. (Contrary to a popular
+misconception, Mac does not run on a Linux kernel.  It runs on a kernel called
+Darwin originally forked from BSD.)
+
+For this reason, the Singularity community maintains a set of Vagrant Boxes via
+\sphinxhref{https://www.vagrantup.com/}{Vagrant Cloud}, one of \sphinxhref{https://www.hashicorp.com/\#open-source-tools}{Hashicorp’s} open source tools. The current
+versions can be found under the \sphinxhref{https://app.vagrantup.com/sylabs}{sylabs}
+organization.
+
+
+\subsection{Setup}
+\label{\detokenize{installation:setup}}
+First, install the following software:
+
+
+\subsubsection{Windows}
+\label{\detokenize{installation:windows}}
+Install the following programs:
+\begin{itemize}
+\item {} 
+\sphinxhref{https://git-for-windows.github.io/}{Git for Windows}
+
+\item {} 
+\sphinxhref{https://www.virtualbox.org/wiki/Downloads}{VirtualBox for Windows}
+
+\item {} 
+\sphinxhref{https://www.vagrantup.com/downloads.html}{Vagrant for Windows}
+
+\item {} 
+\sphinxhref{http://vagrantmanager.com/downloads/}{Vagrant Manager for Windows}
+
+\end{itemize}
+
+
+\subsubsection{Mac}
+\label{\detokenize{installation:mac}}
+You need to install several programs. This example uses \sphinxhref{https://brew.sh/}{Homebrew} but you can also install these tools using the GUI.
+
+First, optionally install Homebrew.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+/usr/bin/ruby \PYGZhy{}e \PYGZdq{}\PYGZdl{}(curl \PYGZhy{}fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)\PYGZdq{}
+\end{sphinxVerbatim}
+
+Next, install Vagrant and the necessary bits (either using this method or by
+downloading and installing the tools manually).
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} brew cask install virtualbox \PYGZam{}\PYGZam{} \PYGZbs{}
+    brew cask install vagrant \PYGZam{}\PYGZam{} \PYGZbs{}
+    brew cask install vagrant\PYGZhy{}manager
+\end{sphinxVerbatim}
+
+
+
+
+\subsection{Singularity Vagrant Box}
+\label{\detokenize{installation:singularity-vagrant-box}}
+Run GitBash (Windows) or open a terminal (Mac) and create and enter a directory
+to be used with your Vagrant VM.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} mkdir vm\PYGZhy{}singularity \PYGZam{}\PYGZam{} \PYGZbs{}
+    cd vm\PYGZhy{}singularity
+\end{sphinxVerbatim}
+
+If you have already created and used this folder for another VM, you will need
+to destroy the VM and delete the Vagrantfile.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} vagrant destroy \PYGZam{}\PYGZam{} \PYGZbs{}
+    rm Vagrantfile
+\end{sphinxVerbatim}
+
+Then issue the following commands to bring up the Virtual Machine. (Substitute a
+different value for the \sphinxcode{\sphinxupquote{\$VM}} variable if you like.)
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} export VM=sylabs/singularity\PYGZhy{}ubuntu\PYGZhy{}bionic64 \PYGZam{}\PYGZam{} \PYGZbs{}
+    vagrant init \PYGZdl{}VM \PYGZam{}\PYGZam{} \PYGZbs{}
+    vagrant up \PYGZam{}\PYGZam{} \PYGZbs{}
+    vagrant ssh
+\end{sphinxVerbatim}
+
+You can check the installed version of Singularity with the following:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+vagrant@ubuntu\PYGZhy{}bionic:\PYGZti{}\PYGZdl{} singularity version
+    3.0.1
+\end{sphinxVerbatim}
+
+Of course, you can also start with a plain OS Vagrant box as a base and then
+install Singularity using one of the above methods for Linux.
+
+
+\section{Singularity on a shared resource}
+\label{\detokenize{installation:singularity-on-a-shared-resource}}
+Perhaps you are a user who wants a few talking points and background to share
+with your administrator.  Or maybe you are an administrator who needs to decide
+whether to install Singularity.
+
+This document, and the accompanying administrator documentation provides answers
+to many common questions.
+
+If you need to request an installation you may decide to draft a message similar
+to this:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Dear shared resource administrator,
+
+We are interested in having Singularity (https://www.sylabs.io/docs/)
+installed on our shared resource. Singularity containers will allow us to
+build encapsulated environments, meaning that our work is reproducible and
+we are empowered to choose all dependencies including libraries, operating
+system, and custom software. Singularity is already in use on many of the
+top HPC centers around the world. Examples include:
+
+    Texas Advanced Computing Center
+    GSI Helmholtz Center for Heavy Ion Research
+    Oak Ridge Leadership Computing Facility
+    Purdue University
+    National Institutes of Health HPC
+    UFIT Research Computing at the University of Florida
+    San Diego Supercomputing Center
+    Lawrence Berkeley National Laboratory
+    University of Chicago
+    McGill HPC Centre/Calcul Québec
+    Barcelona Supercomputing Center
+    Sandia National Lab
+    Argonne National Lab
+
+Importantly, it has a vibrant team of developers, scientists, and HPC
+administrators that invest heavily in the security and development of the
+software, and are quick to respond to the needs of the community. To help
+learn more about Singularity, I thought these items might be of interest:
+
+    \PYGZhy{} Security: A discussion of security concerns is discussed at
+    https://www.sylabs.io/guides/2.5.2/user\PYGZhy{}guide/introduction.html\PYGZsh{}security\PYGZhy{}and\PYGZhy{}privilege\PYGZhy{}escalation
+
+    \PYGZhy{} Installation:
+    https://www.sylabs.io/guides/3.0/user\PYGZhy{}guide/installation.html
+
+If you have questions about any of the above, you can email the open source
+list (singularity@lbl.gov), join the open source slack channel
+(singularity\PYGZhy{}container.slack.com), or contact the organization that supports
+Singularity directly to get a human response (sylabs.io/contact). I can do
+my best to facilitate this interaction if help is needed.
+
+Thank you kindly for considering this request!
+
+Best,
+
+User
+\end{sphinxVerbatim}
+
+As is stated in the sample message above, you can always \sphinxhref{https://www.sylabs.io/contact/}{reach out} to us for additional questions or support.
+
+
 \chapter{Build a Container}
 \label{\detokenize{build_a_container:build-a-container}}\label{\detokenize{build_a_container:id1}}\label{\detokenize{build_a_container::doc}}\phantomsection\label{\detokenize{build_a_container:sec-build-a-container}}
 \sphinxcode{\sphinxupquote{build}} is the “Swiss army knife” of container creation. You can use it to
@@ -939,7 +1490,7 @@ build to exit with an error because it cannot find a GPU on your system.
 \label{\detokenize{build_a_container:remote}}
 Singularity 3.0 introduces the ability to build a container on an external
 resource running a remote builder.  (The default remote builder is located at
-“\sphinxurl{https://build.sylabs.io}”.)
+“\sphinxurl{https://cloud.sylabs.io/builder}”.)
 
 
 \subsection{\sphinxstyleliteralintitle{\sphinxupquote{-{-}sandbox}}}

@@ -5,69 +5,69 @@
 <!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
 <head>
   <meta charset="utf-8">
-  
+
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
+
   <title>Limiting container resources with cgroups &mdash; Singularity container 3.0 documentation</title>
-  
 
-  
-  
+
+
+
     <link rel="shortcut icon" href="_static/favicon.png"/>
-  
-  
-  
 
-  
 
-  
-  
-    
 
-  
+
+
+
+
+
+
+
+
 
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Network virtualization" href="networking.html" /> 
+    <link rel="prev" title="Network virtualization" href="networking.html" />
 
-  
+
   <script src="_static/js/modernizr.min.js"></script>
 
 </head>
 
 <body class="wy-body-for-nav">
 
-   
+
   <div class="wy-grid-for-nav">
 
-    
+
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search">
-          
 
-          
+
+
             <a href="index.html" class="icon icon-home"> Singularity container
-          
 
-          
-            
+
+
+
             <img src="_static/logo.png" class="logo" alt="Logo"/>
-          
+
           </a>
 
-          
-            
-            
+
+
+
               <div class="version">
                 3.0
               </div>
-            
-          
 
-          
+
+
+
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" />
@@ -76,18 +76,19 @@
   </form>
 </div>
 
-          
+
         </div>
 
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
+
+
+
+
+
+
               <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a container</a></li>
 <li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
 <li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
@@ -114,28 +115,28 @@
 </li>
 </ul>
 
-            
-          
+
+
         </div>
       </div>
     </nav>
 
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
 
-      
+
       <nav class="wy-nav-top" aria-label="top navigation">
-        
+
           <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
           <a href="index.html">Singularity container</a>
-        
+
       </nav>
 
 
       <div class="wy-nav-content">
-        
+
         <div class="rst-content style-external-links">
-        
-          
+
+
 
 
 
@@ -154,30 +155,30 @@
 <div role="navigation" aria-label="breadcrumbs navigation">
 
   <ul class="wy-breadcrumbs">
-    
+
       <li><a href="index.html">Docs</a> &raquo;</li>
-        
+
       <li>Limiting container resources with cgroups</li>
-    
-    
+
+
       <li class="wy-breadcrumbs-aside">
-        
-            
-            
+
+
+
               <a href="https://github.com/sylabs/singularity-userdocs/blob/master/cgroups.rst" class="fa fa-github"> Edit on GitHub</a>
-            
-          
-        
+
+
+
       </li>
-    
+
   </ul>
 
-  
+
   <hr/>
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-            
+
   <div class="section" id="limiting-container-resources-with-cgroups">
 <span id="cgroups"></span><h1>Limiting container resources with cgroups<a class="headerlink" href="#limiting-container-resources-with-cgroups" title="Permalink to this headline">¶</a></h1>
 <p>Starting in Singularity 3.0, users have the ability to limit container resources
@@ -207,19 +208,19 @@ and save it in your home directory.</p>
 </pre></div>
 </div>
 <p>Start your container like so:</p>
-<div class="highlight-code notranslate"><div class="highlight"><pre><span></span>$ sudo singularity instance start --apply-cgroups /home/$USER/cgroups.toml \
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity instance start --apply-cgroups /home/$USER/cgroups.toml \
     my_container.sif instance1
 </pre></div>
 </div>
 <p>After that, you can verify that the container is only using 500MB of memory.
 (This example assumes that <code class="docutils literal notranslate"><span class="pre">instance1</span></code> is the only running instance.)</p>
-<div class="highlight-code notranslate"><div class="highlight"><pre><span></span>$ cat /sys/fs/cgroup/memory/singularity/*/memory.limit_in_bytes
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ cat /sys/fs/cgroup/memory/singularity/*/memory.limit_in_bytes
 524288000
 </pre></div>
 </div>
 <p>After you are finished with this example, be sure to cleanup your instance with
 the following command.</p>
-<div class="highlight-code notranslate"><div class="highlight"><pre><span></span>$ sudo singularity instance stop instance1
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo singularity instance stop instance1
 </pre></div>
 </div>
 <p>Similarly, the remaining examples can be tested by starting instances and
@@ -366,27 +367,27 @@ management guide section 3.5 DEVICES</a>.</p>
 
 
            </div>
-           
+
           </div>
           <footer>
-  
+
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-      
+
+
         <a href="networking.html" class="btn btn-neutral" title="Network virtualization" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
+
     </div>
-  
+
 
   <hr/>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2018, Singularity.
+        &copy; Copyright 2018, Singularity
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
 
 </footer>
 
@@ -396,27 +397,30 @@ management guide section 3.5 DEVICES</a>.</p>
     </section>
 
   </div>
-  
 
 
-  
+<script type="text/javascript" src="_static/js/footer.js"></script>
 
-    <script type="text/javascript">
-        var DOCUMENTATION_OPTIONS = {
-            URL_ROOT:'./',
-            VERSION:'3.0',
-            LANGUAGE:'None',
-            COLLAPSE_INDEX:false,
-            FILE_SUFFIX:'.html',
-            HAS_SOURCE:  true,
-            SOURCELINK_SUFFIX: '.txt'
-        };
-    </script>
-      <script type="text/javascript" src="_static/jquery.js"></script>
-      <script type="text/javascript" src="_static/underscore.js"></script>
-      <script type="text/javascript" src="_static/doctools.js"></script>
 
-  
+
+
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'3.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+
+
+
 
   <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -424,7 +428,7 @@ management guide section 3.5 DEVICES</a>.</p>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
 
 </body>
 </html>
