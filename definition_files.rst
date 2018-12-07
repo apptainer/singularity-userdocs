@@ -46,7 +46,7 @@ about the base operating system that it should use to build the container. It is
 composed of several keywords.
 
 The only keyword that is required for every type of build is ``Bootstrap``.  
-It determines the _bootstrap agent_  that will be used to create the base 
+It determines the *bootstrap agent*  that will be used to create the base 
 operating system you want to use. For example, the ``library`` bootstrap agent
 will pull a container from the `Container Library 
 <https://cloud.sylabs.io/library>`_ as a base. Similarlty, the ``docker`` 
@@ -74,7 +74,7 @@ this:
     Include: yum
 
 Each bootstrap agent enables its own options and keywords. You can read about 
-them and see examples at the following links:
+them and see examples in the appendix:
 
 -  :ref:`docker <build-docker-module>` (images hosted on Docker Hub)
 
@@ -488,6 +488,7 @@ The following runscript demonstrates how to build 2 different apps into the
 same container using SCI-F modules:
 
 .. code-block:: none
+
     Bootstrap: docker
     From: ubuntu
 

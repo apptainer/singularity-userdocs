@@ -8,6 +8,7 @@ User Guide
    Quick Start <quick_start>
    Installation <installation>
    Build a container <build_a_container>
+   The Definition File <definition_files>
    Bind Paths and Mounts <bind_paths_and_mounts>
    Persistent Overlays <persistent_overlays>
    Sign and Verify <signNverify>
