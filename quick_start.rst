@@ -44,9 +44,14 @@ You must first install development libraries to your host. Assuming Ubuntu
         libgpgme11-dev \
         squashfs-tools
 
+On CentOS/RHEL:
+
+.. code-block:: none
+
+    $ sudo yum groupinstall -y 'Development Tools'
+    $ sudo yum install -y openssl-devel libuuid-devel libseccomp-devel squashfs-tools 
 .. note::
   Note that ``squashfs-tools`` is an image build dependency only and is not required for Singularity ``build`` and ``run`` commands.
-
 
 Install Go
 ==========
@@ -93,15 +98,7 @@ build Singularity from source.
     $ git clone https://github.com/sylabs/singularity.git
     $ cd singularity
 
-Install Go dependencies
-=======================
-
-Dependencies are managed using `Dep <https://github.com/golang/dep>`_. You
-can use go get to install it like so:
-
-.. code-block:: none
-
-    $ go get -u -v github.com/golang/dep/cmd/dep
+Dependencies will be downloaded automatlicy.
 
 Compile the Singularity binary
 ==============================
@@ -113,8 +110,9 @@ downloaded. You can build Singularity using the following commands:
 
     $ cd $GOPATH/src/github.com/sylabs/singularity
     $ ./mconfig
-    $ make -C builddir
-    $ sudo make -C builddir install
+    $ cd buildder/
+    $ make
+    $ sudo make install
 
 Singularity must be installed as root to function properly.
 
@@ -281,11 +279,14 @@ containers of interest on the `Container Library <https://cloud.sylabs.io/librar
     		Tags: 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 latest
     	library://sylabsed/examples/alpine
     		Tags: latest
+----
+Pull
+----
 
 You can use the :ref:`pull <pull-command>` and :ref:`build <build-command>`
 commands to download pre-built images from an external resource like the
-`Container Library <https://cloud.sylabs.io/library>`_ or
-`Docker Hub <https://hub.docker.com/>`_.
+`Container Library <https://cloud.sylabs.io/library>`_,
+`Docker Hub <https://hub.docker.com/>`_, or `Singularity Hub <https://singularity-hub.org/>`_.
 
 When called on a native Singularity image like those provided on the Container
 Library, ``pull`` simply downloads the image file to your system.
@@ -294,10 +295,10 @@ Library, ``pull`` simply downloads the image file to your system.
 
     $ singularity pull library://sylabsed/linux/alpine
 
-You can also use ``pull`` with the ``docker://`` uri to reference Docker images
-served from a registry. In this case ``pull`` does not just download an image
-file. Docker images are stored in layers, so ``pull`` must also combine those
-layers into a usable Singularity file.
+You can also use ``pull`` with the ``docker://`` URI, to reference Docker images
+served from a registry. In this case, ``pull`` does not just download an image
+file, but also combine those layers into a usable Singularity file, sense Docker
+images are stored in layers.
 
 .. code-block:: none
 
@@ -308,6 +309,10 @@ image today and then wait six months and pull again, you are not guaranteed to
 get the same image. If any of the source layers has changed the image will be
 altered. If reproducibility is a priority for you, try building your images from
 the Container Library.
+
+-----
+Build
+-----
 
 You can also use the ``build`` command to download pre-built images from an
 external resource. When using ``build`` you must specify a name for your
@@ -324,9 +329,9 @@ image format after downloading it.
 
 ``build`` is like a “Swiss Army knife” for container creation. In addition to
 downloading images, you can use ``build`` to create images from other images or
-from scratch using a :ref:`definition file <container-recipes>`. You can also
-use ``build`` to convert an image between the container formats supported by
-Singularity.
+from scratch using a :ref:`Building a container for a def file <build-a-container>`.
+You can also use ``build`` to convert an image between the container formats
+supported by Singularity.
 
 --------------------
 Interact with images
@@ -470,7 +475,6 @@ Files on the host are reachable from within the container.
 .. code-block:: none
 
     $ echo "Hello from inside the container" > $HOME/hostfile.txt
-
     $ singularity exec lolcow_latest.sif cat $HOME/hostfile.txt
 
     Hello from inside the container
@@ -531,7 +535,7 @@ Sandbox Directories
 ===================
 
 To build into a ``sandbox`` (container in a directory) use the
-``build --sandbox`` command and option:
+``--sandbox`` command and option:
 
 .. code-block:: none
 
@@ -549,7 +553,6 @@ directory (provided you have the permissions to do so).
 .. code-block:: none
 
     $ sudo singularity exec --writable ubuntu touch /foo
-
     $ singularity exec ubuntu/ ls /foo
     /foo
 
@@ -564,7 +567,7 @@ so:
 
 .. code-block:: none
 
-    $ singularity build new-sif sandbox
+    $ singularity build new-container.sif sandbox/
 
 Doing so may break reproducibility if you have altered your sandbox outside of
 the context of a definition file, so you are advised to exercise care.
@@ -605,7 +608,7 @@ Here is an example of a definition file:
 
 
 To build a container from this definition file (assuming it is a file
-named lolcow.def), you would call build like so:
+named ``lolcow.def``), you would call build like so:
 
 .. code-block:: none
 
