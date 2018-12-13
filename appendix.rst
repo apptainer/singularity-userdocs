@@ -13,8 +13,8 @@ Appendix
 Overview
 ========
 
-You can use an existing container on the Container Library your “base,” and then 
-add customization. This allows you to build multiple images from the same 
+You can use an existing container on the Container Library as your “base,” and 
+then add customization. This allows you to build multiple images from the same 
 starting point. For example, you may want to build several containers with the 
 same custom python installation, the same custom compiler toolchain, or the same 
 base MPI installation. Instead of building these from scratch each time, you 
@@ -46,7 +46,8 @@ will default to ``latest``.
 
     Library: http://custom/library
 
-The Library keyword is optional. It will default to `` https://library.sylabs.io``.
+The Library keyword is optional. It will default to 
+``https://cloud.sylabs.io/library``.
 
 
 .. _build-docker-module:

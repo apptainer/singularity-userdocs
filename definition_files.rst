@@ -165,7 +165,7 @@ the ``%setup`` section.
 .. note::
 
     Be careful with the ``%setup`` section! This scriptlet is executed outside
-    of the container on the host system itself, and is executed will elevated 
+    of the container on the host system itself, and is executed with elevated 
     priviledges. Commands in ``%setup`` can alter and potentially damage the 
     host.
 
@@ -193,10 +193,10 @@ use is generally discouraged.
 
 The ``%files`` section allows you to copy files from your host system into the 
 container with greater safety than using the ``%setup`` section. Each line is a 
-pair of ``<source>`` and ``<destination>``, where the source is a path on your 
-host system, and the destination is a path in the container. The 
-``<destination>`` specification can be omitted and will be assumed to be the
-same path as the ``<source>`` specification. 
+``<source>`` and ``<destination>`` pair, where the source is a path on your host
+system, and the destination is a path in the container. The  ``<destination>`` 
+specification can be omitted and will be assumed to be the same path as the 
+``<source>`` specification. 
 
 Consider the example from the definition file above:
 
@@ -328,7 +328,7 @@ the final ``echo`` command replaces the current entry in the process table
 (which originally was the call to Singularity). Thus the runscript shell process 
 ceases to exist, and only the process running within the container remains.
 
-Running the container built using this def file will yeild the following:
+Running the container built using this def file will yield the following:
 
 .. code-block:: none
 
@@ -403,7 +403,7 @@ system), you can do so with the ``--notest`` build option:
 
     $ sudo singularity build --notest my_container.sif my_container.def
 
-Running the test command on a container built with this def file yeilds the 
+Running the test command on a container built with this def file yields the 
 following:
 
 .. code-block:: none
