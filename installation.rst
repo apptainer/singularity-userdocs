@@ -7,8 +7,7 @@ Installation
 
 This document will guide you through the process of installing Singularity >=
 3.0.0 via several different methods. (For instructions on installing earlier
-versions of Singularity please see `earlier versions of the
-docs <https://www.sylabs.io/docs/>`_.)
+versions of Singularity please see `earlier versions of the docs <https://www.sylabs.io/docs/>`__).
 
 Overview
 --------
@@ -16,8 +15,7 @@ Overview
 Singularity runs on Linux natively and can also be run on Windows and Mac
 through virtual machines (VMs). Here we cover several different methods of
 installing Singularity (>=v3.0.0) on Linux and also give methods for downloading
-and running VMs with singularity pre-installed from `Vagrant Cloud
-<https://app.vagrantup.com/sylabs>`_.
+and running VMs with singularity pre-installed from `Vagrant Cloud <https://app.vagrantup.com/sylabs>`_.
 
 Install on Linux
 ----------------
@@ -99,13 +97,6 @@ Then, set up your environment for Go.
         echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
         source ~/.bashrc
 
-If you are installing Singularity v3.0.0 you will also need to install ``dep``
-for dependency resolution.
-
-.. code-block:: none
-
-    $ go get -u github.com/golang/dep/cmd/dep
-
 ===================
 Install from source
 ===================
@@ -128,13 +119,6 @@ When installing from source, you can decide to install from either a **tag**, a
 Download Singularity repo (and optionally check out a tag or branch)
 --------------------------------------------------------------------
 
-To ensure that the Singularity source code is downloaded to the appropriate
-directory use these commands.
-
-.. code-block:: none
-
-    $ go get -d github.com/sylabs/singularity
-
 Go will complain that there are no Go files, but it will still  download the
 Singularity source code to the appropriate directory within the ``$GOPATH``.
 
@@ -151,7 +135,7 @@ Now checkout the version of Singularity you want to install.
 Compile Singularity
 -------------------
 
-Singularity uses a custom build system called ``makeit``.  ``mconfig`` is called
+Singularity uses a custom build system called ``makeit``. ``mconfig`` is called
 to generate a ``Makefile`` and then ``make`` is used to compile and install.
 
 .. code-block:: none
@@ -173,7 +157,7 @@ This option can be useful if you want to install multiple versions of
 Singularity, install a personal version of Singularity on a shared system, or if
 you want to remove Singularity easily after installing it.
 
-For a full list of ``mconfig`` options, run ``mconfig --help``.  Here are some
+For a full list of ``mconfig`` options, run ``./mconfig --help``.  Here are some
 of the most common options that you may need to use when building Singularity
 from source.
 
