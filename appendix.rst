@@ -277,9 +277,9 @@ use. It is only required if you have specified a %{OSVERSION} variable in the
 
     MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
 
-The MirrorURL keyword is mandatory. It specifies the URL to use as a mirror to 
+The MirrorURL keyword is mandatory. It specifies the URI to use as a mirror to 
 download the OS. If you define the ``OSVersion`` keyword, than you can use it in 
-the URL as in the example above.
+the URI as in the example above.
 
 .. code-block:: none
 
@@ -354,7 +354,7 @@ to use. For Ubuntu you can use code words like ``trusty`` (14.04), ``xenial``
 
      MirrorURL:  http://us.archive.ubuntu.com/ubuntu/
 
-The MirrorURL keyword is mandatory. It specifies a URL to use as a mirror when 
+The MirrorURL keyword is mandatory. It specifies a URI to use as a mirror when 
 downloading the OS.
 
 .. code-block:: none
@@ -455,7 +455,7 @@ use.
 
     MirrorURL: https://www.busybox.net/downloads/binaries/1.26.1-defconfig-multiarch/busybox-x86_64
 
-The MirrorURL keyword is mandatory. It specifies a URL to use as a mirror when 
+The MirrorURL keyword is mandatory. It specifies a URI to use as a mirror when 
 downloading the OS.
 
 Notes
