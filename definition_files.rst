@@ -49,7 +49,7 @@ The only keyword that is required for every type of build is ``Bootstrap``.
 It determines the *bootstrap agent*  that will be used to create the base 
 operating system you want to use. For example, the ``library`` bootstrap agent
 will pull a container from the `Container Library 
-<https://cloud.sylabs.io/library>`_ as a base. Similarlty, the ``docker`` 
+<https://cloud.sylabs.io/library>`_ as a base. Similarly, the ``docker`` 
 bootstrap agent will pull docker layers from `Docker Hub 
 <https://hub.docker.com/>`_ as a base OS to start your image.
 
@@ -105,7 +105,7 @@ build process. Note that if any command fails, the build process will halt.
 Here is an example definition file that uses every available section. We will 
 discuss each section in turn. It is not necessary to include every section (or 
 any sections at all) within a def file. Furthermore, the order of the sections
-in the def file is uninportant and multiple sections of the same name can be 
+in the def file is unimportant and multiple sections of the same name can be 
 included and will be appended to one another during the build process.
 
 .. code-block:: none
@@ -185,7 +185,7 @@ container**.
 In later versions of Singularity the ``%files`` section is provided as a safer
 alternative to copying files from the host system into the container during the 
 build. Because of the potential danger involved in running the ``%setup`` 
-scriptlet with elevated priviledges on the host system during the build, it's 
+scriptlet with elevated privileges on the host system during the build, it's 
 use is generally discouraged.
 
 %files
@@ -323,7 +323,7 @@ In this runscript, the time that the container was created is echoed via the
 ``$NOW`` variable (set in the ``%post`` section above). The options passed to 
 the container at runtime are printed as a single string (``$*``) and then they 
 are passed to echo via a quoted array (``$@``) which ensures that all of the 
-arguments are properly parsed by the executed command. The ``exec`` preceeding 
+arguments are properly parsed by the executed command. The ``exec`` preceding 
 the final ``echo`` command replaces the current entry in the process table 
 (which originally was the call to Singularity). Thus the runscript shell process 
 ceases to exist, and only the process running within the container remains.

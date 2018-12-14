@@ -204,7 +204,7 @@ container can be in either image or directory format.
 Overview
 ========
 
-You can use an existing container image as your “base,” and then add 
+You can use an existing container image as your “base”, and then add 
 customization. This allows you to build multiple images from the same starting 
 point. For example, you may want to build several containers with the same 
 custom python installation, the same custom compiler toolchain, or the same base 
