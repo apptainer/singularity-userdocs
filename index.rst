@@ -14,4 +14,5 @@ User Guide
    Security Options <security_options>
    Network Options <networking>
    Cgroups Support <cgroups>
+   Appendix <appendix>
    Contributing <contributing>
