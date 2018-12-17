@@ -26,7 +26,7 @@ service provider, and system administrators include Singularity for you!
 Singularity on Slack
 ====================
 
-Many of our users come to slack for quick help with an issue. You can find us at `singularity-container <https://singularity-container.slack.com/>`_.
+Many of our users come to Slack for quick help with an issue. You can find us at `singularity-container <https://singularity-container.slack.com/>`_.
 
 ----------------------
 Contribute to the code
@@ -38,9 +38,9 @@ To contribute to the development of Singularity, you must:
 
 -  Be able to submit software under the ``3 clause BSD`` (or equivalent) license (while other licenses are allowed to be submitted by the license, acceptance of any contribution is up to the project lead).
 
--  Read, understand and agree to the license.
+-  Read, understand, and agree to the license.
 
--  Have a GitHub account (this just makes it easier on me).
+-  Have a GitHub account (this just makes it easier for me).
 
 We use the traditional `GitHub Flow <https://guides.github.com/introduction/flow/>`_ to develop. This means that you fork the repo and checkout a branch to make changes, you submit a pull request (PR) to the development branch with your changes, and the development branch gets merged with master for official releases.
 We also have an official `CONTRIBUTING <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md>`_ document, which also includes a `code of conduct <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md#code-of-conduct>`_ .
@@ -164,7 +164,7 @@ I can also add some of my colleagues, if I want to pull from their branches:
 
 
 In the GitHub flow, the master branch is the frozen, current version of the software.
-Your master branch is always in sync with the upstream (our sylabs master), and the sylabs master is always the latest release of Singularity.
+Your master branch is always in sync with the upstream (our Sylabs master), and the Sylabs master is always the latest release of Singularity.
 
 This would mean that I can update my master branch as follows:
 
@@ -191,7 +191,7 @@ Step 3. Checkout a new branch
     git pull origin development
 
 
-At this point, you can either choose to work on this branch, push to your origin development and pull request to sylabs development, or you can checkout another branch specific to your feature. We recommend always working from, and staying in sync with development. The command below would checkout a branch called ``add/my-awesome-new-feature`` from development.
+At this point, you can either choose to work on this branch, push to your origin development and pull request to Sylabs development, or you can checkout another branch specific to your feature. We recommend always working from, and staying, in sync with development. The command below would checkout a branch called ``add/my-awesome-new-feature`` from development.
 
 .. code-block:: none
 
@@ -256,9 +256,9 @@ Note that you should always check the status of your branches to see what has be
 Step 6. Submit a Pull Request
 =============================
 
-Once you have pushed your branch, then you can go to either fork and (in the GUI) `submit a Pull Request <https://help.github.com/articles/creating-a-pull-request/>`_. Regardless of the name of your branch, your PR should be submit to the sylabs development branch. This will open up a nice conversation interface / forum for the developers of Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the Pull Request.
+Once you have pushed your branch, then you can go to either fork and (in the GUI) `submit a Pull Request <https://help.github.com/articles/creating-a-pull-request/>`_. Regardless of the name of your branch, your PR should be submitted to the Sylabs development branch. This will open up a nice conversation interface / forum for the developers of Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the Pull Request.
 
-Support, helping and spreading the word!
+Support, helping, and spreading the word!
 ========================================
 
 This is a huge endeavor, and it is greatly appreciated! If you have been using Singularity and having good luck with it, join our `Google Group <https://groups.google.com/a/lbl.gov/forum/#!forum/singularity>`_ and help out other users! Post to online communities about Singularity, and request that your distribution vendor, service provider, and system administrators include Singularity for you!
@@ -267,9 +267,9 @@ This is a huge endeavor, and it is greatly appreciated! If you have been using S
 Contributing to Documentation
 -----------------------------
 
-We (like almost all open source software providers) have a documentation dilemma… We tend to focus on the code features and functionality before working on documentation. And there is very good reason for this, we want to share the love so nobody feels left out!
+We (like almost all open source software providers) have a documentation dilemma… We tend to focus on the code features and functionality before working on documentation. And there is very good reason for this: we want to share the love so nobody feels left out!
 
-You can contribute to the documentation, by sending a `pull request <https://help.github.com/articles/about-pull-requests/>`_ on our repository for documentation.
+You can contribute to the documentation by sending a `pull request <https://help.github.com/articles/about-pull-requests/>`_ on our repository for documentation.
 
 The current documentation is generated with:
 
@@ -281,4 +281,4 @@ Other dependencies include:
 
 - `Sphinx <https://pypi.org/project/Sphinx/>`_
 
-More information about contributing to the documentation and the instructions on how to install the dependencies and how to generate the files can be obtained `here <https://github.com/sylabs/singularity-userdocs#singularity-user-docs>`_.
+More information about contributing to the documentation, and the instructions on how to install the dependencies, and how to generate the files can be obtained `here <https://github.com/sylabs/singularity-userdocs#singularity-user-docs>`_.
