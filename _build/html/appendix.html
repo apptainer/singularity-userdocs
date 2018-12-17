@@ -1,0 +1,667 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Appendix &mdash; Singularity container 3.0 documentation</title>
+
+
+
+
+    <link rel="shortcut icon" href="_static/favicon.png"/>
+
+
+
+
+
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="prev" title="Limiting container resources with cgroups" href="cgroups.html" />
+
+
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav">
+
+
+  <div class="wy-grid-for-nav">
+
+
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+
+
+
+            <a href="index.html" class="icon icon-home"> Singularity container
+
+
+
+
+            <img src="_static/logo.png" class="logo" alt="Logo"/>
+
+          </a>
+
+
+
+
+              <div class="version">
+                3.0
+              </div>
+
+
+
+
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+
+
+
+
+
+
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Quick Start</a></li>
+<li class="toctree-l1"><a class="reference internal" href="installation.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="build_a_container.html">Build a container</a></li>
+<li class="toctree-l1"><a class="reference internal" href="definition_files.html">The Definition File</a></li>
+<li class="toctree-l1"><a class="reference internal" href="bind_paths_and_mounts.html">Bind Paths and Mounts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="persistent_overlays.html">Persistent Overlays</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signNverify.html">Sign and Verify</a></li>
+<li class="toctree-l1"><a class="reference internal" href="security_options.html">Security Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="networking.html">Network Options</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cgroups.html">Cgroups Support</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Appendix</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#library-bootstrap-agent"><code class="docutils literal notranslate"><span class="pre">library</span></code> bootstrap agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#keywords">Keywords</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#docker-bootstrap-agent"><code class="docutils literal notranslate"><span class="pre">docker</span></code> bootstrap agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sec-build-docker-module">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#notes">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#shub-bootstrap-agent"><code class="docutils literal notranslate"><span class="pre">shub</span></code> bootstrap agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#sec-build-shub">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#localimage-bootstrap-agent"><code class="docutils literal notranslate"><span class="pre">localimage</span></code> bootstrap agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#yum-bootstrap-agent"><code class="docutils literal notranslate"><span class="pre">yum</span></code> bootstrap agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#debootstrap-build-agent"><code class="docutils literal notranslate"><span class="pre">debootstrap</span></code> build agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id13">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id14">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#arch-bootstrap-agent"><code class="docutils literal notranslate"><span class="pre">arch</span></code> bootstrap agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id15">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id16">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id17">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#busybox-bootstrap-agent"><code class="docutils literal notranslate"><span class="pre">busybox</span></code> bootstrap agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id18">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id19">Keywords</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id20">Notes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#zypper-bootstrap-agent"><code class="docutils literal notranslate"><span class="pre">zypper</span></code> bootstrap agent</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id21">Overview</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id22">Keywords</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+
+      <nav class="wy-nav-top" aria-label="top navigation">
+
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Singularity container</a>
+
+      </nav>
+
+
+      <div class="wy-nav-content">
+
+        <div class="rst-content style-external-links">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+
+      <li><a href="index.html">Docs</a> &raquo;</li>
+
+      <li>Appendix</li>
+
+
+      <li class="wy-breadcrumbs-aside">
+
+
+
+              <a href="https://github.com/sylabs/singularity-userdocs/blob/3.0/appendix.rst" class="fa fa-github"> Edit on GitHub</a>
+
+
+
+      </li>
+
+  </ul>
+
+
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+
+  <div class="section" id="appendix">
+<h1>Appendix<a class="headerlink" href="#appendix" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="library-bootstrap-agent">
+<span id="build-library-module"></span><h2><code class="docutils literal notranslate"><span class="pre">library</span></code> bootstrap agent<a class="headerlink" href="#library-bootstrap-agent" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="overview">
+<span id="sec-build-library-module"></span><h3>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h3>
+<p>You can use an existing container on the Container Library as your “base,” and
+then add customization. This allows you to build multiple images from the same
+starting point. For example, you may want to build several containers with the
+same custom python installation, the same custom compiler toolchain, or the same
+base MPI installation. Instead of building these from scratch each time, you
+could create a base container on the Container Library and then build new
+containers from that existing base container adding customizations in <code class="docutils literal notranslate"><span class="pre">%post</span></code>,
+<code class="docutils literal notranslate"><span class="pre">%environment</span></code>, <code class="docutils literal notranslate"><span class="pre">%runscript</span></code>, etc.</p>
+</div>
+<div class="section" id="keywords">
+<h3>Keywords<a class="headerlink" href="#keywords" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: library
+</pre></div>
+</div>
+<p>The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>From: &lt;entity&gt;/&lt;collection&gt;/&lt;container&gt;:&lt;tag&gt;
+</pre></div>
+</div>
+<p>The From keyword is mandatory. It specifies the container to use as a base.
+<code class="docutils literal notranslate"><span class="pre">entity</span></code> is optional and defaults to <code class="docutils literal notranslate"><span class="pre">library</span></code>. <code class="docutils literal notranslate"><span class="pre">collection</span></code> is
+optional and defaults to <code class="docutils literal notranslate"><span class="pre">default</span></code>. This is the correct namespace to use for
+some official containers (<code class="docutils literal notranslate"><span class="pre">alpine</span></code> for example). <code class="docutils literal notranslate"><span class="pre">tag</span></code> is also optional and
+will default to <code class="docutils literal notranslate"><span class="pre">latest</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Library: http://custom/library
+</pre></div>
+</div>
+<p>The Library keyword is optional. It will default to
+<code class="docutils literal notranslate"><span class="pre">https://cloud.sylabs.io/library</span></code>.</p>
+</div>
+</div>
+<div class="section" id="docker-bootstrap-agent">
+<span id="build-docker-module"></span><h2><code class="docutils literal notranslate"><span class="pre">docker</span></code> bootstrap agent<a class="headerlink" href="#docker-bootstrap-agent" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sec-build-docker-module">
+<span id="id1"></span><h3>Overview<a class="headerlink" href="#sec-build-docker-module" title="Permalink to this headline">¶</a></h3>
+<p>Docker images are comprised of layers that are assembled at runtime to create an
+image. You can use Docker layers to create a base image, and then add your own
+custom software. For example, you might use Docker’s Ubuntu image layers to
+create an Ubuntu Singularity container. You could do the same with CentOS,
+Debian, Arch, Suse, Alpine, BusyBox, etc.</p>
+<p>Or maybe you want a container that already has software installed. For instance,
+maybe you want to build a container that uses CUDA and cuDNN to leverage the
+GPU, but you don’t want to install from scratch. You can start with one of the
+<code class="docutils literal notranslate"><span class="pre">nvidia/cuda</span></code> containers and install your software on top of that.</p>
+<p>Or perhaps you have already invested in Docker and created your own Docker
+containers. If so, you can seamlessly convert them to Singularity with the
+<code class="docutils literal notranslate"><span class="pre">docker</span></code> bootstrap module.</p>
+</div>
+<div class="section" id="id2">
+<h3>Keywords<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: docker
+</pre></div>
+</div>
+<p>The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>From: &lt;registry&gt;/&lt;namespace&gt;/&lt;container&gt;:&lt;tag&gt;@&lt;digest&gt;
+</pre></div>
+</div>
+<p>The From keyword is mandatory. It specifies the container to use as a base.
+<code class="docutils literal notranslate"><span class="pre">registry</span></code> is optional and defaults to <code class="docutils literal notranslate"><span class="pre">index.docker.io</span></code>. <code class="docutils literal notranslate"><span class="pre">namespace</span></code> is
+optional and defaults to <code class="docutils literal notranslate"><span class="pre">library</span></code>. This is the correct namespace to use for
+some official containers (ubuntu for example). <code class="docutils literal notranslate"><span class="pre">tag</span></code> is also optional and will
+default to <code class="docutils literal notranslate"><span class="pre">latest</span></code></p>
+<p>See <span class="xref std std-ref">Singularity and Docker</span> for more detailed
+info on using Docker registries.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Registry: http://custom_registry
+</pre></div>
+</div>
+<p>The Registry keyword is optional. It will default to <code class="docutils literal notranslate"><span class="pre">index.docker.io</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Namespace: namespace
+</pre></div>
+</div>
+<p>The Namespace keyword is optional. It will default to <code class="docutils literal notranslate"><span class="pre">library</span></code>.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>IncludeCmd: yes
+</pre></div>
+</div>
+<p>The IncludeCmd keyword is optional. If included, and if a <code class="docutils literal notranslate"><span class="pre">%runscript</span></code> is not
+specified, a Docker <code class="docutils literal notranslate"><span class="pre">CMD</span></code> will take precedence over <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code> and will be
+used as a runscript. Note that the <code class="docutils literal notranslate"><span class="pre">IncludeCmd</span></code> keyword is considered valid if
+it is not empty! This means that <code class="docutils literal notranslate"><span class="pre">IncludeCmd:</span> <span class="pre">yes</span></code> and <code class="docutils literal notranslate"><span class="pre">IncludeCmd:</span> <span class="pre">no</span></code> are
+identical. In both cases the <code class="docutils literal notranslate"><span class="pre">IncludeCmd</span></code> keyword is not empty, so the Docker
+<code class="docutils literal notranslate"><span class="pre">CMD</span></code> will take precedence over an <code class="docutils literal notranslate"><span class="pre">ENTRYPOINT</span></code>.</p>
+<blockquote>
+<div>See <span class="xref std std-ref">Singularity and Docker</span> for more info on
+order of operations for determining a runscript.</div></blockquote>
+</div>
+<div class="section" id="notes">
+<h3>Notes<a class="headerlink" href="#notes" title="Permalink to this headline">¶</a></h3>
+<p>Docker containers are stored as a collection of tarballs called layers. When
+building from a Docker container the layers must be downloaded and then
+assembled in the proper order to produce a viable file system. Then the file
+system must be converted to Singularity Image File (sif) format.</p>
+<p>Building from Docker Hub is not considered reproducible because if any of the
+layers of the image are changed, the container will change. If reproducibility
+is important to your workflow, consider hosting a base container on the
+Container Library and building from it instead.</p>
+<p>For detailed information about setting your build environment see
+<span class="xref std std-ref">Build Customization</span>.</p>
+</div>
+</div>
+<div class="section" id="shub-bootstrap-agent">
+<span id="build-shub"></span><h2><code class="docutils literal notranslate"><span class="pre">shub</span></code> bootstrap agent<a class="headerlink" href="#shub-bootstrap-agent" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="sec-build-shub">
+<span id="id3"></span><h3>Overview<a class="headerlink" href="#sec-build-shub" title="Permalink to this headline">¶</a></h3>
+<p>You can use an existing container on Singularity Hub as your “base,” and then
+add customization. This allows you to build multiple images from the same
+starting point. For example, you may want to build several containers with the
+same custom python installation, the same custom compiler toolchain, or the same
+base MPI installation. Instead of building these from scratch each time, you
+could create a base container on Singularity Hub and then build new containers
+from that existing base container adding customizations in <code class="docutils literal notranslate"><span class="pre">%post</span></code> ,
+<code class="docutils literal notranslate"><span class="pre">%environment</span></code>, <code class="docutils literal notranslate"><span class="pre">%runscript</span></code>, etc.</p>
+</div>
+<div class="section" id="id4">
+<h3>Keywords<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: shub
+</pre></div>
+</div>
+<p>The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>From: shub://&lt;registry&gt;/&lt;username&gt;/&lt;container-name&gt;:&lt;tag&gt;@digest
+</pre></div>
+</div>
+<p>The From keyword is mandatory. It specifies the container to use as a base.
+<code class="docutils literal notranslate"><span class="pre">registry</span> <span class="pre">is</span> <span class="pre">optional</span> <span class="pre">and</span> <span class="pre">defaults</span> <span class="pre">to</span> <span class="pre">``singularity-hub.org</span></code>. <code class="docutils literal notranslate"><span class="pre">tag</span></code> and
+<code class="docutils literal notranslate"><span class="pre">digest</span></code> are also optional. <code class="docutils literal notranslate"><span class="pre">tag</span></code> defaults to <code class="docutils literal notranslate"><span class="pre">latest</span></code> and <code class="docutils literal notranslate"><span class="pre">digest</span></code> can
+be left blank if you want the latest build.</p>
+</div>
+<div class="section" id="id5">
+<h3>Notes<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<p>When bootstrapping from a Singularity Hub image, all previous definition files
+that led to the creation of the current image will be stored in a directory
+within the container called <code class="docutils literal notranslate"><span class="pre">/.singularity.d/bootstrap_history</span></code>. Singularity
+will also alert you if environment variables have been changed between the base
+image and the new image during bootstrap.</p>
+</div>
+</div>
+<div class="section" id="localimage-bootstrap-agent">
+<span id="build-localimage"></span><h2><code class="docutils literal notranslate"><span class="pre">localimage</span></code> bootstrap agent<a class="headerlink" href="#localimage-bootstrap-agent" title="Permalink to this headline">¶</a></h2>
+<p id="sec-build-localimage">This module allows you to build a container from an existing Singularity
+container on your host system. The name is somewhat misleading because your
+container can be in either image or directory format.</p>
+<div class="section" id="id6">
+<h3>Overview<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<p>You can use an existing container image as your “base”, and then add
+customization. This allows you to build multiple images from the same starting
+point. For example, you may want to build several containers with the same
+custom python installation, the same custom compiler toolchain, or the same base
+MPI installation. Instead of building these from scratch each time, you could
+start with the appropriate local base container and then customize the new
+container in <code class="docutils literal notranslate"><span class="pre">%post</span></code>, <code class="docutils literal notranslate"><span class="pre">%environment</span></code>, <code class="docutils literal notranslate"><span class="pre">%runscript</span></code>, etc.</p>
+</div>
+<div class="section" id="id7">
+<h3>Keywords<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: localimage
+</pre></div>
+</div>
+<p>The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>From: /path/to/container/file/or/directory
+</pre></div>
+</div>
+<p>The From keyword is mandatory. It specifies the local container to use as a
+base.</p>
+</div>
+<div class="section" id="id8">
+<h3>Notes<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<p>When building from a local container, all previous definition files that led to
+the creation of the current container will be stored in a directory within the
+container called <code class="docutils literal notranslate"><span class="pre">/.singularity.d/bootstrap_history</span></code>. Singularity will also
+alert you if environment variables have been changed between the base image and
+the new image during bootstrap.</p>
+</div>
+</div>
+<div class="section" id="yum-bootstrap-agent">
+<span id="build-yum"></span><h2><code class="docutils literal notranslate"><span class="pre">yum</span></code> bootstrap agent<a class="headerlink" href="#yum-bootstrap-agent" title="Permalink to this headline">¶</a></h2>
+<p id="sec-build-yum">This module allows you to build a Red Hat/CentOS/Scientific Linux style
+container from a mirror URI.</p>
+<div class="section" id="id9">
+<h3>Overview<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">yum</span></code> module to specify a base for a CentOS-like container. You must
+also specify the URI for the mirror you would like to use.</p>
+</div>
+<div class="section" id="id10">
+<h3>Keywords<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: yum
+</pre></div>
+</div>
+<p>The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OSVersion: 7
+</pre></div>
+</div>
+<p>The OSVersion keyword is optional. It specifies the OS version you would like to
+use. It is only required if you have specified a %{OSVERSION} variable in the
+<code class="docutils literal notranslate"><span class="pre">MirrorURL</span></code> keyword.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
+</pre></div>
+</div>
+<p>The MirrorURL keyword is mandatory. It specifies the URI to use as a mirror to
+download the OS. If you define the <code class="docutils literal notranslate"><span class="pre">OSVersion</span></code> keyword, than you can use it in
+the URI as in the example above.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Include: yum
+</pre></div>
+</div>
+<p>The Include keyword is optional. It allows you to install additional packages
+into the core operating system. It is a best practice to supply only the bare
+essentials such that the <code class="docutils literal notranslate"><span class="pre">%post</span></code> section has what it needs to properly
+complete the build. One common package you may want to install when using the
+<code class="docutils literal notranslate"><span class="pre">yum</span></code> build module is YUM itself.</p>
+</div>
+<div class="section" id="id11">
+<h3>Notes<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<p>There is a major limitation with using YUM to bootstrap a container. The RPM
+database that exists within the container will be created using the RPM library
+and Berkeley DB implementation that exists on the host system. If the RPM
+implementation inside the container is not compatible with the RPM database that
+was used to create the container, RPM and YUM commands inside the container may
+fail. This issue can be easily demonstrated by bootstrapping an older RHEL
+compatible image by a newer one (e.g. bootstrap a Centos 5 or 6 container from a
+Centos 7 host).</p>
+<p>In order to use the <code class="docutils literal notranslate"><span class="pre">debootstrap</span></code> build module, you must have <code class="docutils literal notranslate"><span class="pre">yum</span></code>
+installed on your system. It may seem counter-intuitive to install YUM on a
+system that uses a different package manager, but you can do so. For instance,
+on Ubuntu you can install it like so:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update &amp;&amp; sudo apt-get install yum
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="debootstrap-build-agent">
+<span id="build-debootstrap"></span><h2><code class="docutils literal notranslate"><span class="pre">debootstrap</span></code> build agent<a class="headerlink" href="#debootstrap-build-agent" title="Permalink to this headline">¶</a></h2>
+<p id="sec-build-debootstrap">This module allows you to build a Debian/Ubuntu style container from a mirror
+URI.</p>
+<div class="section" id="id12">
+<h3>Overview<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">debootstrap</span></code> module to specify a base for a Debian-like container.
+You must also specify the OS version and a URI for the mirror you would like to
+use.</p>
+</div>
+<div class="section" id="id13">
+<h3>Keywords<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: debootstrap
+</pre></div>
+</div>
+<p>The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OSVersion: xenial
+</pre></div>
+</div>
+<p>The OSVersion keyword is mandatory. It specifies the OS version you would like
+to use. For Ubuntu you can use code words like <code class="docutils literal notranslate"><span class="pre">trusty</span></code> (14.04), <code class="docutils literal notranslate"><span class="pre">xenial</span></code>
+(16.04), and <code class="docutils literal notranslate"><span class="pre">yakkety</span></code> (17.04). For Debian you can use values like <code class="docutils literal notranslate"><span class="pre">stable</span></code>,
+<code class="docutils literal notranslate"><span class="pre">oldstable</span></code>, <code class="docutils literal notranslate"><span class="pre">testing</span></code>, and <code class="docutils literal notranslate"><span class="pre">unstable</span></code> or code words like <code class="docutils literal notranslate"><span class="pre">wheezy</span></code> (7),
+<code class="docutils literal notranslate"><span class="pre">jesse</span></code> (8), and <code class="docutils literal notranslate"><span class="pre">stretch</span></code> (9).</p>
+<blockquote>
+<div><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>MirrorURL:  http://us.archive.ubuntu.com/ubuntu/
+</pre></div>
+</div>
+</div></blockquote>
+<p>The MirrorURL keyword is mandatory. It specifies a URI to use as a mirror when
+downloading the OS.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Include: somepackage
+</pre></div>
+</div>
+<p>The Include keyword is optional. It allows you to install additional packages
+into the core operating system. It is a best practice to supply only the bare
+essentials such that the <code class="docutils literal notranslate"><span class="pre">%post</span></code> section has what it needs to properly
+complete the build.</p>
+</div>
+<div class="section" id="id14">
+<h3>Notes<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h3>
+<p>In order to use the <code class="docutils literal notranslate"><span class="pre">debootstrap</span></code> build module, you must have <code class="docutils literal notranslate"><span class="pre">debootstrap</span></code>
+installed on your system. On Ubuntu you can install it like so:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo apt-get update &amp;&amp; sudo apt-get install debootstrap
+</pre></div>
+</div>
+<p>On CentOS you can install it from the epel repos like so:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>$ sudo yum update &amp;&amp; sudo yum install epel-release &amp;&amp; sudo yum install debootstrap.noarch
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="arch-bootstrap-agent">
+<span id="build-arch"></span><h2><code class="docutils literal notranslate"><span class="pre">arch</span></code> bootstrap agent<a class="headerlink" href="#arch-bootstrap-agent" title="Permalink to this headline">¶</a></h2>
+<p id="sec-build-arch">This module allows you to build a Arch Linux based container.</p>
+<div class="section" id="id15">
+<h3>Overview<a class="headerlink" href="#id15" title="Permalink to this headline">¶</a></h3>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">arch</span></code> module to specify a base for an Arch Linux based container.
+Arch Linux uses the aptly named <code class="docutils literal notranslate"><span class="pre">pacman</span></code> package manager (all puns intended).</p>
+</div>
+<div class="section" id="id16">
+<h3>Keywords<a class="headerlink" href="#id16" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: arch
+</pre></div>
+</div>
+<p>The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.</p>
+<p>The Arch Linux bootstrap module does not name any additional keywords at this
+time. By defining the <code class="docutils literal notranslate"><span class="pre">arch</span></code> module, you have essentially given all of the
+information necessary for that particular bootstrap module to build a core
+operating system.</p>
+</div>
+<div class="section" id="id17">
+<h3>Notes<a class="headerlink" href="#id17" title="Permalink to this headline">¶</a></h3>
+<p>Arch Linux is, by design, a very stripped down, light-weight OS. You may need to
+perform a significant amount of configuration to get a usable OS. Please refer
+to this
+<a class="reference external" href="https://github.com/singularityware/singularity/blob/master/examples/arch/README.md">README.md</a>
+and the
+<a class="reference external" href="https://github.com/singularityware/singularity/blob/master/examples/arch/Singularity">Arch Linux example</a>
+for more info.</p>
+</div>
+</div>
+<div class="section" id="busybox-bootstrap-agent">
+<span id="build-busybox"></span><h2><code class="docutils literal notranslate"><span class="pre">busybox</span></code> bootstrap agent<a class="headerlink" href="#busybox-bootstrap-agent" title="Permalink to this headline">¶</a></h2>
+<p id="sec-build-busybox">This module allows you to build a container based on BusyBox.</p>
+<div class="section" id="id18">
+<h3>Overview<a class="headerlink" href="#id18" title="Permalink to this headline">¶</a></h3>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">busybox</span></code> module to specify a BusyBox base for container. You must
+also specify a URI for the mirror you would like to use.</p>
+</div>
+<div class="section" id="id19">
+<h3>Keywords<a class="headerlink" href="#id19" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: busybox
+</pre></div>
+</div>
+<p>The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>MirrorURL: https://www.busybox.net/downloads/binaries/1.26.1-defconfig-multiarch/busybox-x86_64
+</pre></div>
+</div>
+<p>The MirrorURL keyword is mandatory. It specifies a URI to use as a mirror when
+downloading the OS.</p>
+</div>
+<div class="section" id="id20">
+<h3>Notes<a class="headerlink" href="#id20" title="Permalink to this headline">¶</a></h3>
+<p>You can build a fully functional BusyBox container that only takes up ~600kB of
+disk space!</p>
+</div>
+</div>
+<div class="section" id="zypper-bootstrap-agent">
+<span id="build-zypper"></span><h2><code class="docutils literal notranslate"><span class="pre">zypper</span></code> bootstrap agent<a class="headerlink" href="#zypper-bootstrap-agent" title="Permalink to this headline">¶</a></h2>
+<p id="sec-build-zypper">This module allows you to build a Suse style container from a mirror URI.</p>
+<div class="section" id="id21">
+<h3>Overview<a class="headerlink" href="#id21" title="Permalink to this headline">¶</a></h3>
+<p>Use the <code class="docutils literal notranslate"><span class="pre">zypper</span></code> module to specify a base for a Suse-like container. You must
+also specify a URI for the mirror you would like to use.</p>
+</div>
+<div class="section" id="id22">
+<h3>Keywords<a class="headerlink" href="#id22" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Bootstrap: zypper
+</pre></div>
+</div>
+<p>The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>OSVersion: 42.2
+</pre></div>
+</div>
+<p>The OSVersion keyword is optional. It specifies the OS version you would like to
+use. It is only required if you have specified a %{OSVERSION} variable in the
+<code class="docutils literal notranslate"><span class="pre">MirrorURL</span></code> keyword.</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Include: somepackage
+</pre></div>
+</div>
+<p>The Include keyword is optional. It allows you to install additional packages
+into the core operating system. It is a best practice to supply only the bare
+essentials such that the <code class="docutils literal notranslate"><span class="pre">%post</span></code> section has what it needs to properly
+complete the build. One common package you may want to install when using the
+zypper build module is <code class="docutils literal notranslate"><span class="pre">zypper</span></code> itself.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+
+          </div>
+          <footer>
+
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+
+
+        <a href="cgroups.html" class="btn btn-neutral" title="Limiting container resources with cgroups" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+
+    </div>
+
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2018, Singularity
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+
+
+
+  <script type="text/javascript" src="_static/js/footer.js"></script>
+
+
+
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'./',
+              VERSION:'3.0',
+              LANGUAGE:'None',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+
+
+
+
+  <script type="text/javascript" src="_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+</body>
+</html>

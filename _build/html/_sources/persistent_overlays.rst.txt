@@ -25,7 +25,6 @@ You can use a persistent overlays with the following commands:
 - ``shell``
 - ``instance.start``
 
-
 -----
 Usage
 -----

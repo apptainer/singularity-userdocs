@@ -17,7 +17,6 @@ For any additional help or support contact the Sylabs team:
 https://www.sylabs.io/contact/
 
 
-
 .. _quick-installation:
 
 ------------------------
