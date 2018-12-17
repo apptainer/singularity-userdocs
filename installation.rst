@@ -10,6 +10,7 @@ This document will guide you through the process of installing Singularity >=
 versions of Singularity please see `earlier versions of the
 docs <https://www.sylabs.io/docs/>`_.)
 
+
 Overview
 --------
 
@@ -482,7 +483,7 @@ You can check the installed version of Singularity with the following:
 
     vagrant@ubuntu-bionic:~$ singularity version
         3.0.1
-        
+
 
 Of course, you can also start with a plain OS Vagrant box as a base and then
 install Singularity using one of the above methods for Linux.

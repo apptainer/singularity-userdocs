@@ -57,41 +57,91 @@
 \contentsline {subsection}{\numberline {3.7.9}\sphinxstyleliteralintitle {\sphinxupquote {-{-}section}}}{22}{subsection.3.7.9}
 \contentsline {subsection}{\numberline {3.7.10}\sphinxstyleliteralintitle {\sphinxupquote {-{-}update}}}{22}{subsection.3.7.10}
 \contentsline {section}{\numberline {3.8}More Build topics}{22}{section.3.8}
-\contentsline {chapter}{\numberline {4}Bind Paths and Mounts}{23}{chapter.4}
+\contentsline {chapter}{\numberline {4}Definition Files}{23}{chapter.4}
 \contentsline {section}{\numberline {4.1}Overview}{23}{section.4.1}
-\contentsline {section}{\numberline {4.2}System-defined bind paths}{23}{section.4.2}
-\contentsline {section}{\numberline {4.3}User-defined bind paths}{23}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Specifying bind paths}{23}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}A note on using \sphinxstyleliteralintitle {\sphinxupquote {-{-}bind}} with the \sphinxstyleliteralintitle {\sphinxupquote {-{-}writable}} flag}{24}{subsection.4.3.2}
-\contentsline {chapter}{\numberline {5}Persistent Overlays}{25}{chapter.5}
-\contentsline {section}{\numberline {5.1}Overview}{25}{section.5.1}
-\contentsline {section}{\numberline {5.2}Usage}{25}{section.5.2}
-\contentsline {chapter}{\numberline {6}Signing and Verifying Containers}{27}{chapter.6}
-\contentsline {section}{\numberline {6.1}Verifying containers from the Container Library}{27}{section.6.1}
-\contentsline {section}{\numberline {6.2}Signing your own containers}{27}{section.6.2}
-\contentsline {subsection}{\numberline {6.2.1}Generating and managing PGP keys}{27}{subsection.6.2.1}
-\contentsline {subsection}{\numberline {6.2.2}Signing and validating your own containers}{28}{subsection.6.2.2}
-\contentsline {chapter}{\numberline {7}Security Options}{31}{chapter.7}
-\contentsline {section}{\numberline {7.1}Linux Capabilities}{31}{section.7.1}
-\contentsline {section}{\numberline {7.2}Security related action options}{32}{section.7.2}
-\contentsline {subsection}{\numberline {7.2.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}add-caps}}}{32}{subsection.7.2.1}
-\contentsline {subsection}{\numberline {7.2.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}allow-setuid}}}{32}{subsection.7.2.2}
-\contentsline {subsection}{\numberline {7.2.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}keep-privs}}}{32}{subsection.7.2.3}
-\contentsline {subsection}{\numberline {7.2.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}drop-caps}}}{32}{subsection.7.2.4}
-\contentsline {subsection}{\numberline {7.2.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}security}}}{33}{subsection.7.2.5}
-\contentsline {chapter}{\numberline {8}Network virtualization}{35}{chapter.8}
-\contentsline {section}{\numberline {8.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}dns}}}{35}{section.8.1}
-\contentsline {section}{\numberline {8.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}hostname}}}{35}{section.8.2}
-\contentsline {section}{\numberline {8.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}net}}}{35}{section.8.3}
-\contentsline {section}{\numberline {8.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}network}}}{36}{section.8.4}
-\contentsline {section}{\numberline {8.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}network-args}}}{36}{section.8.5}
-\contentsline {chapter}{\numberline {9}Limiting container resources with cgroups}{39}{chapter.9}
-\contentsline {section}{\numberline {9.1}Overview}{39}{section.9.1}
-\contentsline {section}{\numberline {9.2}Examples}{39}{section.9.2}
-\contentsline {subsection}{\numberline {9.2.1}Limiting memory}{39}{subsection.9.2.1}
-\contentsline {subsection}{\numberline {9.2.2}Limiting CPU}{40}{subsection.9.2.2}
-\contentsline {subsubsection}{\numberline {9.2.2.1}shares}{40}{subsubsection.9.2.2.1}
-\contentsline {subsubsection}{\numberline {9.2.2.2}quota/period}{40}{subsubsection.9.2.2.2}
-\contentsline {subsubsection}{\numberline {9.2.2.3}cpus/mems}{40}{subsubsection.9.2.2.3}
-\contentsline {subsection}{\numberline {9.2.3}Limiting IO}{41}{subsection.9.2.3}
-\contentsline {subsubsection}{\numberline {9.2.3.1}Limiting device access}{42}{subsubsection.9.2.3.1}
+\contentsline {section}{\numberline {4.2}Header}{23}{section.4.2}
+\contentsline {section}{\numberline {4.3}Sections}{24}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\%setup}{25}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}\%files}{25}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.3}\%environment}{26}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}\%post}{26}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}\%runscript}{27}{subsection.4.3.5}
+\contentsline {subsection}{\numberline {4.3.6}\%startscript}{27}{subsection.4.3.6}
+\contentsline {subsection}{\numberline {4.3.7}\%test}{28}{subsection.4.3.7}
+\contentsline {subsection}{\numberline {4.3.8}\%labels}{28}{subsection.4.3.8}
+\contentsline {subsection}{\numberline {4.3.9}\%help}{29}{subsection.4.3.9}
+\contentsline {section}{\numberline {4.4}Apps}{29}{section.4.4}
+\contentsline {section}{\numberline {4.5}Best Practices for Build Recipes}{31}{section.4.5}
+\contentsline {chapter}{\numberline {5}Bind Paths and Mounts}{33}{chapter.5}
+\contentsline {section}{\numberline {5.1}Overview}{33}{section.5.1}
+\contentsline {section}{\numberline {5.2}System-defined bind paths}{33}{section.5.2}
+\contentsline {section}{\numberline {5.3}User-defined bind paths}{33}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}Specifying bind paths}{33}{subsection.5.3.1}
+\contentsline {subsection}{\numberline {5.3.2}A note on using \sphinxstyleliteralintitle {\sphinxupquote {-{-}bind}} with the \sphinxstyleliteralintitle {\sphinxupquote {-{-}writable}} flag}{34}{subsection.5.3.2}
+\contentsline {chapter}{\numberline {6}Persistent Overlays}{35}{chapter.6}
+\contentsline {section}{\numberline {6.1}Overview}{35}{section.6.1}
+\contentsline {section}{\numberline {6.2}Usage}{35}{section.6.2}
+\contentsline {chapter}{\numberline {7}Signing and Verifying Containers}{37}{chapter.7}
+\contentsline {section}{\numberline {7.1}Verifying containers from the Container Library}{37}{section.7.1}
+\contentsline {section}{\numberline {7.2}Signing your own containers}{37}{section.7.2}
+\contentsline {subsection}{\numberline {7.2.1}Generating and managing PGP keys}{37}{subsection.7.2.1}
+\contentsline {subsection}{\numberline {7.2.2}Signing and validating your own containers}{38}{subsection.7.2.2}
+\contentsline {chapter}{\numberline {8}Security Options}{41}{chapter.8}
+\contentsline {section}{\numberline {8.1}Linux Capabilities}{41}{section.8.1}
+\contentsline {section}{\numberline {8.2}Security related action options}{42}{section.8.2}
+\contentsline {subsection}{\numberline {8.2.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}add-caps}}}{42}{subsection.8.2.1}
+\contentsline {subsection}{\numberline {8.2.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}allow-setuid}}}{42}{subsection.8.2.2}
+\contentsline {subsection}{\numberline {8.2.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}keep-privs}}}{42}{subsection.8.2.3}
+\contentsline {subsection}{\numberline {8.2.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}drop-caps}}}{42}{subsection.8.2.4}
+\contentsline {subsection}{\numberline {8.2.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}security}}}{43}{subsection.8.2.5}
+\contentsline {chapter}{\numberline {9}Network virtualization}{45}{chapter.9}
+\contentsline {section}{\numberline {9.1}\sphinxstyleliteralintitle {\sphinxupquote {-{-}dns}}}{45}{section.9.1}
+\contentsline {section}{\numberline {9.2}\sphinxstyleliteralintitle {\sphinxupquote {-{-}hostname}}}{45}{section.9.2}
+\contentsline {section}{\numberline {9.3}\sphinxstyleliteralintitle {\sphinxupquote {-{-}net}}}{45}{section.9.3}
+\contentsline {section}{\numberline {9.4}\sphinxstyleliteralintitle {\sphinxupquote {-{-}network}}}{46}{section.9.4}
+\contentsline {section}{\numberline {9.5}\sphinxstyleliteralintitle {\sphinxupquote {-{-}network-args}}}{46}{section.9.5}
+\contentsline {chapter}{\numberline {10}Limiting container resources with cgroups}{49}{chapter.10}
+\contentsline {section}{\numberline {10.1}Overview}{49}{section.10.1}
+\contentsline {section}{\numberline {10.2}Examples}{49}{section.10.2}
+\contentsline {subsection}{\numberline {10.2.1}Limiting memory}{49}{subsection.10.2.1}
+\contentsline {subsection}{\numberline {10.2.2}Limiting CPU}{50}{subsection.10.2.2}
+\contentsline {subsubsection}{\numberline {10.2.2.1}shares}{50}{subsubsection.10.2.2.1}
+\contentsline {subsubsection}{\numberline {10.2.2.2}quota/period}{50}{subsubsection.10.2.2.2}
+\contentsline {subsubsection}{\numberline {10.2.2.3}cpus/mems}{50}{subsubsection.10.2.2.3}
+\contentsline {subsection}{\numberline {10.2.3}Limiting IO}{51}{subsection.10.2.3}
+\contentsline {subsubsection}{\numberline {10.2.3.1}Limiting device access}{52}{subsubsection.10.2.3.1}
+\contentsline {chapter}{\numberline {11}Appendix}{53}{chapter.11}
+\contentsline {section}{\numberline {11.1}\sphinxstyleliteralintitle {\sphinxupquote {library}} bootstrap agent}{53}{section.11.1}
+\contentsline {subsection}{\numberline {11.1.1}Overview}{53}{subsection.11.1.1}
+\contentsline {subsection}{\numberline {11.1.2}Keywords}{53}{subsection.11.1.2}
+\contentsline {section}{\numberline {11.2}\sphinxstyleliteralintitle {\sphinxupquote {docker}} bootstrap agent}{53}{section.11.2}
+\contentsline {subsection}{\numberline {11.2.1}Overview}{53}{subsection.11.2.1}
+\contentsline {subsection}{\numberline {11.2.2}Keywords}{54}{subsection.11.2.2}
+\contentsline {subsection}{\numberline {11.2.3}Notes}{54}{subsection.11.2.3}
+\contentsline {section}{\numberline {11.3}\sphinxstyleliteralintitle {\sphinxupquote {shub}} bootstrap agent}{55}{section.11.3}
+\contentsline {subsection}{\numberline {11.3.1}Overview}{55}{subsection.11.3.1}
+\contentsline {subsection}{\numberline {11.3.2}Keywords}{55}{subsection.11.3.2}
+\contentsline {subsection}{\numberline {11.3.3}Notes}{55}{subsection.11.3.3}
+\contentsline {section}{\numberline {11.4}\sphinxstyleliteralintitle {\sphinxupquote {localimage}} bootstrap agent}{55}{section.11.4}
+\contentsline {subsection}{\numberline {11.4.1}Overview}{55}{subsection.11.4.1}
+\contentsline {subsection}{\numberline {11.4.2}Keywords}{55}{subsection.11.4.2}
+\contentsline {subsection}{\numberline {11.4.3}Notes}{56}{subsection.11.4.3}
+\contentsline {section}{\numberline {11.5}\sphinxstyleliteralintitle {\sphinxupquote {yum}} bootstrap agent}{56}{section.11.5}
+\contentsline {subsection}{\numberline {11.5.1}Overview}{56}{subsection.11.5.1}
+\contentsline {subsection}{\numberline {11.5.2}Keywords}{56}{subsection.11.5.2}
+\contentsline {subsection}{\numberline {11.5.3}Notes}{56}{subsection.11.5.3}
+\contentsline {section}{\numberline {11.6}\sphinxstyleliteralintitle {\sphinxupquote {debootstrap}} build agent}{57}{section.11.6}
+\contentsline {subsection}{\numberline {11.6.1}Overview}{57}{subsection.11.6.1}
+\contentsline {subsection}{\numberline {11.6.2}Keywords}{57}{subsection.11.6.2}
+\contentsline {subsection}{\numberline {11.6.3}Notes}{57}{subsection.11.6.3}
+\contentsline {section}{\numberline {11.7}\sphinxstyleliteralintitle {\sphinxupquote {arch}} bootstrap agent}{58}{section.11.7}
+\contentsline {subsection}{\numberline {11.7.1}Overview}{58}{subsection.11.7.1}
+\contentsline {subsection}{\numberline {11.7.2}Keywords}{58}{subsection.11.7.2}
+\contentsline {subsection}{\numberline {11.7.3}Notes}{58}{subsection.11.7.3}
+\contentsline {section}{\numberline {11.8}\sphinxstyleliteralintitle {\sphinxupquote {busybox}} bootstrap agent}{58}{section.11.8}
+\contentsline {subsection}{\numberline {11.8.1}Overview}{58}{subsection.11.8.1}
+\contentsline {subsection}{\numberline {11.8.2}Keywords}{58}{subsection.11.8.2}
+\contentsline {subsection}{\numberline {11.8.3}Notes}{58}{subsection.11.8.3}
+\contentsline {section}{\numberline {11.9}\sphinxstyleliteralintitle {\sphinxupquote {zypper}} bootstrap agent}{59}{section.11.9}
+\contentsline {subsection}{\numberline {11.9.1}Overview}{59}{subsection.11.9.1}
+\contentsline {subsection}{\numberline {11.9.2}Keywords}{59}{subsection.11.9.2}
