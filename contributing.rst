@@ -12,7 +12,11 @@ Singularity is an open source project, meaning we have the challenge of limited 
 We are grateful for any support that you might offer to other users in the way of helping with issues, documentation,
 or code! If you haven’t already, check out some of the ways to contribute to code and docs:
 
+.. _contribute-to-the-code:
+
 -  `Contribute code <#contribute-to-the-code>`_
+
+.. _contributing-to-documentation:
 
 -  `Contribute docs <#contributing-to-documentation>`_
 
@@ -49,7 +53,7 @@ We also have an official `CONTRIBUTING <https://github.com/sylabs/singularity/bl
 Step 1. Fork the repo
 =====================
 
-To contribute to the web based documentation, you should obtain a GitHub account and fork the `Singularity <https://github.com/sylabs/singularity>`_ repository.
+To contribute to Singularity, you should obtain a GitHub account and fork the `Singularity <https://github.com/sylabs/singularity>`_ repository.
 Once forked, you will want to clone the fork of the repo to your computer. Let’s say my GitHub username is vsoch, and I am using ssh:
 
 .. code-block:: none
@@ -69,99 +73,57 @@ Let’s say my ``.git/config`` first looks like this, after I clone my own branc
 .. code-block:: none
 
     [core]
-
         repositoryformatversion = 0
-
         filemode = true
-
         bare = false
-
         logallrefupdates = true
-
     [remote "origin"]
-
         url = git@github.com:vsoch/singularity
-
         fetch = +refs/heads/*:refs/remotes/origin/*
-
     [branch "master"]
-
         remote = origin
-
         merge = refs/heads/master
-
 
 I would want to add the upstream repository, which is where I forked from.
 
 .. code-block:: none
 
     [core]
-
         repositoryformatversion = 0
-
         filemode = true
-
         bare = false
-
         logallrefupdates = true
-
     [remote "origin"]
-
         url = git@github.com:vsoch/singularity
-
         fetch = +refs/heads/*:refs/remotes/origin/*
-
     [remote "upstream"]
-
         url = https://github.com/sylabs/singularity
-
         fetch = +refs/heads/*:refs/remotes/origin/*
-
     [branch "master"]
-
         remote = origin
-
         merge = refs/heads/master
-
 
 I can also add some of my colleagues, if I want to pull from their branches:
 
 .. code-block:: none
 
     [core]
-
         repositoryformatversion = 0
-
         filemode = true
-
         bare = false
-
         logallrefupdates = true
-
     [remote "origin"]
-
         url = git@github.com:vsoch/singularity
-
         fetch = +refs/heads/*:refs/remotes/origin/*
-
     [remote "upstream"]
-
         url = https://github.com/sylabs/singularity
-
         fetch = +refs/heads/*:refs/remotes/origin/*
-
     [remote "greg"]
-
         url = https://github.com/gmkurtzer/singularity
-
         fetch = +refs/heads/*:refs/remotes/origin/*
-
     [branch "master"]
-
         remote = origin
-
         merge = refs/heads/master
-
 
 In the GitHub flow, the master branch is the frozen, current version of the software.
 Your master branch is always in sync with the upstream (our Sylabs master), and the Sylabs master is always the latest release of Singularity.
@@ -171,9 +133,9 @@ This would mean that I can update my master branch as follows:
 .. code-block:: none
 
     git checkout master
-
+    
     git pull upstream master
-
+    
     git push origin master
 
 
@@ -182,12 +144,14 @@ and then I would return to working on the branch for my feature. How to do that 
 Step 3. Checkout a new branch
 =============================
 
-`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features. For example, if I am working on several features, I would want to keep them separate, and “submit them” (in what is called a `pull request <https://help.github.com/articles/about-pull-requests/>`_ ) to be added to the main repository codebase. Each repository, including your fork, has a main branch, which is usually called “master”. As mentioned earlier, the master branch of a fork should always be in sync with the repository it is forked from (which I usually refer to as “upstream”) and then branches of the fork consistently updated with that master. Given that we’ve just cloned the repo, we probably want to work off of the current development branch, which has the most up to date “next version” of the software. So we can start by checking out that branch:
+`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features from the main branch. Given that we’ve just cloned the repo, we probably want to work off of the current development branch, which has the most up to date “next version” of the software. So we can start by checking out that branch:
+
+
 
 .. code-block:: none
 
     git checkout -b development
-
+    
     git pull origin development
 
 
@@ -196,7 +160,6 @@ At this point, you can either choose to work on this branch, push to your origin
 .. code-block:: none
 
     # Checkout a new branch called add/my-awesome-feature
-
     git checkout -b add/my-awesome-feature development
 
 
@@ -219,10 +182,11 @@ On your new branch, go nuts! Make changes, test them, and when you are happy wit
 
 .. code-block:: none
 
-    git commit -a
+    git add file-changed1 files-chenged2
+    
+    git commit -m "what changed?"
 
-
-This will open up a little window in your default text editor that you can write a message in the first line. This commit message is important - it should describe exactly the changes that you have made. Bad commit messages are like:
+This commit message is important - it should describe exactly the changes that you have made. Bad commit messages are like:
 
 - changed code
 
@@ -243,7 +207,7 @@ When you are done with your commits, you should push your branch to your fork (a
 
 .. code-block:: none
 
-    git push origin add/my-awesome-feature
+    git push origin my-awesome-feature
 
 
 Note that you should always check the status of your branches to see what has been pushed (or not):
