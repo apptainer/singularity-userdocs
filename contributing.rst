@@ -47,7 +47,7 @@ To contribute to the development of Singularity, you must:
 -  Have a GitHub account (this just makes it easier for me).
 
 We use the traditional `GitHub Flow <https://guides.github.com/introduction/flow/>`_ to develop. This means that you fork the repo and checkout a branch to make changes, you submit a pull request (PR) to the development branch with your changes, and the development branch gets merged with master for official releases.
-We also have an official `CONTRIBUTING <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md>`_ document, which also includes a `code of conduct <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md#code-of-conduct>`_ .
+We also have an official `CONTRIBUTING <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md>`_ document, which also includes a `code of conduct <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
 
 
 Step 1. Fork the repo
