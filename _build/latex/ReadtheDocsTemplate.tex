@@ -55,7 +55,7 @@
 
 
 \title{Singularity Container Documentation}
-\date{Dec 04, 2018}
+\date{Dec 17, 2018}
 \release{3.0}
 \author{User Docs}
 \newcommand{\sphinxlogo}{\sphinxincludegraphics{logo.png}\par}
@@ -495,7 +495,7 @@ disappears.
 
 \subsection{Running a container}
 \label{\detokenize{quick_start:running-a-container}}
-Singularity containers contain \DUrole{xref,std,std-ref}{runscripts}. These are user
+Singularity containers contain {\hyperref[\detokenize{definition_files:runscript}]{\sphinxcrossref{\DUrole{std,std-ref}{runscripts}}}}. These are user
 defined scripts that define the actions a container should perform when someone
 runs it. The runscript can be triggered with the \DUrole{xref,std,std-ref}{run}
 command, or simply by  calling the container as though it were an executable.
@@ -1546,6 +1546,624 @@ the cloud) check out \sphinxhref{https://cloud.sylabs.io/builder}{this site}
 \end{itemize}
 
 
+\chapter{Definition Files}
+\label{\detokenize{definition_files:definition-files}}\label{\detokenize{definition_files:id1}}\label{\detokenize{definition_files::doc}}\phantomsection\label{\detokenize{definition_files:sec-deffiles}}
+A Singularity Definition File (or “def file” for short) is like a set of
+blueprints explaining how to build a custom container. It includes specifics
+about the base OS to build or the base container to start from, software to
+install, environment variables to set at runtime, files to add from the host
+system, and container metadata.
+
+
+\section{Overview}
+\label{\detokenize{definition_files:overview}}
+A Singularity Definition file is divided into two parts:
+\begin{enumerate}
+\item {} 
+\sphinxstylestrong{Header}: The Header describes the core operating system to build within
+the container. Here you will configure the base operating system features
+needed within the container. You can specify, the Linux distribution, the
+specific version, and the packages that must be part of the core install
+(borrowed from the host system).
+
+\item {} 
+\sphinxstylestrong{Sections}: The rest of the definition is comprised of sections, (sometimes
+called scriptlets or blobs of data). Each section is defined by a \sphinxcode{\sphinxupquote{\%}}
+character followed by the name of the particular section. All sections are
+optional, and a def file may contain more than one instance of a given
+section. Sections that are executed at build time are executed with the
+\sphinxcode{\sphinxupquote{/bin/sh}} interpreter and can accept \sphinxcode{\sphinxupquote{/bin/sh}} options. Similarly,
+sections that produce scripts to be executed at runtime can accept options
+intended for \sphinxcode{\sphinxupquote{/bin/sh}}
+
+\end{enumerate}
+
+For more in-depth and practical examples of def files, see the \sphinxhref{https://github.com/sylabs/examples}{Sylabs examples
+repository}
+
+
+\section{Header}
+\label{\detokenize{definition_files:header}}
+The header should be written at the top of the def file. It tells Singularity
+about the base operating system that it should use to build the container. It is
+composed of several keywords.
+
+The only keyword that is required for every type of build is \sphinxcode{\sphinxupquote{Bootstrap}}.
+It determines the \sphinxstyleemphasis{bootstrap agent}  that will be used to create the base
+operating system you want to use. For example, the \sphinxcode{\sphinxupquote{library}} bootstrap agent
+will pull a container from the \sphinxhref{https://cloud.sylabs.io/library}{Container Library} as a base. Similarly, the \sphinxcode{\sphinxupquote{docker}}
+bootstrap agent will pull docker layers from \sphinxhref{https://hub.docker.com/}{Docker Hub} as a base OS to start your image.
+
+Depending on the value assigned to \sphinxcode{\sphinxupquote{Bootstrap}}, other keywords may also be
+valid in the header. For example, when using the \sphinxcode{\sphinxupquote{library}} bootstrap agent,
+the \sphinxcode{\sphinxupquote{From}} keyword becomes valid. Observe the following example for building a
+Debian container from the Container Library:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: library
+From: debian:7
+\end{sphinxVerbatim}
+
+A def file that uses an official mirror to install Centos-7 might look like
+this:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: yum
+OSVersion: 7
+MirrorURL: http://mirror.centos.org/centos\PYGZhy{}\PYGZpc{}\PYGZob{}OSVERSION\PYGZcb{}/\PYGZpc{}\PYGZob{}OSVERSION\PYGZcb{}/os/\PYGZdl{}basearch/
+Include: yum
+\end{sphinxVerbatim}
+
+Each bootstrap agent enables its own options and keywords. You can read about
+them and see examples in the appendix:
+\begin{itemize}
+\item {} 
+{\hyperref[\detokenize{appendix:build-library-module}]{\sphinxcrossref{\DUrole{std,std-ref}{library}}}} (images hosted on the Container Library)
+
+\item {} 
+{\hyperref[\detokenize{appendix:build-docker-module}]{\sphinxcrossref{\DUrole{std,std-ref}{docker}}}} (images hosted on Docker Hub)
+
+\item {} 
+{\hyperref[\detokenize{appendix:build-shub}]{\sphinxcrossref{\DUrole{std,std-ref}{shub}}}} (images hosted on Singularity Hub)
+
+\item {} 
+{\hyperref[\detokenize{appendix:build-localimage}]{\sphinxcrossref{\DUrole{std,std-ref}{localimage}}}} (images saved on your machine)
+
+\item {} 
+{\hyperref[\detokenize{appendix:build-yum}]{\sphinxcrossref{\DUrole{std,std-ref}{yum}}}} (yum based systems such as CentOS and Scientific Linux)
+
+\item {} 
+{\hyperref[\detokenize{appendix:build-debootstrap}]{\sphinxcrossref{\DUrole{std,std-ref}{debootstrap}}}} (apt based systems such as Debian and Ubuntu)
+
+\item {} 
+{\hyperref[\detokenize{appendix:build-arch}]{\sphinxcrossref{\DUrole{std,std-ref}{arch}}}} (Arch Linux)
+
+\item {} 
+{\hyperref[\detokenize{appendix:build-busybox}]{\sphinxcrossref{\DUrole{std,std-ref}{busybox}}}} (BusyBox)
+
+\item {} 
+{\hyperref[\detokenize{appendix:build-zypper}]{\sphinxcrossref{\DUrole{std,std-ref}{zypper}}}} (zypper based systems such as Suse and OpenSuse)
+
+\end{itemize}
+
+
+\section{Sections}
+\label{\detokenize{definition_files:sections}}
+The main content of the bootstrap file is broken into sections. Different
+sections add different content or execute commands at different times during the
+build process. Note that if any command fails, the build process will halt.
+
+Here is an example definition file that uses every available section. We will
+discuss each section in turn. It is not necessary to include every section (or
+any sections at all) within a def file. Furthermore, the order of the sections
+in the def file is unimportant and multiple sections of the same name can be
+included and will be appended to one another during the build process.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: library
+From: ubuntu:18.04
+
+\PYGZpc{}setup
+    touch /file1
+    touch \PYGZdl{}\PYGZob{}SINGULARITY\PYGZus{}ROOTFS\PYGZcb{}/file2
+
+\PYGZpc{}files
+    /file1
+    /file1 /opt
+
+\PYGZpc{}environment
+    export LISTEN\PYGZus{}PORT=12345
+    export LC\PYGZus{}ALL=C
+
+\PYGZpc{}post
+    apt\PYGZhy{}get update \PYGZam{}\PYGZam{} apt\PYGZhy{}get install \PYGZhy{}y netcat
+    NOW={}`date{}`
+    echo \PYGZdq{}export NOW=\PYGZbs{}\PYGZdq{}\PYGZdl{}\PYGZob{}NOW\PYGZcb{}\PYGZbs{}\PYGZdq{}\PYGZdq{} \PYGZgt{}\PYGZgt{} \PYGZdl{}SINGULARITY\PYGZus{}ENVIRONMENT
+
+\PYGZpc{}runscript
+    echo \PYGZdq{}Container was created \PYGZdl{}NOW\PYGZdq{}
+    echo \PYGZdq{}Arguments received: \PYGZdl{}*\PYGZdq{}
+    exec echo \PYGZdq{}\PYGZdl{}@\PYGZdq{}
+
+\PYGZpc{}startscript
+    nc \PYGZhy{}lp \PYGZdl{}LISTEN\PYGZus{}PORT
+
+\PYGZpc{}test
+    grep \PYGZhy{}q NAME=\PYGZbs{}\PYGZdq{}Ubuntu\PYGZbs{}\PYGZdq{} /etc/os\PYGZhy{}release
+    if [ \PYGZdl{}? \PYGZhy{}eq 0 ]; then
+        echo \PYGZdq{}Container base is Ubuntu as expected.\PYGZdq{}
+    else
+        echo \PYGZdq{}Container base is not Ubuntu.\PYGZdq{}
+    fi
+
+\PYGZpc{}labels
+    Author d@sylabs.io
+    Version v0.0.1
+
+\PYGZpc{}help
+    This is a demo container used to illustrate a def file that uses all
+    supported sections.
+\end{sphinxVerbatim}
+
+
+\subsection{\%setup}
+\label{\detokenize{definition_files:setup}}
+Commands in the \sphinxcode{\sphinxupquote{\%setup}} section are executed on the host system outside of
+the container after the base OS has been installed. You can reference the
+container file system with the \sphinxcode{\sphinxupquote{\$SINGULARITY\_ROOTFS}} environment variable in
+the \sphinxcode{\sphinxupquote{\%setup}} section.
+
+\begin{sphinxadmonition}{note}{Note:}
+Be careful with the \sphinxcode{\sphinxupquote{\%setup}} section! This scriptlet is executed outside
+of the container on the host system itself, and is executed with elevated
+priviledges. Commands in \sphinxcode{\sphinxupquote{\%setup}} can alter and potentially damage the
+host.
+\end{sphinxadmonition}
+
+Consider the example from the definition file above:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZpc{}setup
+    touch /file1
+    touch \PYGZdl{}\PYGZob{}SINGULARITY\PYGZus{}ROOTFS\PYGZcb{}/file2
+\end{sphinxVerbatim}
+
+Here, \sphinxcode{\sphinxupquote{file1}} is created at the root of the file system \sphinxstylestrong{on the host}.
+We’ll use \sphinxcode{\sphinxupquote{file1}} to demonstrate the usage of the \sphinxcode{\sphinxupquote{\%files}} section below.
+The \sphinxcode{\sphinxupquote{file2}} is created at the root of the file system \sphinxstylestrong{within the
+container}.
+
+In later versions of Singularity the \sphinxcode{\sphinxupquote{\%files}} section is provided as a safer
+alternative to copying files from the host system into the container during the
+build. Because of the potential danger involved in running the \sphinxcode{\sphinxupquote{\%setup}}
+scriptlet with elevated privileges on the host system during the build, it’s
+use is generally discouraged.
+
+
+\subsection{\%files}
+\label{\detokenize{definition_files:files}}
+The \sphinxcode{\sphinxupquote{\%files}} section allows you to copy files from your host system into the
+container with greater safety than using the \sphinxcode{\sphinxupquote{\%setup}} section. Each line is a
+\sphinxcode{\sphinxupquote{\textless{}source\textgreater{}}} and \sphinxcode{\sphinxupquote{\textless{}destination\textgreater{}}} pair, where the source is a path on your host
+system, and the destination is a path in the container. The  \sphinxcode{\sphinxupquote{\textless{}destination\textgreater{}}}
+specification can be omitted and will be assumed to be the same path as the
+\sphinxcode{\sphinxupquote{\textless{}source\textgreater{}}} specification.
+
+Consider the example from the definition file above:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZpc{}files
+    /file1
+    /file1 /opt
+\end{sphinxVerbatim}
+
+\sphinxcode{\sphinxupquote{file1}} was created in the root of the host file system during the \sphinxcode{\sphinxupquote{\%setup}}
+section (see above).  The \sphinxcode{\sphinxupquote{\%files}} scriptlet will copy \sphinxcode{\sphinxupquote{file1}} to the root
+of the container file system and then make a second copy of \sphinxcode{\sphinxupquote{file1}} within the
+container in \sphinxcode{\sphinxupquote{/opt}}.
+
+Files in the \sphinxcode{\sphinxupquote{\%files}} section are copied before the \sphinxcode{\sphinxupquote{\%post}} section is
+executed so that they are available during the build and configuration process.
+
+
+\subsection{\%environment}
+\label{\detokenize{definition_files:environment}}
+The \sphinxcode{\sphinxupquote{\%environment}} section allows you to define environment variables that
+will be set at runtime. Note that these variables are not made available at
+build time by their inclusion in the \sphinxcode{\sphinxupquote{\%environment}} section. This means that
+if you need the same variables during the build process, you should also define
+them in your \sphinxcode{\sphinxupquote{\%post}} section. Specifically:
+\begin{itemize}
+\item {} 
+\sphinxstylestrong{during build}: The \sphinxcode{\sphinxupquote{\%environment}} section is written to a file in the
+container metadata directory. This file is not sourced.
+
+\item {} 
+\sphinxstylestrong{during runtime}: The file in the container metadata directory is sourced.
+
+\end{itemize}
+
+You should use the same conventions that you would use in a \sphinxcode{\sphinxupquote{.bashrc}} or
+\sphinxcode{\sphinxupquote{.profile}} file. Consider this example from the def file above:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZpc{}environment
+    export LISTEN\PYGZus{}PORT=12345
+    export LC\PYGZus{}ALL=C
+\end{sphinxVerbatim}
+
+The \sphinxcode{\sphinxupquote{\$LISTEN\_PORT}} variable will be used in the \sphinxcode{\sphinxupquote{\%startscript}} section
+below. The \sphinxcode{\sphinxupquote{\$LC\_ALL}} variable is useful for many programs (often written in
+Perl) that complain when no locale is set.
+
+After building this container, you can verify that the environment variables are
+set appropriately at runtime with the following command:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity exec my\PYGZus{}container.sif env \textbar{} grep \PYGZhy{}E \PYGZsq{}LISTEN\PYGZus{}PORT\textbar{}LC\PYGZus{}ALL\PYGZsq{}
+LISTEN\PYGZus{}PORT=12345
+LC\PYGZus{}ALL=C
+\end{sphinxVerbatim}
+
+In the special case of variables generated at build time, you can also add
+environment variables to your container in the \sphinxcode{\sphinxupquote{\%post}} section (see below).
+
+At build time, the content of the \sphinxcode{\sphinxupquote{\%environment}} section is written to a file
+called \sphinxcode{\sphinxupquote{/.singularity.d/env/90-environment.sh}} inside of the container.  Text
+redirected to the \sphinxcode{\sphinxupquote{\$SINGULARITY\_ENVIRONMENT}} variable during \sphinxcode{\sphinxupquote{\%post}} (see
+below) is added to a file called \sphinxcode{\sphinxupquote{/.singularity.d/env/91-environment.sh}}.
+
+At runtime, scripts in \sphinxcode{\sphinxupquote{/.singularity/env}} are sourced in order. This means
+that variables in the \sphinxcode{\sphinxupquote{\%post}} section take precedence over those added  via
+\sphinxcode{\sphinxupquote{\%environment}}.
+
+See \DUrole{xref,std,std-ref}{Environment and Metadata} for more
+information about the Singularity container environment.
+
+
+\subsection{\%post}
+\label{\detokenize{definition_files:post}}
+Commands in the \sphinxcode{\sphinxupquote{\%post}} section are executed within the container after the
+base OS has been installed at build time. This is where you will download files
+from the internet with tools like \sphinxcode{\sphinxupquote{git}} and \sphinxcode{\sphinxupquote{wget}}, install new software and
+libraries, write configuration files, create new directories, etc.
+
+Consider the example from the definition file above:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZpc{}post
+    apt\PYGZhy{}get update \PYGZam{}\PYGZam{} apt\PYGZhy{}get install \PYGZhy{}y netcat
+    NOW={}`date{}`
+    echo \PYGZdq{}export NOW=\PYGZbs{}\PYGZdq{}\PYGZdl{}\PYGZob{}NOW\PYGZcb{}\PYGZbs{}\PYGZdq{}\PYGZdq{} \PYGZgt{}\PYGZgt{} \PYGZdl{}SINGULARITY\PYGZus{}ENVIRONMENT
+\end{sphinxVerbatim}
+
+This \sphinxcode{\sphinxupquote{\%post}} scriptlet uses the Ubuntu package manager \sphinxcode{\sphinxupquote{apt}} to update the
+container and install the program \sphinxcode{\sphinxupquote{netcat}} (that will be used in the
+\sphinxcode{\sphinxupquote{\%startscript}} section below).
+
+The script is also setting an environment variable at build time.  Note that the
+value of this variable cannot be anticipated, and therefore cannot be set during
+the \sphinxcode{\sphinxupquote{\%environment}} section. For situations like this, the
+\sphinxcode{\sphinxupquote{\$SINGULARITY\_ENVIRONMENT}} variable is provided. Redirecting text to this
+variable will cause it to be written to a file called
+\sphinxcode{\sphinxupquote{/.singularity.d/env/91-environment.sh}} that will be sourced at runtime.  Note
+that variables set in \sphinxcode{\sphinxupquote{\%post}} take precedence over those set in the
+\sphinxcode{\sphinxupquote{\%environment}} section as explained above.
+
+
+\subsection{\%runscript}
+\label{\detokenize{definition_files:runscript}}\label{\detokenize{definition_files:id2}}\phantomsection\label{\detokenize{definition_files:sec-runscript}}
+The contents of the \sphinxcode{\sphinxupquote{\%runscript}} section are written to a file within the
+container that is executed when the container image is run (either via the
+\sphinxcode{\sphinxupquote{singularity run}} command or by executing the container directly as a
+command). When the container is invoked, arguments following the container name
+are passed to the runscript. This means that you can (and should) process
+arguments within your runscript.
+
+Consider the example from the def file above:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZpc{}runscript
+    echo \PYGZdq{}Container was created \PYGZdl{}NOW\PYGZdq{}
+    echo \PYGZdq{}Arguments received: \PYGZdl{}*\PYGZdq{}
+    exec echo \PYGZdq{}\PYGZdl{}@\PYGZdq{}
+\end{sphinxVerbatim}
+
+In this runscript, the time that the container was created is echoed via the
+\sphinxcode{\sphinxupquote{\$NOW}} variable (set in the \sphinxcode{\sphinxupquote{\%post}} section above). The options passed to
+the container at runtime are printed as a single string (\sphinxcode{\sphinxupquote{\$*}}) and then they
+are passed to echo via a quoted array (\sphinxcode{\sphinxupquote{\$@}}) which ensures that all of the
+arguments are properly parsed by the executed command. The \sphinxcode{\sphinxupquote{exec}} preceding
+the final \sphinxcode{\sphinxupquote{echo}} command replaces the current entry in the process table
+(which originally was the call to Singularity). Thus the runscript shell process
+ceases to exist, and only the process running within the container remains.
+
+Running the container built using this def file will yield the following:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} ./my\PYGZus{}container.sif
+Container was created Thu Dec  6 20:01:56 UTC 2018
+Arguments received:
+
+\PYGZdl{} ./my\PYGZus{}container.sif this that and the other
+Container was created Thu Dec  6 20:01:56 UTC 2018
+Arguments received: this that and the other
+this that and the other
+\end{sphinxVerbatim}
+
+
+\subsection{\%startscript}
+\label{\detokenize{definition_files:startscript}}\label{\detokenize{definition_files:sec-help}}
+Similar to the \sphinxcode{\sphinxupquote{\%runscript}} section, the contents of the \sphinxcode{\sphinxupquote{\%startscript}}
+section are written to a file within the container at build time.  This file is
+executed when the \sphinxcode{\sphinxupquote{instance start}} command is issued.
+
+Consider the example from the def file above.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZpc{}startscript
+    nc \PYGZhy{}lp \PYGZdl{}LISTEN\PYGZus{}PORT
+\end{sphinxVerbatim}
+
+Here the netcat program is used to listen for TCP traffic on the port indicated
+by the \sphinxcode{\sphinxupquote{\$LISTEN\_PORT}} variable (set in the \sphinxcode{\sphinxupquote{\%environment}} section above).
+The script can be invoked like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity instance start my\PYGZus{}container.sif instance1
+INFO:    instance started successfully
+
+\PYGZdl{} lsof \textbar{} grep LISTEN
+nc        19061               vagrant    3u     IPv4             107409      0t0        TCP *:12345 (LISTEN)
+
+\PYGZdl{} singularity instance stop instance1
+Stopping instance1 instance of /home/vagrant/my\PYGZus{}container.sif (PID=19035)
+\end{sphinxVerbatim}
+
+
+\subsection{\%test}
+\label{\detokenize{definition_files:test}}
+The \sphinxcode{\sphinxupquote{\%test}} section runs at the very end of the build process to validate the
+container using a method of your choice. You can also execute this scriptlet
+through the container itself, using the \sphinxcode{\sphinxupquote{test}} command.
+
+Consider the example from the def file above:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZpc{}test
+    grep \PYGZhy{}q NAME=\PYGZbs{}\PYGZdq{}Ubuntu\PYGZbs{}\PYGZdq{} /etc/os\PYGZhy{}release
+    if [ \PYGZdl{}? \PYGZhy{}eq 0 ]; then
+        echo \PYGZdq{}Container base is Ubuntu as expected.\PYGZdq{}
+    else
+        echo \PYGZdq{}Container base is not Ubuntu.\PYGZdq{}
+    fi
+\end{sphinxVerbatim}
+
+This (somewhat silly) script tests if the base OS is Ubuntu. You could also
+write a script to test that binaries were appropriately downloaded and built, or
+that software works as expected on custom hardware. If you want to build a
+container without running the \sphinxcode{\sphinxupquote{\%test}} section (for example, if the build
+system does not have the same hardware that will be used on the production
+system), you can do so with the \sphinxcode{\sphinxupquote{-{-}notest}} build option:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo singularity build \PYGZhy{}\PYGZhy{}notest my\PYGZus{}container.sif my\PYGZus{}container.def
+\end{sphinxVerbatim}
+
+Running the test command on a container built with this def file yields the
+following:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity test my\PYGZus{}container.sif
+Container base is Ubuntu as expected.
+\end{sphinxVerbatim}
+
+
+\subsection{\%labels}
+\label{\detokenize{definition_files:labels}}
+The \sphinxcode{\sphinxupquote{\%labels}} section is used to add metadata to the file
+\sphinxcode{\sphinxupquote{/.singularity.d/labels.json}} within your container. The general format is a
+name-value pair.
+
+Consider the example from the def file above:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZpc{}labels
+    Author d@sylabs.io
+    Version v0.0.1
+\end{sphinxVerbatim}
+
+The easiest way to see labels is to inspect the image:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity inspect my\PYGZus{}container.sif
+
+\PYGZob{}
+    \PYGZdq{}Author\PYGZdq{}: \PYGZdq{}d@sylabs.io\PYGZdq{},
+    \PYGZdq{}Version\PYGZdq{}: \PYGZdq{}v0.0.1\PYGZdq{},
+    \PYGZdq{}org.label\PYGZhy{}schema.build\PYGZhy{}date\PYGZdq{}: \PYGZdq{}Thursday\PYGZus{}6\PYGZus{}December\PYGZus{}2018\PYGZus{}20:1:56\PYGZus{}UTC\PYGZdq{},
+    \PYGZdq{}org.label\PYGZhy{}schema.schema\PYGZhy{}version\PYGZdq{}: \PYGZdq{}1.0\PYGZdq{},
+    \PYGZdq{}org.label\PYGZhy{}schema.usage\PYGZdq{}: \PYGZdq{}/.singularity.d/runscript.help\PYGZdq{},
+    \PYGZdq{}org.label\PYGZhy{}schema.usage.singularity.deffile.bootstrap\PYGZdq{}: \PYGZdq{}library\PYGZdq{},
+    \PYGZdq{}org.label\PYGZhy{}schema.usage.singularity.deffile.from\PYGZdq{}: \PYGZdq{}ubuntu:18.04\PYGZdq{},
+    \PYGZdq{}org.label\PYGZhy{}schema.usage.singularity.runscript.help\PYGZdq{}: \PYGZdq{}/.singularity.d/runscript.help\PYGZdq{},
+    \PYGZdq{}org.label\PYGZhy{}schema.usage.singularity.version\PYGZdq{}: \PYGZdq{}3.0.1\PYGZdq{}
+\PYGZcb{}
+\end{sphinxVerbatim}
+
+Some labels that are captured automatically from the build process. You can read
+more about labels and metadata \DUrole{xref,std,std-ref}{here}.
+
+
+\subsection{\%help}
+\label{\detokenize{definition_files:help}}
+Any text in the \sphinxcode{\sphinxupquote{\%help}} section is transcribed into a metadata file in the
+container during the build. This text can then be displayed using the
+\sphinxcode{\sphinxupquote{run-help}} command.
+
+Consider the example from the def file above:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZpc{}help
+    This is a demo container used to illustrate a def file that uses all
+    supported sections.
+\end{sphinxVerbatim}
+
+After building the help can be displayed like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity run\PYGZhy{}help my\PYGZus{}container.sif
+    This is a demo container used to illustrate a def file that uses all
+    supported sections.
+\end{sphinxVerbatim}
+
+
+\section{Apps}
+\label{\detokenize{definition_files:apps}}
+In some circumstances, it may be redundant to build different containers for
+each app with nearly equivalent dependencies. Singularity supports installing
+apps within internal modules based on the concept of \sphinxhref{https://sci-f.github.io/}{Standard Container
+Integration Format (SCI-F)}
+
+The following runscript demonstrates how to build 2 different apps into the
+same container using SCI-F modules:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: docker
+From: ubuntu
+
+\PYGZpc{}environment
+    GLOBAL=variables
+    AVAILABLE=\PYGZdq{}to all apps\PYGZdq{}
+
+\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}
+\PYGZsh{} foo
+\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}
+
+\PYGZpc{}apprun foo
+    exec echo \PYGZdq{}RUNNING FOO\PYGZdq{}
+
+\PYGZpc{}applabels foo
+   BESTAPP FOO
+
+\PYGZpc{}appinstall foo
+   touch foo.exec
+
+\PYGZpc{}appenv foo
+    SOFTWARE=foo
+    export SOFTWARE
+
+\PYGZpc{}apphelp foo
+    This is the help for foo.
+
+\PYGZpc{}appfiles foo
+   foo.txt
+
+\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}
+\PYGZsh{} bar
+\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}\PYGZsh{}
+
+\PYGZpc{}apphelp bar
+    This is the help for bar.
+
+\PYGZpc{}applabels bar
+   BESTAPP BAR
+
+\PYGZpc{}appinstall bar
+    touch bar.exec
+
+\PYGZpc{}appenv bar
+    SOFTWARE=bar
+    export SOFTWARE
+\end{sphinxVerbatim}
+
+An \sphinxcode{\sphinxupquote{\%appinstall}} section is the equivalent of \sphinxcode{\sphinxupquote{\%post}} but for a particular
+app. Similarly, \sphinxcode{\sphinxupquote{\%appenv}} equates to the app version of \sphinxcode{\sphinxupquote{\%environment}} and
+so on.
+
+The \sphinxcode{\sphinxupquote{\%app*}} sections can exist alongside any of the primary sections (i.e.
+\sphinxcode{\sphinxupquote{\%post}}, \sphinxcode{\sphinxupquote{\%runscript}}, \sphinxcode{\sphinxupquote{\%environment}}, etc.).  As with the other sections,
+the ordering of the \sphinxcode{\sphinxupquote{\%app*}} sections isn’t important.
+
+After installing apps into modules using the \sphinxcode{\sphinxupquote{\%app*}} sections, the \sphinxcode{\sphinxupquote{-{-}app}}
+option becomes available allowing the following functions:
+
+To run a specific app within the container:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZpc{} singularity run \PYGZhy{}\PYGZhy{}app foo my\PYGZus{}container.sif
+RUNNING FOO
+\end{sphinxVerbatim}
+
+The same environment variable, \sphinxcode{\sphinxupquote{\$SOFTWARE}} is defined for both apps in the def
+file above. You can execute the following command to search the list of active
+environment variables and \sphinxcode{\sphinxupquote{grep}} to determine if the variable changes
+depending on the app we specify:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} singularity exec \PYGZhy{}\PYGZhy{}app foo my\PYGZus{}container.sif env \textbar{} grep SOFTWARE
+SOFTWARE=foo
+
+\PYGZdl{} singularity exec \PYGZhy{}\PYGZhy{}app bar my\PYGZus{}container.sif env \textbar{} grep SOFTWARE
+SOFTWARE=bar
+\end{sphinxVerbatim}
+
+
+\section{Best Practices for Build Recipes}
+\label{\detokenize{definition_files:best-practices-for-build-recipes}}
+When crafting your recipe, it is best to consider the following:
+\begin{enumerate}
+\item {} 
+Always install packages, programs, data, and files into operating system
+locations (e.g. not \sphinxcode{\sphinxupquote{/home}}, \sphinxcode{\sphinxupquote{/tmp}} , or any other directories that might
+get commonly binded on).
+
+\item {} 
+Document your container. If your runscript doesn’t supply help, write a
+\sphinxcode{\sphinxupquote{\%help}} or \sphinxcode{\sphinxupquote{\%apphelp}} section. A good container tells the user how to
+interact with it.
+
+\item {} 
+If you require any special environment variables to be defined, add them to
+the \sphinxcode{\sphinxupquote{\%environment}} and \sphinxcode{\sphinxupquote{\%appenv}} sections of the build recipe.
+
+\item {} 
+Files should always be owned by a system account (UID less than 500).
+
+\item {} 
+Ensure that sensitive files like \sphinxcode{\sphinxupquote{/etc/passwd}}, \sphinxcode{\sphinxupquote{/etc/group}}, and
+\sphinxcode{\sphinxupquote{/etc/shadow}} do not contain secrets.
+
+\item {} 
+Build production containers from a definition file  instead of a sandbox that
+has been manually changed. This ensures greatest possibility of
+reproducibility and mitigates the “black box” effect.
+
+\end{enumerate}
+
+
 \chapter{Bind Paths and Mounts}
 \label{\detokenize{bind_paths_and_mounts:bind-paths-and-mounts}}\label{\detokenize{bind_paths_and_mounts:id1}}\label{\detokenize{bind_paths_and_mounts::doc}}\phantomsection\label{\detokenize{bind_paths_and_mounts:sec-bindpaths}}
 If \sphinxhref{https://singularity-admindoc.readthedocs.io/en/latest/the\_singularity\_config\_file.html\#user-bind-control-boolean-default-yes}{enabled by the system administrator},
@@ -2574,6 +3192,501 @@ is configured to only be able to read from or write to \sphinxcode{\sphinxupquot
 
 For more information on limiting access to devices the \sphinxhref{https://access.redhat.com/documentation/en-us/red\_hat\_enterprise\_linux/6/html/resource\_management\_guide/sec-devices}{Red Hat resource
 management guide section 3.5 DEVICES}.
+
+
+\chapter{Appendix}
+\label{\detokenize{appendix:appendix}}\label{\detokenize{appendix::doc}}
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{library}} bootstrap agent}
+\label{\detokenize{appendix:library-bootstrap-agent}}\label{\detokenize{appendix:build-library-module}}
+
+\subsection{Overview}
+\label{\detokenize{appendix:overview}}\label{\detokenize{appendix:sec-build-library-module}}
+You can use an existing container on the Container Library as your “base,” and
+then add customization. This allows you to build multiple images from the same
+starting point. For example, you may want to build several containers with the
+same custom python installation, the same custom compiler toolchain, or the same
+base MPI installation. Instead of building these from scratch each time, you
+could create a base container on the Container Library and then build new
+containers from that existing base container adding customizations in \sphinxcode{\sphinxupquote{\%post}},
+\sphinxcode{\sphinxupquote{\%environment}}, \sphinxcode{\sphinxupquote{\%runscript}}, etc.
+
+
+\subsection{Keywords}
+\label{\detokenize{appendix:keywords}}
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: library
+\end{sphinxVerbatim}
+
+The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+From: \PYGZlt{}entity\PYGZgt{}/\PYGZlt{}collection\PYGZgt{}/\PYGZlt{}container\PYGZgt{}:\PYGZlt{}tag\PYGZgt{}
+\end{sphinxVerbatim}
+
+The From keyword is mandatory. It specifies the container to use as a base.
+\sphinxcode{\sphinxupquote{entity}} is optional and defaults to \sphinxcode{\sphinxupquote{library}}. \sphinxcode{\sphinxupquote{collection}} is
+optional and defaults to \sphinxcode{\sphinxupquote{default}}. This is the correct namespace to use for
+some official containers (\sphinxcode{\sphinxupquote{alpine}} for example). \sphinxcode{\sphinxupquote{tag}} is also optional and
+will default to \sphinxcode{\sphinxupquote{latest}}.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Library: http://custom/library
+\end{sphinxVerbatim}
+
+The Library keyword is optional. It will default to
+\sphinxcode{\sphinxupquote{https://cloud.sylabs.io/library}}.
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{docker}} bootstrap agent}
+\label{\detokenize{appendix:docker-bootstrap-agent}}\label{\detokenize{appendix:build-docker-module}}
+
+\subsection{Overview}
+\label{\detokenize{appendix:sec-build-docker-module}}\label{\detokenize{appendix:id1}}
+Docker images are comprised of layers that are assembled at runtime to create an
+image. You can use Docker layers to create a base image, and then add your own
+custom software. For example, you might use Docker’s Ubuntu image layers to
+create an Ubuntu Singularity container. You could do the same with CentOS,
+Debian, Arch, Suse, Alpine, BusyBox, etc.
+
+Or maybe you want a container that already has software installed. For instance,
+maybe you want to build a container that uses CUDA and cuDNN to leverage the
+GPU, but you don’t want to install from scratch. You can start with one of the
+\sphinxcode{\sphinxupquote{nvidia/cuda}} containers and install your software on top of that.
+
+Or perhaps you have already invested in Docker and created your own Docker
+containers. If so, you can seamlessly convert them to Singularity with the
+\sphinxcode{\sphinxupquote{docker}} bootstrap module.
+
+
+\subsection{Keywords}
+\label{\detokenize{appendix:id2}}
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: docker
+\end{sphinxVerbatim}
+
+The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+From: \PYGZlt{}registry\PYGZgt{}/\PYGZlt{}namespace\PYGZgt{}/\PYGZlt{}container\PYGZgt{}:\PYGZlt{}tag\PYGZgt{}@\PYGZlt{}digest\PYGZgt{}
+\end{sphinxVerbatim}
+
+The From keyword is mandatory. It specifies the container to use as a base.
+\sphinxcode{\sphinxupquote{registry}} is optional and defaults to \sphinxcode{\sphinxupquote{index.docker.io}}. \sphinxcode{\sphinxupquote{namespace}} is
+optional and defaults to \sphinxcode{\sphinxupquote{library}}. This is the correct namespace to use for
+some official containers (ubuntu for example). \sphinxcode{\sphinxupquote{tag}} is also optional and will
+default to \sphinxcode{\sphinxupquote{latest}}
+
+See \DUrole{xref,std,std-ref}{Singularity and Docker} for more detailed
+info on using Docker registries.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Registry: http://custom\PYGZus{}registry
+\end{sphinxVerbatim}
+
+The Registry keyword is optional. It will default to \sphinxcode{\sphinxupquote{index.docker.io}}.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Namespace: namespace
+\end{sphinxVerbatim}
+
+The Namespace keyword is optional. It will default to \sphinxcode{\sphinxupquote{library}}.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+IncludeCmd: yes
+\end{sphinxVerbatim}
+
+The IncludeCmd keyword is optional. If included, and if a \sphinxcode{\sphinxupquote{\%runscript}} is not
+specified, a Docker \sphinxcode{\sphinxupquote{CMD}} will take precedence over \sphinxcode{\sphinxupquote{ENTRYPOINT}} and will be
+used as a runscript. Note that the \sphinxcode{\sphinxupquote{IncludeCmd}} keyword is considered valid if
+it is not empty! This means that \sphinxcode{\sphinxupquote{IncludeCmd: yes}} and \sphinxcode{\sphinxupquote{IncludeCmd: no}} are
+identical. In both cases the \sphinxcode{\sphinxupquote{IncludeCmd}} keyword is not empty, so the Docker
+\sphinxcode{\sphinxupquote{CMD}} will take precedence over an \sphinxcode{\sphinxupquote{ENTRYPOINT}}.
+\begin{quote}
+
+See \DUrole{xref,std,std-ref}{Singularity and Docker} for more info on
+order of operations for determining a runscript.
+\end{quote}
+
+
+\subsection{Notes}
+\label{\detokenize{appendix:notes}}
+Docker containers are stored as a collection of tarballs called layers. When
+building from a Docker container the layers must be downloaded and then
+assembled in the proper order to produce a viable file system. Then the file
+system must be converted to Singularity Image File (sif) format.
+
+Building from Docker Hub is not considered reproducible because if any of the
+layers of the image are changed, the container will change. If reproducibility
+is important to your workflow, consider hosting a base container on the
+Container Library and building from it instead.
+
+For detailed information about setting your build environment see
+\DUrole{xref,std,std-ref}{Build Customization}.
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{shub}} bootstrap agent}
+\label{\detokenize{appendix:shub-bootstrap-agent}}\label{\detokenize{appendix:build-shub}}
+
+\subsection{Overview}
+\label{\detokenize{appendix:sec-build-shub}}\label{\detokenize{appendix:id3}}
+You can use an existing container on Singularity Hub as your “base,” and then
+add customization. This allows you to build multiple images from the same
+starting point. For example, you may want to build several containers with the
+same custom python installation, the same custom compiler toolchain, or the same
+base MPI installation. Instead of building these from scratch each time, you
+could create a base container on Singularity Hub and then build new containers
+from that existing base container adding customizations in \sphinxcode{\sphinxupquote{\%post}} ,
+\sphinxcode{\sphinxupquote{\%environment}}, \sphinxcode{\sphinxupquote{\%runscript}}, etc.
+
+
+\subsection{Keywords}
+\label{\detokenize{appendix:id4}}
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: shub
+\end{sphinxVerbatim}
+
+The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+From: shub://\PYGZlt{}registry\PYGZgt{}/\PYGZlt{}username\PYGZgt{}/\PYGZlt{}container\PYGZhy{}name\PYGZgt{}:\PYGZlt{}tag\PYGZgt{}@digest
+\end{sphinxVerbatim}
+
+The From keyword is mandatory. It specifies the container to use as a base.
+\sphinxcode{\sphinxupquote{registry is optional and defaults to {}`{}`singularity-hub.org}}. \sphinxcode{\sphinxupquote{tag}} and
+\sphinxcode{\sphinxupquote{digest}} are also optional. \sphinxcode{\sphinxupquote{tag}} defaults to \sphinxcode{\sphinxupquote{latest}} and \sphinxcode{\sphinxupquote{digest}} can
+be left blank if you want the latest build.
+
+
+\subsection{Notes}
+\label{\detokenize{appendix:id5}}
+When bootstrapping from a Singularity Hub image, all previous definition files
+that led to the creation of the current image will be stored in a directory
+within the container called \sphinxcode{\sphinxupquote{/.singularity.d/bootstrap\_history}}. Singularity
+will also alert you if environment variables have been changed between the base
+image and the new image during bootstrap.
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{localimage}} bootstrap agent}
+\label{\detokenize{appendix:localimage-bootstrap-agent}}\label{\detokenize{appendix:build-localimage}}\phantomsection\label{\detokenize{appendix:sec-build-localimage}}
+This module allows you to build a container from an existing Singularity
+container on your host system. The name is somewhat misleading because your
+container can be in either image or directory format.
+
+
+\subsection{Overview}
+\label{\detokenize{appendix:id6}}
+You can use an existing container image as your “base”, and then add
+customization. This allows you to build multiple images from the same starting
+point. For example, you may want to build several containers with the same
+custom python installation, the same custom compiler toolchain, or the same base
+MPI installation. Instead of building these from scratch each time, you could
+start with the appropriate local base container and then customize the new
+container in \sphinxcode{\sphinxupquote{\%post}}, \sphinxcode{\sphinxupquote{\%environment}}, \sphinxcode{\sphinxupquote{\%runscript}}, etc.
+
+
+\subsection{Keywords}
+\label{\detokenize{appendix:id7}}
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: localimage
+\end{sphinxVerbatim}
+
+The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+From: /path/to/container/file/or/directory
+\end{sphinxVerbatim}
+
+The From keyword is mandatory. It specifies the local container to use as a
+base.
+
+
+\subsection{Notes}
+\label{\detokenize{appendix:id8}}
+When building from a local container, all previous definition files that led to
+the creation of the current container will be stored in a directory within the
+container called \sphinxcode{\sphinxupquote{/.singularity.d/bootstrap\_history}}. Singularity will also
+alert you if environment variables have been changed between the base image and
+the new image during bootstrap.
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{yum}} bootstrap agent}
+\label{\detokenize{appendix:yum-bootstrap-agent}}\label{\detokenize{appendix:build-yum}}\phantomsection\label{\detokenize{appendix:sec-build-yum}}
+This module allows you to build a Red Hat/CentOS/Scientific Linux style
+container from a mirror URI.
+
+
+\subsection{Overview}
+\label{\detokenize{appendix:id9}}
+Use the \sphinxcode{\sphinxupquote{yum}} module to specify a base for a CentOS-like container. You must
+also specify the URI for the mirror you would like to use.
+
+
+\subsection{Keywords}
+\label{\detokenize{appendix:id10}}
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: yum
+\end{sphinxVerbatim}
+
+The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+OSVersion: 7
+\end{sphinxVerbatim}
+
+The OSVersion keyword is optional. It specifies the OS version you would like to
+use. It is only required if you have specified a \%\{OSVERSION\} variable in the
+\sphinxcode{\sphinxupquote{MirrorURL}} keyword.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+MirrorURL: http://mirror.centos.org/centos\PYGZhy{}\PYGZpc{}\PYGZob{}OSVERSION\PYGZcb{}/\PYGZpc{}\PYGZob{}OSVERSION\PYGZcb{}/os/\PYGZdl{}basearch/
+\end{sphinxVerbatim}
+
+The MirrorURL keyword is mandatory. It specifies the URI to use as a mirror to
+download the OS. If you define the \sphinxcode{\sphinxupquote{OSVersion}} keyword, than you can use it in
+the URI as in the example above.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Include: yum
+\end{sphinxVerbatim}
+
+The Include keyword is optional. It allows you to install additional packages
+into the core operating system. It is a best practice to supply only the bare
+essentials such that the \sphinxcode{\sphinxupquote{\%post}} section has what it needs to properly
+complete the build. One common package you may want to install when using the
+\sphinxcode{\sphinxupquote{yum}} build module is YUM itself.
+
+
+\subsection{Notes}
+\label{\detokenize{appendix:id11}}
+There is a major limitation with using YUM to bootstrap a container. The RPM
+database that exists within the container will be created using the RPM library
+and Berkeley DB implementation that exists on the host system. If the RPM
+implementation inside the container is not compatible with the RPM database that
+was used to create the container, RPM and YUM commands inside the container may
+fail. This issue can be easily demonstrated by bootstrapping an older RHEL
+compatible image by a newer one (e.g. bootstrap a Centos 5 or 6 container from a
+Centos 7 host).
+
+In order to use the \sphinxcode{\sphinxupquote{debootstrap}} build module, you must have \sphinxcode{\sphinxupquote{yum}}
+installed on your system. It may seem counter-intuitive to install YUM on a
+system that uses a different package manager, but you can do so. For instance,
+on Ubuntu you can install it like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo apt\PYGZhy{}get update \PYGZam{}\PYGZam{} sudo apt\PYGZhy{}get install yum
+\end{sphinxVerbatim}
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{debootstrap}} build agent}
+\label{\detokenize{appendix:debootstrap-build-agent}}\label{\detokenize{appendix:build-debootstrap}}\phantomsection\label{\detokenize{appendix:sec-build-debootstrap}}
+This module allows you to build a Debian/Ubuntu style container from a mirror
+URI.
+
+
+\subsection{Overview}
+\label{\detokenize{appendix:id12}}
+Use the \sphinxcode{\sphinxupquote{debootstrap}} module to specify a base for a Debian-like container.
+You must also specify the OS version and a URI for the mirror you would like to
+use.
+
+
+\subsection{Keywords}
+\label{\detokenize{appendix:id13}}
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: debootstrap
+\end{sphinxVerbatim}
+
+The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+OSVersion: xenial
+\end{sphinxVerbatim}
+
+The OSVersion keyword is mandatory. It specifies the OS version you would like
+to use. For Ubuntu you can use code words like \sphinxcode{\sphinxupquote{trusty}} (14.04), \sphinxcode{\sphinxupquote{xenial}}
+(16.04), and \sphinxcode{\sphinxupquote{yakkety}} (17.04). For Debian you can use values like \sphinxcode{\sphinxupquote{stable}},
+\sphinxcode{\sphinxupquote{oldstable}}, \sphinxcode{\sphinxupquote{testing}}, and \sphinxcode{\sphinxupquote{unstable}} or code words like \sphinxcode{\sphinxupquote{wheezy}} (7),
+\sphinxcode{\sphinxupquote{jesse}} (8), and \sphinxcode{\sphinxupquote{stretch}} (9).
+\begin{quote}
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+MirrorURL:  http://us.archive.ubuntu.com/ubuntu/
+\end{sphinxVerbatim}
+\end{quote}
+
+The MirrorURL keyword is mandatory. It specifies a URI to use as a mirror when
+downloading the OS.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Include: somepackage
+\end{sphinxVerbatim}
+
+The Include keyword is optional. It allows you to install additional packages
+into the core operating system. It is a best practice to supply only the bare
+essentials such that the \sphinxcode{\sphinxupquote{\%post}} section has what it needs to properly
+complete the build.
+
+
+\subsection{Notes}
+\label{\detokenize{appendix:id14}}
+In order to use the \sphinxcode{\sphinxupquote{debootstrap}} build module, you must have \sphinxcode{\sphinxupquote{debootstrap}}
+installed on your system. On Ubuntu you can install it like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo apt\PYGZhy{}get update \PYGZam{}\PYGZam{} sudo apt\PYGZhy{}get install debootstrap
+\end{sphinxVerbatim}
+
+On CentOS you can install it from the epel repos like so:
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+\PYGZdl{} sudo yum update \PYGZam{}\PYGZam{} sudo yum install epel\PYGZhy{}release \PYGZam{}\PYGZam{} sudo yum install debootstrap.noarch
+\end{sphinxVerbatim}
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{arch}} bootstrap agent}
+\label{\detokenize{appendix:arch-bootstrap-agent}}\label{\detokenize{appendix:build-arch}}\phantomsection\label{\detokenize{appendix:sec-build-arch}}
+This module allows you to build a Arch Linux based container.
+
+
+\subsection{Overview}
+\label{\detokenize{appendix:id15}}
+Use the \sphinxcode{\sphinxupquote{arch}} module to specify a base for an Arch Linux based container.
+Arch Linux uses the aptly named \sphinxcode{\sphinxupquote{pacman}} package manager (all puns intended).
+
+
+\subsection{Keywords}
+\label{\detokenize{appendix:id16}}
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: arch
+\end{sphinxVerbatim}
+
+The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.
+
+The Arch Linux bootstrap module does not name any additional keywords at this
+time. By defining the \sphinxcode{\sphinxupquote{arch}} module, you have essentially given all of the
+information necessary for that particular bootstrap module to build a core
+operating system.
+
+
+\subsection{Notes}
+\label{\detokenize{appendix:id17}}
+Arch Linux is, by design, a very stripped down, light-weight OS. You may need to
+perform a significant amount of configuration to get a usable OS. Please refer
+to this
+\sphinxhref{https://github.com/singularityware/singularity/blob/master/examples/arch/README.md}{README.md}
+and the
+\sphinxhref{https://github.com/singularityware/singularity/blob/master/examples/arch/Singularity}{Arch Linux example}
+for more info.
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{busybox}} bootstrap agent}
+\label{\detokenize{appendix:busybox-bootstrap-agent}}\label{\detokenize{appendix:build-busybox}}\phantomsection\label{\detokenize{appendix:sec-build-busybox}}
+This module allows you to build a container based on BusyBox.
+
+
+\subsection{Overview}
+\label{\detokenize{appendix:id18}}
+Use the \sphinxcode{\sphinxupquote{busybox}} module to specify a BusyBox base for container. You must
+also specify a URI for the mirror you would like to use.
+
+
+\subsection{Keywords}
+\label{\detokenize{appendix:id19}}
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: busybox
+\end{sphinxVerbatim}
+
+The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+MirrorURL: https://www.busybox.net/downloads/binaries/1.26.1\PYGZhy{}defconfig\PYGZhy{}multiarch/busybox\PYGZhy{}x86\PYGZus{}64
+\end{sphinxVerbatim}
+
+The MirrorURL keyword is mandatory. It specifies a URI to use as a mirror when
+downloading the OS.
+
+
+\subsection{Notes}
+\label{\detokenize{appendix:id20}}
+You can build a fully functional BusyBox container that only takes up \textasciitilde{}600kB of
+disk space!
+
+
+\section{\sphinxstyleliteralintitle{\sphinxupquote{zypper}} bootstrap agent}
+\label{\detokenize{appendix:zypper-bootstrap-agent}}\label{\detokenize{appendix:build-zypper}}\phantomsection\label{\detokenize{appendix:sec-build-zypper}}
+This module allows you to build a Suse style container from a mirror URI.
+
+
+\subsection{Overview}
+\label{\detokenize{appendix:id21}}
+Use the \sphinxcode{\sphinxupquote{zypper}} module to specify a base for a Suse-like container. You must
+also specify a URI for the mirror you would like to use.
+
+
+\subsection{Keywords}
+\label{\detokenize{appendix:id22}}
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Bootstrap: zypper
+\end{sphinxVerbatim}
+
+The Bootstrap keyword is always mandatory. It describes the bootstrap module to
+use.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+OSVersion: 42.2
+\end{sphinxVerbatim}
+
+The OSVersion keyword is optional. It specifies the OS version you would like to
+use. It is only required if you have specified a \%\{OSVERSION\} variable in the
+\sphinxcode{\sphinxupquote{MirrorURL}} keyword.
+
+\fvset{hllines={, ,}}%
+\begin{sphinxVerbatim}[commandchars=\\\{\}]
+Include: somepackage
+\end{sphinxVerbatim}
+
+The Include keyword is optional. It allows you to install additional packages
+into the core operating system. It is a best practice to supply only the bare
+essentials such that the \sphinxcode{\sphinxupquote{\%post}} section has what it needs to properly
+complete the build. One common package you may want to install when using the
+zypper build module is \sphinxcode{\sphinxupquote{zypper}} itself.
 
 
 

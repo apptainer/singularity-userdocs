@@ -24,10 +24,10 @@ apply the settings in the TOML file by using the path as an argument to the
 
 The ``--apply-cgroups`` option can only be used with root privileges.
 
+
 --------
 Examples
 --------
-
 
 Limiting memory
 ===============
