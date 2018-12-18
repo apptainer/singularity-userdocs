@@ -53,82 +53,18 @@ We also have an official `CONTRIBUTING <https://github.com/sylabs/singularity/bl
 Step 1. Fork the repo
 =====================
 
-To contribute to Singularity, you should obtain a GitHub account and fork the `Singularity <https://github.com/sylabs/singularity>`_ repository.
-Once forked, you will want to clone the fork of the repo to your computer. Let’s say my GitHub username is vsoch, and I am using ssh:
+To contribute to Singularity, you should obtain a GitHub account and fork the
+`Singularity <https://github.com/sylabs/singularity>`_ repository. Once forked, you will want to
+clone the fork of the repo to your computer: obviously, you should replace ``your-username`` with your username.
 
 .. code-block:: none
 
-    git clone git@github.com:vsoch/singularity.git
+    git clone https://github.com/your-username/singularity.git
 
     cd singularity/
 
 
-Step 2. Set up your config
-==========================
-
-The GitHub config file, located at .git/config, is the best way to keep track of many different forks of a repository.
-I usually open it up right after cloning my fork to add the repository that I forked as a `remote <https://help.github.com/articles/adding-a-remote/>`_, so I can easily get updated from it.
-Let’s say my ``.git/config`` first looks like this, after I clone my own branch:
-
-.. code-block:: none
-
-    [core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-    [remote "origin"]
-        url = git@github.com:vsoch/singularity
-        fetch = +refs/heads/*:refs/remotes/origin/*
-    [branch "master"]
-        remote = origin
-        merge = refs/heads/master
-
-I would want to add the upstream repository, which is where I forked from.
-
-.. code-block:: none
-
-    [core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-    [remote "origin"]
-        url = git@github.com:vsoch/singularity
-        fetch = +refs/heads/*:refs/remotes/origin/*
-    [remote "upstream"]
-        url = https://github.com/sylabs/singularity
-        fetch = +refs/heads/*:refs/remotes/origin/*
-    [branch "master"]
-        remote = origin
-        merge = refs/heads/master
-
-I can also add some of my colleagues, if I want to pull from their branches:
-
-.. code-block:: none
-
-    [core]
-        repositoryformatversion = 0
-        filemode = true
-        bare = false
-        logallrefupdates = true
-    [remote "origin"]
-        url = git@github.com:vsoch/singularity
-        fetch = +refs/heads/*:refs/remotes/origin/*
-    [remote "upstream"]
-        url = https://github.com/sylabs/singularity
-        fetch = +refs/heads/*:refs/remotes/origin/*
-    [remote "greg"]
-        url = https://github.com/gmkurtzer/singularity
-        fetch = +refs/heads/*:refs/remotes/origin/*
-    [branch "master"]
-        remote = origin
-        merge = refs/heads/master
-
-In the GitHub flow, the master branch is the frozen, current version of the software.
-Your master branch is always in sync with the upstream (our Sylabs master), and the Sylabs master is always the latest release of Singularity.
-
-This would mean that I can update my master branch as follows:
+Now, we need to checkout are branch, more-content...
 
 .. code-block:: none
 
@@ -139,14 +75,14 @@ This would mean that I can update my master branch as follows:
     git push origin master
 
 
-and then I would return to working on the branch for my feature. How to do that exactly? Read on!
+And then I would return to working on the branch for my feature. How to do that exactly? Read on!
 
 Step 3. Checkout a new branch
 =============================
 
-`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features from the main branch. Given that we’ve just cloned the repo, we probably want to work off of the current development branch, which has the most up to date “next version” of the software. So we can start by checking out that branch:
-
-
+`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features from the main branch.
+Given that we’ve just cloned the repo, we probably want to work off of the current development branch, which
+has the most up to date “next version” of the software. So we can start by checking out that branch:
 
 .. code-block:: none
 
@@ -155,15 +91,18 @@ Step 3. Checkout a new branch
     git pull origin development
 
 
-At this point, you can either choose to work on this branch, push to your origin development and pull request to Sylabs development, or you can checkout another branch specific to your feature. We recommend always working from, and staying, in sync with development. The command below would checkout a branch called ``add/my-awesome-new-feature`` from development.
+At this point, you can either choose to work on this branch, push to your origin development and pull request to Sylabs
+development, or you can checkout another branch specific to your feature. We recommend always working from, and staying, in
+sync with development. The command below would checkout a branch called ``my-awesome-new-feature`` from development.
 
 .. code-block:: none
 
-    # Checkout a new branch called add/my-awesome-feature
-    git checkout -b add/my-awesome-feature development
+    # Checkout a new branch called my-awesome-feature
+    git checkout -b my-awesome-feature development
 
 
-The addition of the ``-b`` argument tells git that we want to make a new branch. If I want to just change branches (for example back to master) I can do the same command without ``-b``:
+The addition of the ``-b`` argument tells git that we want to make a new branch. If I want to just change branches
+(for example back to master) I can do the same command without ``-b``:
 
 .. code-block:: none
 
@@ -172,13 +111,15 @@ The addition of the ``-b`` argument tells git that we want to make a new branch.
     git checkout master
 
 
-Note that you should commit changes to the branch you are working on before changing branches, otherwise they would be lost. GitHub will give you a warning and prevent you from changing branches if this is the case, so don’t worry too much about it.
+Note that you should commit changes to the branch you are working on before changing branches, otherwise they would be lost.
+GitHub will give you a warning and prevent you from changing branches if this is the case, so don’t worry too much about it.
 
 
 Step 4. Make your changes
 =========================
 
-On your new branch, go nuts! Make changes, test them, and when you are happy with a bit of progress, commit the changes to the branch:
+On your new branch, go nuts! Make changes, test them, and when you are happy with a bit of progress, commit the changes to
+the branch:
 
 .. code-block:: none
 
@@ -220,7 +161,12 @@ Note that you should always check the status of your branches to see what has be
 Step 6. Submit a Pull Request
 =============================
 
-Once you have pushed your branch, then you can go to either fork and (in the GUI) `submit a Pull Request <https://help.github.com/articles/creating-a-pull-request/>`_. Regardless of the name of your branch, your PR should be submitted to the Sylabs development branch. This will open up a nice conversation interface / forum for the developers of Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the Pull Request.
+Once you have pushed your branch, then you can go to either fork and (in the GUI) `submit a Pull Request
+<https://help.github.com/articles/creating-a-pull-request/>`_. Regardless of the name of your branch, your PR should be
+submitted to the Sylabs development branch. This will open up a nice conversation interface / forum for the developers of
+Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with
+the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the
+Pull Request.
 
 Support, helping, and spreading the word!
 ========================================
