@@ -87,8 +87,6 @@ Now, we need to checkout are branch, more-content...
     git push origin master
 
 
-And then I would return to working on the branch for my feature. How to do that exactly? Read on!
-
 Step 3. Checkout a new branch
 =============================
 
