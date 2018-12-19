@@ -90,7 +90,7 @@ Now, we need to checkout are branch, more-content...
 Step 3. Checkout a new branch
 =============================
 
-`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features from the main branch. Given that we’ve just cloned the repo, we probably want to work off of the current development branch, which has the most up to date “next version” of the software. So we can start by checking out that branch:
+`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features from the main branch. Given that we’ve just cloned the repo, we probably want to work off of the current development branch, which has the most up to date “next version” of the software. So we can start by checking-out that branch:
 
 .. code-block:: none
 
