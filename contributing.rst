@@ -76,9 +76,7 @@ We also have an official `CONTRIBUTING <https://github.com/sylabs/singularity/bl
 Step 1. Fork the repo
 =====================
 
-To contribute to Singularity, you should obtain a GitHub account and fork the
-`Singularity <https://github.com/sylabs/singularity>`_ repository. Once forked, you will want to
-clone the fork of the repo to your computer: obviously, you should replace ``your-username`` with your username.
+To contribute to Singularity, you should obtain a GitHub account and fork the `Singularity <https://github.com/sylabs/singularity>`_ repository. Once forked, you will want to clone the fork of the repo to your computer: obviously, you should replace ``your-username`` with your username.
 
 .. code-block:: none
 
@@ -103,9 +101,7 @@ And then I would return to working on the branch for my feature. How to do that 
 Step 3. Checkout a new branch
 =============================
 
-`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features from the main branch.
-Given that we’ve just cloned the repo, we probably want to work off of the current development branch, which
-has the most up to date “next version” of the software. So we can start by checking out that branch:
+`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features from the main branch. Given that we’ve just cloned the repo, we probably want to work off of the current development branch, which has the most up to date “next version” of the software. So we can start by checking out that branch:
 
 .. code-block:: none
 
@@ -114,9 +110,7 @@ has the most up to date “next version” of the software. So we can start by c
     git pull origin development
 
 
-At this point, you can either choose to work on this branch, push to your origin development and pull request to Sylabs
-development, or you can checkout another branch specific to your feature. We recommend always working from, and staying, in
-sync with development. The command below would checkout a branch called ``my-awesome-new-feature`` from development.
+At this point, you can either choose to work on this branch, push to your origin development and pull request to Sylabs development, or you can checkout another branch specific to your feature. We recommend always working from, and staying, in sync with development. The command below would checkout a branch called ``my-awesome-new-feature`` from development.
 
 .. code-block:: none
 
@@ -124,8 +118,7 @@ sync with development. The command below would checkout a branch called ``my-awe
     
     git checkout -b my-awesome-feature development
 
-Note that you should commit changes to the branch you are working on before changing branches, otherwise they would be lost.
-GitHub will give you a warning and prevent you from changing branches if this is the case, so don’t worry too much about it.
+Note that you should commit changes to the branch you are working on before changing branches, otherwise they would be lost. GitHub will give you a warning and prevent you from changing branches if this is the case, so don’t worry too much about it.
 
 
 Step 4. Make your changes
