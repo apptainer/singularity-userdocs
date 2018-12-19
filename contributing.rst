@@ -59,18 +59,9 @@ More information about contributing to the documentation, and the instructions o
 Contribute to the code
 ----------------------
 
-To contribute to the development of Singularity, you must:
-
--  Own the code and/or have the right to contribute it.
-
--  Be able to submit software under the ``3 clause BSD`` (or equivalent) license (while other licenses are allowed to be submitted by the license, acceptance of any contribution is up to the project lead).
-
--  Read, understand, and agree to the license.
-
--  Have a GitHub account (this just makes it easier for me).
-
 We use the traditional `GitHub Flow <https://guides.github.com/introduction/flow/>`_ to develop. This means that you fork the repo and checkout a branch to make changes, you submit a pull request (PR) to the development branch with your changes, and the development branch gets merged with master for official releases.
-We also have an official `CONTRIBUTING <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md>`_ document, which also includes a `code of conduct <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
+
+Check out our official `CONTRIBUTING <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md>`_ document, which also includes a `code of conduct <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
 
 
 Step 1. Fork the repo
