@@ -20,6 +20,11 @@ or code! If you haven’t already, check out some of the ways to contribute to c
 
 -  `Contribute docs <#contributing-to-documentation>`_
 
+.. _report-a-issue:
+
+-  `Report a Issue <#report-a-issue>`_
+
+
 Singularity Google Group
 ========================
 
@@ -192,3 +197,15 @@ Other dependencies include:
 - `Sphinx <https://pypi.org/project/Sphinx/>`_
 
 More information about contributing to the documentation, and the instructions on how to install the dependencies, and how to generate the files can be obtained `here <https://github.com/sylabs/singularity-userdocs#singularity-user-docs>`_.
+
+
+-----------------
+Reporting a Issue
+-----------------
+
+
+For general bugs/issues, you can open a issue `at our GitHub repo <https://github.com/sylabs/singularity>`_. However, if you find a security related issue/problem, please email us insread at security@sylabs.io.
+
+
+
+
