@@ -133,17 +133,11 @@ the branch:
     
     git commit -m "what changed?"
 
-This commit message is important - it should describe exactly the changes that you have made. Bad commit messages are like:
+This commit message is important - it should describe exactly the changes that you have made. Good commit messages are like:
 
-- changed code
+- ``changed function “get_config” in functions.py to output csv to fix #2``
 
-- updated files
-
-Good commit messages are like:
-
-- changed function “get_config” in functions.py to output csv to fix #2
-
-- updated docs about shell to close #10
+- ``updated docs about shell to close #10``
 
 The tags “close #10” and “fix #2” are referencing issues that are posted on the main repo you are going to do a pull request to. Given that your fix is merged into the master branch, these messages will automatically close the issues, and further, it will link your commits directly to the issues they intended to fix. This is very important down the line if someone wants to understand your contribution, or (hopefully not) revert the code back to a previous version.
 
