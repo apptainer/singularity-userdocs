@@ -76,7 +76,7 @@ We also have an official `CONTRIBUTING <https://github.com/sylabs/singularity/bl
 Step 1. Fork the repo
 =====================
 
-To contribute to Singularity, you should obtain a GitHub account and fork the `Singularity <https://github.com/sylabs/singularity>`_ repository. Once forked, you will want to clone the fork of the repo to your computer: obviously, you should replace ``your-username`` with your username.
+To contribute to Singularity, you should obtain a GitHub account and fork the `Singularity <https://github.com/sylabs/singularity>`_ repository. Once forked, you will want to clone the fork of the repo to your computer: (obviously, you should replace ``your-username`` with your GitHub username)
 
 .. code-block:: none
 
