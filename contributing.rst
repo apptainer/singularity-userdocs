@@ -158,7 +158,7 @@ the code base will also be run. If there is an issue, you can continue to push c
 Pull Request.
 
 Support, helping, and spreading the word!
-========================================
+=========================================
 
 This is a huge endeavor, and it is greatly appreciated! If you have been using Singularity and having good luck with it, join our `Google Group <https://groups.google.com/a/lbl.gov/forum/#!forum/singularity>`_ and help out other users! Post to online communities about Singularity, and request that your distribution vendor, service provider, and system administrators include Singularity for you!
 
