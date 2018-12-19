@@ -121,18 +121,8 @@ sync with development. The command below would checkout a branch called ``my-awe
 .. code-block:: none
 
     # Checkout a new branch called my-awesome-feature
+    
     git checkout -b my-awesome-feature development
-
-
-The addition of the ``-b`` argument tells git that we want to make a new branch. If I want to just change branches
-(for example back to master) I can do the same command without ``-b``:
-
-.. code-block:: none
-
-    # Change back to master
-
-    git checkout master
-
 
 Note that you should commit changes to the branch you are working on before changing branches, otherwise they would be lost.
 GitHub will give you a warning and prevent you from changing branches if this is the case, so don’t worry too much about it.
