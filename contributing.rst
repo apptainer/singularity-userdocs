@@ -43,13 +43,13 @@ You can contribute to the documentation by sending a `pull request <https://help
 
 The current documentation is generated with:
 
-- `reStructured Text (RST) <http://docutils.sourceforge.net/rst.html>`_ and `ReadTheDocs <https://readthedocs.org/>`_
+- `reStructured Text (RST) <http://docutils.sourceforge.net/rst.html>`_ and `ReadTheDocs <https://readthedocs.org/>`_.
 
 Other dependencies include:
 
-- `Python 2.7 <https://www.python.org/download/releases/2.7/>`_
+- `Python 2.7 <https://www.python.org/download/releases/2.7/>`_.
 
-- `Sphinx <https://pypi.org/project/Sphinx/>`_
+- `Sphinx <https://pypi.org/project/Sphinx/>`_.
 
 More information about contributing to the documentation, and the instructions on how to install the dependencies, and how to generate the files can be obtained `here <https://github.com/sylabs/singularity-userdocs#singularity-user-docs>`_.
 
