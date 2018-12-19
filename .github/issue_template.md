@@ -1,14 +1,14 @@
 
 ## Which Document page:
 
-What page is the problem on.
+On what page is the problem?
 
 
 ### Expected results:
 
-What are you expexted to see.
+What are you expecting to see?
 
 
 ### Actual results:
 
-What the problem is, whats misspelled, or whats missing.
+What is the problem, what's misspelled, or what's missing?
