@@ -96,9 +96,6 @@ Step 3. Checkout a new branch
 .. code-block:: none
 
     git checkout -b development
-    
-    git pull origin development
-
 
 At this point, you can either choose to work on this branch, push to your origin development and pull request to Sylabs development, or you can checkout another branch specific to your feature. We recommend always working from, and staying, in sync with development. The command below would checkout a branch called ``my-awesome-new-feature`` from development.
 
