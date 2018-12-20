@@ -76,7 +76,7 @@ To contribute to Singularity, you should obtain a GitHub account and fork the `S
     cd singularity/
 
 
-Now, we need to checkout are branch, more-content...
+Cloning the repo will bring me an exact copy of the Singularity repository at that moment, but we need to update to the master branch, you will need to follow the next steps:
 
 .. code-block:: none
 
