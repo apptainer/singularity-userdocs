@@ -118,7 +118,7 @@ the branch:
 
 .. code-block:: none
 
-    git add file-changed1 files-changed2
+    git add .
     
     git commit -m "what changed?"
 
