@@ -110,6 +110,8 @@ At this point, you can either choose to work on this branch, push to your origin
 
 Note that you should commit changes to the branch you are working on before changing branches, otherwise they would be lost. GitHub will give you a warning and prevent you from changing branches if this is the case, so don’t worry too much about it.
 
+You can always check which branch you are in by ``git branch``.
+
 
 Step 4. Make your changes
 =========================
