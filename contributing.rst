@@ -81,11 +81,12 @@ Cloning the repo will bring me an exact copy of the Singularity repository at th
 .. code-block:: none
 
     git checkout master
-    
-    git pull upstream master
-    
-    git push origin master
 
+    git fetch upstream
+
+    git pull upstream master
+
+    git push origin master
 
 Step 3. Checkout a new branch
 =============================
