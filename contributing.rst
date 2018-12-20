@@ -169,8 +169,7 @@ Reporting a Issue
 -----------------
 
 
-For general bugs/issues, you can open a issue `at our GitHub repo <https://github.com/sylabs/singularity>`_. However, if you find a security related issue/problem, please email us instead at security@sylabs.io.
-
+For general bugs/issues, you can open a issue `at our GitHub repo <https://github.com/sylabs/singularity>`_. However, if you find a security related issue/problem, please email us instead at `security@sylabs.io <mailto:security@sylabs.io>`_.
 
 
 
