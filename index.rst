@@ -16,4 +16,3 @@ User Guide
    Network Options <networking>
    Cgroups Support <cgroups>
    Appendix <appendix>
-   
