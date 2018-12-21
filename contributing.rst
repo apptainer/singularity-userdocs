@@ -10,14 +10,7 @@ Support Singularity
 
 Singularity is an open source project, meaning we have the challenge of limited resources.
 We are grateful for any support that you might offer to other users in the way of helping with issues, documentation,
-or code! If you haven’t already, check out some of the ways to contribute: to docs, code, and issue reporting:
-
--  `Contribute docs <#contributing-to-documentation>`_
-
--  `Contribute code <#contribute-to-the-code>`_
-
--  `Report a Issue <#reporting-a-issue>`_
-
+or code! If you haven’t already, check out some of the ways to contribute: to docs, code, and issue reporting.
 
 Singularity Google Group
 ========================
