@@ -71,22 +71,17 @@ To contribute to Singularity, you should obtain a GitHub account and fork the `S
 
 .. code-block:: none
 
-    git clone https://github.com/your-username/singularity.git
+    $ git clone https://github.com/your-username/singularity.git \
+      cd singularity/
 
-    cd singularity/
-
-
-Cloning the repo will bring me an exact copy of the Singularity repository at that moment, but we need to update to the master branch, you will need to follow the next steps:
+Cloning the repo will create an exact copy of the Singularity repository at that moment. in the event that you need to update a master branch, you will need to follow the next steps:
 
 .. code-block:: none
 
-    git checkout master
-
-    git fetch upstream
-
-    git pull upstream master
-
-    git push origin master
+    $ git remote add upstream https://github.com/sylabs/singularity.git # to add a new remote named "upstream" \
+      git checkout master # or another branch to be updated \
+      git pull upstream master \
+      git push origin master # to update your fork
 
 Step 3. Checkout a new branch
 =============================
@@ -97,7 +92,8 @@ Step 3. Checkout a new branch
 
     git checkout -b development
 
-At this point, you can either choose to work on this branch, push to your origin development and pull request to Sylabs development, or you can checkout another branch specific to your feature. We recommend always working from, and staying, in sync with development. The command below would checkout a branch called ``my-awesome-new-feature`` from development.
+At this point, you can either choose to work on this branch, push to your origin master and pull request to Sylabs master, or you can checkout another branch specific to your feature. We recommend always working from, and staying, in sync with master. The command below would checkout a branch called ``my-awesome-new-feature`` from master.
+
 
 .. code-block:: none
 
