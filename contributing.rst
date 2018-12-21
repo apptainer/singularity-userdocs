@@ -90,7 +90,7 @@ Step 3. Checkout a new branch
 
 .. code-block:: none
 
-    git checkout -b development
+    $ git checkout -b development
 
 At this point, you can either choose to work on this branch, push to your origin master and pull request to Sylabs master, or you can checkout another branch specific to your feature. We recommend always working from, and staying, in sync with master. The command below would checkout a branch called ``my-awesome-new-feature`` from master.
 
@@ -99,7 +99,7 @@ At this point, you can either choose to work on this branch, push to your origin
 
     # Checkout a new branch called my-awesome-feature
     
-    git checkout -b my-awesome-feature development
+    $ git checkout -b my-awesome-feature development
 
 Note that you should commit changes to the branch you are working on before changing branches, otherwise they would be lost. GitHub will give you a warning and prevent you from changing branches if this is the case, so don’t worry too much about it.
 
@@ -114,9 +114,9 @@ the branch:
 
 .. code-block:: none
 
-    git add file-changed1 file-changed2...
+    $ git add file-changed1 file-changed2...
     
-    git commit -m "what changed?"
+    $ git commit -m "what changed?"
 
 This commit message is important - it should describe exactly the changes that you have made. Good commit messages are like:
 
@@ -133,14 +133,14 @@ When you are done with your commits, you should push your branch to your fork (a
 
 .. code-block:: none
 
-    git push origin my-awesome-feature
+    $ git push origin my-awesome-feature
 
 
 Note that you should always check the status of your branches to see what has been pushed (or not):
 
 .. code-block:: none
 
-    git status
+    $ git status
 
 
 Step 6. Submit a Pull Request
