@@ -29,9 +29,11 @@ also define custom environment variables in your Recipe file as follows:
 
     %environment
 
-        VARIABLE_NAME=VARIABLE_VALUE
-
-        export VARIABLE_NAME
+        #First define them
+        VARIABLE_PATH=/usr/local/bootstrap
+        VARIABLE_VERSION=3.0
+        #Then export them
+        export VARIABLE_PATH VARIABLE_VERSION
 
 You may need to add environment variables to your container during the
 ``%post`` section. For instance, maybe you will not know the appropriate
@@ -46,7 +48,8 @@ To add variables to the environment during ``%post`` you can use the
         echo 'export VARIABLE_NAME=VARIABLE_VALUE' >>$SINGULARITY_ENVIRONMENT
 
 Text in the ``%environment`` section will be appended to the file ``/.singularity.d/env/90-environment.sh`` while text redirected
-to ``$SINGULARITY_ENVIRONMENT`` will end up in the file /.singularity.d/env/91-environment.sh.
+to ``$SINGULARITY_ENVIRONMENT`` will end up in the file ``/.singularity.d/env/91-environment.sh``. Of course if no environment variables are exported during the
+``%post`` section, the file ``/.singularity.d/env/91-environment.sh``
 
 Because files in ``/.singularity.d/env`` are sourced in alpha-numerical order, this means that
 variables added using ``$SINGULARITY_ENVIRONMENT`` take precedence over those added via the ``%environment``
@@ -86,7 +89,7 @@ to remove the host environment from the container. If we remove the ``--cleanenv
 we will still pass forward ``HELLO=WORLD``, and the list shown above, but we will
 also pass forward all the other environment variables from the host.
 
-If you need to change the $PATH of your container at runtime there are
+If you need to change the ``$PATH`` of your container at runtime there are
 a few environmental variables you can use:
 
 -  ``SINGULARITYENV_PREPEND_PATH=/good/stuff/at/beginning`` to prepend directories to the beginning of the ``$PATH``
@@ -99,62 +102,37 @@ a few environmental variables you can use:
 Labels
 ------
 
-Your container stores metadata about it’s build, along with Docker
+Your container stores metadata about its build, along with Docker
 labels, and custom labels that you define during build in a ``%labels`` section.
 
-For containers that are generated with Singularity version 2.4 and
+For containers that are generated with Singularity version 3.0 and
 later, labels are represented using the `rc1 Label Schema <http://label-schema.org/rc1/>`_. For
 example:
 
 .. code-block:: none
 
-    $ singularity inspect dino.img
+    $ singularity inspect jupyter.sif
 
-    {
+        {
+            "OWNER": "Joana",
 
-        "org.label-schema.usage.singularity.deffile.bootstrap": "docker",
+	          "org.label-schema.build-date": "Friday_21_December_2018_0:49:50_CET",
 
-        "MAINTAINER": "Vanessasaurus",
+            "org.label-schema.schema-version": "1.0",
 
-        "org.label-schema.usage.singularity.deffile": "Singularity.help",
+            "org.label-schema.usage": "/.singularity.d/runscript.help",
 
-        "org.label-schema.usage": "/.singularity.d/runscript.help",
+            "org.label-schema.usage.singularity.deffile.bootstrap": "library",
 
-        "org.label-schema.schema-version": "1.0",
+            "org.label-schema.usage.singularity.deffile.from": "debian:9",
 
-        "org.label-schema.usage.singularity.deffile.from": "ubuntu:latest",
+            "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
 
-        "org.label-schema.build-date": "2017-07-28T22:59:17-04:00",
+            "org.label-schema.usage.singularity.version": "3.0.1-236.g2453fdfe"
+        }
 
-        "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
-
-        "org.label-schema.usage.singularity.version": "2.3.1-add/label-schema.g00f040f",
-
-        "org.label-schema.build-size": "715MB"
-
-    }
-
-You will notice that the one label doesn’t belong to the label schema, ``MAINTAINER`` .
-This was a user provided label during bootstrap. Finally, for
-Singularity versions >= 2.4, the image build size is added as a label, ``org.label-schema.build-size``,
-and the label schema is used throughout. For versions earlier than 2.4,
-containers did not use the label schema, and looked like this:
-
-.. code-block:: none
-
-    singularity exec centos7.img cat /.singularity.d/labels.json
-
-    { "name":
-
-          "CentOS Base Image",
-
-           "build-date": "20170315",
-
-           "vendor": "CentOS",
-
-           "license": "GPLv2"
-
-    }
+You will notice that the one label doesn’t belong to the label schema, ``OWNER`` .
+This was a user provided label during bootstrap.
 
 You can add custom labels to your container in a bootstrap file:
 
@@ -165,10 +143,9 @@ You can add custom labels to your container in a bootstrap file:
     From: ubuntu: latest
 
 
-
     %labels
 
-    AUTHOR Vanessasaur
+    AUTHOR Joana
 
 
 The ``inspect`` command is useful for viewing labels and other container meta-data.
@@ -202,7 +179,13 @@ helpful to know where they are and what they do:
 
     │   ├── 01-base.sh
 
+    |   ├── 10-docker2singularity.sh
+
     │   ├── 90-environment.sh
+
+    │   ├── 91-environment.sh
+
+    |   ├── 94-appsbase.sh
 
     │   ├── 95-apps.sh
 
@@ -214,12 +197,14 @@ helpful to know where they are and what they do:
 
     ├── runscript
 
+    ├── runscript.help
+
     ├── Singularity
 
     └── startscript
 
 -  **actions**: This directory contains helper scripts to allow the
-   container to carry out the action commands.
+   container to carry out the action commands. (e.g. ``exec`` , ``run`` or ``shell``)
 
 -  **env**: All \*.sh files in this directory are sourced in
    alpha-numeric order when the container is initiated. For legacy
@@ -235,12 +220,14 @@ helpful to know where they are and what they do:
 -  **runscript**: The commands in this file will be executed when the
    container is invoked with the ``run`` command or called as an executable. For
    legacy purposes there is a symbolic link called ``/singularity`` that points to this
-   file
+   file.
+
+-  **runscript.help**: Contains the description that was added in the ``%help`` section.
 
 -  **Singularity**: This is the Recipe file that was used to generate
    the container. If more than 1 Recipe file was used to generate the
    container additional Singularity files will appear in numeric order
-   in a sub-directory called ``bootstrap_history``
+   in a sub-directory called ``bootstrap_history``.
 
 -  **startscript**: The commands in this file will be executed when the
    container is invoked with the ``instance.start`` command.
