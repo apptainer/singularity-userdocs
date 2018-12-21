@@ -34,7 +34,7 @@ Contributing to Documentation
 
 We (like almost all open source software providers) have a documentation dilemma… We tend to focus on the code features and functionality before working on documentation. And there is very good reason for this: we want to share the love so nobody feels left out!
 
-You can contribute to the documentation by `raising an issue to suggest an improvement <https://github.com/sylabs/singularity-userdocs/issues>`_ or by sending a `pull request <https://help.github.com/articles/about-pull-requests/>`_ on `our repository for documentation <https://github.com/sylabs/singularity-userdocs>`_.
+You can contribute to the documentation by `raising an issue to suggest an improvement <https://github.com/sylabs/singularity-userdocs>`_ or by sending a `pull request <https://github.com/sylabs/singularity-userdocs>`_ on `our repository for documentation <https://github.com/sylabs/singularity-userdocs>`_.
 
 The current documentation is generated with:
 
