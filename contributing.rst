@@ -19,9 +19,7 @@ Joining the community
 Singularity Google Group
 ========================
 
-This is a huge endeavor, and it is greatly appreciated! If you have been using Singularity and having good luck with it,
-join our `Google Group <https://groups.google.com/a/lbl.gov/forum/#!forum/singularity>`_  and help out other users! Post to online communities about Singularity, and request that your distribution vendor,
-service provider, and system administrators include Singularity for you!
+This is a huge endeavor, and your help would be greatly appreciated! If you have been using Singularity and having good luck with it, join our `Google Group <https://groups.google.com/a/lbl.gov/forum/#!forum/singularity>`_  and help out other users! Post to online communities about Singularity, and request that your distribution vendor, service provider, and system administrators include Singularity for you!
 
 Singularity on Slack
 ====================
@@ -36,7 +34,7 @@ Contributing to Documentation
 
 We (like almost all open source software providers) have a documentation dilemma… We tend to focus on the code features and functionality before working on documentation. And there is very good reason for this: we want to share the love so nobody feels left out!
 
-You can contribute to the documentation by sending a `pull request <https://help.github.com/articles/about-pull-requests/>`_ on our repository for documentation.
+You can contribute to the documentation by `raising an issue to suggest an improvement <https://github.com/sylabs/singularity-userdocs/issues>`_ or by sending a `pull request <https://help.github.com/articles/about-pull-requests/>`_ on `our repository for documentation <https://github.com/sylabs/singularity-userdocs>`_.
 
 The current documentation is generated with:
 
