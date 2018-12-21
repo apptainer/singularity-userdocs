@@ -151,7 +151,7 @@ Pull Request.
 Support, helping, and spreading the word!
 =========================================
 
-This is a huge endeavor, and it is greatly appreciated! If you have been using Singularity and having good luck with it, join our `Google Group <https://groups.google.com/a/lbl.gov/forum/#!forum/singularity>`_ and help out other users! Post to online communities about Singularity, and request that your distribution vendor, service provider, and system administrators include Singularity for you!
+This is a huge endeavor, and it is greatly appreciated! If you have been using Singularity and having good luck with it, Post to online communities about Singularity, and request that your distribution vendor, service provider, and system administrators include Singularity for you!
 
 .. _report-a-issue:
 
