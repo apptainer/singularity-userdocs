@@ -6,6 +6,7 @@ User Guide
    :maxdepth: 5
 
    Quick Start <quick_start>
+   Contributing <contributing>
    Installation <installation>
    Build a container <build_a_container>
    The Definition File <definition_files>
@@ -16,4 +17,3 @@ User Guide
    Network Options <networking>
    Cgroups Support <cgroups>
    Appendix <appendix>
-   Contributing <contributing>
