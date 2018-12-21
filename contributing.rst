@@ -54,7 +54,7 @@ More information about contributing to the documentation, and the instructions o
 Contribute to the code
 ----------------------
 
-We use the traditional `GitHub Flow <https://guides.github.com/introduction/flow/>`_ to develop. This means that you fork the repo and checkout a branch to make changes, you submit a pull request (PR) to the development branch with your changes, and the development branch gets merged with master for official releases.
+We use the traditional `GitHub Flow <https://guides.github.com/introduction/flow/>`_ to develop. This means that you fork the repo and create a new a branch to make changes, you submit a pull request (PR) to the master branch with your changes.
 
 Check out our official `CONTRIBUTING <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md>`_ document, which also includes a `code of conduct <https://github.com/sylabs/singularity/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
 
@@ -143,7 +143,7 @@ Step 6. Submit a Pull Request
 
 Once you have pushed your branch, then you can go to either fork and (in the GUI) `submit a Pull Request
 <https://help.github.com/articles/creating-a-pull-request/>`_. Regardless of the name of your branch, your PR should be
-submitted to the Sylabs development branch. This will open up a nice conversation interface / forum for the developers of
+submitted to the Sylabs master branch. This will open up a nice conversation interface / forum for the developers of
 Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with
 the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the
 Pull Request.
