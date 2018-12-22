@@ -81,11 +81,11 @@ Cloning the repo will create an exact copy of the Singularity repository at that
 Step 3. Checkout a new branch
 =============================
 
-`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features from the main branch. Given that we’ve just cloned the repo, we probably want to work off of the current development branch, which has the most up to date “next version” of the software. So we can start by checking-out that branch:
+`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features from the main branch. Given that we’ve just cloned the repo, we will probably want to make a new branch with for that feature:
 
 .. code-block:: none
 
-    $ git checkout -b development
+    $ git checkout -b new-feature
 
 At this point, you can either choose to work on this branch, push to your origin master and pull request to Sylabs master, or you can checkout another branch specific to your feature. We recommend always working from, and staying, in sync with master. The command below would checkout a branch called ``my-awesome-new-feature`` from master.
 
@@ -94,7 +94,7 @@ At this point, you can either choose to work on this branch, push to your origin
 
     # Checkout a new branch called my-awesome-feature
     
-    $ git checkout -b my-awesome-feature development
+    $ git checkout -b my-awesome-feature feature
 
 Note that you should commit changes to the branch you are working on before changing branches, otherwise they would be lost. GitHub will give you a warning and prevent you from changing branches if this is the case, so don’t worry too much about it.
 
