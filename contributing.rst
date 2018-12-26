@@ -141,9 +141,9 @@ Note that you should always check the status of your branches to see what has be
 Step 6. Submit a Pull Request
 =============================
 
-Once you have pushed your branch, then you can go to either fork and (in the GUI) `submit a Pull Request
+Once you have pushed your branch, then you can go to your fork (in the GUI) and `submit a Pull Request
 <https://help.github.com/articles/creating-a-pull-request/>`_. Regardless of the name of your branch, your PR should be
-submitted to the Sylabs master branch. This will open up a nice conversation interface / forum for the developers of
+submitted to the Sylabs ``master`` branch. This will open up a nice conversation interface / forum for the developers of
 Singularity to discuss your contribution, likely after testing. At this time, any continuous integration that is linked with
 the code base will also be run. If there is an issue, you can continue to push commits to your branch and it will update the
 Pull Request.
