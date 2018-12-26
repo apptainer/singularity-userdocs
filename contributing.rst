@@ -46,7 +46,7 @@ Other dependencies include:
 
 - `Sphinx <https://pypi.org/project/Sphinx/>`_.
 
-More information about contributing to the documentation, and the instructions on how to install the dependencies, and how to generate the files can be obtained `here <https://github.com/sylabs/singularity-userdocs/blob/master/README.md#singularity-user-docs>`_.
+More information about contributing to the documentation, instructions on how to install the dependencies, and how to generate the files can be obtained `here <https://github.com/sylabs/singularity-userdocs/blob/master/README.md#singularity-user-docs>`_.
 
 .. _contribute-to-the-code:
 
