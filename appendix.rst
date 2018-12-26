@@ -2,6 +2,26 @@
 Appendix
 ========
 
+.. _singularity-environment-variables:
+
+-----------------------------------
+Singularity's environment variables
+-----------------------------------
+
+Singularity 3.0 comes with some environment variables you can set or modify depending on your needs.
+You can see them listed below with their respective functionality.
+
+#. **SINGULARITY_ENVIRONMENT**: Contains all the environment variables that have been exported in your container.
+
+#. **SINGULARITY_ROOTFS**: To reference the system file location.
+
+#. **SINGULARITY_BINDPATH**: Path to bind between the host and the container.
+
+#. **SINGULARITY_IMAGE**: Filename of the container.
+
+#. **TMPDIR**: Used with the ``build`` command, to consider a temporary location for the build.
+
+
 .. _build-library-module:
 
 ---------------------------
