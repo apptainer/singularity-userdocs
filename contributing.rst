@@ -34,7 +34,7 @@ Contributing to Documentation
 
 We (like almost all open source software providers) have a documentation dilemma… We tend to focus on the code features and functionality before working on documentation. And there is very good reason for this: we want to share the love so nobody feels left out!
 
-You can contribute to the documentation by `raising an issue to suggest an improvement <https://github.com/sylabs/singularity-userdocs>`_ or by sending a `pull request <https://github.com/sylabs/singularity-userdocs>`_ on `our repository for documentation <https://github.com/sylabs/singularity-userdocs>`_.
+You can contribute to the documentation by `raising an issue to suggest an improvement <https://github.com/sylabs/singularity-userdocs/issues/new>`_ or by sending a `pull request <https://github.com/sylabs/singularity-userdocs/compare>`_ on `our repository for documentation <https://github.com/sylabs/singularity-userdocs>`_.
 
 The current documentation is generated with:
 
@@ -69,7 +69,7 @@ To contribute to Singularity, you should obtain a GitHub account and fork the `S
     $ git clone https://github.com/your-username/singularity.git \
       cd singularity/
 
-Cloning the repo will create an exact copy of the Singularity repository at that moment. in the event that you need to update a master branch, you will need to follow the next steps:
+Cloning the repo will create an exact copy of the Singularity repository at that moment. In the event that you need to update a branch, you will need to follow the next steps:
 
 .. code-block:: none
 
@@ -78,30 +78,26 @@ Cloning the repo will create an exact copy of the Singularity repository at that
       git pull upstream master \
       git push origin master # to update your fork
 
-Step 3. Checkout a new branch
+Step 2. Checkout a new branch
 =============================
 
-`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features from the main branch. Given that we’ve just cloned the repo, we will probably want to make a new branch with for that feature:
+`Branches <https://guides.github.com/introduction/flow//>`_ are a way of isolating your features from the main branch. Given that we’ve just cloned the repo, we will probably want to make a new branch with for that feature, lets call that branch ``new-feature``:
 
 .. code-block:: none
 
     $ git checkout -b new-feature
 
-At this point, you can either choose to work on this branch, push to your origin master and pull request to Sylabs master, or you can checkout another branch specific to your feature. We recommend always working from, and staying, in sync with master. The command below would checkout a branch called ``my-awesome-new-feature`` from master.
-
+Then we will name that branch ``my-awsome-feature``:
 
 .. code-block:: none
 
-    # Checkout a new branch called my-awesome-feature
-    
     $ git checkout -b my-awesome-feature feature
 
-Note that you should commit changes to the branch you are working on before changing branches, otherwise they would be lost. GitHub will give you a warning and prevent you from changing branches if this is the case, so don’t worry too much about it.
+.. note::
 
-You can always check which branch you are in by ``git branch``.
+    You can always check which branch you are in by running ``git branch``.
 
-
-Step 4. Make your changes
+Step 3. Make your changes
 =========================
 
 On your new branch, go nuts! Make changes, test them, and when you are happy with a bit of progress, commit the changes to
@@ -121,7 +117,7 @@ This commit message is important - it should describe exactly the changes that y
 
 The tags ``close #10`` and ``fix #2`` are referencing issues that are posted on the main repo you are going to do a pull request to. Given that your fix is merged into the master branch, these messages will automatically close the issues, and further, it will link your commits directly to the issues they intended to fix. This is very important down the line if someone wants to understand your contribution, or (hopefully not) revert the code back to a previous version.
 
-Step 5. Push your branch to your fork
+Step 4. Push your branch to your fork
 =====================================
 
 When you are done with your commits, you should push your branch to your fork (and you can also continuously push commits here as you work):
@@ -138,7 +134,7 @@ Note that you should always check the status of your branches to see what has be
     $ git status
 
 
-Step 6. Submit a Pull Request
+Step 5. Submit a Pull Request
 =============================
 
 Once you have pushed your branch, then you can go to your fork (in the GUI) and `submit a Pull Request
