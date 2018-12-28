@@ -19,7 +19,21 @@ You can see them listed below with their respective functionality.
 
 #. **SINGULARITY_IMAGE**: Filename of the container.
 
-#. **TMPDIR**: Used with the ``build`` command, to consider a temporary location for the build.
+#. **SINGULARITY_TMPDIR**: Used with the ``build`` command, to consider a temporary location for the build.
+
+#. **SINGULARITY_NOHTTPS**: Which can be set to "1" (true) to avoid HTTPS or "0" to allow HTTPS for communicating with the docker local registry.
+
+#. **SINGULARITY_LIBRARY**: To specify the library from where to pull from.
+
+#. **SINGULARITY_FORCE**: To overwrite an image file if it exists. Set to "1" true to overwrite otherwise set to "0" by default.
+
+#. **SINGULARIY_NAME**: To specify a custom image name from build or pull commands.
+
+#. **SINGULARITY_SANDBOX**: Used with build to specify the image as a sandbox format. (Chroot directory structure)
+
+#. **SINGULARITY_SECTION**: Use on build command, to run only specific sections of the definition file.
+
+#. **SINGULARITY_JSON**: To build a definition file s
 
 
 .. _build-library-module:
