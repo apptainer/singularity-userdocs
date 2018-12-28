@@ -48,15 +48,15 @@ To add variables to the environment during ``%post`` you can use the
         echo 'export VARIABLE_NAME=VARIABLE_VALUE' >>$SINGULARITY_ENVIRONMENT
 
 Text in the ``%environment`` section will be appended to the file ``/.singularity.d/env/90-environment.sh`` while text redirected
-to ``$SINGULARITY_ENVIRONMENT`` will end up in the file ``/.singularity.d/env/91-environment.sh``. Of course if no environment variables are exported during the
-``%post`` section, the file ``/.singularity.d/env/91-environment.sh``
+to ``$SINGULARITY_ENVIRONMENT`` will end up in the file ``/.singularity.d/env/91-environment.sh``.
+Of course if nothing is redirected to ``$SINGULARITY_ENVIRONMENT`` in the ``%post`` section, the file ``/.singularity.d/env/91-environment.sh`` will be empty.
 
 Because files in ``/.singularity.d/env`` are sourced in alpha-numerical order, this means that
 variables added using ``$SINGULARITY_ENVIRONMENT`` take precedence over those added via the ``%environment``
 section.
 
-If you need to define a variable at runtime, set variables inside the
-container by prefixing them with ``SINGULARITYENV_``. They will be
+If you need to define a variable in the container at runtime, when you execute
+Singularity pass a variable prefixed with ``SINGULARITYENV_``. They will be
 transposed automatically and the prefix will be stripped. For example,
 let’s say we want to set the variable ``HELLO`` to have value ``WORLD``. We can do that
 as follows:
@@ -206,7 +206,7 @@ helpful to know where they are and what they do:
 -  **actions**: This directory contains helper scripts to allow the
    container to carry out the action commands. (e.g. ``exec`` , ``run`` or ``shell``)
 
--  **env**: All \*.sh files in this directory are sourced in
+-  **env**: All *.sh files in this directory are sourced in
    alpha-numeric order when the container is initiated. For legacy
    purposes there is a symbolic link called ``/environment`` that points to ``/.singularity.d/env/90-environment.sh``.
 
@@ -230,4 +230,4 @@ helpful to know where they are and what they do:
    in a sub-directory called ``bootstrap_history``.
 
 -  **startscript**: The commands in this file will be executed when the
-   container is invoked with the ``instance.start`` command.
+   container is invoked with the ``instance start`` command.
