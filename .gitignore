@@ -1,6 +1,10 @@
 *~
 #*
 *#
+
+.idea
+.DS_Store
+
 !_build/html/_static/js/
 _build/doctrees/
 _build/html/*
@@ -9,3 +13,4 @@ _build/html/_sources/
 _build/html/_templates/
 _build/html/_static/*
 
+_build/epub/*
