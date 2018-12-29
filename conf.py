@@ -273,3 +273,46 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+# -- Options for Epub output -------------------------------------------------
+
+# Bibliographic Dublin Core info.
+
+# The title of the document. It defaults to the html_title option
+# but can be set independently for epub creation.
+epub_title = 'Singularity ' + version + ' User Documentation'
+
+# The author of the document. This is put in the Dublin Core metadata.
+# It defaults to the author option.
+epub_author = project
+
+# The publisher of the document. This is put in the Dublin Core metadata.
+# You may use any sensible string, e.g. the project homepage. The defaults to the author option.
+epub_publisher = project
+
+# The copyright of the document.
+# It defaults to the copyright option but can be set independently for epub creation.
+epub_copyright = copyright
+
+# The basename for the epub file. It defaults to the project name.
+epub_basename = epub_title.replace(' ', '_')
+
+# The HTML theme for the epub output.
+# Since the default themes are not optimized for small screen space,
+# using the same theme for HTML and epub output is usually not wise.
+# This defaults to 'epub', a theme designed to save visual space.
+epub_theme = 'epub'
+
+# The unique identifier of the text. This can be a ISBN number
+# or the project homepage.
+epub_identifier = 'https://github.com/sylabs/singularity-userdocs'
+
+# The publication scheme for the epub_identifier. This is put in the Dublin Core metadata.
+# For published books the scheme is 'ISBN'. If you use the project homepage, 'URL' seems reasonable.
+epub_scheme = 'URL'
+
+# A unique identification for the text.
+epub_uid = epub_title
+
+# A list of files that should not be packed into the epub file.
+epub_exclude_files = []
