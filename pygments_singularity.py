@@ -14,8 +14,8 @@ class SingularityLexer(RegexLexer):
     filenames = ['*.def', 'Singularity']
     flags = re.IGNORECASE | re.MULTILINE | re.DOTALL
 
-    _headers = r'^(\s)*(bootstrap|from|osversion|mirrorurl|include)(:)'
-    _section = r'^%(?:post|setup|environment|help|labels|test|runscript|files|startscript)\b'
+    _headers = r'^(\s)*(bootstrap|from|osversion|mirrorurl|include|registry|namespace|includecmd)(:)'
+    _section = r'^%(?:pre|post|setup|environment|help|labels|test|runscript|files|startscript)\b'
     _appsect = r'^%app(?:install|help|run|labels|env|test|files)\b'
 
     tokens = {
