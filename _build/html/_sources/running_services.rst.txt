@@ -37,7 +37,7 @@ properly.
 Container Instances in Singularity
 ----------------------------------
 
-For demonstration, let's use an easy example of lolcow_latest.sif image that we
+For demonstration, let's use an easy example of :ref:`lolcow_latest.sif <lolcowimage>` image that we
 previously built.
 
 To start an instance, you should follow this structure:
@@ -234,7 +234,7 @@ API server that converts a web page into a PDF, and can be found
 `here <https://github.com/alvarcarto/url-to-pdf-api>`__.
 You can build the image by following below described steps or if you wish to
 just download the final image directly from Container Library, simply run
-``singularity pull ``.
+``singularity pull``.
 
 Building the image
 ==================
