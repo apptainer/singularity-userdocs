@@ -56,7 +56,7 @@ Environment variables can be included in your container by adding them in the fo
 
   This will give you the following output:
 
-  ..code-block:: none
+  .. code-block:: none
 
       {
           "OWNER": "Joana",
@@ -81,7 +81,7 @@ Environment variables can be included in your container by adding them in the fo
 
       Like this:
 
-      ..code-block:: none
+      .. code-block:: none
 
           Bootstrap: library
 
