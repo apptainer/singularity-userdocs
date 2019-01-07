@@ -80,7 +80,7 @@ Environment variables can be included in your container by adding them in the fo
       should use the ``%labels`` section in your definition file.
 
       Like this:
-
+      
       .. code-block:: none
 
           Bootstrap: library
