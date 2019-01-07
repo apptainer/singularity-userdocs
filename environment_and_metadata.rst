@@ -77,7 +77,7 @@ Environment variables can be included in your container by adding them in the fo
       }
 
       Of course, all of these labels will be shown by default, so to add new custom labels you
-      should use the ``%labels`` section.
+      should use the ``%labels`` section in your definition file.
 
       Like this:
 
