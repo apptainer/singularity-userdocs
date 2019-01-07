@@ -93,6 +93,8 @@ Environment variables can be included in your container by adding them in the fo
       So after building this container with the label inside the ``%labels`` section, the inspect command
       will return the list with the ``MASTER`` label inside.
 
+      Notice that you can use any type of combination that suits your needs, you can consider the sections that
+      you consider are important for building your container.
 
 -----------
 Environment
