@@ -52,7 +52,7 @@ Environment variables can be included in your container by adding them in the fo
 
   .. code-block:: none
 
-      singularity inspect mysifimage.sif
+    $  singularity inspect mysifimage.sif
 
   This will give you the following output:
 
@@ -94,7 +94,8 @@ Environment variables can be included in your container by adding them in the fo
       will return the list with the ``MASTER`` label inside.
 
       Notice that you can use any type of combination that suits your needs, you can consider the sections that
-      you consider are important for building your container.
+      you consider are important for building your container. To know more about the inspect command you can see the
+      :ref:`inspect command section <inspect-command>`.
 
 -----------
 Environment
@@ -232,7 +233,242 @@ You can add custom labels to your container in a bootstrap file:
     AUTHOR Joana
 
 
-The ``inspect`` command is useful for viewing labels and other container meta-data.
+The ``inspect`` command is useful for viewing labels and other container meta-data,
+we will see more in detail the different options that this command offers in the next section.
+
+-----------------------
+The ``inspect`` command
+-----------------------
+
+.. _sec:inspect-command:
+
+The ``inspect`` command gives you the possibility to print out the environment variables and/or metadata that was added in your definition file and that were then added into your container.
+
+Of course the simple execution of inspect command will give you an output in JSON format, but if you are looking to know some parts of the definition file and do not want to print them all,
+you might be interested in the following options:
+
+
+- ``--labels ``
+
+This flag corresponds to the default behavior of the ``inspect`` command. When you run a ``singularity inspect <your-container.sif>`` you will get this same output.
+
+.. code-block:: none
+
+    $ singularity inspect --labels jupyter.sif
+
+And the output would look like:
+
+.. code-block:: none
+    {
+        "org.label-schema.build-date": "Friday_21_December_2018_0:49:50_CET",
+
+        "org.label-schema.schema-version": "1.0",
+
+        "org.label-schema.usage": "/.singularity.d/runscript.help",
+
+        "org.label-schema.usage.singularity.deffile.bootstrap": "library",
+
+        "org.label-schema.usage.singularity.deffile.from": "debian:9",
+
+        "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
+
+        "org.label-schema.usage.singularity.version": "3.0.1-236.g2453fdfe"
+    }
+
+Which of course is the same output as running ``singularity inspect jupyter.sif``.
+
+- ``--deffile``
+
+This flag will give you as an output the def file as you would ``cat`` your definition file on the command line.
+
+.. code-block:: none
+
+    $ singularity inspect --deffile jupyter.sif
+
+And the output would look like:
+
+.. code-block:: none
+
+    bootstrap: library
+    from: debian:9
+
+    %help
+
+      Container with Anaconda 2 (Conda 4.5.11 Canary) and Jupyter Notebook 5.6.0 for Debian 9.x (Stretch).
+      This installation is based on Python 2.7.15
+
+    %environment
+      JUP_PORT=8888
+      JUP_IPNAME=localhost
+      export JUP_PORT JUP_IPNAME
+
+    %startscript
+
+      PORT=""
+      if [ -n "$JUP_PORT" ]; then
+      PORT="--port=${JUP_PORT}"
+      fi
+
+      IPNAME=""
+      if [ -n "$JUP_IPNAME" ]; then
+      IPNAME="--ip=${JUP_IPNAME}"
+      fi
+
+      exec jupyter notebook --allow-root ${PORT} ${IPNAME}
+
+    %setup
+
+      #Create the .condarc file where the environments/channels from conda are specified, these are pulled with preference to root
+      cd /
+      touch .condarc
+
+    %post
+
+      echo 'export RANDOM=123456' >>$SINGULARITY_ENVIRONMENT
+
+      #Installing all dependencies
+
+      apt-get update && apt-get -y upgrade
+      apt-get -y install \
+      build-essential \
+      wget \
+      bzip2 \
+      ca-certificates \
+      libglib2.0-0 \
+      libxext6 \
+      libsm6 \
+      libxrender1 \
+      git
+
+      rm -rf /var/lib/apt/lists/*
+      apt-get clean
+
+      #Installing Anaconda 2 and Conda 4.5.11
+
+      wget -c https://repo.continuum.io/archive/Anaconda2-5.3.0-Linux-x86_64.sh
+      /bin/bash Anaconda2-5.3.0-Linux-x86_64.sh -bfp /usr/local
+
+      #Conda configuration of channels from .condarc file
+
+      conda config --file /.condarc --add channels defaults
+      conda config --file /.condarc --add channels conda-forge
+      conda update conda
+
+      #List installed environments
+      conda list
+
+Which is the definition file for the ``jupyter.sif`` container.
+
+- ``--runscript``
+
+This flag shows the runscript for the image.
+
+.. code-block:: none
+
+    $ singularity inspect --runscript jupyter.sif
+
+And the output would look like:
+
+.. code-block:: none
+
+    #!/bin/sh
+    OCI_ENTRYPOINT=""
+    OCI_CMD="bash"
+    # ENTRYPOINT only - run entrypoint plus args
+    if [ -z "$OCI_CMD" ] && [ -n "$OCI_ENTRYPOINT" ]; then
+    SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} $@"
+    fi
+
+    # CMD only - run CMD or override with args
+    if [ -n "$OCI_CMD" ] && [ -z "$OCI_ENTRYPOINT" ]; then
+    if [ $# -gt 0 ]; then
+        SINGULARITY_OCI_RUN="$@"
+    else
+        SINGULARITY_OCI_RUN="${OCI_CMD}"
+    fi
+    fi
+
+    # ENTRYPOINT and CMD - run ENTRYPOINT with CMD as default args
+    # override with user provided args
+    if [ $# -gt 0 ]; then
+    SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} $@"
+    else
+    SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
+    fi
+
+    exec $SINGULARITY_OCI_RUN
+
+- ``--test``
+
+This flag shows the test script for the image.
+
+.. code-block:: none
+
+    $ singularity inspect --test jupyter.sif
+
+This will output the corresponding ``%test`` section from the definition file.
+
+- ``--environment``
+
+This flag shows the environment settings for the image. The respective environment variables set in ``%environment`` section ( So the ones in ``90-environment.sh`` ) and ``SINGULARITY_ENV`` variables set at runtime (that are located in``91-environment.sh``) will be printed out.
+
+.. code-block:: none
+
+    $ singularity inspect --environment jupyter.sif
+
+And the output would look like:
+
+.. code-block:: none
+
+    ==90-environment.sh==
+    #!/bin/sh
+
+    JUP_PORT=8888
+    JUP_IPNAME=localhost
+    export JUP_PORT JUP_IPNAME
+
+    ==91-environment.sh==
+    export RANDOM=123456
+
+As you can see, the ``JUP_PORT`` and ``JUP_IPNAME`` were previously defined in the ``%environment`` section of the defintion file,
+while the RANDOM variable shown regards to the use of ``SINGULARITYENV_`` variables, so in this case ``SINGULARITYENV_RANDOM`` variable was set and exported at runtime.
+
+- ``--helpfile``
+
+This flag will show the container's description in the ``%help`` section of its definition file.
+
+You can call it this way:
+
+.. code-block:: none
+
+    $ singularity inspect --helpfile jupyter.sif
+
+And the output would look like:
+
+.. code-block:: none
+
+    Container with Anaconda 2 (Conda 4.5.11 Canary) and Jupyter Notebook 5.6.0 for Debian 9.x (Stretch).
+    This installation is based on Python 2.7.15
+
+- ``--json``
+
+This flag gives you the possibility to output your labels in a JSON format.
+
+You can call it this way:
+
+.. code-block:: none
+
+    $ singularity inspect --json jupyter.sif
+
+And the output would look like:
+
+.. code-block:: none
+    {
+	     "attributes": {
+		     "labels": "{\n\t\"org.label-schema.build-date\": \"Friday_21_December_2018_0:49:50_CET\",\n\t\"org.label-schema.schema-version\": \"1.0\",\n\t\"org.label-schema.usage\": \"/.singularity.d/runscript.help\",\n\t\"org.label-schema.usage.singularity.deffile.bootstrap\": \"library\",\n\t\"org.label-schema.usage.singularity.deffile.from\": \"debian:9\",\n\t\"org.label-schema.usage.singularity.runscript.help\": \"/.singularity.d/runscript.help\",\n\t\"org.label-schema.usage.singularity.version\": \"3.0.1-236.g2453fdfe\"\n}"
+	     },
+	     "type": "container"
+    }
 
 ------------------
 Container Metadata
