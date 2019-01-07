@@ -59,7 +59,7 @@ valid in the header. For example, when using the ``library`` bootstrap agent,
 the ``From`` keyword becomes valid. Observe the following example for building a
 Debian container from the Container Library:
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: library
     From: debian:7
@@ -67,7 +67,7 @@ Debian container from the Container Library:
 A def file that uses an official mirror to install Centos-7 might look like
 this:
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: yum
     OSVersion: 7
@@ -109,7 +109,7 @@ any sections at all) within a def file. Furthermore, the order of the sections
 in the def file is unimportant and multiple sections of the same name can be
 included and will be appended to one another during the build process.
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: library
     From: ubuntu:18.04
@@ -172,7 +172,7 @@ the ``%setup`` section.
 
 Consider the example from the definition file above:
 
-.. code-block:: none
+.. code-block:: singularity
 
     %setup
         touch /file1
@@ -201,7 +201,7 @@ specification can be omitted and will be assumed to be the same path as the
 
 Consider the example from the definition file above:
 
-.. code-block:: none
+.. code-block:: singularity
 
     %files
         /file1
@@ -232,7 +232,7 @@ them in your ``%post`` section. Specifically:
 You should use the same conventions that you would use in a ``.bashrc`` or
 ``.profile`` file. Consider this example from the def file above:
 
-.. code-block:: none
+.. code-block:: singularity
 
     %environment
         export LISTEN_PORT=12345
@@ -276,7 +276,7 @@ libraries, write configuration files, create new directories, etc.
 
 Consider the example from the definition file above:
 
-.. code-block:: none
+.. code-block:: singularity
 
     %post
         apt-get update && apt-get install -y netcat
@@ -313,7 +313,7 @@ arguments within your runscript.
 
 Consider the example from the def file above:
 
-.. code-block:: none
+.. code-block:: singularity
 
     %runscript
         echo "Container was created $NOW"
@@ -353,7 +353,7 @@ executed when the ``instance start`` command is issued.
 
 Consider the example from the def file above.
 
-.. code-block:: none
+.. code-block:: singularity
 
     %startscript
         nc -lp $LISTEN_PORT
@@ -382,7 +382,7 @@ through the container itself, using the ``test`` command.
 
 Consider the example from the def file above:
 
-.. code-block:: none
+.. code-block:: singularity
 
     %test
         grep -q NAME=\"Ubuntu\" /etc/os-release
@@ -422,7 +422,7 @@ name-value pair.
 
 Consider the example from the def file above:
 
-.. code-block:: none
+.. code-block:: singularity
 
     %labels
         Author d@sylabs.io
@@ -458,7 +458,7 @@ container during the build. This text can then be displayed using the
 
 Consider the example from the def file above:
 
-.. code-block:: none
+.. code-block:: singularity
 
     %help
         This is a demo container used to illustrate a def file that uses all
@@ -484,7 +484,7 @@ Integration Format (SCI-F) <https://sci-f.github.io/>`_
 The following runscript demonstrates how to build 2 different apps into the
 same container using SCI-F modules:
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: docker
     From: ubuntu

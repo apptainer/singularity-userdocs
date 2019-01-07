@@ -128,11 +128,11 @@ Building containers from Singularity definition files
 
 Of course, Singularity definition files can be used as the target when building
 a container. For detailed information on writing Singularity definition files,
-please see the :ref:`Container Definition docs <container-recipes>`. Let’s say
+please see the :doc:`Container Definition docs <definition_files>`. Let’s say
 you already have the following container definition file called ``lolcow.def``,
 and you want to use it to build a SIF container.
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: docker
     From: ubuntu:16.04

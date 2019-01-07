@@ -583,7 +583,7 @@ container from the host system.
 
 Here is an example of a definition file:
 
-.. code-block:: none
+.. code-block:: singularity
 
     BootStrap: library
     From: ubuntu:16.04

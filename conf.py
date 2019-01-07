@@ -116,7 +116,7 @@ html_context = {
     'display_github': True,
     'github_user': 'sylabs',
     'github_repo': 'singularity-userdocs',
-    'github_version': '3.0',
+    'github_version': 'master',
     'conf_py_path': '/',
 }
 
@@ -316,3 +316,14 @@ epub_uid = epub_title
 
 # A list of files that should not be packed into the epub file.
 epub_exclude_files = []
+
+
+# -- Custom lexer ---------------------------------------------------------
+
+sys.path.append(os.path.join(os.path.dirname(__file__), '.'))
+from sphinx.highlighting import lexers
+from pygments_singularity import SingularityLexer
+
+# lexer for Singularity definition files (added here until it is upstreamed into Pygments).
+lexers['singularity'] = SingularityLexer(startinline=True)
+
