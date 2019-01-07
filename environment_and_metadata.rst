@@ -7,24 +7,106 @@ Environment and Metadata
 .. _sec:envandmetadata:
 
 Singularity containers support environment variables and labels that you
-can add to your container during the build process. This page details
-general information about defining environments and labels.
-If you are looking for specific environment variables for build time, see our build
-environment section.
+can add to your container during the build process.
+If you are looking for specific environment variables for build time,
+see our :ref:`build environment section <build-environment>`.
+
+--------
+Overview
+--------
+
+Environment variables can be included in your container by adding them in the following sections:
+
+  - On your ``%environment`` section of your definition file.
+
+    Like this:
+
+    .. code-block:: none
+
+        Bootstrap: library
+
+        From: library/alpine
+
+        %environment
+
+            VARIABLE_ONE = hello
+            VARIABLE_TWO = world
+
+            export VARIABLE_ONE VARIABLE_TWO
+
+  - Or on your ``%post`` section of your definition file.
+
+    Like this:
+
+    .. code-block:: none
+
+        Bootstrap: library
+
+        From: library/alpine
+
+        %post
+
+            echo 'export VARIABLE_NAME=VARIABLE_VALUE' >>$SINGULARITY_ENVIRONMENT
+
+  To check the available labels on your container you can also run the following command:
+
+  .. code-block:: none
+
+      singularity inspect mysifimage.sif
+
+  This will give you the following output:
+
+  ..code-block:: none
+
+      {
+          "OWNER": "Joana",
+
+          "org.label-schema.build-date": "Monday_07_January_2019_0:01:50_CET",
+
+          "org.label-schema.schema-version": "1.0",
+
+          "org.label-schema.usage": "/.singularity.d/runscript.help",
+
+          "org.label-schema.usage.singularity.deffile.bootstrap": "library",
+
+          "org.label-schema.usage.singularity.deffile.from": "debian:9",
+
+          "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
+
+          "org.label-schema.usage.singularity.version": "3.0.1-236.g2453fdfe"
+      }
+
+      Of course, all of these labels will be shown by default, so to add new custom labels you
+      should use the ``%labels`` section.
+
+      Like this:
+
+      ..code-block:: none
+
+          Bootstrap: library
+
+          From: library/alpine
+
+          %labels
+          MASTER = yoda
+
+      So after building this container with the label inside the ``%labels`` section, the inspect command
+      will return the list with the ``MASTER`` label inside.
+
 
 -----------
 Environment
 -----------
 
-If you build a container from Singularity Hub or Docker Hub, the
+If you build a container from Container Library or Docker Hub, the
 environment will be included with the container at build time. You can
-also define custom environment variables in your Recipe file as follows:
+also define custom environment variables in your definition file as follows:
 
 .. code-block:: none
 
-    Bootstrap: shub
+    Bootstrap: library
 
-    From: vsoch/hello-world
+    From: library/alpine
 
 
     %environment
@@ -49,7 +131,7 @@ To add variables to the environment during ``%post`` you can use the
 
 Text in the ``%environment`` section will be appended to the file ``/.singularity.d/env/90-environment.sh`` while text redirected
 to ``$SINGULARITY_ENVIRONMENT`` will end up in the file ``/.singularity.d/env/91-environment.sh``.
-Of course if nothing is redirected to ``$SINGULARITY_ENVIRONMENT`` in the ``%post`` section, the file ``/.singularity.d/env/91-environment.sh`` will be empty.
+Of course if nothing is redirected to ``$SINGULARITY_ENVIRONMENT`` in the ``%post`` section, the file ``/.singularity.d/env/91-environment.sh`` will not exist.
 
 Because files in ``/.singularity.d/env`` are sourced in alpha-numerical order, this means that
 variables added using ``$SINGULARITY_ENVIRONMENT`` take precedence over those added via the ``%environment``
@@ -205,6 +287,7 @@ helpful to know where they are and what they do:
 
 -  **actions**: This directory contains helper scripts to allow the
    container to carry out the action commands. (e.g. ``exec`` , ``run`` or ``shell``)
+   In later versions of Singularity, these files may be dynamically written at runtime.
 
 -  **env**: All *.sh files in this directory are sourced in
    alpha-numeric order when the container is initiated. For legacy
@@ -224,8 +307,8 @@ helpful to know where they are and what they do:
 
 -  **runscript.help**: Contains the description that was added in the ``%help`` section.
 
--  **Singularity**: This is the Recipe file that was used to generate
-   the container. If more than 1 Recipe file was used to generate the
+-  **Singularity**: This is the definition file that was used to generate
+   the container. If more than 1 definition file was used to generate the
    container additional Singularity files will appear in numeric order
    in a sub-directory called ``bootstrap_history``.
 

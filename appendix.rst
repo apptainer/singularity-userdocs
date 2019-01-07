@@ -2,49 +2,6 @@
 Appendix
 ========
 
-.. _singularity-environment-variables:
-
------------------------------------
-Singularity's environment variables
------------------------------------
-
-Singularity 3.0 comes with some environment variables you can set or modify depending on your needs.
-You can see them listed below with their respective functionality.
-
-#. **SINGULARITY_ENVIRONMENT**: Contains all the environment variables that have been exported in your container.
-
-#. **SINGULARITY_ROOTFS**: To reference the system file location.
-
-#. **SINGULARITY_BINDPATH**: Path to bind between the host and the container.
-
-#. **SINGULARITY_IMAGE**: Filename of the container.
-
-#. **SINGULARITY_TMPDIR**: Used with the ``build`` command, to consider a temporary location for the build.
-
-#. **SINGULARITY_NOHTTPS**: Which can be set to "1" (true) to avoid HTTPS or "0" to allow HTTPS for communicating with the docker local registry.
-
-#. **SINGULARITY_LIBRARY**: To specify the library from where to pull from.
-
-#. **SINGULARITY_FORCE**: To overwrite an image file if it exists. Set to "1" (true) to overwrite otherwise set to "0" by default.
-
-#. **SINGULARIY_NAME**: To specify a custom image name from build or pull commands.
-
-#. **SINGULARITY_SANDBOX**: Used with build to specify the image as a sandbox format. (Chroot directory structure)
-
-#. **SINGULARITY_SECTION**: Use on build command, to run only specific sections of the definition file.
-
-#. **SINGULARITY_JSON**: To build from a definition file in a JSON format.
-
-#. **SINGULARITY_REMOTE**: To build an image remotely (does not require root). Set to "1" (true) to build remotely.
-
-#. **SINGULARITY_DETACHED**: Used to submit build job and print the build ID, this variable set to 1 requires to use ``SINGULARITY_REMOTE`` set to 1 as well.
-
-#. **SINGULARITY_NO_CLEANUP**: Used to avoid clean up bundle after a failed build, it can be helpful for debugging.
-
-#. **SINGULARITY_CONFDIR**: Used to set the path to file ``nvliblist.conf`` to configure nvidia bind points.
-
-#. **SINGULARITY_SHELL**: Used to specify the shell to be used in the container.
-
 .. _build-library-module:
 
 ---------------------------
