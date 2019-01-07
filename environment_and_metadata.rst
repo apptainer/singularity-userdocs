@@ -168,7 +168,7 @@ example:
     $ singularity inspect jupyter.sif
         {
             "OWNER": "Joana",
-	          "org.label-schema.build-date": "Friday_21_December_2018_0:49:50_CET",
+            "org.label-schema.build-date": "Friday_21_December_2018_0:49:50_CET",
             "org.label-schema.schema-version": "1.0",
             "org.label-schema.usage": "/.singularity.d/runscript.help",
             "org.label-schema.usage.singularity.deffile.bootstrap": "library",
