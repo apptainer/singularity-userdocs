@@ -69,14 +69,14 @@ containers from that existing base container adding customizations in ``%post``,
 Keywords
 ========
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: library
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap module to
 use.
 
-.. code-block:: none
+.. code-block:: singularity
 
     From: <entity>/<collection>/<container>:<tag>
 
@@ -86,7 +86,7 @@ optional and defaults to ``default``. This is the correct namespace to use for
 some official containers (``alpine`` for example). ``tag`` is also optional and
 will default to ``latest``.
 
-.. code-block:: none
+.. code-block:: singularity
 
     Library: http://custom/library
 
@@ -123,14 +123,14 @@ containers. If so, you can seamlessly convert them to Singularity with the
 Keywords
 ========
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: docker
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap module to
 use.
 
-.. code-block:: none
+.. code-block:: singularity
 
     From: <registry>/<namespace>/<container>:<tag>@<digest>
 
@@ -143,19 +143,19 @@ default to ``latest``
 See :ref:`Singularity and Docker <singularity-and-docker>` for more detailed
 info on using Docker registries.
 
-.. code-block:: none
+.. code-block:: singularity
 
     Registry: http://custom_registry
 
 The Registry keyword is optional. It will default to ``index.docker.io``.
 
-.. code-block:: none
+.. code-block:: singularity
 
     Namespace: namespace
 
 The Namespace keyword is optional. It will default to ``library``.
 
-.. code-block:: none
+.. code-block:: singularity
 
     IncludeCmd: yes
 
@@ -208,14 +208,14 @@ from that existing base container adding customizations in ``%post`` ,
 Keywords
 ========
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: shub
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap module to
 use.
 
-.. code-block:: none
+.. code-block:: singularity
 
     From: shub://<registry>/<username>/<container-name>:<tag>@digest
 
@@ -259,14 +259,14 @@ container in ``%post``, ``%environment``, ``%runscript``, etc.
 Keywords
 ========
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: localimage
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap module to
 use.
 
-.. code-block:: none
+.. code-block:: singularity
 
     From: /path/to/container/file/or/directory
 
@@ -302,14 +302,14 @@ also specify the URI for the mirror you would like to use.
 Keywords
 ========
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: yum
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap module to
 use.
 
-.. code-block:: none
+.. code-block:: singularity
 
     OSVersion: 7
 
@@ -317,7 +317,7 @@ The OSVersion keyword is optional. It specifies the OS version you would like to
 use. It is only required if you have specified a %{OSVERSION} variable in the
 ``MirrorURL`` keyword.
 
-.. code-block:: none
+.. code-block:: singularity
 
     MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
 
@@ -325,7 +325,7 @@ The MirrorURL keyword is mandatory. It specifies the URI to use as a mirror to
 download the OS. If you define the ``OSVersion`` keyword, than you can use it in
 the URI as in the example above.
 
-.. code-block:: none
+.. code-block:: singularity
 
     Include: yum
 
@@ -377,14 +377,14 @@ use.
 Keywords
 ========
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: debootstrap
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap module to
 use.
 
-.. code-block:: none
+.. code-block:: singularity
 
     OSVersion: xenial
 
@@ -394,14 +394,14 @@ to use. For Ubuntu you can use code words like ``trusty`` (14.04), ``xenial``
 ``oldstable``, ``testing``, and ``unstable`` or code words like ``wheezy`` (7),
 ``jesse`` (8), and ``stretch`` (9).
 
- .. code-block:: none
+ .. code-block:: singularity
 
      MirrorURL:  http://us.archive.ubuntu.com/ubuntu/
 
 The MirrorURL keyword is mandatory. It specifies a URI to use as a mirror when
 downloading the OS.
 
-.. code-block:: none
+.. code-block:: singularity
 
     Include: somepackage
 
@@ -446,7 +446,7 @@ Arch Linux uses the aptly named ``pacman`` package manager (all puns intended).
 Keywords
 ========
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: arch
 
@@ -488,14 +488,14 @@ also specify a URI for the mirror you would like to use.
 Keywords
 ========
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: busybox
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap module to
 use.
 
-.. code-block:: none
+.. code-block:: singularity
 
     MirrorURL: https://www.busybox.net/downloads/binaries/1.26.1-defconfig-multiarch/busybox-x86_64
 
@@ -527,14 +527,14 @@ also specify a URI for the mirror you would like to use.
 Keywords
 ========
 
-.. code-block:: none
+.. code-block:: singularity
 
     Bootstrap: zypper
 
 The Bootstrap keyword is always mandatory. It describes the bootstrap module to
 use.
 
-.. code-block:: none
+.. code-block:: singularity
 
     OSVersion: 42.2
 
@@ -542,7 +542,7 @@ The OSVersion keyword is optional. It specifies the OS version you would like to
 use. It is only required if you have specified a %{OSVERSION} variable in the
 ``MirrorURL`` keyword.
 
-.. code-block:: none
+.. code-block:: singularity
 
     Include: somepackage
 
