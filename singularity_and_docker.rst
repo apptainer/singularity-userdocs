@@ -1,3 +1,6 @@
+.. _singularity-and-docker:
+
+
 =====================================
 Singularity and Docker/OCI containers
 =====================================
@@ -132,6 +135,7 @@ complete contents of that image.
 .. the line below should probaby be added to a larger discussion in which the 
 .. entire URI is explained.  I think the existing explanation is pretty good,
 .. but probably needs style edits. 
+
 In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker Hub user, whereas ``lolcow`` is the name of the repository. Adding the option to specifiy an image tag, the generic version of the URI is ``docker://<hub-user>/<repo-name>[:<tag>]``. `Repositories on Docker Hub <https://docs.docker.com/docker-hub/repos/>`_ provides additional details.
 
 .. TODO Docker layers = OCI blobs ??? need note re: repeat blob here??? 
@@ -179,7 +183,7 @@ Interactive login is the first of three means provided for authentication with t
     INFO:    Creating SIF file...
     INFO:    Build complete: mylolcow_latest.sif
 
-After successful authentication, the private Docker image is ``pull``ed and converted to SIF as described above. 
+After successful authentication, the private Docker image is pulled and converted to SIF as described above. 
 
 .. note::
 
@@ -191,7 +195,7 @@ After successful authentication, the private Docker image is ``pull``ed and conv
 Authentication via Environment Variables
 ----------------------------------------
 
-Environment variables offer an alternative means for authentication with the Docker Hub. The **required** ``export``s are as follows:
+Environment variables offer an alternative means for authentication with the Docker Hub. The **required** exports are as follows:
 
 .. code-block:: none
 
@@ -207,6 +211,10 @@ Of course, the ``<redacted>`` plain-text password needs to be replaced by a vali
 .. note:: 
 
     When specifying passwords, 'special characters' (e.g., ``$``, ``#``, ``.``) need to be escaped to avoid interpretation by the shell. 
+
+
+.. TODO + NGC specifics 
+
 
 
 Building images for Singularity from the Docker Hub
@@ -281,9 +289,64 @@ Implicit in the above command-line interactions is use of pre-built public image
 (Recall that ``docker://ilumb/mylolcow`` is a private image available via the Docker Hub.) See :ref:`Authentication via Interactive Login <sec:authentication_via_docker_login>` above regarding use of ``--docker-login``.
 
 
+Working with Definition Files: Docker-Specific Headers
+------------------------------------------------------
 
-Working with Definition Files
------------------------------
+Akin to a set of blueprints that explain how to build a custom container, Singularity definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here. 
+
+Singularity definition files are comprised of two parts - a **header** plus **sections**. 
+
+When working with repositories such as the Docker Hub, ``Bootstrap`` and ``From`` are mandatory keywords within the header; for example, if the file ``lolcow.def`` has contents 
+
+.. code-block:: singularity 
+
+    Bootstrap: docker
+    From: godlovedc/lolcow
+
+then 
+
+.. code-block:: none 
+
+    sudo singularity build lolcow.sif lolcow.def
+
+creates a Singularity container in SIF by bootstrapping from the public ``godlovedc/lolcow`` image from the Docker Hub. 
+
+In the above definition file, ``docker`` is one of numerous, possible bootstrap agents; again, the section dedicated to definition files provides additional context. 
+
+Through the means for authentication described above, definition files permit use of private images hosted via the Docker Hub. For example, if the file ``mylolcow.def`` has contents
+
+.. code-block:: singularity 
+
+    Bootstrap: docker
+    From: ilumb/mylolcow
+
+then 
+
+.. code-block:: none 
+
+    sudo singularity build --docker-login mylolcow.sif mylolcow.def 
+
+creates a Singularity container in SIF by bootstrapping from the *private* ``ilumb/mylolcow`` image from the Docker Hub after successful :ref:`interactive authenticcation <sec:authentication_via_docker_login>`. 
+
+Alternatively, if :ref:`environment variables have been set as above <sec:authentication_via_environment_variables>`, then 
+
+.. code-block:: none 
+
+    sudo -E singularity build mylolcow.sif mylolcow.def
+
+enables authenticated use of the private image. 
+
+.. note:: 
+
+    The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create Singularity containers via the ``build`` command. 
+
+
+Working with Definition Files: Docker-Specific Sections
+-------------------------------------------------------
+
+.. TODO https://www.sylabs.io/guides/3.0/user-guide/appendix.html#docker-bootstrap-agent 
+
+
 
 .. --------------
 .. Best Practices
