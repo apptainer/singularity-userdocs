@@ -2,6 +2,60 @@
 Appendix
 ========
 
+
+.. _singularity-environment-variables:
+
+-----------------------------------
+Singularity's environment variables
+-----------------------------------
+
+Singularity 3.0 comes with some environment variables you can set or modify depending on your needs.
+You can see them listed below with their respective functionality.
+
+#. **SINGULARITY_APP** and **SINGULARITY_APPNAME**: Sets the name of an application to be run inside a container.
+
+#. **SINGULARITY_BINDPATH** and **SINGULARITY_BIND**: Path to bind between the host and the container.
+
+#. **SINGULARITY_HOME**: A home directory specification, it could be a source or destination path.
+The source path is the home directory outside the container and the destination overrides the home directory within the container.
+
+#. **SINGULARITY_OVERLAY** and **SINGULARITY_OVERLAYIMAGE**: To indicate the use of an overlay file system image for persistent data storage or as read-only layer of container.
+
+#. **SINGULARITY_SCRATCH** and **SINGULARITY_SCRATCHDIR**: Used to include a scratch directory within the container that is linked to a temporary directory. (use -W to force location)
+
+#. **SINGULARITY_WORKDIR**: The working directory to be used for ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was also used)
+
+#. **SINGULARITY_SHELL**: The path to the program to be used as an interactive shell.
+
+#. **SINGULARITY_PWD** and **SINGULARITY_TARGET_PWD**: The initial working directory for payload process inside the container.
+
+#. **SINGULARITY_HOSTNAME**: The container's hostname.
+
+#. **SINGULARITY_NETWORK**: Used to specify a desired network. If more than one parameters are used, addresses should be separated by commas, where each network will bring up a dedicated interface inside the container.
+
+#. **SINGULARITY_NETWORK_ARGS**: To specify the network arguments to pass to CNI plugins.
+
+#. **SINGULARITY_DNS**: A list of the DNS server addresses separated by commas to be added in ``resolv.conf``.
+
+#. **SINGULARITY_SECURITY**: Used to enable security features. (SELinux, Apparmor, Seccomp)
+
+#. **SINGULARITY_APPLY_CGROUPS**: Used to apply cgroups from an input file for container processes. (it requires root privileges)
+
+#. **SINGULARITY_CONTAINLIBS**: ????????
+
+#. **SINGULARITY_DOCKER_USERNAME**: To specify a username for docker authentication.
+
+#. **SINGULARITY_DOCKER_PASSWORD**: To specify the password for docker authentication.
+
+#. **SINGULARITY_IMAGE**: Filename of the container.
+
+#. **SINGULARITY_TMPDIR**: Used with the ``build`` command, to consider a temporary location for the build.
+
+#. **SINGULARITY_ENVIRONMENT**: Contains all the environment variables that have been exported in your container.
+
+#. **SINGULARITY_ROOTFS**: To reference the system file location.
+
+
 .. _build-library-module:
 
 ---------------------------
