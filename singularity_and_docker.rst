@@ -255,7 +255,7 @@ From the above example, it is evident that
     INFO:    Creating SIF file...
     INFO:    Build complete: pytorch_18.11-py3.sif
 
-will retrieve a specific version of the `PyTorch platform <https://pytorch.org/>`_ for Deep Learning from the NVIDIA GPU Cloud (NGC). Because NGC is a private registry, the above ``pull`` assumes :ref:`authentication via environment variables <sec:authentication_via_environment_variables>`- when the blob that collectively comprise the Docker image have not already been cached locally. In the NGC case, the required environment variable are set as follows:
+will retrieve a specific version of the `PyTorch platform <https://pytorch.org/>`_ for Deep Learning from the NVIDIA GPU Cloud (NGC). Because NGC is a private registry, the above ``pull`` assumes :ref:`authentication via environment variables <sec:authentication_via_environment_variables>` when the blobs that collectively comprise the Docker image have not already been cached locally. In the NGC case, the required environment variable are set as follows:
 
 .. code-block:: none 
 
@@ -263,6 +263,10 @@ will retrieve a specific version of the `PyTorch platform <https://pytorch.org/>
     export SINGULARITY_DOCKER_PASSWORD=<redacted>
 
 Upon use, these environment-variable settings allow for authentication with NGC.
+
+.. note::
+
+    The password provided via these means is actually an API token. This token is generated via your NGC account, and is **required** for use of the service. For additional details regarding authentication with NGC, and much more, please consult their `Getting Started <https://docs.nvidia.com/ngc/ngc-getting-started-guide/index.html>`_ documentation. 
 
 Alternatively, for purely interactive use, ``--docker-login`` is recommended:
 
@@ -283,11 +287,7 @@ Alternatively, for purely interactive use, ``--docker-login`` is recommended:
     INFO:    Creating SIF file...
     INFO:    Build complete: pytorch_18.11-py3.sif
 
-For additional details regarding authentication with NGC, and much more, please consult their `Getting Started <https://docs.nvidia.com/ngc/ngc-getting-started-guide/index.html>`_ documentation. 
-
-.. note::
-
-    The password provided via these means is actually an API token. This token is generated via your NGC account, and is required for use of the service. 
+Authentication aside, the outcome of the ``pull`` is the Singularity container ``pytorch_18.11-py3.sif`` in SIF. 
 
 
 Building images for Singularity from the Docker Hub
@@ -434,96 +434,9 @@ This def file ``ngc_pytorch.def`` can be passed as a specification to ``build`` 
     Getting image source signatures
     Copying blob sha256:18d680d616571900d78ee1c8fff0310f2a2afe39c6ed0ba2651ff667af406c3e
      41.34 MiB / 41.34 MiB [====================================================] 2s
-    Copying blob sha256:0addb6fece630456e0ab187b0aa4304d0851ba60576e7f6f9042a97ee908a796
-     851 B / 851 B [============================================================] 0s
-    Copying blob sha256:78e58219b215b359fe002f0ca1f416617b75ca9b36cb274c98d7a5f808711179
-     620 B / 620 B [============================================================] 0s
-    Copying blob sha256:eb6959a66df2ea26a26452ba11f84fb64bb45af90204374862ec71ee59f795e7
-     169 B / 169 B [============================================================] 0s
-    Copying blob sha256:4628c5124b80950f1e80165669d5e788292a8240b4c14a62cfa477db8e454191
-     9.71 MiB / 9.71 MiB [======================================================] 1s
-    Copying blob sha256:48caf7a8cf74b4fc8c8e44567683755d68c15e5fecc0eae1a4d9a4690b835d2d
-     12.72 KiB / 12.72 KiB [====================================================] 0s
-    Copying blob sha256:c0d9cf2ad624d152c6933ea7a05dafa26f0ba9125c91c25a47387b914310e590
-     4.95 KiB / 4.95 KiB [======================================================] 0s
-    Copying blob sha256:47e67a425dc353e975235badad98d60f6dc913b9c59acd9879f00c8aa75ca18c
-     361.62 MiB / 361.62 MiB [=================================================] 36s
-    Copying blob sha256:315602669ae610348d94bf3ea8b846016a7bf862c6baaab015bdb8bbaeb35b54
-     3.46 KiB / 3.46 KiB [======================================================] 0s
-    Copying blob sha256:5e0d28b1e462054c73bd93f76ee3114446e96ea76bd5867e1b3c05422ce45c4e
-     602 B / 602 B [============================================================] 0s
-    Copying blob sha256:b1e0c4bd8ad5a2160ed15d18cd243c6c1e272e7e255ffe30b78e03e82b83ef88
-     1.36 KiB / 1.36 KiB [======================================================] 0s
-    Copying blob sha256:d8ef59807ef094817ffcef1ac9809155c7ca3a3e8e13b625f99e2545b55f74a8
-     370.15 MiB / 370.15 MiB [=================================================] 39s
-    Copying blob sha256:6f116bbf60a4f4550ffda18c21184e37a5ec50e878b5fcd50991418cbf5818b1
-     89 B / 89 B [==============================================================] 0s
-    Copying blob sha256:047d275db36d7ebd6948a6a9bdd37f0e5f95b3566c64d8d9ee15895405f72fe1
-     11.27 KiB / 11.27 KiB [====================================================] 0s
-    Copying blob sha256:5511e945c784a495485436e7a7717a9cec7f6c4899fba88218a02d2c77c50db1
-     182 B / 182 B [============================================================] 0s
-    Copying blob sha256:93e9c285e6f73135fd827a10333aafbb864e0796d344f4526eadc205dbaf4ac3
-     168.67 KiB / 168.67 KiB [==================================================] 0s
-    Copying blob sha256:6ce4b5f817e4e27664f2a83f282d8cb9f197cc1b6d1a4e168919b91447a79d7e
-     727 B / 727 B [============================================================] 0s
-    Copying blob sha256:64788754f3e77bd5e4eb1f0c5e0570a275870ad5a01d64be7e2bb88749c65f08
-     87.94 MiB / 87.94 MiB [====================================================] 5s
-    Copying blob sha256:4dce30177721463cd678b741f67291f2513630a356edc127c12e0086bf7fcd26
-     4.13 MiB / 4.13 MiB [======================================================] 0s
-    Copying blob sha256:60d2b3103cb10339c07ce9a8c51fcee91d59a2f3b477308811321d6587a799a5
-     4.68 MiB / 4.68 MiB [======================================================] 0s
-    Copying blob sha256:c77bc819d73f8cd82d7a9315bb4211a2bb56713d2704ca158c0e960f854595fc
-     4.95 KiB / 4.95 KiB [======================================================] 0s
-    Copying blob sha256:3c6a83f9ba708d6c8b36fafeb830916bdd56b31a18cf6a66f599036f081e9fec
-     506 B / 506 B [============================================================] 0s
-    Copying blob sha256:f1d06ebf7cc38cc2e9377db9b480e18a518d7cc187953d2050f8f291aa4bde70
-     91.25 MiB / 91.25 MiB [====================================================] 5s
-    Copying blob sha256:a3786d7c00baaaa9042aea58baf308939ea745f51c5caa8e3081bb48038b9d40
-     75.06 MiB / 75.06 MiB [====================================================] 8s
-    Copying blob sha256:7d0b05e3b9370a6002a98820d550d4014e0c3b734f3ace43ddb86623ccd7bf1f
-     473.25 MiB / 473.25 MiB [===============================================] 1m11s
-    Copying blob sha256:9abd1b7e94054340de43aea3d2f71f160249ccbe76a465302eccc6299e5b3b76
-     1.07 MiB / 1.07 MiB [======================================================] 0s
-    Copying blob sha256:a9246d870665c10608e7b9cae8bc5f0b1db71862c8b7882600b8f402dc4f16fd
-     115 B / 115 B [============================================================] 0s
-    Copying blob sha256:809424639bf2c1f675b5939b718681ac3f0ad96d1b93de7e6306ce46f52f9f4f
-     474 B / 474 B [============================================================] 0s
-    Copying blob sha256:ca1bf1f970ddc76165c3ecd944fc4e264e3bbbfa95ace441f5b2a131e9d7f04a
-     208 B / 208 B [============================================================] 0s
-    Copying blob sha256:cd4a78db1d165158d76bf175d2c5320354c752d01f5e14a649d2088f331c6522
-     269 B / 269 B [============================================================] 0s
-    Copying blob sha256:608ca85971ba87a30284a6dfb017f33b02976613c5b77c028ebdfd02d3b461cd
-     56.13 MiB / 56.13 MiB [====================================================] 3s
-    Copying blob sha256:5aa83f04f686d0acb469c33a3fb3214f154bbcd2974b656680b5463a5d26370d
-     76.46 MiB / 76.46 MiB [====================================================] 4s
-    Copying blob sha256:f3e6c21a123670bc87b6130905dff214721c3042977d807f1a985ea0fa3da7ea
-     27.06 MiB / 27.06 MiB [====================================================] 1s
-    Copying blob sha256:27af4fd81e409182903fbe8ab7a48ac4d1c5bbe296ce3b07a5380232b91c346f
-     101.91 KiB / 101.91 KiB [==================================================] 0s
-    Copying blob sha256:e70ecdbb1bc768eb4cc27832c766f0092384368405f884aaadc85519e798a4da
-     290.14 MiB / 290.14 MiB [=================================================] 21s
-    Copying blob sha256:336b3214524bdd78553054f88571fc1d4bbc269ae1749d0a33b4bb775e68fa68
-     1.15 MiB / 1.15 MiB [======================================================] 0s
-    Copying blob sha256:6ee9e2edc9b079d25e8a04ef08aac45fcb12896af2fc1478043070ef3202d830
-     17.20 MiB / 17.20 MiB [====================================================] 1s
-    Copying blob sha256:3b7fee52fbd2444d16626e20c7bcf6ec1c42854ccc7844b639461c248f0e6477
-     22.68 MiB / 22.68 MiB [====================================================] 2s
-    Copying blob sha256:4f25cfdd8abc22b84fd890a443126a8768b5f4403b35e3c8551d0b374aa9b583
-     98 B / 98 B [==============================================================] 0s
-    Copying blob sha256:256f80480544cc016ab60d42b110ad883e798d04e47f02750634d0634db5cb76
-     1.11 KiB / 1.11 KiB [======================================================] 0s
-    Copying blob sha256:2210ee72daedccf885f731b928c4c739c8464ce1090695a2430da21087e318fd
-     1.00 KiB / 1.00 KiB [======================================================] 0s
-    Copying blob sha256:8309d9cf8cc22b9f7fa1c40dab4a07f1880596c8bc3659fd1d41d70a937f454e
-     6.81 MiB / 6.81 MiB [======================================================] 0s
-    Copying blob sha256:1c4cf6df24ea9381fd2159d000b3d5e25395eedea9b1b90eca0c2f6861a5b9ee
-     4.06 MiB / 4.06 MiB [======================================================] 0s
-    Copying blob sha256:eb03bbdb3611f08cb2b1778b929b7eff41f7bd2ed6778c93ff3997e54e55701b
-     10.88 MiB / 10.88 MiB [====================================================] 1s
-    Copying blob sha256:c71aeebc266c779eb4e769c98c935356a930b16d881d7dde4db510a09cfa4222
-     1.61 KiB / 1.61 KiB [======================================================] 0s
+    <blob copying details deleted>
     Copying config sha256:b77551af8073c85588088ab2a39007d04bc830831ba1eef4127b2d39aaf3a6b1
-     21.28 KiB / 21.28 KiB [====================================================] 0s
+    21.28 KiB / 21.28 KiB [====================================================] 0s
     Writing manifest to image destination
     Storing signatures
     INFO:    Creating SIF file...
