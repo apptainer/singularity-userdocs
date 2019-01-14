@@ -41,7 +41,7 @@ The source path is the home directory outside the container and the destination 
 
 #. **SINGULARITY_APPLY_CGROUPS**: Used to apply cgroups from an input file for container processes. (it requires root privileges)
 
-#. **SINGULARITY_CONTAINLIBS**: ????????
+#. **SINGULARITY_CONTAINLIBS**: Used to specify a string of file names (comma separated string) to bind to the `/.singularity.d/libs` directory.
 
 #. **SINGULARITY_DOCKER_USERNAME**: To specify a username for docker authentication.
 
