@@ -292,7 +292,7 @@ server:
     $ sudo singularity instance start url-pdf.sif pdf
 
 .. note::
-    If there occurs an error related to Port connection being refused while staring
+    If there occurs an error related to port connection being refused while starting
     the instance or while using it later, you can try mentioning different port
     numbers in the definition file above.
 
@@ -364,7 +364,7 @@ And update our ``startscript`` to point to the app location:
         nohup npm start > /dev/null 2>&1 < /dev/null &
 
 
-Now we want to define the pdf\_client app, which we will run to send the
+Now we want to define the pdf_client app, which we will run to send the
 requests to the server:
 
 .. code-block:: singularity
@@ -386,7 +386,7 @@ generated PDF’s to go. Now we simply start the instance like so:
 
 .. code-block:: singularity
 
-    $ singularity instance.start -B out/:/scif/data/pdf_client/output/ url-to-pdf-api.img pdf
+    $ singularity instance start -B out/:/scif/data/pdf_client/output/ url-to-pdf-api.img pdf
 
 And to request a pdf simply do:
 
@@ -401,12 +401,12 @@ And to confirm that it worked:
     $ ls out/
     google.pdf
 
-When you are finished, use the instance.stop command to close all
+When you are finished, use the instance stop command to close all
 running instances.
 
 .. code-block:: singularity
 
-    $ singularity instance.stop \*
+    $ singularity instance stop \*
 
 ---------------
 Important Notes
