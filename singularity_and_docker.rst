@@ -399,7 +399,7 @@ then
 
     sudo singularity build --docker-login mylolcow.sif mylolcow.def 
 
-creates a Singularity container in SIF by bootstrapping from the *private* ``ilumb/mylolcow`` image from the Docker Hub after successful :ref:`interactive authenticcation <sec:authentication_via_docker_login>`. 
+creates a Singularity container in SIF by bootstrapping from the *private* ``ilumb/mylolcow`` image from the Docker Hub after successful :ref:`interactive authentication <sec:authentication_via_docker_login>`. 
 
 Alternatively, if :ref:`environment variables have been set as above <sec:authentication_via_environment_variables>`, then 
 
@@ -412,6 +412,19 @@ enables authenticated use of the private image.
 .. note:: 
 
     The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create Singularity containers via the ``build`` command. 
+
+In the two-previous examples, the ``From`` keyword specifies *both* the ``hub-user`` and ``repo-name`` in making use of the Docker Hub. *Optional* use of ``Namespace`` permits the more-granular split across two keywords:
+
+.. code-block:: singularity
+
+    Bootstrap: docker
+    Namespace: godlovedc
+    From: lolcow
+
+.. note:: 
+
+    In `their documentation <https://docs.docker.com/docker-hub/repos/>`_, "Docker ID namespace" and ``hub-user`` are employed as synonyms in the text and examples, respectively. 
+
 
 .. TODO new section??? 
 
