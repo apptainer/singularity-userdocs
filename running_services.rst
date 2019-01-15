@@ -215,7 +215,7 @@ API server that converts a web page into a PDF, and can be found
 `here <https://github.com/alvarcarto/url-to-pdf-api>`__.
 You can build the image by following below described steps or if you wish to
 just download the final image directly from Container Library, simply run
-``singularity pull``.
+``singularity pull library://sylabs/doc-examples/url-to-pdf:latest``.
 
 Building the image
 ==================
@@ -244,7 +244,7 @@ the docker image ``node:8`` which comes pre-installed with Node 8:
 
         apt-get update && apt-get install -yq gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3
         libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0
-        libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3
+        libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6     libxfixes3
         libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release
         xdg-utils wget curl && rm -r /var/lib/apt/lists/*
         git clone https://github.com/alvarcarto/url-to-pdf-api.git pdf_server
@@ -301,12 +301,18 @@ curl:
 
 .. code-block:: singularity
 
-    $ curl -o google.pdf localhost:9000/api/render?url=http://google.com
+    $ curl -o sylabs.pdf localhost:9000/api/render?url=http://sylabs.io/docs
 
     % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
                              Dload  Upload   Total   Spent    Left  Speed
 
     100 73750  100 73750    0     0  14583      0  0:00:05  0:00:05 --:--:-- 19130
+    
+You should see a PDDF file file being generated like the one below:
+
+.. image:: /home/sushma/Pictures/docpage.png
+  :width: 400
+  :alt: Screenshot of the generated PDF 
 
 
 If you shell into the instance, you can see the running processes:
