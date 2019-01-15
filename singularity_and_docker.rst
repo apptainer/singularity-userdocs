@@ -215,8 +215,8 @@ Of course, the ``<redacted>`` plain-text password needs to be replaced by a vali
 
 .. TODO + NGC specifics 
 
-Making use of pre-built private images from Private Registrys
-=============================================================
+Making use of pre-built private images from Private Registries
+==============================================================
 
 Authentication is required to access *private* images that reside in the Docker Hub. Of course, private images can also reside in **private registries**. Accounting for locations *other* than the Docker Hub is easily achieved. 
 
@@ -362,8 +362,8 @@ Implicit in the above command-line interactions is use of pre-built public image
 (Recall that ``docker://ilumb/mylolcow`` is a private image available via the Docker Hub.) See :ref:`Authentication via Interactive Login <sec:authentication_via_docker_login>` above regarding use of ``--docker-login``.
 
 
-Working with Definition Files: Docker-Specific Headers
-------------------------------------------------------
+Working with Definition Files: Mandatory Headers
+------------------------------------------------
 
 Akin to a set of blueprints that explain how to build a custom container, Singularity definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here. 
 
@@ -413,6 +413,10 @@ enables authenticated use of the private image.
 
     The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create Singularity containers via the ``build`` command. 
 
+
+Working with Definition Files: Optional Headers
+-----------------------------------------------
+
 In the two-previous examples, the ``From`` keyword specifies *both* the ``hub-user`` and ``repo-name`` in making use of the Docker Hub. *Optional* use of ``Namespace`` permits the more-granular split across two keywords:
 
 .. code-block:: singularity
@@ -425,8 +429,13 @@ In the two-previous examples, the ``From`` keyword specifies *both* the ``hub-us
 
     In `their documentation <https://docs.docker.com/docker-hub/repos/>`_, "Docker ID namespace" and ``hub-user`` are employed as synonyms in the text and examples, respectively. 
 
+.. note::
 
-.. TODO new section??? 
+    The default value for the optional keyword ``Namespace`` is ``library``. 
+
+
+Working with Definition Files: Private Images and Registries 
+------------------------------------------------------------
 
 Thus far, use of Docker Hub has been assumed. To make use of a different repository of Docker images the **optional** ``Registry`` keyword can be added to the Singularity definition file. For example, to make use of a Docker image from the NVIDIA GPU Cloud (NGC) corresponding definition file is:
 
@@ -455,11 +464,92 @@ This def file ``ngc_pytorch.def`` can be passed as a specification to ``build`` 
     INFO:    Creating SIF file...
     INFO:    Build complete: mypytorch.sif
 
-After successful authentication via interactive use of the ``--docker-login`` option, output as the SIF container ``mypytorch.sif`` is (ultimately) produced. As above, use of environment variables is another option available for authenticating private Docker type repositories such as NGC; once set, the ``build`` command is as above save for the absence of the ``-docker-login`` option. 
+After successful authentication via interactive use of the ``--docker-login`` option, output as the SIF container ``mypytorch.sif`` is (ultimately) produced. As above, use of environment variables is another option available for authenticating private Docker type repositories such as NGC; once set, the ``build`` command is as above save for the absence of the ``--docker-login`` option. 
 
 
-Working with Definition Files: Docker-Specific Sections
--------------------------------------------------------
+Working with Definition Files: Directing Execution 
+--------------------------------------------------
+
+The ``Dockerfile`` corresponding to ``godlovedc/lolcow`` (and `available here <https://hub.docker.com/r/godlovedc/lolcow/dockerfile>`_) is as follows:
+
+.. code-block:: none
+
+    FROM ubuntu:16.04
+
+    RUN apt-get update && apt-get install -y fortune cowsay lolcat
+
+    ENV PATH /usr/games:${PATH}
+    ENV LC_ALL=C
+
+    ENTRYPOINT fortune | cowsay | lolcat
+
+The execution-specific part of this ``Dockerfile`` is the ``ENTRYPOINT`` - "... an optional definition for the first part of the command to be run ..." according to `the available documentation <https://docs.docker.com/search/?q=ENTRYPOINT>`_. After conversion to SIF, execution of ``fortune | cowsay | lolcat`` *within* the container produces the output:
+
+.. code-block:: none 
+
+    $ ./mylolcow.sif 
+     ______________________________________
+    / Q: How did you get into artificial   \
+    | intelligence? A: Seemed logical -- I |
+    \ didn't have any real intelligence.   /
+     --------------------------------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+
+.. TODO add a note re: ./??.sif above 
+
+In addition, ``CMD`` allows an arbitrary string to be *appended* to the ``ENTRYPOINT``. Thus, multiple commands or flags can be passed together through combined use.
+
+Suppose now that a Singularity `%runscript` **section** is added to the definition file as follows:
+
+.. code-block:: singularity
+
+    Bootstrap: docker
+    Namespace: godlovedc
+    From: lolcow
+
+    %runscript
+
+        fortune
+
+After conversion to SIF via the Singularity ``build`` command, exection of the resulting container produces the output:
+
+.. code-block:: none 
+
+    $ ./lolcow.sif 
+    This was the most unkindest cut of all.
+            -- William Shakespeare, "Julius Caesar"
+
+In other words, introduction of a ``%runscript`` section into the Singularity definition file causes the ``ENTRYPOINT`` of the ``Dockerfile`` to be *bypassed*. The presence of the ``%runscript`` section would also bypass a ``CMD`` entry in the ``Dockerfile``. 
+
+To *preserve* use of ``ENTRYPOINT`` and/or ``CMD`` as defined in the ``Dockerfile``, the ``%runscript`` section must be *absent* from the Singularity definition. In this case, and to favor execution of ``CMD`` *over* ``ENTRYPOINT``, a non-empty assignment of the *optional* ``IncludeCmd`` should be included in the header section of the Singularity definition file as follows:
+
+.. code-block:: singularity
+
+    Bootstrap: docker
+    Namespace: godlovedc
+    From: lolcow
+    IncludeCmd: yes
+
+.. note:: 
+
+    Because only a non-empty ``IncludeCmd`` is required, *either* ``yes`` (as above) or ``no`` results in execution of ``CMD`` *over* ``ENTRYPOINT``. 
+
+To summarize execution precedence:  
+
+    1. If present, the %runscript section of the Singularity definition file is executed 
+
+    2. If ``IncludeCmd`` is a non-empty entry in the header of the Singularity definition file, then ``CMD`` from the ``Dockerfile`` is executed 
+
+    3. If present in the ``Dockerfile``, `ENTRYPOINT`` appended by ``CMD`` (if present) are executed in sequence 
+
+    4. Execution of the ``bash`` shell is defaulted to
+
+.. TODO If no %runscript is specified, or if the import command is used as in the example above, the ENTRYPOINT is used as runscript.
+
 
 .. TODO https://www.sylabs.io/guides/3.0/user-guide/appendix.html#docker-bootstrap-agent 
 
