@@ -5,10 +5,6 @@
 Singularity and Docker/OCI containers
 =====================================
 
-.. TODO Singularity Hub ? <-- I would not worry about either Singularity Hub or
-    .. the contaienr library on this page.  Both of those host containers that are 
-    .. in native Singularity formats.  I think this page is more for interacting 
-    .. with things in Docker or OCI format.  (feel free to delete comment.)
 
 --------
 Overview
@@ -16,16 +12,7 @@ Overview
 
 .. TODO Overview content ... 
 
-.. TODO relocate below ??? 
-
 .. Review the overview of the Sy interface ... 
-
-
-.. ------------------------------------------
-.. Making use of pre-built Singularity images
-.. ------------------------------------------
-
-.. SHUB and NVIDIA ... 
 
 
 ----------------------------
@@ -35,9 +22,9 @@ Interoperability with Docker
 Running action commands on Docker Hub images
 ============================================
 
-.. info about shell, run, and exec on Docker Hub images
-.. explanation that layers are downloaded and then "spatted out to disk" to 
-    .. create an ephemeral Singularity container in which commands are run
+.. TODO info about shell, run, and exec on Docker Hub images
+.. TODO explanation that layers are downloaded and then "spatted out to disk" to 
+    .. TODO create an ephemeral Singularity container in which commands are run
 
 
 .. _sec:use_prebuilt_public_docker_images:
@@ -86,9 +73,7 @@ In translating to SIF, individual layers of the Docker image have been *combined
     .. a one-way operation because info is lost.
     .. Also some workds on how this is considered less reproducible than pulling
     .. from the container library.  
-    .. Also should talk about how a build and a pull are really the same thing
-    .. under the hood.  Both are really "builds" in the sense that the layers 
-    .. are built into a Singularity image.
+
 
 .. note:: 
 
@@ -120,8 +105,6 @@ SIF files built from Docker images are *not* crytographically signed:
     Verifying image: lolcow_latest.sif
     ERROR:   verification failed: error while searching for signature blocks: no signatures found for system partition
 
-.. TODO Need to fix ref below ... 
-
 The ``sign`` command allows a cryptographic signature to be added. Refer to 
 :ref:`Signing and Verifying Containers <signNverify>` for details. But caution
 should be exercised in signing images from Docker Hub because, unless you build
@@ -132,7 +115,7 @@ complete contents of that image.
 
     ``pull`` actually builds a SIF file that corresponds to the image you retrieved from the Docker Hub. Updates to the image on the Docker Hub will *not* be reflected in your *local* copy. 
 
-.. the line below should probaby be added to a larger discussion in which the 
+.. TODO the line below should probaby be added to a larger discussion in which the 
 .. entire URI is explained.  I think the existing explanation is pretty good,
 .. but probably needs style edits. 
 
@@ -211,9 +194,7 @@ Of course, the ``<redacted>`` plain-text password needs to be replaced by a vali
 .. note:: 
 
     When specifying passwords, 'special characters' (e.g., ``$``, ``#``, ``.``) need to be escaped to avoid interpretation by the shell. 
-
-
-.. TODO + NGC specifics 
+ 
 
 Making use of pre-built private images from Private Registries
 ==============================================================
@@ -551,7 +532,7 @@ To summarize execution precedence:
 .. TODO If no %runscript is specified, or if the import command is used as in the example above, the ENTRYPOINT is used as runscript.
 
 
-.. TODO https://www.sylabs.io/guides/3.0/user-guide/appendix.html#docker-bootstrap-agent 
+.. TODO links to https://www.sylabs.io/guides/3.0/user-guide/appendix.html#docker-bootstrap-agent 
 
 
 
@@ -570,7 +551,7 @@ To summarize execution precedence:
 
 
 
-.. TODO Othjer commands that can do this >>>>?? 
+.. TODO Other commands that can do this >>>>?? 
 
 
 .. TODO What about private Docker registries? How does signing/verification work in that case? 
@@ -582,18 +563,11 @@ To summarize execution precedence:
 .. I suggest the following additional topics to round the page out.  Maybe we can 
 .. carve off topics and work on the page together.
 .. 
-.. Using docker bootstrap agent in a def file (link to appendix)
-..     Must figure out all of the CMD and ENTRYPOINT stuff.  afaik it has changed?
+
 .. The breakdown of the URI is useful and should be retained (but edited)
 ..     https://www.sylabs.io/guides/2.6/user-guide/singularity_and_docker.html#how-do-i-specify-my-docker-image
-.. Using custom authentication for a private Docker Hub repo (may need to set one
-..     up for testing)
-.. Using a different registry.  quay.io would provide a good example
-.. How to use nvidia's cloud
+
 .. build a singularity container from local docker images (ask Ian and/or Michael)
 ..     running in daemon
 ..     sitting on host 
 .. build from an OCI bundle (ask Ian and/or Michael.)
-.. The best practices section is also useful and should likely be retained
-
-.. TODO Account for "See Singularity and Docker for more info on order of operations for determining a runscript." in the 3.0 appendix for keywords after the Docker bootstrap agent ... 
