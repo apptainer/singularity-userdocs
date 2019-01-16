@@ -16,7 +16,7 @@ You can see them listed below with their respective functionality.
 
 #. **SINGULARITY_BINDPATH** and **SINGULARITY_BIND**: Path to bind between the host and the container.
 
-#. **SINGULARITY_HOME**: A home directory specification, it could be a source or destination path.
+#. **SINGULARITY_HOME** : A home directory specification, it could be a source or destination path.
 The source path is the home directory outside the container and the destination overrides the home directory within the container.
 
 #. **SINGULARITY_OVERLAY** and **SINGULARITY_OVERLAYIMAGE**: To indicate the use of an overlay file system image for persistent data storage or as read-only layer of container.
