@@ -547,7 +547,7 @@ To summarize execution precedence:
 Working with Definition Files: Container Metadata 
 -------------------------------------------------
 
-Singularity's ``inspect`` command displays container metadata - data about data that is encapsulated within a SIF file. Default output from the command was :ref:`illustrated above <sec:use_prebuilt_public_docker_images_SUB_inspect>`. ``inspect``, however, provides a number of options that are alluded to here. 
+Singularity's ``inspect`` command displays container metadata - data about data that is encapsulated within a SIF file. Default output (assumed via the ``--labels`` option) from the command was :ref:`illustrated above <sec:use_prebuilt_public_docker_images_SUB_inspect>`. ``inspect``, however, provides a number of options that are alluded to here. 
 
 Emphasis in this section has been on Singularity definition files. The definition file that created a SIF file can be determined from the container's metadata as follows:
 
@@ -590,7 +590,7 @@ When the ``%runscript`` section is *removed* from the Singularity definition fil
 
 .. Note, however, that ``IncludeCmd: yes`` was *added* to the def file to allow for illustration of the :ref:`the second case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`); the resulting runscript for the container is:
 
-and the corresponding runscript is 'inherited' from the ``Dockerfile`` as:
+The runscript 'inherited' from the ``Dockerfile`` is:
 
 .. code-block:: none
 
@@ -623,7 +623,29 @@ and the corresponding runscript is 'inherited' from the ``Dockerfile`` as:
 
     eval ${SINGULARITY_OCI_RUN}
 
-In this Bourne shell script, it is evident that only an ``ENTRYPOINT`` is detailed in the ``Dockerfile``; thus the ``ENTRYPOINT only - run entrypoint plus args`` conditional block is executed. In this case then, the :ref:`the third case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`) has been illustrated. 
+From this Bourne shell script, it is evident that only an ``ENTRYPOINT`` is detailed in the ``Dockerfile``; thus the ``ENTRYPOINT only - run entrypoint plus args`` conditional block is executed. In this case then, :ref:`the third case of execution precedence <sec:def_files_execution_SUB_execution_precedence>` has been illustrated. 
+
+The above Bourne shell script also illustrates how the following scenarios will be handled:
+
+    - A ``CMD`` only entry in the ``Dockerfile`` 
+
+    - **Both** ``ENTRYPOINT`` *and* ``CMD`` entries in the ``Dockerfile`` 
+
+From this level of detail, use of ``ENTRYPOINT`` *and/or* ``CMD`` in a Dockerfile has been made **explicit**. These remain examples within :ref:`the third case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`. 
+
+The ``--environment`` option for ``inspect`` is worth noting; for example:
+
+.. code-block:: none
+
+    $ singularity inspect --environment lolcow.sif
+
+    #!/bin/sh
+    #Custom environment shell code should follow
+
+Other ``inspect`` options are detailed elsewhere in this manual and available online via ``singularity inspect --help``. 
+
+
+.. TODO https://www.sylabs.io/guides/3.0/user-guide/environment_and_metadata.html#the-inspect-command
 
 .. --------------
 .. Best Practices
@@ -660,3 +682,5 @@ In this Bourne shell script, it is evident that only an ``ENTRYPOINT`` is detail
 ..     running in daemon
 ..     sitting on host 
 .. build from an OCI bundle (ask Ian and/or Michael.)
+
+.. TODO siftool ??? 
