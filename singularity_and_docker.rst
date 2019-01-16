@@ -19,6 +19,8 @@ Overview
 Interoperability with Docker
 ----------------------------
 
+.. TODO Check headings ^^^ doesn't seem necessary!
+
 Running action commands on Docker Hub images
 ============================================
 
@@ -82,6 +84,8 @@ In translating to SIF, individual layers of the Docker image have been *combined
 .. note:: 
 
     ``singularity search [search options...] <search query>`` does *not* support Docker registries like `Docker Hub <https://hub.docker.com/>`_. Use the search box at Docker Hub to locate Docker images. Docker ``pull`` commands, e.g., ``docker pull godlovedc/lolcow``, can be easily translated into the corresponding command for Singularity. The Docker ``pull`` command is available under "DETAILS" for a given image on Docker Hub. 
+
+.. _sec:use_prebuilt_public_docker_images_SUB_inspect:
 
 ``inspect`` reveals metadata for the container encapsulated via SIF:
 
@@ -394,6 +398,8 @@ enables authenticated use of the private image.
 
     The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create Singularity containers via the ``build`` command. 
 
+.. TODO links to https://www.sylabs.io/guides/3.0/user-guide/appendix.html#docker-bootstrap-agent 
+
 
 Working with Definition Files: Optional Headers
 -----------------------------------------------
@@ -447,6 +453,8 @@ This def file ``ngc_pytorch.def`` can be passed as a specification to ``build`` 
 
 After successful authentication via interactive use of the ``--docker-login`` option, output as the SIF container ``mypytorch.sif`` is (ultimately) produced. As above, use of environment variables is another option available for authenticating private Docker type repositories such as NGC; once set, the ``build`` command is as above save for the absence of the ``--docker-login`` option. 
 
+
+.. _sec:def_files_execution:
 
 Working with Definition Files: Directing Execution 
 --------------------------------------------------
@@ -519,22 +527,103 @@ To *preserve* use of ``ENTRYPOINT`` and/or ``CMD`` as defined in the ``Dockerfil
 
     Because only a non-empty ``IncludeCmd`` is required, *either* ``yes`` (as above) or ``no`` results in execution of ``CMD`` *over* ``ENTRYPOINT``. 
 
+.. _sec:def_files_execution_SUB_execution_precedence:
+
 To summarize execution precedence:  
 
     1. If present, the %runscript section of the Singularity definition file is executed 
 
     2. If ``IncludeCmd`` is a non-empty entry in the header of the Singularity definition file, then ``CMD`` from the ``Dockerfile`` is executed 
 
-    3. If present in the ``Dockerfile``, `ENTRYPOINT`` appended by ``CMD`` (if present) are executed in sequence 
+    3. If present in the ``Dockerfile``, ``ENTRYPOINT`` appended by ``CMD`` (if present) are executed in sequence 
 
     4. Execution of the ``bash`` shell is defaulted to
 
 .. TODO If no %runscript is specified, or if the import command is used as in the example above, the ENTRYPOINT is used as runscript.
 
+.. TODO Test CMD vs ENTRYPOINT 
 
-.. TODO links to https://www.sylabs.io/guides/3.0/user-guide/appendix.html#docker-bootstrap-agent 
+
+Working with Definition Files: Container Metadata 
+-------------------------------------------------
+
+Singularity's ``inspect`` command displays container metadata - data about data that is encapsulated within a SIF file. Default output from the command was :ref:`illustrated above <sec:use_prebuilt_public_docker_images_SUB_inspect>`. ``inspect``, however, provides a number of options that are alluded to here. 
+
+Emphasis in this section has been on Singularity definition files. The definition file that created a SIF file can be determined from the container's metadata as follows:
+
+.. code-block:: none
+
+    $ singularity inspect --deffile lolcow.sif 
+
+    namespace: godlovedc
+    from: lolcow
+    bootstrap: docker
+
+    %runscript
+
+        fortune
+
+Of particular relevance to :ref:`execution precedence <sec:def_files_execution_SUB_execution_precedence>` is the ``--runscript`` option for ``inspect``. For example, using the definition file above, the runscript is unsurprisingly:
+
+.. code-block:: none
+
+    $ singularity inspect --runscript lolcow.sif 
+
+    #!/bin/sh
 
 
+        fortune
+
+As stated above (i.e., :ref:`the first case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`), the very existence of a ``%runscript`` section in a Singularity definition file *takes precedence* over commands that might exist in the ``Dockerfile``. 
+
+When the ``%runscript`` section is *removed* from the Singularity definition file, the result is (once again):
+
+.. code-block:: none
+
+    $ singularity inspect --deffile lolcow.sif 
+
+    from: lolcow
+    bootstrap: docker
+    namespace: godlovedc
+
+.. TODO below ... Need to add a CMD to lolcow ... 
+
+.. Note, however, that ``IncludeCmd: yes`` was *added* to the def file to allow for illustration of the :ref:`the second case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`); the resulting runscript for the container is:
+
+and the corresponding runscript is 'inherited' from the ``Dockerfile`` as:
+
+.. code-block:: none
+
+    $ singularity inspect --runscript lolcow.sif 
+
+    #!/bin/sh
+    OCI_ENTRYPOINT='"/bin/sh" "-c" "fortune | cowsay | lolcat"'
+    OCI_CMD=''
+    # ENTRYPOINT only - run entrypoint plus args
+    if [ -z "$OCI_CMD" ] && [ -n "$OCI_ENTRYPOINT" ]; then
+        SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} $@"
+    fi
+
+    # CMD only - run CMD or override with args
+    if [ -n "$OCI_CMD" ] && [ -z "$OCI_ENTRYPOINT" ]; then
+        if [ $# -gt 0 ]; then
+            SINGULARITY_OCI_RUN="$@"
+        else
+            SINGULARITY_OCI_RUN="${OCI_CMD}"
+        fi
+    fi
+
+    # ENTRYPOINT and CMD - run ENTRYPOINT with CMD as default args
+    # override with user provided args
+    if [ $# -gt 0 ]; then
+        SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} $@"
+    else
+        SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
+    fi
+
+    eval ${SINGULARITY_OCI_RUN}
+
+In this Bourne shell script, it is evident that only an ``ENTRYPOINT`` is detailed in the ``Dockerfile``; thus the ``ENTRYPOINT only - run entrypoint plus args`` conditional block is executed. In this case then, the :ref:`the third case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`) has been illustrated. 
 
 .. --------------
 .. Best Practices
