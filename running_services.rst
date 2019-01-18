@@ -310,8 +310,8 @@ curl:
     
 You should see a PDDF file file being generated like the one below:
 
-.. image:: home/sushma/Pictures/docpage.png
-  :alt: Screenshot of the generated PDF 
+.. image:: /home/sushma/Pictures/docpage.png
+   :alt: Screenshot of the PDF generated
 
 
 If you shell into the instance, you can see the running processes:
