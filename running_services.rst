@@ -310,8 +310,7 @@ curl:
     
 You should see a PDDF file file being generated like the one below:
 
-.. image:: /home/sushma/Pictures/docpage.png
-  :width: 400
+.. image:: home/sushma/Pictures/docpage.png
   :alt: Screenshot of the generated PDF 
 
 
