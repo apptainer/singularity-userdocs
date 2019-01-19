@@ -23,12 +23,12 @@ Overview
 
 Singularity v2.4 introduced the concept of *instances* allowing users to run 
 services in Singularity. This page will help you understand instances using an 
-elementary example followed by a more useful example running an Nginx web server 
+elementary example followed by a more useful example running an NGINX web server 
 using instances. In the end, you will find a more detailed example of running an 
 instance of an API that converts URL to PDFs.
 
-To begin with, suppose you want to run an nginx web server outside of a 
-container. You can simply install nginx and start the service by:
+To begin with, suppose you want to run an NGINX web server outside of a 
+container. You can simply install NGINX and start the service by:
 
 .. code-block:: singularity
 
@@ -38,7 +38,7 @@ container. You can simply install nginx and start the service by:
 If you were to do something like this from within a container you would also see 
 the service start, and the web server running. But then if you were to exit the
 container, the process would continue to run within an unreachable mount 
-namespace. The process would still be running, but you couldn’t easily kill or 
+namespace. The process would still be running, but you couldn't easily kill or 
 interface with it. This is a called an orphan process. Singularity instances 
 give you the ability to handle services properly.
 
@@ -141,7 +141,7 @@ Nginx “Hello-world” in Singularity
 
 The above example, although not very useful, should serve as a fair introduction 
 to the concept of Singularity instances and running services in the background. 
-The following illustrates a more useful example of setting up a sample nginx web 
+The following illustrates a more useful example of setting up a sample NGINX web 
 server using instances. First we will create a basic 
 :ref:`definition file <definition-files>` (let's call it nginx.def):
 
@@ -155,8 +155,8 @@ server using instances. First we will create a basic
        nginx
 
 
-This downloads the official nginx Docker container, converts it to a Singularity 
-image, and tells it to run nginx when you start the instance. Since we’re 
+This downloads the official NGINX Docker container, converts it to a Singularity 
+image, and tells it to run NGINX when you start the instance. Since we’re 
 running a web server, we’re going to run the following commands as root.
 
 .. code-block:: singularity
@@ -169,7 +169,7 @@ running a web server, we’re going to run the following commands as root.
     server. Also, to let the instance write temporary files during execution, 
     you should use `--writable-tmpfs` while starting the instance.
 
-Just like that we’ve downloaded, built, and run an nginx Singularity
+Just like that we’ve downloaded, built, and run an NGINX Singularity
 image. And to confirm that it’s correctly running:
 
 .. code-block:: singularity
