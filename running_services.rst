@@ -4,13 +4,16 @@
 Running Services
 ================
 
-There are :ref:`different ways <runcontainer>`  in which you can run Singularity containers. If you used commands like `run`,
-`exec` and `shell` to interact with processes in the container, that's running  Singularity containers in the
-foreground. Singularity, also lets you run containers in a "detached" or "deamon" mode which can run different services
-in the background. A 'service' is essentially a software functionality with a purpose that different clients can reuse for
-different purposes. For example, if you wanted to run services like a web server or a database in a Singularity container in the background,
-container instances are used in such cases. A container instance, simply put, is a persistent and isolated version of the container image that runs
-in the background.
+There are :ref:`different ways <runcontainer>`  in which you can run Singularity 
+containers. If you use commands like ``run``, ``exec`` and ``shell`` to 
+interact with processes in the container, you are running Singularity containers 
+in the foreground. Singularity, also lets you run containers in a "detached" or 
+"daemon" mode which can run different services in the background. A 'service' is 
+essentially a process running in the background that multiple different clients 
+can use. For example, a web server or a database. To run services in a 
+Singularity container one should use *instances*. A container instance is a 
+persistent and isolated version of the container image that runs in the 
+background.
 
 ------------------------
 Overview
@@ -18,70 +21,67 @@ Overview
 
 .. _sec:instances:
 
-Singularity 2.4v introduced the ability to run "Container instances" allowing users to run services using Singularity.
-This page will help you understand `instances` with the help of an elementary example followed by running Nginx web server using instances.
-In the end, you will find a very useful example of running an instance of API that converts URL to PDFs.
+Singularity v2.4 introduced the concept of *instances* allowing users to run 
+services in Singularity. This page will help you understand instances using an 
+elementary example followed by a more useful example running an Nginx web server 
+using instances. In the end, you will find a more detailed example of running an 
+instance of an API that converts URL to PDFs.
 
-Let's understand the significance of Singularity instances before we start operating on them.
-Suppose you want to run an nginx web server, you can simply install nginx and start the service by:
+To begin with, suppose you want to run an nginx web server outside of a 
+container. You can simply install nginx and start the service by:
 
 .. code-block:: singularity
 
     $ apt-get update && apt-get install -y nginx
     $ service nginx start
 
-With older versions of Singularity, if you were to do something like
-this, from inside the container you would happily see the service
-start, and the web server running! But then if you were to log out of
-the container what would happen?
-Orphan process within unreachable namespaces!
-You would lose control of the process. It would still be running, but
-you couldn’t easily kill or interface with it. This is a called an
-orphan process. Singularity versions 2.4 and later can handle running services
-properly.
+If you were to do something like this from within a container you would also see 
+the service start, and the web server running. But then if you were to exit the
+container, the process would continue to run within an unreachable mount 
+namespace. The process would still be running, but you couldn’t easily kill or 
+interface with it. This is a called an orphan process. Singularity instances 
+give you the ability to handle services properly.
 
 ----------------------------------
 Container Instances in Singularity
 ----------------------------------
 
-For demonstration, let's use an easy example of :ref:`lolcow_latest.sif<cowimage>` image that we
-previously built.
+For demonstration, let's use an easy (though somewhat useless) example of 
+:ref:`lolcow_latest.sif<cowimage>` image that is referenced in the quickstart.
 
-To start an instance, you should follow this structure:
+To start an instance, you should follow this procedure :
 
 .. code-block:: singularity
 
-          [command]                 [image]             [name of instance]
+    [command]                      [image]              [name of instance]
 
-    $ singularity instance start   lolcow_latest.sif     cow1
+    $ singularity instance start   library://alpine     instance1
 
-When you run that command, Singularity creates an isolated environment
-for the container instances’ processes/services to live inside. We can
-confirm that this command started an instance by running the
-``instance list`` command like so:
+This command causes Singularity to create an isolated environment for the 
+container services to live inside. One can confirm that an instance is running
+by using the ``instance list`` command like so:
 
 .. code-block:: singularity
 
     $ singularity instance list
 
     INSTANCE NAME    PID      IMAGE
-    cow1             7388     /home/sushma/lolcow_latest.sif
+    instance1        7388     /home/vagrant/.singularity/cache/library/sha256.69ce2a3dcc6d3e559e20ced0df251046ee6ecff390a945d856fe0dcb3bcb3ce8/alpine_latest.si
 
 .. note::
-    The instances are linked with your user. So make sure to run ALL the instance
-    commands either with or without the ``sudo`` privilege.
-    If you ``start`` an instance with sudo and then ``list`` it without sudo, it
-    might not be able to locate the instance.
+    The instances are linked with your user. So make sure to run *all* the 
+    instance commands either with or without the ``sudo`` privilege. If you 
+    ``start`` an instance with sudo and then you must ``list`` it with sudo, as
+    well or you will not be able to locate the instance.
 
-If you want to run multiple instances from the same image, it’s as simple
-as running the command multiple times with different instance names.
-The instance names uniquely identifies an instance, so they cannot be
-repeated.
+If you want to run multiple instances from the same image, it’s as simple as 
+running the command multiple times with different instance names. The instance 
+name uniquely identify instances, so they cannot be repeated.
 
 .. code-block:: singularity
 
-      $ singularity instance start   lolcow_latest.sif  cow2
-      $ singularity instance start   lolcow_latest.sif  cow3
+      $ singularity instance start library://alpine instance2
+      $ singularity instance start library://alpine instance3
 
 And again to confirm that the instances are running as we expected:
 
@@ -90,16 +90,16 @@ And again to confirm that the instances are running as we expected:
     $ singularity instance list
 
     INSTANCE NAME    PID      IMAGE
-    cow1             16519    /home/sushma/lolcow_latest.sif
-    cow2             16576    /home/sushma/lolcow_latest.sif
-    cow3             16618    /home/sushma/lolcow_latest.sif
+    instance1        1658     /home/vagrant/.singularity/cache/library/sha256.69ce2a3dcc6d3e559e20ced0df251046ee6ecff390a945d856fe0dcb3bcb3ce8/alpine_latest.sif
+    instance2        1720     /home/vagrant/.singularity/cache/library/sha256.69ce2a3dcc6d3e559e20ced0df251046ee6ecff390a945d856fe0dcb3bcb3ce8/alpine_latest.sif
+    instance3        1780     /home/vagrant/.singularity/cache/library/sha256.69ce2a3dcc6d3e559e20ced0df251046ee6ecff390a945d856fe0dcb3bcb3ce8/alpine_latest.sif
 
 You can use the ``singularity run/exec`` commands on instances:
 
 .. code-block:: singularity
 
-    $ singularity run instance://cow1
-    $ singularity exec instance://cow1 cowsay moo
+    $ singularity run instance://instance1
+    $ singularity exec instance://instance2 cat /etc/os-release
 
 When using ``run`` with an instance URI, the ``runscript`` will be executed
 inside of the instance. Similarly with ``exec``, it will execute the given
@@ -110,18 +110,18 @@ If you want to poke around inside of your instance, you can do a normal
 
 .. code-block:: singularity
 
-    $ singularity shell instance://cow1
-    Singularity lolcow_latest.sif:~>
+    $ singularity shell instance://instance3
+    Singularity>
 
 When you are finished with your instance you can clean it up with the
 ``instance stop`` command as follows:
 
 .. code-block:: singularity
 
-    $ singularity instance stop cow1
+    $ singularity instance stop instance1
 
-If you have multiple instances running and you want to stop all of
-them, you can do so with a wildcard or the -a flag:
+If you have multiple instances running and you want to stop all of them, you can 
+do so with a wildcard or the -a flag:
 
 .. code-block:: singularity
 
@@ -139,10 +139,11 @@ them, you can do so with a wildcard or the -a flag:
 Nginx “Hello-world” in Singularity
 ----------------------------------
 
-The above example, although ineffectual, should have fairly introduced the concept of Singularity instances and
-running services in the background. The following illustrates a more
-functional example of setting up a sample nginx web server using instances in
-Singularity. First we will create a basic :ref:`definition file <definition-files>` (let's call it nginx.def):
+The above example, although not very useful, should serve as a fair introduction 
+to the concept of Singularity instances and running services in the background. 
+The following illustrates a more useful example of setting up a sample nginx web 
+server using instances. First we will create a basic 
+:ref:`definition file <definition-files>` (let's call it nginx.def):
 
 .. code-block:: singularity
 
@@ -154,20 +155,19 @@ Singularity. First we will create a basic :ref:`definition file <definition-file
        nginx
 
 
-All this does is, download the official nginx Docker container, convert
-it to a Singularity image, and tell it to run nginx when you start the
-instance. Since we’re running a web server, we’re going to run the
-following commands as root.
+This downloads the official nginx Docker container, converts it to a Singularity 
+image, and tells it to run nginx when you start the instance. Since we’re 
+running a web server, we’re going to run the following commands as root.
 
 .. code-block:: singularity
 
-    $ singularity build nginx.sif nginx.def
+    $ sudo singularity build nginx.sif nginx.def
     $ sudo singularity instance start --writable-tmpfs nginx.sif web
 
 .. note::
-    The above ``start`` command requires `sudo` because the "user" directive runs processes only
-    with super user privileges. Also, to let the instance write temporary files during execution, you should use
-    `--writable-tmpfs` while starting the instance.
+    The above ``start`` command requires `sudo` because we are running a web
+    server. Also, to let the instance write temporary files during execution, 
+    you should use `--writable-tmpfs` while starting the instance.
 
 Just like that we’ve downloaded, built, and run an nginx Singularity
 image. And to confirm that it’s correctly running:
@@ -209,21 +209,21 @@ Visit localhost on your browser, you should see a Welcome message!
 Putting all together
 --------------------
 
-In this section, we will demonstrate an example of packaging a service
-into a container and running it. The service we will be packaging is an
-API server that converts a web page into a PDF, and can be found
-`here <https://github.com/alvarcarto/url-to-pdf-api>`__.
-You can build the image by following below described steps or if you wish to
-just download the final image directly from Container Library, simply run
+In this section, we will demonstrate an example of packaging a service into a 
+container and running it. The service we will be packaging is an API server that 
+converts a web page into a PDF, and can be found `here 
+<https://github.com/alvarcarto/url-to-pdf-api>`__. You can build the image by 
+following the steps described below or you can just download the final image 
+directly from Container Library, simply run
 ``singularity pull library://sylabs/doc-examples/url-to-pdf:latest``.
 
 Building the image
 ==================
 
-This section will describe the requirements for creating definition file(url-to-pdf.def)
-which will be used to build the conatiner image. To begin, when looking at the GitHub
-page of the ``url-to-pdf-api``, we can see that it is a Node 8 server that uses
-headless Chromium called `Puppeteer <https://github.com/GoogleChrome/puppeteer>`_.
+This section will describe the requirements for creating the definition file 
+(url-to-pdf.def) that will be used to build the container image. 
+``url-to-pdf-api`` is based on a Node 8 server that uses a headless version of 
+Chromium called `Puppeteer <https://github.com/GoogleChrome/puppeteer>`_.
 Let’s first choose a base from which to build our container, in this case the
 docker image ``node:8`` which comes pre-installed with Node 8 has been used:
 
@@ -234,27 +234,31 @@ docker image ``node:8`` which comes pre-installed with Node 8 has been used:
     Includecmd: no
 
 
-| Puppeteer also requires a few dependencies to be manually installed in
-  addition to Node 8, so we can add those into the ``post`` section as well as
-  the installation script for the ``url-to-pdf``:
+Puppeteer also requires a few dependencies to be manually installed in addition 
+to Node 8, so we can add those into the ``post`` section as well as the 
+installation script for the ``url-to-pdf``:
 
 .. code-block:: singularity
 
     %post
 
-        apt-get update && apt-get install -yq gconf-service libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3
-        libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0
-        libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6     libxfixes3
-        libxi6 libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates fonts-liberation libappindicator1 libnss3 lsb-release
-        xdg-utils wget curl && rm -r /var/lib/apt/lists/*
+        apt-get update && apt-get install -yq gconf-service libasound2 \
+            libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 \
+            libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 \
+            libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 \
+            libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
+            libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 \
+            libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
+            fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils \
+            wget curl && rm -r /var/lib/apt/lists/*
         git clone https://github.com/alvarcarto/url-to-pdf-api.git pdf_server
         cd pdf_server
         npm install
         chmod -R 0755 .
 
-And now we need to define what happens when we start an instance of the
-container. In this situation, we want to run the commands that starts up
-the url-to-pdf server:
+And now we need to define what happens when we start an instance of the 
+container. In this situation, we want to run the commands that starts up the 
+url-to-pdf server:
 
 .. code-block:: singularity
 
@@ -264,8 +268,8 @@ the url-to-pdf server:
         nohup npm start > /dev/null 2>&1 < /dev/null &
 
 
-Also, the ``url-to-pdf`` server requires some ``environment`` variables to be set, which we can do in the
-environment section:
+Also, the ``url-to-pdf`` server requires some environment variables to be set, 
+which we can do in the environment section:
 
 .. code-block:: singularity
 
@@ -284,17 +288,16 @@ environment section:
 Running the Server
 ==================
 
-Now that we have an image, we are ready to start an instance and run the
-server:
+We can now start an instance and run the server:
 
 .. code-block:: singularity
 
     $ sudo singularity instance start url-to-pdf.sif pdf
 
 .. note::
-    If there occurs an error related to port connection being refused while starting
-    the instance or while using it later, you can try mentioning different port
-    numbers in the definition file above.
+    If there occurs an error related to port connection being refused while 
+    starting the instance or while using it later, you can try specifying 
+    different port numbers in the definition file above.
 
 We can confirm it’s working by sending the server an http request using
 curl:
@@ -337,18 +340,16 @@ If you shell into the instance, you can see the running processes:
 Making it Pretty
 ================
 
-Now that we have confirmation that the server is working, let’s make
-it a little cleaner. It’s difficult to remember the exact curl command
-and URL syntax each time you want to request a PDF, so let’s automate
-that. To do that, we’re going to be using Standard Container
-Integration Format (SCIF) apps, which are integrated directly into
-singularity. If you haven’t already, check out the `Singularity app documentation <https://sci-f.github.io/>`_
-to come up to speed.
+Now that we have confirmation that the server is working, let’s make it a little 
+cleaner. It’s difficult to remember the exact ``curl`` command and URL syntax 
+each time you want to request a PDF, so let’s automate it. To do that, we can 
+use Standard Container Integration Format (SCIF) apps, that are integrated 
+directly into singularity. If you haven’t already, check out the `Scientific 
+Filesystem documentation <https://sci-f.github.io/>`_ to come up to speed.
 
-First off, we’re going to move the installation of the url-to-pdf
-into an app, so that there is a designated spot to place output files.
-To do that, we want to add a section to our definition file to build
-the server:
+First off, we’re going to move the installation of the url-to-pdf into an app, 
+so that there is a designated spot to place output files. To do that, we want to 
+add a section to our definition file to build the server:
 
 .. code-block:: singularity
 
@@ -369,8 +370,8 @@ And update our ``startscript`` to point to the app location:
         nohup npm start > /dev/null 2>&1 < /dev/null &
 
 
-Now we want to define the pdf_client app, which we will run to send the
-requests to the server:
+Now we want to define the pdf_client app, which we will run to send the requests 
+to the server:
 
 .. code-block:: singularity
 
@@ -383,45 +384,42 @@ requests to the server:
         curl -o "${SINGULARITY_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
 
 
-As you can see, the ``pdf_client`` app checks to make sure that the user provides at
-least one argument. Now that we have an output directory in the
-container, we need to expose it to the host using a bind mount. Once
-we’ve rebuilt the container, make a new directory called ``out`` for the
-generated PDF’s to go. After building the image from the edited definition file we simply start the instance:
+As you can see, the ``pdf_client`` app checks to make sure that the user 
+provides at least one argument. Now that we have an output directory in the
+container, we need to expose it to the host using a bind mount. Once we’ve 
+rebuilt the container, make a new directory called ``out`` for the generated 
+PDFs to go. After building the image from the edited definition file we simply 
+start the instance:
 
 .. code-block:: singularity
 
     $ singularity instance start -B out/:/scif/data/pdf_client/output/ url-to-pdf.sif pdf
 
-And to request a pdf simply do:
+To request a pdf simply do:
 
 .. code-block:: singularity
 
     $ singularity run --app pdf_client instance://pdf http://sylabs.io/docs sylabs.pdf
 
-And to confirm that it worked:
+To confirm that it worked:
 
 .. code-block:: singularity
 
     $ ls out/
     sylabs.pdf
 
-When you are finished, use the instance stop command to close all
-running instances.
+When you are finished, use the instance stop command to close all running 
+instances.
 
 .. code-block:: singularity
 
     $ singularity instance stop \*
 
----------------
-Important Notes
----------------
-
 .. note::
     If the service you want to run in your instance requires a bind mount,
-    then you must pass the ``-B`` option when calling ``instance start``. For example, if you wish to
-    capture the output of the ``web`` container instance which is placed at ``/output/`` inside
-    the container you could do:
+    then you must pass the ``-B`` option when calling ``instance start``. For 
+    example, if you wish to capture the output of the ``web`` container instance 
+    which is placed at ``/output/`` inside the container you could do:
 
     .. code-block:: singularity
 
