@@ -232,7 +232,7 @@ of the default ``/var``) you can do the following:
 
 .. code-block:: none
 
-    rpmbuild -tb --define='_localstatedir /mnt' singularity-$VERSION.tar.gz'
+    rpmbuild -tb --define='_localstatedir /mnt' singularity-$VERSION.tar.gz
 
 .. note::
 
