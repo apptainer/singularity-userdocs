@@ -32,7 +32,7 @@ container. You can simply install NGINX and start the service by:
 
 .. code-block:: singularity
 
-    $ apt-get update && apt-get install -y nginx
+    $ sudo apt-get update && sudo apt-get install -y nginx
     $ service nginx start
 
 If you were to do something like this from within a container you would also see 
