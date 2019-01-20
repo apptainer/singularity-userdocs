@@ -14,7 +14,7 @@ You can see them listed below with their respective functionality.
 
 #. **SINGULARITY_APP** and **SINGULARITY_APPNAME**: Sets the name of an application to be run inside a container.
 
-#. **SINGULARITY_BINDPATH** and **SINGULARITY_BIND**: Path to bind between the host and the container.
+#. **SINGULARITY_BINDPATH** and **SINGULARITY_BIND**: Comma separated string ``source:<dest>`` list of paths to bind between the host and the container.
 
 #. **SINGULARITY_HOME** : A home directory specification, it could be a source or destination path. The source path is the home directory outside the container and the destination overrides the home directory within the container.
 
@@ -30,7 +30,7 @@ You can see them listed below with their respective functionality.
 
 #. **SINGULARITY_HOSTNAME**: The container's hostname.
 
-#. **SINGULARITY_NETWORK**: Used to specify a desired network. If more than one parameters are used, addresses should be separated by commas, where each network will bring up a dedicated interface inside the container.
+#. **SINGULARITY_NETWORK**: Used to specify a desired network. If more than one parameters is used, addresses should be separated by commas, where each network will bring up a dedicated interface inside the container.
 
 #. **SINGULARITY_NETWORK_ARGS**: To specify the network arguments to pass to CNI plugins.
 
