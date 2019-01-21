@@ -15,24 +15,21 @@ Overview
 .. Review the overview of the Sy interface ... 
 
 
-----------------------------
-Interoperability with Docker
-----------------------------
-
-.. TODO Check headings ^^^ doesn't seem necessary!
-
+--------------------------------------------
 Running action commands on Docker Hub images
-============================================
+--------------------------------------------
 
 .. TODO info about shell, run, and exec on Docker Hub images
 .. TODO explanation that layers are downloaded and then "spatted out to disk" to 
     .. TODO create an ephemeral Singularity container in which commands are run
 
+.. TODO add a note re: ./??.sif above 
 
 .. _sec:use_prebuilt_public_docker_images:
 
+---------------------------------------------------------
 Making use of pre-built public images from the Docker Hub
-=========================================================
+---------------------------------------------------------
 
 Singularity can make use of pre-built public images available from the `Docker Hub <https://hub.docker.com/>`_. By specifying the ``docker://`` URI for an image you have already located, Singularity can ``pull``  it - e.g.: 
 
@@ -71,9 +68,10 @@ This ``pull`` results in a *local* copy of the Docker image in SIF, the Singular
 In translating to SIF, individual layers of the Docker image have been *combined* into a single, native file for use via Singularity; there is no need to subsequently ``build`` the image for Singularity. For example, you can now ``exec``, ``run`` or ``shell`` into the SIF version via Singularity. See :ref:`Interact with images <quick-start>`. 
 
 .. TODO improve ref above to quick start ... interact 
-    .. Should explain here or in previous section that docker to Singularity is 
+
+.. TODO Should explain here or in previous section that docker to Singularity is 
     .. a one-way operation because info is lost.
-    .. Also some workds on how this is considered less reproducible than pulling
+    .. Also some words on how this is considered less reproducible than pulling
     .. from the container library.  
 
 
@@ -119,17 +117,17 @@ complete contents of that image.
 
     ``pull`` actually builds a SIF file that corresponds to the image you retrieved from the Docker Hub. Updates to the image on the Docker Hub will *not* be reflected in your *local* copy. 
 
-.. TODO the line below should probaby be added to a larger discussion in which the 
-.. entire URI is explained.  I think the existing explanation is pretty good,
-.. but probably needs style edits. 
+.. TODO explain the full Docker URI - add the line below to a larger discussion - the existing 
+    explanation is pretty good, but probably needs style edits.  
 
 In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker Hub user, whereas ``lolcow`` is the name of the repository. Adding the option to specifiy an image tag, the generic version of the URI is ``docker://<hub-user>/<repo-name>[:<tag>]``. `Repositories on Docker Hub <https://docs.docker.com/docker-hub/repos/>`_ provides additional details.
 
 .. TODO Docker layers = OCI blobs ??? need note re: repeat blob here??? 
 
 
+----------------------------------------------------------
 Making use of pre-built private images from the Docker Hub
-==========================================================
+----------------------------------------------------------
 
 After successful authentication, Singularity can also make use of pre-built *private* images available from the `Docker Hub <https://hub.docker.com/>`_. The three means available for authentication follow here. Before describing these means, it is instructive to illustate the error generated when attempting access a private image *without* credentials:
 
@@ -147,7 +145,7 @@ In this case, the ``mylolcow`` repository of user ``ilumb`` **requires** authent
 .. _sec:authentication_via_docker_login: 
 
 Authentication via Interactive Login
-------------------------------------
+====================================
 
 Interactive login is the first of three means provided for authentication with the Docker Hub. It is enabled through use of the ``--docker-login`` option of Singularity's ``pull`` command; for example:
 
@@ -180,7 +178,7 @@ After successful authentication, the private Docker image is pulled and converte
 .. _sec:authentication_via_environment_variables: 
 
 Authentication via Environment Variables
-----------------------------------------
+========================================
 
 Environment variables offer an alternative means for authentication with the Docker Hub. The **required** exports are as follows:
 
@@ -199,9 +197,12 @@ Of course, the ``<redacted>`` plain-text password needs to be replaced by a vali
 
     When specifying passwords, 'special characters' (e.g., ``$``, ``#``, ``.``) need to be escaped to avoid interpretation by the shell. 
  
+.. TODO testing auth - updated from the 2.6 docs - needed?
 
+
+--------------------------------------------------------------
 Making use of pre-built private images from Private Registries
-==============================================================
+--------------------------------------------------------------
 
 Authentication is required to access *private* images that reside in the Docker Hub. Of course, private images can also reside in **private registries**. Accounting for locations *other* than the Docker Hub is easily achieved. 
 
@@ -275,14 +276,15 @@ Alternatively, for purely interactive use, ``--docker-login`` is recommended:
 Authentication aside, the outcome of the ``pull`` is the Singularity container ``pytorch_18.11-py3.sif`` in SIF. 
 
 
-Building images for Singularity from the Docker Hub
-===================================================
+------------------------------------------------------
+Building images for Singularity from Docker Registries
+------------------------------------------------------
 
 The ``build`` command is used to **create** Singularity containers. Because it is documented extensively :ref:`elsewhere in this manual <build-a-container>`, only specifics relevant to Docker are provided here - namely, working with the Docker Hub via the Singularity command line and through Singularity definition files. 
 
 
 Working from the Singularity Command Line
------------------------------------------
+=========================================
 
 In the simplest case, ``build`` is functionally equivalent to ``pull``: 
 
@@ -347,8 +349,11 @@ Implicit in the above command-line interactions is use of pre-built public image
 (Recall that ``docker://ilumb/mylolcow`` is a private image available via the Docker Hub.) See :ref:`Authentication via Interactive Login <sec:authentication_via_docker_login>` above regarding use of ``--docker-login``.
 
 
-Working with Definition Files: Mandatory Headers
-------------------------------------------------
+Working with Definition Files
+=============================
+
+Mandatory Headers
+------------------
 
 Akin to a set of blueprints that explain how to build a custom container, Singularity definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here. 
 
@@ -369,7 +374,7 @@ then
 
 creates a Singularity container in SIF by bootstrapping from the public ``godlovedc/lolcow`` image from the Docker Hub. 
 
-In the above definition file, ``docker`` is one of numerous, possible bootstrap agents; again, the section dedicated to definition files provides additional context. 
+In the above definition file, ``docker`` is one of numerous, possible bootstrap agents; this, and other bootstrap agents receive attention :ref:`in the appendix <build-docker-module>`.     
 
 Through the means for authentication described above, definition files permit use of private images hosted via the Docker Hub. For example, if the file ``mylolcow.def`` has contents
 
@@ -398,11 +403,9 @@ enables authenticated use of the private image.
 
     The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create Singularity containers via the ``build`` command. 
 
-.. TODO links to https://www.sylabs.io/guides/3.0/user-guide/appendix.html#docker-bootstrap-agent 
 
-
-Working with Definition Files: Optional Headers
------------------------------------------------
+Optional Headers
+----------------
 
 In the two-previous examples, the ``From`` keyword specifies *both* the ``hub-user`` and ``repo-name`` in making use of the Docker Hub. *Optional* use of ``Namespace`` permits the more-granular split across two keywords:
 
@@ -421,8 +424,8 @@ In the two-previous examples, the ``From`` keyword specifies *both* the ``hub-us
     The default value for the optional keyword ``Namespace`` is ``library``. 
 
 
-Working with Definition Files: Private Images and Registries 
-------------------------------------------------------------
+Private Images and Registries 
+-----------------------------
 
 Thus far, use of Docker Hub has been assumed. To make use of a different repository of Docker images the **optional** ``Registry`` keyword can be added to the Singularity definition file. For example, to make use of a Docker image from the NVIDIA GPU Cloud (NGC) corresponding definition file is:
 
@@ -456,8 +459,8 @@ After successful authentication via interactive use of the ``--docker-login`` op
 
 .. _sec:def_files_execution:
 
-Working with Definition Files: Directing Execution 
---------------------------------------------------
+Directing Execution 
+-------------------
 
 The ``Dockerfile`` corresponding to ``godlovedc/lolcow`` (and `available here <https://hub.docker.com/r/godlovedc/lolcow/dockerfile>`_) is as follows:
 
@@ -488,7 +491,7 @@ The execution-specific part of this ``Dockerfile`` is the ``ENTRYPOINT`` - "... 
                     ||----w |
                     ||     ||
 
-.. TODO add a note re: ./??.sif above 
+
 
 In addition, ``CMD`` allows an arbitrary string to be *appended* to the ``ENTRYPOINT``. Thus, multiple commands or flags can be passed together through combined use.
 
@@ -539,13 +542,11 @@ To summarize execution precedence:
 
     4. Execution of the ``bash`` shell is defaulted to
 
-.. TODO If no %runscript is specified, or if the import command is used as in the example above, the ENTRYPOINT is used as runscript.
-
-.. TODO Test CMD vs ENTRYPOINT 
+.. TODO Test CMD vs ENTRYPOINT via a documented example 
 
 
-Working with Definition Files: Container Metadata 
--------------------------------------------------
+Container Metadata 
+------------------
 
 Singularity's ``inspect`` command displays container metadata - data about data that is encapsulated within a SIF file. Default output (assumed via the ``--labels`` option) from the command was :ref:`illustrated above <sec:use_prebuilt_public_docker_images_SUB_inspect>`. ``inspect``, however, provides a number of options that are alluded to here. 
 
@@ -644,6 +645,8 @@ The ``--environment`` option for ``inspect`` is worth noting; for example:
 
 Other ``inspect`` options are detailed elsewhere in this manual and available online via ``singularity inspect --help``. 
 
+.. TODO (optional) siftool ??? 
+
 
 .. TODO https://www.sylabs.io/guides/3.0/user-guide/environment_and_metadata.html#the-inspect-command
 
@@ -662,11 +665,6 @@ Other ``inspect`` options are detailed elsewhere in this manual and available on
 
 
 
-.. TODO Other commands that can do this >>>>?? 
-
-
-.. TODO What about private Docker registries? How does signing/verification work in that case? 
-
 
 
 .. TODO Account for locally cached Docker images - further research required ...  
@@ -675,12 +673,10 @@ Other ``inspect`` options are detailed elsewhere in this manual and available on
 .. carve off topics and work on the page together.
 .. 
 
-.. The breakdown of the URI is useful and should be retained (but edited)
+.. TODO The breakdown of the URI is useful and should be retained (but edited)
 ..     https://www.sylabs.io/guides/2.6/user-guide/singularity_and_docker.html#how-do-i-specify-my-docker-image
 
-.. build a singularity container from local docker images (ask Ian and/or Michael)
+.. TODO build a singularity container from local docker images (ask Ian and/or Michael)
 ..     running in daemon
 ..     sitting on host 
 .. build from an OCI bundle (ask Ian and/or Michael.)
-
-.. TODO siftool ??? 
