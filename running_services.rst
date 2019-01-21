@@ -263,7 +263,7 @@ installation script for the ``url-to-pdf``:
 
 And now we need to define what happens when we start an instance of the
 container. In this situation, we want to run the commands that starts up the
-url-to-pdf server:
+url-to-pdf service:
 
 .. code-block:: singularity
 
@@ -273,7 +273,7 @@ url-to-pdf server:
         nohup npm start > /dev/null 2>&1 < /dev/null &
 
 
-Also, the ``url-to-pdf`` server requires some environment variables to be set,
+Also, the ``url-to-pdf`` service requires some environment variables to be set,
 which we can do in the environment section:
 
 .. code-block:: singularity
@@ -290,10 +290,10 @@ which we can do in the environment section:
     $ sudo singularity build url-to-pdf.sif url-to-pdf.def
 
 
-Running the Server
+Running the Service
 ==================
 
-We can now start an instance and run the server:
+We can now start an instance and run the service:
 
 .. code-block:: singularity
 
