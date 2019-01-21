@@ -19,6 +19,47 @@ Overview
 Running action commands on Docker Hub images
 --------------------------------------------
 
+
+
+.. code-block:: none
+
+    $ singularity run docker://godlovedc/lolcow
+    INFO:    Converting OCI blobs to SIF format
+    INFO:    Starting build...
+    Getting image source signatures
+    Copying blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+     45.33 MiB / 45.33 MiB [====================================================] 1s
+    Copying blob sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+     848 B / 848 B [============================================================] 0s
+    Copying blob sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+     621 B / 621 B [============================================================] 0s
+    Copying blob sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+     853 B / 853 B [============================================================] 0s
+    Copying blob sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+     169 B / 169 B [============================================================] 0s
+    Copying blob sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+     53.75 MiB / 53.75 MiB [====================================================] 2s
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: /home/vagrant/.singularity/cache/oci-tmp/a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb/lolcow_latest.sif
+    INFO:    Image cached as SIF at /home/vagrant/.singularity/cache/oci-tmp/a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb/lolcow_latest.sif
+     ___________________________________
+    / Repartee is something we think of \
+    | twenty-four hours too late.       |
+    |                                   |
+    \ -- Mark Twain                     /
+     -----------------------------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+
+
+
 .. TODO info about shell, run, and exec on Docker Hub images
 .. TODO explanation that layers are downloaded and then "spatted out to disk" to 
     .. TODO create an ephemeral Singularity container in which commands are run
@@ -286,6 +327,9 @@ The ``build`` command is used to **create** Singularity containers. Because it i
 Working from the Singularity Command Line
 =========================================
 
+Remotely Hosted Images
+----------------------
+
 In the simplest case, ``build`` is functionally equivalent to ``pull``: 
 
 .. code-block:: none
@@ -349,11 +393,60 @@ Implicit in the above command-line interactions is use of pre-built public image
 (Recall that ``docker://ilumb/mylolcow`` is a private image available via the Docker Hub.) See :ref:`Authentication via Interactive Login <sec:authentication_via_docker_login>` above regarding use of ``--docker-login``.
 
 
+Locally Cached Images
+---------------------
+
+Singularity containers can be built at the command line from images cached locally by Docker. Suppose, for example: 
+
+.. code-block:: none
+
+    $ sudo docker images
+    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+    godlovedc/lolcow    latest              577c1fe8e6d8        16 months ago       241MB
+
+This indicates that ``godlovedc/lolcow:latest`` has been cached locally by Docker. Then 
+
+.. code-block:: none
+
+    $ sudo singularity build lolcow_from_docker_cache.sif docker-daemon://godlovedc/lolcow:latest
+    WARNING: Authentication token file not found : Only pulls of public images will succeed
+    INFO:    Starting build...
+    Getting image source signatures
+    Copying blob sha256:a2022691bf950a72f9d2d84d557183cb9eee07c065a76485f1695784855c5193
+     119.83 MiB / 119.83 MiB [==================================================] 6s
+    Copying blob sha256:ae620432889d2553535199dbdd8ba5a264ce85fcdcd5a430974d81fc27c02b45
+     15.50 KiB / 15.50 KiB [====================================================] 0s
+    Copying blob sha256:c561538251751e3685c7c6e7479d488745455ad7f84e842019dcb452c7b6fecc
+     14.50 KiB / 14.50 KiB [====================================================] 0s
+    Copying blob sha256:f96e6b25195f1b36ad02598b5d4381e41997c93ce6170cab1b81d9c68c514db0
+     5.50 KiB / 5.50 KiB [======================================================] 0s
+    Copying blob sha256:7f7a065d245a6501a782bf674f4d7e9d0a62fa6bd212edbf1f17bad0d5cd0bfc
+     3.00 KiB / 3.00 KiB [======================================================] 0s
+    Copying blob sha256:70ca7d49f8e9c44705431e3dade0636a2156300ae646ff4f09c904c138728839
+     116.56 MiB / 116.56 MiB [==================================================] 6s
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: lolcow_from_docker_cache.sif
+
+results in ``lolcow_from_docker_cache.sif`` for native use by Singularity. There are two important differences in syntax evident in the above ``build`` command:
+
+    1. The ``docker`` part of the URI has been appended by ``daemon``. This ensures Singularity seek an image locally cached by Docker to boostrap the conversion process to SIF, as opposed to attempting to retrieve an image remnotely hosted via the Docker Hub. 
+
+    2. ``sudo`` is prepended to the ``build`` command for Singularity. This is required as the Docker daemon executes as ``root``.  
+
+.. note:: 
+
+    The tag ``latest`` is **required** when bootstraping creation of a container for Singularity from an image locally cached by Docker. 
+
+
 Working with Definition Files
 =============================
 
-Mandatory Headers
-------------------
+Mandatory Headers: Remotely Boostrapped
+---------------------------------------
 
 Akin to a set of blueprints that explain how to build a custom container, Singularity definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here. 
 
@@ -402,6 +495,44 @@ enables authenticated use of the private image.
 .. note:: 
 
     The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create Singularity containers via the ``build`` command. 
+
+Mandatory Headers: Locally Boostrapped
+---------------------------------------
+
+If def file is 
+
+.. code-block:: singularity 
+
+    Bootstrap: docker-daemon
+    From: godlovedc/lolcow:latest
+
+then 
+
+.. code-block:: none 
+
+    $ sudo singularity build lolcow_from_docker_cache.sif lolcow-d.def 
+    WARNING: Authentication token file not found : Only pulls of public images will succeed
+    Build target already exists. Do you want to overwrite? [N/y] y
+    INFO:    Starting build...
+    Getting image source signatures
+    Copying blob sha256:a2022691bf950a72f9d2d84d557183cb9eee07c065a76485f1695784855c5193
+     119.83 MiB / 119.83 MiB [==================================================] 6s
+    Copying blob sha256:ae620432889d2553535199dbdd8ba5a264ce85fcdcd5a430974d81fc27c02b45
+     15.50 KiB / 15.50 KiB [====================================================] 0s
+    Copying blob sha256:c561538251751e3685c7c6e7479d488745455ad7f84e842019dcb452c7b6fecc
+     14.50 KiB / 14.50 KiB [====================================================] 0s
+    Copying blob sha256:f96e6b25195f1b36ad02598b5d4381e41997c93ce6170cab1b81d9c68c514db0
+     5.50 KiB / 5.50 KiB [======================================================] 0s
+    Copying blob sha256:7f7a065d245a6501a782bf674f4d7e9d0a62fa6bd212edbf1f17bad0d5cd0bfc
+     3.00 KiB / 3.00 KiB [======================================================] 0s
+    Copying blob sha256:70ca7d49f8e9c44705431e3dade0636a2156300ae646ff4f09c904c138728839
+     116.56 MiB / 116.56 MiB [==================================================] 6s
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: lolcow_from_docker_cache.sif
 
 
 Optional Headers
@@ -643,12 +774,10 @@ The ``--environment`` option for ``inspect`` is worth noting; for example:
     #!/bin/sh
     #Custom environment shell code should follow
 
-Other ``inspect`` options are detailed elsewhere in this manual and available online via ``singularity inspect --help``. 
+Other ``inspect`` options are detailed :ref:`elsewhere in this manual <environment-and-metadata>` and available online via ``singularity inspect --help``. 
 
 .. TODO (optional) siftool ??? 
 
-
-.. TODO https://www.sylabs.io/guides/3.0/user-guide/environment_and_metadata.html#the-inspect-command
 
 .. --------------
 .. Best Practices
