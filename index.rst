@@ -13,6 +13,7 @@ User Guide
    Bind Paths and Mounts <bind_paths_and_mounts>
    Persistent Overlays <persistent_overlays>
    Singularity and Docker <singularity_and_docker>
+   Environment and Metadata <environment_and_metadata>
    Sign and Verify <signNverify>
    Security Options <security_options>
    Network Options <networking>
