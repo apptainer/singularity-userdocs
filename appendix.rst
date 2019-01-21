@@ -1,11 +1,11 @@
-========
+
 Appendix
 ========
 
 
 .. _singularity-environment-variables:
 
------------------------------------
+
 Singularity's environment variables
 -----------------------------------
 
@@ -55,17 +55,23 @@ You can see them listed below with their respective functionality.
 #. **SINGULARITY_ROOTFS**: To reference the system file location.
 
 
+.. _build-modules:
+
+
+Build Modules
+-------------
+
 .. _build-library-module:
 
----------------------------
+
 ``library`` bootstrap agent
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. _sec:build-library-module:
 
 
 Overview
-========
+""""""""
 
 You can use an existing container on the Container Library as your “base,” and
 then add customization. This allows you to build multiple images from the same
@@ -77,7 +83,7 @@ containers from that existing base container adding customizations in ``%post``,
 ``%environment``, ``%runscript``, etc.
 
 Keywords
-========
+""""""""
 
 .. code-block:: singularity
 
@@ -106,14 +112,15 @@ The Library keyword is optional. It will default to
 
 .. _build-docker-module:
 
---------------------------
+
 ``docker`` bootstrap agent
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. _sec:build-docker-module:
 
+
 Overview
-========
+""""""""
 
 Docker images are comprised of layers that are assembled at runtime to create an
 image. You can use Docker layers to create a base image, and then add your own
@@ -130,8 +137,9 @@ Or perhaps you have already invested in Docker and created your own Docker
 containers. If so, you can seamlessly convert them to Singularity with the
 ``docker`` bootstrap module.
 
+
 Keywords
-========
+""""""""
 
 .. code-block:: singularity
 
@@ -180,7 +188,7 @@ identical. In both cases the ``IncludeCmd`` keyword is not empty, so the Docker
  order of operations for determining a runscript.
 
 Notes
-=====
+"""""
 
 Docker containers are stored as a collection of tarballs called layers. When
 building from a Docker container the layers must be downloaded and then
@@ -197,14 +205,14 @@ For detailed information about setting your build environment see
 
 .. _build-shub:
 
-------------------------
+
 ``shub`` bootstrap agent
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. _sec:build-shub:
 
 Overview
-========
+""""""""
 
 You can use an existing container on Singularity Hub as your “base,” and then
 add customization. This allows you to build multiple images from the same
@@ -216,7 +224,7 @@ from that existing base container adding customizations in ``%post`` ,
 ``%environment``, ``%runscript``, etc.
 
 Keywords
-========
+""""""""
 
 .. code-block:: singularity
 
@@ -235,7 +243,7 @@ The From keyword is mandatory. It specifies the container to use as a base.
 be left blank if you want the latest build.
 
 Notes
-=====
+"""""
 
 When bootstrapping from a Singularity Hub image, all previous definition files
 that led to the creation of the current image will be stored in a directory
@@ -245,9 +253,9 @@ image and the new image during bootstrap.
 
 .. _build-localimage:
 
-------------------------------
+
 ``localimage`` bootstrap agent
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. _sec:build-localimage:
 
@@ -256,7 +264,7 @@ container on your host system. The name is somewhat misleading because your
 container can be in either image or directory format.
 
 Overview
-========
+""""""""
 
 You can use an existing container image as your “base”, and then add
 customization. This allows you to build multiple images from the same starting
@@ -267,7 +275,7 @@ start with the appropriate local base container and then customize the new
 container in ``%post``, ``%environment``, ``%runscript``, etc.
 
 Keywords
-========
+""""""""
 
 .. code-block:: singularity
 
@@ -284,7 +292,7 @@ The From keyword is mandatory. It specifies the local container to use as a
 base.
 
 Notes
-=====
+"""""
 
 When building from a local container, all previous definition files that led to
 the creation of the current container will be stored in a directory within the
@@ -294,9 +302,9 @@ the new image during bootstrap.
 
 .. _build-yum:
 
------------------------
+
 ``yum`` bootstrap agent
------------------------
+^^^^^^^^^^^^^^^^^^^^^^^
 
 .. _sec:build-yum:
 
@@ -304,13 +312,13 @@ This module allows you to build a Red Hat/CentOS/Scientific Linux style
 container from a mirror URI.
 
 Overview
-========
+""""""""
 
 Use the ``yum`` module to specify a base for a CentOS-like container. You must
 also specify the URI for the mirror you would like to use.
 
 Keywords
-========
+""""""""
 
 .. code-block:: singularity
 
@@ -346,7 +354,7 @@ complete the build. One common package you may want to install when using the
 ``yum`` build module is YUM itself.
 
 Notes
-=====
+"""""
 
 There is a major limitation with using YUM to bootstrap a container. The RPM
 database that exists within the container will be created using the RPM library
@@ -368,9 +376,9 @@ on Ubuntu you can install it like so:
 
 .. _build-debootstrap:
 
----------------------------
+
 ``debootstrap`` build agent
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. _sec:build-debootstrap:
 
@@ -378,14 +386,14 @@ This module allows you to build a Debian/Ubuntu style container from a mirror
 URI.
 
 Overview
-========
+""""""""
 
 Use the ``debootstrap`` module to specify a base for a Debian-like container.
 You must also specify the OS version and a URI for the mirror you would like to
 use.
 
 Keywords
-========
+""""""""
 
 .. code-block:: singularity
 
@@ -421,7 +429,7 @@ essentials such that the ``%post`` section has what it needs to properly
 complete the build.
 
 Notes
-=====
+"""""
 
 In order to use the ``debootstrap`` build module, you must have ``debootstrap``
 installed on your system. On Ubuntu you can install it like so:
@@ -438,23 +446,23 @@ On CentOS you can install it from the epel repos like so:
 
 .. _build-arch:
 
-------------------------
+
 ``arch`` bootstrap agent
-------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. _sec:build-arch:
 
 This module allows you to build a Arch Linux based container.
 
 Overview
-========
+""""""""
 
 Use the ``arch`` module to specify a base for an Arch Linux based container.
 Arch Linux uses the aptly named ``pacman`` package manager (all puns intended).
 
 
 Keywords
-========
+""""""""
 
 .. code-block:: singularity
 
@@ -469,7 +477,7 @@ information necessary for that particular bootstrap module to build a core
 operating system.
 
 Notes
-=====
+"""""
 
 Arch Linux is, by design, a very stripped down, light-weight OS. You may need to
 perform a significant amount of configuration to get a usable OS. Please refer
@@ -481,22 +489,22 @@ for more info.
 
 .. _build-busybox:
 
----------------------------
+
 ``busybox`` bootstrap agent
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. _sec:build-busybox:
 
 This module allows you to build a container based on BusyBox.
 
 Overview
-========
+""""""""
 
 Use the ``busybox`` module to specify a BusyBox base for container. You must
 also specify a URI for the mirror you would like to use.
 
 Keywords
-========
+""""""""
 
 .. code-block:: singularity
 
@@ -513,29 +521,29 @@ The MirrorURL keyword is mandatory. It specifies a URI to use as a mirror when
 downloading the OS.
 
 Notes
-=====
+"""""
 
 You can build a fully functional BusyBox container that only takes up ~600kB of
 disk space!
 
 .. _build-zypper:
 
---------------------------
+
 ``zypper`` bootstrap agent
---------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 .. _sec:build-zypper:
 
 This module allows you to build a Suse style container from a mirror URI.
 
 Overview
-========
+""""""""
 
 Use the ``zypper`` module to specify a base for a Suse-like container. You must
 also specify a URI for the mirror you would like to use.
 
 Keywords
-========
+""""""""
 
 .. code-block:: singularity
 
