@@ -220,7 +220,7 @@ converts a web page into a PDF, and can be found `here
 <https://github.com/alvarcarto/url-to-pdf-api>`__. You can build the image by
 following the steps described below or you can just download the final image
 directly from Container Library, simply run
-``singularity pull library://sylabs/doc-examples/url-to-pdf:latest``.
+``$ singularity pull library://sylabs/doc-examples/url-to-pdf:latest``.
 
 Building the image
 ==================
