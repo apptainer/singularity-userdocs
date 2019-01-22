@@ -393,6 +393,8 @@ Implicit in the above command-line interactions is use of pre-built public image
 (Recall that ``docker://ilumb/mylolcow`` is a private image available via the Docker Hub.) See :ref:`Authentication via Interactive Login <sec:authentication_via_docker_login>` above regarding use of ``--docker-login``.
 
 
+.. _sec:mandatory_headers_docker_locally_boostrapped_cli:
+
 Locally Cached Images
 ---------------------
 
@@ -439,7 +441,7 @@ results in ``lolcow_from_docker_cache.sif`` for native use by Singularity. There
 
 .. note:: 
 
-    The tag ``latest`` is **required** when bootstraping creation of a container for Singularity from an image locally cached by Docker. 
+    The image tag, in this case ``latest``, is **required** when bootstrapping creation of a container for Singularity from an image locally cached by Docker. 
 
 
 Working with Definition Files
@@ -496,17 +498,24 @@ enables authenticated use of the private image.
 
     The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create Singularity containers via the ``build`` command. 
 
+
+.. _sec:mandatory_headers_docker_locally_boostrapped_def_file:
+
 Mandatory Headers: Locally Boostrapped
 ---------------------------------------
 
-If def file is 
+When ``docker-daemon`` is the bootstrap agent in a Singularity definition file, SIF containers can be created from images cached locally by Docker. Suppose the definition file ``lolcow-d.def`` has contents: 
 
 .. code-block:: singularity 
 
     Bootstrap: docker-daemon
     From: godlovedc/lolcow:latest
 
-then 
+.. note:: 
+
+    Again, the image tag ``latest`` is **required** when bootstrapping creation of a container for Singularity from an image locally cached by Docker. 
+
+Then,  
 
 .. code-block:: none 
 
@@ -533,6 +542,8 @@ then
     Storing signatures
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_from_docker_cache.sif
+
+In other words, this is the definition-file counterpart to :ref:`the command-line invocation provided above <sec:mandatory_headers_docker_locally_boostrapped_cli>`. 
 
 
 Optional Headers
@@ -695,7 +706,15 @@ Emphasis in this section has been on Singularity definition files. The definitio
 
         fortune
 
-Of particular relevance to :ref:`execution precedence <sec:def_files_execution_SUB_execution_precedence>` is the ``--runscript`` option for ``inspect``. For example, using the definition file above, the runscript is unsurprisingly:
+In this case, the ``lolcow`` image was hosted remotely via user ``godlovedc`` at the Docker Hub. On the other hand, the existence of ``docker-daemon`` in the output from ``inspect`` indicates that an image locally cached by Docker was used to ``build`` the SIF file (:ref:`as above <sec:mandatory_headers_docker_locally_boostrapped_cli>`):
+
+.. code-block:: none
+
+    $ singularity inspect --deffile lolcow_from_docker_cache.sif
+    from: godlovedc/lolcow:latest
+    bootstrap: docker-daemon
+
+Of particular relevance to :ref:`execution precedence <sec:def_files_execution_SUB_execution_precedence>`, however, is the ``--runscript`` option for ``inspect``. For example, using the definition file above, the runscript is unsurprisingly:
 
 .. code-block:: none
 
@@ -719,8 +738,6 @@ When the ``%runscript`` section is *removed* from the Singularity definition fil
     namespace: godlovedc
 
 .. TODO below ... Need to add a CMD to lolcow ... 
-
-.. Note, however, that ``IncludeCmd: yes`` was *added* to the def file to allow for illustration of the :ref:`the second case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`); the resulting runscript for the container is:
 
 The runscript 'inherited' from the ``Dockerfile`` is:
 
@@ -776,9 +793,6 @@ The ``--environment`` option for ``inspect`` is worth noting; for example:
 
 Other ``inspect`` options are detailed :ref:`elsewhere in this manual <environment-and-metadata>` and available online via ``singularity inspect --help``. 
 
-.. TODO (optional) siftool ??? 
-
-
 .. --------------
 .. Best Practices
 .. --------------
@@ -793,11 +807,6 @@ Other ``inspect`` options are detailed :ref:`elsewhere in this manual <environme
 .. TODO Existing pgh + testing auth'n 
 
 
-
-
-
-.. TODO Account for locally cached Docker images - further research required ...  
-
 .. I suggest the following additional topics to round the page out.  Maybe we can 
 .. carve off topics and work on the page together.
 .. 
@@ -805,7 +814,6 @@ Other ``inspect`` options are detailed :ref:`elsewhere in this manual <environme
 .. TODO The breakdown of the URI is useful and should be retained (but edited)
 ..     https://www.sylabs.io/guides/2.6/user-guide/singularity_and_docker.html#how-do-i-specify-my-docker-image
 
-.. TODO build a singularity container from local docker images (ask Ian and/or Michael)
-..     running in daemon
-..     sitting on host 
-.. build from an OCI bundle (ask Ian and/or Michael.)
+.. TODO build from an OCI bundle (ask Ian and/or Michael.) ??? 
+
+.. TODO SIFtool - does it have more to offer here??? 
