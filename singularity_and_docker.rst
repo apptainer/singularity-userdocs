@@ -11,15 +11,16 @@ Overview
 --------
 
 .. TODO Overview content ... 
+.. no need for the Docker daemon 
 
 .. Review the overview of the Sy interface ... 
 
 
---------------------------------------------
-Running action commands on Docker Hub images
---------------------------------------------
+----------------------------------------------------------------------
+Running action commands on pre-built public images from the Docker Hub
+----------------------------------------------------------------------
 
-
+``godlovedc/lolcow`` is a whimsical example of a public image hosted via `the Docker Hub <https://hub.docker.com/>`_. Singularity can ``run`` this image as follows:
 
 .. code-block:: none
 
@@ -58,13 +59,80 @@ Running action commands on Docker Hub images
                     ||----w |
                     ||     ||
 
+``docker`` is prepended to ensure that the ``run`` command of Singularity is instructed to boostrap container creation based upon this Docker image; thus creating a complete URI for Singularity. Singularity subsequently downloads all the OCI blobs that comprise this image, and converts them into a *single* SIF file - the native format for Singularity containers. Because this image from the Docker Hub is cached locally in the ``$HOME/.singularity/cache/oci-tmp/<unique cache string>/lolcow_latest.sif`` directory, the image does not need to be downloaded again (from the Docker Hub) the next time a Singularity ``run`` is executed. In other words, the cached copy is sensibly reused: 
 
+.. code-block:: none
 
-.. TODO info about shell, run, and exec on Docker Hub images
-.. TODO explanation that layers are downloaded and then "spatted out to disk" to 
-    .. TODO create an ephemeral Singularity container in which commands are run
+    $ singularity run docker://godlovedc/lolcow
+     _________________________________________
+    / Soap and education are not as sudden as \
+    | a massacre, but they are more deadly in |
+    | the long run.                           |
+    |                                         |
+    \ -- Mark Twain                           /
+     -----------------------------------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
 
-.. TODO add a note re: ./??.sif above 
+As the runtime of this container is encapsulated as a single SIF file, it is possible to ``cd /home/vagrant/.singularity/cache/oci-tmp/a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb/``, and then execute the SIF file directly:
+
+.. code-block:: none
+
+    ./lolcow_latest.sif 
+     _______________________________________
+    / The secret source of humor is not joy \
+    | but sorrow; there is no humor in      |
+    | Heaven.                               |
+    |                                       |
+    \ -- Mark Twain                         /
+     ---------------------------------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+
+.. note:: 
+
+    SIF files abstract Singularity containers as a single file. As with any executable, a SIF file can be executed directly. 
+
+``fortune | cowsay | lolcat`` is executed by *default* when this container is ``run`` by Singularity. Singularity's ``exec`` command allows a different command to be executed; for example: 
+
+.. code-block:: none 
+
+    $ singularity exec docker://godlovedc/lolcow fortune
+    Don't go around saying the world owes you a living.  The world owes you
+    nothing.  It was here first.
+            -- Mark Twain
+
+.. note::
+
+    The *same* cached copy of the ``lolcow`` container is reused here by Singularity ``exec``, and immediately below here by ``shell``. 
+
+In addition to non-interactive execution of an image from the Docker Hub, Singularity provides support for an *interactive* ``shell`` session: 
+
+.. code-block:: none 
+
+    $ singularity shell docker://godlovedc/lolcow 
+    Singularity lolcow_latest.sif:~> cat /etc/os-release 
+    NAME="Ubuntu"
+    VERSION="16.04.3 LTS (Xenial Xerus)"
+    ID=ubuntu
+    ID_LIKE=debian
+    PRETTY_NAME="Ubuntu 16.04.3 LTS"
+    VERSION_ID="16.04"
+    HOME_URL="http://www.ubuntu.com/"
+    SUPPORT_URL="http://help.ubuntu.com/"
+    BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
+    VERSION_CODENAME=xenial
+    UBUNTU_CODENAME=xenial
+    Singularity lolcow_latest.sif:~> 
+
+From this it is evident that use is being made of Ubuntu 16.04 *within* this container, whereas the shell *external* to the container is running a more-recent release of Ubuntu (not illustrated here). 
+
 
 .. _sec:use_prebuilt_public_docker_images:
 
@@ -814,6 +882,6 @@ Other ``inspect`` options are detailed :ref:`elsewhere in this manual <environme
 .. TODO The breakdown of the URI is useful and should be retained (but edited)
 ..     https://www.sylabs.io/guides/2.6/user-guide/singularity_and_docker.html#how-do-i-specify-my-docker-image
 
-.. TODO build from an OCI bundle (ask Ian and/or Michael.) ??? 
+.. TODO build from an OCI bundle (ask Ian and/or Michael.) ??? 3.0 (see changelog - from tarball) 
 
 .. TODO SIFtool - does it have more to offer here??? 
