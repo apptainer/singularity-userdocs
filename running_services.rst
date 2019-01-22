@@ -48,7 +48,7 @@ Container Instances in Singularity
 
 For demonstration, let's use an easy (though somewhat useless) example of
 `alpine_latest.sif <https://cloud.sylabs.io/library/_container/5baba5e594feb900016ea41c>`_
-image from the container library:
+image from the `container library <https://cloud.sylabs.io/library/>`_:
 
 .. code-block:: singularity
 
