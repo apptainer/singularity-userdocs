@@ -19,7 +19,7 @@ this offers advantags:
 
  - No root access needed.
 
- - Can build directly to the library without the need to :ref:`push <push>` your container after.
+ - Can build directly to the library without the need to :ref:`push <push>` your container after. (only thrught the web GUI)
 
 content...
 
@@ -32,7 +32,7 @@ Make a Acount
 Makeing a acount is easy, and straightforward:
 
  1. Go to: https://cloud.sylabs.io/library.
- 2. Click ``Sign in to Sylabs`` (top right corner).
+ 2. Click "Sign in to Sylabs" (top right corner).
  3. Select you method to sign in, with Google, GitHub, GitLab, or MicroSoft.
  4. Type your passwords, and thats it!
 
@@ -58,6 +58,7 @@ Now that you have your token, you are ready to push your container!
 
 .. _push:
 
+-------------------
 Pushing a Container
 -------------------
 
@@ -79,11 +80,27 @@ Now you can download (pull) that container from the ``singularity pull`` command
 
 .. _pull:
 
+-------------------
 Pulling a container
 -------------------
 
+The ``singularity pull`` will pull a container from the `Library <https://cloud.sylabs.io/library>`_ (``library://``), and also `Docker Hub <https://hub.docker.com/>`_ (``docker://``).
 
-The ``singularity pull`` will pull a container from the library (``library://``), or docker hub (``docker://``).
+.. note::
+
+    When pulling from Docker, the container will automaticly be converted to a SIF (Singularity Image Format) container.
+
+
+Heres a typical pull command:
+
+.. code-block:: bash
+
+    $ singularity pull file-out.sif library://alpine:latest
+
+.. note::
+
+    If theres no tag after the container name, Singularity will pull the container with the latest tag.
+
 
 ...more content...
 
