@@ -512,6 +512,59 @@ results in ``lolcow_from_docker_cache.sif`` for native use by Singularity. There
     The image tag, in this case ``latest``, is **required** when bootstrapping creation of a container for Singularity from an image locally cached by Docker. 
 
 
+Remotely Built Containers
+-------------------------
+
+Whether Docker images are remotely hosted or locally cached, SIF containers can be **remotely built** via the `Sylabs Cloud Remote Builder <https://cloud.sylabs.io/builder>`_. The Sylabs Cloud Remote Builder is a service that can be used from the Singularity command line or via its Web interface. Here use of the Singularity CLI is emphasized. 
+
+Once you have an account for Sylabs Cloud, and have logged in to the portal, select `Remote Builder <https://cloud.sylabs.io/builder>`_. The right-hand side of this page is devoted to use of the Singularity CLI. Self-generated API tokens are used to enable authenticated access to the Remote Builder. To create a 30-day token, follow the `instructions provided <https://cloud.sylabs.io/auth/tokens>`_. Once the token has been created, store it in the file ``$HOME/.singularity/sylabs-token``. 
+
+The above token provides authenticate use of the Sylabs Cloud Remote Builder when ``--remote`` is appended to the Singularity ``build`` command. For example, for remotely hosted images: 
+
+.. code-block:: none 
+
+    $ singularity build --remote lolcow_rb.sif docker://godlovedc/lolcow
+    searching for available build agent.........INFO:    Starting build...
+    Getting image source signatures
+    Copying blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+     45.33 MiB / 45.33 MiB  0s
+    Copying blob sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+     848 B / 848 B  0s
+    Copying blob sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+     621 B / 621 B  0s
+    Copying blob sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+     853 B / 853 B  0s
+    Copying blob sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+     169 B / 169 B  0s
+    Copying blob sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+     53.75 MiB / 53.75 MiB  0s
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB  0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: /tmp/image-341891107
+    INFO:    Now uploading /tmp/image-341891107 to the library
+     87.94 MiB / 87.94 MiB  100.00% 38.96 MiB/s 2s
+    INFO:    Setting tag latest
+     87.94 MiB / 87.94 MiB [===============================================================================] 100.00% 17.23 MiB/s 5s
+
+During the build process, progress can be monitored in the Sylabs Cloud portal on the Remote Builder page. Once complete, this results in a local copy of the SIF file ``lolcow_rb.sif``. 
+
+From the `Sylabs Cloud Singularity Library <https://cloud.sylabs.io/library>`_ it is evident that the 'original' SIF file remains available via this portal. 
+
+.. For images locally cached by Docker, the appropriate syntax is:
+
+.. .. code-block:: none 
+
+..     $
+
+.. In the case of images cached locally by Docker, spe
+
+.. .. image:: remote_builder_docker.png
+
+
+
 Working with Definition Files
 =============================
 
