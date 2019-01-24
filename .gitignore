@@ -5,8 +5,10 @@
 .idea
 .DS_Store
 __pycache__
+pygments_singularity.pyc
 
 !_build/html/_static/js/
+_build/html/_static/js/theme.js
 _build/doctrees/
 _build/html/*
 _build/html/_images/
