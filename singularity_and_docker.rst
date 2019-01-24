@@ -468,7 +468,7 @@ SIF containers can be **remotely built**, from images remotely hosted at the Doc
 
 Once you have an account for Sylabs Cloud, and have logged in to the portal, select `Remote Builder <https://cloud.sylabs.io/builder>`_. The right-hand side of this page is devoted to use of the Singularity CLI. Self-generated API tokens are used to enable authenticated access to the Remote Builder. To create a 30-day token, follow the `instructions provided <https://cloud.sylabs.io/auth/tokens>`_. Once the token has been created, store it in the file ``$HOME/.singularity/sylabs-token``. 
 
-The above token provides authenticate use of the Sylabs Cloud Remote Builder when ``--remote`` is appended to the Singularity ``build`` command. For example, for remotely hosted images: 
+The above token provides authenticated use of the Sylabs Cloud Remote Builder when ``--remote`` is appended to the Singularity ``build`` command. For example, for remotely hosted images: 
 
 .. code-block:: none 
 
@@ -498,9 +498,9 @@ The above token provides authenticate use of the Sylabs Cloud Remote Builder whe
     INFO:    Setting tag latest
      87.94 MiB / 87.94 MiB [===============================================================================] 100.00% 17.23 MiB/s 5s
 
-During the build process, progress can be monitored in the Sylabs Cloud portal on the Remote Builder page. Once complete, this results in a local copy of the SIF file ``lolcow_rb.sif``. 
+During the build process, progress can be monitored in the Sylabs Cloud portal on the Remote Builder page - as illustrated upon completion by the screenshot below. Once complete, this results in a *local* copy of the SIF file ``lolcow_rb.sif``. From the `Sylabs Cloud Singularity Library <https://cloud.sylabs.io/library>`_ it is evident that the 'original' SIF file remains available via this portal. 
 
-From the `Sylabs Cloud Singularity Library <https://cloud.sylabs.io/library>`_ it is evident that the 'original' SIF file remains available via this portal. 
+.. image:: lolcow_sylabsrb.png 
 
 
 .. _sec:mandatory_headers_docker_locally_boostrapped_cli:
@@ -557,6 +557,8 @@ results in ``lolcow_from_docker_cache.sif`` for native use by Singularity. There
 
     The Sylabs Cloud Remote Builder *does not* interoperate with local Docker daemons; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. 
 
+    Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, uploaded to the Sylabs Cloud Singularity Library. 
+
 
 
 Working with Definition Files
@@ -584,7 +586,9 @@ then
 
 creates a Singularity container in SIF by bootstrapping from the public ``godlovedc/lolcow`` image from the Docker Hub. 
 
-In the above definition file, ``docker`` is one of numerous, possible bootstrap agents; this, and other bootstrap agents receive attention :ref:`in the appendix <build-docker-module>`.     
+In the above definition file, ``docker`` is one of numerous, possible bootstrap agents; this, and other bootstrap agents receive attention :ref:`in the appendix <build-docker-module>`.    
+
+.. TODO remote builder content  
 
 Through the means for authentication described above, definition files permit use of private images hosted via the Docker Hub. For example, if the file ``mylolcow.def`` has contents
 
@@ -659,6 +663,8 @@ Then,
     INFO:    Build complete: lolcow_from_docker_cache.sif
 
 In other words, this is the definition-file counterpart to :ref:`the command-line invocation provided above <sec:mandatory_headers_docker_locally_boostrapped_cli>`. 
+
+.. TODO remote builder content note - exclusion 
 
 
 Optional Headers
