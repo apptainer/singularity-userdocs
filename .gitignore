@@ -1,7 +1,14 @@
 *~
 #*
 *#
+
+.idea
+.DS_Store
+__pycache__
+pygments_singularity.pyc
+
 !_build/html/_static/js/
+_build/html/_static/js/theme.js
 _build/doctrees/
 _build/html/*
 _build/html/_images/
@@ -9,3 +16,5 @@ _build/html/_sources/
 _build/html/_templates/
 _build/html/_static/*
 
+_build/epub/*
+_build/latex/*
