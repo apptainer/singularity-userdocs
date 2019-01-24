@@ -69,14 +69,17 @@ Heres an example of a typical push command:
 
     $ singularity push my-container.sif library://your-name/project-dir/my-container:latest
 
-The ``:latest`` is the contianer tag, this is used to have difrent version of that container.
+The ``:latest`` is the contianer tag. Tags are used to have difrent version of the same container.
 Heres an example:
+
+Lets assume you have your container (v1.0.1), and you want to push that container without deleting your ``:latest`` container,
+then you can add a version tag to that container, like so:
 
 .. code-block:: bash
 
-    $ singularity push my-container.sif library://your-name/project-dir/my-container:1.0.0
+    $ singularity push my-container.sif library://your-name/project-dir/my-container:1.0.1
 
-Now you can download (pull) that container from the ``singularity pull`` command.
+You can download the container with that tag by replacing the ``:latest``, with the taged container you want to download.
 
 .. _pull:
 
@@ -84,12 +87,12 @@ Now you can download (pull) that container from the ``singularity pull`` command
 Pulling a container
 -------------------
 
-The ``singularity pull`` will pull a container from the `Library <https://cloud.sylabs.io/library>`_ (``library://``), and also `Docker Hub <https://hub.docker.com/>`_ (``docker://``).
+The ``singularity pull`` can pull a container from the `Library <https://cloud.sylabs.io/library>`_ (``library://``),
+and also `Docker Hub <https://hub.docker.com/>`_ (``docker://``).
 
 .. note::
 
     When pulling from Docker, the container will automaticly be converted to a SIF (Singularity Image Format) container.
-
 
 Heres a typical pull command:
 
@@ -102,5 +105,57 @@ Heres a typical pull command:
     If theres no tag after the container name, Singularity will pull the container with the latest tag.
 
 
+To pull a container with a spicific tag, just add the tag to the library URL:
+
+.. code-block:: bash
+
+    $ singularity pull file-out.sif library://alpine:3.8
+
+
+Of course you can pull your own containers. Heres what that will look like:
+
+.. code-block:: bash
+
+    $ singularity pull library://your-name/project-dir/my-container:latest
+
+    # or use a difrent tag:
+
+    $ singularity pull library://your-name/project-dir/my-container:1.0.1
+
+
+.. note::
+
+    You dont have to specify a output file, one will be created automaticly, but its good practice to always
+    specify your output file.
+
+
 ...more content...
+
+
+==========================
+Verify/Sign your Container
+==========================
+
+Check out :ref:`this page <signNverify>` on how to: :ref:`verify a container <verify_container_from_library>`,
+:ref:`making PGP key, and sign your own containers <sign_your_own_containers>`.
+
+
+.. _search_the_library:
+
+====================================
+Searching the Library for Containers
+====================================
+
+
+When it come to searching the library, there are two options:
+
+ 1. Go to: https://cloud.sylabs.io/library and search for a container there, or
+ 2. Use the ``singularity search`` command to access the cloud library.
+
+
+Using the CLI Search
+--------------------
+
+some more content
+
 

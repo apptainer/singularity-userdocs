@@ -12,6 +12,8 @@ them to sign and verify containers. This provides a trusted method for
 Singularity users to share containers. It ensures a bit-for-bit reproduction
 of the original container as the author intended it.
 
+.. _verify_container_from_library:
+
 -----------------------------------------------
 Verifying containers from the Container Library
 -----------------------------------------------
@@ -43,6 +45,8 @@ bit-for-bit reproductions of the original image.
     	Sylabs Admin <support@sylabs.io>, KeyID 51BE5020C508C7E9
 
 In this example you can see that **Sylabs Admin** has signed the container.
+
+.. _sign_your_own_containers:
 
 ---------------------------
 Signing your own containers
