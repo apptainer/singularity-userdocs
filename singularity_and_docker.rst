@@ -564,6 +564,8 @@ results in ``lolcow_from_docker_cache.sif`` for native use by Singularity. There
 Working with Definition Files
 =============================
 
+.. _sec:def_file_mandatory_headers_remotely_boostrapped: 
+
 Mandatory Headers: Remotely Boostrapped
 ---------------------------------------
 
@@ -616,6 +618,68 @@ enables authenticated use of the private image.
 .. note:: 
 
     The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create Singularity containers via the ``build`` command. 
+
+
+Remotely Bootstrapped and Built Containers
+------------------------------------------
+
+Consider again :ref:`the definition file used the outset of the section above <sec:def_file_mandatory_headers_remotely_boostrapped>`: 
+
+.. code-block:: singularity 
+
+    Bootstrap: docker
+    From: godlovedc/lolcow
+
+With two small adjustments to the Singularity ``build`` command, the Sylabs Cloud Remote Builder can be utilized:
+
+
+.. code-block:: none 
+
+    $ singularity build --remote lolcow_rb_def.sif lolcow.def
+    searching for available build agent......INFO:    Starting build...
+    Getting image source signatures
+    Copying blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+     45.33 MiB / 45.33 MiB  0s
+    Copying blob sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+     848 B / 848 B  0s
+    Copying blob sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+     621 B / 621 B  0s
+    Copying blob sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+     853 B / 853 B  0s
+    Copying blob sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+     169 B / 169 B  0s
+    Copying blob sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+     53.75 MiB / 53.75 MiB  0s
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB  0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: /tmp/image-994007654
+    INFO:    Now uploading /tmp/image-994007654 to the library
+     87.94 MiB / 87.94 MiB  100.00% 41.76 MiB/s 2s
+    INFO:    Setting tag latest
+     87.94 MiB / 87.94 MiB [===============================================================================] 100.00% 19.08 MiB/s 4s
+
+In the above, ``--remote`` has been added as the ``build`` option that causes use of the Remote Builder service. A much more subtle change, however, is the *absence* of ``sudo`` ahead of ``singulartiy build``. Though subtle here, this absence is notable, as users can build containers via the Remote Builder with *escalated privileges*; in other words, steps in container creation that require ``root`` access *are* enabled via the Remote Builder even for users *without* admninistrative privileges locally.  
+
+In addition to the command-line support described above, The Sylabs Cloud Remote Builder also allows definition files to be copied and pasted for via its Graphical User Interface (GUI). After pasting a definition file, and having that file validated by the service, the build-centric part of the GUI appears as illustrated below. By clicking on the ``Build`` button, creation of the container is initiated.
+
+.. image:: build_gui.png
+
+Once the build process has been completed, the corresponding SIF File can be retrieved from the service - as shown below. A log file for the ``build`` process is provided by the GUI, and made available for download as a text file (not shown).  
+
+.. image:: build_output.png
+
+A copy of the SIF file created by the service remains in the Sylabs Cloud Singularity Library as illustrated below. 
+
+.. image:: mysylabslibrary.png
+
+The GUI that is the Sylabs Cloud is robust, responsive, intuitive and therefore extremely useful. 
+
+.. note:: 
+
+    The Sylabs Cloud is currently available as an Alpha Preview. In addition to the Singularity Library and Remote Builder, a Keystore service is also available. All three services make use of a *freemium* pricing model in supporting Singularity Community Edition. In contrast, all three services are included in SingularityPRO - an enterprise grade subscription for Singularity that is offered for a fee from Sylabs. For addtional details regarding the different offerings available for Singularity, please `consult the Sylabs website <https://www.sylabs.io/singularity/>`_.  
 
 
 .. _sec:mandatory_headers_docker_locally_boostrapped_def_file:
