@@ -641,6 +641,10 @@ There are two important differences in syntax evident in the above ``build`` com
 
     2. ``sudo`` is *not* prepended to the ``build`` command for Singularity. This is *not* required if the executing user has the appropriate access privileges to the stored file.  
 
+.. note::
+
+    The ``docker-archive`` bootstrap agent handles archives (``.tar`` files) as well as compressed archives (``.tar.gz``) when containers are built for Singularity via its ``build`` command. 
+
 .. note:: 
 
     The Sylabs Cloud Remote Builder *does not* interoperate with locally stored Docker-format images; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, :ref:`pushed to the Sylabs Cloud Singularity Library <sec:pushing_locally_available_images_to_library>`. 
