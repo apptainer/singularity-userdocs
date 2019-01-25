@@ -514,8 +514,8 @@ During the build process, progress can be monitored in the Sylabs Cloud portal o
 
 .. _sec:mandatory_headers_docker_locally_boostrapped_cli:
 
-Locally Cached Images
----------------------
+Locally Available Images: Cached by Docker
+------------------------------------------
 
 Singularity containers can be built at the command line from images cached locally by Docker. Suppose, for example: 
 
@@ -564,10 +564,120 @@ results in ``lolcow_from_docker_cache.sif`` for native use by Singularity. There
 
 .. note:: 
 
-    The Sylabs Cloud Remote Builder *does not* interoperate with local Docker daemons; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. 
+    The Sylabs Cloud Remote Builder *does not* interoperate with local Docker daemons; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, :ref:`pushed to the Sylabs Cloud Singularity Library <sec:pushing_locally_available_images_to_library>`. 
+ 
 
-    Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, uploaded to the Sylabs Cloud Singularity Library. 
 
+.. _sec:mandatory_headers_docker_locally_stored_bootstrap_cli:
+
+Locally Available Images: Stored Archives
+------------------------------------------
+
+Singularity containers can also be built at the command line from Docker images stored locally as ``tar`` files. Suppose, for example, ``lolcow.tar`` is locally stored archive in the *current* working directory; then the contents of this archive can be revealed as follows:
+
+.. code-block:: none 
+
+    $ tar tvf lolcow.tar 
+    drwxr-xr-x 0/0               0 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/
+    -rw-r--r-- 0/0               3 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/VERSION
+    -rw-r--r-- 0/0            1417 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/json
+    -rw-r--r-- 0/0       122219008 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/layer.tar
+    drwxr-xr-x 0/0               0 2017-09-21 19:37 3762e087ebbb895fd9c38981c1f7bfc76c9879fd3fdadef64df49e92721bb527/
+    -rw-r--r-- 0/0               3 2017-09-21 19:37 3762e087ebbb895fd9c38981c1f7bfc76c9879fd3fdadef64df49e92721bb527/VERSION
+    -rw-r--r-- 0/0             482 2017-09-21 19:37 3762e087ebbb895fd9c38981c1f7bfc76c9879fd3fdadef64df49e92721bb527/json
+    -rw-r--r-- 0/0           14848 2017-09-21 19:37 3762e087ebbb895fd9c38981c1f7bfc76c9879fd3fdadef64df49e92721bb527/layer.tar
+    -rw-r--r-- 0/0            4432 2017-09-21 19:37 577c1fe8e6d84360932b51767b65567550141af0801ff6d24ad10963e40472c5.json
+    drwxr-xr-x 0/0               0 2017-09-21 19:37 5bad884501c0e760bc0c9ca3ae3dca3f12c4abeb7d18194c364fec522b91b4f9/
+    -rw-r--r-- 0/0               3 2017-09-21 19:37 5bad884501c0e760bc0c9ca3ae3dca3f12c4abeb7d18194c364fec522b91b4f9/VERSION
+    -rw-r--r-- 0/0             482 2017-09-21 19:37 5bad884501c0e760bc0c9ca3ae3dca3f12c4abeb7d18194c364fec522b91b4f9/json
+    -rw-r--r-- 0/0            3072 2017-09-21 19:37 5bad884501c0e760bc0c9ca3ae3dca3f12c4abeb7d18194c364fec522b91b4f9/layer.tar
+    drwxr-xr-x 0/0               0 2017-09-21 19:37 81ce2fd011bc8241ae72eaee9146116b7c289e941467ff276397720171e6c576/
+    -rw-r--r-- 0/0               3 2017-09-21 19:37 81ce2fd011bc8241ae72eaee9146116b7c289e941467ff276397720171e6c576/VERSION
+    -rw-r--r-- 0/0             406 2017-09-21 19:37 81ce2fd011bc8241ae72eaee9146116b7c289e941467ff276397720171e6c576/json
+    -rw-r--r-- 0/0       125649920 2017-09-21 19:37 81ce2fd011bc8241ae72eaee9146116b7c289e941467ff276397720171e6c576/layer.tar
+    drwxr-xr-x 0/0               0 2017-09-21 19:37 a10239905b060fd8b17ab31f37957bd126774f52f5280767d3b2639692913499/
+    -rw-r--r-- 0/0               3 2017-09-21 19:37 a10239905b060fd8b17ab31f37957bd126774f52f5280767d3b2639692913499/VERSION
+    -rw-r--r-- 0/0             482 2017-09-21 19:37 a10239905b060fd8b17ab31f37957bd126774f52f5280767d3b2639692913499/json
+    -rw-r--r-- 0/0           15872 2017-09-21 19:37 a10239905b060fd8b17ab31f37957bd126774f52f5280767d3b2639692913499/layer.tar
+    drwxr-xr-x 0/0               0 2017-09-21 19:37 ab6e1ca3392b2f4dbb60157cf99434b6975f37a767f530e293704a7348407634/
+    -rw-r--r-- 0/0               3 2017-09-21 19:37 ab6e1ca3392b2f4dbb60157cf99434b6975f37a767f530e293704a7348407634/VERSION
+    -rw-r--r-- 0/0             482 2017-09-21 19:37 ab6e1ca3392b2f4dbb60157cf99434b6975f37a767f530e293704a7348407634/json
+    -rw-r--r-- 0/0            5632 2017-09-21 19:37 ab6e1ca3392b2f4dbb60157cf99434b6975f37a767f530e293704a7348407634/layer.tar
+    -rw-r--r-- 0/0             574 1970-01-01 01:00 manifest.json
+
+In other words, it is evident that this 'tarball' is a Docker-format image comprised of multiple layers along with metadata in a JSON manifest. 
+
+.. TODO check the JSON manifest stmt above 
+
+Through use of the ``docker-archive`` bootstrap agent, a SIF file (``lolcow_tar.sif``) for use by Singularity can be created via the following ``build`` command:
+
+.. code-block:: none 
+
+    $ singularity build lolcow_tar.sif docker-archive://lolcow.tar
+    INFO:    Starting build...
+    Getting image source signatures
+    Copying blob sha256:a2022691bf950a72f9d2d84d557183cb9eee07c065a76485f1695784855c5193
+     119.83 MiB / 119.83 MiB [==================================================] 6s
+    Copying blob sha256:ae620432889d2553535199dbdd8ba5a264ce85fcdcd5a430974d81fc27c02b45
+     15.50 KiB / 15.50 KiB [====================================================] 0s
+    Copying blob sha256:c561538251751e3685c7c6e7479d488745455ad7f84e842019dcb452c7b6fecc
+     14.50 KiB / 14.50 KiB [====================================================] 0s
+    Copying blob sha256:f96e6b25195f1b36ad02598b5d4381e41997c93ce6170cab1b81d9c68c514db0
+     5.50 KiB / 5.50 KiB [======================================================] 0s
+    Copying blob sha256:7f7a065d245a6501a782bf674f4d7e9d0a62fa6bd212edbf1f17bad0d5cd0bfc
+     3.00 KiB / 3.00 KiB [======================================================] 0s
+    Copying blob sha256:70ca7d49f8e9c44705431e3dade0636a2156300ae646ff4f09c904c138728839
+     116.56 MiB / 116.56 MiB [==================================================] 6s
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: lolcow_tar.sif
+
+There are two important differences in syntax evident in the above ``build`` command:
+
+    1. The ``docker`` part of the URI has been appended by ``archive``. This ensures Singularity seek a Docker-format image stored locally as ``lolcow.tar`` to boostrap the conversion process to SIF, as opposed to attempting to retrieve an image remnotely hosted via the Docker Hub. 
+
+    2. ``sudo`` is *not* prepended to the ``build`` command for Singularity. This is *not* required if the executing user has the appropriate access privileges to the stored file.  
+
+.. note:: 
+
+    The Sylabs Cloud Remote Builder *does not* interoperate with locally stored Docker-format images; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, :ref:`pushed to the Sylabs Cloud Singularity Library <sec:pushing_locally_available_images_to_library>`. 
+
+
+.. _sec:pushing_locally_available_images_to_library:
+
+Pushing Locally Available Images to a Library
+---------------------------------------------
+
+The outcome of bootstrapping from an image cached locally by Docker, or one stored locally as an archive, is of course a locally stored SIF file. As noted above, this is the *only* option available, as the Sylabs Cloud Remote Builder does not interoperate with the Docker daemon or locally stored archives in the Docker image format. Once produced, however, it may be desirable to  make the resulting SIF file available through the Sylabs Cloud Singularity Library; therefore, the procedure to ``push`` a locally available SIF file to the Library is detailed here. 
+
+From the `Sylabs Cloud Singularity Library <https://cloud.sylabs.io/library>`_, select ``Create a new Project``. In this first of two steps, the publicly accessible project is created as illustrated below: 
+
+.. image:: create_project.png
+
+Because an access token for the cloud service already exists, attention can be focused on the ``push`` command prototyped towards the bottom of the following screenshot:
+
+.. image:: push_prototype.png
+
+In fact, by simply replacing ``image.sif`` with ``lolcow_tar.sif``, the following upload is executed: 
+
+.. code-block:: none 
+
+    $ singularity push lolcow_tar.sif library://ilumb/default/lolcow_tar
+    INFO:    Now uploading lolcow_tar.sif to the library
+     87.94 MiB / 87.94 MiB [=============================================================================] 100.00% 1.25 MiB/s 1m10s
+    INFO:    Setting tag latest
+
+
+Finally, from the perspective of the Library, the **hosted** version of the SIF file appears as illustrated below. Directions on how to ``pull`` this file are included. 
+
+.. image:: lolcow_lib_listing.png
+
+.. note:: 
+
+    The hosted version of the SIF file in the Sylabs Cloud Singularity Library is maintainable. In other words, if the image is updated lcoally, the update can be pushed to the Library and tagged appropriately. 
 
 
 Working with Definition Files
@@ -737,7 +847,45 @@ Then,
 
 In other words, this is the definition-file counterpart to :ref:`the command-line invocation provided above <sec:mandatory_headers_docker_locally_boostrapped_cli>`. 
 
-.. TODO remote builder content note - exclusion 
+.. TODO remote builder content note - exclusion above 
+
+Alternatively when ``docker-archive`` is the bootstrap agent in a Singularity definition file, SIF containers can be created from images stored locally by Docker. Suppose the definition file ``lolcow-da.def`` has contents: 
+
+.. code-block:: singularity 
+
+    Bootstrap: docker-archive
+    From: lolcow.tar
+
+Then, 
+
+.. code-block:: none
+
+    $ sudo singularity build lolcow_tar_def.sif lolcow-da.def 
+    WARNING: Authentication token file not found : Only pulls of public images will succeed
+    INFO:    Starting build...
+    Getting image source signatures
+    Copying blob sha256:a2022691bf950a72f9d2d84d557183cb9eee07c065a76485f1695784855c5193
+     119.83 MiB / 119.83 MiB [==================================================] 6s
+    Copying blob sha256:ae620432889d2553535199dbdd8ba5a264ce85fcdcd5a430974d81fc27c02b45
+     15.50 KiB / 15.50 KiB [====================================================] 0s
+    Copying blob sha256:c561538251751e3685c7c6e7479d488745455ad7f84e842019dcb452c7b6fecc
+     14.50 KiB / 14.50 KiB [====================================================] 0s
+    Copying blob sha256:f96e6b25195f1b36ad02598b5d4381e41997c93ce6170cab1b81d9c68c514db0
+     5.50 KiB / 5.50 KiB [======================================================] 0s
+    Copying blob sha256:7f7a065d245a6501a782bf674f4d7e9d0a62fa6bd212edbf1f17bad0d5cd0bfc
+     3.00 KiB / 3.00 KiB [======================================================] 0s
+    Copying blob sha256:70ca7d49f8e9c44705431e3dade0636a2156300ae646ff4f09c904c138728839
+     116.56 MiB / 116.56 MiB [==================================================] 6s
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: lolcow_tar_def.sif
+
+through ``build`` results in the SIF file ``lolcow_tar_def.sif``. In other words, this is the definition-file counterpart to :ref:`the command-line invocation provided above <sec:mandatory_headers_docker_locally_stored_bootstrap_cli>` . 
+
+.. TODO RB Test 
 
 
 Optional Headers
@@ -905,8 +1053,20 @@ In this case, the ``lolcow`` image was hosted remotely via user ``godlovedc`` at
 .. code-block:: none
 
     $ singularity inspect --deffile lolcow_from_docker_cache.sif
+
     from: godlovedc/lolcow:latest
     bootstrap: docker-daemon
+
+On the other hand, if a locally stored copy of a Docker image was used to bootstrap creation of a container for Singularity, then ``inspect`` reveals existence of ``docker-archive`` in the definition file that was used as follows:
+
+.. code-block:: none 
+
+    $ singularity inspect --deffile lolcow_tar.sif
+
+    bootstrap: docker-archive
+    from: lolcow.tar
+
+The name of the archive used, ``lolcow.tar`` in this case, appears in the ``from`` header of the  definition file retrieved by ``inspect``. 
 
 Of particular relevance to :ref:`execution precedence <sec:def_files_execution_SUB_execution_precedence>`, however, is the ``--runscript`` option for ``inspect``. For example, using the definition file above, the runscript is unsurprisingly:
 
