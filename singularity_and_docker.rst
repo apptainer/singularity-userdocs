@@ -15,6 +15,11 @@ Overview
 
 .. Review the overview of the Sy interface ... 
 
+.. TODO - from the changelog for 3.0 re: docker & oci URIs/images handling ... use here???: 
+.. Handling of docker & oci URIs/images now utilizes containers/image to parse and convert those image types in a supported way https://github.com/containers/image
+
+.. TODO account for oci and oci-archive ... somewhere in this section 
+
 
 ----------------------------------------------------------------------
 Running action commands on pre-built public images from the Docker Hub
@@ -132,6 +137,10 @@ In addition to non-interactive execution of an image from the Docker Hub, Singul
     Singularity lolcow_latest.sif:~> 
 
 From this it is evident that use is being made of Ubuntu 16.04 *within* this container, whereas the shell *external* to the container is running a more-recent release of Ubuntu (not illustrated here). 
+
+.. TODO add content re: singularity capability - possibly a new section 
+
+.. TODO add content re: singularity instance - possibly a new section ... review first sushma-98's edits for the running services page 
 
 
 .. _sec:use_prebuilt_public_docker_images:
