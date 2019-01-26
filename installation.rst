@@ -472,7 +472,7 @@ different value for the ``$VM`` variable if you like.)
 
 .. code-block:: none
 
-    $ export VM=sylabs/singularity-ubuntu-bionic64 && \
+    $ export VM=sylabs/singularity-3.0-ubuntu-bionic64 && \
         vagrant init $VM && \
         vagrant up && \
         vagrant ssh
@@ -481,8 +481,8 @@ You can check the installed version of Singularity with the following:
 
 .. code-block:: none
 
-    vagrant@ubuntu-bionic:~$ singularity version
-        3.0.1
+    vagrant@vagrant:~$ singularity version
+    3.0.3-1
 
 
 Of course, you can also start with a plain OS Vagrant box as a base and then
