@@ -2,6 +2,8 @@
 Appendix
 ========
 
+.. TODO oci & oci-archive along with http & https
+
 .. _build-library-module:
 
 ---------------------------

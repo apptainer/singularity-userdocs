@@ -531,7 +531,6 @@ This indicates that ``godlovedc/lolcow:latest`` has been cached locally by Docke
 .. code-block:: none
 
     $ sudo singularity build lolcow_from_docker_cache.sif docker-daemon://godlovedc/lolcow:latest
-    WARNING: Authentication token file not found : Only pulls of public images will succeed
     INFO:    Starting build...
     Getting image source signatures
     Copying blob sha256:a2022691bf950a72f9d2d84d557183cb9eee07c065a76485f1695784855c5193
@@ -827,7 +826,6 @@ Then,
 .. code-block:: none 
 
     $ sudo singularity build lolcow_from_docker_cache.sif lolcow-d.def 
-    WARNING: Authentication token file not found : Only pulls of public images will succeed
     Build target already exists. Do you want to overwrite? [N/y] y
     INFO:    Starting build...
     Getting image source signatures
@@ -866,7 +864,6 @@ Then,
 .. code-block:: none
 
     $ sudo singularity build lolcow_tar_def.sif lolcow-da.def 
-    WARNING: Authentication token file not found : Only pulls of public images will succeed
     INFO:    Starting build...
     Getting image source signatures
     Copying blob sha256:a2022691bf950a72f9d2d84d557183cb9eee07c065a76485f1695784855c5193
@@ -1188,12 +1185,13 @@ After describing various :ref:`action commands that could be applied to images h
 
 Thus use of Singularity's ``pull`` command results in the *local* file copy in SIF, namely ``lolcow_latest.sif``. Layers of the image from the Docker Hub are copied locally as OCI blobs. OCI is the acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes; it is the former that is emphasized here. Stated simply, an OCI blob is content that can be addressed; in other words, *each* layer of a Docker image is rendered as an OCI blob as illustrated in the ``pull`` example above. To facilitate interoperation with the Docker Hub, the Singularity core makes use of  the ``containers/image`` `library <https://github.com/containers/image/>`_ - "... a set of Go libraries aimed at working in various way[s] with containers' images and container image registries."
 
+.. TODO minor - fix appearance of above link 
+
 If the *same* ``pull`` command is issued a *second* time, the output is different:
 
 .. code-block:: none
 
     $ singularity pull docker://godlovedc/lolcow
-    WARNING: Authentication token file not found : Only pulls of public images will succeed
     INFO:    Starting build...
     Getting image source signatures
     Skipping fetch of repeat blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
@@ -1232,6 +1230,8 @@ As the copy operation has clearly been *skipped*, it is evident that a copy of a
 
     4 directories, 10 files
 
+.. _misc:OCI_Image_Layout_Specification: 
+
 This cache implementation in Singularity complies with the `OCI Image Layout Specification <https://github.com/opencontainers/image-spec/blob/master/image-layout.md>`_:
 
     - ``blobs`` directory - contains content addressable data, that is otherwise considered opaque
@@ -1242,7 +1242,7 @@ This cache implementation in Singularity complies with the `OCI Image Layout Spe
 
 For additional details regarding this specification, consult `OCI Image Format Specification <https://github.com/opencontainers/image-spec>`_. 
 
-As required by the layout specification, OCI blobs are named by their contents:
+As required by the layout specification, OCI blobs are uniquely named by their contents:
 
 .. code-block:: none
 
@@ -1421,7 +1421,114 @@ The ``digest`` blob referenced in the ``inbdex.json`` file references the follow
 Even when all OCI blobs are already in Singularity's local cache, repeated image pulls cause *both* these last-two JSON object files, as well as the ``oci-layout`` and ``index.json`` files, to be updated. 
 
 
-.. TODO minor - fix appearance of above link 
+Building images for Singularity from OCI Bundles
+================================================
+
+Working Locally from the Singularity Command Line: ``oci`` Boostrap Agent
+-------------------------------------------------------------------------
+
+The example detailed in the previous section can be used to illustrate how a SIF file for use by Singularity can be created from the local cache. In this case, the ``build`` command of Singularity makes use of the ``oci`` boostrap agent as follows:
+
+.. code-block:: none
+
+    $ singularity build ~/lolcow_oci_cache.sif oci://$HOME/.singularity/cache/oci:a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb
+    INFO:    Starting build...
+    Getting image source signatures
+    Skipping fetch of repeat blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+    Skipping fetch of repeat blob sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+    Skipping fetch of repeat blob sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+    Skipping fetch of repeat blob sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+    Skipping fetch of repeat blob sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+    Skipping fetch of repeat blob sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: /home/vagrant/lolcow_oci_cache.sif
+
+As can be seen, this results in the SIF file ``lolcow_oci_cache.sif`` in the user's home directory. 
+
+The syntax for the ``oci`` boostrap agent requires some elaboration, however. In this case, and as illustrated above, `$HOME/.singularity/cache/oci`` has content:
+
+.. code-block:: none
+
+    $ ls
+    blobs  index.json  oci-layout
+
+
+In other words, it is the directory containing the data and metadata that comprise the image layed out in accordance with the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>` - the same data and metadata that are assembled into a single SIF file through the ``build`` process. However, 
+
+.. code-block:: none
+
+    $ singularity build ~/lolcow_oci_cache.sif oci://$HOME/.singularity/cache/oci
+    INFO:    Starting build...
+    FATAL:   While performing build: conveyor failed to get: more than one image in oci, choose an image
+
+*does not* uniquely specify an image from which to bootstrap the ``build`` process. In other words, there are multiple images referenced via ``org.opencontainers.image.ref.name`` in the ``index.json`` file. By appending ``:a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb`` to ``oci`` in this example, the image is uniquely specified, and the container created in SIF. 
+
+.. note::
+
+    Executing the Singularity ``pull`` command multiple times on the same image produces multiple ``org.opencontainers.image.ref.name`` entries in the ``index.json`` file. Appending the value of the unique ``org.opencontainers.image.ref.name`` allows for use of the ``oci`` boostrap agent.
+
+
+Working Locally from the Singularity Command Line: ``oci-archive`` Boostrap Agent
+---------------------------------------------------------------------------------
+
+OCI archives, i.e., ``.tar`` files obeying the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`, can seed creation of a container for Singularity. In this case, use is made of the ``oci-archive`` bootstrap agent. 
+
+To illustrate this agent, it is convenient to build the archive from the Singularity cache. After a single ``pull`` of the ``godlovedc/lolcow`` image from the Docker Hub, a ``tar`` format archive can be generated from the ``$HOME/.singularity/cache/oci`` directory as follows:
+
+.. code-block:: none
+
+    $ tar cvf $HOME/godlovedc_lolcow.tar *
+    blobs/
+    blobs/sha256/
+    blobs/sha256/73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+    blobs/sha256/8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+    blobs/sha256/9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+    blobs/sha256/3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+    blobs/sha256/9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+    blobs/sha256/d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+    blobs/sha256/f2a852991b0a36a9f3d6b2a33b98a461e9ede8393482f0deb5287afcbae2ce10
+    blobs/sha256/7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+    index.json
+    oci-layout
+
+The native container ``lolcow_oci_tarfile.sif`` for use by Singularity can be created by issuing the ``build`` command as follows:
+
+.. code-block:: none
+
+    $ singularity build lolcow_oci_tarfile.sif oci-archive://godlovedc_lolcow.tar 
+    Build target already exists. Do you want to overwrite? [N/y] y
+    INFO:    Starting build...
+    Getting image source signatures
+    Skipping fetch of repeat blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+    Skipping fetch of repeat blob sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+    Skipping fetch of repeat blob sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+    Skipping fetch of repeat blob sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+    Skipping fetch of repeat blob sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+    Skipping fetch of repeat blob sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: lolcow_oci_tarfile.sif
+
+This assumes that the ``tar`` file exists in the current working directory. 
+
+.. note::
+
+    Cache maintenance is a manual process at the current time. In other words, the cache can be cleared by **carefully** issuing the command ``rm -rf $HOME/.singularity/cache``. Of course, this will clear the local cache of all downloaded images. 
+
+.. note:: 
+
+    Because the layers of a Docker image as well as the blobs of an OCI image are already ``gzip`` compressed, there is a minimal advantage to having compressed archives representing OCI images. For this reason, the ``build`` detailed above boostraps a SIF file for use by Singularity from only a ``tar`` file, and not a ``tar.gz`` file. 
+
+
+
+
 
 .. --------------
 .. Best Practices
