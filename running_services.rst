@@ -8,7 +8,7 @@ There are :ref:`different ways <runcontainer>`  in which you can run Singularity
 containers. If you use commands like ``run``, ``exec`` and ``shell`` to
 interact with processes in the container, you are running Singularity containers
 in the foreground. Singularity, also lets you run containers in a "detached" or
-"daemon" mode which can run different services in the background. A 'service' is
+"daemon" mode which can run different services in the background. A "service" is
 essentially a process running in the background that multiple different clients
 can use. For example, a web server or a database. To run services in a
 Singularity container one should use *instances*. A container instance is a
@@ -28,12 +28,13 @@ using instances. In the end, you will find a more detailed example of running an
 instance of an API that converts URL to PDFs.
 
 To begin with, suppose you want to run an NGINX web server outside of a
-container. You can simply install NGINX and start the service by:
+container. On Ubuntu, you can simply install NGINX and start the service by:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ sudo apt-get update && sudo apt-get install -y nginx
-    $ service nginx start
+
+    $ sudo service nginx start
 
 If you were to do something like this from within a container you would also see
 the service start, and the web server running. But then if you were to exit the
@@ -50,13 +51,16 @@ For demonstration, let's use an easy (though somewhat useless) example of
 `alpine_latest.sif <https://cloud.sylabs.io/library/_container/5baba5e594feb900016ea41c>`_
 image from the `container library <https://cloud.sylabs.io/library/>`_:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ singularity pull library://alpine
 
+The above command will save the alpine image from the Container Library as 
+``alpine_latest.sif``.
+
 To start an instance, you should follow this procedure :
 
-.. code-block:: singularity
+.. code-block:: none
 
     [command]                      [image]              [name of instance]
 
@@ -66,7 +70,7 @@ This command causes Singularity to create an isolated environment for the
 container services to live inside. One can confirm that an instance is running
 by using the ``instance list`` command like so:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ singularity instance list
 
@@ -83,14 +87,15 @@ If you want to run multiple instances from the same image, it’s as simple as
 running the command multiple times with different instance names. The instance
 name uniquely identify instances, so they cannot be repeated.
 
-.. code-block:: singularity
+.. code-block:: none
 
       $ singularity instance start alpine_latest.sif instance2
+
       $ singularity instance start alpine_latest.sif instance3
 
 And again to confirm that the instances are running as we expected:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ singularity instance list
 
@@ -101,9 +106,10 @@ And again to confirm that the instances are running as we expected:
 
 You can use the ``singularity run/exec`` commands on instances:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ singularity run instance://instance1
+
     $ singularity exec instance://instance2 cat /etc/os-release
 
 When using ``run`` with an instance URI, the ``runscript`` will be executed
@@ -113,28 +119,30 @@ command in the instance.
 If you want to poke around inside of your instance, you can do a normal
 ``singularity shell`` command, but give it the instance URI:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ singularity shell instance://instance3
+    
     Singularity>
 
 When you are finished with your instance you can clean it up with the
 ``instance stop`` command as follows:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ singularity instance stop instance1
 
 If you have multiple instances running and you want to stop all of them, you can
-do so with a wildcard or the -a flag:
+do so with a wildcard or the --all flag. The following three commands are all 
+identical.
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ singularity instance stop \*
-    or
-    $ singularity instance stop -a
-    or
+    
     $ singularity instance stop --all
+    
+    $ singularity instance stop --a
 
 .. note::
     Note that you must escape the wildcard with a backslash like this ``\*`` to
@@ -164,20 +172,21 @@ This downloads the official NGINX Docker container, converts it to a Singularity
 image, and tells it to run NGINX when you start the instance. Since we’re
 running a web server, we’re going to run the following commands as root.
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ sudo singularity build nginx.sif nginx.def
+
     $ sudo singularity instance start --writable-tmpfs nginx.sif web
 
 .. note::
-    The above ``start`` command requires `sudo` because we are running a web
+    The above ``start`` command requires ``sudo`` because we are running a web
     server. Also, to let the instance write temporary files during execution,
-    you should use `--writable-tmpfs` while starting the instance.
+    you should use ``--writable-tmpfs`` while starting the instance.
 
 Just like that we’ve downloaded, built, and run an NGINX Singularity
 image. And to confirm that it’s correctly running:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ curl localhost
 
@@ -219,8 +228,11 @@ container and running it. The service we will be packaging is an API server that
 converts a web page into a PDF, and can be found `here
 <https://github.com/alvarcarto/url-to-pdf-api>`__. You can build the image by
 following the steps described below or you can just download the final image
-directly from Container Library, simply run
-``$ singularity pull library://sylabs/doc-examples/url-to-pdf:latest``.
+directly from Container Library, simply run:
+
+.. code-block:: none
+
+    $ singularity pull url-to-pdf.sif library://sylabs/doc-examples/url-to-pdf:latest
 
 Building the image
 ==================
@@ -239,8 +251,8 @@ docker image ``node:8`` which comes pre-installed with Node 8 has been used:
     Includecmd: no
 
 
-Puppeteer also requires a few dependencies to be manually installed in addition
-to Node 8, so we can add those into the ``post`` section as well as the
+Puppeteer also requires a slew of dependencies to be manually installed in 
+addition to Node 8, so we can add those into the ``post`` section as well as the
 installation script for the ``url-to-pdf``:
 
 .. code-block:: singularity
@@ -285,29 +297,68 @@ which we can do in the environment section:
         URL=localhost
         export NODE_ENV PORT ALLOW_HTTP URL
 
+The complete definition file will look like this:
+
 .. code-block:: singularity
+
+    Bootstrap: docker
+    From: node:8
+    Includecmd: no
+
+    %post
+
+        apt-get update && apt-get install -yq gconf-service libasound2 \
+            libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 \
+            libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 \
+            libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 \
+            libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
+            libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 \
+            libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
+            fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils \
+            wget curl && rm -r /var/lib/apt/lists/*
+        git clone https://github.com/alvarcarto/url-to-pdf-api.git pdf_server
+        cd pdf_server
+        npm install
+        chmod -R 0755 .
+
+    %startscript
+        cd /pdf_server
+        # Use nohup and /dev/null to completely detach server process from terminal
+        nohup npm start > /dev/null 2>&1 < /dev/null &
+
+    %environment
+        NODE_ENV=development
+        PORT=9000
+        ALLOW_HTTP=true
+        URL=localhost
+        export NODE_ENV PORT ALLOW_HTTP URL
+
+The container can be built like so:
+
+.. code-block:: none
 
     $ sudo singularity build url-to-pdf.sif url-to-pdf.def
 
 
 Running the Service
-==================
+===================
 
 We can now start an instance and run the service:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ sudo singularity instance start url-to-pdf.sif pdf
 
 .. note::
     If there occurs an error related to port connection being refused while
     starting the instance or while using it later, you can try specifying
-    different port numbers in the definition file above.
+    different port numbers in the ``%environment`` section of the definition 
+    file above.
 
 We can confirm it’s working by sending the server an http request using
 curl:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ curl -o sylabs.pdf localhost:9000/api/render?url=http://sylabs.io/docs
 
@@ -324,7 +375,7 @@ You should see a PDF file being generated like the one shown below:
 
 If you shell into the instance, you can see the running processes:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ sudo singularity shell instance://pdf
     Singularity: Invoking an interactive shell within container...
@@ -342,8 +393,8 @@ If you shell into the instance, you can see the running processes:
     Singularity final.sif:/home/ysub> exit
 
 
-Making it Pretty
-================
+Making it Fancy
+===============
 
 Now that we have confirmation that the server is working, let’s make it a little
 cleaner. It’s difficult to remember the exact ``curl`` command and URL syntax
@@ -370,7 +421,7 @@ And update our ``startscript`` to point to the app location:
 .. code-block:: singularity
 
     %startscript
-        cd "${APPROOT_pdf_server}/pdf_server"
+        cd /scif/apps/pdf_server/scif/pdf_server
         # Use nohup and /dev/null to completely detach server process from terminal
         nohup npm start > /dev/null 2>&1 < /dev/null &
 
@@ -384,48 +435,106 @@ to the server:
         if [ -z "${1:-}" ]; then
             echo "Usage: singularity run --app pdf <instance://name> <URL> [output file]"
             exit 1
-
         fi
         curl -o "${SINGULARITY_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
 
 
 As you can see, the ``pdf_client`` app checks to make sure that the user
-provides at least one argument. Now that we have an output directory in the
-container, we need to expose it to the host using a bind mount. Once we’ve
-rebuilt the container, make a new directory called ``out`` for the generated
-PDFs to go. After building the image from the edited definition file we simply
-start the instance:
+provides at least one argument. 
+
+The full def file will look like this:
 
 .. code-block:: singularity
 
-    $ singularity instance start -B out/:/scif/data/pdf_client/output/ url-to-pdf.sif pdf
+    Bootstrap: docker
+    From: node:8
+    Includecmd: no
+
+    %post
+
+        apt-get update && apt-get install -yq gconf-service libasound2 \
+            libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 \
+            libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 \
+            libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 \
+            libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 \
+            libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 \
+            libxrandr2 libxrender1 libxss1 libxtst6 ca-certificates \
+            fonts-liberation libappindicator1 libnss3 lsb-release xdg-utils \
+            wget curl && rm -r /var/lib/apt/lists/*
+
+    %appinstall pdf_server
+        git clone https://github.com/alvarcarto/url-to-pdf-api.git pdf_server
+        cd pdf_server
+        npm install
+        chmod -R 0755 .
+
+    %startscript
+        cd /scif/apps/pdf_server/scif/pdf_server
+        # Use nohup and /dev/null to completely detach server process from terminal
+        nohup npm start > /dev/null 2>&1 < /dev/null &
+
+    %environment
+        NODE_ENV=development
+        PORT=9000
+        ALLOW_HTTP=true
+        URL=localhost
+        export NODE_ENV PORT ALLOW_HTTP URL
+
+    %apprun pdf_client
+        if [ -z "${1:-}" ]; then
+            echo "Usage: singularity run --app pdf <instance://name> <URL> [output file]"
+            exit 1
+        fi
+        curl -o "${SINGULARITY_APPDATA}/output/${2:-output.pdf}" "${URL}:${PORT}/api/render?url=${1}"
+
+Create the container as before. The ``--force`` option will overwrite the old
+container:
+
+.. code-block:: none
+
+    $ sudo singularity build --force url-to-pdf.sif url-to-pdf.def
+
+Now that we have an output directory in the container, we need to expose it to 
+the host using a bind mount. Once we’ve rebuilt the container, make a new 
+directory called ``/tmp/out`` for the generated PDFs to go. 
+
+.. code-block:: none
+
+    $ mkdir /tmp/out
+
+After building the image from the edited definition file we simply start the 
+instance:
+
+.. code-block:: none
+
+    $ singularity instance start --bind /tmp/out/:/output url-to-pdf.sif pdf
 
 To request a pdf simply do:
 
-.. code-block:: singularity
+.. code-block:: none
 
     $ singularity run --app pdf_client instance://pdf http://sylabs.io/docs sylabs.pdf
 
 To confirm that it worked:
 
-.. code-block:: singularity
+.. code-block:: none
 
-    $ ls out/
+    $ ls /tmp/out/
     sylabs.pdf
 
 When you are finished, use the instance stop command to close all running
 instances.
 
-.. code-block:: singularity
+.. code-block:: none
 
-    $ singularity instance stop \*
+    $ singularity instance stop --all
 
 .. note::
     If the service you want to run in your instance requires a bind mount,
-    then you must pass the ``-B`` option when calling ``instance start``. For
-    example, if you wish to capture the output of the ``web`` container instance
-    which is placed at ``/output/`` inside the container you could do:
+    then you must pass the ``--bind`` option when calling ``instance start``. 
+    For example, if you wish to capture the output of the ``web`` container 
+    instance which is placed at ``/output/`` inside the container you could do:
 
-    .. code-block:: singularity
+    .. code-block:: none
 
-        $ singularity instance start -B output/dir/outside/:/output/ nginx.sif  web
+        $ singularity instance start --bind output/dir/outside/:/output/ nginx.sif  web
