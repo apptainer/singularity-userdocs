@@ -20,6 +20,7 @@ Overview
 
 .. TODO account for oci and oci-archive ... somewhere in this section 
 
+.. _sec:action_commands_prebuilt_public_docker_images:
 
 ----------------------------------------------------------------------
 Running action commands on pre-built public images from the Docker Hub
@@ -1150,6 +1151,277 @@ The ``--environment`` option for ``inspect`` is worth noting; for example:
     #Custom environment shell code should follow
 
 Other ``inspect`` options are detailed :ref:`elsewhere in this manual <environment-and-metadata>` and available online via ``singularity inspect --help``. 
+
+
+--------------------------------
+Support for the OCI Image Format
+--------------------------------
+
+Layout Overview
+===============
+
+After describing various :ref:`action commands that could be applied to images hosted remotely via the Docker Hub <sec:action_commands_prebuilt_public_docker_images>`, the notion of having :ref:`a local copy in Singularity's native format for containerization (SIF) <sec:use_prebuilt_public_docker_images>` was introduced:
+
+.. code-block:: none 
+
+    $ singularity pull docker://godlovedc/lolcow
+    INFO:    Starting build...
+    Getting image source signatures
+    Copying blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+     45.33 MiB / 45.33 MiB [====================================================] 1s
+    Copying blob sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+     848 B / 848 B [============================================================] 0s
+    Copying blob sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+     621 B / 621 B [============================================================] 0s
+    Copying blob sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+     853 B / 853 B [============================================================] 0s
+    Copying blob sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+     169 B / 169 B [============================================================] 0s
+    Copying blob sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+     53.75 MiB / 53.75 MiB [====================================================] 2s
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: lolcow_latest.sif
+
+Thus use of Singularity's ``pull`` command results in the *local* file copy in SIF, namely ``lolcow_latest.sif``. Layers of the image from the Docker Hub are copied locally as OCI blobs. OCI is the acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes; it is the former that is emphasized here. Stated simply, an OCI blob is content that can be addressed; in other words, *each* layer of a Docker image is rendered as an OCI blob as illustrated in the ``pull`` example above. To facilitate interoperation with the Docker Hub, the Singularity core makes use of  the ``containers/image`` `library <https://github.com/containers/image/>`_ - "... a set of Go libraries aimed at working in various way[s] with containers' images and container image registries."
+
+If the *same* ``pull`` command is issued a *second* time, the output is different:
+
+.. code-block:: none
+
+    $ singularity pull docker://godlovedc/lolcow
+    WARNING: Authentication token file not found : Only pulls of public images will succeed
+    INFO:    Starting build...
+    Getting image source signatures
+    Skipping fetch of repeat blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+    Skipping fetch of repeat blob sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+    Skipping fetch of repeat blob sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+    Skipping fetch of repeat blob sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+    Skipping fetch of repeat blob sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+    Skipping fetch of repeat blob sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: lolcow_latest.sif
+
+As the copy operation has clearly been *skipped*, it is evident that a copy of all OCI blobs **must** be cached locally. Indeed, Singularity has made an entry in its local cache as follows:
+
+.. code-block:: none
+
+    $ tree .singularity/
+    .singularity/
+    └── cache
+        └── oci
+            ├── blobs
+            │   └── sha256
+            │       ├── 3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+            │       ├── 73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+            │       ├── 7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+            │       ├── 8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+            │       ├── 9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+            │       ├── 9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+            │       ├── d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+            │       └── f2a852991b0a36a9f3d6b2a33b98a461e9ede8393482f0deb5287afcbae2ce10
+            ├── index.json
+            └── oci-layout
+
+    4 directories, 10 files
+
+This cache implementation in Singularity complies with the `OCI Image Layout Specification <https://github.com/opencontainers/image-spec/blob/master/image-layout.md>`_:
+
+    - ``blobs`` directory - contains content addressable data, that is otherwise considered opaque
+
+    - ``oci-layout`` file - a mandatory JSON object file containing both mandatory and optional content
+
+    - ``index.json`` file - a mandatory JSON object file containing an index of the images 
+
+For additional details regarding this specification, consult `OCI Image Format Specification <https://github.com/opencontainers/image-spec>`_. 
+
+As required by the layout specification, OCI blobs are named by their contents:
+
+.. code-block:: none
+
+    $ shasum -a 256 ./blobs/sha256/9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118 
+    9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118  ./blobs/sha256/9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+
+They are also otherwise opaque:
+
+.. code-block:: none
+
+    $ file ./blobs/sha256/9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118 ./blobs/sha256/9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118: gzip compressed data
+
+The content of the ``oci-layout`` file in this example is:
+
+.. code-block:: javascript
+
+    $ cat oci-layout | jq
+    {
+      "imageLayoutVersion": "1.0.0"
+    }
+
+This is as required for compliance with the layout standard. 
+
+.. note:: 
+
+    In rendering the above JSON object files, use has been made of ``jq`` - the command-line JSON processor.
+
+The index of images in this case is:
+
+.. code-block:: javascript
+
+    $ cat index.json | jq
+    {
+      "schemaVersion": 2,
+      "manifests": [
+        {
+          "mediaType": "application/vnd.oci.image.manifest.v1+json",
+          "digest": "sha256:f2a852991b0a36a9f3d6b2a33b98a461e9ede8393482f0deb5287afcbae2ce10",
+          "size": 1125,
+          "annotations": {
+            "org.opencontainers.image.ref.name": "a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb"
+          },
+          "platform": {
+            "architecture": "amd64",
+            "os": "linux"
+          }
+        }
+      ]
+    }
+
+The ``digest`` blob in this index file includes the details for all of the blobs that collectively comprise the ``godlovedc/lolcow`` image:
+
+.. code-block:: javascript
+
+    $ cat  ./blobs/sha256/f2a852991b0a36a9f3d6b2a33b98a461e9ede8393482f0deb5287afcbae2ce10 | jq
+    {
+      "schemaVersion": 2,
+      "config": {
+        "mediaType": "application/vnd.oci.image.config.v1+json",
+        "digest": "sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82",
+        "size": 3410
+      },
+      "layers": [
+        {
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+          "digest": "sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118",
+          "size": 47536248
+        },
+        {
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+          "digest": "sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a",
+          "size": 848
+        },
+        {
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+          "digest": "sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2",
+          "size": 621
+        },
+        {
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+          "digest": "sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e",
+          "size": 853
+        },
+        {
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+          "digest": "sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9",
+          "size": 169
+        },
+        {
+          "mediaType": "application/vnd.oci.image.layer.v1.tar+gzip",
+          "digest": "sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945",
+          "size": 56355961
+        }
+      ]
+    }
+
+The ``digest`` blob referenced in the ``inbdex.json`` file references the following configuration file:
+
+.. code-block:: javascript 
+
+    $ cat 73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82 | jq
+    {
+      "created": "2017-09-21T18:37:47.278336798Z",
+      "architecture": "amd64",
+      "os": "linux",
+      "config": {
+        "Env": [
+          "PATH=/usr/games:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "LC_ALL=C"
+        ],
+        "Entrypoint": [
+          "/bin/sh",
+          "-c",
+          "fortune | cowsay | lolcat"
+        ]
+      },
+      "rootfs": {
+        "type": "layers",
+        "diff_ids": [
+          "sha256:a2022691bf950a72f9d2d84d557183cb9eee07c065a76485f1695784855c5193",
+          "sha256:ae620432889d2553535199dbdd8ba5a264ce85fcdcd5a430974d81fc27c02b45",
+          "sha256:c561538251751e3685c7c6e7479d488745455ad7f84e842019dcb452c7b6fecc",
+          "sha256:f96e6b25195f1b36ad02598b5d4381e41997c93ce6170cab1b81d9c68c514db0",
+          "sha256:7f7a065d245a6501a782bf674f4d7e9d0a62fa6bd212edbf1f17bad0d5cd0bfc",
+          "sha256:70ca7d49f8e9c44705431e3dade0636a2156300ae646ff4f09c904c138728839"
+        ]
+      },
+      "history": [
+        {
+          "created": "2017-09-18T23:31:37.453092323Z",
+          "created_by": "/bin/sh -c #(nop) ADD file:5ed435208da6621b45db657dd6549ee132cde58c4b6763920030794c2f31fbc0 in / "
+        },
+        {
+          "created": "2017-09-18T23:31:38.196268404Z",
+          "created_by": "/bin/sh -c set -xe \t\t&& echo '#!/bin/sh' > /usr/sbin/policy-rc.d \t&& echo 'exit 101' >> /usr/sbin/policy-rc.d \t&& chmod +x /usr/sbin/policy-rc.d \t\t&& dpkg-divert --local --rename --add /sbin/initctl \t&& cp -a /usr/sbin/policy-rc.d /sbin/initctl \t&& sed -i 's/^exit.*/exit 0/' /sbin/initctl \t\t&& echo 'force-unsafe-io' > /etc/dpkg/dpkg.cfg.d/docker-apt-speedup \t\t&& echo 'DPkg::Post-Invoke { \"rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true\"; };' > /etc/apt/apt.conf.d/docker-clean \t&& echo 'APT::Update::Post-Invoke { \"rm -f /var/cache/apt/archives/*.deb /var/cache/apt/archives/partial/*.deb /var/cache/apt/*.bin || true\"; };' >> /etc/apt/apt.conf.d/docker-clean \t&& echo 'Dir::Cache::pkgcache \"\"; Dir::Cache::srcpkgcache \"\";' >> /etc/apt/apt.conf.d/docker-clean \t\t&& echo 'Acquire::Languages \"none\";' > /etc/apt/apt.conf.d/docker-no-languages \t\t&& echo 'Acquire::GzipIndexes \"true\"; Acquire::CompressionTypes::Order:: \"gz\";' > /etc/apt/apt.conf.d/docker-gzip-indexes \t\t&& echo 'Apt::AutoRemove::SuggestsImportant \"false\";' > /etc/apt/apt.conf.d/docker-autoremove-suggests"
+        },
+        {
+          "created": "2017-09-18T23:31:38.788043199Z",
+          "created_by": "/bin/sh -c rm -rf /var/lib/apt/lists/*"
+        },
+        {
+          "created": "2017-09-18T23:31:39.411670721Z",
+          "created_by": "/bin/sh -c sed -i 's/^#\\s*\\(deb.*universe\\)$/\\1/g' /etc/apt/sources.list"
+        },
+        {
+          "created": "2017-09-18T23:31:40.055188541Z",
+          "created_by": "/bin/sh -c mkdir -p /run/systemd && echo 'docker' > /run/systemd/container"
+        },
+        {
+          "created": "2017-09-18T23:31:40.215057796Z",
+          "created_by": "/bin/sh -c #(nop)  CMD [\"/bin/bash\"]",
+          "empty_layer": true
+        },
+        {
+          "created": "2017-09-21T18:37:46.483638061Z",
+          "created_by": "/bin/sh -c apt-get update && apt-get install -y fortune cowsay lolcat"
+        },
+        {
+          "created": "2017-09-21T18:37:47.041333952Z",
+          "created_by": "/bin/sh -c #(nop)  ENV PATH=/usr/games:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+          "empty_layer": true
+        },
+        {
+          "created": "2017-09-21T18:37:47.170535967Z",
+          "created_by": "/bin/sh -c #(nop)  ENV LC_ALL=C",
+          "empty_layer": true
+        },
+        {
+          "created": "2017-09-21T18:37:47.278336798Z",
+          "created_by": "/bin/sh -c #(nop)  ENTRYPOINT [\"/bin/sh\" \"-c\" \"fortune | cowsay | lolcat\"]",
+          "empty_layer": true
+        }
+      ]
+    }
+
+Even when all OCI blobs are already in Singularity's local cache, repeated image pulls cause *both* these last-two JSON object files, as well as the ``oci-layout`` and ``index.json`` files, to be updated. 
+
+
+.. TODO minor - fix appearance of above link 
 
 .. --------------
 .. Best Practices
