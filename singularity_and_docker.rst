@@ -1421,8 +1421,8 @@ The ``digest`` blob referenced in the ``inbdex.json`` file references the follow
 Even when all OCI blobs are already in Singularity's local cache, repeated image pulls cause *both* these last-two JSON object files, as well as the ``oci-layout`` and ``index.json`` files, to be updated. 
 
 
-Building images for Singularity from OCI Bundles
-================================================
+Building Containers for Singularity from OCI Images
+===================================================
 
 Working Locally from the Singularity Command Line: ``oci`` Boostrap Agent
 -------------------------------------------------------------------------
@@ -1471,6 +1471,8 @@ In other words, it is the directory containing the data and metadata that compri
 
     Executing the Singularity ``pull`` command multiple times on the same image produces multiple ``org.opencontainers.image.ref.name`` entries in the ``index.json`` file. Appending the value of the unique ``org.opencontainers.image.ref.name`` allows for use of the ``oci`` boostrap agent.
 
+
+.. _sec:cli_oci_archive_bootstrap_agent:
 
 Working Locally from the Singularity Command Line: ``oci-archive`` Boostrap Agent
 ---------------------------------------------------------------------------------
@@ -1527,7 +1529,57 @@ This assumes that the ``tar`` file exists in the current working directory.
     Because the layers of a Docker image as well as the blobs of an OCI image are already ``gzip`` compressed, there is a minimal advantage to having compressed archives representing OCI images. For this reason, the ``build`` detailed above boostraps a SIF file for use by Singularity from only a ``tar`` file, and not a ``tar.gz`` file. 
 
 
+Working from the Singularity Command Line with Remotely Hosted Images
+---------------------------------------------------------------------
 
+In the previous section, an OCI archive was created from locally available OCI blobs and metadata; the resulting ``tar`` file served to bootstrap the creation of a container for Singularity in SIF via the ``oci-archive`` agent. Typically, however, OCI archives of interest are remotely hosted. Consider, for example, an Alpine Linux OCI archive stored in Amazon S3 storage. Because such an archive can be retrieved via secure HTTP, the following ``pull`` command results in a local copy as follows: 
+
+.. code-block:: none
+
+    $ singularity pull https://s3.amazonaws.com/singularity-ci-public/alpine-oci-archive.tar
+     1.98 MiB / 1.98 MiB [==================================================================================] 100.00% 7.48 MiB/s 0s
+
+Thus ``https`` (and ``http``) are additional bootstrap agents available to seed development of containers for Singularity. 
+
+Proceeding as before, for a (now) locally available OCI archive, a SIF file can be produced by executing:
+
+.. code-block:: none 
+
+    $ singularity build alpine_oci_archive.sif oci-archive://alpine-oci-archive.tar 
+    INFO:    Starting build...
+    Getting image source signatures
+    Copying blob sha256:ff3a5c916c92643ff77519ffa742d3ec61b7f591b6b7504599d95a4a41134e28
+     1.97 MiB / 1.97 MiB [======================================================] 0s
+    Copying config sha256:b1a7f144ece0194921befe57ab30ed1fd98c5950db7996719429020986092058
+     585 B / 585 B [============================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: alpine_oci_archive.sif
+
+The resulting SIF file can be validated as follows, for example:
+
+.. code-block:: none
+
+    $ ./alpine_oci_archive.sif 
+    Singularity> cat /etc/os-release 
+    NAME="Alpine Linux"
+    ID=alpine
+    VERSION_ID=3.7.0
+    PRETTY_NAME="Alpine Linux v3.7"
+    HOME_URL="http://alpinelinux.org"
+    BUG_REPORT_URL="http://bugs.alpinelinux.org"
+    Singularity> 
+    $ 
+
+Established with nothing more than a Web server then, any individual, group or organization, *could* host OCI archives. This might be particularly appealing, for example, for organizations having security requirements that preclude access to public registries such as the Docker Hub. Other that having a very basic hosting capability, OCI archives need only comply to the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`. 
+
+.. note::
+
+    Though a frequently asked question, the distribution of OCI images remains `out of scope <https://www.opencontainers.org/about/oci-scope-table>`_. In other words, there is no OCI endorsed distribution method or registry. 
+
+
+.. TODO Def files 
 
 
 .. --------------
@@ -1543,10 +1595,6 @@ This assumes that the ``tar`` file exists in the current working directory.
 
 .. TODO Existing pgh + testing auth'n 
 
-
-.. I suggest the following additional topics to round the page out.  Maybe we can 
-.. carve off topics and work on the page together.
-.. 
 
 .. TODO The breakdown of the URI is useful and should be retained (but edited)
 ..     https://www.sylabs.io/guides/2.6/user-guide/singularity_and_docker.html#how-do-i-specify-my-docker-image
