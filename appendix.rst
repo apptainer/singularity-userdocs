@@ -48,7 +48,7 @@ will default to ``latest``.
     Library: http://custom/library
 
 The Library keyword is optional. It will default to
-``https://cloud.sylabs.io/library``.
+``https://library.sylabs.io``.
 
 
 .. _build-docker-module:
