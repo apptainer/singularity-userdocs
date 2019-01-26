@@ -1150,12 +1150,15 @@ The ``--environment`` option for ``inspect`` is worth noting; for example:
 Other ``inspect`` options are detailed :ref:`elsewhere in this manual <environment-and-metadata>` and available online via ``singularity inspect --help``. 
 
 
---------------------------------
-Support for the OCI Image Format
---------------------------------
+-----------------
+OCI Image Support
+-----------------
 
-Layout Overview
-===============
+Overview
+========
+
+Image Pulls Revisited
+---------------------
 
 After describing various :ref:`action commands that could be applied to images hosted remotely via the Docker Hub <sec:action_commands_prebuilt_public_docker_images>`, the notion of having :ref:`a local copy in Singularity's native format for containerization (SIF) <sec:use_prebuilt_public_docker_images>` was introduced:
 
@@ -1186,6 +1189,10 @@ After describing various :ref:`action commands that could be applied to images h
 Thus use of Singularity's ``pull`` command results in the *local* file copy in SIF, namely ``lolcow_latest.sif``. Layers of the image from the Docker Hub are copied locally as OCI blobs. OCI is the acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes; it is the former that is emphasized here. Stated simply, an OCI blob is content that can be addressed; in other words, *each* layer of a Docker image is rendered as an OCI blob as illustrated in the ``pull`` example above. To facilitate interoperation with the Docker Hub, the Singularity core makes use of  the ``containers/image`` `library <https://github.com/containers/image/>`_ - "... a set of Go libraries aimed at working in various way[s] with containers' images and container image registries."
 
 .. TODO minor - fix appearance of above link 
+
+
+Images Cached by Singularity
+----------------------------
 
 If the *same* ``pull`` command is issued a *second* time, the output is different:
 
@@ -1232,6 +1239,9 @@ As the copy operation has clearly been *skipped*, it is evident that a copy of a
 
 .. _misc:OCI_Image_Layout_Specification: 
 
+Compliance with the OCI Image Layout Specification 
+--------------------------------------------------
+
 This cache implementation in Singularity complies with the `OCI Image Layout Specification <https://github.com/opencontainers/image-spec/blob/master/image-layout.md>`_:
 
     - ``blobs`` directory - contains content addressable data, that is otherwise considered opaque
@@ -1241,6 +1251,10 @@ This cache implementation in Singularity complies with the `OCI Image Layout Spe
     - ``index.json`` file - a mandatory JSON object file containing an index of the images 
 
 For additional details regarding this specification, consult `OCI Image Format Specification <https://github.com/opencontainers/image-spec>`_. 
+
+
+OCI Compliance and the Singularity Cache
+----------------------------------------
 
 As required by the layout specification, OCI blobs are uniquely named by their contents:
 
@@ -1579,7 +1593,10 @@ Established with nothing more than a Web server then, any individual, group or o
     Though a frequently asked question, the distribution of OCI images remains `out of scope <https://www.opencontainers.org/about/oci-scope-table>`_. In other words, there is no OCI endorsed distribution method or registry. 
 
 
-.. TODO Def files 
+Working with Definition Files
+-----------------------------
+
+ 
 
 
 .. --------------
