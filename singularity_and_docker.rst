@@ -245,6 +245,8 @@ In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker H
 .. TODO Docker layers = OCI blobs ??? need note re: repeat blob here??? 
 
 
+.. _sec:using_prebuilt_private_images:
+
 ----------------------------------------------------------
 Making use of pre-built private images from the Docker Hub
 ----------------------------------------------------------
@@ -319,6 +321,8 @@ Of course, the ``<redacted>`` plain-text password needs to be replaced by a vali
  
 .. TODO testing auth - updated from the 2.6 docs - needed?
 
+
+.. _sec:using_prebuilt_private_images_parivate_registries:
 
 --------------------------------------------------------------
 Making use of pre-built private images from Private Registries
@@ -1725,20 +1729,52 @@ Singularity can make use of most Docker and OCI images without complication. How
 
     A detailed review of the container's build specification (e.g., its ``Dockerfile``) may be required to ensure this best practice is adhered to. 
 
-    3. Library Configurations
+    3. Current library caches
 
     Irrespective of containers, `a common error <https://codeyarns.com/2014/01/14/how-to-fix-shared-object-file-error/>`_ stems from failing to locate shared libraries required for execution. Suppose now there exists a requirement for symbolically linked libraries *within* a Singularity container. If the builld process that creates the container fails to update the cache, then it is quite likely that (read-only) execution of this container will result in the common error of missing libraries. Upon investigation, it is likely revealed that the library exists, just not the required symbolic links. Thus a third best practice is:
 
         "Ensure calls to ``ldconfig`` are executed towards the *end* of ``build`` specifications (e.g., ``Dockerfile``), so that the library cache is updated when the container is created."
 
+    4. Use of plain-text passwords for authentication 
+
+    For obvious reasons, it is desireable to completely *avoid* use of plain-text passwords. Therefore, for interactive sessions requiring authentication, use of the ``--docker-login`` option for Singularity's ``pull`` and ``build`` commands is recommended. At the present time, the *only* option available for non-interactive use is to embed plain-text passwords into environment variables. Because the Sylabs Cloud Singularity Library employs time-limited access tokens for authentication, use of SIF containers hosted through this service provides a more secure means for both interactive and non-interactive use. Finally, this fourth best practice is:
+
+        "Avoid use of plain-text passwords"
+
 Best practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details. 
 
 
-.. ---------------
-.. Troubleshooting
-.. ---------------
+.. _sec:troubleshooting: 
 
-.. TODO Existing pgh + testing auth'n 
+---------------
+Troubleshooting
+---------------
+
+In making use of Docker and OCI images through Singularity the need to troubleshoot may arise. A brief compilation of issues and their resolution is provided here. 
+
+    1. Authentication issues
+
+    Authentication is required to make use of Docker-style private images and/or private registries. Examples involving private images hosted by the public Docker Hub were :ref:`provided above <sec:using_prebuilt_private_images>`, whereas the NVIDIA GPU Cloud was used to :ref:`illustrate access to a private registry <sec:using_prebuilt_private_images_parivate_registries>`. Even if the intended use of containers is non-interactive, issues in authenticating with these image-hosting services are most easily addressed through use of the ``--docker-login`` option that can be appended to a Singularity ``pull`` request. As soon as image signatures and blobs start being received, authentication credentials have been validated, and the image ``pull`` can be cancelled. 
+
+    2. Execution mismatches
+
+    Execution intentions are detailed through specification files - i.e., the ``Dockerfile`` in the case of Docker images. However, intentions and precedence aside, the reality of executing a container may not align with expectations. To alleviate this mismatch, use of ``singularity inspect --runscript <somecontainer>.sif`` details the *effective* runscript - i.e., the one that is actually being executed. Of course, the ultimate solution to this issue is to develop and maintain Singularity definition files for containers of interest.  
+
+    3. More than one image in the OCI bundle directory
+
+    :ref:`As illustrated above <sec:cli_oci_bootstrap_agent>`, and with respect to the bootstrap agent ``oci://$OCI_BUNDLE_DIR``, a fatal error is generated when *more* than one image is referenced in the ``$OCI_BUNDLE_DIR/index.json`` file. The workaround shared previously was to append the bootstrap directive with the unique reference name for the image of interest - i.e., ``oci://$OCI_BUNDLE_DIR:org.opencontainers.image.ref.name``. Because it may take some effort to locate the reference name for an image of interest, an even simpler solution is to ensure that each ``$OCI_BUNDLE_DIR`` contains at most a single image.  
+
+    4. Cache maintenance
+
+    Maintenance of the Singularity cache (i.e., ``$HOME/.singularity/cache``) requires manaul intervention at this time. By **carefully** issuing the command ``rm -rf $HOME/.singularity/cache``, its local cache will be cleared of all downloaded images.
+
+    5. The ``http`` and ``https`` are ``pull`` only boostrap agents 
+
+    ``http`` and ``https`` are the only examples of ``pull`` only boostrap agents. In other words, when used with Singularity's ``pull`` command, the result is a local copy of, for example, an OCI archive image. This means that a subsequent step is necessary to actually create a SIF container for use by Singularity - a step involving the ``oci-archive`` bootstrap agent in the case of an OCI image archive. 
+
+
+Like :ref:`best practices <sec:best_practices>`, troubleshooting scenarios and solutions emerge from experience. Contributions that allow additional experiences to be shared  are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details. 
+
 
 .. TODO Maintaining images 
 
