@@ -33,7 +33,7 @@ Makeing a acount is easy, and straightforward:
 
  1. Go to: https://cloud.sylabs.io/library.
  2. Click "Sign in to Sylabs" (top right corner).
- 3. Select you method to sign in, with Google, GitHub, GitLab, or MicroSoft.
+ 3. Select you method to sign in, with Google, GitHub, GitLab, or Microsoft.
  4. Type your passwords, and thats it!
 
 
@@ -90,7 +90,6 @@ The ``singularity pull`` will pull a container from the `Library <https://cloud.
 
     When pulling from Docker, the container will automaticly be converted to a SIF (Singularity Image Format) container.
 
-
 Heres a typical pull command:
 
 .. code-block:: console
@@ -100,7 +99,6 @@ Heres a typical pull command:
 .. note::
 
     If theres no tag after the container name, Singularity will pull the container with the ``:latest`` tag.
-
 
 Pulling your own container
 --------------------------
@@ -159,15 +157,13 @@ Check out :ref:`this page <signNverify>` on how to: :ref:`verify a container <ve
 Searching the Library for Containers
 ------------------------------------
 
-When it come to searching the library, there are two options:
-
- 1. Go to: https://cloud.sylabs.io/library and search for a container there, or
- 2. Use the ``singularity search`` command to access the cloud library.
+When it come to searching the library, you could always go to: https://cloud.sylabs.io/library and search from there.
+Or you can use ``singularity search <container/user>``, this will search the library for the ``<container/user>``.
 
 Using the CLI Search
 --------------------
 
-some more content
+Here is a example for searching the library for ``centos``:
 
 .. code-block:: console
 
@@ -190,4 +186,5 @@ some more content
     	library://emmeff/default/centos7-python36
     		Tags: 1.0
 
+Notice there are different tags for the same container...
 
