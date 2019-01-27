@@ -1737,7 +1737,7 @@ Singularity can make use of most Docker and OCI images without complication. How
 
     4. Use of plain-text passwords for authentication 
 
-    For obvious reasons, it is desireable to completely *avoid* use of plain-text passwords. Therefore, for interactive sessions requiring authentication, use of the ``--docker-login`` option for Singularity's ``pull`` and ``build`` commands is recommended. At the present time, the *only* option available for non-interactive use is to embed plain-text passwords into environment variables. Because the Sylabs Cloud Singularity Library employs time-limited access tokens for authentication, use of SIF containers hosted through this service provides a more secure means for both interactive and non-interactive use. Finally, this fourth best practice is:
+    For obvious reasons, it is desireable to completely *avoid* use of plain-text passwords. Therefore, for interactive sessions requiring authentication, use of the ``--docker-login`` option for Singularity's ``pull`` and ``build`` commands is *recommended*. At the present time, the *only* option available for non-interactive use is to :ref:`embed plain-text passwords into environment variables <sec:authentication_via_environment_variables>`. Because the Sylabs Cloud Singularity Library employs `time-limited API tokens for authentication <https://cloud.sylabs.io/auth>`_, use of SIF containers hosted through this service provides a more secure means for both interactive and non-interactive use. Finally, this fourth best practice is:
 
         "Avoid use of plain-text passwords"
 
