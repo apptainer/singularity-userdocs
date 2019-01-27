@@ -1709,28 +1709,27 @@ In working with definition files, the following additional considerations arise:
 Best Practices
 --------------
 
-.. TODO Does this apply to OCI containers as well? 
-
 Singularity can make use of most Docker and OCI images without complication. However, there exist  known cases where complications can arise. A brief compilation of these known cases follows below. 
 
     1. Installation to ``/root``
 
+    Docker and OCI container's are typically run as the ``root`` user; therefore, ``/root`` (this user's ``$HOME`` directory) will be the installation target when ``$HOME`` is specified. Installation to ``/root`` may prove workable in some circumstances - e.g., while the container is executing, or if read-only access is required to this directory after installation. In general, however, becasue this is the ``root`` directory conventional wisdom suggests this practice be avoided. Thus the first best practice is: 
 
-    Docker container's are typically run as the ``root`` user; therefore, ``/root`` (this user's ``$HOME`` directory) will be the installation target when ``$HOME`` is specified. Installation to ``/root`` may prove workable in some circumstances - e.g., while the Docker container is executing, or if read-only access is required to this directory after installation. In general, however, becasue this is the ``root`` directory conventional wisdom suggests this practice be avoided. Thus the first best practice is: 
-
-    Avoid installations that make use of ``/root``.
+        "Avoid installations that make use of ``/root``."
 
     2. Installation to ``$HOME`` or ``$TMP``
 
     In making use of Singularity, it is common practice for ``$USER`` to be automatically mounted on ``$HOME``, and for ``$TMP`` also to be mounted. To avoid the side effects (e.g., 'missing' or conflicting files) that might arise as a consequence of executing ``mount`` commands then, a second best practice is: 
 
-    Avoid placing container 'valuables' in ``$HOME`` or ``$TMP``. 
+        "Avoid placing container 'valuables' in ``$HOME`` or ``$TMP``."
+
+    A detailed review of the container's build specification (e.g., its ``Dockerfile``) may be required to ensure this best practice is adhered to. 
 
     3. Library Configurations
 
     Irrespective of containers, `a common error <https://codeyarns.com/2014/01/14/how-to-fix-shared-object-file-error/>`_ stems from failing to locate shared libraries required for execution. Suppose now there exists a requirement for symbolically linked libraries *within* a Singularity container. If the builld process that creates the container fails to update the cache, then it is quite likely that (read-only) execution of this container will result in the common error of missing libraries. Upon investigation, it is likely revealed that the library exists, just not the required symbolic links. Thus a third best practice is:
 
-    Ensure that a call to ``ldconfig`` is executed towards the *end* of ``build`` specifications (e.g., ``Dockerfile``) so that the library cache is updated when the container is created. 
+        "Ensure calls to ``ldconfig`` are executed towards the *end* of ``build`` specifications (e.g., ``Dockerfile``), so that the library cache is updated when the container is created."
 
 Best practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details. 
 
