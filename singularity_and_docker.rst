@@ -890,6 +890,8 @@ through ``build`` results in the SIF file ``lolcow_tar_def.sif``. In other words
 .. TODO RB Test 
 
 
+.. _sec:optional_headers_def_files: 
+
 Optional Headers
 ----------------
 
@@ -1030,6 +1032,7 @@ To summarize execution precedence:
 
 .. TODO Test CMD vs ENTRYPOINT via a documented example 
 
+.. _sec:inspect_container_metadata: 
 
 Container Metadata 
 ------------------
@@ -1191,7 +1194,7 @@ Thus use of Singularity's ``pull`` command results in the *local* file copy in S
 .. TODO minor - fix appearance of above link 
 
 
-Images Cached by Singularity
+Image Caching in Singularity
 ----------------------------
 
 If the *same* ``pull`` command is issued a *second* time, the output is different:
@@ -1432,11 +1435,15 @@ The ``digest`` blob referenced in the ``inbdex.json`` file references the follow
       ]
     }
 
+.. TODO Is the above not the config.json file referred to at https://github.com/opencontainers/runtime-spec/blob/master/config.md ??? 
+
 Even when all OCI blobs are already in Singularity's local cache, repeated image pulls cause *both* these last-two JSON object files, as well as the ``oci-layout`` and ``index.json`` files, to be updated. 
 
 
 Building Containers for Singularity from OCI Images
 ===================================================
+
+.. _sec:cli_oci_bootstrap_agent:
 
 Working Locally from the Singularity Command Line: ``oci`` Boostrap Agent
 -------------------------------------------------------------------------
@@ -1593,10 +1600,107 @@ Established with nothing more than a Web server then, any individual, group or o
     Though a frequently asked question, the distribution of OCI images remains `out of scope <https://www.opencontainers.org/about/oci-scope-table>`_. In other words, there is no OCI endorsed distribution method or registry. 
 
 
-Working with Definition Files
------------------------------
+Working with Definition Files: Mandatory Headers
+------------------------------------------------
 
- 
+Three, new bootstrap agents have been introduced as a consequence of compliance with the OCI Image Specification - assuming ``http`` and ``https`` are considered together. In addition to bootstrapping images for Singularity completely from the command line, definition files can be employed. 
+
+As :ref:`above <sec:cli_oci_bootstrap_agent>`, the OCI image layout compliant Singularity cache can be employed to create SIF containers; the definition file, ``lolcow-oci.def``, equivalent is:
+
+.. code-block:: singularity
+
+    Bootstrap: oci
+    From: .singularity/cache/oci:a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb
+
+Recall that the colon-appended string in this file uniquely specifies the ``org.opencontainers.image.ref.name`` of the desired image, as more that one possibility exists in the ``index.json`` file. The corresponding ``build`` command is:
+
+.. code-block:: none
+
+    $ sudo singularity build ~/lolcow_oci_cache.sif lolcow-oci.def 
+    WARNING: Authentication token file not found : Only pulls of public images will succeed
+    Build target already exists. Do you want to overwrite? [N/y] y
+    INFO:    Starting build...
+    Getting image source signatures
+    Copying blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+     45.33 MiB / 45.33 MiB [====================================================] 0s
+    Copying blob sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+     848 B / 848 B [============================================================] 0s
+    Copying blob sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+     621 B / 621 B [============================================================] 0s
+    Copying blob sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+     853 B / 853 B [============================================================] 0s
+    Copying blob sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+     169 B / 169 B [============================================================] 0s
+    Copying blob sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+     53.75 MiB / 53.75 MiB [====================================================] 0s
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: /home/vagrant/lolcow_oci_cache.sif
+
+Required use of ``sudo`` allows Singularity to ``build`` the SIF container ``lolcow_oci_cache.sif``. 
+
+When it comes to OCI archives, the definition file, ``lolcow-ocia.def`` corresponding to the command-line invocation above is:
+
+.. code-block:: singularity
+
+    Bootstrap: oci-archive
+    From: godlovedc_lolcow.tar
+
+Applying build as follows 
+
+.. code-block:: none
+
+    $ sudo singularity build lolcow_oci_tarfile.sif lolcow-ocia.def 
+    WARNING: Authentication token file not found : Only pulls of public images will succeed
+    INFO:    Starting build...
+    Getting image source signatures
+    Skipping fetch of repeat blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+    Skipping fetch of repeat blob sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+    Skipping fetch of repeat blob sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+    Skipping fetch of repeat blob sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+    Skipping fetch of repeat blob sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+    Skipping fetch of repeat blob sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+    Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+     3.33 KiB / 3.33 KiB [======================================================] 0s
+    Writing manifest to image destination
+    Storing signatures
+    INFO:    Creating SIF file...
+    INFO:    Build complete: lolcow_oci_tarfile.sif
+
+results in the SIF container ``lolcow_oci_tarfile.sif``. 
+
+.. note::
+
+    The ``http`` and ``https`` bootstrap agents can only be used to ``pull`` OCI archives from where they are hosted. As a consequence, there is no ``build`` counterpart - in other words, neither of these agents serve as a valid ``build`` source. 
+
+
+Working with Definition Files: Additonal Considerations 
+-------------------------------------------------------
+
+In working with definition files, the following additional considerations arise: 
+
+    - In addition to the mandatory headers documented above, :ref:`optional headers <sec:optional_headers_def_files>` are possible additions to OCI bundle and/or archive bootstrap definition files.
+
+    - As distribution of OCI bundles and/or archives is out of the Initiative's scope, so is the authentication required to access private images and/or registries. 
+
+    - The direction of execution follows along the same lines :ref:`as described above <sec:def_files_execution>`. Of course, the SIF container's metadata will make clear the ``runscript`` through application of the ``inspect`` command :ref:`as described previously <sec:inspect_container_metadata>`. 
+
+    - Container metadata will also reveal whether or not a given SIF file was bootstrapped from an OCI bundle or archive; for example, below it is evident that an OCI archive was employed to bootstrap creation of the SIF file:  
+
+.. code-block:: javascript 
+
+    $ singularity inspect --labels lolcow_oci_tarfile.sif | jq
+    {
+      "org.label-schema.build-date": "Sunday_27_January_2019_0:5:29_UTC",
+      "org.label-schema.schema-version": "1.0",
+      "org.label-schema.usage.singularity.deffile.bootstrap": "oci-archive",
+      "org.label-schema.usage.singularity.deffile.from": "godlovedc_lolcow.tar",
+      "org.label-schema.usage.singularity.version": "3.0.3-1"
+    }
+
 
 
 .. --------------
@@ -1615,7 +1719,5 @@ Working with Definition Files
 
 .. TODO The breakdown of the URI is useful and should be retained (but edited)
 ..     https://www.sylabs.io/guides/2.6/user-guide/singularity_and_docker.html#how-do-i-specify-my-docker-image
-
-.. TODO build from an OCI bundle (ask Ian and/or Michael.) ??? 3.0 (see changelog - from tarball) 
 
 .. TODO SIFtool - does it have more to offer here??? 
