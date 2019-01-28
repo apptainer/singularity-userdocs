@@ -1,17 +1,40 @@
 .. _singularity-and-docker:
 
 
-==============================
-Support for and Docker and OCI
-==============================
+==========================
+Support for Docker and OCI
+==========================
 
 
 --------
 Overview
 --------
 
-.. TODO Overview content ... 
-.. no need for the Docker daemon 
+`Docker <https://www.docker.com/>`_ has been largely responsible for establishing interest in, and uptake of, containers in the Linux operating environment. Given its 'first-mover' status, it is not surprising that significant effort has been expended in developing Docker containers. Deconstructed into one or more compressed archives (typically split across multiple segments, or **layers** as they are known in Docker parlance) plus some metadata, images for these containers are built from specifications known as ``Dockerfiles``. Uptake has been compelling enough that the public `Docker Hub <https://hub.docker.com/>`_, as well as various private registries, host a multitude of images for use as Docker containers.
+
+Those seeking to employ Linux containers in compute-driven use cases have been among those making substantial investments in Docker containers - and especially, by developing and sharing images. Appreciating this situation, Singularity has from the outset emphasized the importance of interoperability with Docker. As a consequence, this section of the Singularity User Docs first makes its sole focus interoperabilty with Docker. In so doing, the following topics receive attention here:
+
+    - Application of Singularity action commands on ephemeral containers derived from public Docker images  
+
+    - Converting public Docker images into Singularity's native format for containerization, namely the Singularity Image Format (SIF)
+
+    - Authenticated application of Singularity commands to containers derived from private Docker images
+
+    - Authenticated application of Singularity commands to containers derived from private Docker images originating from private registries
+
+    - Building SIF containers for Singularity via the command line or definition files from a variety of sources for Docker images and image archives 
+
+The second part of this section places emphasis upon Singularity's interoperability with open standards emerging from the `Open Containers Initiative <https://www.opencontainers.org/>`_ (OCI). Specifically, in documenting Singularity interoperability as it relates to the OCI Image Specification, the following topics are covered:
+
+    - Compliance with the OCI Image Layout Specification
+
+    - OCI-compliant caching in Singularity 
+
+    - Acquiring OCI images and image archives via Singularity 
+
+    - Building SIF containers for Singularity via the command line or definition files from a variety of sources for OCI images and image archives 
+
+The section closes with a brief enumeration of emerging best practices plus consideration of troubleshooting common issues. 
 
 
 .. _sec:action_commands_prebuilt_public_docker_images:
@@ -1793,7 +1816,6 @@ In making use of Docker and OCI images through Singularity the need to troublesh
     5. The ``http`` and ``https`` are ``pull`` only boostrap agents 
 
     ``http`` and ``https`` are the only examples of ``pull`` only boostrap agents. In other words, when used with Singularity's ``pull`` command, the result is a local copy of, for example, an OCI archive image. This means that a subsequent step is necessary to actually create a SIF container for use by Singularity - a step involving the ``oci-archive`` bootstrap agent in the case of an OCI image archive. 
-
 
 Like :ref:`best practices <sec:best_practices>`, troubleshooting scenarios and solutions emerge from experience. Contributions that allow additional experiences to be shared  are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details. 
 
