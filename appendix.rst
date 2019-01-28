@@ -10,89 +10,32 @@ Singularity's environment variables
 -----------------------------------
 
 Singularity 3.0 comes with some environment variables you can set or modify depending on your needs.
-You can see them listed below with their respective functionality.
+You can see them listed alphabetically below with their respective functionality.
 
-#. **SINGULARITY_APP** and **SINGULARITY_APPNAME**: Sets the name of an application to be run inside a container.
+a
+^
 
-#. **SINGULARITY_BINDPATH** and **SINGULARITY_BIND**: Comma separated string ``source:<dest>`` list of paths to bind between the host and the container.
-
-#. **SINGULARITY_HOME** : A home directory specification, it could be a source or destination path. The source path is the home directory outside the container and the destination overrides the home directory within the container.
-
-#. **SINGULARITY_OVERLAY** and **SINGULARITY_OVERLAYIMAGE**: To indicate the use of an overlay file system image for persistent data storage or as read-only layer of container.
-
-#. **SINGULARITY_SCRATCH** and **SINGULARITY_SCRATCHDIR**: Used to include a scratch directory within the container that is linked to a temporary directory. (use -W to force location)
-
-#. **SINGULARITY_WORKDIR**: The working directory to be used for ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was also used)
-
-#. **SINGULARITY_SHELL**: The path to the program to be used as an interactive shell.
-
-#. **SINGULARITY_PWD** and **SINGULARITY_TARGET_PWD**: The initial working directory for payload process inside the container.
-
-#. **SINGULARITY_HOSTNAME**: The container's hostname.
-
-#. **SINGULARITY_NETWORK**: Used to specify a desired network. If more than one parameters is used, addresses should be separated by commas, where each network will bring up a dedicated interface inside the container.
-
-#. **SINGULARITY_NETWORK_ARGS**: To specify the network arguments to pass to CNI plugins.
-
-#. **SINGULARITY_DNS**: A list of the DNS server addresses separated by commas to be added in ``resolv.conf``.
-
-#. **SINGULARITY_SECURITY**: Used to enable security features. (SELinux, Apparmor, Seccomp)
-
-#. **SINGULARITY_APPLY_CGROUPS**: Used to apply cgroups from an input file for container processes. (it requires root privileges)
-
-#. **SINGULARITY_CONTAINLIBS**: Used to specify a string of file names (comma separated string) to bind to the `/.singularity.d/libs` directory.
-
-#. **SINGULARITY_DOCKER_LOGIN**: To specify the interactive prompt for docker authentication.
-
-#. **SINGULARITY_DOCKER_USERNAME**: To specify a username for docker authentication.
-
-#. **SINGULARITY_DOCKER_PASSWORD**: To specify the password for docker authentication.
-
-#. **SINGULARITY_IMAGE**: Filename of the container.
-
-#. **SINGULARITY_TMPDIR**: Used with the ``build`` command, to consider a temporary location for the build.
-
-#. **SINGULARITY_ENVIRONMENT**: Contains all the environment variables that have been exported in your container.
-
-#. **SINGULARITY_ROOTFS**: To reference the system file location.
-
-#. **SINGULARITY_USER**: Used to specify a string of capabilities for the given user.
-
-#. **SINGULARITY_GROUP**: Used to specify a string of capabilities for the given group.
-
-#. **SINGULARITY_DESC**: Contains a description of the capabilities.
+#. **SINGULARITY_ADD_CAPS**: To specify a list (comma separated string) of capabilities to be added. Default is an empty string.
 
 #. **SINGULARITY_ALL**: List all the users and groups capabilities.
 
-#. **SINGULARITY_LABELS**: Specifies the labels associated with the image.
+#. **SINGULARITY_ALLOW_SETUID**: To specify that setuid binaries should or not be allowed in the container. (root only) Default is set to false.
 
-#. **SINGULARITY_DEFFILE**: Shows the Singularity recipe that was used to generate the image.
+#. **SINGULARITY_APP** and **SINGULARITY_APPNAME**: Sets the name of an application to be run inside a container.
 
-#. **SINGULARITY_RUNSCRIPT**: Specifies the runscript of the image.
+#. **SINGULARITY_APPLY_CGROUPS**: Used to apply cgroups from an input file for container processes. (it requires root privileges)
 
-#. **SINGULARITY_TEST**: Specifies the test script for the image.
+b
+^
 
-#. **SINGULARITY_HELPFILE**: Specifies the runscript helpfile, if it exists.
-
-#. **SINGULARITY_JSON**: Specifies the structured json of the def file, every node as each section in the def file.
-
-#. **SINGULARITY_FORCE**: Forces to kill the instance.
-
-#. **SINGULARITY_SIGNAL**: Specifies a signal sent to the instance.
-
-#. **SINGULARITY_SECRET**: Lists all the private keys instead of the default which display the public ones.
-
-#. **SINGULARITY_URL**: Specifies the key server ``URL``.
-
-#. **SINGULARITY_LIBRARY**: Specifies the library to pull from. Default is set to our Cloud Library.
-
-#. **SINGULARITY_NAME**: Specifies a custom image name.
-
-#. **SINGULARITY_NOHTTPS**: Sets to either false or true to avoid using HTTPS for communicating with the local docker registry. Default is set to false.
+#. **SINGULARITY_BINDPATH** and **SINGULARITY_BIND**: Comma separated string ``source:<dest>`` list of paths to bind between the host and the container.
 
 #. **SINGULARITY_BOOT**: Set to false by default, considers if executing ``/sbin/init`` when container boots (root only).
 
-#. **SINGULARITY_FAKEROOT**: Set to false by default, considers running the container in a new user namespace as uid 0 (experimental).
+#. **SINGULARITY_BUILDER**: To specify the remote builder service URL. Defaults to our remote builder.
+
+c
+^
 
 #. **SINGULARITY_CLEANENV**: Specifies if the environment should be cleaned or not before running the container. Default is set to false.
 
@@ -100,11 +43,88 @@ You can see them listed below with their respective functionality.
 
 #. **SINGULARITY_CONTAINALL**: To contain not only file systems, but also PID, IPC, and environment. Default is set to false.
 
-#. **SINGULARITY_NV**: To enable experimental Nvidia support. Default is set to false.
+#. **SINGULARITY_CONTAINLIBS**: Used to specify a string of file names (comma separated string) to bind to the `/.singularity.d/libs` directory.
 
-#. **SINGULARITY_WRITABLE**: By default, all Singularity containers are available as read only, this option makes the file system accessible as read/write. Default set to false.
+d
+^
 
-#. **SINGULARITY_WRITABLE_TMPFS**: Makes the file system accessible as read-write with non-persistent data (with overlay support only). Default is set to false.
+#. **SINGULARITY_DEFFILE**: Shows the Singularity recipe that was used to generate the image.
+
+#. **SINGULARITY_DESC**: Contains a description of the capabilities.
+
+#. **SINGULARITY_DETACHED**: To submit a build job and print the build ID (no real-time logs and also requires ``--remote``). Default is set to false.
+
+#. **SINGULARITY_DNS**: A list of the DNS server addresses separated by commas to be added in ``resolv.conf``.
+
+#. **SINGULARITY_DOCKER_LOGIN**: To specify the interactive prompt for docker authentication.
+
+#. **SINGULARITY_DOCKER_USERNAME**: To specify a username for docker authentication.
+
+#. **SINGULARITY_DOCKER_PASSWORD**: To specify the password for docker authentication.
+
+#. **SINGULARITY_DROP_CAPS**: To specify a list (comma separated string) of capabilities to be dropped. Default is an empty string.
+
+e
+^
+
+#. **SINGULARITY_ENVIRONMENT**: Contains all the environment variables that have been exported in your container.
+
+f
+^
+
+#. **SINGULARITY_FAKEROOT**: Set to false by default, considers running the container in a new user namespace as uid 0 (experimental).
+
+#. **SINGULARITY_FORCE**: Forces to kill the instance.
+
+g
+^
+
+#. **SINGULARITY_GROUP**: Used to specify a string of capabilities for the given group.
+
+h
+^
+
+#. **SINGULARITY_HELPFILE**: Specifies the runscript helpfile, if it exists.
+
+#. **SINGULARITY_HOME** : A home directory specification, it could be a source or destination path. The source path is the home directory outside the container and the destination overrides the home directory within the container.
+
+#. **SINGULARITY_HOSTNAME**: The container's hostname.
+
+i
+^
+
+#. **SINGULARITY_IMAGE**: Filename of the container.
+
+j
+^
+
+#. **SINGULARITY_JSON**: Specifies the structured json of the def file, every node as each section in the def file.
+
+k
+^
+
+#. **SINGULARITY_KEEP_PRIVS**: To let root user keep privileges in the container. Default is set to false.
+
+l
+^
+
+#. **SINGULARITY_LABELS**: Specifies the labels associated with the image.
+
+#. **SINGULARITY_LIBRARY**: Specifies the library to pull from. Default is set to our Cloud Library.
+
+
+n
+^
+
+#. **SINGULARITY_NAME**: Specifies a custom image name.
+
+#. **SINGULARITY_NETWORK**: Used to specify a desired network. If more than one parameters is used, addresses should be separated by commas, where each network will bring up a dedicated interface inside the container.
+
+#. **SINGULARITY_NETWORK_ARGS**: To specify the network arguments to pass to CNI plugins.
+
+#. **SINGULARITY_NOCLEANUP**: To not clean up the bundle after a failed build, this can be helpful for debugging. Default is set to false.
+
+#. **SINGULARITY_NOHTTPS**: Sets to either false or true to avoid using HTTPS for communicating with the local docker registry. Default is set to false.
 
 #. **SINGULARITY_NO_HOME**: Considers not mounting users home directory if home is not the current working directory. Default is set to false.
 
@@ -112,6 +132,56 @@ You can see them listed below with their respective functionality.
 
 #. **SINGULARITY_NO_NV**: Flag to disable Nvidia support. Opposite of ``SINGULARITY_NV``.
 
+#. **SINGULARITY_NO_PRIVS**: To drop all the privileges from root user in the container. Default is set to false.
+
+#. **SINGULARITY_NV**: To enable experimental Nvidia support. Default is set to false.
+
+o
+^
+
+#. **SINGULARITY_OVERLAY** and **SINGULARITY_OVERLAYIMAGE**: To indicate the use of an overlay file system image for persistent data storage or as read-only layer of container.
+
+p
+^
+
+#. **SINGULARITY_PWD** and **SINGULARITY_TARGET_PWD**: The initial working directory for payload process inside the container.
+
+r
+^
+
+#. **SINGULARITY_REMOTE**: To build an image remotely. (Does not require root) Default is set to false.
+
+#. **SINGULARITY_ROOTFS**: To reference the system file location.
+
+#. **SINGULARITY_RUNSCRIPT**: Specifies the runscript of the image.
+
+s
+^
+
+#. **SINGULARITY_SANDBOX**: To specify that the format of the image should be a sandbox. Default is set to false.
+
+#. **SINGULARITY_SCRATCH** and **SINGULARITY_SCRATCHDIR**: Used to include a scratch directory within the container that is linked to a temporary directory. (use -W to force location)
+
+#. **SINGULARITY_SECTION**: To specify a comma separated string of all the sections to be run from the deffile (setup, post, files, environment, test, labels, none)
+
+#. **SINGULARITY_SECURITY**: Used to enable security features. (SELinux, Apparmor, Seccomp)
+
+#. **SINGULARITY_SECRET**: Lists all the private keys instead of the default which display the public ones.
+
+#. **SINGULARITY_SHELL**: The path to the program to be used as an interactive shell.
+
+#. **SINGULARITY_SIGNAL**: Specifies a signal sent to the instance.
+
+
+t
+^
+
+#. **SINGULARITY_TEST**: Specifies the test script for the image.
+
+#. **SINGULARITY_TMPDIR**: Used with the ``build`` command, to consider a temporary location for the build.
+
+u
+^
 #. **SINGULARITY_UNSHARE_PID**: To specify that the container will run in a new PID namespace. Default is set to false.
 
 #. **SINGULARITY_UNSHARE_IPC**: To specify that the container will run in a new IPC namespace. Default is set to false.
@@ -120,31 +190,22 @@ You can see them listed below with their respective functionality.
 
 #. **SINGULARITY_UNSHARE_UTS**: To specify that the container will run in a new UTS namespace. Default is set to false.
 
-#. **SINGULARITY_USERNS** and **SINGULARITY_UNSHARE_USERNS**: To specify that the container will run in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This may not support every feature of Singularity. (Sandbox image only). Default is set to false.
-
-#. **SINGULARITY_KEEP_PRIVS**: To let root user keep privileges in the container. Default is set to false.
-
-#. **SINGULARITY_NO_PRIVS**: To drop all the privileges from root user in the container. Default is set to false.
-
-#. **SINGULARITY_ADD_CAPS**: To specify a list (comma separated string) of capabilities to be added. Default is an empty string.
-
-#. **SINGULARITY_DROP_CAPS**: To specify a list (comma separated string) of capabilities to be dropped. Default is an empty string.
-
-#. **SINGULARITY_ALLOW_SETUID**: To specify that setuid binaries should or not be allowed in the container. (root only) Default is set to false.
-
-#. **SINGULARITY_SANDBOX**: To specify that the format of the image should be a sandbox. Default is set to false.
-
-#. **SINGULARITY_SECTION**: To specify a comma separated string of all the sections to be run from the deffile (setup, post, files, environment, test, labels, none)
-
 #. **SINGULARITY_UPDATE**: To run the definition over an existing container (skips the header). Default is set to false.
 
-#. **SINGULARITY_REMOTE**: To build an image remotely. (Does not require root) Default is set to false.
+#. **SINGULARITY_URL**: Specifies the key server ``URL``.
 
-#. **SINGULARITY_DETACHED**: To submit a build job and print the build ID (no real-time logs and also requires ``--remote``). Default is set to false.
+#. **SINGULARITY_USER**: Used to specify a string of capabilities for the given user.
 
-#. **SINGULARITY_BUILDER**: To specify the remote builder service URL. Defaults to our remote builder.
+#. **SINGULARITY_USERNS** and **SINGULARITY_UNSHARE_USERNS**: To specify that the container will run in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This may not support every feature of Singularity. (Sandbox image only). Default is set to false.
 
-#. **SINGULARITY_NOCLEANUP**: To not clean up the bundle after a failed build, this can be helpful for debugging. Default is set to false.
+w
+^
+
+#. **SINGULARITY_WORKDIR**: The working directory to be used for ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was also used)
+
+#. **SINGULARITY_WRITABLE**: By default, all Singularity containers are available as read only, this option makes the file system accessible as read/write. Default set to false.
+
+#. **SINGULARITY_WRITABLE_TMPFS**: Makes the file system accessible as read-write with non-persistent data (with overlay support only). Default is set to false.
 
 .. _build-modules:
 
