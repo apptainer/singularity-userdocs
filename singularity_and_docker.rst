@@ -5,7 +5,6 @@
 Support for and Docker and OCI
 ==============================
 
-.. TODO proof entire document for continuity, clarity, etc. 
 
 --------
 Overview
@@ -196,11 +195,6 @@ This ``pull`` results in a *local* copy of the Docker image in SIF, the Singular
 
 In converting to SIF, individual layers of the Docker image have been *combined* into a single, native file for use by Singularity; there is no need to subsequently ``build`` the image for Singularity. For example, you can now ``exec``, ``run`` or ``shell`` into the SIF version via Singularity, :ref:`as described above <sec:action_commands_prebuilt_public_docker_images>`.  
 
-.. TODO Should explain here or in previous section that docker to Singularity is 
-    .. a one-way operation because info is lost.
-    .. Also some words on how this is considered less reproducible than pulling
-    .. from the container library.  
-
 .. note:: 
 
     The above authentication warning originates from a check for the existence of ``${HOME}/.singularity/sylabs-token``. It can be ignored when making use of the Docker Hub, or  silenced by issuing ``touch ${HOME}/.singularity/sylabs-token`` once.  
@@ -242,9 +236,6 @@ complete contents of that image.
 .. note::
 
     ``pull`` is a one-time-only operation that builds a SIF file corresponding to the image retrieved from the Docker Hub. Updates to the image on the Docker Hub will *not* be reflected in the *local* copy. 
-
-.. TODO explain the full Docker URI - add the line below to a larger discussion - the existing 
-    explanation is pretty good, but probably needs style edits.  
 
 In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker Hub user, whereas ``lolcow`` is the name of the repository. Adding the option to specifiy an image tag, the generic version of the URI is ``docker://<hub-user>/<repo-name>[:<tag>]``. `Repositories on Docker Hub <https://docs.docker.com/docker-hub/repos/>`_ provides additional details.
 
@@ -1805,11 +1796,5 @@ In making use of Docker and OCI images through Singularity the need to troublesh
 
 
 Like :ref:`best practices <sec:best_practices>`, troubleshooting scenarios and solutions emerge from experience. Contributions that allow additional experiences to be shared  are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details. 
-
-
-.. TODO Maintaining images **repeat**
-
-.. TODO The breakdown of the URI is useful and should be retained (but edited) **repeat**
-..     https://www.sylabs.io/guides/2.6/user-guide/singularity_and_docker.html#how-do-i-specify-my-docker-image <<< use ??? 
 
 .. TODO-ND SIFtool - does it have more to offer here??? 
