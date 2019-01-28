@@ -327,6 +327,8 @@ from scratch using a :ref:`definition file <container-recipes>`. You can also
 use ``build`` to convert an image between the container formats supported by
 Singularity.
 
+.. _cowimage:
+
 --------------------
 Interact with images
 --------------------
@@ -411,6 +413,8 @@ disappears.
                 (__)\       )\/\
                     ||----w |
                     ||     ||
+
+.. _runcontainer:
 
 Running a container
 ===================
