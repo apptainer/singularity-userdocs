@@ -12,8 +12,8 @@ Singularity's environment variables
 Singularity 3.0 comes with some environment variables you can set or modify depending on your needs.
 You can see them listed alphabetically below with their respective functionality.
 
-a
-^
+``A``
+^^^^^
 
 #. **SINGULARITY_ADD_CAPS**: To specify a list (comma separated string) of capabilities to be added. Default is an empty string.
 
@@ -25,8 +25,8 @@ a
 
 #. **SINGULARITY_APPLY_CGROUPS**: Used to apply cgroups from an input file for container processes. (it requires root privileges)
 
-b
-^
+``B``
+^^^^^
 
 #. **SINGULARITY_BINDPATH** and **SINGULARITY_BIND**: Comma separated string ``source:<dest>`` list of paths to bind between the host and the container.
 
@@ -34,8 +34,8 @@ b
 
 #. **SINGULARITY_BUILDER**: To specify the remote builder service URL. Defaults to our remote builder.
 
-c
-^
+``C``
+^^^^^
 
 #. **SINGULARITY_CLEANENV**: Specifies if the environment should be cleaned or not before running the container. Default is set to false.
 
@@ -45,8 +45,8 @@ c
 
 #. **SINGULARITY_CONTAINLIBS**: Used to specify a string of file names (comma separated string) to bind to the `/.singularity.d/libs` directory.
 
-d
-^
+``D``
+^^^^^
 
 #. **SINGULARITY_DEFFILE**: Shows the Singularity recipe that was used to generate the image.
 
@@ -64,25 +64,25 @@ d
 
 #. **SINGULARITY_DROP_CAPS**: To specify a list (comma separated string) of capabilities to be dropped. Default is an empty string.
 
-e
-^
+``E``
+^^^^^
 
 #. **SINGULARITY_ENVIRONMENT**: Contains all the environment variables that have been exported in your container.
 
-f
-^
+``F``
+^^^^^
 
 #. **SINGULARITY_FAKEROOT**: Set to false by default, considers running the container in a new user namespace as uid 0 (experimental).
 
 #. **SINGULARITY_FORCE**: Forces to kill the instance.
 
-g
-^
+``G``
+^^^^^
 
 #. **SINGULARITY_GROUP**: Used to specify a string of capabilities for the given group.
 
-h
-^
+``H``
+^^^^^
 
 #. **SINGULARITY_HELPFILE**: Specifies the runscript helpfile, if it exists.
 
@@ -90,31 +90,30 @@ h
 
 #. **SINGULARITY_HOSTNAME**: The container's hostname.
 
-i
-^
+``I``
+^^^^^
 
 #. **SINGULARITY_IMAGE**: Filename of the container.
 
-j
-^
+``J``
+^^^^^
 
 #. **SINGULARITY_JSON**: Specifies the structured json of the def file, every node as each section in the def file.
 
-k
-^
+``K``
+^^^^^
 
 #. **SINGULARITY_KEEP_PRIVS**: To let root user keep privileges in the container. Default is set to false.
 
-l
-^
+``L``
+^^^^^
 
 #. **SINGULARITY_LABELS**: Specifies the labels associated with the image.
 
 #. **SINGULARITY_LIBRARY**: Specifies the library to pull from. Default is set to our Cloud Library.
 
-
-n
-^
+``N``
+^^^^^
 
 #. **SINGULARITY_NAME**: Specifies a custom image name.
 
@@ -136,18 +135,18 @@ n
 
 #. **SINGULARITY_NV**: To enable experimental Nvidia support. Default is set to false.
 
-o
-^
+``O``
+^^^^^
 
 #. **SINGULARITY_OVERLAY** and **SINGULARITY_OVERLAYIMAGE**: To indicate the use of an overlay file system image for persistent data storage or as read-only layer of container.
 
-p
-^
+``P``
+^^^^^
 
 #. **SINGULARITY_PWD** and **SINGULARITY_TARGET_PWD**: The initial working directory for payload process inside the container.
 
-r
-^
+``R``
+^^^^^
 
 #. **SINGULARITY_REMOTE**: To build an image remotely. (Does not require root) Default is set to false.
 
@@ -155,8 +154,8 @@ r
 
 #. **SINGULARITY_RUNSCRIPT**: Specifies the runscript of the image.
 
-s
-^
+``S``
+^^^^^
 
 #. **SINGULARITY_SANDBOX**: To specify that the format of the image should be a sandbox. Default is set to false.
 
@@ -173,15 +172,16 @@ s
 #. **SINGULARITY_SIGNAL**: Specifies a signal sent to the instance.
 
 
-t
-^
+``T``
+^^^^^
 
 #. **SINGULARITY_TEST**: Specifies the test script for the image.
 
 #. **SINGULARITY_TMPDIR**: Used with the ``build`` command, to consider a temporary location for the build.
 
-u
-^
+``U``
+^^^^^
+
 #. **SINGULARITY_UNSHARE_PID**: To specify that the container will run in a new PID namespace. Default is set to false.
 
 #. **SINGULARITY_UNSHARE_IPC**: To specify that the container will run in a new IPC namespace. Default is set to false.
@@ -198,8 +198,8 @@ u
 
 #. **SINGULARITY_USERNS** and **SINGULARITY_UNSHARE_USERNS**: To specify that the container will run in a new user namespace, allowing Singularity to run completely unprivileged on recent kernels. This may not support every feature of Singularity. (Sandbox image only). Default is set to false.
 
-w
-^
+``W``
+^^^^^
 
 #. **SINGULARITY_WORKDIR**: The working directory to be used for ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was also used)
 
