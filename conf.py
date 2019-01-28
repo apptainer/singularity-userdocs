@@ -44,7 +44,7 @@ master_doc = 'index'
 
 # General information about the project.
 project = u'Singularity container'
-copyright = u'2018, Singularity'
+copyright = u'2017-2019, Sylabs Inc'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -326,4 +326,3 @@ from pygments_singularity import SingularityLexer
 
 # lexer for Singularity definition files (added here until it is upstreamed into Pygments).
 lexers['singularity'] = SingularityLexer(startinline=True)
-
