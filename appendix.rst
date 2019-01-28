@@ -2,7 +2,6 @@
 Appendix
 ========
 
-
 .. _singularity-environment-variables:
 
 
@@ -68,6 +67,10 @@ You can see them listed alphabetically below with their respective functionality
 ^^^^^
 
 #. **SINGULARITY_ENVIRONMENT**: Contains all the environment variables that have been exported in your container.
+#. **SINGULARITYENV_***: Allows you to transpose variables into the container at runtime. You can see more in detail how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
+#. **SINGULARITYENV_APPEND_PATH**: Used to append directories to the end of the ``$PATH`` environment variable. You can see more in detail on how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
+#. **SINGULARITYENV_PATH**: A specified path to override the ``$PATH`` environment variable within the container. You can see more in detail on how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
+#. **SINGULARITYENV_PREPEND_PATH**: Used to prepend directories to the beginning of `$PATH`` environment variable. You can see more in detail on how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
 
 ``F``
 ^^^^^
@@ -171,7 +174,6 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **SINGULARITY_SIGNAL**: Specifies a signal sent to the instance.
 
-
 ``T``
 ^^^^^
 
@@ -209,7 +211,6 @@ You can see them listed alphabetically below with their respective functionality
 
 
 .. _build-modules:
-
 
 Build Modules
 -------------
