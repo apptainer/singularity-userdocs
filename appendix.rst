@@ -42,7 +42,7 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **SINGULARITY_CONTAINALL**: To contain not only file systems, but also PID, IPC, and environment. Default is set to false.
 
-#. **SINGULARITY_CONTAINLIBS**: Used to specify a string of file names (comma separated string) to bind to the `/.singularity.d/libs` directory.
+#. **SINGULARITY_CONTAINLIBS**: Used to specify a string of file names (comma separated string) to bind to the ``/.singularity.d/libs`` directory.
 
 ``D``
 ^^^^^
