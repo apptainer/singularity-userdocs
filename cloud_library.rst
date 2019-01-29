@@ -33,7 +33,7 @@ Making an account is easy, and straightforward:
 
  1. Go to: https://cloud.sylabs.io/library.
  2. Click "Sign in to Sylabs" (top right corner).
- 3. Select you method to sign in, with Google, GitHub, GitLab, or Microsoft.
+ 3. Select your method to sign in, with Google, GitHub, GitLab, or Microsoft.
  4. Type your passwords, and that's it!
 
 .. _creating_a_access_token:
@@ -192,13 +192,13 @@ Notice there are different tags for the same container.
 Remote Builder
 --------------
 
-The remote builder service can build your container remotly, (you dont need root access
+The remote builder service can build your container remotely, (you don't need root access
 to use remote builder)
 
-Building from a defition file:
+Building from a definition file:
 ------------------------------
 
-This is are defition file, lets call it ``ubuntu.def``:
+This is are definition file, let's call it ``ubuntu.def``:
 
 .. code-block:: singularity
 
