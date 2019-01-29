@@ -12,29 +12,29 @@ Overview
 The Cloud Library is the place to push (upload) your containers to the cloud so other users can
 download, :ref:`Verify <signNverify>` (optional), and use the containers.
 
-We also pervide a :ref:`Remote Builder <remote_builder>`, this is used for building your containers remotly,
-this offers advantags:
+We also provide a :ref:`Remote Builder <remote_builder>`, this is used for building your containers remotely,
+this offers advantages:
 
- - Usally fast.
+ - Usually fast.
 
  - No root access needed.
 
- - Can build directly to the library without the need to :ref:`push <push>` your container after. (only thrught the web GUI)
+ - Can build directly to the library without the need to :ref:`push <push>` your container after. (only through the web GUI)
 
 content...
 
 .. _make_a_account:
 
--------------
-Make a Acount
--------------
+---------------
+Make an Account
+---------------
 
-Makeing a acount is easy, and straightforward:
+Making an account is easy, and straightforward:
 
  1. Go to: https://cloud.sylabs.io/library.
  2. Click "Sign in to Sylabs" (top right corner).
  3. Select you method to sign in, with Google, GitHub, GitLab, or Microsoft.
- 4. Type your passwords, and thats it!
+ 4. Type your passwords, and that's it!
 
 .. _creating_a_access_token:
 
@@ -61,21 +61,21 @@ Now that you have your token, you are ready to push your container!
 Pushing a Container
 -------------------
 
-The ``singularity push`` will push a container to the container library with the givin URL. Heres an example of a typical push command:
+The ``singularity push`` will push a container to the container library with the given URL. Here's an example of a typical push command:
 
 .. code-block:: console
 
     $ singularity push my-container.sif library://your-name/project-dir/my-container:latest
 
-The ``:latest`` is the contianer tag. Tags are used to have difrent version of the same container. Heres an example:
+The ``:latest`` is the container tag. Tags are used to have different version of the same container. Here's an example:
 
-Lets assume you have your container (v1.0.1), and you want to push that container without deleting your ``:latest`` container, then you can add a version tag to that container, like so:
+Let's assume you have your container (v1.0.1), and you want to push that container without deleting your ``:latest`` container, then you can add a version tag to that container, like so:
 
 .. code-block:: console
 
     $ singularity push my-container.sif library://your-name/project-dir/my-container:1.0.1
 
-You can download the container with that tag by replacing the ``:latest``, with the taged container you want to download.
+You can download the container with that tag by replacing the ``:latest``, with the tagged container you want to download.
 
 .. _pull:
 
@@ -87,9 +87,9 @@ The ``singularity pull`` will pull a container from the `Library <https://cloud.
 
 .. note::
 
-    When pulling from Docker, the container will automaticly be converted to a SIF (Singularity Image Format) container.
+    When pulling from Docker, the container will automatically be converted to a SIF (Singularity Image Format) container.
 
-Heres a typical pull command:
+Here's a typical pull command:
 
 .. code-block:: console
 
@@ -97,7 +97,7 @@ Heres a typical pull command:
 
 .. note::
 
-    If theres no tag after the container name, Singularity will pull the container with the ``:latest`` tag.
+    If there's no tag after the container name, Singularity automatically will pull the container with the ``:latest`` tag.
 
 Pulling your own container
 --------------------------
@@ -107,37 +107,36 @@ and also `Docker Hub <https://hub.docker.com/>`_ (``docker://``).
 
 .. note::
 
-    When pulling from Docker, the container will automaticly be converted to a SIF (Singularity Image Format) container.
+    When pulling from Docker, the container will automatically be converted to a SIF (Singularity Image Format) container.
 
-Heres a typical pull command:
+Here's a typical pull command:
 
 .. code-block:: console
 
     $ singularity pull file-out.sif library://alpine:latest
 
-If theres no tag after the container name, Singularity will pull the container with the latest tag.
+If there's no tag after the container name, Singularity will pull the container with the latest tag.
 
-To pull a container with a spicific tag, just add the tag to the library URL:
+To pull a container with a specific tag, just add the tag to the library URL:
 
 .. code-block:: console
 
     $ singularity pull file-out.sif library://alpine:3.8
 
-Of course you can pull your own containers. Heres what that will look like:
+Of course, you can pull your own containers. Here's what that will look like:
 
 .. code-block:: console
 
     $ singularity pull library://your-name/project-dir/my-container:latest
 
-    # or use a difrent tag:
+    # or use a different tag:
 
     $ singularity pull library://your-name/project-dir/my-container:1.0.1
 
 .. note::
 
-    You dont have to specify a output file, one will be created automaticly, but its good practice to always
+    You don't have to specify a output file, one will be created automatically, but it's good practice to always
     specify your output file.
-
 
 ...more content...
 
@@ -156,13 +155,13 @@ Check out :ref:`this page <signNverify>` on how to: :ref:`verify a container <ve
 Searching the Library for Containers
 ------------------------------------
 
-When it come to searching the library, you could always go to: https://cloud.sylabs.io/library and search from there.
+When it comes to searching the library, you could always go to: https://cloud.sylabs.io/library and search from there.
 Or you can use ``singularity search <container/user>``, this will search the library for the ``<container/user>``.
 
 Using the CLI Search
 --------------------
 
-Here is a example for searching the library for ``centos``:
+Here is an example for searching the library for ``centos``:
 
 .. code-block:: console
 
@@ -185,7 +184,7 @@ Here is a example for searching the library for ``centos``:
     	library://emmeff/default/centos7-python36
     		Tags: 1.0
 
-Notice there are different tags for the same container...
+Notice there are different tags for the same container.
 
 .. _remote_builder:
 
@@ -216,6 +215,7 @@ Now, to build the container, use the ``--remote`` flag, and without ``sudo``:
     $ singularity build --remote ubuntu.sif ubuntu.def
 
 .. note:
+
     Make sure you have a access token, otherwise the build will fail.
 
 Then, you should wave your container; ``ubuntu.sif``, and you can test it by running it:
@@ -224,5 +224,4 @@ Then, you should wave your container; ``ubuntu.sif``, and you can test it by run
 
     $ ./ubuntu.sif
     hello world from ubuntu container!
-
 
