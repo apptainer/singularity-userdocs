@@ -36,7 +36,6 @@ Makeing a acount is easy, and straightforward:
  3. Select you method to sign in, with Google, GitHub, GitLab, or Microsoft.
  4. Type your passwords, and thats it!
 
-
 .. _creating_a_access_token:
 
 -----------------------
@@ -187,4 +186,43 @@ Here is a example for searching the library for ``centos``:
     		Tags: 1.0
 
 Notice there are different tags for the same container...
+
+.. _remote_builder:
+
+--------------
+Remote Builder
+--------------
+
+The remote builder service can build your container remotly, (you dont need root access
+to use remote builder)
+
+Building from a defition file:
+------------------------------
+
+This is are defition file, lets call it ``ubuntu.def``:
+
+.. code-block:: singularity
+
+    bootstrap: library
+    from: ubuntu:18.04
+
+    %runscript
+    echo "hello world from ubuntu container!"
+
+Now, to build the container, use the ``--remote`` flag, and without ``sudo``:
+
+.. code-block:: console
+
+    $ singularity build --remote ubuntu.sif ubuntu.def
+
+.. note:
+    Make sure you have a access token, otherwise the build will fail.
+
+Then, you should wave your container; ``ubuntu.sif``, and you can test it by running it:
+
+.. code-block:: console
+
+    $ ./ubuntu.sif
+    hello world from ubuntu container!
+
 
