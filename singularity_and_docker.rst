@@ -759,7 +759,7 @@ Alternatively, if :ref:`environment variables have been set as above <sec:authen
 
 .. code-block:: none 
 
-    sudo -E singularity build mylolcow.sif mylolcow.def
+    $ sudo -E singularity build mylolcow.sif mylolcow.def
 
 enables authenticated use of the private image. 
 
