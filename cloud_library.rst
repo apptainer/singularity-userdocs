@@ -195,6 +195,11 @@ Remote Builder
 The remote builder service can build your container remotely, (you don't need root access
 to use remote builder)
 
+.. note::
+
+    It is only possible to remote build a SIF (Singularity Image Format) container, its **not** possible
+    to remote build a :ref:`sandbox container <create_a_writable_container>`.
+
 Building from a definition file:
 ------------------------------
 
@@ -214,7 +219,7 @@ Now, to build the container, use the ``--remote`` flag, and without ``sudo``:
 
     $ singularity build --remote ubuntu.sif ubuntu.def
 
-.. note:
+.. note::
 
     Make sure you have a access token, otherwise the build will fail.
 
