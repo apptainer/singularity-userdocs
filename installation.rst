@@ -472,7 +472,7 @@ different value for the ``$VM`` variable if you like.)
 
 .. code-block:: none
 
-    $ export VM=sylabs/singularity-ubuntu-bionic64 && \
+    $ export VM=sylabs/singularity-3.0-ubuntu-bionic64 && \
         vagrant init $VM && \
         vagrant up && \
         vagrant ssh
