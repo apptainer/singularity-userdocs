@@ -10,6 +10,7 @@ User Guide
    Installation <installation>
    Build a container <build_a_container>
    The Definition File <definition_files>
+   Build Environment <build_env>
    Bind Paths and Mounts <bind_paths_and_mounts>
    Persistent Overlays <persistent_overlays>
    Running Services <running_services>
