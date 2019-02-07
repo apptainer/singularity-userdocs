@@ -30,7 +30,7 @@ You will need ``git`` to download the source code and the appropriate tools and 
 
     git fetch --all
 
-    git checkout 2.6.0
+    git checkout 2.6.1
 
     ./autogen.sh
 
