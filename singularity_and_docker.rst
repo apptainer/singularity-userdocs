@@ -166,7 +166,7 @@ In addition to non-interactive execution of an image from the Docker Hub, Singul
     UBUNTU_CODENAME=xenial
     Singularity lolcow_latest.sif:~> 
 
-From this it is evident that use is being made of Ubuntu 16.04 *within* this container, whereas the shell *external* to the container is running a more-recent release of Ubuntu (not illustrated here). 
+From this it is evident that use is being made of Ubuntu 16.04 *within* this container, whereas the shell *external* to the container is running a more recent release of Ubuntu (not illustrated here). 
 
 ``inspect`` reveals the metadata for a Singularity container encapsulated via SIF; :ref:`Container Metadata <sec:inspect_container_metadata>` is documented below.
 
@@ -1174,8 +1174,10 @@ The ``--environment`` option for ``inspect`` is worth noting; for example:
 
     $ singularity inspect --environment lolcow.sif
 
+    ==90-environment.sh==
     #!/bin/sh
     #Custom environment shell code should follow
+
 
 Other ``inspect`` options are detailed :ref:`elsewhere in this manual <environment-and-metadata>` and available online via ``singularity inspect --help``. 
 
@@ -1788,15 +1790,15 @@ Singularity can make use of most Docker and OCI images without complication. How
 
         "Employ Singularity's ``%runscript`` by default to avoid execution ambiguity"
 
-    7. Shared cache directories
+    .. 7. Shared cache directories
 
-    :ref:`As noted above <sec:action_commands_prebuilt_public_docker_images>`, Docker and OCI images are cached to ``$HOME/.singularity`` by default; this default can be overridden through specification of a ``SINGULARITY_CACHEDIR``. In some circumstances, however, it may be desirable to maintain a *shared* or common cache directory - e.g., to avoid multiple downloads of the same image by multiple users. 
+    .. :ref:`As noted above <sec:action_commands_prebuilt_public_docker_images>`, Docker and OCI images are cached to ``$HOME/.singularity`` by default; this default can be overridden through specification of a ``SINGULARITY_CACHEDIR``. In some circumstances, however, it may be desirable to maintain a *shared* or common cache directory - e.g., to avoid multiple downloads of the same image by multiple users. 
 
-    Because some workload managers identify images cached locally on compute nodes as resources that can be *requested*, shared cache directories can *reduce* a job's elapsed time - i.e., the time between a job being dispatched for exection, and actually being ready to commence execution, owing to a locally cache image. 
+    .. Because some workload managers identify images cached locally on compute nodes as resources that can be *requested*, shared cache directories can *reduce* a job's elapsed time - i.e., the time between a job being dispatched for exection, and actually being ready to commence execution, owing to a locally cache image. 
 
-    Thus the best practice is: 
+    .. Thus the best practice is: 
 
-        "Make strategic use of shared cache directories"
+    ..     "Make strategic use of shared cache directories"
 
 
 Best practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details. 
