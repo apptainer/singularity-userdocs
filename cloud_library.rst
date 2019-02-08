@@ -34,7 +34,7 @@ Making an account is easy, and straightforward:
 Creating a Access token
 -----------------------
 
-Access tokens are used to... more content...
+Access tokens for pushing a container, and remote builder.
 
 To generate a access token, do the following steps:
 
@@ -53,15 +53,22 @@ Now that you have your token, you are ready to push your container!
 Pushing a Container
 -------------------
 
-The ``singularity push`` will push a container to the container library with the given URL. Here's an example of a typical push command:
+The ``singularity push`` will push a container to the container library with the given URL. Here's an example
+of a typical push command:
 
 .. code-block:: console
 
     $ singularity push my-container.sif library://your-name/project-dir/my-container:latest
 
-The ``:latest`` is the container tag. Tags are used to have different version of the same container. Here's an example:
+The ``:latest`` is the container tag. Tags are used to have different version of the same container.
+Here's an example:
 
-Let's assume you have your container (v1.0.1), and you want to push that container without deleting your ``:latest`` container, then you can add a version tag to that container, like so:
+.. note::
+    When pushing your container, theres no need to add a ``.sif`` to the end of the container name, like
+    on your local machine.
+
+Let's assume you have your container (v1.0.1), and you want to push that container without deleting
+your ``:latest`` container, then you can add a version tag to that container, like so:
 
 .. code-block:: console
 
@@ -75,10 +82,11 @@ You can download the container with that tag by replacing the ``:latest``, with 
 Pulling a container
 -------------------
 
-The ``singularity pull`` will pull a container from the `Library <https://cloud.sylabs.io/library>`_ (``library://``), and also `Docker Hub <https://hub.docker.com/>`_ (``docker://``).
+The ``singularity pull`` will pull a container from the `Library <https://cloud.sylabs.io/library>`_
+(``library://``), `Docker Hub <https://hub.docker.com/>`_ (``docker://``), and also
+`Shub <https://singularity-hub.org/collections>`_ (``shub://``).
 
 .. note::
-
     When pulling from Docker, the container will automatically be converted to a SIF (Singularity Image Format) container.
 
 Here's a typical pull command:
@@ -88,26 +96,8 @@ Here's a typical pull command:
     $ singularity pull file-out.sif library://alpine:latest
 
 .. note::
-
     If there's no tag after the container name, Singularity automatically will pull the container with the ``:latest`` tag.
 
-Pulling your own container
---------------------------
-
-The ``singularity pull`` can pull a container from the `Library <https://cloud.sylabs.io/library>`_ (``library://``),
-and also `Docker Hub <https://hub.docker.com/>`_ (``docker://``).
-
-.. note::
-
-    When pulling from Docker, the container will automatically be converted to a SIF (Singularity Image Format) container.
-
-Here's a typical pull command:
-
-.. code-block:: console
-
-    $ singularity pull file-out.sif library://alpine:latest
-
-If there's no tag after the container name, Singularity will pull the container with the latest tag.
 
 To pull a container with a specific tag, just add the tag to the library URL:
 
@@ -117,20 +107,22 @@ To pull a container with a specific tag, just add the tag to the library URL:
 
 Of course, you can pull your own containers. Here's what that will look like:
 
+Pulling your own container
+--------------------------
+
+Pulling your own container is just like pulling from Github, Docker, etc...
+
 .. code-block:: console
 
-    $ singularity pull library://your-name/project-dir/my-container:latest
+    $ singularity pull out-file.sif library://your-name/project-dir/my-container:latest
 
     # or use a different tag:
 
-    $ singularity pull library://your-name/project-dir/my-container:1.0.1
+    $ singularity pull out-file.sif library://your-name/project-dir/my-container:1.0.1
 
 .. note::
-
-    You don't have to specify a output file, one will be created automatically, but it's good practice to always
+    You *don't* have to specify a output file, one will be created automatically, but it's good practice to always
     specify your output file.
-
-...more content...
 
 --------------------------
 Verify/Sign your Container
@@ -147,8 +139,9 @@ Check out :ref:`this page <signNverify>` on how to: :ref:`verify a container <ve
 Searching the Library for Containers
 ------------------------------------
 
-When it comes to searching the library, you could always go to: https://cloud.sylabs.io/library and search from there.
-Or you can use ``singularity search <container/user>``, this will search the library for the ``<container/user>``.
+When it comes to searching the library, you could always go to: https://cloud.sylabs.io/library and search from there
+thrught the web GUI. Or you can use ``singularity search <container/user>``, this will search the library for
+the ``<container/user>``.
 
 Using the CLI Search
 --------------------
@@ -192,8 +185,15 @@ to use remote builder)
     It is only possible to remote build a SIF (Singularity Image Format) container, its **not** possible
     to remote build a :ref:`sandbox container <create_a_writable_container>`.
 
+Here's a typical remote build command:
+
+.. code-block:: console
+
+    $ singularity build --remote file-out.sif docker://ubuntu:18.04
+
+
 Building from a definition file:
-------------------------------
+--------------------------------
 
 This is are definition file, let's call it ``ubuntu.def``:
 
