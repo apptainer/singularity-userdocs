@@ -40,7 +40,7 @@ The section closes with a brief enumeration of emerging best practices plus cons
 .. _sec:action_commands_prebuilt_public_docker_images:
 
 ----------------------------------------------------------------------
-Running action commands on pre-built public images from the Docker Hub
+Running action commands on public images from the Docker Hub
 ----------------------------------------------------------------------
 
 ``godlovedc/lolcow`` is a whimsical example of a publicly accessible image hosted via `the Docker Hub <https://hub.docker.com/>`_. Singularity can execute this image as follows:
@@ -183,10 +183,10 @@ From this it is evident that use is being made of Ubuntu 16.04 *within* this con
 .. _sec:use_prebuilt_public_docker_images:
 
 ---------------------------------------------------------
-Making use of pre-built public images from the Docker Hub
+Making use of public images from the Docker Hub
 ---------------------------------------------------------
 
-Singularity can make use of pre-built public images available from the `Docker Hub <https://hub.docker.com/>`_. By specifying the ``docker://`` URI for an image that has already been located, Singularity can ``pull``  it - e.g.: 
+Singularity can make use of public images available from the `Docker Hub <https://hub.docker.com/>`_. By specifying the ``docker://`` URI for an image that has already been located, Singularity can ``pull``  it - e.g.: 
 
 .. code-block:: none
 
@@ -270,10 +270,10 @@ In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker H
 .. _sec:using_prebuilt_private_images:
 
 ----------------------------------------------------------
-Making use of pre-built private images from the Docker Hub
+Making use of private images from the Docker Hub
 ----------------------------------------------------------
 
-After successful authentication, Singularity can also make use of pre-built *private* images available from the `Docker Hub <https://hub.docker.com/>`_. The two means available for authentication follow here. Before describing these means, it is instructive to illustate the error generated when attempting access a private image *without* credentials:
+After successful authentication, Singularity can also make use of *private* images available from the `Docker Hub <https://hub.docker.com/>`_. The two means available for authentication follow here. Before describing these means, it is instructive to illustate the error generated when attempting access a private image *without* credentials:
 
 .. code-block:: none
 
@@ -347,7 +347,7 @@ Based upon these exports, ``$ singularity pull docker://ilumb/mylolcow`` allows 
 .. _sec:using_prebuilt_private_images_parivate_registries:
 
 --------------------------------------------------------------
-Making use of pre-built private images from Private Registries
+Making use of private images from Private Registries
 --------------------------------------------------------------
 
 Authentication is required to access *private* images that reside in the Docker Hub. Of course, private images can also reside in **private registries**. Accounting for locations *other* than the Docker Hub is easily achieved. 
@@ -491,7 +491,7 @@ After successful execution, the above command results in creation of the ``mylol
 
 The ``build`` command of Singularity allows (e.g., development) sandbox containers to be converted into (e.g., production) read-only SIF containers, and vice-versa. Consult the :ref:`Build a container <build-a-container>` documentation for the details. 
 
-Implicit in the above command-line interactions is use of pre-built public images from the Docker Hub. To make use of pre-built **private** images from the Docker Hub, authentication is required. Available means for authentication were described above. Use of environment variables is functionally equivalent for Singularity ``build`` as it is for ``pull``; see :ref:`Authentication via Environment Variables <sec:authentication_via_environment_variables>` above. For purely interactive use, authentication can be added to the ``build`` command as follows:
+Implicit in the above command-line interactions is use of public images from the Docker Hub. To make use of **private** images from the Docker Hub, authentication is required. Available means for authentication were described above. Use of environment variables is functionally equivalent for Singularity ``build`` as it is for ``pull``; see :ref:`Authentication via Environment Variables <sec:authentication_via_environment_variables>` above. For purely interactive use, authentication can be added to the ``build`` command as follows:
 
 .. code-block:: none
 
@@ -500,10 +500,10 @@ Implicit in the above command-line interactions is use of pre-built public image
 (Recall that ``docker://ilumb/mylolcow`` is a private image available via the Docker Hub.) See :ref:`Authentication via Interactive Login <sec:authentication_via_docker_login>` above regarding use of ``--docker-login``.
 
 
-Remotely Hosted and Built Containers
-------------------------------------
+Building Containers Remotely
+----------------------------
 
-SIF containers can be **remotely built**, from images remotely hosted at the Docker Hub, via the `Sylabs Cloud Remote Builder <https://cloud.sylabs.io/builder>`_. The Sylabs Cloud Remote Builder is a **service** that can be used from the Singularity command line or via its Web interface. Here use of the Singularity CLI is emphasized. 
+By making use of the `Sylabs Cloud Remote Builder <https://cloud.sylabs.io/builder>`_, it is possible to build SIF containers *remotely* from images hosted at the Docker Hub. The Sylabs Cloud Remote Builder is a **service** that can be used from the Singularity command line or via its Web interface. Here use of the Singularity CLI is emphasized. 
 
 Once you have an account for Sylabs Cloud, and have logged in to the portal, select `Remote Builder <https://cloud.sylabs.io/builder>`_. The right-hand side of this page is devoted to use of the Singularity CLI. Self-generated API tokens are used to enable authenticated access to the Remote Builder. To create a 30-day token, follow the `instructions provided <https://cloud.sylabs.io/auth/tokens>`_. Once the token has been created, store it in the file ``$HOME/.singularity/sylabs-token``. 
 
@@ -585,7 +585,7 @@ results in ``lolcow_from_docker_cache.sif`` for native use by Singularity. There
 
     1. The ``docker`` part of the URI has been appended by ``daemon``. This ensures Singularity seek an image locally cached by Docker to boostrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via the Docker Hub. 
 
-    2. ``sudo`` is prepended to the ``build`` command for Singularity. This is required as the Docker daemon executes as ``root``.  
+    2. ``sudo`` is prepended to the ``build`` command for Singularity; this is required as the Docker daemon executes as ``root``. However, if the user issuing the ``build`` command is a member of the ``docker`` Linux group, then ``sudo`` need not be prepended. 
 
 .. note:: 
 
@@ -876,6 +876,10 @@ Then,
     INFO:    Build complete: lolcow_from_docker_cache.sif
 
 In other words, this is the definition-file counterpart to :ref:`the command-line invocation provided above <sec:mandatory_headers_docker_locally_boostrapped_cli>`. 
+
+.. note::
+
+    The ``sudo`` requirement in the above ``build`` request originates from Singularity; it is the standard requirement when use is made of definition files. In other words, membership of the issuing user in the ``docker`` Linux group is of no consequence in this context. 
 
 .. TODO-ND remote builder content note - exclusion above 
 
