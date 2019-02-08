@@ -13,15 +13,7 @@ The Cloud Library is the place to push (upload) your containers to the cloud so 
 download, :ref:`Verify <signNverify>` (optional), and use the containers.
 
 We also provide a :ref:`Remote Builder <remote_builder>`, this is used for building your containers remotely,
-this offers advantages:
-
- - Usually fast.
-
- - No root access needed.
-
- - Can build directly to the library without the need to :ref:`push <push>` your container after. (only through the web GUI)
-
-content...
+witch allows you to build containers without root access
 
 .. _make_a_account:
 
