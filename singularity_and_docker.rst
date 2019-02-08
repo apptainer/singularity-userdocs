@@ -104,6 +104,10 @@ Here ``docker`` is prepended to ensure that the ``run`` command of Singularity i
 
     Image caching is :ref:`documented in detail below <sec:oci_overview>`. 
 
+.. note::
+
+    Use is made of the ``$HOME/.singularity`` directory by default to cache images. To cache images elsewhere, use of the environment variable ``SINGULARITY_CACHEDIR`` can be made. 
+
 As the runtime of this container is encapsulated as a single SIF file, it is possible to ``cd /home/vagrant/.singularity/cache/oci-tmp/a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb/``, and then execute the SIF file directly:
 
 .. code-block:: none
@@ -145,7 +149,7 @@ As the runtime of this container is encapsulated as a single SIF file, it is pos
 
 In addition to non-interactive execution of an image from the Docker Hub, Singularity provides support for an *interactive* ``shell`` session: 
 
-.. code-block:: none 
+.. code-block:: none
 
     $ singularity shell docker://godlovedc/lolcow 
     Singularity lolcow_latest.sif:~> cat /etc/os-release 
@@ -1783,6 +1787,17 @@ Singularity can make use of most Docker and OCI images without complication. How
     Short of converting an *entire* ``Dockerfile`` into a Singularity definition file, informed specification of the ``%runscript`` entry in the def file *removes* any ambiguity associated with ``ENTRYPOINT`` :ref:`versus <sec:def_files_execution>` ``CMD`` and ultimately :ref:`execution precedence <sec:def_files_execution>`. Thus the best practice is:
 
         "Employ Singularity's ``%runscript`` by default to avoid execution ambiguity"
+
+    7. Shared cache directories
+
+    :ref:`As noted above <sec:action_commands_prebuilt_public_docker_images>`, Docker and OCI images are cached to ``$HOME/.singularity`` by default; this default can be overridden through specification of a ``SINGULARITY_CACHEDIR``. In some circumstances, however, it may be desirable to maintain a *shared* or common cache directory - e.g., to avoid multiple downloads of the same image by multiple users. 
+
+    Because some workload managers identify images cached locally on compute nodes as resources that can be *requested*, shared cache directories can *reduce* a job's elapsed time - i.e., the time between a job being dispatched for exection, and actually being ready to commence execution, owing to a locally cache image. 
+
+    Thus the best practice is: 
+
+        "Make strategic use of shared cache directories"
+
 
 Best practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details. 
 
