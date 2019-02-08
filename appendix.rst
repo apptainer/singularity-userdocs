@@ -2,9 +2,9 @@
 Appendix
 ========
 
-<<<<<<< HEAD
+
 .. TODO oci & oci-archive along with http & https
-=======
+
 .. _singularity-environment-variables:
 
 
@@ -217,7 +217,6 @@ You can see them listed alphabetically below with their respective functionality
 
 Build Modules
 -------------
->>>>>>> f0daad6be75b766519d2f0e7ec8cb8751264a521
 
 .. _build-library-module:
 
