@@ -1754,21 +1754,44 @@ In working with definition files, the following additional considerations arise:
 Best Practices
 --------------
 
-Singularity can make use of most Docker and OCI images without complication. However, there exist  known cases where complications can arise. A brief compilation of these known cases follows below. 
+Singularity can make use of most Docker and OCI images without complication. However, there exist  known cases where complications can arise. Thus a brief compilation of best practices follows below. 
 
-    1. Maintaining containers built from Docker and OCI images  
+    1. Accounting for trust   
+
+    Docker containers *allow for* privilege escalation. In a ``Dockerfile``, for example, the ``USER`` instruction allows for user and/or group settings to be made in the Linux operating environment. The trust model in Singularity is completely different: Singularity allows untrusted users to run untrusted containers in a trusted way. Because Singularity containers embodied as SIF files execute in *user* space, there is no possibility for privilege escalation. In other words, those familiar with Docker, should *not* expect access to elevated user permissions; and as a corollary, use of the ``USER`` instruction must be *avoided*. 
+
+    Singularity does, however, allow for fine-grained control over the permissions that containers require for execution. Given that Singularilty executes in user space, it is not surprising that permissions need to be externally established *for* the container through use of the ``capability`` command. :ref:`Detailed elsewhere in this documentation <security-options>`, Singularity allows users and/or groups to be granted/revoked authorized capabilties. Owing to Singularity's trust model, this fundamental best practice can be stated as follows:
+
+        "Employ ``singularity capability`` to manage execution privileges for containers" 
+
+
+    2. Maintaining containers built from Docker and OCI images  
 
     SIF files created by boostrapping from Docker or OCI images are, of course, only as current as the most recent Singularity ``pull``. Subsequent retrievals *may* result in containers that are built and/or behave differently, owing to changes in the corresponding ``Dockerfile``. A prudent practice then, for maintaining containers of value, is based upon use of Singularity definition files. Styled and implemented after a ``Dockerfile`` retrieved at some point in time, use of ``diff`` on subsequent versions of this same file, can be employed to inform maintenance of the corresponding Singularity definition file. Understanding build specifications at this level of detail places container creators in a much more sensible position prior to signing with an encrypted key. Thus the best practice is:
 
         "Maintain detailed build specifications for containers, rather than opaque runtimes"
 
-    2. Installation to ``/root``
+    3. Working with environment variables 
+
+    In a ``Dockerfile``, `environment variables are declared <https://docs.docker.com/engine/reference/builder/#env>`_ as key-value pairs through use of the ``ENV`` instruction. Declaration in the build specification for a container is advised, rather than relying upon user
+    (e.g., ``.bashrc``, ``.profile``) or system-wide configuration files for interactive shells. Should a ``Dockerfile`` be converted into a definition file for Singularity, as suggested in the container-maintenance best practice above, :ref:`environment variables can be explicitly represented <definition-files>` as ``ENV`` instructions that have been converted into entries in the ``%environment`` section, respectively. This best practice can be stated as follows:
+
+        "Define environment variables in container specifications, not interactive shells"
+
+
+    4. Installation to ``/root``
 
     Docker and OCI container's are typically run as the ``root`` user; therefore, ``/root`` (this user's ``$HOME`` directory) will be the installation target when ``$HOME`` is specified. Installation to ``/root`` may prove workable in some circumstances - e.g., while the container is executing, or if read-only access is required to this directory after installation. In general, however, because this is the ``root`` directory conventional wisdom suggests this practice be avoided. Thus the best practice is: 
 
         "Avoid installations that make use of ``/root``."
 
-    3. Installation to ``$HOME`` or ``$TMP``
+    5. Read-only ``/`` filesystem 
+
+    Singularity mounts a container's ``/`` filesystem in read-only mode. To ensure a Docker container meets Singularity's requirements, it may prove useful to execute ``docker run --read-only --tmpfs /run --tmpfs /tmp godlovedc/lolcow``. The best practioce here is:
+
+        "Ensure Docker containers meet Singularity's read-only ``/`` filesystem requirement"
+
+    6. Installation to ``$HOME`` or ``$TMP``
 
     In making use of Singularity, it is common practice for ``$USER`` to be automatically mounted on ``$HOME``, and for ``$TMP`` also to be mounted. To avoid the side effects (e.g., 'missing' or conflicting files) that might arise as a consequence of executing ``mount`` commands then, the best practice is: 
 
@@ -1776,38 +1799,27 @@ Singularity can make use of most Docker and OCI images without complication. How
 
     A detailed review of the container's build specification (e.g., its ``Dockerfile``) may be required to ensure this best practice is adhered to. 
 
-    4. Current library caches
+    7. Current library caches
 
     Irrespective of containers, `a common runtime error <https://codeyarns.com/2014/01/14/how-to-fix-shared-object-file-error/>`_ stems from failing to locate shared libraries required for execution. Suppose now there exists a requirement for symbolically linked libraries *within* a Singularity container. If the builld process that creates the container fails to update the cache, then it is quite likely that (read-only) execution of this container will result in the common error of missing libraries. Upon investigation, it is likely revealed that the library exists, just not the required symbolic links. Thus the best practice is:
 
         "Ensure calls to ``ldconfig`` are executed towards the *end* of ``build`` specifications (e.g., ``Dockerfile``), so that the library cache is updated when the container is created."
 
-    5. Use of plain-text passwords for authentication 
+    8. Use of plain-text passwords for authentication 
 
     For obvious reasons, it is desireable to completely *avoid* use of plain-text passwords. Therefore, for interactive sessions requiring authentication, use of the ``--docker-login`` option for Singularity's ``pull`` and ``build`` commands is *recommended*. At the present time, the *only* option available for non-interactive use is to :ref:`embed plain-text passwords into environment variables <sec:authentication_via_environment_variables>`. Because the Sylabs Cloud Singularity Library employs `time-limited API tokens for authentication <https://cloud.sylabs.io/auth>`_, use of SIF containers hosted through this service provides a more secure means for both interactive *and* non-interactive use. This best practice is:
 
         "Avoid use of plain-text passwords"
 
-    6. Execution ambiguity 
+    9. Execution ambiguity 
 
     Short of converting an *entire* ``Dockerfile`` into a Singularity definition file, informed specification of the ``%runscript`` entry in the def file *removes* any ambiguity associated with ``ENTRYPOINT`` :ref:`versus <sec:def_files_execution>` ``CMD`` and ultimately :ref:`execution precedence <sec:def_files_execution>`. Thus the best practice is:
 
         "Employ Singularity's ``%runscript`` by default to avoid execution ambiguity"
 
-    .. 7. Shared cache directories
-
-    .. :ref:`As noted above <sec:action_commands_prebuilt_public_docker_images>`, Docker and OCI images are cached to ``$HOME/.singularity`` by default; this default can be overridden through specification of a ``SINGULARITY_CACHEDIR``. In some circumstances, however, it may be desirable to maintain a *shared* or common cache directory - e.g., to avoid multiple downloads of the same image by multiple users. 
-
-    .. Because some workload managers identify images cached locally on compute nodes as resources that can be *requested*, shared cache directories can *reduce* a job's elapsed time - i.e., the time between a job being dispatched for exection, and actually being ready to commence execution, owing to a locally cache image. 
-
-    .. Thus the best practice is: 
-
-    ..     "Make strategic use of shared cache directories"
-
+    Note that the ``ENTRYPOINT`` can be bypassed completely, e.g., ``docker run -i -t --entrypoint /bin/bash godlovedc/lolcow``. This allows for an interactive session within the container, that may prove useful in validating the built runtime.  
 
 Best practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details. 
-
-.. TODO-ND: Work from Dockerfles directly 
 
 
 .. _sec:troubleshooting: 
