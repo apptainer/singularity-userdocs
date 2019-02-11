@@ -9,7 +9,7 @@ This page will cover how to use our cloud services with Singularity.
 Overview
 --------
 
-The Cloud Library is the place to push (upload) your containers to the cloud so other users can
+The Cloud Library is the place to :ref:`push <push>` (upload) your containers to the cloud so other users can
 download, :ref:`Verify <signNverify>` (optional), and use the containers.
 
 We also provide a :ref:`Remote Builder <remote_builder>`, this is used for building your containers remotely,
@@ -213,7 +213,7 @@ Now, to build the container, use the ``--remote`` flag, and without ``sudo``:
 
 .. note::
 
-    Make sure you have a access token, otherwise the build will fail.
+    Make sure you have a :ref:`access token <creating_a_access_token>`, otherwise the build will fail.
 
 Then, you should wave your container; ``ubuntu.sif``, and you can test it by running it:
 
@@ -221,4 +221,5 @@ Then, you should wave your container; ``ubuntu.sif``, and you can test it by run
 
     $ ./ubuntu.sif
     hello world from ubuntu container!
+
 
