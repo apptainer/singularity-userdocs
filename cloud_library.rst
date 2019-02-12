@@ -64,8 +64,8 @@ The ``:latest`` is the container tag. Tags are used to have different version of
 Here's an example:
 
 .. note::
-    When pushing your container, theres no need to add a ``.sif`` to the end of the container name, like
-    on your local machine.
+    When pushing your container, theres no need to add a ``.sif`` (Singularity Image Format) to the end of the container name, (like
+    on your local machine), because all containers on the library are SIF containers.
 
 Let's assume you have your container (v1.0.1), and you want to push that container without deleting
 your ``:latest`` container, then you can add a version tag to that container, like so:
@@ -95,9 +95,12 @@ Here's a typical pull command:
 
     $ singularity pull file-out.sif library://alpine:latest
 
+    # or pull from docker:
+
+    $ singularity pull file-out.sif docker://alpine:latest
+
 .. note::
     If there's no tag after the container name, Singularity automatically will pull the container with the ``:latest`` tag.
-
 
 To pull a container with a specific tag, just add the tag to the library URL:
 
@@ -181,7 +184,6 @@ The remote builder service can build your container remotely, (you don't need ro
 to use remote builder)
 
 .. note::
-
     It is only possible to remote build a SIF (Singularity Image Format) container, its **not** possible
     to remote build a :ref:`sandbox container <create_a_writable_container>`.
 
@@ -212,7 +214,6 @@ Now, to build the container, use the ``--remote`` flag, and without ``sudo``:
     $ singularity build --remote ubuntu.sif ubuntu.def
 
 .. note::
-
     Make sure you have a :ref:`access token <creating_a_access_token>`, otherwise the build will fail.
 
 Then, you should wave your container; ``ubuntu.sif``, and you can test it by running it:
@@ -222,4 +223,7 @@ Then, you should wave your container; ``ubuntu.sif``, and you can test it by run
     $ ./ubuntu.sif
     hello world from ubuntu container!
 
+You can also use the web GUI to build containers remotly. First, go to https://cloud.sylabs.io/builder (make sure you are signed in).
+Then you can copy-past, upload, or type your def file (definition file). When you are done, click build, the you can download the container
+with the URL.
 
