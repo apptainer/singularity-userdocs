@@ -7,16 +7,16 @@ This project uses <a href="http://docutils.sourceforge.net/rst.html"> reStructur
 
 First things first, you will need to install the following tools:
 
-- <a href="https://www.python.org/download/releases/2.7/">Install Python 2.7</a> 
+- <a href="https://www.python.org/download/releases/2.7/">Install Python 2.7</a>
 - After that then you will need to install Sphinx:
-  
+
 ```
 pip install -U Sphinx
 ```
 
 You're all set! after this you will only need to use your favorite editor for RST files.
 
-## How to do stuff on RST? ### 
+## How to do stuff on RST? ###
 
 First of all, it is good to have an idea of some files and their functionality into the project:
 
@@ -38,7 +38,7 @@ This file contains the themes, extensions, variables and naming for files that t
 - ``html_theme``: Describes the theme to be used in the ``ReadtheDocs`` document.
 - ``html_theme_options``: Describes the options needed for configuration in the theme (This varies from theme to theme, so we enforce using the options for the ``Sphinx theme`` only.
 - ``html_context``: Options related to which is the github repository and what name it has.
-- ``html_logo``: The logo for the sidebar 
+- ``html_logo``: The logo for the sidebar
 - ``html_favicon``: The ``favicon`` for the entire project
 - ``htmlhelp_basename``: Default name of the document generated in Latex, we leave all these as default values.
 
@@ -128,26 +128,32 @@ The name after the ref tag could also be different, the important thing is that 
 
 You can find a lot of information about RST on <a href="http://docutils.sourceforge.net/docs/ref/rst/restructuredtext.html">this site</a>
 
-### How can I generate the html files once I have already edited the RST files? ### 
+### How to generate the HTML files from RST files? ###
 
 This is pretty straightforward by going to the root of the project on the command line and then do:
 
 ```
 make html
 ```
-This will generate a folder called **_build** which inside has the folder **html** containing all the html files needed.
+This will generate a folder called **_build** which inside will have a folder called **html** containing all the html files you need.
 
-### How to generate PDF files then? ### 
+### How to generate PDF files? ###
 
 This is very similar to the previous step, you will need to execute on command line:
 
 ```
 make latexpdf
 ```
-with this, a new folder inside **_build** will be generated, called **latex** and in there you can find the pdf file generated from RST (by default it is called "ReadTheDocsTemplate.pdf").
+with this, a new folder inside **_build** will be generated, called **latex** and in there you can find the `pdf` file generated from `RST` (by default it is called "ReadTheDocsTemplate.pdf").
 
 (Additional latex files are also generated if needed.)
 
+### How to generate the EPUB files? ###
 
+Very similar to the previous command, you will just need to execute on a command line:
 
+```
+make epub
+```
 
+This will generate an **epub** folder inside **_build** folder. Inside you will find the file with an `epub` extension.
