@@ -9,6 +9,7 @@ BUILDDIR      = _build
 
 # This is a custom target that represents the CLI docs generated from Singularity
 CLIDOCS = cli/singularity.rst
+# This is the pull path to the singularity submodule
 SINGULARITY_DIR = $(CURDIR)/vendor/src/github.com/sylabs/singularity
 
 # User-friendly check for sphinx-build
@@ -25,7 +26,7 @@ I18NSPHINXOPTS  = $(PAPEROPT_$(PAPER)) $(SPHINXOPTS) .
 
 .PHONY: help clean html dirhtml singlehtml pickle json htmlhelp qthelp devhelp epub latex latexpdf text man changes linkcheck doctest gettext clidocs
 
-help: clidocs
+help:
 	@echo "Please use \`make <target>' where <target> is one of"
 	@echo "  html       to make standalone HTML files"
 	@echo "  dirhtml    to make HTML files named index.html in directories"
@@ -53,14 +54,14 @@ help: clidocs
 clidocs: cli/singularity.rst
 
 vendor/github.com/sylabs/singularity/builddir/singularity:
-	export GOPATH=$$(pwd)/vendor && \
-	cd $(SINGULARITY_DIR) &&  \
-	./mconfig && \
+	export GOPATH=$$(pwd)/vendor &&\
+	cd $(SINGULARITY_DIR) &&\
+	./mconfig &&\
 	cd builddir &&\
 	make
 
 cli/singularity.rst: vendor/github.com/sylabs/singularity/builddir/singularity
-	export GOPATH=$$(pwd)/vendor && \
+	export GOPATH=$$(pwd)/vendor &&\
 	go run $(SINGULARITY_DIR)/cmd/docs/docs.go rst --dir cli
 
 clean:
