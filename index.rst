@@ -8,6 +8,7 @@ User Guide
    Quick Start <quick_start>
    Contributing <contributing>
    Installation <installation>
+   Command Line Reference <cli>
    Build a container <build_a_container>
    The Definition File <definition_files>
    Bind Paths and Mounts <bind_paths_and_mounts>
