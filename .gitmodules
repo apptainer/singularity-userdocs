@@ -1,3 +1,3 @@
-[submodule "vendor/singularity"]
+[submodule "vendor/github.com/sylabs/singularity"]
 	path = vendor/github.com/sylabs/singularity
-	rl = https://github.com/sylabs/singularity
+	url = https://github.com/sylabs/singularity
