@@ -1,6 +1,4 @@
-[submodule "singularity"]
-	path = vendor/singularity
-	url = https://github.com/sylabs/singularity
 [submodule "vendor/singularity"]
 	path = vendor/github.com/sylabs/singularity
 	url = https://github.com/sylabs/singularity
+	branch = v3.0.3
