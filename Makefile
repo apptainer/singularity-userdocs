@@ -53,7 +53,7 @@ clidocs: cli/singularity.rst
 
 vendor/github.com/sylabs/singularity/builddir/singularity:
 	SING=$$(pwd)/vendor/github.com/sylabs/singularity && \
-	GOPATH=$$(pwd)/vendor && \
+	export GOPATH=$$(pwd)/vendor && \
 	cd $${SING} &&  \
 	./mconfig && \
 	cd builddir &&\
@@ -61,6 +61,7 @@ vendor/github.com/sylabs/singularity/builddir/singularity:
 
 cli/singularity.rst: vendor/github.com/sylabs/singularity/builddir/singularity
 	SING=$$(pwd)/vendor/github.com/sylabs/singularity && \
+	export GOPATH=$$(pwd)/vendor && \
 	go run $${SING}/cmd/docs/docs.go rst --dir cli
 
 clean:
