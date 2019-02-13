@@ -9,7 +9,7 @@ BUILDDIR      = _build
 
 # This is a custom target that represents the CLI docs generated from Singularity
 CLIDOCS = cli/singularity.rst
-# This is the pull path to the singularity submodule
+# This is the full path to the singularity submodule
 SINGULARITY_DIR = $(CURDIR)/vendor/src/github.com/sylabs/singularity
 
 # User-friendly check for sphinx-build
