@@ -148,6 +148,22 @@ Now checkout the version of Singularity you want to install.
         git fetch && \
         git checkout $VERSION # omit this command to install the latest bleeding edge code from master
 
+------------------------------------------------
+Download and install Singularity from a release
+------------------------------------------------
+
+You can also install Singularity from one of our releases. For this, you can simply download a release from <https://github.com/sylabs/singularity/releases>`_.
+After that you can just run the following commands to proceed with the installation.
+
+.. code-block:: none
+    export VERSION=3.0.1 && # adjust this as necessary \
+        mkdir -p $GOPATH/src/github.com/sylabs && \
+        cd $GOPATH/src/github.com/sylabs && \
+        wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
+        tar -xzf singularity-${VERSION}.tar.gz && \
+        cd ./singularity && \
+        ./mconfig
+
 -------------------
 Compile Singularity
 -------------------
