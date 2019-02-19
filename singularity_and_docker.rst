@@ -108,7 +108,13 @@ Here ``docker`` is prepended to ensure that the ``run`` command of Singularity i
 
     Use is made of the ``$HOME/.singularity`` directory by default to cache images. To cache images elsewhere, use of the environment variable ``SINGULARITY_CACHEDIR`` can be made. 
 
-As the runtime of this container is encapsulated as a single SIF file, it is possible to ``cd /home/vagrant/.singularity/cache/oci-tmp/a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb/``, and then execute the SIF file directly:
+As the runtime of this container is encapsulated as a single SIF file, it is possible to 
+
+.. code-block:: none
+
+    cd /home/vagrant/.singularity/cache/oci-tmp/a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb/
+
+and then execute the SIF file directly:
 
 .. code-block:: none
 
