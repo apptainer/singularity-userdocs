@@ -155,6 +155,10 @@ Download and install Singularity from a release
 You can also install Singularity from one of our releases. For this, you can simply download a release from <https://github.com/sylabs/singularity/releases>`_.
 After that you can just run the following commands to proceed with the installation.
 
+.. note::
+
+    Make sure to update the release version before running the following commands.
+
 .. code-block:: none
     export VERSION=3.0.1 && # adjust this as necessary \
         mkdir -p $GOPATH/src/github.com/sylabs && \
