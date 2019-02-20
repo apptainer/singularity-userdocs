@@ -616,11 +616,25 @@ results in ``lolcow_from_docker_cache.sif`` for native use by Singularity. There
 Locally Available Images: Stored Archives
 ------------------------------------------
 
-Singularity containers can also be built at the command line from Docker images stored locally as ``tar`` files. Suppose, for example, ``lolcow.tar`` is a locally stored archive in the *current* working directory; then the contents of this archive can be revealed as follows:
+Singularity containers can also be built at the command line from Docker images stored locally as ``tar`` files. 
+
+The ``lolcow.tar`` file employed below in this example can be produced by making use of an environment in which Docker is available as follows:
+
+    1. Obtain a local copy of the image from Docker Hub via ``sudo docker pull godlovedc/lolcow``. Issuing the following command confirms that a copy of the desired image is available locally:
+
+    .. code-block:: none 
+
+        $ sudo docker images 
+        REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+        godlovedc/lolcow    latest              577c1fe8e6d8        17 months ago       241MB
+
+    2. Noting that the image identifier above is ``577c1fe8e6d8``, the required archive can be created by ``sudo docker save 577c1fe8e6d8 -o lolcow.tar``. 
+
+Thus ``lolcow.tar`` is a locally stored archive in the *current* working directory with contents:
 
 .. code-block:: none 
 
-    $ tar tvf lolcow.tar 
+    $ sudo tar tvf lolcow.tar 
     drwxr-xr-x 0/0               0 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/
     -rw-r--r-- 0/0               3 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/VERSION
     -rw-r--r-- 0/0            1417 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/json
