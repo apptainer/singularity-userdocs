@@ -159,7 +159,7 @@ requires root privileges.
 
 
 .. note::
-    Beware that it is possible to build an image on a host and then not running on a different host. This depends on
+    Beware that it is possible to build an image on a host and have the image not work on a different host. This could be because of
     the default compressor supported by the host. For example, when building an image on a host in which the default compressor
     is ``xz`` and then trying to run that image on a CentOS 6 node, where the only compressor available is ``gzip``.
 
