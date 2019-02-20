@@ -32,14 +32,14 @@ The system administrator has the ability to define what bind paths will be
 included automatically inside each container. Some bind paths are automatically
 derived (e.g. a user’s home directory) and some are statically defined (e.g.
 bind paths in the Singularity configuration file). In the default
-configuration, the directories ``$HOME`` , ``/tmp:/tmp`` , ``/proc:/proc`` , ``/sys:/sys`` ,
+configuration, the system default bind points are ``$HOME`` , ``/tmp:/tmp`` , ``/proc:/proc`` , ``/sys:/sys`` ,
 ``/dev:/dev``, ``/proc:/proc``, ``/sys:/sys``, ``/dev:/dev``, ``/tmp:/tmp``, ``/var/tmp:/var/tmp``, 
-``/etc/resolv.conf:/etc/resolv.conf``, ``/etc/passwd:/etc/passwd``, and ``$PWD``
-are the system-defined bind paths.
+``/etc/resolv.conf:/etc/resolv.conf``, ``/etc/passwd:/etc/passwd``, and ``$PWD``. Where the first
+path before ``:`` is the path from the host and the second path is the path in the container.
 
--------------------------
+-----------------------
 User-defined bind paths
--------------------------
+-----------------------
 
 If the system administrator has `enabled user control of binds <https://singularity-admindoc.readthedocs.io/en/latest/the_singularity_config_file.html#user-bind-control-boolean-default-yes>`_,
 you will be able to request your own bind paths within your container.
