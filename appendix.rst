@@ -36,6 +36,8 @@ You can see them listed alphabetically below with their respective functionality
 ``C``
 ^^^^^
 
+#. **SINGULARITY_CACHEDIR**: Specifies the directory for image downloads to be cached in.
+
 #. **SINGULARITY_CLEANENV**: Specifies if the environment should be cleaned or not before running the container. Default is set to false.
 
 #. **SINGULARITY_CONTAIN**: To use minimal ``/dev`` and empty other directories (e.g. ``/tmp`` and ``$HOME``) instead of sharing filesystems from your host. Default is set to false.
