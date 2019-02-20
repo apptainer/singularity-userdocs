@@ -157,6 +157,12 @@ You can do so with the following command.
 The command requires ``sudo`` just as installing software on your local machine
 requires root privileges.
 
+
+.. note::
+    Beware that it is possible to build an image on a host and have the image not work on a different host. This could be because of
+    the default compressor supported by the host. For example, when building an image on a host in which the default compressor
+    is ``xz`` and then trying to run that image on a CentOS 6 node, where the only compressor available is ``gzip``.
+
 -------------
 Build options
 -------------
