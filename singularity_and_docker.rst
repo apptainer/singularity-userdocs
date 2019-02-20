@@ -397,14 +397,18 @@ will retrieve a specific version of the `PyTorch platform <https://pytorch.org/>
 
 .. code-block:: none 
 
-    export SINGULARITY_DOCKER_USERNAME=$oauthtoken
+    export SINGULARITY_DOCKER_USERNAME='$oauthtoken'
     export SINGULARITY_DOCKER_PASSWORD=<redacted>
 
 Upon use, these environment-variable settings allow for authentication with NGC.
 
 .. note::
 
-    The password provided via these means is actually an API token. This token is generated via your NGC account, and is **required** for use of the service. For additional details regarding authentication with NGC, and much more, please consult the NGC `Getting Started <https://docs.nvidia.com/ngc/ngc-getting-started-guide/index.html>`_ documentation. 
+    ``$oauthtoken`` is to be taken literally - it is not, for example, an environment variable. 
+
+    The password provided via these means is actually an API token. This token is generated via your NGC account, and is **required** for use of the service. 
+
+    For additional details regarding authentication with NGC, and much more, please consult the NGC `Getting Started <https://docs.nvidia.com/ngc/ngc-getting-started-guide/index.html>`_ documentation. 
 
 Alternatively, for purely interactive use, ``--docker-login`` is recommended:
 
