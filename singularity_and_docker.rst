@@ -1629,6 +1629,19 @@ In the previous section, an OCI archive was created from locally available OCI b
 
 Thus ``https`` (and ``http``) are additional bootstrap agents available to seed development of containers for Singularity. 
 
+It is worth noting that the OCI image specfication compliant contents of this archive are:
+
+.. code-block:: none 
+
+    $ tar tvf alpine-oci-archive.tar 
+    drwxr-xr-x 1000/1000         0 2018-06-25 14:45 blobs/
+    drwxr-xr-x 1000/1000         0 2018-06-25 14:45 blobs/sha256/
+    -rw-r--r-- 1000/1000       585 2018-06-25 14:45 blobs/sha256/b1a7f144ece0194921befe57ab30ed1fd98c5950db7996719429020986092058
+    -rw-r--r-- 1000/1000       348 2018-06-25 14:45 blobs/sha256/d0ff39a54244ba25ac7447f19941765bee97b05f37ceb438a72e80c9ed39854a
+    -rw-r--r-- 1000/1000   2065537 2018-06-25 14:45 blobs/sha256/ff3a5c916c92643ff77519ffa742d3ec61b7f591b6b7504599d95a4a41134e28
+    -rw-r--r-- 1000/1000       296 2018-06-25 14:45 index.json
+    -rw-r--r-- 1000/1000        31 2018-06-25 14:45 oci-layout
+
 Proceeding as before, for a (now) locally available OCI archive, a SIF file can be produced by executing:
 
 .. code-block:: none 
