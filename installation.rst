@@ -160,7 +160,8 @@ After that you can just run the following commands to proceed with the installat
     Make sure to update the release version before running the following commands.
 
 .. code-block:: none
-    export VERSION=3.0.1 && # adjust this as necessary \
+
+    $ export VERSION=3.0.1 && # adjust this as necessary \
         mkdir -p $GOPATH/src/github.com/sylabs && \
         cd $GOPATH/src/github.com/sylabs && \
         wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
