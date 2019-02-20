@@ -14,7 +14,7 @@ sending your Docker Credentials to the registry endpoint. Here we will discuss t
 Cache Folders
 -------------
 
-To make download of layers for build and :ref:`pull <pull-command>` faster and less redundant, we
+To make download of layers for build and :ref:`pull <pull-command>`, :ref:`exec <exec-command>`, :ref:`shell <shell-command>`, :ref:`build <build-command>`, :ref:`run <run-command>` and :ref:`instance <instance-command>` faster and less redundant, we
 use a caching strategy. By default, the Singularity software will create
 a set of folders in your ``$HOME`` directory for docker layers, Cloud library images and metadata, respectively:
 
@@ -22,6 +22,7 @@ a set of folders in your ``$HOME`` directory for docker layers, Cloud library im
 
     $HOME/.singularity/oci
     $HOME/.singularity/oci-tmp
+    $HOME/.singularity/cache/library
 
 
 If you want replace the full path where you want to cache, set ``SINGULARITY_CACHEDIR`` to the desired path.
@@ -33,6 +34,9 @@ Cache commands
 --------------
 
 Singularity 3.1 comes with new commands for cleaning and listing the cache image files generated.
+
+Listing Cache
+=============
 
 For example, you can list cache image files and check which type they belong to: Library or oci.
 
@@ -49,7 +53,10 @@ For example, you can list cache image files and check which type they belong to:
     ubuntu_latest.sif      2019-01-31 14:59:41    27.99 Mb         oci
     alpine_latest.sif      2019-01-31 14:58:30    2.72 Mb          oci
 
-You can also clean up specific type of cache by running:
+    There are 15 oci blob file(s) using 112.51 Mb of space. Use: '-T=blob' to list
+
+    You can also clean a specific cache type, chosing between: ``library``, ``oci``, ``blob``
+    (separated by commas)
 
 .. code-block:: none
 
@@ -65,26 +72,28 @@ You can also clean up specific type of cache by running:
     # clean only library, and oci cache
     $ singularity cache clean --type=library,oci
 
-And you can also clean cache with a specific name, by naming the image file from which cache is about to be cleaned up, you can do this by:
+.. note::
 
-.. code-block:: none
+  This feature of passing additional flags with comma-separated arguments can also be used with the ```singularity cache clean`` command we will see below.
 
-    $ singularity cache clean --name alpine_latest.sif
+Cleaning Cache
+==============
 
-Furthermore, if you just run:
+Most of the ``cache clean`` and ``cache list`` flags can be interchanged, (``--name`` is only reserved for ``cache clean``).
 
-..code-block::none
+It's worth noticing that by running the following command: (with no flags)
 
-    singularity cache clean
+..code-block:: none
 
-By default it will just clean the blob cache, but if you do:
+    $ singularity cache clean
 
-..code-block::none
+By default will just clean the blob cache, but if you do:
 
-    singularity cache clean --all
+..code-block:: none
 
-This will clean all types of cache.
+    $ singularity cache clean --all
 
+It will clean all the cache.
 
 -----------------
 Temporary Folders
@@ -103,7 +112,7 @@ If you are building an image on the fly, for example
 
 .. code-block:: none
 
-    singularity exec docker://busybox /bin/sh
+    $ singularity exec docker://busybox /bin/sh
 
 Since all the oci blobs are converted into SIF format, by default a temporary runtime directory is created in ``.singularity/cache/oci-tmp/<sha256-code>/busybox_latest.sif``.
 
