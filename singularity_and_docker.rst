@@ -1425,7 +1425,7 @@ The ``digest`` blob referenced in the ``index.json`` file references the followi
 
 .. code-block:: javascript 
 
-    $ cat 73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82 | jq
+    $ cat ./blobs/sha256/73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82 | jq
     {
       "created": "2017-09-21T18:37:47.278336798Z",
       "architecture": "amd64",
