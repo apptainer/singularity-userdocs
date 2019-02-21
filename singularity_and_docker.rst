@@ -1096,52 +1096,7 @@ To summarize execution precedence:
 Container Metadata 
 ------------------
 
-Singularity's ``inspect`` command displays container metadata - data about data that is encapsulated *within* a SIF file. Default output (assumed via the ``--labels`` option) from the command was :ref:`illustrated above <sec:use_prebuilt_public_docker_images_SUB_inspect>`. ``inspect``, however, provides a number of options that are applied here. 
-
-Emphasis in this section has been on Singularity definition files. The definition file that created a SIF file can be determined from the container's metadata as follows:
-
-.. code-block:: none
-
-    $ singularity inspect --deffile lolcow.sif 
-
-    namespace: godlovedc
-    from: lolcow
-    bootstrap: docker
-
-    %runscript
-
-        fortune
-
-In this case, the ``lolcow`` image was hosted remotely via user ``godlovedc`` at Docker Hub. On the other hand, the existence of ``docker-daemon`` in the output from ``inspect`` indicates that an image locally cached by Docker was used to ``build`` the SIF file (:ref:`as above <sec:mandatory_headers_docker_locally_boostrapped_cli>`):
-
-.. code-block:: none
-
-    $ singularity inspect --deffile lolcow_from_docker_cache.sif
-
-    from: godlovedc/lolcow:latest
-    bootstrap: docker-daemon
-
-If a locally stored copy of a Docker image archive was used to bootstrap creation of a container for Singularity, then ``inspect`` reveals existence of ``docker-archive`` in the definition file that was used as follows:
-
-.. code-block:: none 
-
-    $ singularity inspect --deffile lolcow_tar.sif
-
-    bootstrap: docker-archive
-    from: lolcow.tar
-
-The name of the archive used, ``lolcow.tar`` in this case, appears in the ``from`` header of the  definition file retrieved by ``inspect``. 
-
-Of particular relevance to :ref:`execution precedence <sec:def_files_execution_SUB_execution_precedence>`, however, is the ``--runscript`` option for ``inspect``. For example, using the definition file above, the runscript is unsurprisingly:
-
-.. code-block:: none
-
-    $ singularity inspect --runscript lolcow.sif 
-
-    #!/bin/sh
-
-
-        fortune
+Singularity's ``inspect`` command displays container metadata - data about data that is encapsulated *within* a SIF file. Default output (assumed via the ``--labels`` option) from the command was :ref:`illustrated above <sec:use_prebuilt_public_docker_images_SUB_inspect>`. ``inspect``, however, provides a number of options that are :ref:`detailed elsewhere <environment-and-metadata>`; in the remainder of this section, Docker-specific use to establish execution precedence is emphasized.  
 
 As stated above (i.e., :ref:`the first case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`), the very existence of a ``%runscript`` section in a Singularity definition file *takes precedence* over commands that might exist in the ``Dockerfile``. 
 
@@ -1199,19 +1154,6 @@ The above Bourne shell script also illustrates how the following scenarios will 
     - **Both** ``ENTRYPOINT`` *and* ``CMD`` entries in the ``Dockerfile`` 
 
 From this level of detail, use of ``ENTRYPOINT`` *and/or* ``CMD`` in a Dockerfile has been made **explicit**. These remain examples within :ref:`the third case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`. 
-
-The ``--environment`` option for ``inspect`` is worth noting; for example:
-
-.. code-block:: none
-
-    $ singularity inspect --environment lolcow.sif
-
-    ==90-environment.sh==
-    #!/bin/sh
-    #Custom environment shell code should follow
-
-
-Other ``inspect`` options are detailed :ref:`elsewhere in this manual <environment-and-metadata>` and available online via ``singularity inspect --help``. 
 
 
 -----------------
