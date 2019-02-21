@@ -143,7 +143,7 @@ Now checkout the version of Singularity you want to install.
 
 .. code-block:: none
 
-    $ export VERSION=v3.0.1 # or another tag or branch if you like && \
+    $ export VERSION=v3.0.3 # or another tag or branch if you like && \
         cd $GOPATH/src/github.com/sylabs/singularity && \
         git fetch && \
         git checkout $VERSION # omit this command to install the latest bleeding edge code from master
@@ -161,7 +161,7 @@ After that you can just run the following commands to proceed with the installat
 
 .. code-block:: none
 
-    $ export VERSION=3.0.1 && # adjust this as necessary \
+    $ export VERSION=3.0.3 && # adjust this as necessary \
         mkdir -p $GOPATH/src/github.com/sylabs && \
         cd $GOPATH/src/github.com/sylabs && \
         wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
@@ -241,7 +241,7 @@ build and install the RPM.
 
 .. code-block:: none
 
-    $ export VERSION=3.0.1 && # adjust this as necessary \
+    $ export VERSION=3.0.3 && # adjust this as necessary \
         wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         rpmbuild -tb singularity-${VERSION}.tar.gz && \
         sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-$VERSION-1.el7.x86_64.rpm && \
