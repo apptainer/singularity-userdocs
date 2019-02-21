@@ -157,3 +157,21 @@ make epub
 ```
 
 This will generate an **epub** folder inside **_build** folder. Inside you will find the file with an `epub` extension.
+
+## How are the CLI docs generated?
+The Singularity CLI docs are generated using the actual code from Singularity.
+To do this, we include Singularity as a submodule, and whenever a Makefile target (like `make html`) is run, Singularity itself is compiled and used to generate the CLI docs.
+
+However, you might not want to compile Singularity, either because you can't on your machine, or because you want to test out a quick change to the docs.
+If this is the case, you can skip the CLI doc generation using the `SKIPCLI` argument. 
+For example, to rebuild the HTML docs without including the CLI docs, just run `make html SKIPCLI=1`.
+
+If Singularity has been updated and you want to synchronize the CLI docs with the new version of Singularity, you'll have to update the submodule.
+To do this, just run:
+```bash
+git submodule update --remote --merge
+git add vendor/src/github.com/sylabs/singularity
+git commit
+```
+This will update the Singularity submodule to the latest version of the master branch.
+
