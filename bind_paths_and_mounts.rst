@@ -33,9 +33,9 @@ included automatically inside each container. Some bind paths are automatically
 derived (e.g. a user’s home directory) and some are statically defined (e.g.
 bind paths in the Singularity configuration file). In the default
 configuration, the system default bind points are ``$HOME`` , ``/sys:/sys`` ,
-``/proc:/proc``, ``/sys:/sys``, ``/tmp:/tmp``, ``/var/tmp:/var/tmp``,
-``/etc/resolv.conf:/etc/resolv.conf``, ``/etc/passwd:/etc/passwd``, and ``$PWD``. Where the first
-path before ``:`` is the path from the host and the second path is the path in the container.
+``/proc:/proc``, ``/tmp:/tmp``, ``/var/tmp:/var/tmp``, ``/etc/resolv.conf:/etc/resolv.conf``,
+``/etc/passwd:/etc/passwd``, and ``$PWD``. Where the first path before ``:``
+is the path from the host and the second path is the path in the container.
 
 -----------------------
 User-defined bind paths
