@@ -51,6 +51,8 @@ help:
 	@echo "  linkcheck  to check all external links for integrity"
 	@echo "  doctest    to run all doctests embedded in the documentation (if enabled)"
 
+ifndef SKIPCLI
+
 clidocs: cli/singularity.rst
 
 vendor/github.com/sylabs/singularity/builddir/singularity:
@@ -63,6 +65,8 @@ vendor/github.com/sylabs/singularity/builddir/singularity:
 cli/singularity.rst: vendor/github.com/sylabs/singularity/builddir/singularity
 	export GOPATH=$$(pwd)/vendor &&\
 	go run $(SINGULARITY_DIR)/cmd/docs/docs.go rst --dir cli
+
+endif
 
 clean:
 	rm -rf $(BUILDDIR)/*
