@@ -268,7 +268,7 @@ complete contents of that image.
 
     ``pull`` is a one-time-only operation that builds a SIF file corresponding to the image retrieved from Docker Hub. Updates to the image on Docker Hub will *not* be reflected in the *local* copy. 
 
-In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker Hub user, whereas ``lolcow`` is the name of the repository. Adding the option to specifiy an image tag, the generic version of the URI is ``docker://<hub-user>/<repo-name>[:<tag>]``. `Repositories on Docker Hub <https://docs.docker.com/docker-hub/repos/>`_ provides additional details.
+In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker Hub user, whereas ``lolcow`` is the name of the repository. Adding the option to specifiy an image tag, the generic version of the URI is ``docker://<user>/<repo-name>[:<tag>]``. `Repositories on Docker Hub <https://docs.docker.com/docker-hub/repos/>`_ provides additional details.
 
 
 .. _sec:using_prebuilt_private_images:
@@ -360,7 +360,7 @@ In the complete command line specification
 
 .. code-block:: none
 
-    docker://<registry>/<hub-user>/<repo-name>[:<tag>]
+    docker://<registry>/<user>/<repo-name>[:<tag>]
 
 ``registry`` defaults to ``index.docker.io``. In other words,
 
@@ -952,7 +952,7 @@ through ``build`` results in the SIF file ``lolcow_tar_def.sif``. In other words
 Optional Header Keywords
 ------------------------
 
-In the two-previous examples, the ``From`` keyword specifies *both* the ``hub-user`` and ``repo-name`` in making use of Docker Hub. *Optional* use of ``Namespace`` permits the more-granular split across two keywords:
+In the two-previous examples, the ``From`` keyword specifies *both* the ``user`` and ``repo-name`` in making use of Docker Hub. *Optional* use of ``Namespace`` permits the more-granular split across two keywords:
 
 .. code-block:: singularity
 
@@ -962,7 +962,7 @@ In the two-previous examples, the ``From`` keyword specifies *both* the ``hub-us
 
 .. note:: 
 
-    In `their documentation <https://docs.docker.com/docker-hub/repos/>`_, "Docker ID namespace" and ``hub-user`` are employed as synonyms in the text and examples, respectively. 
+    In `their documentation <https://docs.docker.com/docker-hub/repos/>`_, "Docker ID namespace" and ``user`` are employed as synonyms in the text and examples, respectively. 
 
 .. note::
 
