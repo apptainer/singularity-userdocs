@@ -1162,8 +1162,16 @@ OCI Image Support
 
 .. _sec:oci_overview:
 
+
 Overview
 ========
+
+OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes; it is the former that is emphasized here. Stated simply, an **OCI blob** is content that can be addressed; in other words, *each* layer of a Docker image is rendered as an OCI blob as illustrated in the (revisited) ``pull`` example below. 
+
+.. note:: 
+
+    To facilitate interoperation with Docker Hub, the Singularity core makes use of  the ``containers/image`` `library <https://github.com/containers/image/>`_ - "... a set of Go libraries aimed at working in various way[s] with containers' images and container image registries."
+
 
 Image Pulls Revisited
 ---------------------
@@ -1194,7 +1202,7 @@ After describing various :ref:`action commands that could be applied to images h
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_latest.sif
 
-Thus use of Singularity's ``pull`` command results in the *local* file copy in SIF, namely ``lolcow_latest.sif``. Layers of the image from Docker Hub are copied locally as OCI blobs. OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes; it is the former that is emphasized here. Stated simply, an **OCI blob** is content that can be addressed; in other words, *each* layer of a Docker image is rendered as an OCI blob as illustrated in the ``pull`` example above. To facilitate interoperation with Docker Hub, the Singularity core makes use of  the ``containers/image`` `library <https://github.com/containers/image/>`_ - "... a set of Go libraries aimed at working in various way[s] with containers' images and container image registries."
+Thus use of Singularity's ``pull`` command results in the *local* file copy in SIF, namely ``lolcow_latest.sif``. Layers of the image from Docker Hub are copied locally as OCI blobs. 
 
 .. TODO minor - fix appearance of above link 
 
@@ -1455,7 +1463,13 @@ Building Containers for Singularity from OCI Images
 Working Locally from the Singularity Command Line: ``oci`` Boostrap Agent
 -------------------------------------------------------------------------
 
-The example detailed in the previous section can be used to illustrate how a SIF file for use by Singularity can be created from the local cache. In this case, the ``build`` command of Singularity makes use of the ``oci`` boostrap agent as follows:
+The example detailed in the previous section can be used to illustrate how a SIF file for use by Singularity can be created from the local cache - an albeit contrived example, that works because the Singularity cache is compliant with the OCI Image Layout Specification. 
+
+.. note:: 
+
+    Of course, the ``oci`` bootstrap agent can be applied to *any* **bundle** that is compliant with the OCI Image Layout Specification - not *just* the Singularity cache, as created by executing a Singularity ``pull`` command.  
+
+In this local case, the ``build`` command of Singularity makes use of the ``oci`` boostrap agent as follows:
 
 .. code-block:: none
 
