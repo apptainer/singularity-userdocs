@@ -746,8 +746,8 @@ Working with Definition Files
 
 .. _sec:def_file_mandatory_headers_remotely_boostrapped: 
 
-Mandatory Headers: Remotely Boostrapped
----------------------------------------
+Mandatory Header Keywords: Remotely Boostrapped
+-----------------------------------------------
 
 Akin to a set of blueprints that explain how to build a custom container, Singularity definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here. 
 
@@ -862,8 +862,8 @@ A copy of the SIF file created by the service remains in the Sylabs Cloud Singul
 
 .. _sec:mandatory_headers_docker_locally_boostrapped_def_file:
 
-Mandatory Headers: Locally Boostrapped
----------------------------------------
+Mandatory Header Keywords: Locally Boostrapped
+----------------------------------------------
 
 When ``docker-daemon`` is the bootstrap agent in a Singularity definition file, SIF containers can be created from images cached locally by Docker. Suppose the definition file ``lolcow-d.def`` has contents: 
 
@@ -951,8 +951,8 @@ through ``build`` results in the SIF file ``lolcow_tar_def.sif``. In other words
 
 .. _sec:optional_headers_def_files: 
 
-Optional Headers
-----------------
+Optional Header Keywords
+------------------------
 
 In the two-previous examples, the ``From`` keyword specifies *both* the ``hub-user`` and ``repo-name`` in making use of Docker Hub. *Optional* use of ``Namespace`` permits the more-granular split across two keywords:
 
@@ -1083,7 +1083,7 @@ To summarize execution precedence:
 
     1. If present, the ``%runscript`` section of the Singularity definition file is executed 
 
-    2. If ``IncludeCmd`` is a non-empty entry in the header of the Singularity definition file, then ``CMD`` from the ``Dockerfile`` is executed 
+    2. If ``IncludeCmd`` is a non-empty keyword entry in the header of the Singularity definition file, then ``CMD`` from the ``Dockerfile`` is executed 
 
     3. If present in the ``Dockerfile``, ``ENTRYPOINT`` appended by ``CMD`` (if present) are executed in sequence 
 
@@ -1647,8 +1647,8 @@ The resulting SIF file can be validated as follows, for example:
     Established with nothing more than a Web server then, any individual, group or organization, *could* host OCI archives. This might be particularly appealing, for example, for organizations having security requirements that preclude access to public registries such as Docker Hub. Other that having a very basic hosting capability, OCI archives need only comply to the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`. 
 
 
-Working with Definition Files: Mandatory Headers
-------------------------------------------------
+Working with Definition Files: Mandatory Header Keywords
+--------------------------------------------------------
 
 Three, new bootstrap agents have been introduced as a consequence of compliance with the OCI Image Specification - assuming ``http`` and ``https`` are considered together. In addition to bootstrapping images for Singularity completely from the command line, definition files can be employed. 
 
@@ -1725,7 +1725,7 @@ Working with Definition Files: Additonal Considerations
 
 In working with definition files, the following additional considerations arise: 
 
-    - In addition to the mandatory headers documented above, :ref:`optional headers <sec:optional_headers_def_files>` are possible additions to OCI bundle and/or archive bootstrap definition files.
+    - In addition to the mandatory header keywords documented above, :ref:`optional header keywords <sec:optional_headers_def_files>` are possible additions to OCI bundle and/or archive bootstrap definition files.
 
     - As distribution of OCI bundles and/or archives is out of the Initiative's scope, so is the authentication required to access private images and/or registries. 
 
