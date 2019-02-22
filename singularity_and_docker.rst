@@ -10,9 +10,7 @@ Support for Docker and OCI
 Overview
 --------
 
-`Docker <https://www.docker.com/>`_ has been largely responsible for establishing interest in, and uptake of, containers in the Linux operating environment. Given its 'first-mover' status, it is not surprising that significant effort has been expended in developing Docker containers. Deconstructed into one or more compressed archives (typically split across multiple segments, or **layers** as they are known in Docker parlance) plus some metadata, images for these containers are built from specifications known as ``Dockerfiles``. Uptake has been compelling enough that the public `Docker Hub <https://hub.docker.com/>`_, as well as various private registries, host a multitude of images for use as Docker containers.
-
-Those seeking to employ Linux containers in compute-driven use cases have been among those making substantial investments in Docker containers - and especially, by developing and sharing images. Appreciating this situation, Singularity has from the outset emphasized the importance of interoperability with Docker. As a consequence, this section of the Singularity User Docs first makes its sole focus interoperabilty with Docker. In so doing, the following topics receive attention here:
+Effort has been expended in developing `Docker <https://www.docker.com/>`_ containers. Deconstructed into one or more compressed archives (typically split across multiple segments, or **layers** as they are known in Docker parlance) plus some metadata, images for these containers are built from specifications known as ``Dockerfiles``. The public `Docker Hub <https://hub.docker.com/>`_, as well as various private registries, host images for use as Docker containers. Singularity has from the outset emphasized the importance of interoperability with Docker. As a consequence, this section of the Singularity User Docs first makes its sole focus interoperabilty with Docker. In so doing, the following topics receive attention here:
 
     - Application of Singularity action commands on ephemeral containers derived from public Docker images  
 
