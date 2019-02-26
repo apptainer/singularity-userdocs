@@ -137,6 +137,9 @@ before the fingerprint, check the example:
     # search for user:
     $ singularity keys search Godlove
 
+    # search for email:
+    $ singularity key search @gmail.com
+
 Signing and validating your own containers
 ==========================================
 
