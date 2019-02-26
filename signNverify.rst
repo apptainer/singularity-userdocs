@@ -117,6 +117,26 @@ again like so.
 But note that this only restores the *public* key (used for verifying) to your
 local machine and does not restore the *private* key (used for signing).
 
+.. _searching_for_keys:
+
+Searching for keys
+==================
+
+Singularity allows you to search the keystore for plublic keys. You can search for names,
+email, and key IDs (fingerprints). When searching for a fingerprint, you need to use ``0x``
+before the fingerprint, check the example:
+
+.. code-block:: none
+
+    # search for key ID:
+    $ singularity key search 0x1CEC42121A994A3FBFAAF6CC51BE5020C508C7E9
+
+    # search for the sort ID:
+    $ singularity key search 0xC508C7E9
+
+    # search for user:
+    $ singularity keys search Godlove
+
 Signing and validating your own containers
 ==========================================
 
