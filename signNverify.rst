@@ -122,8 +122,8 @@ local machine and does not restore the *private* key (used for signing).
 Searching for keys
 ==================
 
-Singularity allows you to search the keystore for plublic keys. You can search for names,
-email, and key IDs (fingerprints). When searching for a fingerprint, you need to use ``0x``
+Singularity allows you to search the keystore for public keys. You can search for names,
+emails, and fingerprints (key IDs). When searching for a fingerprint, you need to use ``0x``
 before the fingerprint, check the example:
 
 .. code-block:: none
