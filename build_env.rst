@@ -6,6 +6,10 @@ Build Environment
 
 .. _sec:buildenv:
 
+--------
+Overview
+--------
+
 It’s commonly the case that you want to customize your build
 environment, such as specifying a custom cache directory for layers, or
 sending your Docker Credentials to the registry endpoint. Here we will discuss those topics.
@@ -20,11 +24,12 @@ a set of folders in your ``$HOME`` directory for docker layers, Cloud library im
 
 .. code-block:: none
 
-    $HOME/.singularity/oci
-    $HOME/.singularity/oci-tmp
-
+    $HOME/.singularity/cache/library
+    $HOME/.singularity/cache/oci
+    $HOME/.singularity/cache/oci-tmp
 
 If you want replace the full path where you want to cache, set ``SINGULARITY_CACHEDIR`` to the desired path.
+And by using the ``-E`` option, ``SINGULARITY_CACHEDIR`` will be passed along and be respected.
 Remember that when you run commands as sudo this will use root’s home at ``/root`` and not your user’s home.
 
 -----------------
@@ -36,9 +41,8 @@ Temporary Folders
 Singularity also uses some temporary directories to build the squashfs filesystem,
 so this temp space needs to be large enough to hold the entire resulting Singularity image.
 By default this happens in ``/tmp`` but can be overridden by setting ``SINGULARITY_TMPDIR`` to the full
-path where you want the squashfs temp files to be stored. Since images
-are typically built as root, be sure to set this variable in root’s
-environment.
+path where you want the squashfs temp files to be stored. Remember you can also use ``-E`` option to pass and respect the definition of ``SINGULARITY_TMPDIR``.
+Since images are typically built as root, be sure to set this variable in root’s environment.
 
 If you are building an image on the fly, for example
 
@@ -60,30 +64,10 @@ different, or to customize the name of the pulled image.
 Environment Variables
 ---------------------
 
-All environmental variables are parsed by Singularity python helper
-functions, and specifically the file `defaults.py <https://github.com/sylabs/singularity/blob/2.6.0/libexec/python/defaults.py>`_ is a gateway
-between variables defined at runtime, and pre-defined defaults. By way
-of import from the file, variables set at runtime do not change if
-re-imported. This was done intentionally to prevent changes during the
-execution, and could be changed if needed. For all variables, the
-order of operations works as follows:
-
-#. First preference goes to environment variable set at runtime.
-
-#. Second preference goes to default variables defined in this file.
-
-#. Then, if neither is found, null is returned except in the case that ``required=True``.
-   A ``required=True`` variable not found will system exit with an error.
-
-#. Variables that should not be displayed in debug logger are set with ``silent=True``,
-   and are only reported to be defined.
-
-For boolean variables, the following are acceptable for True, with any
-kind of capitalization or not:
-
-.. code-block:: none
-
-    ("yes", "true", "t", "1","y")
+#* If a flag is represented by both a CLI option and an environment variable, and both are set, the CLI option will always take precedence.
+This is true for all environment variables except for ``SINGULARITY_BIND`` and ``SINGULARITY_BINDPATH`` which is combined with the ``--bind`` option, argument pair if both are present.
+#* Environment variables overwrite default values in the CLI code
+#* Any defaults in the CLI code are applied.
 
 -----
 Cache
