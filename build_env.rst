@@ -98,29 +98,11 @@ environment variables at runtime.
 Docker
 ------
 
-**DOCKER_API_BASE** Set as ``index.docker.io``, which is the name of the registry. In
-the first version of Singularity we parsed the Registry argument from
-the build spec file, however now this is removed because it can be
-obtained directly from the image name (eg, ``registry/namespace/repo:tag``). If you don’t specify a
-registry name for your image, this default is used. If you have
-trouble with your registry being detected from the image URI, use this
-variable.
+**SINGULARITY_DOCKER_LOGIN** Used for the interactive login for Docker Hub.
 
-**DOCKER_API_VERSION** Is the version of the Docker Registry API
-currently being used, by default now is ``v2``.
-**DOCKER_OS** This is exposed via the exported environment variable ``SINGULARITY_DOCKER_OS``
-and pertains to images that reveal a version 2 manifest with a
-`manifest list <https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list>`_. In the case that the list is present, we must choose
-an operating system (this variable) and an architecture (below). The
-default is ``linux``.
+**SINGULARITY_DOCKER_USERNAME** Your Docker username.
 
-**DOCKER_ARCHITECTURE** This is exposed via the exported environment
-variable ``SINGULARITY_DOCKER_ARCHITECTURE``
-and the same applies as for the ``DOCKER_OS`` with regards to being used in context
-of a list of manifests. In the case that the list is present, we must
-choose an architecture (this variable) and an os (above). The default
-is ``amd64``, and other common ones include ``arm``, ``arm64``, ``ppc64le``, ``386``, and ``s390x``.
-**NAMESPACE** Is the default namespace, ``library``.
+**SINGULARITY_DOCKER_PASSWORD** Your Docker password.
 
 **RUNSCRIPT_COMMAND** Is not obtained from the environment, but is a
 hard coded default (“/bin/bash”). This is the fallback command used in
@@ -132,3 +114,12 @@ registry that doesn’t have https, and it speaks for itself. If you
 export the variable ``SINGULARITY_NOHTTPS`` you can force the software to not use https when
 interacting with a Docker registry. This use case is typically for use
 of a local registry.
+
+Library
+-------
+
+**SINGULARITY_BUILDER**
+
+**SINGULARITY_LIBRARY**
+
+**SINGULARITY_REMOTE**
