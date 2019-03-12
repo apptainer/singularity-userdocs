@@ -118,8 +118,8 @@ of a local registry.
 Library
 -------
 
-**SINGULARITY_BUILDER**
+**SINGULARITY_BUILDER** Used to specify the remote builder service URL. The default value is our remote builder.
 
-**SINGULARITY_LIBRARY**
+**SINGULARITY_LIBRARY** Used to specify the library to pull from. Default is set to our Cloud Library.
 
-**SINGULARITY_REMOTE**
+**SINGULARITY_REMOTE** Used to build an image remotely (This does not require root). The default is set to false.
