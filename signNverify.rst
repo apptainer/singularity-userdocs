@@ -129,10 +129,10 @@ before the fingerprint, check the example:
 .. code-block:: none
 
     # search for key ID:
-    $ singularity keys search 0x1CEC42121A994A3FBFAAF6CC51BE5020C508C7E9
+    $ singularity keys search 0x8883491F4268F173C6E5DC49EDECE4F3F38D871E
 
     # search for the sort ID:
-    $ singularity keys search 0xC508C7E9
+    $ singularity keys search 0xF38D871E
 
     # search for user:
     $ singularity keys search Godlove
