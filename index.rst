@@ -8,6 +8,7 @@ User Guide
    Quick Start <quick_start>
    Contributing <contributing>
    Installation <installation>
+   Command Line Reference <cli>
    Build a container <build_a_container>
    The Definition File <definition_files>
    Singularity and Docker <singularity_and_docker>

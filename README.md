@@ -133,7 +133,7 @@ You can find a lot of information about RST on <a href="http://docutils.sourcefo
 This is pretty straightforward by going to the root of the project on the command line and then do:
 
 ```
-make html
+make html SKIPCLI=1
 ```
 This will generate a folder called **_build** which inside will have a folder called **html** containing all the html files you need.
 
@@ -142,7 +142,7 @@ This will generate a folder called **_build** which inside will have a folder ca
 This is very similar to the previous step, you will need to execute on command line:
 
 ```
-make latexpdf
+make latexpdf SKIPCLI=1
 ```
 with this, a new folder inside **_build** will be generated, called **latex** and in there you can find the `pdf` file generated from `RST` (by default it is called "ReadTheDocsTemplate.pdf").
 
@@ -153,7 +153,24 @@ with this, a new folder inside **_build** will be generated, called **latex** an
 Very similar to the previous command, you will just need to execute on a command line:
 
 ```
-make epub
+make epub SKIPCLI=1
 ```
 
 This will generate an **epub** folder inside **_build** folder. Inside you will find the file with an `epub` extension.
+
+## How are the CLI docs generated?
+The Singularity CLI docs are generated using the actual code from Singularity.
+To do this, we include Singularity as a submodule, and whenever a Makefile target (like `make html`) is run, Singularity itself is compiled and used to generate the CLI docs.
+
+However, you might not want to compile Singularity, either because you can't on your machine, or because you want to test out a quick change to the docs.
+If this is the case, you can skip the CLI doc generation using the `SKIPCLI` argument.
+For example, to rebuild the HTML docs without including the CLI docs, just run `make html SKIPCLI=1`.
+
+If Singularity has been updated and you want to synchronize the CLI docs with the new version of Singularity, you'll have to update the submodule.
+To do this, just run:
+```bash
+git submodule update --remote --merge
+git add vendor/src/github.com/sylabs/singularity
+git commit
+```
+This will update the Singularity submodule to the latest version of the master branch.
