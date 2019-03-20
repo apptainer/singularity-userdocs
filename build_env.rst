@@ -30,8 +30,8 @@ a set of folders in your ``$HOME`` directory for docker layers, Cloud library im
     $HOME/.singularity/cache/oci-tmp
 
 If you want to cache in a different directory, set ``SINGULARITY_CACHEDIR`` to the desired path.
-By using the ``-E`` option with the ``sudo`` command, ``SINGULARITY_CACHEDIR`` will be passed along 
-to root's environment and respected during the build. 
+By using the ``-E`` option with the ``sudo`` command, ``SINGULARITY_CACHEDIR`` will be passed along
+to root's environment and respected during the build.
 Remember that when you run commands as root images will be cached in root’s home at ``/root`` and not your user’s home.
 
 -----------------
@@ -43,12 +43,12 @@ Temporary Folders
 Singularity uses a temporary directory to build the squashfs filesystem,
 and this temp space needs to be large enough to hold the entire resulting Singularity image.
 By default this happens in ``/tmp`` but the location can be configured by setting ``SINGULARITY_TMPDIR`` to the full
-path where you want the sandbox and squashfs temp files to be stored. Remember to use ``-E`` option to pass the value of ``SINGULARITY_TMPDIR`` 
+path where you want the sandbox and squashfs temp files to be stored. Remember to use ``-E`` option to pass the value of ``SINGULARITY_TMPDIR``
 to root's environment when executing the ``build`` command with ``sudo``.
 
-When you run one of the action commands (i.e. ``run``, ``exec``, or ``shell``) with a container from the 
+When you run one of the action commands (i.e. ``run``, ``exec``, or ``shell``) with a container from the
 container library or an OCI registry, Singularity builds the container in the temporary directory caches it
-and runs it from the cached location.  
+and runs it from the cached location.
 
 Consider the following command:
 
@@ -56,7 +56,7 @@ Consider the following command:
 
     singularity exec docker://busybox /bin/sh
 
-This container is first built in ``/tmp``. Since all the oci blobs are converted into SIF format, 
+This container is first built in ``/tmp``. Since all the oci blobs are converted into SIF format,
 by default a temporary runtime directory is created in:
 
 .. code-block:: none
@@ -76,8 +76,6 @@ different, or to customize the name of the pulled image.
 ---------------------
 Environment Variables
 ---------------------
-
-Environment varialbes 
 
 #. If a flag is represented by both a CLI option and an environment variable, and both are set, the CLI option will always take precedence. This is true for all environment variables except for ``SINGULARITY_BIND`` and ``SINGULARITY_BINDPATH`` which is combined with the ``--bind`` option, argument pair if both are present.
 
