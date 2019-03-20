@@ -2,6 +2,9 @@
 Appendix
 ========
 
+
+.. TODO oci & oci-archive along with http & https
+
 .. _singularity-environment-variables:
 
 
@@ -358,6 +361,8 @@ Container Library and building from it instead.
 
 For detailed information about setting your build environment see
 :ref:`Build Customization <build-environment>`.
+
+.. TODO Add section on docker-daemon boostrap agent 
 
 .. _build-shub:
 

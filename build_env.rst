@@ -5,29 +5,33 @@ Build Environment
 =================
 
 .. _sec:buildenv:
+--------
+Overview
+--------
 
-It’s commonly the case that you want to customize your build
-environment, such as specifying a custom cache directory for layers, or
-sending your Docker Credentials to the registry endpoint. Here we will discuss those topics.
+You may wish to customize your build
+environment by doing things such as specifying a custom cache directory for images or
+sending your Docker Credentials to the registry endpoint. Here we will discuss these and other topics
+related to the build environment.
 
 -------------
 Cache Folders
 -------------
 
-To make download of layers for build and :ref:`pull <pull-command>`, :ref:`exec <exec-command>`, :ref:`shell <shell-command>`, :ref:`build <build-command>`, :ref:`run <run-command>` and :ref:`instance <instance-command>` faster and less redundant, we
-use a caching strategy. By default, the Singularity software will create
-a set of folders in your ``$HOME`` directory for docker layers, Cloud library images and metadata, respectively:
+To make downloading images for build and :ref:`pull <pull-command>` faster and less redundant, Singularity
+uses a caching strategy. By default, Singularity will create
+a set of folders in your ``$HOME`` directory for docker layers, Cloud library images, and metadata, respectively:
 
 .. code-block:: none
 
-    $HOME/.singularity/oci
-    $HOME/.singularity/oci-tmp
     $HOME/.singularity/cache/library
+    $HOME/.singularity/cache/oci
+    $HOME/.singularity/cache/oci-tmp
 
-
-If you want replace the full path where you want to cache, set ``SINGULARITY_CACHEDIR`` to the desired path.
-Remember that when you run commands as sudo this will use root’s home at ``/root`` and not your user’s home.
-
+If you want to cache in a different directory, set ``SINGULARITY_CACHEDIR`` to the desired path.
+By using the ``-E`` option with the ``sudo`` command, ``SINGULARITY_CACHEDIR`` will be passed along
+to root's environment and respected during the build.
+Remember that when you run commands as root images will be cached in root’s home at ``/root`` and not your user’s home.
 
 --------------
 Cache commands
@@ -101,20 +105,31 @@ Temporary Folders
 
  .. _sec:temporaryfolders:
 
-Singularity also uses some temporary directories to build the squashfs filesystem,
-so this temp space needs to be large enough to hold the entire resulting Singularity image.
-By default this happens in ``/tmp`` but can be overridden by setting ``SINGULARITY_TMPDIR`` to the full
-path where you want the squashfs temp files to be stored. Since images
-are typically built as root, be sure to set this variable in root’s
-environment.
 
-If you are building an image on the fly, for example
+ Singularity uses a temporary directory to build the squashfs filesystem,
+ and this temp space needs to be large enough to hold the entire resulting Singularity image.
+ By default this happens in ``/tmp`` but the location can be configured by setting ``SINGULARITY_TMPDIR`` to the full
+ path where you want the sandbox and squashfs temp files to be stored. Remember to use ``-E`` option to pass the value of ``SINGULARITY_TMPDIR``
+ to root's environment when executing the ``build`` command with ``sudo``.
+
+ When you run one of the action commands (i.e. ``run``, ``exec``, or ``shell``) with a container from the
+ container library or an OCI registry, Singularity builds the container in the temporary directory caches it
+ and runs it from the cached location.
+
+ Consider the following command:
 
 .. code-block:: none
 
     $ singularity exec docker://busybox /bin/sh
 
-Since all the oci blobs are converted into SIF format, by default a temporary runtime directory is created in ``.singularity/cache/oci-tmp/<sha256-code>/busybox_latest.sif``.
+This container is first built in ``/tmp``. Since all the oci blobs are converted into SIF format,
+by default a temporary runtime directory is created in:
+
+.. code-block:: none
+
+    $HOME/.singularity/cache/oci-tmp/<sha256-code>/busybox_latest.sif
+
+In this case, the ``SINGULARITY_TMPDIR`` and ``SINGULARITY_CACHEDIR`` variables will also be respected.
 
 -----------
 Pull Folder
@@ -128,30 +143,11 @@ different, or to customize the name of the pulled image.
 Environment Variables
 ---------------------
 
-All environmental variables are parsed by Singularity python helper
-functions, and specifically the file `defaults.py <https://github.com/sylabs/singularity/blob/2.6.0/libexec/python/defaults.py>`_ is a gateway
-between variables defined at runtime, and pre-defined defaults. By way
-of import from the file, variables set at runtime do not change if
-re-imported. This was done intentionally to prevent changes during the
-execution, and could be changed if needed. For all variables, the
-order of operations works as follows:
+#. If a flag is represented by both a CLI option and an environment variable, and both are set, the CLI option will always take precedence. This is true for all environment variables except for ``SINGULARITY_BIND`` and ``SINGULARITY_BINDPATH`` which is combined with the ``--bind`` option, argument pair if both are present.
 
-#. First preference goes to environment variable set at runtime.
+#. Environment variables overwrite default values in the CLI code
 
-#. Second preference goes to default variables defined in this file.
-
-#. Then, if neither is found, null is returned except in the case that ``required=True``.
-   A ``required=True`` variable not found will system exit with an error.
-
-#. Variables that should not be displayed in debug logger are set with ``silent=True``,
-   and are only reported to be defined.
-
-For boolean variables, the following are acceptable for True, with any
-kind of capitalization or not:
-
-.. code-block:: none
-
-    ("yes", "true", "t", "1","y")
+#. Any defaults in the CLI code are applied.
 
 -----
 Cache
@@ -170,7 +166,7 @@ are pulled to the present working directory. The user can change this
 variable to change that.
 
 **SINGULARITY_TMPDIR** Is the base folder for squashfs image
-temporary building. If not defined, it uses default of ``$TEMPDIR``. If defined,
+temporary building. If not defined, it uses default of ``$TMPDIR``. If defined,
 the defined location is used instead.
 
 Defaults
@@ -182,29 +178,11 @@ environment variables at runtime.
 Docker
 ------
 
-**DOCKER_API_BASE** Set as ``index.docker.io``, which is the name of the registry. In
-the first version of Singularity we parsed the Registry argument from
-the build spec file, however now this is removed because it can be
-obtained directly from the image name (eg, ``registry/namespace/repo:tag``). If you don’t specify a
-registry name for your image, this default is used. If you have
-trouble with your registry being detected from the image URI, use this
-variable.
+**SINGULARITY_DOCKER_LOGIN** Used for the interactive login for Docker Hub.
 
-**DOCKER_API_VERSION** Is the version of the Docker Registry API
-currently being used, by default now is ``v2``.
-**DOCKER_OS** This is exposed via the exported environment variable ``SINGULARITY_DOCKER_OS``
-and pertains to images that reveal a version 2 manifest with a
-`manifest list <https://docs.docker.com/registry/spec/manifest-v2-2/#manifest-list>`_. In the case that the list is present, we must choose
-an operating system (this variable) and an architecture (below). The
-default is ``linux``.
+**SINGULARITY_DOCKER_USERNAME** Your Docker username.
 
-**DOCKER_ARCHITECTURE** This is exposed via the exported environment
-variable ``SINGULARITY_DOCKER_ARCHITECTURE``
-and the same applies as for the ``DOCKER_OS`` with regards to being used in context
-of a list of manifests. In the case that the list is present, we must
-choose an architecture (this variable) and an os (above). The default
-is ``amd64``, and other common ones include ``arm``, ``arm64``, ``ppc64le``, ``386``, and ``s390x``.
-**NAMESPACE** Is the default namespace, ``library``.
+**SINGULARITY_DOCKER_PASSWORD** Your Docker password.
 
 **RUNSCRIPT_COMMAND** Is not obtained from the environment, but is a
 hard coded default (“/bin/bash”). This is the fallback command used in
@@ -216,3 +194,12 @@ registry that doesn’t have https, and it speaks for itself. If you
 export the variable ``SINGULARITY_NOHTTPS`` you can force the software to not use https when
 interacting with a Docker registry. This use case is typically for use
 of a local registry.
+
+Library
+-------
+
+**SINGULARITY_BUILDER** Used to specify the remote builder service URL. The default value is our remote builder.
+
+**SINGULARITY_LIBRARY** Used to specify the library to pull from. Default is set to our Cloud Library.
+
+**SINGULARITY_REMOTE** Used to build an image remotely (This does not require root). The default is set to false.
