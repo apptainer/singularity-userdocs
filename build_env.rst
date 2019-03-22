@@ -59,8 +59,7 @@ For example, you can list cache image files and check which type they belong to:
 
     There are 15 oci blob file(s) using 112.51 Mb of space. Use: '-T=blob' to list
 
-    You can also clean a specific cache type, chosing between: ``library``, ``oci``, ``blob``
-    (separated by commas)
+You can also clean a specific cache type, choosing between: ``library``, ``oci``, ``blob`` (separated by commas)
 
 .. code-block:: none
 
@@ -78,14 +77,14 @@ For example, you can list cache image files and check which type they belong to:
 
 .. note::
 
-  This feature of passing additional flags with comma-separated arguments can also be used with the ```singularity cache clean`` command we will see below.
+    This feature of passing additional flags with comma-separated arguments can also be used with the ``singularity cache clean`` command we will see below.
 
-Cleaning Cache
-==============
+Cleaning the Cache
+==================
 
 Most of the ``cache clean`` and ``cache list`` flags can be interchanged, (``--name`` is only reserved for ``cache clean``).
 
-It's worth noticing that by running the following command: (with no flags)
+It's worth noting that by running the following command: (with no flags)
 
 ..code-block:: none
 
@@ -104,7 +103,6 @@ Temporary Folders
 -----------------
 
  .. _sec:temporaryfolders:
-
 
  Singularity uses a temporary directory to build the squashfs filesystem,
  and this temp space needs to be large enough to hold the entire resulting Singularity image.
@@ -149,25 +147,6 @@ Environment Variables
 
 #. Any defaults in the CLI code are applied.
 
------
-Cache
------
-
-The location and usage of the cache is also determined by environment
-variables.
-
-**SINGULARITY_CACHEDIR** Is the base folder for caching layers and
-singularity hub images. If not defined, it uses default of ``$HOME/.singularity``. If
-defined, the defined location is used instead.
-
-**SINGULARITY_PULLFOLDER** While this isn’t relevant for build, since
-build is close to pull, we will include it here. By default, images
-are pulled to the present working directory. The user can change this
-variable to change that.
-
-**SINGULARITY_TMPDIR** Is the base folder for squashfs image
-temporary building. If not defined, it uses default of ``$TMPDIR``. If defined,
-the defined location is used instead.
 
 Defaults
 ========
