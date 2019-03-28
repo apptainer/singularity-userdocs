@@ -16,6 +16,7 @@ User Guide
    Persistent Overlays <persistent_overlays>
    Running Services <running_services>
    Environment and Metadata <environment_and_metadata>
+   OCI Runtime Support <oci_runtime>
    Sign and Verify <signNverify>
    Security Options <security_options>
    Network Options <networking>

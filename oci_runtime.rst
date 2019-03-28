@@ -121,7 +121,7 @@ Critical to compliance with the specification is the presence of the following *
 
 The `filtered <https://github.com/stedolan/jq>`_ ``config.json`` file corresponding to the OCI mounted ``lolcow_latest.sif`` container detailed as follows: 
 
-.. code-block:: javascript
+.. code-block:: none
 
 	$ sudo cat /var/tmp/lolcow/config.json | jq
 	{
@@ -701,7 +701,7 @@ The `filtered <https://github.com/stedolan/jq>`_ ``config.json`` file correspond
 
 Furthermore, the property
 
-.. code-block:: javascript
+.. code-block:: none
 
 	$ sudo cat /var/tmp/lolcow/config.json | jq [.root.path]
 	[
@@ -730,7 +730,7 @@ Beyond ``root.path``, the ``config.json`` file includes a multitude of additiona
 
 	- ``process`` - an optional property that specifies the container process. When invoked via Singularity, subproperties such as ``args`` are populated by making use of the contents of the ``.singularity.d`` directory, e.g.:
 
-	.. code-block:: javascript
+	.. code-block:: none
 
 		$ sudo cat /var/tmp/lolcow/config.json | jq [.process.args]
 		[
