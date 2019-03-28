@@ -750,7 +750,91 @@ a writable file system on an otherwise immutable read-only container; thus they 
 	SIF is stated to be an extensible format capable of encasulating the entire container runtime in a single file. By encapsulating a filesystem bundle that conforms with the OCI runtime specification, the extensibility of SIF is demonstrably evident.
 
 
-.. TODO Review CC's responses again ... 
+------------------------------------------
+Creating OCI Compliant Container Instances 
+------------------------------------------
+
+SIF files encapsulate filesystem bundles that conform with the OCI runtime specification. By 'OCI mounting' a SIF file (see above), this encapsulated filesystem bundle is exposed. Once exposed, the filesystem bundle can be used to bootstrap the creation of an OCI compliant container instance as follows: 
+
+.. code-block:: none
+
+	$ sudo singularity oci create -b /var/tmp/lolcow lolcow 
+
+In this example, the filesystem bundle is located in the directory ``/var/tmp/lolcow`` - i.e., the mount point identified above with respect to 'OCI mounting'. The ``config.json`` file, along with the ``rootfs`` and ``overlay`` filesystems, are all employed in the bootstrap process. The instance is named ``lolcow`` in this example. 
+
+.. note::
+
+	The outcome of this creation request is truly a container **instance**. Multiple instances of the same container can easily be created by simply changing the name of the instance upon subsequent invocation requests. 
+
+The ``state`` of the container instance can be determined via ``$ sudo singularity oci state lolcow``:
+
+.. code-block:: json
+
+	{
+		"ociVersion": "1.0.1-dev",
+		"id": "lolcow",
+		"status": "created",
+		"pid": 3759,
+		"bundle": "/var/tmp/lolcow",
+		"createdAt": 1553794727524020213,
+		"attachSocket": "/var/run/singularity/instances/root/lolcow/attach.sock",
+		"controlSocket": "/var/run/singularity/instances/root/lolcow/control.sock"
+	}
+
+.. TODO Confirmm the above is OCI stnadrads compliant ^^^ 
+
+Whereas the above is provided via the OCI command group, container instances created in this fashion are still known to Singularity - for example: 
+
+.. code-block:: none
+
+	$ sudo singularity instance list
+	INSTANCE NAME    PID      IMAGE
+	lolcow           3759     /var/tmp/lolcow/var/tmp/lolcow/rootfs
+	lolcow2          4014     /var/tmp/lolcow/var/tmp/lolcow/rootfs
+	lolcow3          3938     /var/tmp/lolcow/var/tmp/lolcow/rootfs
+
+Because these three instances are owned by ``root``, use of ``sudo`` is *required* here. 
+
+.. TODO - illustrate use of cgroups 
+
+
+.. ------------------------------------------
+.. Starting OCI Compliant Container Instances 
+.. ------------------------------------------
+
+
+.. $ sudo singularity oci start lolcow
+.. vagrant@vagrant:~$  _______________________________________
+.. / So so is good, very good, very        \
+.. | excellent good: and yet it is not; it |
+.. | is but so so.                         |
+.. |                                       |
+.. | -- William Shakespeare, "As You Like  |
+.. \ It"                                   /
+..  ---------------------------------------
+..         \   ^__^
+..          \  (oo)\_______
+..             (__)\       )\/\
+..                 ||----w |
+..                 ||     ||
+
+.. ~$ sudo singularity oci state lolcow
+.. {
+.. 	"ociVersion": "1.0.1-dev",
+.. 	"id": "lolcow",
+.. 	"status": "stopped",
+.. 	"pid": 3759,
+.. 	"bundle": "/var/tmp/lolcow",
+.. 	"createdAt": 1553794727524020213,
+.. 	"startedAt": 1553799071388238359,
+.. 	"finishedAt": 1553799071604837173,
+.. 	"exitCode": 0,
+.. 	"exitDesc": "exited with code 0",
+.. 	"attachSocket": "/var/run/singularity/instances/root/lolcow/attach.sock",
+.. 	"controlSocket": "/var/run/singularity/instances/root/lolcow/control.sock"
+.. }
+
+.. TODO Review CC's responses again ... see GDocs note on March 20, 2019
 
 .. TODO Highlight UID & GID ??? 
 
