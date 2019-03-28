@@ -53,7 +53,7 @@ Suppose the Singularity Image Format (SIF) file ``lolcow_latest.sif`` exists loc
 	INFO:    Creating SIF file...
 	INFO:    Build complete: lolcow_latest.sif
 
-is one way to bootstrap creation of this image in SIF that retains a local copy. Additional approaches and details can be found in the section :ref:`Support for Docker and OCI <singularity-and-docker>`). 
+is one way to bootstrap creation of this image in SIF that *retains* a local copy. Additional approaches and details can be found in the section :ref:`Support for Docker and OCI <singularity-and-docker>`). 
 
 For the purpose of boostrapping the creation of an OCI compliant runtime, this SIF file can be mounted as follows: 
 
@@ -61,7 +61,7 @@ For the purpose of boostrapping the creation of an OCI compliant runtime, this S
 
 	$ sudo singularity oci mount ./lolcow_latest.sif /var/tmp/lolcow
 
-Because ``mount`` is a command requiring privileged access, so is the OCI variant in Singularity. By issuing this command, the Singularity container runtime encapsulated in the SIF file ``lolcow_latest.sif`` is mounted on the mount point ``/var/tmp/lolcow`` as an ``overlay`` file system, 
+Because ``mount`` is a command requiring privileged access, so does this OCI variant in Singularity. By issuing this command, the Singularity container runtime encapsulated in the SIF file ``lolcow_latest.sif`` is mounted on the mount point ``/var/tmp/lolcow`` as an ``overlay`` file system, 
 
 .. code-block:: none
 
@@ -119,11 +119,10 @@ Critical to compliance with the specification is the presence of the following *
 
 	Because the directory itself, i.e., ``/var/tmp/lolcow`` is *not* part of the bundle, the mount point can be chosen arbitrarily. 
 
-The `filtered <https://github.com/stedolan/jq>`_ ``config.json`` file corresponding to the OCI mounted ``lolcow_latest.sif`` container detailed as follows: 
+The `filtered <https://github.com/stedolan/jq>`_ ``config.json`` file corresponding to the OCI mounted ``lolcow_latest.sif`` container can be detailed as follows via ``$ sudo cat /var/tmp/lolcow/config.json | jq``: 
 
-.. code-block:: none
+.. code-block:: json
 
-	$ sudo cat /var/tmp/lolcow/config.json | jq
 	{
 	  "ociVersion": "1.0.1-dev",
 	  "process": {
@@ -699,11 +698,10 @@ The `filtered <https://github.com/stedolan/jq>`_ ``config.json`` file correspond
 	  }
 	}
 
-Furthermore, the property
+Furthermore, and through use of ``$ sudo cat /var/tmp/lolcow/config.json | jq [.root.path]``, the property
 
-.. code-block:: none
+.. code-block:: json
 
-	$ sudo cat /var/tmp/lolcow/config.json | jq [.root.path]
 	[
 	  "/var/tmp/lolcow/rootfs"
 	]
@@ -728,11 +726,10 @@ Beyond ``root.path``, the ``config.json`` file includes a multitude of additiona
 
 	- ``ociVersion`` - a mandatory property that identifies the version of the OCI runtime specification that the bundle is compliant with 
 
-	- ``process`` - an optional property that specifies the container process. When invoked via Singularity, subproperties such as ``args`` are populated by making use of the contents of the ``.singularity.d`` directory, e.g.:
+	- ``process`` - an optional property that specifies the container process. When invoked via Singularity, subproperties such as ``args`` are populated by making use of the contents of the ``.singularity.d`` directory, e.g. via ``$ sudo cat /var/tmp/lolcow/config.json | jq [.process.args]``:
 
-	.. code-block:: none
+	.. code-block:: json
 
-		$ sudo cat /var/tmp/lolcow/config.json | jq [.process.args]
 		[
 		  [
 		    "/.singularity.d/actions/run"
@@ -748,6 +745,11 @@ a writable file system on an otherwise immutable read-only container; thus they 
 
 .. TODO Need to ensure that what's written above is correct 
 
+.. note::
+
+	SIF is stated to be an extensible format capable of encasulating the entire container runtime in a single file. By encapsulating a filesystem bundle that conforms with the OCI runtime specification, the extensibility of SIF is demonstrably evident.
+
+
 .. TODO Review CC's responses again ... 
 
 .. TODO Highlight UID & GID ??? 
@@ -755,10 +757,4 @@ a writable file system on an otherwise immutable read-only container; thus they 
 .. TODO What is an overlay fs?  ^^^ https://www.datalight.com/blog/2016/01/27/explaining-overlayfs-%E2%80%93-what-it-does-and-how-it-works/ 
 .. Check again after I create a bundle and container ... 
 
-.. sandbox??? 
-
-.. =========================================
-.. Encapsulating Support for the OCI Runtime
-.. =========================================
-
-.. From the outset, the SIF was designed to be extensible. A compelling demonstration of 
+.. sandbox???
