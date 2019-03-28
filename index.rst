@@ -11,6 +11,7 @@ User Guide
    Command Line Reference <cli>
    Build a container <build_a_container>
    The Definition File <definition_files>
+   Build Environment <build_env>
    Singularity and Docker <singularity_and_docker>
    Bind Paths and Mounts <bind_paths_and_mounts>
    Persistent Overlays <persistent_overlays>
