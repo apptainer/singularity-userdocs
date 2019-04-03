@@ -92,6 +92,11 @@ the following network types:
     - ptp
     - ipvlan
     - macvlan
+    - none (must be used alone)
+
+``None`` is the only network option that can be used by non-privileged users.  
+It isolates the container network from the host network with a loopback 
+interface. 
 
 Administrators can also define custom network configurations and place them in
 the same directory for the benefit of users.
