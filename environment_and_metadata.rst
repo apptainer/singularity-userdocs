@@ -23,7 +23,7 @@ definition file:
 .. code-block:: singularity
 
         Bootstrap: library
-        From: library/alpine
+        From: default/alpine
 
         %environment
             VARIABLE_ONE = hello
@@ -35,7 +35,7 @@ definition file:
 .. code-block:: singularity
 
         Bootstrap: library
-        From: library/alpine
+        From: default/alpine
 
         %post
             echo 'export VARIABLE_NAME=variable_value' >>$SINGULARITY_ENVIRONMENT
@@ -45,7 +45,7 @@ You can also add labels to your container using the ``%labels`` section like so:
 .. code-block:: singularity
 
         Bootstrap: library
-        From: library/alpine
+        From: default/alpine
 
         %labels
             OWNER = Joana
@@ -89,7 +89,7 @@ variables in your definition file as follows:
 .. code-block:: singularity
 
     Bootstrap: library
-    From: library/alpine
+    From: default/alpine
 
     %environment
         #First define the variables
