@@ -38,31 +38,23 @@ Mounted OCI Filesystem Bundles
 Mounting an OCI Filesystem Bundle
 =================================
 
-Suppose the Singularity Image Format (SIF) file ``lolcow_latest.sif`` exists locally. (Recall that
+For the purpose of illustration, use of `BusyBox <https://busybox.net/about.html>`_ will be made here. 
+
+Suppose the Singularity Image Format (SIF) file ``busybox_latest.sif`` exists locally. (Recall that
 
 .. code-block:: none
 
-	vagrant@vagrant:~$ singularity pull docker://godlovedc/lolcow
+	$ singularity pull docker://busybox
 	INFO:    Starting build...
 	Getting image source signatures
-	Copying blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
-	 45.33 MiB / 45.33 MiB [====================================================] 2s
-	Copying blob sha256:3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
-	 848 B / 848 B [============================================================] 0s
-	Copying blob sha256:9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
-	 621 B / 621 B [============================================================] 0s
-	Copying blob sha256:d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
-	 853 B / 853 B [============================================================] 0s
-	Copying blob sha256:7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
-	 169 B / 169 B [============================================================] 0s
-	Copying blob sha256:8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
-	 53.75 MiB / 53.75 MiB [====================================================] 2s
-	Copying config sha256:73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
-	 3.33 KiB / 3.33 KiB [======================================================] 0s
+	Copying blob sha256:fc1a6b909f82ce4b72204198d49de3aaf757b3ab2bb823cb6e47c416b97c5985
+	 738.13 KiB / 738.13 KiB [==================================================] 0s
+	Copying config sha256:5fffaf1f2c1830a6a8cf90eb27c7a1a8476b8c49b4b6261a20d6257d031ce4f3
+	 575 B / 575 B [============================================================] 0s
 	Writing manifest to image destination
 	Storing signatures
 	INFO:    Creating SIF file...
-	INFO:    Build complete: lolcow_latest.sif
+	INFO:    Build complete: busybox_latest.sif
 
 is one way to bootstrap creation of this image in SIF that *retains* a local copy. Additional approaches and details can be found in the section :ref:`Support for Docker and OCI <singularity-and-docker>`). 
 
@@ -70,35 +62,29 @@ For the purpose of boostrapping the creation of an OCI compliant runtime, this S
 
 .. code-block:: none 
 
-	$ sudo singularity oci mount ./lolcow_latest.sif /var/tmp/lolcow
+	$ sudo singularity oci mount ./busybox_latest.sif /var/tmp/busybox
 
-Because ``mount`` is a command requiring privileged access, so does this OCI variant in Singularity. By issuing this command, the Singularity container runtime encapsulated in the SIF file ``lolcow_latest.sif`` is mounted on the mount point ``/var/tmp/lolcow`` as an ``overlay`` file system, 
+Because ``mount`` is a command requiring privileged access, so does this OCI variant in Singularity. By issuing this command, the Singularity container runtime encapsulated in the SIF file ``busybox_latest.sif`` is mounted on the mount point ``/var/tmp/busybox`` as an ``overlay`` file system, 
 
 .. code-block:: none
 
-	$ sudo df -k 
-	Filesystem                   1K-blocks      Used Available Use% Mounted on
-	udev                            475192         0    475192   0% /dev
-	tmpfs                           100916      1548     99368   2% /run
-	/dev/mapper/vagrant--vg-root  19519312   2242944  16261792  13% /
-	tmpfs                           504560         0    504560   0% /dev/shm
-	tmpfs                             5120         0      5120   0% /run/lock
-	tmpfs                           504560         0    504560   0% /sys/fs/cgroup
-	vagrant                      243352964 143016400 100336564  59% /vagrant
-	tmpfs                           100912         0    100912   0% /run/user/900
-	overlay                       19519312   2242944  16261792  13% /var/tmp/lolcow/rootfs
+	$ sudo df -k
+	Filesystem                   1K-blocks    Used Available Use% Mounted on
+	udev                            475192       0    475192   0% /dev
+	tmpfs                           100916    1604     99312   2% /run
+	/dev/mapper/vagrant--vg-root  19519312 2620740  15883996  15% /
+	tmpfs                           504560       0    504560   0% /dev/shm
+	tmpfs                             5120       0      5120   0% /run/lock
+	tmpfs                           504560       0    504560   0% /sys/fs/cgroup
+	tmpfs                           100912       0    100912   0% /run/user/900
+	overlay                       19519312 2620740  15883996  15% /var/tmp/busybox/rootfs
 
 with permissions as follows:
 
 .. code-block:: none
 
-	$ sudo ls -ld /var/tmp/lolcow
-	drwx------ 4 root root 4096 Mar 20 15:45 /var/tmp/lolcow
-
-.. note:: 
-
-	All commands in the ``oci`` group *must* be executed as the ``root`` user. 
-
+	$ sudo ls -ld /var/tmp/busybox
+	drwx------ 4 root root 4096 Apr  4 14:30 /var/tmp/busybox
 
 
 Content of an OCI Compliant Filesystem Bundle
@@ -108,13 +94,13 @@ The *expected* contents of the mounted filesystem are as follows:
 
 .. code-block:: none 
 
-	$ sudo ls -la /var/tmp/lolcow
+	$ sudo ls -la /var/tmp/busybox
 	total 28
-	drwx------ 4 root root 4096 Mar 20 15:45 .
-	drwxrwxrwt 4 root root 4096 Mar 20 15:45 ..
-	-rw-rw-rw- 1 root root 9878 Mar 20 15:45 config.json
-	drwx------ 4 root root 4096 Mar 20 15:45 overlay
-	drwx------ 1 root root 4096 Mar 20 15:45 rootfs
+	drwx------ 4 root root 4096 Apr  4 14:30 .
+	drwxrwxrwt 4 root root 4096 Apr  4 14:30 ..
+	-rw-rw-rw- 1 root root 9879 Apr  4 14:30 config.json
+	drwx------ 4 root root 4096 Apr  4 14:30 overlay
+	drwx------ 1 root root 4096 Apr  4 14:30 rootfs
 
 From the perspective of the `OCI runtime specification <https://github.com/opencontainers/runtime-spec/blob/master/bundle.md>`_, this content is expected because it prescribes a 
 
@@ -128,11 +114,11 @@ Critical to compliance with the specification is the presence of the following *
 
 .. note::
 
-	Because the directory itself, i.e., ``/var/tmp/lolcow`` is *not* part of the bundle, the mount point can be chosen arbitrarily. 
+	Because the directory itself, i.e., ``/var/tmp/busybox`` is *not* part of the bundle, the mount point can be chosen arbitrarily. 
 
-The `filtered <https://github.com/stedolan/jq>`_ ``config.json`` file corresponding to the OCI mounted ``lolcow_latest.sif`` container can be detailed as follows via ``$ sudo cat /var/tmp/lolcow/config.json | jq``: 
+The `filtered <https://github.com/stedolan/jq>`_ ``config.json`` file corresponding to the OCI mounted ``busybox_latest.sif`` container can be detailed as follows via ``$ sudo cat /var/tmp/busybox/config.json | jq``: 
 
-.. code-block:: json
+.. code-block:: json 
 
 	{
 	  "ociVersion": "1.0.1-dev",
@@ -240,7 +226,7 @@ The `filtered <https://github.com/stedolan/jq>`_ ``config.json`` file correspond
 	    ]
 	  },
 	  "root": {
-	    "path": "/var/tmp/lolcow/rootfs"
+	    "path": "/var/tmp/busybox/rootfs"
 	  },
 	  "hostname": "mrsdalloway",
 	  "mounts": [
@@ -709,21 +695,20 @@ The `filtered <https://github.com/stedolan/jq>`_ ``config.json`` file correspond
 	  }
 	}
 
-Furthermore, and through use of ``$ sudo cat /var/tmp/lolcow/config.json | jq [.root.path]``, the property
+Furthermore, and through use of ``$ sudo cat /var/tmp/busybox/config.json | jq [.root.path]``, the property
 
 .. code-block:: json
 
 	[
-	  "/var/tmp/lolcow/rootfs"
+  "/var/tmp/busybox/rootfs"
 	]
 
-identifies ``/var/tmp/lolcow/rootfs`` as the container's root filesystem, as required by the standard; this filesystem has contents:
+identifies ``/var/tmp/busybox/rootfs`` as the container's root filesystem, as required by the standard; this filesystem has contents:
 
 .. code-block:: none
 
-	$ sudo ls /var/tmp/lolcow/rootfs
-	bin   core  environment  home  lib64  mnt  proc  run   singularity  sys  usr
-	boot  dev   etc		 lib   media  opt  root  sbin  srv	    tmp  var
+	$ sudo ls /var/tmp/busybox/rootfs
+	bin  dev  environment  etc  home  proc	root  singularity  sys	tmp  usr  var
 
 .. note::
 
@@ -737,7 +722,7 @@ Beyond ``root.path``, the ``config.json`` file includes a multitude of additiona
 
 	- ``ociVersion`` - a mandatory property that identifies the version of the OCI runtime specification that the bundle is compliant with 
 
-	- ``process`` - an optional property that specifies the container process. When invoked via Singularity, subproperties such as ``args`` are populated by making use of the contents of the ``.singularity.d`` directory, e.g. via ``$ sudo cat /var/tmp/lolcow/config.json | jq [.process.args]``:
+	- ``process`` - an optional property that specifies the container process. When invoked via Singularity, subproperties such as ``args`` are populated by making use of the contents of the ``.singularity.d`` directory, e.g. via ``$ sudo cat /var/tmp/busybox/config.json | jq [.process.args]``:
 
 	.. code-block:: json
 
@@ -769,48 +754,47 @@ SIF files encapsulate filesystem bundles that conform with the OCI runtime speci
 
 .. code-block:: none
 
-	$ sudo singularity oci create -b /var/tmp/lolcow lolcow 
+	$ sudo singularity oci create -b /var/tmp/busybox busybox1
 
-In this example, the filesystem bundle is located in the directory ``/var/tmp/lolcow`` - i.e., the mount point identified above with respect to 'OCI mounting'. The ``config.json`` file, along with the ``rootfs`` and ``overlay`` filesystems, are all employed in the bootstrap process. The instance is named ``lolcow`` in this example. 
+In this example, the filesystem bundle is located in the directory ``/var/tmp/busybox`` - i.e., the mount point identified above with respect to 'OCI mounting'. The ``config.json`` file, along with the ``rootfs`` and ``overlay`` filesystems, are all employed in the bootstrap process. The instance is named ``busybox1`` in this example. 
 
 .. note::
 
 	The outcome of this creation request is truly a container **instance**. Multiple instances of the same container can easily be created by simply changing the name of the instance upon subsequent invocation requests. 
 
-The ``state`` of the container instance can be determined via ``$ sudo singularity oci state lolcow``:
+The ``state`` of the container instance can be determined via ``$ sudo singularity oci state busybox``:
 
 .. code-block:: json
 
 	{
-		"ociVersion": "1.0.1-dev",
-		"id": "lolcow",
-		"status": "created",
-		"pid": 3759,
-		"bundle": "/var/tmp/lolcow",
-		"createdAt": 1553794727524020213,
-		"attachSocket": "/var/run/singularity/instances/root/lolcow/attach.sock",
-		"controlSocket": "/var/run/singularity/instances/root/lolcow/control.sock"
+	"ociVersion": "1.0.1-dev",
+	"id": "busybox1",
+	"status": "created",
+	"pid": 6578,
+	"bundle": "/var/tmp/busybox",
+	"createdAt": 1554389921452964253,
+	"attachSocket": "/var/run/singularity/instances/root/busybox1/attach.sock",
+	"controlSocket": "/var/run/singularity/instances/root/busybox1/control.sock"
 	}
 
-.. TODO Confirmm the above is OCI stnadrads compliant ^^^ 
+.. TODO Confirmm the above is OCI standards compliant ^^^ 
 
-Whereas the above is provided via the OCI command group, container instances created in this fashion are still known to Singularity - for example: 
+Whereas the above is provided via the OCI command group, container instances created in this fashion are still 'known' to Singularity - for example: 
 
 .. code-block:: none
 
-	$ sudo singularity instance list
+	$ sudo singularity instance list 
 	INSTANCE NAME    PID      IMAGE
-	lolcow           3759     /var/tmp/lolcow/var/tmp/lolcow/rootfs
-	lolcow2          4014     /var/tmp/lolcow/var/tmp/lolcow/rootfs
-	lolcow3          3938     /var/tmp/lolcow/var/tmp/lolcow/rootfs
+	busybox1         6578     /var/tmp/busybox/var/tmp/busybox/rootfs
 
-Because these three instances are owned by ``root``, use of ``sudo`` is *required* here. 
+Because these instances are owned by ``root``, use of ``sudo`` is *required* here. 
 
 .. note::
 
 	"A container instance is a persistent and isolated version of the container image that runs in the background." The section on :ref:`Running Services <running_services>` details Singularity's ``instance`` command, and provides various examples. 
 
-The ``create`` command has a number of options available. Of these, real-time logging to a file is likely to be of particular value. 
+The ``create`` command has a number of options available. Of these, real-time logging to a file is likely to be of particular value - e.g., in deployments where auditing requirements exist. 
+
 
 .. TODO - illustrate use of cgroups 
 
@@ -820,36 +804,9 @@ The ``create`` command has a number of options available. Of these, real-time lo
 .. ------------------------------------------
 
 
-.. $ sudo singularity oci start lolcow
-.. vagrant@vagrant:~$  _______________________________________
-.. / So so is good, very good, very        \
-.. | excellent good: and yet it is not; it |
-.. | is but so so.                         |
-.. |                                       |
-.. | -- William Shakespeare, "As You Like  |
-.. \ It"                                   /
-..  ---------------------------------------
-..         \   ^__^
-..          \  (oo)\_______
-..             (__)\       )\/\
-..                 ||----w |
-..                 ||     ||
+.. $ sudo singularity oci start busybox
 
-.. ~$ sudo singularity oci state lolcow
-.. {
-.. 	"ociVersion": "1.0.1-dev",
-.. 	"id": "lolcow",
-.. 	"status": "stopped",
-.. 	"pid": 3759,
-.. 	"bundle": "/var/tmp/lolcow",
-.. 	"createdAt": 1553794727524020213,
-.. 	"startedAt": 1553799071388238359,
-.. 	"finishedAt": 1553799071604837173,
-.. 	"exitCode": 0,
-.. 	"exitDesc": "exited with code 0",
-.. 	"attachSocket": "/var/run/singularity/instances/root/lolcow/attach.sock",
-.. 	"controlSocket": "/var/run/singularity/instances/root/lolcow/control.sock"
-.. }
+.. ~$ sudo singularity oci state busybox
 
 .. TODO Review CC's responses again ... see GDocs note on March 20, 2019
 
