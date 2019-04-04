@@ -5,16 +5,27 @@
 OCI Runtime Support 
 ===================
 
-.. --------
-.. Overview
-.. --------
+--------
+Overview
+--------
 
-.. TODO Allude to connection with the OCI image spec and implementation in Singularity 
+OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes. Singularity's compliance with respect to the OCI Image Specification is considered in detail :ref:`elsewhere <sec:oci_overview>`. It is compliance in the sense of the OCI Runtime Specification that is of concern here. 
+
+Briefly, compliance with respect to the OCI Runtime Specification is addressed in Singularity through the introduction of the ``oci`` command group. Although this command group can in principle be used to provide a runtime that supports end users, in this initial documentation effort, emphasis is placed upon interoperability with Kubernetes. More specifically, interoperability with Kubernetes via the `Singularity Container Runtime Interface <https://www.sylabs.io/guides/cri/1.0/user-guide/index.html>`_. 
+
+Owing to this restricted focus, a subset of the Singularity commands in this ``oci`` command group receive attention here; specifically:
+
+	- Mounting and unmounting OCI filesystem bundles
+	- Creating OCI compliant container instances 
+	- Interoperability with Kubernetes via the Singularity CRI 
+
+Subsequent revisions of this documentation are anticipated to provide more complete coverage of this command group. 
+
+.. note:: 
+
+	All commands in the ``oci`` command group require ``root`` privileges. 
 
 .. TODO All commands require root access ... 
-
-.. TODO Intro OCI acronym
- OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes; it is the former that is emphasized here.  
 
 .. TODO Need to account for the diff bootstrap agents that could produce a SIF file for OCI runtime support ... 
 
@@ -794,6 +805,12 @@ Whereas the above is provided via the OCI command group, container instances cre
 	lolcow3          3938     /var/tmp/lolcow/var/tmp/lolcow/rootfs
 
 Because these three instances are owned by ``root``, use of ``sudo`` is *required* here. 
+
+.. note::
+
+	"A container instance is a persistent and isolated version of the container image that runs in the background." The section on :ref:`Running Services <running_services>` details Singularity's ``instance`` command, and provides various examples. 
+
+The ``create`` command has a number of options available. Of these, real-time logging to a file is likely to be of particular value. 
 
 .. TODO - illustrate use of cgroups 
 
