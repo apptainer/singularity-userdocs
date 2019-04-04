@@ -816,3 +816,41 @@ The ``create`` command has a number of options available. Of these, real-time lo
 .. Check again after I create a bundle and container ... 
 
 .. sandbox???
+
+
+---------------------------------
+Unmounting OCI Filesystem Bundles
+---------------------------------
+
+Currently mounted OCI filesystem bundles can be easily verified: 
+
+.. code-block:: none
+
+	$ sudo df -k
+	Filesystem                   1K-blocks    Used Available Use% Mounted on
+	udev                            475192       0    475192   0% /dev
+	tmpfs                           100916    1608     99308   2% /run
+	/dev/mapper/vagrant--vg-root  19519312 2620752  15883984  15% /
+	tmpfs                           504560       0    504560   0% /dev/shm
+	tmpfs                             5120       0      5120   0% /run/lock
+	tmpfs                           504560       0    504560   0% /sys/fs/cgroup
+	tmpfs                           100912       0    100912   0% /run/user/900
+	overlay                       19519312 2620752  15883984  15% /var/tmp/busybox/rootfs
+
+To unmount such a bundle, the follow command should be issued:
+
+.. code-block:: none
+
+	$ sudo singularity oci umount /var/tmp/busybox
+
+To verify that the bundle has been unmounted, the ``df`` command can be issued again.  
+
+.. note:: 
+
+	The argument provided to ``oci umount`` above is the name of the bundle path, ``/var/tmp/busybox/rootfs``, as opposed to the mount point for the overlay filesystem, ``/var/tmp/busybox/rootfs``. 
+
+.. TODO Affect on running instances ... 
+
+
+
+.. TODO - BP - umount ??? 
