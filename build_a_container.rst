@@ -199,7 +199,7 @@ file as a json.
 =============
 
 This command allows you to set a different library.  (The default library is
-"https://cloud.sylabs.io/library")
+"https://library.sylabs.io")
 
 ``--notest``
 ============
