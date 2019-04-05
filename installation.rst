@@ -56,6 +56,7 @@ similar with other package managers.
         libgpgme11-dev \
         squashfs-tools \
         libseccomp-dev \
+        wget \
         pkg-config
 
 ``yum``
@@ -107,6 +108,22 @@ for dependency resolution.
 
     $ go get -u github.com/golang/dep/cmd/dep
 
+==================================
+Install Singularity from a release
+==================================
+
+You can install Singularity from one of our releases. To see a full list, visit <https://github.com/sylabs/singularity/releases>.
+After that you can just run the following commands to proceed with the installation.
+
+.. code-block:: none
+
+    $ export VERSION=3.0.3 && # adjust this as necessary \
+        mkdir -p $GOPATH/src/github.com/sylabs && \
+        cd $GOPATH/src/github.com/sylabs && \
+        wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
+        tar -xzf singularity-${VERSION}.tar.gz && \
+        cd singularity 
+
 ===================
 Install from source
 ===================
@@ -125,49 +142,17 @@ When installing from source, you can decide to install from either a **tag**, a
 
 - **master branch**: The ``master`` branch contains the latest, bleeding edge version of Singularity. This is the default branch when you clone the source code, so you don't have to check out any new branches to install it. The ``master`` branch changes quickly and may be unstable.
 
---------------------------------------------------------------------
-Download Singularity repo (and optionally check out a tag or branch)
---------------------------------------------------------------------
-
 To ensure that the Singularity source code is downloaded to the appropriate
 directory use these commands.
 
 .. code-block:: none
 
-    $ go get -d github.com/sylabs/singularity
-
-Go will complain that there are no Go files, but it will still  download the
-Singularity source code to the appropriate directory within the ``$GOPATH``.
-
-Now checkout the version of Singularity you want to install.
-
-.. code-block:: none
-
-    $ export VERSION=v3.0.3 # or another tag or branch if you like && \
-        cd $GOPATH/src/github.com/sylabs/singularity && \
-        git fetch && \
-        git checkout $VERSION # omit this command to install the latest bleeding edge code from master
-
-------------------------------------------------
-Download and install Singularity from a release
-------------------------------------------------
-
-You can also install Singularity from one of our releases. For this, you can simply download a release from <https://github.com/sylabs/singularity/releases>`_.
-After that you can just run the following commands to proceed with the installation.
-
-.. note::
-
-    Make sure to update the release version before running the following commands.
-
-.. code-block:: none
-
-    $ export VERSION=3.0.3 && # adjust this as necessary \
-        mkdir -p $GOPATH/src/github.com/sylabs && \
+    $ mkdir -p $GOPATH/src/github.com/sylabs && \
         cd $GOPATH/src/github.com/sylabs && \
-        wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
-        tar -xzf singularity-${VERSION}.tar.gz && \
-        cd ./singularity && \
-        ./mconfig
+        git clone https://github.com/sylabs/singularity.git && \
+        cd singularity && \
+        git checkout v3.0.3
+
 
 -------------------
 Compile Singularity
