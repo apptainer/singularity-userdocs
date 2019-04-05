@@ -13,13 +13,13 @@ Overview
 
 OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes. Singularity's compliance with respect to the OCI Image Specification is considered in detail :ref:`elsewhere <sec:oci_overview>`. It is compliance in the sense of the OCI Runtime Specification that is of concern here. 
 
-Briefly, compliance with respect to the OCI Runtime Specification is addressed in Singularity through the introduction of the ``oci`` command group. Although this command group can in principle be used to provide a runtime that supports end users, in this initial documentation effort, emphasis is placed upon interoperability with Kubernetes. More specifically, interoperability with Kubernetes via the `Singularity Container Runtime Interface <https://www.sylabs.io/guides/cri/1.0/user-guide/index.html>`_. 
+Briefly, compliance with respect to the OCI Runtime Specification is addressed in Singularity through the introduction of the ``oci`` command group. Although this command group can in principle be used to provide a runtime that supports end users, in this initial documentation effort, emphasis is placed upon interoperability with Kubernetes; more specifically, interoperability with Kubernetes via the `Singularity Container Runtime Interface <https://www.sylabs.io/guides/cri/1.0/user-guide/index.html>`_. 
 
 Owing to this restricted focus, a subset of the Singularity commands in this ``oci`` command group receive attention here; specifically:
 
 	- Mounting and unmounting OCI filesystem bundles
 	- Creating OCI compliant container instances 
-	- Interoperability with Kubernetes via the Singularity CRI 
+	- Context for integration with Kubernetes via the Singularity CRI 
 
 Subsequent revisions of this documentation are anticipated to provide more complete coverage of this command group. 
 
@@ -66,7 +66,7 @@ For the purpose of boostrapping the creation of an OCI compliant runtime, this S
 
 	$ sudo singularity oci mount ./busybox_latest.sif /var/tmp/busybox
 
-Because ``mount`` is a command requiring privileged access, so does this OCI variant in Singularity. By issuing this command, the Singularity container runtime encapsulated in the SIF file ``busybox_latest.sif`` is mounted on the mount point ``/var/tmp/busybox`` as an ``overlay`` file system, 
+By issuing the ``mount`` command, the Singularity container runtime encapsulated in the SIF file ``busybox_latest.sif`` is mounted on the mount point ``/var/tmp/busybox`` as an ``overlay`` file system, 
 
 .. code-block:: none
 
@@ -861,9 +861,9 @@ To verify that the bundle has been unmounted, the ``df`` command can be issued a
 Kubernetes Integration
 ----------------------
 
-As noted at the :ref:`outset here <sec:oci_runtime_overview>`, in documenting support for an OCI runtime in Singularity is initially driven by the need to integrate with Kubernetes. Simply stated, Kubernetes is an open-source system for orchestrating containers; developed originally at Google, Kubernetes was contributed as seed technology to the Cloud Native Compute Foundation (CNCF). At this point, Kubernetes is regarded as a Graduated Project by CNCF, and is being used widely in production deployments. Even though Kubernetes emphasizes an orientation around services, it is appealing to those seeking to orchestrate containers having compute-driven requirements. Furthermore, emerging classes of workload in AI for example, appear to have requirements that are best addressed by a combination of service and traditional HPC infrastructures. Thus there is ample existing, as well as emerging, interest in integrating Singularity containers with Kubernetes. 
+As noted at the :ref:`outset here <sec:oci_runtime_overview>`, in documenting support for an OCI runtime in Singularity, the impetus is initially derived from the requirement to integrate with `Kubernetes <https://kubernetes.io/>`_. Simply stated, Kubernetes is an open-source system for orchestrating containers; developed originally at Google, Kubernetes was contributed as seed technology to the `Cloud Native Compute Foundation <https://www.cncf.io/>`_ (CNCF). At this point, Kubernetes is regarded as a Graduated Project by CNCF, and is being used widely in production deployments. Even though Kubernetes emphasizes an orientation around services, it is appealing to those seeking to orchestrate containers having compute-driven requirements. Furthermore, emerging classes of workload in AI for example, appear to have requirements that are best addressed by a combination of service and traditional HPC infrastructures. Thus there is ample existing, as well as emerging, interest in integrating Singularity containers with Kubernetes. 
 
-The connection with support for the OCI runtime documented here, within the context of a Singularity-Kubernetes integration, can be well established through an architectural schematic. Dating back to the introduction of a Container Runtime Interface (CRI) for Kubernetes in late 2016, the schematic below is modified version of the original presented in `a Kubernetes blog post <https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/>`_. The lower branch of this schematic is essentially a reproduction of the original; it does however, place emphasis on OCI compliance in terms of the CRI and containers (the runtimes as well as their instances). 
+The connection with support for the OCI runtime documented here, within the context of a Singularity-Kubernetes integration, can be best established through an architectural schematic. Dating back to the introduction of a Container Runtime Interface (CRI) for Kubernetes in late 2016, the schematic below is a modified version of the original presented in `a Kubernetes blog post <https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/>`_. The lower branch of this schematic is essentially a reproduction of the original; it does however, place emphasis on OCI compliance in terms of the CRI and containers (the runtime as well as their instances). 
 
 .. image:: sycri_ociruntime_implementation.png
 
@@ -873,7 +873,7 @@ From this schematic it is evident that integrating Singularity containers with K
 	
 	2. Implementation of an OCI runtime in Singularity
 
-The implementation of a CRI for Singularity is the emphasis of a separate and distinct open-source project; the implementation of this CRI is documented here. For the rationale conveyed through the architectural schematic, Singularity CRI's dependence upon the Singularity with OCI runtime support is made clear as `an installation prerequisite <https://www.sylabs.io/guides/cri/1.0/user-guide/installation.html?highlight=oci#install-dependencies>`_. User-facing documentation for Singularity CRI details usage in a Kubernetes context - usage, of course, that involves orchestration of a Singularity container obtained from the `Sylabs Cloud Container Library <https://cloud.sylabs.io/library>`_. Because the entire Kubernetes-based deployment can exist within a single instance of a Singularity container, Singularity CRI can be easily evaluated via Sykube; inspired by `Minikube <https://kubernetes.io/docs/setup/minikube/)>`_, `use of Sykube <https://www.sylabs.io/guides/cri/1.0/user-guide/sykube.html>`_ is included in the documentation for Singularity CRI.
+The implementation of a CRI for Singularity is the emphasis of a separate and distinct `open source project <https://github.com/sylabs/singularity-cri>`_; the implementation of this CRI is documented here. For the rationale conveyed through the architectural schematic, Singularity CRI's dependence upon Singularity with OCI runtime support is made clear as `an installation prerequisite <https://www.sylabs.io/guides/cri/1.0/user-guide/installation.html?highlight=oci#install-dependencies>`_. User-facing documentation for Singularity CRI details usage in a Kubernetes context - usage, of course, that involves orchestration of a Singularity container obtained from the `Sylabs Cloud Container Library <https://cloud.sylabs.io/library>`_. Because the entire Kubernetes-based deployment can exist within a single instance of a Singularity container, Singularity CRI can be easily evaluated via Sykube; inspired by `Minikube <https://kubernetes.io/docs/setup/minikube/)>`_, `use of Sykube <https://www.sylabs.io/guides/cri/1.0/user-guide/sykube.html>`_ is included in the documentation for Singularity CRI.
 
 Documenting the implementation of an OCI-compliant runtime for Singularity has been the emphasis here. Although this standalone runtime can be used by end users independent of anything to do with Singularity and Kubernetes, the primary purpose here has been documenting it within this integrated context. In other words, by making use of the OCI runtime presented by Singularity, commands originating from Kubernetes (see, e.g., `Basic Usage <https://www.sylabs.io/guides/cri/1.0/user-guide/basic_usage.html>`_ in the Singularity CRI documentation) have impact ultimately on Singularity containers via the CRI. Singularity CRI is implemented as a `gRPC <https://grpc.io/>`_ server - i.e., a persistent service available to `Kubelets <https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/>`_ (node agents). Taken together, this integration allows Singularity containers to be manipulated directly from Kubernetes.  
 
@@ -887,3 +887,13 @@ Documenting the implementation of an OCI-compliant runtime for Singularity has b
 .. TODO - BP - umount ??? 
 
 
+.. CC's suggested workflow:
+
+.. singularity build /tmp/test.sif docker://busybox
+.. sudo singularity oci mount /tmp/test.sif /var/tmp/busy
+.. sudo singularity oci create -b /var/tmp/busy testing > /dev/null 2>&1
+.. sudo singularity oci start testing
+.. sudo singularity oci exec testing /bin/sh
+.. sudo singularity oci kill testing
+.. sudo singularity oci delete testing
+.. sudo singularity oci umount /var/tmp/busy
