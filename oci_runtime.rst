@@ -1,6 +1,9 @@
 .. _oci_runtime:
 
 
+.. TODO-MUST something with the long json snippet ... 
+
+
 ===================
 OCI Runtime Support 
 ===================
@@ -13,15 +16,14 @@ Overview
 
 OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes. Singularity's compliance with respect to the OCI Image Specification is considered in detail :ref:`elsewhere <sec:oci_overview>`. It is compliance in the sense of the OCI Runtime Specification that is of concern here. 
 
-Briefly, compliance with respect to the OCI Runtime Specification is addressed in Singularity through the introduction of the ``oci`` command group. Although this command group can in principle be used to provide a runtime that supports end users, in this initial documentation effort, emphasis is placed upon interoperability with Kubernetes; more specifically, interoperability with Kubernetes via the `Singularity Container Runtime Interface <https://www.sylabs.io/guides/cri/1.0/user-guide/index.html>`_. 
+Briefly, compliance with respect to the OCI Runtime Specification is addressed in Singularity through the introduction of the ``oci`` command group. Although this command group can, in principle, be used to provide a runtime that supports end users, in this initial documentation effort, emphasis is placed upon interoperability with Kubernetes; more specifically, interoperability with Kubernetes via the `Singularity Container Runtime Interface <https://www.sylabs.io/guides/cri/1.0/user-guide/index.html>`_. 
 
-Owing to this restricted focus, a subset of the Singularity commands in this ``oci`` command group receive attention here; specifically:
+Owing to this restricted focus, a subset of the Singularity ``oci`` command group receives attention here; specifically:
 
 	- Mounting and unmounting OCI filesystem bundles
 	- Creating OCI compliant container instances 
-	- Context for integration with Kubernetes via the Singularity CRI 
 
-Subsequent revisions of this documentation are anticipated to provide more complete coverage of this command group. 
+Some context for integration with Kubernetes via the Singularity CRI is provided at the end of the section.
 
 .. note:: 
 
@@ -40,9 +42,9 @@ Mounted OCI Filesystem Bundles
 Mounting an OCI Filesystem Bundle
 =================================
 
-For the purpose of illustration, use of `BusyBox <https://busybox.net/about.html>`_ will be made here. 
+`BusyBox <https://busybox.net/about.html>`_ is used here for the purpose of illustration.
 
-Suppose the Singularity Image Format (SIF) file ``busybox_latest.sif`` exists locally. (Recall that
+Suppose the Singularity Image Format (SIF) file ``busybox_latest.sif`` exists locally. (Recall: 
 
 .. code-block:: none
 
@@ -58,15 +60,15 @@ Suppose the Singularity Image Format (SIF) file ``busybox_latest.sif`` exists lo
 	INFO:    Creating SIF file...
 	INFO:    Build complete: busybox_latest.sif
 
-is one way to bootstrap creation of this image in SIF that *retains* a local copy. Additional approaches and details can be found in the section :ref:`Support for Docker and OCI <singularity-and-docker>`). 
+This is one way to bootstrap creation of this image in SIF that *retains* a local copy - i.e., a local copy of the SIF file *and* a cached copy of the OCI blobs. Additional approaches and details can be found in the section :ref:`Support for Docker and OCI <singularity-and-docker>`). 
 
-For the purpose of boostrapping the creation of an OCI compliant runtime, this SIF file can be mounted as follows: 
+For the purpose of boostrapping the creation of an OCI compliant container, this SIF file can be mounted as follows: 
 
 .. code-block:: none 
 
 	$ sudo singularity oci mount ./busybox_latest.sif /var/tmp/busybox
 
-By issuing the ``mount`` command, the Singularity container runtime encapsulated in the SIF file ``busybox_latest.sif`` is mounted on the mount point ``/var/tmp/busybox`` as an ``overlay`` file system, 
+By issuing the ``mount`` command, the Singularity container runtime encapsulated in the SIF file ``busybox_latest.sif`` is mounted on ``/var/tmp/busybox`` as an ``overlay`` file system, 
 
 .. code-block:: none
 
@@ -702,7 +704,7 @@ Furthermore, and through use of ``$ sudo cat /var/tmp/busybox/config.json | jq [
 .. code-block:: json
 
 	[
-  	"/var/tmp/busybox/rootfs"
+  		"/var/tmp/busybox/rootfs"
 	]
 
 identifies ``/var/tmp/busybox/rootfs`` as the container's root filesystem, as required by the standard; this filesystem has contents:
@@ -734,7 +736,7 @@ Beyond ``root.path``, the ``config.json`` file includes a multitude of additiona
 		  ]
 		]
 
-	where ``run`` equates to the :ref:`familiar runscript <sec:inspect_container_metadata>` for this container. 
+	where ``run`` equates to the :ref:`familiar runscript <sec:inspect_container_metadata>` for this container. If image creation is bootstrapped via a Docker or OCI agent, Singularity will make use of ``ENTRYPOINT`` or ``CMD`` (from the OCI image) to populate ``args``; for additional discussion, please refer to :ref:`Directing Execution <sec:def_files_execution>` in the section :ref:`Support for Docker and OCI <singularity-and-docker>`. 
 
 For a comprehensive discussion of all the ``config.json`` file properties, refer to the `implementation guide <https://github.com/opencontainers/runtime-spec/blob/master/config.md>`_. 
 
@@ -745,18 +747,24 @@ a writable file system on an otherwise immutable read-only container; thus they 
 
 .. note::
 
-	SIF is stated to be an extensible format capable of encasulating the entire container runtime in a single file. By encapsulating a filesystem bundle that conforms with the OCI runtime specification, the extensibility of SIF is demonstrably evident.
+	SIF is stated to be an extensible format capable of encasulating the entire container runtime in a single file. By encapsulating a filesystem bundle that conforms with the OCI runtime specification, the extensibility of SIF is evident.
 
 
 ------------------------------------------
 Creating OCI Compliant Container Instances 
 ------------------------------------------
 
-SIF files encapsulate filesystem bundles that conform with the OCI runtime specification. By 'OCI mounting' a SIF file (see above), this encapsulated filesystem bundle is exposed. Once exposed, the filesystem bundle can be used to bootstrap the creation of an OCI compliant container instance as follows: 
+SIF files encapsulate the OCI runtime. By 'OCI mounting' a SIF file (see above), this encapsulated runtime is revealed; please refer to the note below for additional details. Once revealed, the filesystem bundle can be used to bootstrap the creation of an OCI compliant container instance as follows: 
 
 .. code-block:: none
 
 	$ sudo singularity oci create -b /var/tmp/busybox busybox1
+
+.. note::
+
+	Data for the ``config.json`` file exists within the SIF file as a descriptor for images pulled or built from Docker/OCI registries. For images sourced elsewhere, a default ``config.json`` file is created when the ``singularity oci mount ...`` command is issued. 
+
+	Upon invocation, ``singularity oci mount ...`` also mounts the root filesystem stored in the SIF file on ``/bundle/rootfs``, and establishes an overlay filesystem on the mount point ``/bundle/overlay``. 
 
 In this example, the filesystem bundle is located in the directory ``/var/tmp/busybox`` - i.e., the mount point identified above with respect to 'OCI mounting'. The ``config.json`` file, along with the ``rootfs`` and ``overlay`` filesystems, are all employed in the bootstrap process. The instance is named ``busybox1`` in this example. 
 
@@ -764,7 +772,7 @@ In this example, the filesystem bundle is located in the directory ``/var/tmp/bu
 
 	The outcome of this creation request is truly a container **instance**. Multiple instances of the same container can easily be created by simply changing the name of the instance upon subsequent invocation requests. 
 
-The ``state`` of the container instance can be determined via ``$ sudo singularity oci state busybox``:
+The ``state`` of the container instance can be determined via ``$ sudo singularity oci state busybox1``:
 
 .. code-block:: json
 
@@ -779,21 +787,7 @@ The ``state`` of the container instance can be determined via ``$ sudo singulari
 	"controlSocket": "/var/run/singularity/instances/root/busybox1/control.sock"
 	}
 
-.. TODO Confirmm the above is OCI standards compliant ^^^ 
-
-Whereas the above is provided via the OCI command group, container instances created in this fashion are still 'known' to Singularity - for example: 
-
-.. code-block:: none
-
-	$ sudo singularity instance list 
-	INSTANCE NAME    PID      IMAGE
-	busybox1         6578     /var/tmp/busybox/var/tmp/busybox/rootfs
-
-Because these instances are owned by ``root``, use of ``sudo`` is *required* here. 
-
-.. note::
-
-	"A container instance is a persistent and isolated version of the container image that runs in the background." The section on :ref:`Running Services <running_services>` details Singularity's ``instance`` command, and provides various examples. 
+Container state, as conveyed via these properties, is in compliance with the OCI runtime specification as detailed `here <https://github.com/opencontainers/runtime-spec/blob/master/runtime.md#state>`_. 
 
 The ``create`` command has a number of options available. Of these, real-time logging to a file is likely to be of particular value - e.g., in deployments where auditing requirements exist. 
 
@@ -824,38 +818,22 @@ The ``create`` command has a number of options available. Of these, real-time lo
 Unmounting OCI Filesystem Bundles
 ---------------------------------
 
-Currently mounted OCI filesystem bundles can be easily verified: 
-
-.. code-block:: none
-
-	$ sudo df -k
-	Filesystem                   1K-blocks    Used Available Use% Mounted on
-	udev                            475192       0    475192   0% /dev
-	tmpfs                           100916    1608     99308   2% /run
-	/dev/mapper/vagrant--vg-root  19519312 2620752  15883984  15% /
-	tmpfs                           504560       0    504560   0% /dev/shm
-	tmpfs                             5120       0      5120   0% /run/lock
-	tmpfs                           504560       0    504560   0% /sys/fs/cgroup
-	tmpfs                           100912       0    100912   0% /run/user/900
-	overlay                       19519312 2620752  15883984  15% /var/tmp/busybox/rootfs
-
-To unmount such a bundle, the follow command should be issued:
+To unmount a mounted OCI filesystem bundle, the following command should be issued:
 
 .. code-block:: none
 
 	$ sudo singularity oci umount /var/tmp/busybox
 
-To verify that the bundle has been unmounted, the ``df`` command can be issued again.  
-
 .. note:: 
 
-	The argument provided to ``oci umount`` above is the name of the bundle path, ``/var/tmp/busybox/rootfs``, as opposed to the mount point for the overlay filesystem, ``/var/tmp/busybox/rootfs``. 
+	The argument provided to ``oci umount`` above is the name of the bundle path, ``/var/tmp/busybox``, as opposed to the mount point for the overlay filesystem, ``/var/tmp/busybox/rootfs``. 
 
 .. TODO Affect on running instances ... 
 
 
 
 .. https://www.sylabs.io/guides/cri/1.0/user-guide/installation.html?highlight=oci#install-dependencies 
+
 
 ----------------------
 Kubernetes Integration
