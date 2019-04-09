@@ -14,7 +14,7 @@ OCI Runtime Support
 Overview
 --------
 
-OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes. Singularity's compliance with respect to the OCI Image Specification is considered in detail :ref:`elsewhere <sec:oci_overview>`. It is compliance in the sense of the OCI Runtime Specification that is of concern here. 
+OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes. Singularity's compliance with respect to the OCI Image Specification is considered in detail :ref:`elsewhere <sec:oci_overview>`. It is Singularity's compliance with the OCI Runtime Specification that is of concern here. 
 
 Briefly, compliance with respect to the OCI Runtime Specification is addressed in Singularity through the introduction of the ``oci`` command group. Although this command group can, in principle, be used to provide a runtime that supports end users, in this initial documentation effort, emphasis is placed upon interoperability with Kubernetes; more specifically, interoperability with Kubernetes via the `Singularity Container Runtime Interface <https://www.sylabs.io/guides/cri/1.0/user-guide/index.html>`_. 
 
@@ -68,7 +68,7 @@ For the purpose of boostrapping the creation of an OCI compliant container, this
 
 	$ sudo singularity oci mount ./busybox_latest.sif /var/tmp/busybox
 
-By issuing the ``mount`` command, the Singularity container runtime encapsulated in the SIF file ``busybox_latest.sif`` is mounted on ``/var/tmp/busybox`` as an ``overlay`` file system, 
+By issuing the ``mount`` command, the root filesystem encapsulated in the SIF file ``busybox_latest.sif`` is mounted on ``/var/tmp/busybox`` as an ``overlay`` file system, 
 
 .. code-block:: none
 
@@ -747,7 +747,7 @@ a writable file system on an otherwise immutable read-only container; thus they 
 
 .. note::
 
-	SIF is stated to be an extensible format capable of encasulating the entire container runtime in a single file. By encapsulating a filesystem bundle that conforms with the OCI runtime specification, the extensibility of SIF is evident.
+	SIF is stated to be an extensible format; by encapsulating a filesystem bundle that conforms with the OCI runtime specification, this extensibility is evident.
 
 
 ------------------------------------------
