@@ -101,32 +101,32 @@ Then, set up your environment for Go.
         echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
         source ~/.bashrc
 
-If you are installing Singularity v3.0.0 you will also need to install ``dep``
+If you are installing Singularity >=v3.0.0 you will also need to install ``dep``
 for dependency resolution.
 
 .. code-block:: none
 
     $ go get -u github.com/golang/dep/cmd/dep
 
-==================================
-Install Singularity from a release
-==================================
+===================================
+Download Singularity from a release
+===================================
 
-You can install Singularity from one of our releases. To see a full list, visit <https://github.com/sylabs/singularity/releases>.
+You can download Singularity from one of our releases. To see a full list, visit <https://github.com/sylabs/singularity/releases>.
 After that you can just run the following commands to proceed with the installation.
 
 .. code-block:: none
 
-    $ export VERSION=3.0.3 && # adjust this as necessary \
+    $ export VERSION=3.1.1 && # adjust this as necessary \
         mkdir -p $GOPATH/src/github.com/sylabs && \
         cd $GOPATH/src/github.com/sylabs && \
         wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         tar -xzf singularity-${VERSION}.tar.gz && \
         cd singularity 
 
-===================
-Install from source
-===================
+====================
+Download from source
+====================
 
 The following commands will install Singularity from the `GitHub repo
 <https://github.com/sylabs/singularity>`_ to ``/usr/local``. This method will
@@ -138,7 +138,7 @@ When installing from source, you can decide to install from either a **tag**, a
 
 - **tag**: GitHub tags form the basis for releases, so installing from a tag is the same as downloading and installing a `specific release <https://github.com/sylabs/singularity/releases>`_.  Tags are expected to be relatively stable and well-tested.
 
-- **release branch**: A release branch represents the latest version of a minor release with all the newest bug fixes and enhancements (even those that have not yet made it into a point release).  For instance, to install v3.0 with the latest bug fixes and enhancements checkout ``release-3.0``.  Release branches may be less stable than code in a tagged point release.
+- **release branch**: A release branch represents the latest version of a minor release with all the newest bug fixes and enhancements (even those that have not yet made it into a point release).  For instance, to install v3.1 with the latest bug fixes and enhancements checkout ``release-3.1``.  Release branches may be less stable than code in a tagged point release.
 
 - **master branch**: The ``master`` branch contains the latest, bleeding edge version of Singularity. This is the default branch when you clone the source code, so you don't have to check out any new branches to install it. The ``master`` branch changes quickly and may be unstable.
 
@@ -151,7 +151,7 @@ directory use these commands.
         cd $GOPATH/src/github.com/sylabs && \
         git clone https://github.com/sylabs/singularity.git && \
         cd singularity && \
-        git checkout v3.0.3
+        git checkout v3.1.1
 
 
 -------------------
@@ -226,7 +226,7 @@ build and install the RPM.
 
 .. code-block:: none
 
-    $ export VERSION=3.0.3 && # adjust this as necessary \
+    $ export VERSION=3.1.1 && # adjust this as necessary \
         wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         rpmbuild -tb singularity-${VERSION}.tar.gz && \
         sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-$VERSION-1.el7.x86_64.rpm && \
@@ -256,7 +256,7 @@ Remove an old version
 When you run ``sudo make install``, the command lists files as they are
 installed. They must all be removed in order to completely remove Singularity.
 
-For example, in a standard installation of Singularity 3.0.1 (when building from
+For example, in a standard installation of Singularity 3.0.1 and beyond (when building from
 source) you must remove all of these files and directories to completely remove
 Singularity.
 
@@ -478,7 +478,7 @@ different value for the ``$VM`` variable if you like.)
 
 .. code-block:: none
 
-    $ export VM=sylabs/singularity-3.0-ubuntu-bionic64 && \
+    $ export VM=sylabs/singularity-3.1-ubuntu-bionic64 && \
         vagrant init $VM && \
         vagrant up && \
         vagrant ssh
@@ -488,7 +488,7 @@ You can check the installed version of Singularity with the following:
 .. code-block:: none
 
     vagrant@vagrant:~$ singularity version
-    3.0.3-1
+    3.1.1-1
 
 
 Of course, you can also start with a plain OS Vagrant box as a base and then
@@ -541,7 +541,7 @@ to this:
         https://www.sylabs.io/guides/2.5.2/user-guide/introduction.html#security-and-privilege-escalation
 
         - Installation:
-        https://www.sylabs.io/guides/3.0/user-guide/installation.html
+        https://www.sylabs.io/guides/3.1/user-guide/installation.html
 
     If you have questions about any of the above, you can email the open source
     list (singularity@lbl.gov), join the open source slack channel
