@@ -449,24 +449,20 @@ Install the following programs:
 Mac
 ---
 
-You need to install several programs. This example uses `Homebrew
-<https://brew.sh/>`_ but you can also install these tools using the GUI.
+Singularity is available via Vagrant (installable with `Homebrew <https://brew.sh>`_ or manually) or with the Singularity Desktop for macOS (Alpha Preview).
 
-First, optionally install Homebrew.
-
+With Homebrew:
 .. code-block:: none
 
     /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
-
-Next, install Vagrant and the necessary bits (either using this method or by
-downloading and installing the tools manually).
-
-.. code-block:: none
-
-    $ brew cask install virtualbox && \
+    brew cask install virtualbox && \
         brew cask install vagrant && \
         brew cask install vagrant-manager
 
+With Singularity Desktop for macOS (Alpha Preview):
+
+The disk image file is available `here <http://repo.sylabs.io/desktop/singularity-desktop-0.0.1alpha.dmg>`_.
+More information can be found `here <https://www.sylabs.io/singularity-desktop-macos/>`_.
 
 =======================
 Singularity Vagrant Box
