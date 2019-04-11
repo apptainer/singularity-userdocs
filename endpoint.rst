@@ -33,35 +33,35 @@ To ``add`` an endpoint (local to current user):
 
 .. code-block:: none
 
-    $ singularity remote add <i>name</i> <i>uri</i>
+    $ singularity remote add *name* uri
 
 To ``add`` an global endpoint (available to all users on the system):
 
 .. code-block:: none
 
-    $ sudo singularity remote add -g <i>name</i> <i>uri</i>
+    $ sudo singularity remote add -g name uri
 
 Conversely, to ``remove`` an endpoint:
 
 .. code-block:: none
 
-    $ sudo singularity remote remove <i>name</i>
+    $ sudo singularity remote remove name
 
 Setting a default endpoint:
 
 .. code-block:: none
 
-    $ singularity remote use <i>name</i>
+    $ singularity remote use name
 
 Before using an endpoint, you'll need to ``login`` to it.  This will require an access token obtained from your keystore.  See `http://cloud.sylabs.io/auth` for an example.
 
 .. code-block:: none
 
-    $ singularity remote login <i>name</i>
+    $ singularity remote login name
 
 To check ``status`` of an endpoint and the various services:
 
 .. code-block:: none
 
-    $ singularity remote status <i>name</i>
+    $ singularity remote status name
 
