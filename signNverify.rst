@@ -60,7 +60,7 @@ like so:.
 
 .. code-block:: none
 
-    $ singularity keys newpair
+    $ singularity key newpair
     Enter your name (e.g., John Doe) : Dave Godlove
     Enter your email address (e.g., john.doe@example.com) : d@sylabs.io
     Enter optional comment (e.g., development keys) : demo
@@ -72,7 +72,7 @@ locally.`
 
 .. code-block:: none
 
-    $ singularity keys list
+    $ singularity key list
     Public key listing (/home/david/.singularity/sypgp/pgp-public):
 
     0) U: Dave Godlove (demo) <d@sylabs.io>
@@ -93,7 +93,7 @@ using the fingerprint like so:
 
 .. code-block:: none
 
-    $ singularity keys push 135E426D67D8416DE1D6AC7FFED5BBA38EE0DC4A
+    $ singularity key push 135E426D67D8416DE1D6AC7FFED5BBA38EE0DC4A
     public key `135E426D67D8416DE1D6AC7FFED5BBA38EE0DC4A` pushed to server successfully
 
 This will allow others to verify images that you have signed.
@@ -103,7 +103,7 @@ again like so.
 
 .. code-block:: none
 
-    $ singularity keys search Godlove
+    $ singularity key search Godlove
     Search results for 'Godlove'
 
     Type bits/keyID     Date       User ID
@@ -111,7 +111,7 @@ again like so.
     pub  4096R/8EE0DC4A 2018-10-08 Dave Godlove (demo) <d@sylabs.io>
     --------------------------------------------------------------------------------
 
-    $ singularity keys pull 8EE0DC4A
+    $ singularity key pull 8EE0DC4A
     1 key(s) fetched and stored in local cache /home/david/.singularity/sypgp/pgp-public
 
 But note that this only restores the *public* key (used for verifying) to your
