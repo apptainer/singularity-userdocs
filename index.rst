@@ -19,6 +19,7 @@ User Guide
    Environment and Metadata <environment_and_metadata>
    OCI Runtime Support <oci_runtime>
    Sign and Verify <signNverify>
+   Plugins <plugins>
    Security Options <security_options>
    Network Options <networking>
    Cgroups Support <cgroups>
