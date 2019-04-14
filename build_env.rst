@@ -86,13 +86,13 @@ Most of the ``cache clean`` and ``cache list`` flags can be interchanged, (``--n
 
 It's worth noting that by running the following command: (with no flags)
 
-..code-block:: none
+.. code-block:: none
 
     $ singularity cache clean
 
 By default will just clean the blob cache, but if you do:
 
-..code-block:: none
+.. code-block:: none
 
     $ singularity cache clean --all
 
