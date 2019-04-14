@@ -14,25 +14,6 @@ and/or vendor-specific functionality. Currently, plugins are able to add
 commands and flags to Singularity. In the future, plugins will also be able to
 interface with more complex subsystems of the Singularity runtime.
 
-User's can interact with plugins via the ``singularity plugin`` command.
-
-.. code-block:: none
-
-    $ singularity plugin help
-    Usage:
-      singularity [global options...] plugin [plugin options...] <command>
-    
-    Available Commands:
-      compile     Compile a singularity plugin
-      disable     disable an installed singularity plugin
-      enable      Enable an installed singularity plugin
-      inspect     Inspect a singularity plugin (either an installed one or an image)
-      install     Install a singularity plugin
-      list        List installed singularity plugins
-      uninstall   Uninstall removes the named plugin from the system
-    
-    Run 'singularity plugin --help' for more detailed usage information.
-
 -------------
 Using Plugins
 -------------
