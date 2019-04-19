@@ -1,3 +1,7 @@
+.. _config.json:
+
+.. code-block:: json
+
 {
   "ociVersion": "1.0.1-dev",
   "process": {
