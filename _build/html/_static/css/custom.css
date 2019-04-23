@@ -1,0 +1,7 @@
+/*
+ Add the corresponding max size (500px) to code blocks and allow vertical scrollbar
+*/
+.highlight{
+  max-height: 500px;
+  overflow-y: scroll;
+}

@@ -117,12 +117,12 @@ After that you can just run the following commands to proceed with the installat
 
 .. code-block:: none
 
-    $ export VERSION=3.1.1 && # adjust this as necessary \
+    $ export VERSION= {InstallationVersion} && # adjust this as necessary \
         mkdir -p $GOPATH/src/github.com/sylabs && \
         cd $GOPATH/src/github.com/sylabs && \
         wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         tar -xzf singularity-${VERSION}.tar.gz && \
-        cd singularity 
+        cd singularity
 
 ====================
 Download from source
