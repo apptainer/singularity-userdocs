@@ -129,16 +129,16 @@ before the fingerprint, check the example:
 .. code-block:: none
 
     # search for key ID:
-    $ singularity keys search 0x8883491F4268F173C6E5DC49EDECE4F3F38D871E
+    $ singularity key search 0x8883491F4268F173C6E5DC49EDECE4F3F38D871E
 
     # search for the sort ID:
-    $ singularity keys search 0xF38D871E
+    $ singularity key search 0xF38D871E
 
     # search for user:
-    $ singularity keys search Godlove
+    $ singularity key search Godlove
 
     # search for email:
-    $ singularity keys search @gmail.com
+    $ singularity key search @gmail.com
 
 Signing and validating your own containers
 ==========================================
