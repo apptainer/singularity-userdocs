@@ -81,6 +81,8 @@ Singularity containers.
 
     $ sudo singularity build lolcow.sif docker://godlovedc/lolcow
 
+.. _create_a_writable_container:
+
 -------------------------------------------
 Creating writable ``--sandbox`` directories
 -------------------------------------------
