@@ -41,7 +41,9 @@ You must first install development libraries to your host. Assuming Ubuntu
         libssl-dev \
         uuid-dev \
         libgpgme11-dev \
-        squashfs-tools
+        squashfs-tools \
+        wget \
+        git
 
 .. note::
   Note that ``squashfs-tools`` is an image build dependency only and is not required for Singularity ``build`` and ``run`` commands.
@@ -153,27 +155,30 @@ follows:
       -s, --silent             only print errors
       -t, --tokenfile string   path to the file holding your sylabs
                                authentication token (default
-                               "/home/david/.singularity/sylabs-token")
+                               "/home/jacob/.singularity/sylabs-token")
       -v, --verbose            print additional information
 
     Available Commands:
-      build       Build a new Singularity container
-      capability  Manage Linux capabilities on containers
-      exec        Execute a command within container
+      apps        List available apps within a container
+      build       Build a Singularity image
+      cache       Manage the local cache
+      capability  Manage Linux capabilities for users and groups
+      exec        Run a command within a container
       help        Help about any command
-      inspect     Display metadata for container if available
-      instance    Manage containers running in the background
-      keys        Manage OpenPGP key stores
-      pull        Pull a container from a URI
+      inspect     Show metadata for an image
+      instance    Manage containers running as services
+      key         Manage OpenPGP keys
+      oci         Manage OCI containers
+      pull        Pull an image from a URI
       push        Push a container to a Library URI
-      run         Launch a runscript within container
-      run-help    Display help for container if available
-      search      Search the library
-      shell       Run a Bourne shell within container
-      sign        Attach cryptographic signatures to container
-      test        Run defined tests for this particular container
-      verify      Verify cryptographic signatures on container
-      version     Show application version
+      run         Run the user-defined default command within a container
+      run-help    Show the user-defined help for an image
+      search      Search a Library for images
+      shell       Run a shell within a container
+      sign        Attach a cryptographic signature to an image
+      test        Run the user-defined tests within a container
+      verify      Verify cryptographic signatures attached to an image
+      version     Show the version for Singularity
 
     Examples:
       $ singularity help <command>

@@ -2,6 +2,9 @@
 Appendix
 ========
 
+
+.. TODO oci & oci-archive along with http & https
+
 .. _singularity-environment-variables:
 
 
@@ -35,6 +38,8 @@ You can see them listed alphabetically below with their respective functionality
 
 ``C``
 ^^^^^
+
+#. **SINGULARITY_CACHEDIR**: Specifies the directory for image downloads to be cached in.
 
 #. **SINGULARITY_CLEANENV**: Specifies if the environment should be cleaned or not before running the container. Default is set to false.
 
@@ -356,6 +361,8 @@ Container Library and building from it instead.
 
 For detailed information about setting your build environment see
 :ref:`Build Customization <build-environment>`.
+
+.. TODO Add section on docker-daemon boostrap agent 
 
 .. _build-shub:
 

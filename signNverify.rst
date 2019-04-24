@@ -64,7 +64,7 @@ like so:.
 
 .. code-block:: none
 
-    $ singularity keys newpair
+    $ singularity key newpair
     Enter your name (e.g., John Doe) : Dave Godlove
     Enter your email address (e.g., john.doe@example.com) : d@sylabs.io
     Enter optional comment (e.g., development keys) : demo
@@ -76,7 +76,7 @@ locally.`
 
 .. code-block:: none
 
-    $ singularity keys list
+    $ singularity key list
     Public key listing (/home/david/.singularity/sypgp/pgp-public):
 
     0) U: Dave Godlove (demo) <d@sylabs.io>
@@ -97,7 +97,7 @@ using the fingerprint like so:
 
 .. code-block:: none
 
-    $ singularity keys push 135E426D67D8416DE1D6AC7FFED5BBA38EE0DC4A
+    $ singularity key push 135E426D67D8416DE1D6AC7FFED5BBA38EE0DC4A
     public key `135E426D67D8416DE1D6AC7FFED5BBA38EE0DC4A` pushed to server successfully
 
 This will allow others to verify images that you have signed.
@@ -107,7 +107,7 @@ again like so.
 
 .. code-block:: none
 
-    $ singularity keys search Godlove
+    $ singularity key search Godlove
     Search results for 'Godlove'
 
     Type bits/keyID     Date       User ID
@@ -115,11 +115,34 @@ again like so.
     pub  4096R/8EE0DC4A 2018-10-08 Dave Godlove (demo) <d@sylabs.io>
     --------------------------------------------------------------------------------
 
-    $ singularity keys pull 8EE0DC4A
+    $ singularity key pull 8EE0DC4A
     1 key(s) fetched and stored in local cache /home/david/.singularity/sypgp/pgp-public
 
 But note that this only restores the *public* key (used for verifying) to your
 local machine and does not restore the *private* key (used for signing).
+
+.. _searching_for_keys:
+
+Searching for keys
+==================
+
+Singularity allows you to search the keystore for public keys. You can search for names,
+emails, and fingerprints (key IDs). When searching for a fingerprint, you need to use ``0x``
+before the fingerprint, check the example:
+
+.. code-block:: none
+
+    # search for key ID:
+    $ singularity key search 0x8883491F4268F173C6E5DC49EDECE4F3F38D871E
+
+    # search for the sort ID:
+    $ singularity key search 0xF38D871E
+
+    # search for user:
+    $ singularity key search Godlove
+
+    # search for email:
+    $ singularity key search @gmail.com
 
 Signing and validating your own containers
 ==========================================
