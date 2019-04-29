@@ -2,22 +2,40 @@
 Remote Endpoints
 ================
 
-Remote endpoints allow Singularity to use a separate container library, remote build server and keystore service other than the Sylabs Cloud.  
+Singularity introduced the `Cloud Services <https://cloud.sylabs.io/home>`_ for
+enabling its users to `Create <https://cloud.sylabs.io/builder>`_,
+`Secure <https://cloud.sylabs.io/keystore?sign=true>`_, and
+`Share <https://cloud.sylabs.io/library/guide#create>`_ their container images
+in the Cloud. With latest development of the ``Remote`` command, you can now
+configure Singularity to point to a specific instance of the Cloud services, to
+make use of the Container Library, Remote builder or the Key Store. The ``remote``
+command group maintains the remote endpoints, each of which will permit you to
+maintain these services in a confined manner.
+The configurations are usually stored in ``singularity/etc/remote.yaml`` file.
 
 --------
 Overview
 --------
 
-Each of the services that comprise Sylabs Cloud can be installed locally, allowing a private repository of images, local remote builder and a keystore service. Remote endpoints can be configured per-user or globally for all users.  Multiple endpoints can be defined allowing the greatest flexibility.  
+The remote endpoints can be configured per-user or globally for all users.
+Multiple endpoints can be defined allowing the greatest flexibility.
+This page will describe the <subcommands> under  ``Remote`` command group.
 
-The following commands will be directed to the select remote endpoint.  
+Once a remote point is ``added``, and logged in, the following commands can be
+used with the selected remote endpoint.
+
 - ``pull``
-- ``push``
-- ``build -remote``
-- ``key`` NEED VERIFICATION
-- ``search`` 
 
-* docker:// and shub:// prefixes are unaffected by these commands
+- ``push``
+
+- ``build -remote`` - To build SIF via Remote Builder
+
+- ``key`` - To manage OpenPGP keys (Needs Verification)
+
+- ``search`` - Allows you to search for images within a container library of your choice
+
+.. note::
+    ``docker://`` and ``shub://`` prefixes are unaffected by these commands
 
 -----
 Usage
@@ -33,35 +51,36 @@ To ``add`` an endpoint (local to current user):
 
 .. code-block:: none
 
-    $ singularity remote add *name* uri
+    $ singularity remote add <remote_name> <remote_uri>
 
 To ``add`` an global endpoint (available to all users on the system):
 
 .. code-block:: none
 
-    $ sudo singularity remote add -g name uri
+    $ sudo singularity remote add -g <remote_name> <remote_uri>
 
 Conversely, to ``remove`` an endpoint:
 
 .. code-block:: none
 
-    $ sudo singularity remote remove name
+    $ sudo singularity remote remove <remote_name>
 
 Setting a default endpoint:
 
 .. code-block:: none
 
-    $ singularity remote use name
+    $ singularity remote use <remote_name>
 
-Before using an endpoint, you'll need to ``login`` to it.  This will require an access token obtained from your keystore.  See `http://cloud.sylabs.io/auth` for an example.
+Before using an endpoint, you'll need to ``login`` to it.  This will require
+an access token to be obtained from your `cloud <http://cloud.sylabs.io/auth>`_
+account.
 
 .. code-block:: none
 
-    $ singularity remote login name
+    $ singularity remote login <remote_name>
 
 To check ``status`` of an endpoint and the various services:
 
 .. code-block:: none
 
     $ singularity remote status name
-
