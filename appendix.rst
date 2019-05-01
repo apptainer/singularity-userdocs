@@ -526,7 +526,7 @@ fail. This issue can be easily demonstrated by bootstrapping an older RHEL
 compatible image by a newer one (e.g. bootstrap a Centos 5 or 6 container from a
 Centos 7 host).
 
-In order to use the ``debootstrap`` build module, you must have ``yum``
+In order to use the ``yum`` build module, you must have ``yum``
 installed on your system. It may seem counter-intuitive to install YUM on a
 system that uses a different package manager, but you can do so. For instance,
 on Ubuntu you can install it like so:
