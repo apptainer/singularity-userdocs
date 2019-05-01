@@ -6,12 +6,11 @@ Singularity introduced the `Cloud Services <https://cloud.sylabs.io/home>`_ for
 enabling its users to `Create <https://cloud.sylabs.io/builder>`_,
 `Secure <https://cloud.sylabs.io/keystore?sign=true>`_, and
 `Share <https://cloud.sylabs.io/library/guide#create>`_ their container images
-in the Cloud. With latest development of the ``Remote`` command, you can now
-configure Singularity to point to a specific instance of the Cloud services, to
-make use of the Container Library, Remote builder or the Key Store. The ``remote``
-command group maintains the remote endpoints, each of which will permit you to
-maintain these services in a confined manner.
-The configurations are usually stored in ``singularity/etc/remote.yaml`` file.
+with others.With the latest development of the ``remote`` command, you can now
+configure Singularity to point to a specific instance of the Cloud services,
+enabling access to a private Container Library, Remote Builder and Key Store.
+The remote command group manages these endpoints. The configurations are usually
+stored in ``singularity/etc/remote.yaml`` file.
 
 --------
 Overview
