@@ -472,6 +472,52 @@ After building the help can be displayed like so:
         This is a demo container used to illustrate a def file that uses all
         supported sections.
 
+------------------
+Multi-Stage Builds
+------------------
+
+Singularity 3.2 introduces multi-stage builds where one environment can be used for compilation, then the resulting binary can be copied into a final environment.  This allows a slimmer final image that does not require the entire development stack.
+
+.. code-block:: singularity
+
+    Bootstrap: docker
+    From: golang:1.12.3-alpine3.9
+    Stage: build
+
+    %post
+            # prep environment
+        export PATH="/go/bin:/usr/local/go/bin:$PATH"
+        export HOME="/root"
+        cd /root
+
+        # insert source code, could also be copied from host with %files
+        cat << EOF > hello.go
+        package main
+
+        import "fmt"
+
+        func main() {
+            fmt.Printf("Hello World!\n")
+        }
+
+        EOF
+
+        # build
+        go build -o hello hello.go
+
+
+
+    # Install binary into final image
+    Bootstrap: library
+    From: alpine:3.9
+    Stage: final
+
+    # install binary from stage one
+    %files from build
+      /root/hello /bin/hello
+
+The stage names are arbitrary and files can be copied from any stage to another.
+
 ----
 Apps
 ----
