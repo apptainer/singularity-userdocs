@@ -250,7 +250,8 @@ build and install the RPM.
 If you encounter a failed dependency error for golang but installed it from source, build with this command:
 
 .. code-block:: none
-    rpmbuild -tb --nodeps singularity-${VERSION}.tar.gz && \
+
+    rpmbuild -tb --nodeps singularity-${VERSION}.tar.gz 
 
 
 Options to ``mconfig`` can be passed using the familiar syntax to ``rpmbuild``.
