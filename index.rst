@@ -21,6 +21,7 @@ User Guide
    OCI Runtime Support <oci_runtime>
    Key commands <key_commands>
    Sign and Verify <signNverify>
+   Plugins <plugins>
    Security Options <security_options>
    Network Options <networking>
    Cgroups Support <cgroups>
