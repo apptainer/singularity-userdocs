@@ -49,7 +49,7 @@ The output will look as it follows:
 
     Remember that running that same command but with sudo privilege, will give you a totally different list since it will be the correspondent keystore from user ``root``
 
-After this, you can just simply import the key you need to import just by adding the exact location to the file, let's say you own a gpg key file named ``pinkie-pie.asc`` which is a secret GPG key you want to import.
+After this, you can simply import the key you need by adding the exact location to the file, let's say you own a gpg key file named ``pinkie-pie.asc`` which is a secret GPG key you want to import.
 Then you will just need to run the following command to import your key:
 
 .. code-block:: Singularity
@@ -133,3 +133,19 @@ and on binary format instead:
 .. note::
 
     Exporting keys will not change the status of your local keystore or keyring. This will just obtain the content of the keys and save it on a local file on your host.
+
+.. _key_remove:
+
+------------------
+Key remove command
+------------------
+
+In case you would want to remove a public key from your public local keystore, you can do so by running the following command:
+
+.. code-block:: Singularity
+
+    $ singularity key remove 8C10B902F438E4D504C3ACF689FCFFAED5F34A77
+
+.. note::
+
+    Remember that this will only delete the public key and not the private one with the same matching fingerprint.
