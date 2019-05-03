@@ -39,6 +39,12 @@ Cache commands
 
 Singularity 3.1 comes with new commands for cleaning and listing the cache image files generated.
 
+
+.. note::
+
+    Running the cache commands with sudo privilege will consider cache location as ``/root/.singularity/cache``. Instead, the default location with no sudo privilege is ``~/.singularity/cache``.
+    Make sure that if you build a container with sudo privilege, you will need to consider the sudo location from the cache, and not the default.
+
 Listing Cache
 =============
 
