@@ -42,8 +42,28 @@ Singularity 3.1 comes with new commands for cleaning and listing the cache image
 
 .. note::
 
-    Running the cache commands with sudo privilege will consider cache location as ``/root/.singularity/cache``. Instead, the default location with no sudo privilege is ``~/.singularity/cache``.
+    Running the cache commands with sudo privilege will consider cache location as ``/root/.singularity/cache``. The default location for cache without sudo privilege is ``~/.singularity/cache``.
     Make sure that if you build a container with sudo privilege, you will need to consider the sudo location from the cache, and not the default.
+
+    For example, running the following command with sudo privilege (considering the sudo privilege location for cache ``/root/.singularity/cache``):
+
+    .. code-block:: none
+
+        $ sudo singularity cache list
+        NAME                   DATE CREATED           SIZE             TYPE
+        ubuntu_latest.sif      2019-01-31 14:59:32    28.11 Mb         library
+        ubuntu_18.04.sif       2019-01-31 14:58:44    27.98 Mb         library
+
+    and then cleaning the cache without sudo privilege (``singularity cache clean -a``) will not work, since the default cache location is ``~/.singularity/cache``.
+    In this case you would need to run the clean command with sudo privilege:
+
+    .. code-block:: none
+
+        $ sudo singularity cache clean -a
+        NAME                     DATE CREATED           SIZE             TYPE
+
+        There 0 containers using: 0.00 kB, 0 oci blob file(s) using 0.00 kB of space.
+        Total space used: 0.00 kB
 
 Listing Cache
 =============
