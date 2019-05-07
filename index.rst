@@ -19,7 +19,9 @@ User Guide
    Running Services <running_services>
    Environment and Metadata <environment_and_metadata>
    OCI Runtime Support <oci_runtime>
+   Key commands <key_commands>
    Sign and Verify <signNverify>
+   Plugins <plugins>
    Security Options <security_options>
    Network Options <networking>
    Cgroups Support <cgroups>
