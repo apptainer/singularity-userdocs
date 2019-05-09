@@ -113,6 +113,7 @@ included and will be appended to one another during the build process.
 
     Bootstrap: library
     From: ubuntu:18.04
+    Stage: build
 
     %setup
         touch /file1
@@ -212,8 +213,17 @@ section (see above).  The ``%files`` scriptlet will copy ``file1`` to the root
 of the container file system and then make a second copy of ``file1`` within the
 container in ``/opt``.
 
+Files can be copied from other stages by providing the source location in the 
+previous stage and the destination in the current container.  
+
+.. code-block:: singularity
+
+  %files from stage_name
+    /root/hello /bin/hello
+
 Files in the ``%files`` section are copied before the ``%post`` section is
 executed so that they are available during the build and configuration process.
+
 
 %environment
 ============
@@ -485,25 +495,22 @@ Singularity 3.2 introduces multi-stage builds where one environment can be used 
     Stage: build
 
     %post
-            # prep environment
-        export PATH="/go/bin:/usr/local/go/bin:$PATH"
-        export HOME="/root"
-        cd /root
+      # prep environment
+      export PATH="/go/bin:/usr/local/go/bin:$PATH"
+      export HOME="/root"
+      cd /root
 
-        # insert source code, could also be copied from host with %files
-        cat << EOF > hello.go
-        package main
+      # insert source code, could also be copied from host with %files
+      cat << EOF > hello.go
+      package main
+      import "fmt"
 
-        import "fmt"
+      func main() {
+        fmt.Printf("Hello World!\n")
+      }
+      EOF
 
-        func main() {
-            fmt.Printf("Hello World!\n")
-        }
-
-        EOF
-
-        # build
-        go build -o hello hello.go
+      go build -o hello hello.go
 
 
 
