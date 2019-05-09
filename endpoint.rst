@@ -6,7 +6,7 @@ Singularity introduced the `Cloud Services <https://cloud.sylabs.io/home>`_ for
 enabling its users to `Create <https://cloud.sylabs.io/builder>`_,
 `Secure <https://cloud.sylabs.io/keystore?sign=true>`_, and
 `Share <https://cloud.sylabs.io/library/guide#create>`_ their container images
-with others.With the latest development of the ``remote`` command, you can now
+with others. With the development of the ``remote`` command, you can now
 configure Singularity to point to a specific instance of the Cloud services,
 enabling access to a private Container Library, Remote Builder and Key Store.
 The remote command group manages these endpoints. The configurations are usually
@@ -29,7 +29,7 @@ used with the selected remote endpoint.
 
 - ``build -remote`` - To build SIF via Remote Builder
 
-- ``key`` - To manage OpenPGP keys (Needs Verification)
+- ``key`` - To manage OpenPGP keys 
 
 - ``search`` - Allows you to search for images within a container library of your choice
 
