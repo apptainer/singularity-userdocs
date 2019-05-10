@@ -167,11 +167,11 @@ To customize your pull default location you can do so by specifying Singularity 
     $ singularity pull $HOME/mycontainers library://library/default/alpine
 
 Singularity also allows you to modify the default cache location for pulling images. By default, the location of the pull folder is given by the environment variable ``SINGULARITY_CACHEDIR``.
-``SINGULARITY_CACHEDIR`` by default points to ``$HOME/.singularity/cache`` but this path can be modified. You would need to set and export the ``SINGULARITY_CACHEDIR`` environment variable and pass the ``-E`` flag with sudo privilege at pulling an image, like so:
+``SINGULARITY_CACHEDIR`` by default points to ``$HOME/.singularity/cache`` but this path can be modified. You would need to set and export the ``SINGULARITY_CACHEDIR`` environment variable before pulling the image, like so:
 
 .. code-block:: none
    $ export SINGULARITY_CACHEDIR=$HOME/mycontainers
-   $ sudo -E singularity pull library://library/default/alpine
+   $ singularity pull library://library/default/alpine
 
 And that will successfully pull that container image inside your new ``SINGULARITY_CACHEDIR`` location.
 
