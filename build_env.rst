@@ -159,9 +159,21 @@ In this case, the ``SINGULARITY_TMPDIR`` and ``SINGULARITY_CACHEDIR`` variables 
 Pull Folder
 -----------
 
-For details about customizing the output location of :ref:`pull <pull-command>`, see the
-:ref:`pull docs <pull-command>`. You have the similar ability to set it to be something
-different, or to customize the name of the pulled image.
+To customize your pull default location you can do so by specifying Singularity in which folder to pull the image, assuming you own a folder called ``mycontainers`` inside your ``$HOME`` folder
+, you would need to do something like the following:
+
+.. code-block:: none
+
+    $ singularity pull $HOME/mycontainers library://library/default/alpine
+
+Singularity also allows you to modify the default cache location for pulling images. By default, the location of the pull folder is given by the environment variable ``SINGULARITY_CACHEDIR``.
+``SINGULARITY_CACHEDIR`` by default points to ``$HOME/.singularity/cache`` but this path can be modified. You would need to set and export the ``SINGULARITY_CACHEDIR`` environment variable before pulling the image, like so:
+
+.. code-block:: none
+   $ export SINGULARITY_CACHEDIR=$HOME/mycontainers
+   $ singularity pull library://library/default/alpine
+
+And that will successfully pull that container image inside your new ``SINGULARITY_CACHEDIR`` location.
 
 ---------------------
 Environment Variables
