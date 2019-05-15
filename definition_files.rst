@@ -54,6 +54,10 @@ will pull a container from the `Container Library
 bootstrap agent will pull docker layers from `Docker Hub
 <https://hub.docker.com/>`_ as a base OS to start your image.
 
+Starting with Singularity 3.2, the ``Bootstrap`` keyword needs to be the first 
+entry in the header section.  This breaks compatibility with older versions 
+that allow the parameters of the header to appear in any order.
+
 Depending on the value assigned to ``Bootstrap``, other keywords may also be
 valid in the header. For example, when using the ``library`` bootstrap agent,
 the ``From`` keyword becomes valid. Observe the following example for building a
@@ -523,7 +527,7 @@ Singularity 3.2 introduces multi-stage builds where one environment can be used 
     %files from build
       /root/hello /bin/hello
 
-The stage names are arbitrary and files can be copied from any stage to another.
+The names of stages are arbitrary. Files can only be copied from stages declared before the current stage in the definition. E.g., the "devel" stage in the above definition cannot copy files from the "final" stage, but the "final" stage can copy files from the "devel" stage.
 
 ----
 Apps
