@@ -10,7 +10,7 @@ with others. With the development of the ``remote`` command, you can now
 configure Singularity to point to a specific instance of the Cloud services,
 enabling access to a private Container Library, Remote Builder and Key Store.
 The remote command group manages these endpoints. The configurations are usually
-stored in ``singularity/etc/remote.yaml`` file.
+stored in ``~/.singularity/etc/remote.yaml`` file.
 
 --------
 Overview
