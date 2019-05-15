@@ -508,7 +508,7 @@ Singularity 3.2 introduces multi-stage builds where one environment can be used 
       func main() {
         fmt.Printf("Hello World!\n")
       }
-      EOF
+    EOF
 
       go build -o hello hello.go
 
