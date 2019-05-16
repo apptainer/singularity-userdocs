@@ -54,6 +54,10 @@ will pull a container from the `Container Library
 bootstrap agent will pull docker layers from `Docker Hub
 <https://hub.docker.com/>`_ as a base OS to start your image.
 
+Starting with Singularity 3.2, the ``Bootstrap`` keyword needs to be the first 
+entry in the header section.  This breaks compatibility with older versions 
+that allow the parameters of the header to appear in any order.
+
 Depending on the value assigned to ``Bootstrap``, other keywords may also be
 valid in the header. For example, when using the ``library`` bootstrap agent,
 the ``From`` keyword becomes valid. Observe the following example for building a
@@ -113,6 +117,7 @@ included and will be appended to one another during the build process.
 
     Bootstrap: library
     From: ubuntu:18.04
+    Stage: build
 
     %setup
         touch /file1
@@ -212,8 +217,17 @@ section (see above).  The ``%files`` scriptlet will copy ``file1`` to the root
 of the container file system and then make a second copy of ``file1`` within the
 container in ``/opt``.
 
+Files can be copied from other stages by providing the source location in the 
+previous stage and the destination in the current container.  
+
+.. code-block:: singularity
+
+  %files from stage_name
+    /root/hello /bin/hello
+
 Files in the ``%files`` section are copied before the ``%post`` section is
 executed so that they are available during the build and configuration process.
+
 
 %environment
 ============
@@ -471,6 +485,49 @@ After building the help can be displayed like so:
     $ singularity run-help my_container.sif
         This is a demo container used to illustrate a def file that uses all
         supported sections.
+
+------------------
+Multi-Stage Builds
+------------------
+
+Singularity 3.2 introduces multi-stage builds where one environment can be used for compilation, then the resulting binary can be copied into a final environment.  This allows a slimmer final image that does not require the entire development stack.
+
+.. code-block:: singularity
+
+    Bootstrap: docker
+    From: golang:1.12.3-alpine3.9
+    Stage: build
+
+    %post
+      # prep environment
+      export PATH="/go/bin:/usr/local/go/bin:$PATH"
+      export HOME="/root"
+      cd /root
+
+      # insert source code, could also be copied from host with %files
+      cat << EOF > hello.go
+      package main
+      import "fmt"
+
+      func main() {
+        fmt.Printf("Hello World!\n")
+      }
+    EOF
+
+      go build -o hello hello.go
+
+
+
+    # Install binary into final image
+    Bootstrap: library
+    From: alpine:3.9
+    Stage: final
+
+    # install binary from stage one
+    %files from build
+      /root/hello /bin/hello
+
+The names of stages are arbitrary. Files can only be copied from stages declared before the current stage in the definition. E.g., the ``devel`` stage in the above definition cannot copy files from the ``final`` stage, but the ``final`` stage can copy files from the ``devel`` stage.
 
 ----
 Apps
