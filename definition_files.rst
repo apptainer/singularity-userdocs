@@ -527,7 +527,7 @@ Singularity 3.2 introduces multi-stage builds where one environment can be used 
     %files from build
       /root/hello /bin/hello
 
-The names of stages are arbitrary. Files can only be copied from stages declared before the current stage in the definition. E.g., the "devel" stage in the above definition cannot copy files from the "final" stage, but the "final" stage can copy files from the "devel" stage.
+The names of stages are arbitrary. Files can only be copied from stages declared before the current stage in the definition. E.g., the ``devel`` stage in the above definition cannot copy files from the ``final`` stage, but the ``final`` stage can copy files from the ``devel`` stage.
 
 ----
 Apps
