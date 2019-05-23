@@ -55,7 +55,7 @@ image from the `container library <https://cloud.sylabs.io/library/>`_:
 
     $ singularity pull library://alpine
 
-The above command will save the alpine image from the Container Library as 
+The above command will save the alpine image from the Container Library as
 ``alpine_latest.sif``.
 
 To start an instance, you should follow this procedure :
@@ -122,7 +122,7 @@ If you want to poke around inside of your instance, you can do a normal
 .. code-block:: none
 
     $ singularity shell instance://instance3
-    
+
     Singularity>
 
 When you are finished with your instance you can clean it up with the
@@ -133,15 +133,15 @@ When you are finished with your instance you can clean it up with the
     $ singularity instance stop instance1
 
 If you have multiple instances running and you want to stop all of them, you can
-do so with a wildcard or the --all flag. The following three commands are all 
+do so with a wildcard or the --all flag. The following three commands are all
 identical.
 
 .. code-block:: none
 
     $ singularity instance stop \*
-    
+
     $ singularity instance stop --all
-    
+
     $ singularity instance stop --a
 
 .. note::
@@ -251,7 +251,7 @@ docker image ``node:8`` which comes pre-installed with Node 8 has been used:
     Includecmd: no
 
 
-Puppeteer also requires a slew of dependencies to be manually installed in 
+Puppeteer also requires a slew of dependencies to be manually installed in
 addition to Node 8, so we can add those into the ``post`` section as well as the
 installation script for the ``url-to-pdf``:
 
@@ -352,7 +352,7 @@ We can now start an instance and run the service:
 .. note::
     If there occurs an error related to port connection being refused while
     starting the instance or while using it later, you can try specifying
-    different port numbers in the ``%environment`` section of the definition 
+    different port numbers in the ``%environment`` section of the definition
     file above.
 
 We can confirm it’s working by sending the server an http request using
@@ -399,7 +399,7 @@ Making it Fancy
 Now that we have confirmation that the server is working, let’s make it a little
 cleaner. It’s difficult to remember the exact ``curl`` command and URL syntax
 each time you want to request a PDF, so let’s automate it. To do that, we can
-use Standard Container Integration Format (SCIF) apps, that are integrated
+use Scientific Filesystem (SCIF) apps, that are integrated
 directly into singularity. If you haven’t already, check out the `Scientific
 Filesystem documentation <https://sci-f.github.io/>`_ to come up to speed.
 
@@ -440,7 +440,7 @@ to the server:
 
 
 As you can see, the ``pdf_client`` app checks to make sure that the user
-provides at least one argument. 
+provides at least one argument.
 
 The full def file will look like this:
 
@@ -494,15 +494,15 @@ container:
 
     $ sudo singularity build --force url-to-pdf.sif url-to-pdf.def
 
-Now that we have an output directory in the container, we need to expose it to 
-the host using a bind mount. Once we’ve rebuilt the container, make a new 
-directory called ``/tmp/out`` for the generated PDFs to go. 
+Now that we have an output directory in the container, we need to expose it to
+the host using a bind mount. Once we’ve rebuilt the container, make a new
+directory called ``/tmp/out`` for the generated PDFs to go.
 
 .. code-block:: none
 
     $ mkdir /tmp/out
 
-After building the image from the edited definition file we simply start the 
+After building the image from the edited definition file we simply start the
 instance:
 
 .. code-block:: none
@@ -531,8 +531,8 @@ instances.
 
 .. note::
     If the service you want to run in your instance requires a bind mount,
-    then you must pass the ``--bind`` option when calling ``instance start``. 
-    For example, if you wish to capture the output of the ``web`` container 
+    then you must pass the ``--bind`` option when calling ``instance start``.
+    For example, if you wish to capture the output of the ``web`` container
     instance which is placed at ``/output/`` inside the container you could do:
 
     .. code-block:: none
