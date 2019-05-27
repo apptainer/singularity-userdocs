@@ -1,4 +1,6 @@
 
+.. _appendix:
+
 Appendix
 ========
 
@@ -362,7 +364,7 @@ Container Library and building from it instead.
 For detailed information about setting your build environment see
 :ref:`Build Customization <build-environment>`.
 
-.. TODO Add section on docker-daemon boostrap agent 
+.. TODO Add section on docker-daemon boostrap agent
 
 .. _build-shub:
 

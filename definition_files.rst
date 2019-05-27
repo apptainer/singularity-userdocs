@@ -54,8 +54,8 @@ will pull a container from the `Container Library
 bootstrap agent will pull docker layers from `Docker Hub
 <https://hub.docker.com/>`_ as a base OS to start your image.
 
-Starting with Singularity 3.2, the ``Bootstrap`` keyword needs to be the first 
-entry in the header section.  This breaks compatibility with older versions 
+Starting with Singularity 3.2, the ``Bootstrap`` keyword needs to be the first
+entry in the header section.  This breaks compatibility with older versions
 that allow the parameters of the header to appear in any order.
 
 Depending on the value assigned to ``Bootstrap``, other keywords may also be
@@ -79,13 +79,20 @@ this:
     Include: yum
 
 Each bootstrap agent enables its own options and keywords. You can read about
-them and see examples in the appendix:
+them and see examples in the :ref:`appendix <appendix>`:
 
--  :ref:`library <build-library-module>` (images hosted on the Container Library)
+
+Preferred bootstrap agents
+==========================
+
+-  :ref:`library <build-library-module>` (images hosted on the `Container Library <https://cloud.sylabs.io/library>`_)
 
 -  :ref:`docker <build-docker-module>` (images hosted on Docker Hub)
 
 -  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
+
+Other bootstrap agents
+======================
 
 -  :ref:`localimage <build-localimage>` (images saved on your machine)
 
@@ -98,6 +105,7 @@ them and see examples in the appendix:
 -  :ref:`busybox <build-busybox>` (BusyBox)
 
 -  :ref:`zypper <build-zypper>` (zypper based systems such as Suse and OpenSuse)
+
 
 --------
 Sections
@@ -217,8 +225,8 @@ section (see above).  The ``%files`` scriptlet will copy ``file1`` to the root
 of the container file system and then make a second copy of ``file1`` within the
 container in ``/opt``.
 
-Files can be copied from other stages by providing the source location in the 
-previous stage and the destination in the current container.  
+Files can be copied from other stages by providing the source location in the
+previous stage and the destination in the current container.
 
 .. code-block:: singularity
 
