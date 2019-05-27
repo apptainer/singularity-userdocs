@@ -6,8 +6,8 @@ Quick Start
 
 .. _sec:quickstart:
 
-This guide is intended for running Singularity on a computer where you
-have root (administrative) privileges.
+This guide is intended for running Singularity on a computer where you have root 
+(administrative) privileges.
 
 If you need to request an installation on your shared resource, see the
 :ref:`requesting an installation help page <installation-request>` for
@@ -26,7 +26,7 @@ Quick Installation Steps
 You will need a Linux system to run Singularity.
 
 See the :ref:`installation page <installation>` for information about installing
-older versions of Singularity.
+Singularity.
 
 Install system dependencies
 ===========================
@@ -42,57 +42,60 @@ You must first install development libraries to your host. Assuming Ubuntu
         uuid-dev \
         libgpgme11-dev \
         squashfs-tools \
+        libseccomp-dev \
         wget \
+        pkg-config \
         git
 
 .. note::
-  Note that ``squashfs-tools`` is an image build dependency only and is not required for Singularity ``build`` and ``run`` commands.
-
+    Note that ``squashfs-tools`` is only a dependency for commands that build 
+    images. The ``build`` command obviously relies on ``squashfs-tools``, but 
+    other commands may do so as well if they are run using container images 
+    from Docker Hub for instance.
 
 Install Go
 ==========
 
-Singularity 3.0 is written primarily in Go, and you will need Go installed to
+Singularity v3 is written primarily in Go, and you will need Go installed to
 compile it from source.
 
-This is one of several ways to `install and configure Go <https://golang.org/doc/install>`_.
+This is one of several ways to `install and configure Go
+<https://golang.org/doc/install>`_.
 
-First, visit the `Go download page <https://golang.org/dl/>`_ and pick the
-appropriate Go archive (>=1.11.1). Copy the link address and download
-with ``wget`` like so:
-
-.. code-block:: none
-
-    $ export VERSION=1.11 OS=linux ARCH=amd64
-    $ cd /tmp
-    $ wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz
-
-Then extract the archive to ``/usr/local``
+Visit the `Go download page <https://golang.org/dl/>`_ and pick a package
+archive to download. Copy the link address and download with wget.  Then extract
+the archive to ``/usr/local`` (or use other instructions on go installation
+page).
 
 .. code-block:: none
 
-    $ sudo tar -C /usr/local -xzf go$VERSION.$OS-$ARCH.tar.gz
+    $ export VERSION=1.12 OS=linux ARCH=amd64 && \
+        wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \
+        sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \
+        rm go$VERSION.$OS-$ARCH.tar.gz
 
-Finally, set up your environment for Go
-
-.. code-block:: none
-
-    $ echo 'export GOPATH=${HOME}/go' >> ~/.bashrc
-    $ echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc
-    $ source ~/.bashrc
-
-Clone the Singularity repository
-================================
-
-Go is a bit finicky about where things are placed. Here is the correct way to
-build Singularity from source.
+Then, set up your environment for Go.
 
 .. code-block:: none
 
-    $ mkdir -p $GOPATH/src/github.com/sylabs
-    $ cd $GOPATH/src/github.com/sylabs
-    $ git clone https://github.com/sylabs/singularity.git
-    $ cd singularity
+    $ echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
+        echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
+        source ~/.bashrc
+
+Download Singularity from a release
+===================================
+
+You can download Singularity from one of the releases. To see a full list, visit 
+`the GitHub release page <https://github.com/sylabs/singularity/releases>`_. 
+After deciding on a release to install, you can run the following commands to 
+proceed with the installation.
+
+.. code-block:: none
+
+    $ export VERSION={InstallationVersion} && # adjust this as necessary \
+        wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
+        tar -xzf singularity-${VERSION}.tar.gz && \
+        cd singularity
 
 Compile the Singularity binary
 ==============================
@@ -102,10 +105,9 @@ downloaded. You can build Singularity using the following commands:
 
 .. code-block:: none
 
-    $ cd $GOPATH/src/github.com/sylabs/singularity
-    $ ./mconfig
-    $ make -C builddir
-    $ sudo make -C builddir install
+    $ ./mconfig && \
+        make -C builddir && \
+        sudo make -C builddir install
 
 Singularity must be installed as root to function properly.
 
