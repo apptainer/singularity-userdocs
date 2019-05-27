@@ -74,26 +74,33 @@ this:
     MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
     Include: yum
 
-Each bootstrap agent enables its own options and keywords. You can read about
-them and see examples in the appendix:
+    Each bootstrap agent enables its own options and keywords. You can read about
+    them and see examples in the :ref:`appendix <appendix>`:
 
--  :ref:`library <build-library-module>` (images hosted on the Container Library)
 
--  :ref:`docker <build-docker-module>` (images hosted on Docker Hub)
+    Preferred bootstrap agents
+    ==========================
 
--  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
+    -  :ref:`library <build-library-module>` (images hosted on the `Container Library <https://cloud.sylabs.io/library>`_)
 
--  :ref:`localimage <build-localimage>` (images saved on your machine)
+    -  :ref:`docker <build-docker-module>` (images hosted on Docker Hub)
 
--  :ref:`yum <build-yum>` (yum based systems such as CentOS and Scientific Linux)
+    -  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
 
--  :ref:`debootstrap <build-debootstrap>` (apt based systems such as Debian and Ubuntu)
+    Other bootstrap agents
+    ======================
 
--  :ref:`arch <build-arch>` (Arch Linux)
+    -  :ref:`localimage <build-localimage>` (images saved on your machine)
 
--  :ref:`busybox <build-busybox>` (BusyBox)
+    -  :ref:`yum <build-yum>` (yum based systems such as CentOS and Scientific Linux)
 
--  :ref:`zypper <build-zypper>` (zypper based systems such as Suse and OpenSuse)
+    -  :ref:`debootstrap <build-debootstrap>` (apt based systems such as Debian and Ubuntu)
+
+    -  :ref:`arch <build-arch>` (Arch Linux)
+
+    -  :ref:`busybox <build-busybox>` (BusyBox)
+
+    -  :ref:`zypper <build-zypper>` (zypper based systems such as Suse and OpenSuse)
 
 --------
 Sections
