@@ -57,7 +57,8 @@ similar with other package managers.
         squashfs-tools \
         libseccomp-dev \
         wget \
-        pkg-config
+        pkg-config \
+        git
 
 ``yum``
 
@@ -77,6 +78,9 @@ similar with other package managers.
 ----------
 Install Go
 ----------
+
+Singularity v3 is written primarily in Go, and you will need Go installed to 
+compile it from source.
 
 This is one of several ways to `install and configure Go
 <https://golang.org/doc/install>`_.
@@ -105,9 +109,10 @@ Then, set up your environment for Go.
 Download Singularity from a release
 ===================================
 
-You can download Singularity from one of our releases. To see a full list, visit 
-<https://github.com/sylabs/singularity/releases>. After that you can just run 
-the following commands to proceed with the installation.
+You can download Singularity from one of the releases. To see a full list, visit 
+`the GitHub release page <https://github.com/sylabs/singularity/releases>`_. 
+After deciding on a release to install, you can run the following commands to 
+proceed with the installation.
 
 .. code-block:: none
 
@@ -488,6 +493,8 @@ You can check the installed version of Singularity with the following:
 
 Of course, you can also start with a plain OS Vagrant box as a base and then
 install Singularity using one of the above methods for Linux.
+
+.. _installation-request:
 
 Singularity on a shared resource
 --------------------------------
