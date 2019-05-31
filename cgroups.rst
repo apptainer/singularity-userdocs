@@ -13,10 +13,12 @@ Overview
 
 Singularity cgroups support can be configured and utilized via a TOML file. An
 example file is typically installed at
-``/usr/local/etc/singularity/cgroups/cgroups.toml``.  You can copy and edit this
-file to suit your needs.  Then when you need to limit your container resources,
-apply the settings in the TOML file by using the path as an argument to the
-``--apply-cgroups`` option like so:
+``/usr/local/etc/singularity/cgroups/cgroups.toml`` (but may also be installed 
+in other locations such as ``/etc/singularity/cgroups/cgroups.toml`` depending 
+on your installation method).  You can copy and edit this file to suit your 
+needs.  Then when you need to limit your container resources, apply the settings 
+in the TOML file by using the path as an argument to the ``--apply-cgroups`` 
+option like so:
 
 .. code-block:: none
 
