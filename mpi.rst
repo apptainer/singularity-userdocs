@@ -37,7 +37,7 @@ file such as the following example can be used:
 
 .. code-block: none
 
-    Bootstrap: Docker
+    Bootstrap: docker
     From: ubuntu:latest
 
     %files
@@ -78,7 +78,7 @@ If the host MPI is Open MPI, the definition file looks like:
 
 .. code-block: none
 
-    Bootstrap: Docker
+    Bootstrap: docker
     From: ubuntu:latest
 
     %files
