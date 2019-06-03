@@ -68,7 +68,7 @@ file such as the following example can be used:
 	    cd /tmp/mpich/mpich-$MPICH_VERSION && ./configure --prefix=$MPICH_DIR && make -j8 install
     	# Set env variables so we can compile our application
     	export PATH=$MPICH_DIR/bin:$PATH
-	    export LD_LIBRARY_PAtH=$MPICH_DIR/lib:$LD_LIBRARY_PATH
+	    export LD_LIBRARY_PATH=$MPICH_DIR/lib:$LD_LIBRARY_PATH
     	export MANPATH=$MPICH_DIR/share/man:$MANPATH
 
     	echo "Compiling the MPI application..."
