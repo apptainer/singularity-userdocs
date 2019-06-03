@@ -114,3 +114,35 @@ therefore disallowed. If you need to specify bind paths in combination with the
 ``--writable`` flag, please ensure that the appropriate bind points exist within
 the container. If they do not already exist, it will be necessary to modify the
 container and create them.
+
+
+Using ``--no-home`` and ``--containall`` flags
+==============================================
+
+^^^^^^^^^^^^^
+``--no-home``
+^^^^^^^^^^^^^
+
+When shelling into your container image, Singularity allows you to mount your current working directory (``CWD``)
+without mounting your host ``$HOME`` directory with the ``--no-home`` flag.
+
+.. code-block:: none
+
+      $ singularity shell --no-home my_container.sif
+
+.. note::
+
+    Beware that if it is the case that your ``CWD`` is your ``$HOME`` directory, it will still mount your ``$HOME`` directory.
+
+
+^^^^^^^^^^^^^^^^
+``--containall``
+^^^^^^^^^^^^^^^^
+
+    Using the ``--containall`` (or ``-C`` for short) flag, ``$HOME`` is not  mounted and a dummy bind mount is created at the ``$HOME`` point.
+    You cannot use ``-B``` (or ``--bind``) to bind your ``$HOME`` directory because it creates an empty mount. So if you have files located in
+    the image at ``/home/user``, the ``--containall`` flag will hide them all.
+
+.. code-block:: none
+
+    $ singularity shell --containall my_container.sif
