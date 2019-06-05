@@ -54,7 +54,7 @@ To ``add`` an endpoint (local to current user):
 
     $ singularity remote add <remote_name> <remote_uri>
 
-To ``add`` an global endpoint (available to all users on the system):
+To ``add`` a global endpoint (available to all users on the system):
 
 .. code-block:: none
 
@@ -62,7 +62,7 @@ To ``add`` an global endpoint (available to all users on the system):
 
 .. note::
      Global remote configurations can only be modified by the root user and can
-     be viewed in ``remote.yaml`` file.
+     be viewed in ``~/.singularity/remote.yaml`` file.
 
 Conversely, to ``remove`` an endpoint:
 
@@ -98,5 +98,5 @@ designated endpoint using the ``library://`` uri.
 
 .. note::
     Since, the remote endpoints are linked with the user, make sure to use all
-    the commands either with or without ``sudo`` privilege. If you ``Add`` an
+    the commands either with or without **sudo** privilege. If you ``add`` an
     endpoint using **sudo**, you must ``list`` it using **sudo** as well.
