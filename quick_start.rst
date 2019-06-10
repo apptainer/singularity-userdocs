@@ -1,656 +1,642 @@
+.. _quick-start:
 
-.. _definitionfiles:
+===========
+Quick Start
+===========
 
-================
-Definition Files
-================
+.. _sec:quickstart:
 
-.. _sec:deffiles:
+This guide is intended for running Singularity on a computer where you have root
+(administrative) privileges.
 
-A Singularity Definition File (or "def file" for short) is like a set of
-blueprints explaining how to build a custom container. It includes specifics
-about the base OS to build or the base container to start from, software to
-install, environment variables to set at runtime, files to add from the host
-system, and container metadata.
+If you need to request an installation on your shared resource, see the
+:ref:`requesting an installation help page <installationrequest>` for
+information to send to your system administrator.
 
---------
-Overview
---------
-
-
-A Singularity Definition file is divided into two parts:
-
-#. **Header**: The Header describes the core operating system to build within
-   the container. Here you will configure the base operating system features
-   needed within the container. You can specify, the Linux distribution, the
-   specific version, and the packages that must be part of the core install
-   (borrowed from the host system).
-
-#. **Sections**: The rest of the definition is comprised of sections, (sometimes
-   called scriptlets or blobs of data). Each section is defined by a ``%``
-   character followed by the name of the particular section. All sections are
-   optional, and a def file may contain more than one instance of a given
-   section. Sections that are executed at build time are executed with the
-   ``/bin/sh`` interpreter and can accept ``/bin/sh`` options. Similarly,
-   sections that produce scripts to be executed at runtime can accept options
-   intended for ``/bin/sh``
-
-For more in-depth and practical examples of def files, see the `Sylabs examples
-repository <https://github.com/sylabs/examples>`_
-
-------
-Header
-------
-
-The header should be written at the top of the def file. It tells Singularity
-about the base operating system that it should use to build the container. It is
-composed of several keywords.
-
-The only keyword that is required for every type of build is ``Bootstrap``.
-It determines the *bootstrap agent*  that will be used to create the base
-operating system you want to use. For example, the ``library`` bootstrap agent
-will pull a container from the `Container Library
-<https://cloud.sylabs.io/library>`_ as a base. Similarly, the ``docker``
-bootstrap agent will pull docker layers from `Docker Hub
-<https://hub.docker.com/>`_ as a base OS to start your image.
-
-Starting with Singularity 3.2, the ``Bootstrap`` keyword needs to be the first
-entry in the header section.  This breaks compatibility with older versions
-that allow the parameters of the header to appear in any order.
-
-Depending on the value assigned to ``Bootstrap``, other keywords may also be
-valid in the header. For example, when using the ``library`` bootstrap agent,
-the ``From`` keyword becomes valid. Observe the following example for building a
-Debian container from the Container Library:
-
-.. code-block:: singularity
-
-    Bootstrap: library
-    From: debian:7
-
-A def file that uses an official mirror to install Centos-7 might look like
-this:
-
-.. code-block:: singularity
-
-    Bootstrap: yum
-    OSVersion: 7
-    MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
-    Include: yum
-
-Each bootstrap agent enables its own options and keywords. You can read about
-them and see examples in the :ref:`appendix <appendix>`:
+For any additional help or support contact the Sylabs team:
+https://www.sylabs.io/contact/
 
 
-Preferred bootstrap agents
-==========================
+.. _quick-installation:
 
--  :ref:`library <build-library-module>` (images hosted on the `Container Library <https://cloud.sylabs.io/library>`_)
+------------------------
+Quick Installation Steps
+------------------------
 
--  :ref:`docker <build-docker-module>` (images hosted on Docker Hub)
-
--  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
-
-Other bootstrap agents
-======================
-
--  :ref:`localimage <build-localimage>` (images saved on your machine)
-
--  :ref:`yum <build-yum>` (yum based systems such as CentOS and Scientific Linux)
-
--  :ref:`debootstrap <build-debootstrap>` (apt based systems such as Debian and Ubuntu)
-
--  :ref:`arch <build-arch>` (Arch Linux)
-
--  :ref:`busybox <build-busybox>` (BusyBox)
-
--  :ref:`zypper <build-zypper>` (zypper based systems such as Suse and OpenSuse)
-
-
---------
-Sections
---------
-
-The main content of the bootstrap file is broken into sections. Different
-sections add different content or execute commands at different times during the
-build process. Note that if any command fails, the build process will halt.
-
-Here is an example definition file that uses every available section. We will
-discuss each section in turn. It is not necessary to include every section (or
-any sections at all) within a def file. Furthermore, the order of the sections
-in the def file is unimportant and multiple sections of the same name can be
-included and will be appended to one another during the build process.
-
-.. code-block:: singularity
-
-    Bootstrap: library
-    From: ubuntu:18.04
-    Stage: build
-
-    %setup
-        touch /file1
-        touch ${SINGULARITY_ROOTFS}/file2
-
-    %files
-        /file1
-        /file1 /opt
-
-    %environment
-        export LISTEN_PORT=12345
-        export LC_ALL=C
-
-    %post
-        apt-get update && apt-get install -y netcat
-        NOW=`date`
-        echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
-
-    %runscript
-        echo "Container was created $NOW"
-        echo "Arguments received: $*"
-        exec echo "$@"
-
-    %startscript
-        nc -lp $LISTEN_PORT
-
-    %test
-        grep -q NAME=\"Ubuntu\" /etc/os-release
-        if [ $? -eq 0 ]; then
-            echo "Container base is Ubuntu as expected."
-        else
-            echo "Container base is not Ubuntu."
-        fi
-
-    %labels
-        Author d@sylabs.io
-        Version v0.0.1
-
-    %help
-        This is a demo container used to illustrate a def file that uses all
-        supported sections.
-
-%setup
-======
-
-Commands in the ``%setup`` section are executed on the host system outside of
-the container after the base OS has been installed. You can reference the
-container file system with the ``$SINGULARITY_ROOTFS`` environment variable in
-the ``%setup`` section.
+You will need a Linux system to run Singularity.
 
 .. note::
+     This is only a short manual for Quick Installation. For details on
+     different methods of Installtion, versions, and RPM etc, please refer to
+     the :ref:`Installation page <installation>`.
 
-    Be careful with the ``%setup`` section! This scriptlet is executed outside
-    of the container on the host system itself, and is executed with elevated
-    priviledges. Commands in ``%setup`` can alter and potentially damage the
-    host.
+Install system dependencies
+===========================
 
-Consider the example from the definition file above:
-
-.. code-block:: singularity
-
-    %setup
-        touch /file1
-        touch ${SINGULARITY_ROOTFS}/file2
-
-Here, ``file1`` is created at the root of the file system **on the host**.
-We'll use ``file1`` to demonstrate the usage of the ``%files`` section below.
-The ``file2`` is created at the root of the file system **within the
-container**.
-
-In later versions of Singularity the ``%files`` section is provided as a safer
-alternative to copying files from the host system into the container during the
-build. Because of the potential danger involved in running the ``%setup``
-scriptlet with elevated privileges on the host system during the build, it's
-use is generally discouraged.
-
-%files
-======
-
-The ``%files`` section allows you to copy files from your host system into the
-container with greater safety than using the ``%setup`` section. Each line is a
-``<source>`` and ``<destination>`` pair, where the source is a path on your host
-system, and the destination is a path in the container. The  ``<destination>``
-specification can be omitted and will be assumed to be the same path as the
-``<source>`` specification.
-
-Consider the example from the definition file above:
-
-.. code-block:: singularity
-
-    %files
-        /file1
-        /file1 /opt
-
-``file1`` was created in the root of the host file system during the ``%setup``
-section (see above).  The ``%files`` scriptlet will copy ``file1`` to the root
-of the container file system and then make a second copy of ``file1`` within the
-container in ``/opt``.
-
-Files can be copied from other stages by providing the source location in the
-previous stage and the destination in the current container.
-
-.. code-block:: singularity
-
-  %files from stage_name
-    /root/hello /bin/hello
-
-Files in the ``%files`` section are copied before the ``%post`` section is
-executed so that they are available during the build and configuration process.
-
-
-%environment
-============
-
-The ``%environment`` section allows you to define environment variables that
-will be set at runtime. Note that these variables are not made available at
-build time by their inclusion in the ``%environment`` section. This means that
-if you need the same variables during the build process, you should also define
-them in your ``%post`` section. Specifically:
-
--  **during build**: The ``%environment`` section is written to a file in the
-   container metadata directory. This file is not sourced.
-
--  **during runtime**: The file in the container metadata directory is sourced.
-
-You should use the same conventions that you would use in a ``.bashrc`` or
-``.profile`` file. Consider this example from the def file above:
-
-.. code-block:: singularity
-
-    %environment
-        export LISTEN_PORT=12345
-        export LC_ALL=C
-
-The ``$LISTEN_PORT`` variable will be used in the ``%startscript`` section
-below. The ``$LC_ALL`` variable is useful for many programs (often written in
-Perl) that complain when no locale is set.
-
-After building this container, you can verify that the environment variables are
-set appropriately at runtime with the following command:
+You must first install development libraries to your host. Assuming Ubuntu
+(apply similar to RHEL derivatives):
 
 .. code-block:: none
 
-    $ singularity exec my_container.sif env | grep -E 'LISTEN_PORT|LC_ALL'
-    LISTEN_PORT=12345
-    LC_ALL=C
+    $ sudo apt-get update && sudo apt-get install -y \
+        build-essential \
+        libssl-dev \
+        uuid-dev \
+        libgpgme11-dev \
+        squashfs-tools \
+        libseccomp-dev \
+        wget \
+        pkg-config \
+        git
 
-In the special case of variables generated at build time, you can also add
-environment variables to your container in the ``%post`` section (see below).
+.. note::
+    Note that ``squashfs-tools`` is only a dependency for commands that builds
+    images. The ``build`` command obviously relies on ``squashfs-tools``, but
+    other commands may do so as well if they are run using container images
+    from Docker Hub for instance.
 
-At build time, the content of the ``%environment`` section is written to a file
-called ``/.singularity.d/env/90-environment.sh`` inside of the container.  Text
-redirected to the ``$SINGULARITY_ENVIRONMENT`` variable during ``%post`` (see
-below) is added to a file called ``/.singularity.d/env/91-environment.sh``.
+There are 3 broad steps to installing Singularity:
 
-At runtime, scripts in ``/.singularity/env`` are sourced in order. This means
-that variables in the ``%post`` section take precedence over those added  via
-``%environment``.
+1. :ref:`Installing Go <install>`
+2. :ref:`Downloading Singularity <download>`
+3. :ref:`Compiling Singularity Binaries <compile>`
 
-See :ref:`Environment and Metadata <environment-and-metadata>` for more
-information about the Singularity container environment.
+.. _install:
 
-%post
-=====
-
-Commands in the ``%post`` section are executed within the container after the
-base OS has been installed at build time. This is where you will download files
-from the internet with tools like ``git`` and ``wget``, install new software and
-libraries, write configuration files, create new directories, etc.
-
-Consider the example from the definition file above:
-
-.. code-block:: singularity
-
-    %post
-        apt-get update && apt-get install -y netcat
-        NOW=`date`
-        echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
-
-
-This ``%post`` scriptlet uses the Ubuntu package manager ``apt`` to update the
-container and install the program ``netcat`` (that will be used in the
-``%startscript`` section below).
-
-The script is also setting an environment variable at build time.  Note that the
-value of this variable cannot be anticipated, and therefore cannot be set during
-the ``%environment`` section. For situations like this, the
-``$SINGULARITY_ENVIRONMENT`` variable is provided. Redirecting text to this
-variable will cause it to be written to a file called
-``/.singularity.d/env/91-environment.sh`` that will be sourced at runtime.  Note
-that variables set in ``%post`` take precedence over those set in the
-``%environment`` section as explained above.
-
-.. _runscript:
-
-%runscript
+Install Go
 ==========
 
-.. _sec:runscript:
+Singularity v3 and above is written primarily in Go, so you will need Go
+installed to compile it from source.
 
-The contents of the ``%runscript`` section are written to a file within the
-container that is executed when the container image is run (either via the
-``singularity run`` command or by executing the container directly as a
-command). When the container is invoked, arguments following the container name
-are passed to the runscript. This means that you can (and should) process
-arguments within your runscript.
+This is one of several ways to `install and configure Go
+<https://golang.org/doc/install>`_.
 
-Consider the example from the def file above:
-
-.. code-block:: singularity
-
-    %runscript
-        echo "Container was created $NOW"
-        echo "Arguments received: $*"
-        exec echo "$@"
-
-In this runscript, the time that the container was created is echoed via the
-``$NOW`` variable (set in the ``%post`` section above). The options passed to
-the container at runtime are printed as a single string (``$*``) and then they
-are passed to echo via a quoted array (``$@``) which ensures that all of the
-arguments are properly parsed by the executed command. The ``exec`` preceding
-the final ``echo`` command replaces the current entry in the process table
-(which originally was the call to Singularity). Thus the runscript shell process
-ceases to exist, and only the process running within the container remains.
-
-Running the container built using this def file will yield the following:
+Visit the `Go Downloads page <https://golang.org/dl/>`_ and pick a package
+archive suitable to the environment you are in. Once the Download is complete,
+extract the archive to ``/usr/local`` (or use other instructions on go installation
+page).
 
 .. code-block:: none
 
-    $ ./my_container.sif
-    Container was created Thu Dec  6 20:01:56 UTC 2018
-    Arguments received:
+    $  sudo tar -C /usr/local -xzvf go1.12.5.linux-amd64.tar.gz
 
-    $ ./my_container.sif this that and the other
-    Container was created Thu Dec  6 20:01:56 UTC 2018
-    Arguments received: this that and the other
-    this that and the other
-
-.. _sec:help:
-
-%startscript
-============
-
-Similar to the ``%runscript`` section, the contents of the ``%startscript``
-section are written to a file within the container at build time.  This file is
-executed when the ``instance start`` command is issued.
-
-Consider the example from the def file above.
-
-.. code-block:: singularity
-
-    %startscript
-        nc -lp $LISTEN_PORT
-
-Here the netcat program is used to listen for TCP traffic on the port indicated
-by the ``$LISTEN_PORT`` variable (set in the ``%environment`` section above).
-The script can be invoked like so:
+Set the Environment variable PATH to point to Go:
 
 .. code-block:: none
 
-    $ singularity instance start my_container.sif instance1
-    INFO:    instance started successfully
+    $  echo 'export PATH=/usr/local/go/bin' >> ~/.bashrc && \
+    source ~/.bashrc
 
-    $ lsof | grep LISTEN
-    nc        19061               vagrant    3u     IPv4             107409      0t0        TCP *:12345 (LISTEN)
+.. _download:
 
-    $ singularity instance stop instance1
-    Stopping instance1 instance of /home/vagrant/my_container.sif (PID=19035)
+Download Singularity from a release
+===================================
 
-%test
+You can download Singularity from one of the releases. To see a full list, visit
+`the GitHub release page <https://github.com/sylabs/singularity/releases>`_.
+After deciding on a release to install, you can run the following commands to
+proceed with the installation.
+
+.. code-block:: none
+
+    $ export VERSION={InstallationVersion} && # adjust this as necessary \
+        wget https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
+        tar -xzf singularity-${VERSION}.tar.gz && \
+        cd singularity
+
+.. _compile:
+
+Compile the Singularity binary
+==============================
+
+Now you are ready to build Singularity. Dependencies will be automatically
+downloaded. You can build Singularity using the following commands:
+
+.. code-block:: none
+
+    $ ./mconfig && \
+        make -C builddir && \
+        sudo make -C builddir install
+
+Singularity must be installed as root to function properly.
+
+-------------------------------------
+Overview of the Singularity Interface
+-------------------------------------
+
+Singularity’s command line interface allows you to build
+and interact with containers transparently. You can run programs inside a
+container as if they were running on your host system. You can easily redirect
+IO, use pipes, pass arguments, and access files, sockets, and ports on the host
+system from within a container.
+
+The ``help`` command gives an overview of Singularity options and subcommands as
+follows:
+
+.. code-block:: none
+
+    $ singularity help
+
+    Linux container platform optimized for High Performance Computing (HPC) and
+    Enterprise Performance Computing (EPC)
+
+    Usage:
+      singularity [global options...]
+
+    Description:
+      Singularity containers provide an application virtualization layer enabling
+      mobility of compute via both application and environment portability. With
+      Singularity one is capable of building a root file system that runs on any
+      other Linux system where Singularity is installed.
+
+    Options:
+      -d, --debug     print debugging information (highest verbosity)
+      -h, --help      help for singularity
+          --nocolor   print without color output (default False)
+      -q, --quiet     suppress normal output
+      -s, --silent    only print errors
+      -v, --verbose   print additional information
+
+    Available Commands:
+      build       Build a Singularity image
+      cache       Manage the local cache
+      capability  Manage Linux capabilities for users and groups
+      exec        Run a command within a container
+      help        Help about any command
+      inspect     Show metadata for an image
+      instance    Manage containers running as services
+      key         Manage OpenPGP keys
+      oci         Manage OCI containers
+      plugin      Manage singularity plugins
+      pull        Pull an image from a URI
+      push        Upload image to the provided library (default is "cloud.sylabs.io")
+      remote      Manage singularity remote endpoints
+      run         Run the user-defined default command within a container
+      run-help    Show the user-defined help for an image
+      search      Search a Container Library for images
+      shell       Run a shell within a container
+      sif         siftool is a program for Singularity Image Format (SIF) file manipulation
+      sign        Attach a cryptographic signature to an image
+      test        Run the user-defined tests within a container
+      verify      Verify cryptographic signatures attached to an image
+      version     Show the version for Singularity
+
+  Examples:
+    $ singularity help <command> [<subcommand>]
+    $ singularity help build
+    $ singularity help instance start
+
+
+  For additional help or support, please visit https://www.sylabs.io/docs/
+
+
+Information about subcommand can also be viewed with the ``help`` command.
+
+.. code-block:: none
+
+    $ singularity help verify
+    Verify cryptographic signatures on container
+
+    Usage:
+      singularity verify [verify options...] <image path>
+
+    Description:
+      The verify command allows a user to verify cryptographic signatures on SIF
+      container files. There may be multiple signatures for data objects and
+      multiple data objects signed. By default the command searches for the primary
+      partition signature. If found, a list of all verification blocks applied on
+      the primary partition is gathered so that data integrity (hashing) and
+      signature verification is done for all those blocks.
+
+    Options:
+      -g, --groupid uint32   group ID to be verified
+      -h, --help             help for verify
+      -i, --id uint32        descriptor ID to be verified
+      -l, --local            only verify with local keys
+      -u, --url string       key server URL (default "https://keys.sylabs.io")
+
+
+    Examples:
+      $ singularity verify container.sif
+
+
+    For additional help or support, please visit https://www.sylabs.io/docs/
+
+Singularity uses positional syntax (i.e. the order of commands and options
+matters). Global options affecting the behavior of all commands follow the main
+``singularity`` command. Then sub commands are followed by their options
+and arguments.
+
+For example, to pass the ``--debug`` option to the main ``singularity`` command
+and run Singularity with debugging messages on:
+
+.. code-block:: none
+
+    $ singularity --debug run library://sylabsed/examples/lolcow
+
+To pass the ``--containall`` option to the ``run`` command and run a
+Singularity image in an isolated manner:
+
+.. code-block:: none
+
+    $ singularity run --containall library://sylabsed/examples/lolcow
+
+Singularity 2.4 introduced the concept of command groups. For instance, to list
+Linux capabilities for a particular user, you would use the  ``list`` command in
+the ``capability`` command group like so:
+
+.. code-block:: none
+
+    $ singularity capability list --user dave
+
+Container authors might also write help docs specific to a container or for an
+internal module called an ``app``. If those help docs exist for a particular
+container, you can view them like so.
+
+.. code-block:: none
+
+    $ singularity inspect --helpfile container.sif  # See the container's help, if provided
+
+    $ singularity inspect --helpfile --app=foo foo.sif  # See the help for foo, if provided
+
+-------------------------
+Download pre-built images
+-------------------------
+
+You can use the ``search`` command to locate groups, collections, and
+containers of interest on the `Container Library <https://cloud.sylabs.io/library>`_ .
+
+.. code-block:: none
+
+    $ singularity search alp
+    No users found for 'alp'
+
+    Found 1 collections for 'alp'
+    	library://jchavez/alpine
+
+    Found 5 containers for 'alp'
+    	library://jialipassion/official/alpine
+    		Tags: latest
+    	library://dtrudg/linux/alpine
+    		Tags: 3.2 3.3 3.4 3.5 3.6 3.7 3.8 edge latest
+    	library://sylabsed/linux/alpine
+    		Tags: 3.6 3.7 latest
+    	library://library/default/alpine
+    		Tags: 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 latest
+    	library://sylabsed/examples/alpine
+    		Tags: latest
+
+You can use the `pull <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_pull.html>`_
+and `build <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_build.html>`_
+commands to download pre-built images from an external resource like the
+`Container Library <https://cloud.sylabs.io/library>`_ or
+`Docker Hub <https://hub.docker.com/>`_.
+
+.. code-block:: none
+
+    $ singularity pull library://sylabsed/linux/alpine
+
+You can also use ``pull`` with the ``docker://`` uri to reference Docker images
+served from a registry. In this case ``pull`` does not just download an image
+file. Docker images are stored in layers, so ``pull`` must also combine those
+layers into a usable Singularity file.
+
+.. code-block:: none
+
+    $ singularity pull docker://godlovedc/lolcow
+
+Pulling Docker images reduces reproducibility. If you were to pull a Docker
+image today and then wait six months and pull again, you are not guaranteed to
+get the same image. If any of the source layers has changed the image will be
+altered. If reproducibility is a priority for you, try building your images from
+the Container Library.
+
+You can also use the ``build`` command to download pre-built images from an
+external resource. When using ``build`` you must specify a name for your
+container like so:
+
+.. code-block:: none
+
+    $ singularity build ubuntu.sif library://ubuntu
+
+    $ singularity build lolcow.sif docker://godlovedc/lolcow
+
+Unlike ``pull``, ``build`` will convert your image to the latest Singularity
+image format after downloading it.
+``build`` is like a “Swiss Army knife” for container creation. In addition to
+downloading images, you can use ``build`` to create images from other images or
+from scratch using a :ref:`definition file <definitionfiles>`. You can also
+use ``build`` to convert an image between the container formats supported by
+Singularity.
+
+.. _cowimage:
+
+--------------------
+Interact with images
+--------------------
+
+You can interact with images in several ways each of which can accept image URIs
+in addition to a local image path.
+
+For demonstration, we will use a ``lolcow_latest.sif`` image that can be pulled
+from the Container Library:
+
+.. code-block:: none
+
+    $ singularity pull library://sylabsed/examples/lolcow
+
+Shell
 =====
 
-The ``%test`` section runs at the very end of the build process to validate the
-container using a method of your choice. You can also execute this scriptlet
-through the container itself, using the ``test`` command.
-
-Consider the example from the def file above:
-
-.. code-block:: singularity
-
-    %test
-        grep -q NAME=\"Ubuntu\" /etc/os-release
-        if [ $? -eq 0 ]; then
-            echo "Container base is Ubuntu as expected."
-        else
-            echo "Container base is not Ubuntu."
-        fi
-
-
-This (somewhat silly) script tests if the base OS is Ubuntu. You could also
-write a script to test that binaries were appropriately downloaded and built, or
-that software works as expected on custom hardware. If you want to build a
-container without running the ``%test`` section (for example, if the build
-system does not have the same hardware that will be used on the production
-system), you can do so with the ``--notest`` build option:
+The `shell <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_shell.html>`_
+command allows you to spawn a new shell within your container and interact with
+it as though it were a small virtual machine.
 
 .. code-block:: none
 
-    $ sudo singularity build --notest my_container.sif my_container.def
+    $ singularity shell lolcow_latest.sif
 
-Running the test command on a container built with this def file yields the
-following:
-
-.. code-block:: none
-
-    $ singularity test my_container.sif
-    Container base is Ubuntu as expected.
+    Singularity lolcow_latest.sif:~>
 
 
-%labels
-=======
+The change in prompt indicates that you have entered the container (though you
+should not rely on that to determine whether you are in container or not).
 
-The ``%labels`` section is used to add metadata to the file
-``/.singularity.d/labels.json`` within your container. The general format is a
-name-value pair.
-
-Consider the example from the def file above:
-
-.. code-block:: singularity
-
-    %labels
-        Author d@sylabs.io
-        Version v0.0.1
-
-The easiest way to see labels is to inspect the image:
+Once inside of a Singularity container, you are the same user as you are on the
+host system.
 
 .. code-block:: none
 
-    $ singularity inspect my_container.sif
+    Singularity lolcow_latest.sif:~> whoami
+    david
 
-    {
-    	"Author": "d@sylabs.io",
-    	"Version": "v0.0.1",
-    	"org.label-schema.build-date": "Thursday_6_December_2018_20:1:56_UTC",
-    	"org.label-schema.schema-version": "1.0",
-    	"org.label-schema.usage": "/.singularity.d/runscript.help",
-    	"org.label-schema.usage.singularity.deffile.bootstrap": "library",
-    	"org.label-schema.usage.singularity.deffile.from": "ubuntu:18.04",
-    	"org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
-    	"org.label-schema.usage.singularity.version": "3.0.1"
-    }
+    Singularity lolcow_latest.sif:~> id
+    uid=1000(david) gid=1000(david) groups=1000(david),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lpadmin),126(sambashare)
 
-Some labels that are captured automatically from the build process. You can read
-more about labels and metadata :ref:`here <environment-and-metadata>`.
-
-%help
-=====
-
-Any text in the ``%help`` section is transcribed into a metadata file in the
-container during the build. This text can then be displayed using the
-``run-help`` command.
-
-Consider the example from the def file above:
-
-.. code-block:: singularity
-
-    %help
-        This is a demo container used to illustrate a def file that uses all
-        supported sections.
-
-After building the help can be displayed like so:
+``shell`` also works with the ``library://``, ``docker://``, and ``shub://``
+URIs. This creates an ephemeral container that disappears when the shell is
+exited.
 
 .. code-block:: none
 
-    $ singularity run-help my_container.sif
-        This is a demo container used to illustrate a def file that uses all
-        supported sections.
+    $ singularity shell library://sylabsed/examples/lolcow
 
-------------------
-Multi-Stage Builds
-------------------
+Executing Commands
+==================
 
-Singularity 3.2 introduces multi-stage builds where one environment can be used for compilation, then the resulting binary can be copied into a final environment.  This allows a slimmer final image that does not require the entire development stack.
+The `exec <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_exec.html>`_
+command allows you to execute a custom command within a container by specifying
+the image file. For instance, to execute the ``cowsay`` program within the
+``lolcow_latest.sif`` container:
+
+.. code-block:: none
+
+    $ singularity exec lolcow_latest.sif cowsay moo
+     _____
+    < moo >
+     -----
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+
+``exec`` also works with the ``library://``, ``docker://``, and ``shub://``
+URIs. This creates an ephemeral container that executes a command and
+disappears.
+
+.. code-block:: none
+
+    $ singularity exec library://sylabsed/examples/lolcow cowsay "Fresh from the library!"
+     _________________________
+    < Fresh from the library! >
+     -------------------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+
+.. _runcontainer:
+
+Running a container
+===================
+
+Singularity containers contain :ref:`runscripts <runscript>`. These are user
+defined scripts that define the actions a container should perform when someone
+runs it. The runscript can be triggered with the `run <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_run.html>`_
+command, or simply by  calling the container as though it were an executable.
+
+.. code-block:: none
+
+    $ singularity run lolcow_latest.sif
+     _____________________________________
+    / You have been selected for a secret \
+    \ mission.                            /
+     -------------------------------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+
+    $ ./lolcow_latest.sif
+     ____________________________________
+    / Q: What is orange and goes "click, \
+    \ click?" A: A ball point carrot.    /
+     ------------------------------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+
+
+``run`` also works with the ``library://``, ``docker://``, and ``shub://`` URIs.
+This creates an ephemeral container that runs and then disappears.
+
+.. code-block:: none
+
+    $ singularity run library://sylabsed/examples/lolcow
+     ____________________________________
+    / Is that really YOU that is reading \
+    \ this?                              /
+     ------------------------------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+
+-------------------
+Working with Files
+-------------------
+
+Files on the host are reachable from within the container.
+
+.. code-block:: none
+
+    $ echo "Hello from inside the container" > $HOME/hostfile.txt
+
+    $ singularity exec lolcow_latest.sif cat $HOME/hostfile.txt
+
+    Hello from inside the container
+
+This example works because ``hostfile.txt`` exists in the user’s home directory.
+By default Singularity bind mounts ``/home/$USER``, ``/tmp``, and ``$PWD`` into
+your container at runtime.
+
+You can specify additional directories to bind mount into your container with
+the ``--bind`` option. In this example, the ``data`` directory on the host
+system is bind mounted to the ``/mnt`` directory inside the container.
+
+.. code-block:: none
+
+    $ echo "Drink milk (and never eat hamburgers)." > /data/cow_advice.txt
+
+    $ singularity exec --bind /data:/mnt lolcow_latest.sif cat /mnt/cow_advice.txt
+    Drink milk (and never eat hamburgers).
+
+Pipes and redirects also work with Singularity commands just like they do with
+normal Linux commands.
+
+.. code-block:: none
+
+    $ cat /data/cow_advice.txt | singularity exec lolcow_latest.sif cowsay
+     ________________________________________
+    < Drink milk (and never eat hamburgers). >
+     ----------------------------------------
+            \   ^__^
+             \  (oo)\_______
+                (__)\       )\/\
+                    ||----w |
+                    ||     ||
+
+.. _build-images-from-scratch:
+
+-------------------------
+Build images from scratch
+-------------------------
+
+.. _sec:buildimagesfromscratch:
+
+Singularity v3.0 and above produces immutable images in the Singularity Image File (SIF)
+format. This ensures reproducible and verifiable images and allows for many
+extra benefits such as the ability to sign and verify your containers.
+
+However, during testing and debugging you may want an image format that is
+writable. This way you can ``shell`` into the image and install software and
+dependencies until you are satisfied that your container will fulfill your
+needs. For these scenarios, Singularity also supports the ``sandbox`` format
+(which is really just a directory).
+
+Sandbox Directories
+===================
+
+To build into a ``sandbox`` (container in a directory) use the
+``build --sandbox`` command and option:
+
+.. code-block:: none
+
+    $ sudo singularity build --sandbox ubuntu/ library://ubuntu
+
+This command creates a directory called ``ubuntu/`` with an entire Ubuntu
+Operating System and some Singularity metadata in your current working
+directory.
+
+You can use commands like ``shell``, ``exec`` , and ``run`` with this directory
+just as you would with a Singularity image. If you pass the ``--writable``
+option when you use your container you can also write files within the sandbox
+directory (provided you have the permissions to do so).
+
+.. code-block:: none
+
+    $ sudo singularity exec --writable ubuntu touch /foo
+
+    $ singularity exec ubuntu/ ls /foo
+    /foo
+
+Converting images from one format to another
+============================================
+
+The ``build`` command allows you to build a container from an existing
+container. This means that you can use it to convert a container from one format
+to another. For instance, if you have already created a sandbox (directory) and
+want to convert it to the default immutable image format (squashfs) you can do
+so:
+
+.. code-block:: none
+
+    $ singularity build new-sif sandbox
+
+Doing so may break reproducibility if you have altered your sandbox outside of
+the context of a definition file, so you are advised to exercise care.
+
+Singularity Definition Files
+============================
+
+For a reproducible, verifiable and production-quality container you should
+build a SIF file using a Singularity definition file. This also makes it easy to
+add files, environment variables, and install custom software, and still start
+from your base of choice (e.g., the Container Library).
+
+A definition file has a header and a body. The header determines the base
+container to begin with, and the body is further divided into sections that
+performs things like software installation, environment setup, and copying files
+into the container from host system etc.
+
+Here is an example of a definition file:
 
 .. code-block:: singularity
 
-    Bootstrap: docker
-    From: golang:1.12.3-alpine3.9
-    Stage: build
+    BootStrap: library
+    From: ubuntu:16.04
 
     %post
-      # prep environment
-      export PATH="/go/bin:/usr/local/go/bin:$PATH"
-      export HOME="/root"
-      cd /root
-
-      # insert source code, could also be copied from host with %files
-      cat << EOF > hello.go
-      package main
-      import "fmt"
-
-      func main() {
-        fmt.Printf("Hello World!\n")
-      }
-    EOF
-
-      go build -o hello hello.go
-
-
-
-    # Install binary into final image
-    Bootstrap: library
-    From: alpine:3.9
-    Stage: final
-
-    # install binary from stage one
-    %files from build
-      /root/hello /bin/hello
-
-The names of stages are arbitrary. Files can only be copied from stages declared before the current stage in the definition. E.g., the ``devel`` stage in the above definition cannot copy files from the ``final`` stage, but the ``final`` stage can copy files from the ``devel`` stage.
-
-----
-Apps
-----
-
-In some circumstances, it may be redundant to build different containers for
-each app with nearly equivalent dependencies. Singularity supports installing
-apps within internal modules based on the concept of `Standard Container
-Integration Format (SCI-F) <https://sci-f.github.io/>`_
-
-The following runscript demonstrates how to build 2 different apps into the
-same container using SCI-F modules:
-
-.. code-block:: singularity
-
-    Bootstrap: docker
-    From: ubuntu
+        apt-get -y update
+        apt-get -y install fortune cowsay lolcat
 
     %environment
-        GLOBAL=variables
-        AVAILABLE="to all apps"
+        export LC_ALL=C
+        export PATH=/usr/games:$PATH
 
-    ##############################
-    # foo
-    ##############################
+    %runscript
+        fortune | cowsay | lolcat
 
-    %apprun foo
-        exec echo "RUNNING FOO"
+    %labels
+        Author GodloveD
 
-    %applabels foo
-       BESTAPP FOO
 
-    %appinstall foo
-       touch foo.exec
-
-    %appenv foo
-        SOFTWARE=foo
-        export SOFTWARE
-
-    %apphelp foo
-        This is the help for foo.
-
-    %appfiles foo
-       foo.txt
-
-    ##############################
-    # bar
-    ##############################
-
-    %apphelp bar
-        This is the help for bar.
-
-    %applabels bar
-       BESTAPP BAR
-
-    %appinstall bar
-        touch bar.exec
-
-    %appenv bar
-        SOFTWARE=bar
-        export SOFTWARE
-
-An ``%appinstall`` section is the equivalent of ``%post`` but for a particular
-app. Similarly, ``%appenv`` equates to the app version of ``%environment`` and
-so on.
-
-The ``%app*`` sections can exist alongside any of the primary sections (i.e.
-``%post``, ``%runscript``, ``%environment``, etc.).  As with the other sections,
-the ordering of the ``%app*`` sections isn’t important.
-
-After installing apps into modules using the ``%app*`` sections, the ``--app``
-option becomes available allowing the following functions:
-
-To run a specific app within the container:
+To build a container from this definition file (assuming it is a file
+named lolcow.def), you would call build like so:
 
 .. code-block:: none
 
-    % singularity run --app foo my_container.sif
-    RUNNING FOO
+    $ sudo singularity build lolcow.sif lolcow.def
 
-The same environment variable, ``$SOFTWARE`` is defined for both apps in the def
-file above. You can execute the following command to search the list of active
-environment variables and ``grep`` to determine if the variable changes
-depending on the app we specify:
+In this example, the header tells Singularity to use a base Ubuntu 16.04 image
+from the Container Library.
 
-.. code-block:: none
+- The ``%post`` section executes within the container at build time after the base OS has been installed. The ``%post`` section is therefore the place to perform installations of new applications.
 
-    $ singularity exec --app foo my_container.sif env | grep SOFTWARE
-    SOFTWARE=foo
+- The ``%environment`` section defines some environment variables that will be available to the container at runtime.
 
-    $ singularity exec --app bar my_container.sif env | grep SOFTWARE
-    SOFTWARE=bar
+- The ``%runscript`` section defines actions for the container to take when it is executed.
 
---------------------------------
-Best Practices for Build Recipes
---------------------------------
+- And finally, the ``%labels`` section allows for custom metadata to be added to the container.
 
-When crafting your recipe, it is best to consider the following:
+This is a very small example of the things that you can do with a :ref:`definition file <definitionfiles>`.
+In addition to building a container from the Container Library, you can start
+with base images from Docker Hub and use images directly from official
+repositories such as Ubuntu, Debian, CentOS, Arch, and BusyBox.  You can also
+use an existing container on your host system as a base.
 
-#. Always install packages, programs, data, and files into operating system
-   locations (e.g. not ``/home``, ``/tmp`` , or any other directories that might
-   get commonly binded on).
+If you want to build Singularity images but you don't have administrative (root)
+access on your build system, you can build images using the `Remote Builder <https://cloud.sylabs.io/builder>`_.
 
-#. Document your container. If your runscript doesn’t supply help, write a
-   ``%help`` or ``%apphelp`` section. A good container tells the user how to
-   interact with it.
+This quickstart document just scratches the surface of all of the things you can
+do with Singularity!
 
-#. If you require any special environment variables to be defined, add them to
-   the ``%environment`` and ``%appenv`` sections of the build recipe.
-
-#. Files should always be owned by a system account (UID less than 500).
-
-#. Ensure that sensitive files like ``/etc/passwd``, ``/etc/group``, and
-   ``/etc/shadow`` do not contain secrets.
-
-#. Build production containers from a definition file  instead of a sandbox that
-   has been manually changed. This ensures greatest possibility of
-   reproducibility and mitigates the "black box" effect.
+If you need additional help or support, contact the Sylabs team:
+https://www.sylabs.io/contact/
