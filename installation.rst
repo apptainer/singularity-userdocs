@@ -6,7 +6,7 @@ Installation
 .. _sec:installation:
 
 This document will guide you through the process of installing Singularity >=
-{InstallationVersion} via several different methods. (For instructions on 
+{InstallationVersion} via several different methods. (For instructions on
 installing earlier versions of Singularity please see `earlier versions of the
 docs <https://www.sylabs.io/docs/>`_.)
 
@@ -16,15 +16,15 @@ Overview
 
 Singularity runs on Linux natively and can also be run on Windows and Mac
 through virtual machines (VMs). Here we cover several different methods of
-installing Singularity (>={InstallationVersion}) on Linux and also give methods 
-for downloading and running VMs with singularity pre-installed from `Vagrant 
+installing Singularity (>={InstallationVersion}) on Linux and also give methods
+for downloading and running VMs with singularity pre-installed from `Vagrant
 Cloud <https://app.vagrantup.com/sylabs>`_.
 
 Install on Linux
 ----------------
 
-Linux is the only operating system that can support containers because of kernel 
-features like namespaces.  You can use these methods to install Singularity on 
+Linux is the only operating system that can support containers because of kernel
+features like namespaces.  You can use these methods to install Singularity on
 bare metal Linux or a Linux VM.
 
 ================
@@ -79,7 +79,7 @@ similar with other package managers.
 Install Go
 ----------
 
-Singularity v3 is written primarily in Go, and you will need Go installed to 
+Singularity v3 is written primarily in Go, and you will need Go installed to
 compile it from source.
 
 This is one of several ways to `install and configure Go
@@ -109,9 +109,9 @@ Then, set up your environment for Go.
 Download Singularity from a release
 ===================================
 
-You can download Singularity from one of the releases. To see a full list, visit 
-`the GitHub release page <https://github.com/sylabs/singularity/releases>`_. 
-After deciding on a release to install, you can run the following commands to 
+You can download Singularity from one of the releases. To see a full list, visit
+`the GitHub release page <https://github.com/sylabs/singularity/releases>`_.
+After deciding on a release to install, you can run the following commands to
 proceed with the installation.
 
 .. code-block:: none
@@ -127,7 +127,7 @@ Download from source
 
 The following commands will install Singularity from the `GitHub repo
 <https://github.com/sylabs/singularity>`_ to ``/usr/local``. This method will
-work for >=v{InstallationVersion}. To install an older tagged release see `older 
+work for >=v{InstallationVersion}. To install an older tagged release see `older
 versions of the docs <https://www.sylabs.io/docs/>`_.
 
 When installing from source, you can decide to install from either a **tag**, a
@@ -161,8 +161,8 @@ to generate a ``Makefile`` and then ``make`` is used to compile and install.
         make -C ./builddir && \
         sudo make -C ./builddir install
 
-By default Singularity will be installed in the ``/usr/local`` directory 
-hierarchy. You can specify a custom directory with the ``--prefix`` option, to 
+By default Singularity will be installed in the ``/usr/local`` directory
+hierarchy. You can specify a custom directory with the ``--prefix`` option, to
 ``mconfig`` like so:
 
 .. code-block:: none
@@ -214,8 +214,8 @@ directly from the `release tarball
     should be named `singularity-<version>.tar.gz`.
 
 After installing the :ref:`dependencies <install-dependencies>` and installing
-:ref:`Go <install-go>` as detailed above, you are ready download the tarball and
-build and install the RPM.
+:ref:`Go <install-go>` as detailed above, you are ready to download the tarball
+and build and install the RPM.
 
 .. code-block:: none
 
@@ -225,12 +225,12 @@ build and install the RPM.
         sudo rpm -ivh ~/rpmbuild/RPMS/x86_64/singularity-$VERSION-1.el7.x86_64.rpm && \
         rm -rf ~/rpmbuild singularity-$VERSION*.tar.gz
 
-If you encounter a failed dependency error for golang but installed it from 
+If you encounter a failed dependency error for golang but installed it from
 source, build with this command:
 
 .. code-block:: none
 
-    rpmbuild -tb --nodeps singularity-${VERSION}.tar.gz 
+    rpmbuild -tb --nodeps singularity-${VERSION}.tar.gz
 
 
 Options to ``mconfig`` can be passed using the familiar syntax to ``rpmbuild``.
@@ -257,8 +257,8 @@ Remove an old version
 When you run ``sudo make install``, the command lists files as they are
 installed. They must all be removed in order to completely remove Singularity.
 
-For example, in a standard installation of Singularity 3.0.1 and beyond (when 
-building from source) you must remove all of these files and directories to 
+For example, in a standard installation of Singularity 3.0.1 and beyond (when
+building from source) you must remove all of these files and directories to
 completely remove Singularity.
 
 Obviously, this list of files may differ depending on how you install
@@ -440,8 +440,8 @@ With Singularity Desktop for macOS (Alpha Preview):
 The disk image file is available `here <http://repo.sylabs.io/desktop/singularity-desktop-0.0.1alpha.dmg>`_.
 More information can be found `here <https://www.sylabs.io/singularity-desktop-macos/>`_.
 
-Singularity is also available via Vagrant (installable with 
-`Homebrew <https://brew.sh>`_ or manually) or with the Singularity Desktop for 
+Singularity is also available via Vagrant (installable with
+`Homebrew <https://brew.sh>`_ or manually) or with the Singularity Desktop for
 macOS (Alpha Preview).
 
 With Homebrew:
@@ -494,7 +494,7 @@ You can check the installed version of Singularity with the following:
 Of course, you can also start with a plain OS Vagrant box as a base and then
 install Singularity using one of the above methods for Linux.
 
-.. _installation-request:
+.. _installationrequest:
 
 Singularity on a shared resource
 --------------------------------
