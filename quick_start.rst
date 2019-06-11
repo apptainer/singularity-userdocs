@@ -59,7 +59,7 @@ There are 3 broad steps to installing Singularity:
 
 1. :ref:`Installing Go <install>`
 2. :ref:`Downloading Singularity <download>`
-3. :ref:`Compiling Singularity Binaries <compile>`
+3. :ref:`Compiling Singularity Source Code <compile>`
 
 .. _install:
 
