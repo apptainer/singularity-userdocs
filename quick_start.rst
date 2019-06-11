@@ -27,7 +27,7 @@ You will need a Linux system to run Singularity.
 
 .. note::
      This is only a short manual for Quick Installation. For details on
-     different methods of Installtion, versions, and RPM etc, please refer to
+     different methods of Installation, versions, and RPM etc, please refer to
      the :ref:`Installation page <installation>`.
 
 Install system dependencies
@@ -81,7 +81,7 @@ page).
 
     $  sudo tar -C /usr/local -xzvf go1.12.5.linux-amd64.tar.gz
 
-Set the Environment variable PATH to point to Go:
+Set the Environment variable ``PATH`` to point to Go:
 
 .. code-block:: none
 
