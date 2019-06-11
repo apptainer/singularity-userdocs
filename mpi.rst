@@ -92,11 +92,13 @@ If the host MPI is Open MPI, the definition file looks like:
         export SINGULAIRTYENV_APPEND_LD_LIBRARY_PATH=$OMPI_DIR/lib
 
     %post
+        echo "Installing required packages..."
+        apt-get update && apt-get install -y wget git bash gcc gfortran g++ make file
+
+        echo "Installing Open MPI"
         OMPI_DIR=/opt/ompi
         export OMPI_VERSION=4.0.0
         export OMPI_URL="https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-4.0.1.tar.bz2"
-
-        echo "Installing Open MPI"
         mkdir -p /tmp/ompi
         mkdir -p /opt
         # Download
