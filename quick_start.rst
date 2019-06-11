@@ -107,7 +107,7 @@ proceed with the installation.
 
 .. _compile:
 
-Compile the Singularity binary
+Compile the Singularity source code
 ==============================
 
 Now you are ready to build Singularity. Dependencies will be automatically
