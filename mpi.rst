@@ -98,7 +98,7 @@ If the host MPI is Open MPI, the definition file looks like:
         echo "Installing Open MPI"
         OMPI_DIR=/opt/ompi
         export OMPI_VERSION=4.0.0
-        export OMPI_URL="https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-4.0.1.tar.bz2"
+        export OMPI_URL="https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OMPI_VERSION.tar.bz2"
         mkdir -p /tmp/ompi
         mkdir -p /opt
         # Download
@@ -106,7 +106,7 @@ If the host MPI is Open MPI, the definition file looks like:
         # Compile and install
         cd /tmp/ompi/openmpi-$OMPI_VERSION && ./configure --prefix=$OMPI_DIR && make -j8 install
         # Set env variables so we can compile our application
-        export PATH=$OMPI_DIR/bin:$OMPI_DIR
+        export PATH=$OMPI_DIR/bin:$PATH
         export LD_LIBRARY_PATH=$OMPI_DIR/lib:$LD_LIBRARY_PATH
         export MANPATH=$OMPI_DIR/share/man:$MANPATH
 
