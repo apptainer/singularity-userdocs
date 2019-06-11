@@ -85,7 +85,7 @@ Set the Environment variable ``PATH`` to point to Go:
 
 .. code-block:: none
 
-    $  echo 'export PATH=/usr/local/go/bin' >> ~/.bashrc && \
+    $  echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc && \
     source ~/.bashrc
 
 .. _download:
