@@ -1,14 +1,15 @@
 .. _mpi
 
-========================
-Running MPI applications
-========================
+================================
+Singularity and MPI applications
+================================
 
 .. _sec:mpi
 
--------------------------
-Host MPI
--------------------------
+Users have several options to execute MPI applications that are installed in containers.
+The first and more popular way to execute MPI applications from Singularity containers is
+to rely on the MPI implementation available on the host. This is called the `Host MPI` or
+`hybrid` model. Other models are not covered by this version of the documentation.
 
 Using the MPI implementation that is already available of the host, i.e., the
 MPI implementation provided by system administrators, is the easier way to run
@@ -32,10 +33,54 @@ Since the MPI implementation in the container must be compliant with the version
 available on the system, a standard approach is to build your own MPI container,
 including the target MPI implementation.
 
-Assuming the application is `mpitest.c`, and the host MPI is MPICH, a definition
-file such as the following example can be used:
+To illustrate how Singularity can be used to execute MPI applications, we will
+assume for a moment that the application is `mpitest.c`, a simple hello world:
 
-.. code-block: none
+.. code-block:: none
+
+	#include <mpi.h>
+	#include <stdio.h>
+	#include <stdlib.h>
+
+	int main (int argc, char **argv) {
+		int rc;
+		int size;
+		int myrank;
+
+		rc = MPI_Init (&argc, &argv);
+		if (rc != MPI_SUCCESS) {
+			fprintf (stderr, "MPI_Init() failed");
+			return EXIT_FAILURE;
+		}
+
+		rc = MPI_Comm_size (MPI_COMM_WORLD, &size);
+		if (rc != MPI_SUCCESS) {
+			fprintf (stderr, "MPI_Comm_size() failed");
+			goto exit_with_error;
+		}
+
+		rc = MPI_Comm_rank (MPI_COMM_WORLD, &myrank);
+		if (rc != MPI_SUCCESS) {
+			fprintf (stderr, "MPI_Comm_rank() failed");
+			goto exit_with_error;
+		}
+
+		fprintf (stdout, "Hello, I am rank %d/%d", myrank, size);
+
+		MPI_Finalize();
+
+		return EXIT_SUCCESS;
+
+	 exit_with_error:
+		MPI_Finalize();
+		return EXIT_FAILURE;
+	}
+
+The next step will depend on the MPI implementation available on the host.
+The two main open sources implementation of MPI are MPICH and Open MPI.
+If the host MPI is MPICH, a definition file such as the following example can be used:
+
+.. code-block:: none
 
     Bootstrap: docker
     From: ubuntu:latest
@@ -76,7 +121,7 @@ file such as the following example can be used:
 
 If the host MPI is Open MPI, the definition file looks like:
 
-.. code-block: none
+.. code-block:: none
 
     Bootstrap: docker
     From: ubuntu:latest
@@ -97,7 +142,7 @@ If the host MPI is Open MPI, the definition file looks like:
 
         echo "Installing Open MPI"
         OMPI_DIR=/opt/ompi
-        export OMPI_VERSION=4.0.0
+        export OMPI_VERSION=4.0.1
         export OMPI_URL="https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OMPI_VERSION.tar.bz2"
         mkdir -p /tmp/ompi
         mkdir -p /opt
@@ -121,7 +166,7 @@ containers and ultimately MPI ranks within the containers.
 Assuming your container with MPI and your application is already build,
 the `mpirun` command to start your application looks like:
 
-.. code-block: none
+.. code-block:: none
 
     $ mpirun -n <NUMBER_OF_RANKS> singularity exec <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
 
@@ -138,7 +183,7 @@ job that requests the number of nodes specified by the `NNODES` environment
 variable and a total number of MPI processes specified by the `NP` environment
 variable.
 
-.. code-block: non
+.. code-block:: none
 
     $ cat my_job.sh
     #!/bin/bash
