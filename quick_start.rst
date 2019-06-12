@@ -27,7 +27,7 @@ You will need a Linux system to run Singularity.
 
 .. note::
      This is only a short manual for Quick Installation. For details on
-     different methods of Installation, versions, and RPM etc, please refer to
+     different methods of installation, versions, and RPM etc, please refer to
      the :ref:`Installation page <installation>`.
 
 Install system dependencies
@@ -50,7 +50,7 @@ You must first install development libraries to your host. Assuming Ubuntu
         git
 
 .. note::
-    Note that ``squashfs-tools`` is only a dependency for commands that builds
+    Note that ``squashfs-tools`` is only a dependency for commands that build
     images. The ``build`` command obviously relies on ``squashfs-tools``, but
     other commands may do so as well if they are run using container images
     from Docker Hub for instance.
@@ -75,18 +75,21 @@ This is one of several ways to `install and configure Go
 Visit the `Go Downloads page <https://golang.org/dl/>`_ and pick a package
 archive suitable to the environment you are in. Once the Download is complete,
 extract the archive to ``/usr/local`` (or use other instructions on go installation
-page).
+page). Alternatively, follow the commands here:
 
 .. code-block:: none
 
-    $  sudo tar -C /usr/local -xzvf go1.12.5.linux-amd64.tar.gz
+    $ export VERSION=1.12 OS=linux ARCH=amd64 && \  # Replace the values as needed
+      wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \ # Downloads the required Go package
+      sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \ # Extracts the archive
+      rm go$VERSION.$OS-$ARCH.tar.gz    # Deletes the ``tar`` file
 
 Set the Environment variable ``PATH`` to point to Go:
 
 .. code-block:: none
 
-    $  echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc && \
-    source ~/.bashrc
+    $ echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc && \
+      source ~/.bashrc
 
 .. _download:
 
@@ -108,7 +111,7 @@ proceed with the installation.
 .. _compile:
 
 Compile the Singularity source code
-==============================
+===================================
 
 Now you are ready to build Singularity. Dependencies will be automatically
 downloaded. You can build Singularity using the following commands:
@@ -125,7 +128,7 @@ Singularity must be installed as root to function properly.
 Overview of the Singularity Interface
 -------------------------------------
 
-Singularity’s command line interface allows you to build
+Singularity’s :ref:`command line interface <cli>` allows you to build
 and interact with containers transparently. You can run programs inside a
 container as if they were running on your host system. You can easily redirect
 IO, use pipes, pass arguments, and access files, sockets, and ports on the host
@@ -292,6 +295,9 @@ and `build <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_build.ht
 commands to download pre-built images from an external resource like the
 `Container Library <https://cloud.sylabs.io/library>`_ or
 `Docker Hub <https://hub.docker.com/>`_.
+
+When called on a native Singularity image like those provided on the Container Library, ``pull``
+simply downloads the image file to your system.
 
 .. code-block:: none
 
@@ -583,7 +589,7 @@ from your base of choice (e.g., the Container Library).
 
 A definition file has a header and a body. The header determines the base
 container to begin with, and the body is further divided into sections that
-performs things like software installation, environment setup, and copying files
+perform things like software installation, environment setup, and copying files
 into the container from host system etc.
 
 Here is an example of a definition file:
