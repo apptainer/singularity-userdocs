@@ -6,27 +6,51 @@ Singularity and MPI applications
 
 .. _sec:mpi
 
-Users have several options to execute MPI applications that are installed in containers.
-The first and more popular way to execute MPI applications from Singularity containers is
-to rely on the MPI implementation available on the host. This is called the `Host MPI` or
-`hybrid` model. Other models are not covered by this version of the documentation.
+The `Message Passing Interface (MPI) <https://computing.llnl.gov/tutorials/mpi/>`_
+is  a library standard extensively used by HPC applications to communicate with
+various nodes and clusters. There are two main distributions of MPI at the
+moment - `OpenMPI <https://www.open-mpi.org//>`_ and `MPICH <https://www.mpich.org/>`_,
+both of which are supported by Singularity. The goal of this page is to
+demonstrate the development and running of MPI programs using Singularity containers.
 
-Using the MPI implementation that is already available of the host, i.e., the
-MPI implementation provided by system administrators, is the easier way to run
-container and MPI applications. This configuration is called `host MPI` or
-`hybrid approache` since both MPI on the host and containers will be used.
-It is also possible to mount storage volumes into the container to use the host
-MPI from the containers but we will not cover this use case here since
-requiring file system sharing between the host and containers, which is usually
-not an option on high-performance computing platforms.
+Although there are several ways of carrying this out, the most popular way of
+executing MPI applications installed in a Sigularity container is to rely on the
+MPI implementation available on the host. This is called the ``Host MPI`` or
+the ``Hybrid`` model since both the MPI implementations provided by System
+administrators(on the host) and in the containers will be used.
+
+.. note::
+  It is also possible to mount storage volumes into the container to use the host
+  MPI from the containers but we will not cover this use case here since
+  requiring file system sharing between the host and containers is usually
+  not an option on high-performance computing platforms.
+
+The basic idea behind **Hybrid Approach** is when you execute a Singularity
+container with MPI code, you will call ``mpiexec`` or a similar launcher on the
+``singularity`` command itself. The MPI process outside of the container will
+then work in tandem with MPI inside the container and the containerized MPI code
+to instantiate the job.
+
+The Open MPI/Singularity workflow in detail:
+
+1. ``mpirun`` is called by the resource manager or the user directly from a shell
+2. Open MPI then calls the process management daemon (ORTED)
+3. The ORTED process launches the Singularity container requested by the ``mpirun`` command
+4. Singularity builds the container and namespace environment
+5. Singularity then launches the MPI application within the container
+6. The MPI application launches and loads the Open MPI libraries
+7. The Open MPI libraries connect back to the ORTED process via the Process Management Interface (PMI)
+
+At this point the processes within the container run as they would normally directly on the host.
 
 The advantages of this approach are:
-  - integration with resource managers such as Slurm,
-  - simplicity since similar to natively running MPI applications.
+  - Integration with resource managers such as Slurm,
+  - Simplicity since similar to natively running MPI applications.
+
 The drawbacks are:
-  - the MPI in the container MUST be compatible with the version of MPI
+  - The MPI in the container MUST be compatible with the version of MPI
     available on the host,
-  - the configuration of the MPI implementation in the container MUST be
+  - The configuration of the MPI implementation in the container MUST be
     configured for optimal use of the hardware if performance is critical.
 
 Since the MPI implementation in the container must be compliant with the version
@@ -34,7 +58,7 @@ available on the system, a standard approach is to build your own MPI container,
 including the target MPI implementation.
 
 To illustrate how Singularity can be used to execute MPI applications, we will
-assume for a moment that the application is `mpitest.c`, a simple hello world:
+assume for a moment that the application is `mpitest.c`, a simple Hello World:
 
 .. code-block:: none
 
@@ -76,8 +100,15 @@ assume for a moment that the application is `mpitest.c`, a simple hello world:
 		return EXIT_FAILURE;
 	}
 
-The next step will depend on the MPI implementation available on the host.
-The two main open sources implementation of MPI are MPICH and Open MPI.
+.. note::
+     MPI is an interface to a library, so it consists of function calls and
+     libraries that can be used my many programming languages. It comes with
+     bindings for Fortran and C. However, it can support applications in many
+     languages like Python, R, etc.
+
+The next step is to build the definition file which will depend on the MPI
+implementation available on the host.
+
 If the host MPI is MPICH, a definition file such as the following example can be used:
 
 .. code-block:: none
@@ -160,28 +191,24 @@ If the host MPI is Open MPI, the definition file looks like:
 
 
 The standard way to execute MPI applications with Singularity containers is to
-run the native `mpirun` command from the host, which will start Singularity
+run the native ``mpirun`` command from the host, which will start Singularity
 containers and ultimately MPI ranks within the containers.
 
 Assuming your container with MPI and your application is already build,
-the `mpirun` command to start your application looks like:
+the ``mpirun`` command to start your application looks like:
 
 .. code-block:: none
 
     $ mpirun -n <NUMBER_OF_RANKS> singularity exec <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
 
-Practically, this command will start first a process instantiating `mpirun`
-and then Singularity containers on compute nodes. Finally,
-when the containers start, the MPI binary is executed.
+Practically, this command will first start a process instantiating ``mpirun``
+and then Singularity containers on compute nodes. Finally, when the containers
+start, the MPI binary is executed.
 
 If your target system is setup with a batch system such as SLURM, a standard
 way to execute MPI applications is through a batch script. The following
 example illustrates how to do so with Slurm but can easily be adapted for all
-majour batch systems available.
-The first step is to create a batch script. The following example describes a
-job that requests the number of nodes specified by the `NNODES` environment
-variable and a total number of MPI processes specified by the `NP` environment
-variable.
+major batch systems available.
 
 .. code-block:: none
 
@@ -192,3 +219,7 @@ variable.
     #SBATCH --time=00:05:00 # Max execution time
 
     mpirun -n $NP singularity exec /var/nfsshare/gvallee/mpich.sif /opt/mpitest
+
+The example example describes a job that requests the number of nodes specified
+by the ``NNODES`` environment variable and a total number of MPI processes specified
+by the ``NP`` environment variable.
