@@ -2,15 +2,15 @@
 Remote Endpoints
 ================
 
-Sylabs introduced the `Singularity Container Services 
-<https://cloud.sylabs.io/home>`_ for enabling users to `Create 
+Sylabs introduced the `Singularity Container Services
+<https://cloud.sylabs.io/home>`_ for enabling users to `Create
 <https://cloud.sylabs.io/builder>`_,
 `Secure <https://cloud.sylabs.io/keystore?sign=true>`_, and
 `Share <https://cloud.sylabs.io/library/guide#create>`_ their container images
 with others. With the development of the ``remote`` command, you can now
 configure Singularity to point to a specific instance of the container services,
 enabling access to a private Container Library, Remote Builder and Key Store.
-The ``remote`` command group manages these endpoints. The configurations are 
+The ``remote`` command group manages these endpoints. The configurations are
 usually stored in ``~/.singularity/remote.yaml`` file.
 
 --------
@@ -21,19 +21,19 @@ The remote endpoints can be configured per-user or globally for all users.
 Multiple endpoints can be defined allowing the greatest flexibility.
 This page will describe the subcommands under the ``remote`` command group.
 
-Once a remote point is ``added``, and logged in, commands like the following can 
+Once a remote point is ``added``, and logged in, commands like the following can
 be used with the selected remote endpoint:
 
-`pull <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_pull.html>`_,
-`push <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_push.html>`_,
-`build --remote <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_build.html#options>`_,
-`key <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_key.html>`_,
-`search <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_search.html>`_,
-`verify <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_verify.html>`_,
-`exec <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_exec.html>`_,
-`shell <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_shell.html>`_,
-`run <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_run.html>`_,
-`instance <https://www.sylabs.io/guides/3.2/user-guide/cli/singularity_instance.html>`_
+`pull <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_pull.html>`_,
+`push <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_push.html>`_,
+`build --remote <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_build.html#options>`_,
+`key <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_key.html>`_,
+`search <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_search.html>`_,
+`verify <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_verify.html>`_,
+`exec <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_exec.html>`_,
+`shell <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_shell.html>`_,
+`run <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_run.html>`_,
+`instance <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_instance.html>`_
 
 .. note::
     ``docker://`` and ``shub://`` prefixes are unaffected by these commands
