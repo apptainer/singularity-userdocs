@@ -17,7 +17,7 @@ Overview
 Singularity runs on Linux natively and can also be run on Windows and Mac
 through virtual machines (VMs). Here we cover several different methods of
 installing Singularity (>={InstallationVersion}) on Linux and also give methods
-for downloading and running VMs with singularity pre-installed from `Vagrant
+for downloading and running VMs with Singularity pre-installed from `Vagrant
 Cloud <https://app.vagrantup.com/sylabs>`_.
 
 Install on Linux
