@@ -590,7 +590,7 @@ from your base of choice (e.g., the Container Library).
 A definition file has a header and a body. The header determines the base
 container to begin with, and the body is further divided into sections that
 perform things like software installation, environment setup, and copying files
-into the container from host system etc.
+into the container from host system, etc.
 
 Here is an example of a definition file:
 
