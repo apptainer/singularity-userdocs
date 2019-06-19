@@ -254,11 +254,9 @@ of the default ``/var``) you can do the following:
 Remove an old version
 =====================
 
-When you run ``sudo make install``, the command lists files as they are
-installed. They must all be removed in order to completely remove Singularity.
-
-For example, in a standard installation of Singularity 3.0.1 and beyond (when
-building from source) you must remove all of these files and directories to
+In a standard installation of Singularity 3.0.1 and beyond (when
+building from source), the command ``sudo make install`` lists all the files as
+they are installed. You must remove all of these files and directories to
 completely remove Singularity.
 
 Obviously, this list of files may differ depending on how you install
