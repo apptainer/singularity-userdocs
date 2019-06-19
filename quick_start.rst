@@ -52,7 +52,7 @@ You must first install development libraries to your host. Assuming Ubuntu
 .. note::
     Note that ``squashfs-tools`` is only a dependency for commands that build
     images. The ``build`` command obviously relies on ``squashfs-tools``, but
-    other commands may do so as well if they are run using container images
+    other commands may do so as well if they are ran using container images
     from Docker Hub for instance.
 
 There are 3 broad steps to installing Singularity:
