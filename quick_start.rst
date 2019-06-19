@@ -342,7 +342,7 @@ Singularity.
 Interact with images
 --------------------
 
-You can interact with images in several ways each of which can accept image URIs
+You can interact with images in several ways, each of which can accept image URIs
 in addition to a local image path.
 
 For demonstration, we will use a ``lolcow_latest.sif`` image that can be pulled
