@@ -15,8 +15,8 @@ demonstrate the development and running of MPI programs using Singularity contai
 
 Although there are several ways of carrying this out, the most popular way of
 executing MPI applications installed in a Sigularity container is to rely on the
-MPI implementation available on the host. This is called the **Host MPI** or
-the **Hybrid** model since both the MPI implementations provided by System
+MPI implementation available on the host. This is called the ``Host MPI`` or
+the ``Hybrid`` model since both the MPI implementations provided by System
 administrators(on the host) and in the containers will be used.
 
 .. note::
@@ -50,7 +50,7 @@ The advantages of this approach are:
 The drawbacks are:
   - The MPI in the container MUST be compatible with the version of MPI
     available on the host,
-  - The configuration of the MPI implementation in the container MUST be
+  - The configuration of the MPI implementation in the container must be
     configured for optimal use of the hardware if performance is critical.
 
 Since the MPI implementation in the container must be compliant with the version
@@ -113,82 +113,82 @@ If the host MPI is MPICH, a definition file such as the following example can be
 
 .. code-block:: none
 
-    Bootstrap: docker
-    From: ubuntu:latest
+  Bootstrap: docker
+  From: ubuntu:latest
 
-    %files
-	    mpitest.c /opt
+  %files
+      mpitest.c /opt
 
-    %environment
-	    MPICH_DIR=/opt/mpich-3.3
-    	export MPICH_DIR
-	    export SINGULARITY_MPICH_DIR=$MPICH_DIR
-    	export SINGULARITYENV_APPEND_PATH=$MPICH_DIR/bin
-	    export SINGULAIRTYENV_APPEND_LD_LIBRARY_PATH=$MPICH_DIR/lib
+  %environment
+      MPICH_DIR=/opt/mpich-3.3
+      export MPICH_DIR
+      export SINGULARITY_MPICH_DIR=$MPICH_DIR
+      export SINGULARITYENV_APPEND_PATH=$MPICH_DIR/bin
+      export SINGULAIRTYENV_APPEND_LD_LIBRARY_PATH=$MPICH_DIR/lib
 
-    %post
-	    echo "Installing required packages..."
-    	apt-get update && apt-get install -y wget git bash gcc gfortran g++ make
+  %post
+      echo "Installing required packages..."
+      apt-get update && apt-get install -y wget git bash gcc gfortran g++ make
 
-        # Information about the version of MPICH to use
-        export MPICH_VERSION=3.3
-        export MPICH_URL="http://www.mpich.org/static/downloads/3.3/mpich-3.3.tar.gz"
-        export MPICH_DIR=/opt/mpich
+      # Information about the version of MPICH to use
+      export MPICH_VERSION=3.3
+      export MPICH_URL="http://www.mpich.org/static/downloads/3.3/mpich-3.3.tar.gz"
+      export MPICH_DIR=/opt/mpich
 
-    	echo "Installing MPICH..."
-	    mkdir -p /tmp/mpich
-    	mkdir -p /opt
-	    # Download
-    	cd /tmp/mpich && wget -O mpich-$MPICH_VERSION.tar.gz $MPICH_URL && tar xzf mpich-$MPICH_VERSION.tar.gz
-    	# Compile and install
-	    cd /tmp/mpich/mpich-$MPICH_VERSION && ./configure --prefix=$MPICH_DIR && make -j8 install
-    	# Set env variables so we can compile our application
-    	export PATH=$MPICH_DIR/bin:$PATH
-	    export LD_LIBRARY_PATH=$MPICH_DIR/lib:$LD_LIBRARY_PATH
-    	export MANPATH=$MPICH_DIR/share/man:$MANPATH
+      echo "Installing MPICH..."
+      mkdir -p /tmp/mpich
+      mkdir -p /opt
+      # Download
+      cd /tmp/mpich && wget -O mpich-$MPICH_VERSION.tar.gz $MPICH_URL && tar xzf mpich-$MPICH_VERSION.tar.gz
+      # Compile and install
+      cd /tmp/mpich/mpich-$MPICH_VERSION && ./configure --prefix=$MPICH_DIR && make -j8 install
+      # Set env variables so we can compile our application
+      export PATH=$MPICH_DIR/bin:$PATH
+      export LD_LIBRARY_PATH=$MPICH_DIR/lib:$LD_LIBRARY_PATH
+      export MANPATH=$MPICH_DIR/share/man:$MANPATH
 
-    	echo "Compiling the MPI application..."
-	    cd /opt && mpicc -o mpitest mpitest.c
+      echo "Compiling the MPI application..."
+      cd /opt && mpicc -o mpitest mpitest.c
+
 
 If the host MPI is Open MPI, the definition file looks like:
 
 .. code-block:: none
 
-    Bootstrap: docker
-    From: ubuntu:latest
+  Bootstrap: docker
+  From: ubuntu:latest
 
-    %files
-        mpitest.c /opt
+  %files
+      mpitest.c /opt
 
-    %environment
-        OMPI_DIR=/opt/ompi
-        export OMPI_DIR
-        export SINGULARITY_OMPI_DIR=$OMPI_DIR
-        export SINGULARITYENV_APPEND_PATH=$OMPI_DIR/bin
-        export SINGULAIRTYENV_APPEND_LD_LIBRARY_PATH=$OMPI_DIR/lib
+  %environment
+      OMPI_DIR=/opt/ompi
+      export OMPI_DIR
+      export SINGULARITY_OMPI_DIR=$OMPI_DIR
+      export SINGULARITYENV_APPEND_PATH=$OMPI_DIR/bin
+      export SINGULAIRTYENV_APPEND_LD_LIBRARY_PATH=$OMPI_DIR/lib
 
-    %post
-        echo "Installing required packages..."
-        apt-get update && apt-get install -y wget git bash gcc gfortran g++ make file
+  %post
+      echo "Installing required packages..."
+      apt-get update && apt-get install -y wget git bash gcc gfortran g++ make file
 
-        echo "Installing Open MPI"
-        OMPI_DIR=/opt/ompi
-        export OMPI_VERSION=4.0.1
-        export OMPI_URL="https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OMPI_VERSION.tar.bz2"
-        mkdir -p /tmp/ompi
-        mkdir -p /opt
-        # Download
-        cd /tmp/ompi && wget -O openmpi-$OMPI_VERSION.tar.bz2 $OMPI_URL && tar -xjf openmpi-$OMPI_VERSION.tar.bz2
-        # Compile and install
-        cd /tmp/ompi/openmpi-$OMPI_VERSION && ./configure --prefix=$OMPI_DIR && make -j8 install
-        # Set env variables so we can compile our application
-        export PATH=$OMPI_DIR/bin:$PATH
-        export LD_LIBRARY_PATH=$OMPI_DIR/lib:$LD_LIBRARY_PATH
-        export MANPATH=$OMPI_DIR/share/man:$MANPATH
+      echo "Installing Open MPI"
+      OMPI_DIR=/opt/ompi
+      export OMPI_VERSION=4.0.1
+      export OMPI_URL="https://download.open-mpi.org/release/open-mpi/v4.0/openmpi-$OMPI_VERSION.tar.bz2"
+      mkdir -p /tmp/ompi
+      mkdir -p /opt
+      # Download
+      cd /tmp/ompi && wget -O openmpi-$OMPI_VERSION.tar.bz2 $OMPI_URL && tar -xjf openmpi-$OMPI_VERSION.tar.bz2
+      # Compile and install
+      cd /tmp/ompi/openmpi-$OMPI_VERSION && ./configure --prefix=$OMPI_DIR && make -j8 install
+      # Set env variables so we can compile our application
+      export PATH=$OMPI_DIR/bin:$PATH
+      export LD_LIBRARY_PATH=$OMPI_DIR/lib:$LD_LIBRARY_PATH
+      export MANPATH=$OMPI_DIR/share/man:$MANPATH
 
-        echo "Compiling the MPI application..."
-        cd /opt && mpicc -o mpitest mpitest.c
-
+      echo "Compiling the MPI application..."
+      cd /opt && mpicc -o mpitest mpitest.c
 
 The standard way to execute MPI applications with Singularity containers is to
 run the native ``mpirun`` command from the host, which will start Singularity
