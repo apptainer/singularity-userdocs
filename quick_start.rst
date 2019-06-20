@@ -6,11 +6,11 @@ Quick Start
 
 .. _sec:quickstart:
 
-This guide is intended for running Singularity on a computer where you have root 
+This guide is intended for running Singularity on a computer where you have root
 (administrative) privileges.
 
 If you need to request an installation on your shared resource, see the
-:ref:`requesting an installation help page <installation-request>` for
+:ref:`requesting an installation help page <installationrequest>` for
 information to send to your system administrator.
 
 For any additional help or support contact the Sylabs team:
@@ -25,8 +25,10 @@ Quick Installation Steps
 
 You will need a Linux system to run Singularity.
 
-See the :ref:`installation page <installation>` for information about installing
-Singularity.
+.. note::
+     This is only a short manual for Quick Installation. For details on
+     different methods of installation, versions, and RPM etc, please refer to
+     the :ref:`Installation page <installation>`.
 
 Install system dependencies
 ===========================
@@ -48,46 +50,55 @@ You must first install development libraries to your host. Assuming Ubuntu
         git
 
 .. note::
-    Note that ``squashfs-tools`` is only a dependency for commands that build 
-    images. The ``build`` command obviously relies on ``squashfs-tools``, but 
-    other commands may do so as well if they are run using container images 
+    Note that ``squashfs-tools`` is only a dependency for commands that build
+    images. The ``build`` command obviously relies on ``squashfs-tools``, but
+    other commands may do so as well if they are ran using container images
     from Docker Hub for instance.
+
+There are 3 broad steps to installing Singularity:
+
+1. :ref:`Installing Go <install>`
+2. :ref:`Downloading Singularity <download>`
+3. :ref:`Compiling Singularity Source Code <compile>`
+
+.. _install:
 
 Install Go
 ==========
 
-Singularity v3 is written primarily in Go, and you will need Go installed to
-compile it from source.
+Singularity v3 and above is written primarily in Go, so you will need Go
+installed to compile it from source.
 
 This is one of several ways to `install and configure Go
 <https://golang.org/doc/install>`_.
 
-Visit the `Go download page <https://golang.org/dl/>`_ and pick a package
-archive to download. Copy the link address and download with wget.  Then extract
-the archive to ``/usr/local`` (or use other instructions on go installation
-page).
+Visit the `Go Downloads page <https://golang.org/dl/>`_ and pick a package
+archive suitable to the environment you are in. Once the Download is complete,
+extract the archive to ``/usr/local`` (or use other instructions on go installation
+page). Alternatively, follow the commands here:
 
 .. code-block:: none
 
-    $ export VERSION=1.12 OS=linux ARCH=amd64 && \
-        wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \
-        sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \
-        rm go$VERSION.$OS-$ARCH.tar.gz
+    $ export VERSION=1.12 OS=linux ARCH=amd64 && \  # Replace the values as needed
+      wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \ # Downloads the required Go package
+      sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \ # Extracts the archive
+      rm go$VERSION.$OS-$ARCH.tar.gz    # Deletes the ``tar`` file
 
-Then, set up your environment for Go.
+Set the Environment variable ``PATH`` to point to Go:
 
 .. code-block:: none
 
-    $ echo 'export GOPATH=${HOME}/go' >> ~/.bashrc && \
-        echo 'export PATH=/usr/local/go/bin:${PATH}:${GOPATH}/bin' >> ~/.bashrc && \
-        source ~/.bashrc
+    $ echo 'export PATH=/usr/local/go/bin:$PATH' >> ~/.bashrc && \
+      source ~/.bashrc
+
+.. _download:
 
 Download Singularity from a release
 ===================================
 
-You can download Singularity from one of the releases. To see a full list, visit 
-`the GitHub release page <https://github.com/sylabs/singularity/releases>`_. 
-After deciding on a release to install, you can run the following commands to 
+You can download Singularity from one of the releases. To see a full list, visit
+`the GitHub release page <https://github.com/sylabs/singularity/releases>`_.
+After deciding on a release to install, you can run the following commands to
 proceed with the installation.
 
 .. code-block:: none
@@ -97,8 +108,10 @@ proceed with the installation.
         tar -xzf singularity-${VERSION}.tar.gz && \
         cd singularity
 
-Compile the Singularity binary
-==============================
+.. _compile:
+
+Compile the Singularity source code
+===================================
 
 Now you are ready to build Singularity. Dependencies will be automatically
 downloaded. You can build Singularity using the following commands:
@@ -115,7 +128,7 @@ Singularity must be installed as root to function properly.
 Overview of the Singularity Interface
 -------------------------------------
 
-Singularity’s :ref:`command line interface <command-usage>` allows you to build
+Singularity’s :ref:`command line interface <cli>` allows you to build
 and interact with containers transparently. You can run programs inside a
 container as if they were running on your host system. You can easily redirect
 IO, use pipes, pass arguments, and access files, sockets, and ports on the host
@@ -141,17 +154,14 @@ follows:
       other Linux system where Singularity is installed.
 
     Options:
-      -d, --debug              print debugging information (highest verbosity)
-      -h, --help               help for singularity
-      -q, --quiet              suppress normal output
-      -s, --silent             only print errors
-      -t, --tokenfile string   path to the file holding your sylabs
-                               authentication token (default
-                               "/home/jacob/.singularity/sylabs-token")
-      -v, --verbose            print additional information
+      -d, --debug     print debugging information (highest verbosity)
+      -h, --help      help for singularity
+          --nocolor   print without color output (default False)
+      -q, --quiet     suppress normal output
+      -s, --silent    only print errors
+      -v, --verbose   print additional information
 
     Available Commands:
-      apps        List available apps within a container
       build       Build a Singularity image
       cache       Manage the local cache
       capability  Manage Linux capabilities for users and groups
@@ -161,24 +171,27 @@ follows:
       instance    Manage containers running as services
       key         Manage OpenPGP keys
       oci         Manage OCI containers
+      plugin      Manage singularity plugins
       pull        Pull an image from a URI
-      push        Push a container to a Library URI
+      push        Upload image to the provided library (default is "cloud.sylabs.io")
+      remote      Manage singularity remote endpoints
       run         Run the user-defined default command within a container
       run-help    Show the user-defined help for an image
-      search      Search a Library for images
+      search      Search a Container Library for images
       shell       Run a shell within a container
+      sif         siftool is a program for Singularity Image Format (SIF) file manipulation
       sign        Attach a cryptographic signature to an image
       test        Run the user-defined tests within a container
       verify      Verify cryptographic signatures attached to an image
       version     Show the version for Singularity
 
-    Examples:
-      $ singularity help <command>
-          Additional help for any Singularity subcommand can be seen by appending
-          the subcommand name to the above command.
+  Examples:
+    $ singularity help <command> [<subcommand>]
+    $ singularity help build
+    $ singularity help instance start
 
 
-    For additional help or support, please visit https://www.sylabs.io/docs/
+  For additional help or support, please visit https://www.sylabs.io/docs/
 
 
 Information about subcommand can also be viewed with the ``help`` command.
@@ -203,6 +216,7 @@ Information about subcommand can also be viewed with the ``help`` command.
       -g, --groupid uint32   group ID to be verified
       -h, --help             help for verify
       -i, --id uint32        descriptor ID to be verified
+      -l, --local            only verify with local keys
       -u, --url string       key server URL (default "https://keys.sylabs.io")
 
 
@@ -213,10 +227,8 @@ Information about subcommand can also be viewed with the ``help`` command.
     For additional help or support, please visit https://www.sylabs.io/docs/
 
 Singularity uses positional syntax (i.e. the order of commands and options
-matters).
-
-Global options affecting the behavior of all commands follow the main
-``singularity`` command. Then sub commands are passed followed by their options
+matters). Global options affecting the behavior of all commands follow the main
+``singularity`` command. Then sub commands are followed by their options
 and arguments.
 
 For example, to pass the ``--debug`` option to the main ``singularity`` command
@@ -235,21 +247,21 @@ Singularity image in an isolated manner:
 
 Singularity 2.4 introduced the concept of command groups. For instance, to list
 Linux capabilities for a particular user, you would use the  ``list`` command in
-the ``capabilities`` command group like so:
+the ``capability`` command group like so:
 
 .. code-block:: none
 
     $ singularity capability list --user dave
 
-Container authors might also :ref:`write help docs specific to a container <help>`
-or for an internal module called an ``app``. If those help docs exist for a
-particular container, you can view them like so.
+Container authors might also write help docs specific to a container or for an
+internal module called an ``app``. If those help docs exist for a particular
+container, you can view them like so.
 
 .. code-block:: none
 
-    $ singularity help container.sif  # See the container's help, if provided
+    $ singularity inspect --helpfile container.sif  # See the container's help, if provided
 
-    $ singularity help --app foo container.sif  # See the help for foo, if provided
+    $ singularity inspect --helpfile --app=foo foo.sif  # See the help for foo, if provided
 
 -------------------------
 Download pre-built images
@@ -278,13 +290,14 @@ containers of interest on the `Container Library <https://cloud.sylabs.io/librar
     	library://sylabsed/examples/alpine
     		Tags: latest
 
-You can use the :ref:`pull <pull-command>` and :ref:`build <build-command>`
+You can use the `pull <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_pull.html>`_
+and `build <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_build.html>`_
 commands to download pre-built images from an external resource like the
 `Container Library <https://cloud.sylabs.io/library>`_ or
 `Docker Hub <https://hub.docker.com/>`_.
 
-When called on a native Singularity image like those provided on the Container
-Library, ``pull`` simply downloads the image file to your system.
+When called on a native Singularity image like those provided on the Container Library, ``pull``
+simply downloads the image file to your system.
 
 .. code-block:: none
 
@@ -317,10 +330,9 @@ container like so:
 
 Unlike ``pull``, ``build`` will convert your image to the latest Singularity
 image format after downloading it.
-
 ``build`` is like a “Swiss Army knife” for container creation. In addition to
 downloading images, you can use ``build`` to create images from other images or
-from scratch using a :ref:`definition file <container-recipes>`. You can also
+from scratch using a :ref:`definition file <definitionfiles>`. You can also
 use ``build`` to convert an image between the container formats supported by
 Singularity.
 
@@ -330,12 +342,11 @@ Singularity.
 Interact with images
 --------------------
 
-You can interact with images in several ways. It is not actually necessary to
-``pull`` or ``build`` an image to interact with it. The commands listed here
-will work with image URIs in addition to accepting a local  path to an image.
+You can interact with images in several ways, each of which can accept image URIs
+in addition to a local image path.
 
-For these examples we will use a ``lolcow_latest.sif`` image that can be pulled
-from the Container Library like so.
+For demonstration, we will use a ``lolcow_latest.sif`` image that can be pulled
+from the Container Library:
 
 .. code-block:: none
 
@@ -344,8 +355,9 @@ from the Container Library like so.
 Shell
 =====
 
-The :ref:`shell <shell-command>` command allows you to spawn a new shell within
-your container and interact with it as though it were a small virtual machine.
+The `shell <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_shell.html>`_
+command allows you to spawn a new shell within your container and interact with
+it as though it were a small virtual machine.
 
 .. code-block:: none
 
@@ -379,9 +391,10 @@ exited.
 Executing Commands
 ==================
 
-The :ref:`exec <exec-command>` command allows you to execute a custom command
-within a container by specifying the image file. For instance, to execute the
-``cowsay`` program within the ``lolcow_latest.sif`` container:
+The `exec <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_exec.html>`_
+command allows you to execute a custom command within a container by specifying
+the image file. For instance, to execute the ``cowsay`` program within the
+``lolcow_latest.sif`` container:
 
 .. code-block:: none
 
@@ -418,8 +431,8 @@ Running a container
 
 Singularity containers contain :ref:`runscripts <runscript>`. These are user
 defined scripts that define the actions a container should perform when someone
-runs it. The runscript can be triggered with the :ref:`run <run-command>`
-command, or simply by  calling the container as though it were an executable.
+runs it. The runscript can be triggered with the `run <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_run.html>`_
+ command, or simply by calling the container as though it were an executable.
 
 .. code-block:: none
 
@@ -462,8 +475,9 @@ This creates an ephemeral container that runs and then disappears.
                     ||----w |
                     ||     ||
 
+-------------------
 Working with Files
-==================
+-------------------
 
 Files on the host are reachable from within the container.
 
@@ -480,9 +494,8 @@ By default Singularity bind mounts ``/home/$USER``, ``/tmp``, and ``$PWD`` into
 your container at runtime.
 
 You can specify additional directories to bind mount into your container with
-the ``--bind`` option. In this example, the ``data``
-directory on the host system is bind mounted to the ``/mnt`` directory inside
-the container.
+the ``--bind`` option. In this example, the ``data`` directory on the host
+system is bind mounted to the ``/mnt`` directory inside the container.
 
 .. code-block:: none
 
@@ -514,7 +527,7 @@ Build images from scratch
 
 .. _sec:buildimagesfromscratch:
 
-Singularity v3.0 produces immutable images in the Singularity Image File (SIF)
+Singularity v3.0 and above produces immutable images in the Singularity Image File (SIF)
 format. This ensures reproducible and verifiable images and allows for many
 extra benefits such as the ability to sign and verify your containers.
 
@@ -523,9 +536,6 @@ writable. This way you can ``shell`` into the image and install software and
 dependencies until you are satisfied that your container will fulfill your
 needs. For these scenarios, Singularity also supports the ``sandbox`` format
 (which is really just a directory).
-
-For more details about the different build options and best practices,
-read about the :ref:`Singularity flow <singularity-flow>`.
 
 Sandbox Directories
 ===================
@@ -572,15 +582,15 @@ the context of a definition file, so you are advised to exercise care.
 Singularity Definition Files
 ============================
 
-For a reproducible, production-quality container you should build a SIF file
-using a Singularity definition file. This also makes it easy to add files,
-environment variables, and install custom software, and still start from your
-base of choice (e.g., the Container Library).
+For a reproducible, verifiable and production-quality container you should
+build a SIF file using a Singularity definition file. This also makes it easy to
+add files, environment variables, and install custom software, and still start
+from your base of choice (e.g., the Container Library).
 
 A definition file has a header and a body. The header determines the base
-container to begin with, and the body is further divided into sections that do
-things like install software, setup the environment, and copy files into the
-container from the host system.
+container to begin with, and the body is further divided into sections that
+perform things like software installation, environment setup, and copying files
+into the container from host system, etc.
 
 Here is an example of a definition file:
 
@@ -614,20 +624,15 @@ named lolcow.def), you would call build like so:
 In this example, the header tells Singularity to use a base Ubuntu 16.04 image
 from the Container Library.
 
-The ``%post`` section executes within the container at build time after the base
-OS has been installed. The ``%post`` section is therefore the place to perform
-installations of new applications.
+- The ``%post`` section executes within the container at build time after the base OS has been installed. The ``%post`` section is therefore the place to perform installations of new applications.
 
-The ``%environment`` section defines some environment variables that will be
-available to the container at runtime.
+- The ``%environment`` section defines some environment variables that will be available to the container at runtime.
 
-The ``%runscript`` section defines actions for the container to take when it is
-executed.
+- The ``%runscript`` section defines actions for the container to take when it is executed.
 
-And finally, the ``%labels`` section allows for custom metadata to be added to
-the container.
+- And finally, the ``%labels`` section allows for custom metadata to be added to the container.
 
-This is a very small example of the things that you can do with a :ref:`definition file <container-recipes>`.
+This is a very small example of the things that you can do with a :ref:`definition file <definitionfiles>`.
 In addition to building a container from the Container Library, you can start
 with base images from Docker Hub and use images directly from official
 repositories such as Ubuntu, Debian, CentOS, Arch, and BusyBox.  You can also

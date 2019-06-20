@@ -1,5 +1,5 @@
 
-.. _definition-files:
+.. _definitionfiles:
 
 ================
 Definition Files
