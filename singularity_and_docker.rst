@@ -12,7 +12,7 @@ Overview
 
 Effort has been expended in developing `Docker <https://www.docker.com/>`_ containers. Deconstructed into one or more compressed archives (typically split across multiple segments, or **layers** as they are known in Docker parlance) plus some metadata, images for these containers are built from specifications known as ``Dockerfiles``. The public `Docker Hub <https://hub.docker.com/>`_, as well as various private registries, host images for use as Docker containers. Singularity has from the outset emphasized the importance of interoperability with Docker. As a consequence, this section of the Singularity User Docs first makes its sole focus interoperabilty with Docker. In so doing, the following topics receive attention here:
 
-    - Application of Singularity action commands on ephemeral containers derived from public Docker images  
+    - Application of Singularity action commands on ephemeral containers derived from public Docker images
 
     - Converting public Docker images into Singularity's native format for containerization, namely the Singularity Image Format (SIF)
 
@@ -20,19 +20,19 @@ Effort has been expended in developing `Docker <https://www.docker.com/>`_ conta
 
     - Authenticated application of Singularity commands to containers derived from private Docker images originating from private registries
 
-    - Building SIF containers for Singularity via the command line or definition files from a variety of sources for Docker images and image archives 
+    - Building SIF containers for Singularity via the command line or definition files from a variety of sources for Docker images and image archives
 
 The second part of this section places emphasis upon Singularity's interoperability with open standards emerging from the `Open Containers Initiative <https://www.opencontainers.org/>`_ (OCI). Specifically, in documenting Singularity interoperability as it relates to the OCI Image Specification, the following topics are covered:
 
     - Compliance with the OCI Image Layout Specification
 
-    - OCI-compliant caching in Singularity 
+    - OCI-compliant caching in Singularity
 
-    - Acquiring OCI images and image archives via Singularity 
+    - Acquiring OCI images and image archives via Singularity
 
-    - Building SIF containers for Singularity via the command line or definition files from a variety of sources for OCI images and image archives 
+    - Building SIF containers for Singularity via the command line or definition files from a variety of sources for OCI images and image archives
 
-The section closes with a brief enumeration of emerging best practices plus consideration of troubleshooting common issues. 
+The section closes with a brief enumeration of emerging best practices plus consideration of troubleshooting common issues.
 
 
 .. _sec:action_commands_prebuilt_public_docker_images:
@@ -80,7 +80,7 @@ Running action commands on public images from Docker Hub
                     ||----w |
                     ||     ||
 
-Here ``docker`` is prepended to ensure that the ``run`` command of Singularity is instructed to boostrap container creation based upon this Docker image, thus creating a complete URI for Singularity. Singularity subsequently downloads :ref:`all the OCI blobs that comprise this image <sec:oci_overview>`, and converts them into a *single* SIF file - the native format for Singularity containers. Because this image from Docker Hub is cached locally in the ``$HOME/.singularity/cache/oci-tmp/<org.opencontainers.image.ref.name>/lolcow_latest.sif`` directory, where ``<org.opencontainers.image.ref.name>`` will be replaced by the appropriate hash for the container, the image does not need to be downloaded again (from Docker Hub) the next time a Singularity ``run`` is executed. In other words, the cached copy is sensibly reused: 
+Here ``docker`` is prepended to ensure that the ``run`` command of Singularity is instructed to boostrap container creation based upon this Docker image, thus creating a complete URI for Singularity. Singularity subsequently downloads :ref:`all the OCI blobs that comprise this image <sec:oci_overview>`, and converts them into a *single* SIF file - the native format for Singularity containers. Because this image from Docker Hub is cached locally in the ``$HOME/.singularity/cache/oci-tmp/<org.opencontainers.image.ref.name>/lolcow_latest.sif`` directory, where ``<org.opencontainers.image.ref.name>`` will be replaced by the appropriate hash for the container, the image does not need to be downloaded again (from Docker Hub) the next time a Singularity ``run`` is executed. In other words, the cached copy is sensibly reused:
 
 .. code-block:: none
 
@@ -98,15 +98,15 @@ Here ``docker`` is prepended to ensure that the ``run`` command of Singularity i
                     ||----w |
                     ||     ||
 
-.. note:: 
+.. note::
 
-    Image caching is :ref:`documented in detail below <sec:oci_overview>`. 
+    Image caching is :ref:`documented in detail below <sec:oci_overview>`.
 
 .. note::
 
-    Use is made of the ``$HOME/.singularity`` directory by default to cache images. To cache images elsewhere, use of the environment variable ``SINGULARITY_CACHEDIR`` can be made. 
+    Use is made of the ``$HOME/.singularity`` directory by default to cache images. To cache images elsewhere, use of the environment variable ``SINGULARITY_CACHEDIR`` can be made.
 
-As the runtime of this container is encapsulated as a single SIF file, it is possible to 
+As the runtime of this container is encapsulated as a single SIF file, it is possible to
 
 .. code-block:: none
 
@@ -116,7 +116,7 @@ and then execute the SIF file directly:
 
 .. code-block:: none
 
-    ./lolcow_latest.sif 
+    ./lolcow_latest.sif
      _______________________________________
     / The secret source of humor is not joy \
     | but sorrow; there is no humor in      |
@@ -130,13 +130,13 @@ and then execute the SIF file directly:
                     ||----w |
                     ||     ||
 
-.. note:: 
+.. note::
 
-    SIF files abstract Singularity containers as a single file. As with any executable, a SIF file can be executed directly. 
+    SIF files abstract Singularity containers as a single file. As with any executable, a SIF file can be executed directly.
 
-``fortune | cowsay | lolcat`` is executed by *default* when this container is ``run`` by Singularity. Singularity's ``exec`` command allows a different command to be executed; for example: 
+``fortune | cowsay | lolcat`` is executed by *default* when this container is ``run`` by Singularity. Singularity's ``exec`` command allows a different command to be executed; for example:
 
-.. code-block:: none 
+.. code-block:: none
 
     $ singularity exec docker://godlovedc/lolcow fortune
     Don't go around saying the world owes you a living.  The world owes you
@@ -145,18 +145,18 @@ and then execute the SIF file directly:
 
 .. note::
 
-    The *same* cached copy of the ``lolcow`` container is reused here by Singularity ``exec``, and immediately below here by ``shell``. 
+    The *same* cached copy of the ``lolcow`` container is reused here by Singularity ``exec``, and immediately below here by ``shell``.
 
 .. note::
 
-    Execution defaults are documented below - see :ref:`Directing Execution <sec:def_files_execution>` and :ref:`Container Metadata <sec:inspect_container_metadata>`. 
+    Execution defaults are documented below - see :ref:`Directing Execution <sec:def_files_execution>` and :ref:`Container Metadata <sec:inspect_container_metadata>`.
 
-In addition to non-interactive execution of an image from Docker Hub, Singularity provides support for an *interactive* ``shell`` session: 
+In addition to non-interactive execution of an image from Docker Hub, Singularity provides support for an *interactive* ``shell`` session:
 
 .. code-block:: none
 
-    $ singularity shell docker://godlovedc/lolcow 
-    Singularity lolcow_latest.sif:~> cat /etc/os-release 
+    $ singularity shell docker://godlovedc/lolcow
+    Singularity lolcow_latest.sif:~> cat /etc/os-release
     NAME="Ubuntu"
     VERSION="16.04.3 LTS (Xenial Xerus)"
     ID=ubuntu
@@ -168,20 +168,20 @@ In addition to non-interactive execution of an image from Docker Hub, Singularit
     BUG_REPORT_URL="http://bugs.launchpad.net/ubuntu/"
     VERSION_CODENAME=xenial
     UBUNTU_CODENAME=xenial
-    Singularity lolcow_latest.sif:~> 
+    Singularity lolcow_latest.sif:~>
 
-From this it is evident that use is being made of Ubuntu 16.04 *within* this container, whereas the shell *external* to the container is running a more recent release of Ubuntu (not illustrated here). 
+From this it is evident that use is being made of Ubuntu 16.04 *within* this container, whereas the shell *external* to the container is running a more recent release of Ubuntu (not illustrated here).
 
 ``inspect`` reveals the metadata for a Singularity container encapsulated via SIF; :ref:`Container Metadata <sec:inspect_container_metadata>` is documented below.
 
-.. note:: 
+.. note::
 
-    ``singularity search [search options...] <search query>`` does *not* support Docker registries like `Docker Hub <https://hub.docker.com/>`_. Use the search box at Docker Hub to locate Docker images. Docker ``pull`` commands, e.g., ``docker pull godlovedc/lolcow``, can be easily translated into the corresponding command for Singularity. The Docker ``pull`` command is available under "DETAILS" for a given image on Docker Hub. 
+    ``singularity search [search options...] <search query>`` does *not* support Docker registries like `Docker Hub <https://hub.docker.com/>`_. Use the search box at Docker Hub to locate Docker images. Docker ``pull`` commands, e.g., ``docker pull godlovedc/lolcow``, can be easily translated into the corresponding command for Singularity. The Docker ``pull`` command is available under "DETAILS" for a given image on Docker Hub.
 
 
-.. TODO-ND add content re: singularity capability - possibly a new section 
+.. TODO-ND add content re: singularity capability - possibly a new section
 
-.. TODO-ND add content re: singularity instance - possibly a new section ... review first sushma-98's edits for the running services page 
+.. TODO-ND add content re: singularity instance - possibly a new section ... review first sushma-98's edits for the running services page
 
 
 .. _sec:use_prebuilt_public_docker_images:
@@ -190,7 +190,7 @@ From this it is evident that use is being made of Ubuntu 16.04 *within* this con
 Making use of public images from Docker Hub
 ---------------------------------------------------------
 
-Singularity can make use of public images available from the `Docker Hub <https://hub.docker.com/>`_. By specifying the ``docker://`` URI for an image that has already been located, Singularity can ``pull``  it - e.g.: 
+Singularity can make use of public images available from the `Docker Hub <https://hub.docker.com/>`_. By specifying the ``docker://`` URI for an image that has already been located, Singularity can ``pull``  it - e.g.:
 
 .. code-block:: none
 
@@ -221,14 +221,14 @@ This ``pull`` results in a *local* copy of the Docker image in SIF, the Singular
 
 .. code-block:: none
 
-    $ file lolcow_latest.sif 
+    $ file lolcow_latest.sif
     lolcow_latest.sif: a /usr/bin/env run-singularity script executable (binary data)
 
-In converting to SIF, individual layers of the Docker image have been *combined* into a single, native file for use by Singularity; there is no need to subsequently ``build`` the image for Singularity. For example, you can now ``exec``, ``run`` or ``shell`` into the SIF version via Singularity, :ref:`as described above <sec:action_commands_prebuilt_public_docker_images>`.  
+In converting to SIF, individual layers of the Docker image have been *combined* into a single, native file for use by Singularity; there is no need to subsequently ``build`` the image for Singularity. For example, you can now ``exec``, ``run`` or ``shell`` into the SIF version via Singularity, :ref:`as described above <sec:action_commands_prebuilt_public_docker_images>`.
 
-.. note:: 
+.. note::
 
-    The above authentication warning originates from a check for the existence of ``${HOME}/.singularity/sylabs-token``. It can be ignored when making use of Docker Hub, or  silenced by issuing ``touch ${HOME}/.singularity/sylabs-token`` once.  
+    The above authentication warning originates from a check for the existence of ``${HOME}/.singularity/sylabs-token``. It can be ignored when making use of Docker Hub, or  silenced by issuing ``touch ${HOME}/.singularity/sylabs-token`` once.
 
 .. _sec:use_prebuilt_public_docker_images_SUB_inspect:
 
@@ -236,7 +236,7 @@ In converting to SIF, individual layers of the Docker image have been *combined*
 
 .. code-block:: none
 
-        $ singularity inspect lolcow_latest.sif 
+        $ singularity inspect lolcow_latest.sif
 
         {
             "org.label-schema.build-date": "Thursday_6_December_2018_17:29:48_UTC",
@@ -254,19 +254,19 @@ SIF files built from Docker images are *not* crytographically signed:
 
 .. code-block:: none
 
-    $ singularity verify lolcow_latest.sif 
+    $ singularity verify lolcow_latest.sif
     Verifying image: lolcow_latest.sif
     ERROR:   verification failed: error while searching for signature blocks: no signatures found for system partition
 
-The ``sign`` command allows a cryptographic signature to be added. Refer to 
+The ``sign`` command allows a cryptographic signature to be added. Refer to
 :ref:`Signing and Verifying Containers <signNverify>` for details. But caution
 should be exercised in signing images from Docker Hub because, unless you build
 an image from scratch (OS mirrors) you are probably not really sure about the
-complete contents of that image. 
+complete contents of that image.
 
 .. note::
 
-    ``pull`` is a one-time-only operation that builds a SIF file corresponding to the image retrieved from Docker Hub. Updates to the image on Docker Hub will *not* be reflected in the *local* copy. 
+    ``pull`` is a one-time-only operation that builds a SIF file corresponding to the image retrieved from Docker Hub. Updates to the image on Docker Hub will *not* be reflected in the *local* copy.
 
 In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker Hub user, whereas ``lolcow`` is the name of the repository. Adding the option to specifiy an image tag, the generic version of the URI is ``docker://<user>/<repo-name>[:<tag>]``. `Repositories on Docker Hub <https://docs.docker.com/docker-hub/repos/>`_ provides additional details.
 
@@ -287,21 +287,21 @@ After successful authentication, Singularity can also make use of *private* imag
     denied: requested access to the resource is denied
     unauthorized: authentication required
 
-In this case, the ``mylolcow`` repository of user ``ilumb`` **requires** authentication through specification of a valid username and password. 
+In this case, the ``mylolcow`` repository of user ``ilumb`` **requires** authentication through specification of a valid username and password.
 
 
-.. _sec:authentication_via_docker_login: 
+.. _sec:authentication_via_docker_login:
 
 Authentication via Interactive Login
 ====================================
 
 Interactive login is the first of two means provided for authentication with Docker Hub. It is enabled through use of the ``--docker-login`` option of Singularity's ``pull`` command; for example:
 
-.. code-block:: none 
+.. code-block:: none
 
     $ singularity pull --docker-login docker://ilumb/mylolcow
     Enter Docker Username: ilumb
-    Enter Docker Password: 
+    Enter Docker Password:
     INFO:    Starting build...
     Getting image source signatures
     Skipping fetch of repeat blob sha256:7b8b6451c85f072fd0d7961c97be3fe6e2f772657d471254f6d52ad9f158a580
@@ -316,14 +316,14 @@ Interactive login is the first of two means provided for authentication with Doc
     INFO:    Creating SIF file...
     INFO:    Build complete: mylolcow_latest.sif
 
-After successful authentication, the private Docker image is pulled and converted to SIF as described above. 
+After successful authentication, the private Docker image is pulled and converted to SIF as described above.
 
 .. note::
 
-    For interactive sessions, ``--docker-login`` is *recommended* as use of plain-text passwords in your environment is *avoided*. Encoded authentication data is communicated with Docker Hub via secure HTTP. 
+    For interactive sessions, ``--docker-login`` is *recommended* as use of plain-text passwords in your environment is *avoided*. Encoded authentication data is communicated with Docker Hub via secure HTTP.
 
 
-.. _sec:authentication_via_environment_variables: 
+.. _sec:authentication_via_environment_variables:
 
 Authentication via Environment Variables
 ========================================
@@ -335,18 +335,18 @@ Environment variables offer an alternative means for authentication with Docker 
     export SINGULARITY_DOCKER_USERNAME=ilumb
     export SINGULARITY_DOCKER_PASSWORD=<redacted>
 
-Of course, the ``<redacted>`` plain-text password needs to be replaced by a valid one to be of practical use. 
+Of course, the ``<redacted>`` plain-text password needs to be replaced by a valid one to be of practical use.
 
-Based upon these exports, ``$ singularity pull docker://ilumb/mylolcow`` allows for the retrieval of this private image. 
+Based upon these exports, ``$ singularity pull docker://ilumb/mylolcow`` allows for the retrieval of this private image.
 
-.. note:: 
+.. note::
 
-    This approach for authentication supports both interactive and non-interactive sessions. However, the requirement for a plain-text password assigned to an envrionment variable, is the security compromise for this flexibility. 
+    This approach for authentication supports both interactive and non-interactive sessions. However, the requirement for a plain-text password assigned to an envrionment variable, is the security compromise for this flexibility.
 
-.. note:: 
+.. note::
 
-    When specifying passwords, 'special characters' (e.g., ``$``, ``#``, ``.``) need to be 'escaped' to avoid interpretation by the shell. 
- 
+    When specifying passwords, 'special characters' (e.g., ``$``, ``#``, ``.``) need to be 'escaped' to avoid interpretation by the shell.
+
 
 .. _sec:using_prebuilt_private_images_parivate_registries:
 
@@ -354,7 +354,7 @@ Based upon these exports, ``$ singularity pull docker://ilumb/mylolcow`` allows 
 Making use of private images from Private Registries
 --------------------------------------------------------------
 
-Authentication is required to access *private* images that reside in Docker Hub. Of course, private images can also reside in **private registries**. Accounting for locations *other* than Docker Hub is easily achieved. 
+Authentication is required to access *private* images that reside in Docker Hub. Of course, private images can also reside in **private registries**. Accounting for locations *other* than Docker Hub is easily achieved.
 
 In the complete command line specification
 
@@ -368,13 +368,13 @@ In the complete command line specification
 
     $ singularity pull docker://godlovedc/lolcow
 
-is functionally equivalent to 
+is functionally equivalent to
 
 .. code-block:: none
 
     $ singularity pull docker://index.docker.io/godlovedc/lolcow
 
-From the above example, it is evident that 
+From the above example, it is evident that
 
 .. code-block:: none
 
@@ -393,7 +393,7 @@ From the above example, it is evident that
 
 will retrieve a specific version of the `PyTorch platform <https://pytorch.org/>`_ for Deep Learning from the NVIDIA GPU Cloud (NGC). Because NGC is a private registry, the above ``pull`` assumes :ref:`authentication via environment variables <sec:authentication_via_environment_variables>` when the blobs that collectively comprise the Docker image have not already been cached locally. In the NGC case, the required environment variable are set as follows:
 
-.. code-block:: none 
+.. code-block:: none
 
     export SINGULARITY_DOCKER_USERNAME='$oauthtoken'
     export SINGULARITY_DOCKER_PASSWORD=<redacted>
@@ -402,11 +402,11 @@ Upon use, these environment-variable settings allow for authentication with NGC.
 
 .. note::
 
-    ``$oauthtoken`` is to be taken literally - it is not, for example, an environment variable. 
+    ``$oauthtoken`` is to be taken literally - it is not, for example, an environment variable.
 
-    The password provided via these means is actually an API token. This token is generated via your NGC account, and is **required** for use of the service. 
+    The password provided via these means is actually an API token. This token is generated via your NGC account, and is **required** for use of the service.
 
-    For additional details regarding authentication with NGC, and much more, please consult the NGC `Getting Started <https://docs.nvidia.com/ngc/ngc-getting-started-guide/index.html>`_ documentation. 
+    For additional details regarding authentication with NGC, and much more, please consult the NGC `Getting Started <https://docs.nvidia.com/ngc/ngc-getting-started-guide/index.html>`_ documentation.
 
 Alternatively, for purely interactive use, ``--docker-login`` is recommended:
 
@@ -414,7 +414,7 @@ Alternatively, for purely interactive use, ``--docker-login`` is recommended:
 
     $ singularity pull --docker-login docker://nvcr.io/nvidia/pytorch:18.11-py3
     Enter Docker Username: $oauthtoken
-    Enter Docker Password: 
+    Enter Docker Password:
     INFO:    Starting build...
     Getting image source signatures
     Skipping fetch of repeat blob sha256:18d680d616571900d78ee1c8fff0310f2a2afe39c6ed0ba2651ff667af406c3e
@@ -427,14 +427,14 @@ Alternatively, for purely interactive use, ``--docker-login`` is recommended:
     INFO:    Creating SIF file...
     INFO:    Build complete: pytorch_18.11-py3.sif
 
-Authentication aside, the outcome of the ``pull`` command is the Singularity container ``pytorch_18.11-py3.sif`` - i.e., a locally stored copy, that has been coverted to SIF. 
+Authentication aside, the outcome of the ``pull`` command is the Singularity container ``pytorch_18.11-py3.sif`` - i.e., a locally stored copy, that has been coverted to SIF.
 
 
 ------------------------------------------------------
 Building images for Singularity from Docker Registries
 ------------------------------------------------------
 
-The ``build`` command is used to **create** Singularity containers. Because it is documented extensively :ref:`elsewhere in this manual <build-a-container>`, only specifics relevant to Docker are provided here - namely, working with Docker Hub via :ref:`the Singularity command line <sec:singularity_build_cli>` and through :ref:`Singularity definition files <sec:singularity_build_def_files>`. 
+The ``build`` command is used to **create** Singularity containers. Because it is documented extensively :ref:`elsewhere in this manual <build-a-container>`, only specifics relevant to Docker are provided here - namely, working with Docker Hub via :ref:`the Singularity command line <sec:singularity_build_cli>` and through :ref:`Singularity definition files <sec:singularity_build_def_files>`.
 
 
 .. _sec:singularity_build_cli:
@@ -445,7 +445,7 @@ Working from the Singularity Command Line
 Remotely Hosted Images
 ----------------------
 
-In the simplest case, ``build`` is functionally equivalent to ``pull``: 
+In the simplest case, ``build`` is functionally equivalent to ``pull``:
 
 .. code-block:: none
 
@@ -465,13 +465,13 @@ In the simplest case, ``build`` is functionally equivalent to ``pull``:
     INFO:    Creating SIF file...
     INFO:    Build complete: mylolcow_latest.sif
 
-This ``build`` results in a *local* copy of the Docker image in SIF, as did ``pull`` :ref:`above <sec:use_prebuilt_public_docker_images>`. Here, ``build`` has named the Singularity container ``mylolcow_latest.sif``. 
+This ``build`` results in a *local* copy of the Docker image in SIF, as did ``pull`` :ref:`above <sec:use_prebuilt_public_docker_images>`. Here, ``build`` has named the Singularity container ``mylolcow_latest.sif``.
 
 .. note::
 
-     ``docker://godlovedc/lolcow`` is the **target** provided as input for ``build``. Armed with this target, ``build`` applies the appropriate boostrap agent to create the container - in this case, one appropriate for Docker Hub. 
+     ``docker://godlovedc/lolcow`` is the **target** provided as input for ``build``. Armed with this target, ``build`` applies the appropriate boostrap agent to create the container - in this case, one appropriate for Docker Hub.
 
-In addition to a read-only container image in SIF (**default**), ``build`` allows for the creation of a writable (ch)root *directory* called a **sandbox** for interactive development via the ``--sandbox`` option: 
+In addition to a read-only container image in SIF (**default**), ``build`` allows for the creation of a writable (ch)root *directory* called a **sandbox** for interactive development via the ``--sandbox`` option:
 
 .. code-block:: none
 
@@ -497,7 +497,7 @@ After successful execution, the above command results in creation of the ``mylol
 
     bin  boot  core  dev  environment  etc  home  lib  lib64  media  mnt  opt  proc  root  run  sbin  singularity  srv  sys  tmp  usr  var
 
-The ``build`` command of Singularity allows (e.g., development) sandbox containers to be converted into (e.g., production) read-only SIF containers, and vice-versa. Consult the :ref:`Build a container <build-a-container>` documentation for the details. 
+The ``build`` command of Singularity allows (e.g., development) sandbox containers to be converted into (e.g., production) read-only SIF containers, and vice-versa. Consult the :ref:`Build a container <build-a-container>` documentation for the details.
 
 Implicit in the above command-line interactions is use of public images from Docker Hub. To make use of **private** images from Docker Hub, authentication is required. Available means for authentication were described above. Use of environment variables is functionally equivalent for Singularity ``build`` as it is for ``pull``; see :ref:`Authentication via Environment Variables <sec:authentication_via_environment_variables>` above. For purely interactive use, authentication can be added to the ``build`` command as follows:
 
@@ -511,13 +511,13 @@ Implicit in the above command-line interactions is use of public images from Doc
 Building Containers Remotely
 ----------------------------
 
-By making use of the `Sylabs Cloud Remote Builder <https://cloud.sylabs.io/builder>`_, it is possible to build SIF containers *remotely* from images hosted at Docker Hub. The Sylabs Cloud Remote Builder is a **service** that can be used from the Singularity command line or via its Web interface. Here use of the Singularity CLI is emphasized. 
+By making use of the `Sylabs Cloud Remote Builder <https://cloud.sylabs.io/builder>`_, it is possible to build SIF containers *remotely* from images hosted at Docker Hub. The Sylabs Cloud Remote Builder is a **service** that can be used from the Singularity command line or via its Web interface. Here use of the Singularity CLI is emphasized.
 
-Once you have an account for Sylabs Cloud, and have logged in to the portal, select `Remote Builder <https://cloud.sylabs.io/builder>`_. The right-hand side of this page is devoted to use of the Singularity CLI. Self-generated API tokens are used to enable authenticated access to the Remote Builder. To create a token, follow the `instructions provided <https://cloud.sylabs.io/auth/tokens>`_. Once the token has been created, store it in the file ``$HOME/.singularity/sylabs-token``. 
+Once you have an account for Sylabs Cloud, and have logged in to the portal, select `Remote Builder <https://cloud.sylabs.io/builder>`_. The right-hand side of this page is devoted to use of the Singularity CLI. Self-generated API tokens are used to enable authenticated access to the Remote Builder. To create a token, follow the `instructions provided <https://cloud.sylabs.io/auth/tokens>`_. Once the token has been created, store it in the file ``$HOME/.singularity/sylabs-token``.
 
-The above token provides *authenticated* use of the Sylabs Cloud Remote Builder when ``--remote`` is *appended* to the Singularity ``build`` command. For example, for remotely hosted images: 
+The above token provides *authenticated* use of the Sylabs Cloud Remote Builder when ``--remote`` is *appended* to the Singularity ``build`` command. For example, for remotely hosted images:
 
-.. code-block:: none 
+.. code-block:: none
 
     $ singularity build --remote lolcow_rb.sif docker://godlovedc/lolcow
     searching for available build agent.........INFO:    Starting build...
@@ -547,11 +547,11 @@ The above token provides *authenticated* use of the Sylabs Cloud Remote Builder 
 
 .. note::
 
-    Elevated privileges (e.g., via ``sudo``) are *not* required when use is made of the Sylabs Cloud Remote Builder. 
+    Elevated privileges (e.g., via ``sudo``) are *not* required when use is made of the Sylabs Cloud Remote Builder.
 
-During the build process, progress can be monitored in the Sylabs Cloud portal on the Remote Builder page - as illustrated upon completion by the screenshot below. Once complete, this results in a *local* copy of the SIF file ``lolcow_rb.sif``. From the `Sylabs Cloud Singularity Library <https://cloud.sylabs.io/library>`_ it is evident that the 'original' SIF file remains available via this portal. 
+During the build process, progress can be monitored in the Sylabs Cloud portal on the Remote Builder page - as illustrated upon completion by the screenshot below. Once complete, this results in a *local* copy of the SIF file ``lolcow_rb.sif``. From the `Sylabs Cloud Singularity Library <https://cloud.sylabs.io/library>`_ it is evident that the 'original' SIF file remains available via this portal.
 
-.. image:: lolcow_sylabsrb.png 
+.. image:: lolcow_sylabsrb.png
 
 
 .. _sec:mandatory_headers_docker_locally_boostrapped_cli:
@@ -559,7 +559,7 @@ During the build process, progress can be monitored in the Sylabs Cloud portal o
 Locally Available Images: Cached by Docker
 ------------------------------------------
 
-Singularity containers can be built at the command line from images cached *locally* by Docker. Suppose, for example: 
+Singularity containers can be built at the command line from images cached *locally* by Docker. Suppose, for example:
 
 .. code-block:: none
 
@@ -567,7 +567,7 @@ Singularity containers can be built at the command line from images cached *loca
     REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
     godlovedc/lolcow    latest              577c1fe8e6d8        16 months ago       241MB
 
-This indicates that ``godlovedc/lolcow:latest`` has been cached locally by Docker. Then 
+This indicates that ``godlovedc/lolcow:latest`` has been cached locally by Docker. Then
 
 .. code-block:: none
 
@@ -595,18 +595,18 @@ This indicates that ``godlovedc/lolcow:latest`` has been cached locally by Docke
 
 results in ``lolcow_from_docker_cache.sif`` for native use by Singularity. There are two important differences in syntax evident in the above ``build`` command:
 
-    1. The ``docker`` part of the URI has been appended by ``daemon``. This ensures Singularity seek an image locally cached by Docker to boostrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub. 
+    1. The ``docker`` part of the URI has been appended by ``daemon``. This ensures Singularity seek an image locally cached by Docker to boostrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
 
-    2. ``sudo`` is prepended to the ``build`` command for Singularity; this is required as the Docker daemon executes as ``root``. However, if the user issuing the ``build`` command is a member of the ``docker`` Linux group, then ``sudo`` need not be prepended. 
+    2. ``sudo`` is prepended to the ``build`` command for Singularity; this is required as the Docker daemon executes as ``root``. However, if the user issuing the ``build`` command is a member of the ``docker`` Linux group, then ``sudo`` need not be prepended.
 
-.. note:: 
+.. note::
 
-    The image tag, in this case ``latest``, is **required** when bootstrapping creation of a container for Singularity from an image locally cached by Docker. 
+    The image tag, in this case ``latest``, is **required** when bootstrapping creation of a container for Singularity from an image locally cached by Docker.
 
-.. note:: 
+.. note::
 
-    The Sylabs Cloud Remote Builder *does not* interoperate with local Docker daemons; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, :ref:`pushed to the Sylabs Cloud Singularity Library <sec:pushing_locally_available_images_to_library>`. 
- 
+    The Sylabs Cloud Remote Builder *does not* interoperate with local Docker daemons; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, :ref:`pushed to the Sylabs Cloud Singularity Library <sec:pushing_locally_available_images_to_library>`.
+
 
 
 .. _sec:mandatory_headers_docker_locally_stored_bootstrap_cli:
@@ -614,25 +614,25 @@ results in ``lolcow_from_docker_cache.sif`` for native use by Singularity. There
 Locally Available Images: Stored Archives
 ------------------------------------------
 
-Singularity containers can also be built at the command line from Docker images stored locally as ``tar`` files. 
+Singularity containers can also be built at the command line from Docker images stored locally as ``tar`` files.
 
 The ``lolcow.tar`` file employed below in this example can be produced by making use of an environment in which Docker is available as follows:
 
     1. Obtain a local copy of the image from Docker Hub via ``sudo docker pull godlovedc/lolcow``. Issuing the following command confirms that a copy of the desired image is available locally:
 
-    .. code-block:: none 
+    .. code-block:: none
 
-        $ sudo docker images 
+        $ sudo docker images
         REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
         godlovedc/lolcow    latest              577c1fe8e6d8        17 months ago       241MB
 
-    2. Noting that the image identifier above is ``577c1fe8e6d8``, the required archive can be created by ``sudo docker save 577c1fe8e6d8 -o lolcow.tar``. 
+    2. Noting that the image identifier above is ``577c1fe8e6d8``, the required archive can be created by ``sudo docker save 577c1fe8e6d8 -o lolcow.tar``.
 
 Thus ``lolcow.tar`` is a locally stored archive in the *current* working directory with contents:
 
-.. code-block:: none 
+.. code-block:: none
 
-    $ sudo tar tvf lolcow.tar 
+    $ sudo tar tvf lolcow.tar
     drwxr-xr-x 0/0               0 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/
     -rw-r--r-- 0/0               3 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/VERSION
     -rw-r--r-- 0/0            1417 2017-09-21 19:37 02aefa059d08482d344293d0ad27182a0a9d330ebc73abd92a1f9744844f91e9/json
@@ -660,11 +660,11 @@ Thus ``lolcow.tar`` is a locally stored archive in the *current* working directo
     -rw-r--r-- 0/0            5632 2017-09-21 19:37 ab6e1ca3392b2f4dbb60157cf99434b6975f37a767f530e293704a7348407634/layer.tar
     -rw-r--r-- 0/0             574 1970-01-01 01:00 manifest.json
 
-In other words, it is evident that this 'tarball' is a Docker-format image comprised of multiple layers along with metadata in a JSON manifest. 
+In other words, it is evident that this 'tarball' is a Docker-format image comprised of multiple layers along with metadata in a JSON manifest.
 
 Through use of the ``docker-archive`` bootstrap agent, a SIF file (``lolcow_tar.sif``) for use by Singularity can be created via the following ``build`` command:
 
-.. code-block:: none 
+.. code-block:: none
 
     $ singularity build lolcow_tar.sif docker-archive://lolcow.tar
     INFO:    Starting build...
@@ -690,17 +690,17 @@ Through use of the ``docker-archive`` bootstrap agent, a SIF file (``lolcow_tar.
 
 There are two important differences in syntax evident in the above ``build`` command:
 
-    1. The ``docker`` part of the URI has been appended by ``archive``. This ensures Singularity seek a Docker-format image archive stored locally as ``lolcow.tar`` to boostrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub. 
+    1. The ``docker`` part of the URI has been appended by ``archive``. This ensures Singularity seek a Docker-format image archive stored locally as ``lolcow.tar`` to boostrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
 
-    2. ``sudo`` is *not* prepended to the ``build`` command for Singularity. This is *not* required if the executing user has the appropriate access privileges to the stored file.  
+    2. ``sudo`` is *not* prepended to the ``build`` command for Singularity. This is *not* required if the executing user has the appropriate access privileges to the stored file.
 
 .. note::
 
-    The ``docker-archive`` bootstrap agent handles archives (``.tar`` files) as well as compressed archives (``.tar.gz``) when containers are built for Singularity via its ``build`` command. 
+    The ``docker-archive`` bootstrap agent handles archives (``.tar`` files) as well as compressed archives (``.tar.gz``) when containers are built for Singularity via its ``build`` command.
 
-.. note:: 
+.. note::
 
-    The Sylabs Cloud Remote Builder *does not* interoperate with locally stored Docker-format images; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, :ref:`pushed to the Sylabs Cloud Singularity Library <sec:pushing_locally_available_images_to_library>`. 
+    The Sylabs Cloud Remote Builder *does not* interoperate with locally stored Docker-format images; therefore, images cached locally by Docker, *cannot* be used to bootstrap creation of SIF files via the Remote Builder service. Of course, a SIF file could be created locally as detailed above. Then, in a separate, manual step, :ref:`pushed to the Sylabs Cloud Singularity Library <sec:pushing_locally_available_images_to_library>`.
 
 
 .. _sec:pushing_locally_available_images_to_library:
@@ -708,9 +708,9 @@ There are two important differences in syntax evident in the above ``build`` com
 Pushing Locally Available Images to a Library
 ---------------------------------------------
 
-The outcome of bootstrapping from an image cached locally by Docker, or one stored locally as an archive, is of course a *locally* stored SIF file. As noted above, this is the *only* option available, as the Sylabs Cloud Remote Builder *does not* interoperate with the Docker daemon or locally stored archives in the Docker image format. Once produced, however, it may be desirable to  make the resulting SIF file available through the Sylabs Cloud Singularity Library; therefore, the procedure to ``push`` a locally available SIF file to the Library is detailed here. 
+The outcome of bootstrapping from an image cached locally by Docker, or one stored locally as an archive, is of course a *locally* stored SIF file. As noted above, this is the *only* option available, as the Sylabs Cloud Remote Builder *does not* interoperate with the Docker daemon or locally stored archives in the Docker image format. Once produced, however, it may be desirable to  make the resulting SIF file available through the Sylabs Cloud Singularity Library; therefore, the procedure to ``push`` a locally available SIF file to the Library is detailed here.
 
-From the `Sylabs Cloud Singularity Library <https://cloud.sylabs.io/library>`_, select ``Create a new Project``. In this first of two steps, the publicly accessible project is created as illustrated below: 
+From the `Sylabs Cloud Singularity Library <https://cloud.sylabs.io/library>`_, select ``Create a new Project``. In this first of two steps, the publicly accessible project is created as illustrated below:
 
 .. image:: create_project.png
 
@@ -718,9 +718,9 @@ Because an access token for the cloud service already exists, attention can be f
 
 .. image:: push_prototype.png
 
-In fact, by simply replacing ``image.sif`` with ``lolcow_tar.sif``, the following upload is executed: 
+In fact, by simply replacing ``image.sif`` with ``lolcow_tar.sif``, the following upload is executed:
 
-.. code-block:: none 
+.. code-block:: none
 
     $ singularity push lolcow_tar.sif library://ilumb/default/lolcow_tar
     INFO:    Now uploading lolcow_tar.sif to the library
@@ -728,13 +728,13 @@ In fact, by simply replacing ``image.sif`` with ``lolcow_tar.sif``, the followin
     INFO:    Setting tag latest
 
 
-Finally, from the perspective of the Library, the *hosted* version of the SIF file appears as illustrated below. Directions on how to ``pull`` this file are included from the portal. 
+Finally, from the perspective of the Library, the *hosted* version of the SIF file appears as illustrated below. Directions on how to ``pull`` this file are included from the portal.
 
 .. image:: lolcow_lib_listing.png
 
-.. note:: 
+.. note::
 
-    The hosted version of the SIF file in the Sylabs Cloud Singularity Library is maintainable. In other words, if the image is updated locally, the update can be pushed to the Library and tagged appropriately. 
+    The hosted version of the SIF file in the Sylabs Cloud Singularity Library is maintainable. In other words, if the image is updated locally, the update can be pushed to the Library and tagged appropriately.
 
 
 .. _sec:singularity_build_def_files:
@@ -742,68 +742,68 @@ Finally, from the perspective of the Library, the *hosted* version of the SIF fi
 Working with Definition Files
 =============================
 
-.. _sec:def_file_mandatory_headers_remotely_boostrapped: 
+.. _sec:def_file_mandatory_headers_remotely_boostrapped:
 
 Mandatory Header Keywords: Remotely Boostrapped
 -----------------------------------------------
 
-Akin to a set of blueprints that explain how to build a custom container, Singularity definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here. 
+Akin to a set of blueprints that explain how to build a custom container, Singularity definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here.
 
-Singularity definition files are comprised of two parts - a **header** plus **sections**. 
+Singularity definition files are comprised of two parts - a **header** plus **sections**.
 
-When working with repositories such as Docker Hub, ``Bootstrap`` and ``From`` are **mandatory** keywords within the header; for example, if the file ``lolcow.def`` has contents 
+When working with repositories such as Docker Hub, ``Bootstrap`` and ``From`` are **mandatory** keywords within the header; for example, if the file ``lolcow.def`` has contents
 
-.. code-block:: singularity 
+.. code-block:: singularity
 
     Bootstrap: docker
     From: godlovedc/lolcow
 
-then 
+then
 
-.. code-block:: none 
+.. code-block:: none
 
     sudo singularity build lolcow.sif lolcow.def
 
-creates a Singularity container in SIF by bootstrapping from the public ``godlovedc/lolcow`` image from Docker Hub. 
+creates a Singularity container in SIF by bootstrapping from the public ``godlovedc/lolcow`` image from Docker Hub.
 
-In the above definition file, ``docker`` is one of numerous, possible bootstrap agents; this, and other bootstrap agents receive attention :ref:`in the appendix <build-docker-module>`.    
+In the above definition file, ``docker`` is one of numerous, possible bootstrap agents; this, and other bootstrap agents receive attention :ref:`in the appendix <build-docker-module>`.
 
-.. TODO-ND remote builder content  
+.. TODO-ND remote builder content
 
 Through :ref:`the means for authentication described above <sec:using_prebuilt_private_images>`, definition files permit use of private images hosted via Docker Hub. For example, if the file ``mylolcow.def`` has contents
 
-.. code-block:: singularity 
+.. code-block:: singularity
 
     Bootstrap: docker
     From: ilumb/mylolcow
 
-then 
+then
 
-.. code-block:: none 
+.. code-block:: none
 
-    sudo singularity build --docker-login mylolcow.sif mylolcow.def 
+    sudo singularity build --docker-login mylolcow.sif mylolcow.def
 
-creates a Singularity container in SIF by bootstrapping from the *private* ``ilumb/mylolcow`` image from Docker Hub after successful :ref:`interactive authentication <sec:authentication_via_docker_login>`. 
+creates a Singularity container in SIF by bootstrapping from the *private* ``ilumb/mylolcow`` image from Docker Hub after successful :ref:`interactive authentication <sec:authentication_via_docker_login>`.
 
-Alternatively, if :ref:`environment variables have been set as above <sec:authentication_via_environment_variables>`, then 
+Alternatively, if :ref:`environment variables have been set as above <sec:authentication_via_environment_variables>`, then
 
-.. code-block:: none 
+.. code-block:: none
 
     $ sudo -E singularity build mylolcow.sif mylolcow.def
 
-enables authenticated use of the private image. 
+enables authenticated use of the private image.
 
-.. note:: 
+.. note::
 
-    The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create Singularity containers via the ``build`` command. 
+    The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create Singularity containers via the ``build`` command.
 
 
 Remotely Bootstrapped and Built Containers
 ------------------------------------------
 
-Consider again :ref:`the definition file used the outset of the section above <sec:def_file_mandatory_headers_remotely_boostrapped>`: 
+Consider again :ref:`the definition file used the outset of the section above <sec:def_file_mandatory_headers_remotely_boostrapped>`:
 
-.. code-block:: singularity 
+.. code-block:: singularity
 
     Bootstrap: docker
     From: godlovedc/lolcow
@@ -811,7 +811,7 @@ Consider again :ref:`the definition file used the outset of the section above <s
 With two small adjustments to the Singularity ``build`` command, the Sylabs Cloud Remote Builder can be utilized:
 
 
-.. code-block:: none 
+.. code-block:: none
 
     $ singularity build --remote lolcow_rb_def.sif lolcow.def
     searching for available build agent......INFO:    Starting build...
@@ -839,23 +839,23 @@ With two small adjustments to the Singularity ``build`` command, the Sylabs Clou
     INFO:    Setting tag latest
      87.94 MiB / 87.94 MiB [===============================================================================] 100.00% 19.08 MiB/s 4s
 
-In the above, ``--remote`` has been added as the ``build`` option that causes use of the Remote Builder service. A much more subtle change, however, is the *absence* of ``sudo`` ahead of ``singularity build``. Though subtle here, this absence is notable, as users can build containers via the Remote Builder with *escalated privileges*; in other words, steps in container creation that *require* ``root`` access *are* enabled via the Remote Builder even for (DevOps) users *without* admninistrative privileges locally.  
+In the above, ``--remote`` has been added as the ``build`` option that causes use of the Remote Builder service. A much more subtle change, however, is the *absence* of ``sudo`` ahead of ``singularity build``. Though subtle here, this absence is notable, as users can build containers via the Remote Builder with *escalated privileges*; in other words, steps in container creation that *require* ``root`` access *are* enabled via the Remote Builder even for (DevOps) users *without* admninistrative privileges locally.
 
 In addition to the command-line support described above, the Sylabs Cloud Remote Builder also allows definition files to be copied and pasted into its Graphical User Interface (GUI). After pasting a definition file, and having that file validated by the service, the build-centric part of the GUI appears as illustrated below. By clicking on the ``Build`` button, creation of the container is initiated.
 
 .. image:: build_gui.png
 
-Once the build process has been completed, the corresponding SIF file can be retrieved from the service - as shown below. A log file for the ``build`` process is provided by the GUI, and made available for download as a text file (not shown here).  
+Once the build process has been completed, the corresponding SIF file can be retrieved from the service - as shown below. A log file for the ``build`` process is provided by the GUI, and made available for download as a text file (not shown here).
 
 .. image:: build_output.png
 
-A copy of the SIF file created by the service remains in the Sylabs Cloud Singularity Library as illustrated below. 
+A copy of the SIF file created by the service remains in the Sylabs Cloud Singularity Library as illustrated below.
 
 .. image:: mysylabslibrary.png
 
-.. note:: 
+.. note::
 
-    The Sylabs Cloud is currently available as an Alpha Preview. In addition to the Singularity Library and Remote Builder, a Keystore service is also available. All three services make use of a *freemium* pricing model in supporting Singularity Community Edition. In contrast, all three services are included in SingularityPRO - an enterprise grade subscription for Singularity that is offered for a fee from Sylabs. For addtional details regarding the different offerings available for Singularity, please `consult the Sylabs website <https://www.sylabs.io/singularity/>`_.  
+    The Sylabs Cloud is currently available as an Alpha Preview. In addition to the Singularity Library and Remote Builder, a Keystore service is also available. All three services make use of a *freemium* pricing model in supporting Singularity Community Edition. In contrast, all three services are included in SingularityPRO - an enterprise grade subscription for Singularity that is offered for a fee from Sylabs. For addtional details regarding the different offerings available for Singularity, please `consult the Sylabs website <https://www.sylabs.io/singularity/>`_.
 
 
 .. _sec:mandatory_headers_docker_locally_boostrapped_def_file:
@@ -863,22 +863,22 @@ A copy of the SIF file created by the service remains in the Sylabs Cloud Singul
 Mandatory Header Keywords: Locally Boostrapped
 ----------------------------------------------
 
-When ``docker-daemon`` is the bootstrap agent in a Singularity definition file, SIF containers can be created from images cached locally by Docker. Suppose the definition file ``lolcow-d.def`` has contents: 
+When ``docker-daemon`` is the bootstrap agent in a Singularity definition file, SIF containers can be created from images cached locally by Docker. Suppose the definition file ``lolcow-d.def`` has contents:
 
-.. code-block:: singularity 
+.. code-block:: singularity
 
     Bootstrap: docker-daemon
     From: godlovedc/lolcow:latest
 
-.. note:: 
+.. note::
 
-    Again, the image tag ``latest`` is **required** when bootstrapping creation of a container for Singularity from an image locally cached by Docker. 
+    Again, the image tag ``latest`` is **required** when bootstrapping creation of a container for Singularity from an image locally cached by Docker.
 
-Then,  
+Then,
 
-.. code-block:: none 
+.. code-block:: none
 
-    $ sudo singularity build lolcow_from_docker_cache.sif lolcow-d.def 
+    $ sudo singularity build lolcow_from_docker_cache.sif lolcow-d.def
     Build target already exists. Do you want to overwrite? [N/y] y
     INFO:    Starting build...
     Getting image source signatures
@@ -901,26 +901,26 @@ Then,
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_from_docker_cache.sif
 
-In other words, this is the definition-file counterpart to :ref:`the command-line invocation provided above <sec:mandatory_headers_docker_locally_boostrapped_cli>`. 
+In other words, this is the definition-file counterpart to :ref:`the command-line invocation provided above <sec:mandatory_headers_docker_locally_boostrapped_cli>`.
 
 .. note::
 
-    The ``sudo`` requirement in the above ``build`` request originates from Singularity; it is the standard requirement when use is made of definition files. In other words, membership of the issuing user in the ``docker`` Linux group is of no consequence in this context. 
+    The ``sudo`` requirement in the above ``build`` request originates from Singularity; it is the standard requirement when use is made of definition files. In other words, membership of the issuing user in the ``docker`` Linux group is of no consequence in this context.
 
-.. TODO-ND remote builder content note - exclusion above 
+.. TODO-ND remote builder content note - exclusion above
 
-Alternatively when ``docker-archive`` is the bootstrap agent in a Singularity definition file, SIF containers can be created from images stored locally by Docker. Suppose the definition file ``lolcow-da.def`` has contents: 
+Alternatively when ``docker-archive`` is the bootstrap agent in a Singularity definition file, SIF containers can be created from images stored locally by Docker. Suppose the definition file ``lolcow-da.def`` has contents:
 
-.. code-block:: singularity 
+.. code-block:: singularity
 
     Bootstrap: docker-archive
     From: lolcow.tar
 
-Then, 
+Then,
 
 .. code-block:: none
 
-    $ sudo singularity build lolcow_tar_def.sif lolcow-da.def 
+    $ sudo singularity build lolcow_tar_def.sif lolcow-da.def
     INFO:    Starting build...
     Getting image source signatures
     Copying blob sha256:a2022691bf950a72f9d2d84d557183cb9eee07c065a76485f1695784855c5193
@@ -942,12 +942,12 @@ Then,
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_tar_def.sif
 
-through ``build`` results in the SIF file ``lolcow_tar_def.sif``. In other words, this is the definition-file counterpart to :ref:`the command-line invocation provided above <sec:mandatory_headers_docker_locally_stored_bootstrap_cli>` . 
+through ``build`` results in the SIF file ``lolcow_tar_def.sif``. In other words, this is the definition-file counterpart to :ref:`the command-line invocation provided above <sec:mandatory_headers_docker_locally_stored_bootstrap_cli>` .
 
-.. TODO-ND RB Test 
+.. TODO-ND RB Test
 
 
-.. _sec:optional_headers_def_files: 
+.. _sec:optional_headers_def_files:
 
 Optional Header Keywords
 ------------------------
@@ -960,16 +960,16 @@ In the two-previous examples, the ``From`` keyword specifies *both* the ``user``
     Namespace: godlovedc
     From: lolcow
 
-.. note:: 
+.. note::
 
-    In `their documentation <https://docs.docker.com/docker-hub/repos/>`_, "Docker ID namespace" and ``user`` are employed as synonyms in the text and examples, respectively. 
+    In `their documentation <https://docs.docker.com/docker-hub/repos/>`_, "Docker ID namespace" and ``user`` are employed as synonyms in the text and examples, respectively.
 
 .. note::
 
-    The default value for the optional keyword ``Namespace`` is ``library``. 
+    The default value for the optional keyword ``Namespace`` is ``library``.
 
 
-Private Images and Registries 
+Private Images and Registries
 -----------------------------
 
 Thus far, use of Docker Hub has been assumed. To make use of a different repository of Docker images the **optional** ``Registry`` keyword can be added to the Singularity definition file. For example, to make use of a Docker image from the NVIDIA GPU Cloud (NGC) corresponding definition file is:
@@ -982,9 +982,9 @@ Thus far, use of Docker Hub has been assumed. To make use of a different reposit
 
 This def file ``ngc_pytorch.def`` can be passed as a specification to ``build`` as follows:
 
-.. code-block:: none 
+.. code-block:: none
 
-    $ sudo singularity build --docker-login mypytorch.sif ngc_pytorch.def 
+    $ sudo singularity build --docker-login mypytorch.sif ngc_pytorch.def
     Enter Docker Username: $oauthtoken
     Enter Docker Password: <obscured>
     INFO:    Starting build...
@@ -999,12 +999,12 @@ This def file ``ngc_pytorch.def`` can be passed as a specification to ``build`` 
     INFO:    Creating SIF file...
     INFO:    Build complete: mypytorch.sif
 
-After successful authentication via interactive use of the ``--docker-login`` option, output as the SIF container ``mypytorch.sif`` is (ultimately) produced. As above, :ref:`use of environment variables <sec:authentication_via_environment_variables>` is another option available for authenticating private Docker type repositories such as NGC; once set, the ``build`` command is as above save for the absence of the ``--docker-login`` option. 
+After successful authentication via interactive use of the ``--docker-login`` option, output as the SIF container ``mypytorch.sif`` is (ultimately) produced. As above, :ref:`use of environment variables <sec:authentication_via_environment_variables>` is another option available for authenticating private Docker type repositories such as NGC; once set, the ``build`` command is as above save for the absence of the ``--docker-login`` option.
 
 
 .. _sec:def_files_execution:
 
-Directing Execution 
+Directing Execution
 -------------------
 
 The ``Dockerfile`` corresponding to ``godlovedc/lolcow`` (and `available here <https://hub.docker.com/r/godlovedc/lolcow/dockerfile>`_) is as follows:
@@ -1022,9 +1022,9 @@ The ``Dockerfile`` corresponding to ``godlovedc/lolcow`` (and `available here <h
 
 The execution-specific part of this ``Dockerfile`` is the ``ENTRYPOINT`` - "... an optional definition for the first part of the command to be run ..." according to `the available documentation <https://docs.docker.com/search/?q=ENTRYPOINT>`_. After conversion to SIF, execution of ``fortune | cowsay | lolcat`` *within* the container produces the output:
 
-.. code-block:: none 
+.. code-block:: none
 
-    $ ./mylolcow.sif 
+    $ ./mylolcow.sif
      ______________________________________
     / Q: How did you get into artificial   \
     | intelligence? A: Seemed logical -- I |
@@ -1054,13 +1054,13 @@ Suppose now that a Singularity ``%runscript`` **section** is added to the defini
 
 After conversion to SIF via the Singularity ``build`` command, exection of the resulting container produces the output:
 
-.. code-block:: none 
+.. code-block:: none
 
-    $ ./lolcow.sif 
+    $ ./lolcow.sif
     This was the most unkindest cut of all.
             -- William Shakespeare, "Julius Caesar"
 
-In other words, introduction of a ``%runscript`` section into the Singularity definition file causes the ``ENTRYPOINT`` of the ``Dockerfile`` to be *bypassed*. The presence of the ``%runscript`` section would also bypass a ``CMD`` entry in the ``Dockerfile``. 
+In other words, introduction of a ``%runscript`` section into the Singularity definition file causes the ``ENTRYPOINT`` of the ``Dockerfile`` to be *bypassed*. The presence of the ``%runscript`` section would also bypass a ``CMD`` entry in the ``Dockerfile``.
 
 To *preserve* use of ``ENTRYPOINT`` and/or ``CMD`` as defined in the ``Dockerfile``, the ``%runscript`` section must be *absent* from the Singularity definition. In this case, and to favor execution of ``CMD`` *over* ``ENTRYPOINT``, a non-empty assignment of the *optional* ``IncludeCmd`` should be included in the header section of the Singularity definition file as follows:
 
@@ -1071,50 +1071,50 @@ To *preserve* use of ``ENTRYPOINT`` and/or ``CMD`` as defined in the ``Dockerfil
     From: lolcow
     IncludeCmd: yes
 
-.. note:: 
+.. note::
 
-    Because only a non-empty ``IncludeCmd`` is required, *either* ``yes`` (as above) or ``no`` results in execution of ``CMD`` *over* ``ENTRYPOINT``. 
+    Because only a non-empty ``IncludeCmd`` is required, *either* ``yes`` (as above) or ``no`` results in execution of ``CMD`` *over* ``ENTRYPOINT``.
 
 .. _sec:def_files_execution_SUB_execution_precedence:
 
-To summarize execution precedence:  
+To summarize execution precedence:
 
-    1. If present, the ``%runscript`` section of the Singularity definition file is executed 
+    1. If present, the ``%runscript`` section of the Singularity definition file is executed
 
-    2. If ``IncludeCmd`` is a non-empty keyword entry in the header of the Singularity definition file, then ``CMD`` from the ``Dockerfile`` is executed 
+    2. If ``IncludeCmd`` is a non-empty keyword entry in the header of the Singularity definition file, then ``CMD`` from the ``Dockerfile`` is executed
 
-    3. If present in the ``Dockerfile``, ``ENTRYPOINT`` appended by ``CMD`` (if present) are executed in sequence 
+    3. If present in the ``Dockerfile``, ``ENTRYPOINT`` appended by ``CMD`` (if present) are executed in sequence
 
     4. Execution of the ``bash`` shell is defaulted to
 
-.. TODO-ND Test CMD vs ENTRYPOINT via a documented example 
+.. TODO-ND Test CMD vs ENTRYPOINT via a documented example
 
-.. _sec:inspect_container_metadata: 
+.. _sec:inspect_container_metadata:
 
-Container Metadata 
+Container Metadata
 ------------------
 
-Singularity's ``inspect`` command displays container metadata - data about data that is encapsulated *within* a SIF file. Default output (assumed via the ``--labels`` option) from the command was :ref:`illustrated above <sec:use_prebuilt_public_docker_images_SUB_inspect>`. ``inspect``, however, provides a number of options that are :ref:`detailed elsewhere <environment-and-metadata>`; in the remainder of this section, Docker-specific use to establish execution precedence is emphasized.  
+Singularity's ``inspect`` command displays container metadata - data about data that is encapsulated *within* a SIF file. Default output (assumed via the ``--labels`` option) from the command was :ref:`illustrated above <sec:use_prebuilt_public_docker_images_SUB_inspect>`. ``inspect``, however, provides a number of options that are :ref:`detailed elsewhere <environment-and-metadata>`; in the remainder of this section, Docker-specific use to establish execution precedence is emphasized.
 
-As stated above (i.e., :ref:`the first case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`), the very existence of a ``%runscript`` section in a Singularity definition file *takes precedence* over commands that might exist in the ``Dockerfile``. 
+As stated above (i.e., :ref:`the first case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`), the very existence of a ``%runscript`` section in a Singularity definition file *takes precedence* over commands that might exist in the ``Dockerfile``.
 
 When the ``%runscript`` section is *removed* from the Singularity definition file, the result is (once again):
 
 .. code-block:: none
 
-    $ singularity inspect --deffile lolcow.sif 
+    $ singularity inspect --deffile lolcow.sif
 
     from: lolcow
     bootstrap: docker
     namespace: godlovedc
 
-.. TODO-ND below ... Need to add a CMD to lolcow ... 
+.. TODO-ND below ... Need to add a CMD to lolcow ...
 
 The runscript 'inherited' from the ``Dockerfile`` is:
 
 .. code-block:: none
 
-    $ singularity inspect --runscript lolcow.sif 
+    $ singularity inspect --runscript lolcow.sif
 
     #!/bin/sh
     OCI_ENTRYPOINT='"/bin/sh" "-c" "fortune | cowsay | lolcat"'
@@ -1143,15 +1143,15 @@ The runscript 'inherited' from the ``Dockerfile`` is:
 
     eval ${SINGULARITY_OCI_RUN}
 
-From this Bourne shell script, it is evident that only an ``ENTRYPOINT`` is detailed in the ``Dockerfile``; thus the ``ENTRYPOINT only - run entrypoint plus args`` conditional block is executed. In this case then, :ref:`the third case of execution precedence <sec:def_files_execution_SUB_execution_precedence>` has been illustrated. 
+From this Bourne shell script, it is evident that only an ``ENTRYPOINT`` is detailed in the ``Dockerfile``; thus the ``ENTRYPOINT only - run entrypoint plus args`` conditional block is executed. In this case then, :ref:`the third case of execution precedence <sec:def_files_execution_SUB_execution_precedence>` has been illustrated.
 
 The above Bourne shell script also illustrates how the following scenarios will be handled:
 
-    - A ``CMD`` only entry in the ``Dockerfile`` 
+    - A ``CMD`` only entry in the ``Dockerfile``
 
-    - **Both** ``ENTRYPOINT`` *and* ``CMD`` entries in the ``Dockerfile`` 
+    - **Both** ``ENTRYPOINT`` *and* ``CMD`` entries in the ``Dockerfile``
 
-From this level of detail, use of ``ENTRYPOINT`` *and/or* ``CMD`` in a Dockerfile has been made **explicit**. These remain examples within :ref:`the third case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`. 
+From this level of detail, use of ``ENTRYPOINT`` *and/or* ``CMD`` in a Dockerfile has been made **explicit**. These remain examples within :ref:`the third case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`.
 
 
 -----------------
@@ -1164,9 +1164,9 @@ OCI Image Support
 Overview
 ========
 
-OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes; it is the former that is emphasized here. Stated simply, an **OCI blob** is content that can be addressed; in other words, *each* layer of a Docker image is rendered as an OCI blob as illustrated in the (revisited) ``pull`` example below. 
+OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes; it is the former that is emphasized here. Stated simply, an **OCI blob** is content that can be addressed; in other words, *each* layer of a Docker image is rendered as an OCI blob as illustrated in the (revisited) ``pull`` example below.
 
-.. note:: 
+.. note::
 
     To facilitate interoperation with Docker Hub, the Singularity core makes use of  the ``containers/image`` `library <https://github.com/containers/image/>`_ - "... a set of Go libraries aimed at working in various way[s] with containers' images and container image registries."
 
@@ -1176,7 +1176,7 @@ Image Pulls Revisited
 
 After describing various :ref:`action commands that could be applied to images hosted remotely via Docker Hub <sec:action_commands_prebuilt_public_docker_images>`, the notion of having :ref:`a local copy in Singularity's native format for containerization (SIF) <sec:use_prebuilt_public_docker_images>` was introduced:
 
-.. code-block:: none 
+.. code-block:: none
 
     $ singularity pull docker://godlovedc/lolcow
     INFO:    Starting build...
@@ -1200,9 +1200,9 @@ After describing various :ref:`action commands that could be applied to images h
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_latest.sif
 
-Thus use of Singularity's ``pull`` command results in the *local* file copy in SIF, namely ``lolcow_latest.sif``. Layers of the image from Docker Hub are copied locally as OCI blobs. 
+Thus use of Singularity's ``pull`` command results in the *local* file copy in SIF, namely ``lolcow_latest.sif``. Layers of the image from Docker Hub are copied locally as OCI blobs.
 
-.. TODO minor - fix appearance of above link 
+.. TODO minor - fix appearance of above link
 
 
 Image Caching in Singularity
@@ -1251,9 +1251,9 @@ As the copy operation has clearly been *skipped*, it is evident that a copy of a
 
     4 directories, 10 files
 
-.. _misc:OCI_Image_Layout_Specification: 
+.. _misc:OCI_Image_Layout_Specification:
 
-Compliance with the OCI Image Layout Specification 
+Compliance with the OCI Image Layout Specification
 --------------------------------------------------
 
 From the perspective of the directory ``$HOME/.singularity/cache/oci``, this cache implementation in Singularity complies with the `OCI Image Layout Specification <https://github.com/opencontainers/image-spec/blob/master/image-layout.md>`_:
@@ -1262,11 +1262,11 @@ From the perspective of the directory ``$HOME/.singularity/cache/oci``, this cac
 
     - ``oci-layout`` file - a mandatory JSON object file containing both mandatory and optional content
 
-    - ``index.json`` file - a mandatory JSON object file containing an index of the images 
+    - ``index.json`` file - a mandatory JSON object file containing an index of the images
 
-Because one or more images is 'bundled' here, the directory ``$HOME/.singularity/cache/oci`` is referred to as the ``$OCI_BUNDLE_DIR``. 
+Because one or more images is 'bundled' here, the directory ``$HOME/.singularity/cache/oci`` is referred to as the ``$OCI_BUNDLE_DIR``.
 
-For additional details regarding this specification, consult the `OCI Image Format Specification <https://github.com/opencontainers/image-spec>`_. 
+For additional details regarding this specification, consult the `OCI Image Format Specification <https://github.com/opencontainers/image-spec>`_.
 
 
 OCI Compliance and the Singularity Cache
@@ -1276,7 +1276,7 @@ As required by the layout specification, OCI blobs are *uniquely* named by their
 
 .. code-block:: none
 
-    $ shasum -a 256 ./blobs/sha256/9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118 
+    $ shasum -a 256 ./blobs/sha256/9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
     9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118  ./blobs/sha256/9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
 
 They are also otherwise opaque:
@@ -1294,9 +1294,9 @@ The content of the ``oci-layout`` file in this example is:
       "imageLayoutVersion": "1.0.0"
     }
 
-This is as required for compliance with the layout standard. 
+This is as required for compliance with the layout standard.
 
-.. note:: 
+.. note::
 
     In rendering the above JSON object files, use has been made of ``jq`` - the command-line JSON processor.
 
@@ -1371,7 +1371,7 @@ The ``digest`` blob in this index file includes the details for all of the blobs
 
 The ``digest`` blob referenced in the ``index.json`` file references the following configuration file:
 
-.. code-block:: javascript 
+.. code-block:: javascript
 
     $ cat ./blobs/sha256/73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82 | jq
     {
@@ -1448,9 +1448,9 @@ The ``digest`` blob referenced in the ``index.json`` file references the followi
       ]
     }
 
-.. TODO Is the above not the config.json file referred to at https://github.com/opencontainers/runtime-spec/blob/master/config.md ??? 
+.. TODO Is the above not the config.json file referred to at https://github.com/opencontainers/runtime-spec/blob/master/config.md ???
 
-Even when all OCI blobs are already in Singularity's local cache, repeated image pulls cause *both* these last-two JSON object files, as well as the ``oci-layout`` and ``index.json`` files, to be updated. 
+Even when all OCI blobs are already in Singularity's local cache, repeated image pulls cause *both* these last-two JSON object files, as well as the ``oci-layout`` and ``index.json`` files, to be updated.
 
 
 Building Containers for Singularity from OCI Images
@@ -1461,11 +1461,11 @@ Building Containers for Singularity from OCI Images
 Working Locally from the Singularity Command Line: ``oci`` Boostrap Agent
 -------------------------------------------------------------------------
 
-The example detailed in the previous section can be used to illustrate how a SIF file for use by Singularity can be created from the local cache - an albeit contrived example, that works because the Singularity cache is compliant with the OCI Image Layout Specification. 
+The example detailed in the previous section can be used to illustrate how a SIF file for use by Singularity can be created from the local cache - an albeit contrived example, that works because the Singularity cache is compliant with the OCI Image Layout Specification.
 
-.. note:: 
+.. note::
 
-    Of course, the ``oci`` bootstrap agent can be applied to *any* **bundle** that is compliant with the OCI Image Layout Specification - not *just* the Singularity cache, as created by executing a Singularity ``pull`` command.  
+    Of course, the ``oci`` bootstrap agent can be applied to *any* **bundle** that is compliant with the OCI Image Layout Specification - not *just* the Singularity cache, as created by executing a Singularity ``pull`` command.
 
 In this local case, the ``build`` command of Singularity makes use of the ``oci`` boostrap agent as follows:
 
@@ -1487,7 +1487,7 @@ In this local case, the ``build`` command of Singularity makes use of the ``oci`
     INFO:    Creating SIF file...
     INFO:    Build complete: /home/vagrant/lolcow_oci_cache.sif
 
-As can be seen, this results in the SIF file ``lolcow_oci_cache.sif`` in the user's home directory. 
+As can be seen, this results in the SIF file ``lolcow_oci_cache.sif`` in the user's home directory.
 
 The syntax for the ``oci`` boostrap agent requires some elaboration, however. In this case, and as illustrated above, ``$HOME/.singularity/cache/oci`` has content:
 
@@ -1497,7 +1497,7 @@ The syntax for the ``oci`` boostrap agent requires some elaboration, however. In
     blobs  index.json  oci-layout
 
 
-In other words, it is the ``$OCI_BUNDLE_DIR`` containing the data and metadata that collectively comprise the image layed out in accordance with the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>` - the same data and metadata that are assembled into a single SIF file through the ``build`` process. However, 
+In other words, it is the ``$OCI_BUNDLE_DIR`` containing the data and metadata that collectively comprise the image layed out in accordance with the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>` - the same data and metadata that are assembled into a single SIF file through the ``build`` process. However,
 
 .. code-block:: none
 
@@ -1505,7 +1505,7 @@ In other words, it is the ``$OCI_BUNDLE_DIR`` containing the data and metadata t
     INFO:    Starting build...
     FATAL:   While performing build: conveyor failed to get: more than one image in oci, choose an image
 
-does not *uniquely* specify an image from which to bootstrap the ``build`` process. In other words, there are multiple images referenced via ``org.opencontainers.image.ref.name`` in the ``index.json`` file. By appending ``:a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb`` to ``oci`` in this example, the image is uniquely specified, and the container created in SIF (as illustrated previously). 
+does not *uniquely* specify an image from which to bootstrap the ``build`` process. In other words, there are multiple images referenced via ``org.opencontainers.image.ref.name`` in the ``index.json`` file. By appending ``:a692b57abc43035b197b10390ea2c12855d21649f2ea2cc28094d18b93360eeb`` to ``oci`` in this example, the image is uniquely specified, and the container created in SIF (as illustrated previously).
 
 .. note::
 
@@ -1517,7 +1517,7 @@ does not *uniquely* specify an image from which to bootstrap the ``build`` proce
 Working Locally from the Singularity Command Line: ``oci-archive`` Boostrap Agent
 ---------------------------------------------------------------------------------
 
-OCI archives, i.e., ``tar`` files obeying the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`, can seed creation of a container for Singularity. In this case, use is made of the ``oci-archive`` bootstrap agent. 
+OCI archives, i.e., ``tar`` files obeying the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`, can seed creation of a container for Singularity. In this case, use is made of the ``oci-archive`` bootstrap agent.
 
 To illustrate this agent, it is convenient to build the archive from the Singularity cache. After a single ``pull`` of the ``godlovedc/lolcow`` image from Docker Hub, a ``tar`` format archive can be generated from the ``$HOME/.singularity/cache/oci`` directory as follows:
 
@@ -1541,7 +1541,7 @@ The native container ``lolcow_oci_tarfile.sif`` for use by Singularity can be cr
 
 .. code-block:: none
 
-    $ singularity build lolcow_oci_tarfile.sif oci-archive://godlovedc_lolcow.tar 
+    $ singularity build lolcow_oci_tarfile.sif oci-archive://godlovedc_lolcow.tar
     Build target already exists. Do you want to overwrite? [N/y] y
     INFO:    Starting build...
     Getting image source signatures
@@ -1558,36 +1558,36 @@ The native container ``lolcow_oci_tarfile.sif`` for use by Singularity can be cr
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_oci_tarfile.sif
 
-This assumes that the ``tar`` file exists in the current working directory. 
+This assumes that the ``tar`` file exists in the current working directory.
 
 .. note::
 
-    Cache maintenance is a manual process at the current time. In other words, the cache can be cleared by **carefully** issuing the command ``rm -rf $HOME/.singularity/cache``. Of course, this will clear the local cache of all downloaded images. 
+    Cache maintenance is a manual process at the current time. In other words, the cache can be cleared by **carefully** issuing the command ``rm -rf $HOME/.singularity/cache``. Of course, this will clear the local cache of all downloaded images.
 
-.. TODO-ND: Update owing to intro of new capab??? 
+.. TODO-ND: Update owing to intro of new capab???
 
-.. note:: 
+.. note::
 
-    Because the layers of a Docker image as well as the blobs of an OCI image are already ``gzip`` compressed, there is a minimal advantage to having compressed archives representing OCI images. For this reason, the ``build`` detailed above boostraps a SIF file for use by Singularity from only a ``tar`` file, and not a ``tar.gz`` file. 
+    Because the layers of a Docker image as well as the blobs of an OCI image are already ``gzip`` compressed, there is a minimal advantage to having compressed archives representing OCI images. For this reason, the ``build`` detailed above boostraps a SIF file for use by Singularity from only a ``tar`` file, and not a ``tar.gz`` file.
 
 
 Working from the Singularity Command Line with Remotely Hosted Images
 ---------------------------------------------------------------------
 
-In the previous section, an OCI archive was created from locally available OCI blobs and metadata; the resulting ``tar`` file served to bootstrap the creation of a container for Singularity in SIF via the ``oci-archive`` agent. Typically, however, OCI archives of interest are remotely hosted. Consider, for example, an Alpine Linux OCI archive stored in Amazon S3 storage. Because such an archive can be retrieved via secure HTTP, the following ``pull`` command results in a local copy as follows: 
+In the previous section, an OCI archive was created from locally available OCI blobs and metadata; the resulting ``tar`` file served to bootstrap the creation of a container for Singularity in SIF via the ``oci-archive`` agent. Typically, however, OCI archives of interest are remotely hosted. Consider, for example, an Alpine Linux OCI archive stored in Amazon S3 storage. Because such an archive can be retrieved via secure HTTP, the following ``pull`` command results in a local copy as follows:
 
 .. code-block:: none
 
     $ singularity pull https://s3.amazonaws.com/singularity-ci-public/alpine-oci-archive.tar
      1.98 MiB / 1.98 MiB [==================================================================================] 100.00% 7.48 MiB/s 0s
 
-Thus ``https`` (and ``http``) are additional bootstrap agents available to seed development of containers for Singularity. 
+Thus ``https`` (and ``http``) are additional bootstrap agents available to seed development of containers for Singularity.
 
 It is worth noting that the OCI image specfication compliant contents of this archive are:
 
-.. code-block:: none 
+.. code-block:: none
 
-    $ tar tvf alpine-oci-archive.tar 
+    $ tar tvf alpine-oci-archive.tar
     drwxr-xr-x 1000/1000         0 2018-06-25 14:45 blobs/
     drwxr-xr-x 1000/1000         0 2018-06-25 14:45 blobs/sha256/
     -rw-r--r-- 1000/1000       585 2018-06-25 14:45 blobs/sha256/b1a7f144ece0194921befe57ab30ed1fd98c5950db7996719429020986092058
@@ -1598,9 +1598,9 @@ It is worth noting that the OCI image specfication compliant contents of this ar
 
 Proceeding as before, for a (now) locally available OCI archive, a SIF file can be produced by executing:
 
-.. code-block:: none 
+.. code-block:: none
 
-    $ singularity build alpine_oci_archive.sif oci-archive://alpine-oci-archive.tar 
+    $ singularity build alpine_oci_archive.sif oci-archive://alpine-oci-archive.tar
     INFO:    Starting build...
     Getting image source signatures
     Copying blob sha256:ff3a5c916c92643ff77519ffa742d3ec61b7f591b6b7504599d95a4a41134e28
@@ -1616,21 +1616,21 @@ The resulting SIF file can be validated as follows, for example:
 
 .. code-block:: none
 
-    $ ./alpine_oci_archive.sif 
-    Singularity> cat /etc/os-release 
+    $ ./alpine_oci_archive.sif
+    Singularity> cat /etc/os-release
     NAME="Alpine Linux"
     ID=alpine
     VERSION_ID=3.7.0
     PRETTY_NAME="Alpine Linux v3.7"
     HOME_URL="http://alpinelinux.org"
     BUG_REPORT_URL="http://bugs.alpinelinux.org"
-    Singularity> 
-    $ 
+    Singularity>
+    $
 
 .. note::
 
 
-    The ``http`` and ``https`` bootstrap agents can only be used to ``pull`` OCI archives from where they are hosted. 
+    The ``http`` and ``https`` bootstrap agents can only be used to ``pull`` OCI archives from where they are hosted.
 
     In working with remotely hosted OCI image archives then, a two-step workflow is *required* to produce SIF files for native use by Singularity:
 
@@ -1640,15 +1640,15 @@ The resulting SIF file can be validated as follows, for example:
 
 .. note::
 
-    Though a frequently asked question, the distribution of OCI images remains `out of scope <https://www.opencontainers.org/about/oci-scope-table>`_. In other words, there is no OCI endorsed distribution method or registry. 
+    Though a frequently asked question, the distribution of OCI images remains `out of scope <https://www.opencontainers.org/about/oci-scope-table>`_. In other words, there is no OCI endorsed distribution method or registry.
 
-    Established with nothing more than a Web server then, any individual, group or organization, *could* host OCI archives. This might be particularly appealing, for example, for organizations having security requirements that preclude access to public registries such as Docker Hub. Other that having a very basic hosting capability, OCI archives need only comply to the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`. 
+    Established with nothing more than a Web server then, any individual, group or organization, *could* host OCI archives. This might be particularly appealing, for example, for organizations having security requirements that preclude access to public registries such as Docker Hub. Other that having a very basic hosting capability, OCI archives need only comply to the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`.
 
 
 Working with Definition Files: Mandatory Header Keywords
 --------------------------------------------------------
 
-Three, new bootstrap agents have been introduced as a consequence of compliance with the OCI Image Specification - assuming ``http`` and ``https`` are considered together. In addition to bootstrapping images for Singularity completely from the command line, definition files can be employed. 
+Three, new bootstrap agents have been introduced as a consequence of compliance with the OCI Image Specification - assuming ``http`` and ``https`` are considered together. In addition to bootstrapping images for Singularity completely from the command line, definition files can be employed.
 
 As :ref:`above <sec:cli_oci_bootstrap_agent>`, the OCI image layout compliant Singularity cache can be employed to create SIF containers; the definition file, ``lolcow-oci.def``, equivalent is:
 
@@ -1661,7 +1661,7 @@ Recall that the colon-appended string in this file uniquely specifies the ``org.
 
 .. code-block:: none
 
-    $ sudo singularity build ~/lolcow_oci_cache.sif lolcow-oci.def 
+    $ sudo singularity build ~/lolcow_oci_cache.sif lolcow-oci.def
     WARNING: Authentication token file not found : Only pulls of public images will succeed
     Build target already exists. Do you want to overwrite? [N/y] y
     INFO:    Starting build...
@@ -1685,7 +1685,7 @@ Recall that the colon-appended string in this file uniquely specifies the ``org.
     INFO:    Creating SIF file...
     INFO:    Build complete: /home/vagrant/lolcow_oci_cache.sif
 
-Required use of ``sudo`` allows Singularity to ``build`` the SIF container ``lolcow_oci_cache.sif``. 
+Required use of ``sudo`` allows Singularity to ``build`` the SIF container ``lolcow_oci_cache.sif``.
 
 When it comes to OCI archives, the definition file, ``lolcow-ocia.def`` corresponding to the command-line invocation above is:
 
@@ -1694,11 +1694,11 @@ When it comes to OCI archives, the definition file, ``lolcow-ocia.def`` correspo
     Bootstrap: oci-archive
     From: godlovedc_lolcow.tar
 
-Applying ``build`` as follows 
+Applying ``build`` as follows
 
 .. code-block:: none
 
-    $ sudo singularity build lolcow_oci_tarfile.sif lolcow-ocia.def 
+    $ sudo singularity build lolcow_oci_tarfile.sif lolcow-ocia.def
     WARNING: Authentication token file not found : Only pulls of public images will succeed
     INFO:    Starting build...
     Getting image source signatures
@@ -1715,23 +1715,23 @@ Applying ``build`` as follows
     INFO:    Creating SIF file...
     INFO:    Build complete: lolcow_oci_tarfile.sif
 
-results in the SIF container ``lolcow_oci_tarfile.sif``. 
+results in the SIF container ``lolcow_oci_tarfile.sif``.
 
 
-Working with Definition Files: Additonal Considerations 
+Working with Definition Files: Additonal Considerations
 -------------------------------------------------------
 
-In working with definition files, the following additional considerations arise: 
+In working with definition files, the following additional considerations arise:
 
     - In addition to the mandatory header keywords documented above, :ref:`optional header keywords <sec:optional_headers_def_files>` are possible additions to OCI bundle and/or archive bootstrap definition files.
 
-    - As distribution of OCI bundles and/or archives is out of the Initiative's scope, so is the authentication required to access private images and/or registries. 
+    - As distribution of OCI bundles and/or archives is out of the Initiative's scope, so is the authentication required to access private images and/or registries.
 
-    - The direction of execution follows along the same lines :ref:`as described above <sec:def_files_execution>`. Of course, the SIF container's metadata will make clear the ``runscript`` through application of the ``inspect`` command :ref:`as described previously <sec:inspect_container_metadata>`. 
+    - The direction of execution follows along the same lines :ref:`as described above <sec:def_files_execution>`. Of course, the SIF container's metadata will make clear the ``runscript`` through application of the ``inspect`` command :ref:`as described previously <sec:inspect_container_metadata>`.
 
-    - Container metadata will also reveal whether or not a given SIF file was bootstrapped from an OCI bundle or archive; for example, below it is evident that an OCI archive was employed to bootstrap creation of the SIF file:  
+    - Container metadata will also reveal whether or not a given SIF file was bootstrapped from an OCI bundle or archive; for example, below it is evident that an OCI archive was employed to bootstrap creation of the SIF file:
 
-.. code-block:: javascript 
+.. code-block:: javascript
 
     $ singularity inspect --labels lolcow_oci_tarfile.sif | jq
     {
@@ -1743,30 +1743,30 @@ In working with definition files, the following additional considerations arise:
     }
 
 
-.. _sec:best_practices: 
+.. _sec:best_practices:
 
 --------------
 Best Practices
 --------------
 
-Singularity can make use of most Docker and OCI images without complication. However, there exist  known cases where complications can arise. Thus a brief compilation of best practices follows below. 
+Singularity can make use of most Docker and OCI images without complication. However, there exist  known cases where complications can arise. Thus a brief compilation of best practices follows below.
 
-    1. Accounting for trust   
+    1. Accounting for trust
 
-    Docker containers *allow for* privilege escalation. In a ``Dockerfile``, for example, the ``USER`` instruction allows for user and/or group settings to be made in the Linux operating environment. The trust model in Singularity is completely different: Singularity allows untrusted users to run untrusted containers in a trusted way. Because Singularity containers embodied as SIF files execute in *user* space, there is no possibility for privilege escalation. In other words, those familiar with Docker, should *not* expect access to elevated user permissions; and as a corollary, use of the ``USER`` instruction must be *avoided*. 
+    Docker containers *allow for* privilege escalation. In a ``Dockerfile``, for example, the ``USER`` instruction allows for user and/or group settings to be made in the Linux operating environment. The trust model in Singularity is completely different: Singularity allows untrusted users to run untrusted containers in a trusted way. Because Singularity containers embodied as SIF files execute in *user* space, there is no possibility for privilege escalation. In other words, those familiar with Docker, should *not* expect access to elevated user permissions; and as a corollary, use of the ``USER`` instruction must be *avoided*.
 
     Singularity does, however, allow for fine-grained control over the permissions that containers require for execution. Given that Singularilty executes in user space, it is not surprising that permissions need to be externally established *for* the container through use of the ``capability`` command. :ref:`Detailed elsewhere in this documentation <security-options>`, Singularity allows users and/or groups to be granted/revoked authorized capabilties. Owing to Singularity's trust model, this fundamental best practice can be stated as follows:
 
-        "Employ ``singularity capability`` to manage execution privileges for containers" 
+        "Employ ``singularity capability`` to manage execution privileges for containers"
 
 
-    2. Maintaining containers built from Docker and OCI images  
+    2. Maintaining containers built from Docker and OCI images
 
     SIF files created by boostrapping from Docker or OCI images are, of course, only as current as the most recent Singularity ``pull``. Subsequent retrievals *may* result in containers that are built and/or behave differently, owing to changes in the corresponding ``Dockerfile``. A prudent practice then, for maintaining containers of value, is based upon use of Singularity definition files. Styled and implemented after a ``Dockerfile`` retrieved at some point in time, use of ``diff`` on subsequent versions of this same file, can be employed to inform maintenance of the corresponding Singularity definition file. Understanding build specifications at this level of detail places container creators in a much more sensible position prior to signing with an encrypted key. Thus the best practice is:
 
         "Maintain detailed build specifications for containers, rather than opaque runtimes"
 
-    3. Working with environment variables 
+    3. Working with environment variables
 
     In a ``Dockerfile``, `environment variables are declared <https://docs.docker.com/engine/reference/builder/#env>`_ as key-value pairs through use of the ``ENV`` instruction. Declaration in the build specification for a container is advised, rather than relying upon user
     (e.g., ``.bashrc``, ``.profile``) or system-wide configuration files for interactive shells. Should a ``Dockerfile`` be converted into a definition file for Singularity, as suggested in the container-maintenance best practice above, :ref:`environment variables can be explicitly represented <definition-files>` as ``ENV`` instructions that have been converted into entries in the ``%environment`` section, respectively. This best practice can be stated as follows:
@@ -1776,11 +1776,11 @@ Singularity can make use of most Docker and OCI images without complication. How
 
     4. Installation to ``/root``
 
-    Docker and OCI container's are typically run as the ``root`` user; therefore, ``/root`` (this user's ``$HOME`` directory) will be the installation target when ``$HOME`` is specified. Installation to ``/root`` may prove workable in some circumstances - e.g., while the container is executing, or if read-only access is required to this directory after installation. In general, however, because this is the ``root`` directory conventional wisdom suggests this practice be avoided. Thus the best practice is: 
+    Docker and OCI container's are typically run as the ``root`` user; therefore, ``/root`` (this user's ``$HOME`` directory) will be the installation target when ``$HOME`` is specified. Installation to ``/root`` may prove workable in some circumstances - e.g., while the container is executing, or if read-only access is required to this directory after installation. In general, however, because this is the ``root`` directory conventional wisdom suggests this practice be avoided. Thus the best practice is:
 
         "Avoid installations that make use of ``/root``."
 
-    5. Read-only ``/`` filesystem 
+    5. Read-only ``/`` filesystem
 
     Singularity mounts a container's ``/`` filesystem in read-only mode. To ensure a Docker container meets Singularity's requirements, it may prove useful to execute ``docker run --read-only --tmpfs /run --tmpfs /tmp godlovedc/lolcow``. The best practioce here is:
 
@@ -1788,11 +1788,11 @@ Singularity can make use of most Docker and OCI images without complication. How
 
     6. Installation to ``$HOME`` or ``$TMP``
 
-    In making use of Singularity, it is common practice for ``$USER`` to be automatically mounted on ``$HOME``, and for ``$TMP`` also to be mounted. To avoid the side effects (e.g., 'missing' or conflicting files) that might arise as a consequence of executing ``mount`` commands then, the best practice is: 
+    In making use of Singularity, it is common practice for ``$USER`` to be automatically mounted on ``$HOME``, and for ``$TMP`` also to be mounted. To avoid the side effects (e.g., 'missing' or conflicting files) that might arise as a consequence of executing ``mount`` commands then, the best practice is:
 
         "Avoid placing container 'valuables' in ``$HOME`` or ``$TMP``."
 
-    A detailed review of the container's build specification (e.g., its ``Dockerfile``) may be required to ensure this best practice is adhered to. 
+    A detailed review of the container's build specification (e.g., its ``Dockerfile``) may be required to ensure this best practice is adhered to.
 
     7. Current library caches
 
@@ -1800,51 +1800,97 @@ Singularity can make use of most Docker and OCI images without complication. How
 
         "Ensure calls to ``ldconfig`` are executed towards the *end* of ``build`` specifications (e.g., ``Dockerfile``), so that the library cache is updated when the container is created."
 
-    8. Use of plain-text passwords for authentication 
+    8. Use of plain-text passwords for authentication
 
     For obvious reasons, it is desireable to completely *avoid* use of plain-text passwords. Therefore, for interactive sessions requiring authentication, use of the ``--docker-login`` option for Singularity's ``pull`` and ``build`` commands is *recommended*. At the present time, the *only* option available for non-interactive use is to :ref:`embed plain-text passwords into environment variables <sec:authentication_via_environment_variables>`. Because the Sylabs Cloud Singularity Library employs `time-limited API tokens for authentication <https://cloud.sylabs.io/auth>`_, use of SIF containers hosted through this service provides a more secure means for both interactive *and* non-interactive use. This best practice is:
 
         "Avoid use of plain-text passwords"
 
-    9. Execution ambiguity 
+    9. Execution ambiguity
 
     Short of converting an *entire* ``Dockerfile`` into a Singularity definition file, informed specification of the ``%runscript`` entry in the def file *removes* any ambiguity associated with ``ENTRYPOINT`` :ref:`versus <sec:def_files_execution>` ``CMD`` and ultimately :ref:`execution precedence <sec:def_files_execution>`. Thus the best practice is:
 
         "Employ Singularity's ``%runscript`` by default to avoid execution ambiguity"
 
-    Note that the ``ENTRYPOINT`` can be bypassed completely, e.g., ``docker run -i -t --entrypoint /bin/bash godlovedc/lolcow``. This allows for an interactive session within the container, that may prove useful in validating the built runtime.  
+    Note that the ``ENTRYPOINT`` can be bypassed completely, e.g., ``docker run -i -t --entrypoint /bin/bash godlovedc/lolcow``. This allows for an interactive session within the container, that may prove useful in validating the built runtime.
 
-Best practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details. 
+Best practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details.
 
 
-.. _sec:troubleshooting: 
+.. _sec:troubleshooting:
 
 ---------------
 Troubleshooting
 ---------------
 
-In making use of Docker and OCI images through Singularity the need to troubleshoot may arise. A brief compilation of issues and their resolution is provided here. 
+In making use of Docker and OCI images through Singularity the need to troubleshoot may arise. A brief compilation of issues and their resolution is provided here.
 
     1. Authentication issues
 
-    Authentication is required to make use of Docker-style private images and/or private registries. Examples involving private images hosted by the public Docker Hub were :ref:`provided above <sec:using_prebuilt_private_images>`, whereas the NVIDIA GPU Cloud was used to :ref:`illustrate access to a private registry <sec:using_prebuilt_private_images_parivate_registries>`. Even if the intended use of containers is non-interactive, issues in authenticating with these image-hosting services are most easily addressed through use of the ``--docker-login`` option that can be appended to a Singularity ``pull`` request. As soon as image signatures and blobs start being received, authentication credentials have been validated, and the image ``pull`` can be cancelled. 
+    Authentication is required to make use of Docker-style private images and/or private registries. Examples involving private images hosted by the public Docker Hub were :ref:`provided above <sec:using_prebuilt_private_images>`, whereas the NVIDIA GPU Cloud was used to :ref:`illustrate access to a private registry <sec:using_prebuilt_private_images_parivate_registries>`. Even if the intended use of containers is non-interactive, issues in authenticating with these image-hosting services are most easily addressed through use of the ``--docker-login`` option that can be appended to a Singularity ``pull`` request. As soon as image signatures and blobs start being received, authentication credentials have been validated, and the image ``pull`` can be cancelled.
 
     2. Execution mismatches
 
-    Execution intentions are detailed through specification files - i.e., the ``Dockerfile`` in the case of Docker images. However, intentions and precedence aside, the reality of executing a container may not align with expectations. To alleviate this mismatch, use of ``singularity inspect --runscript <somecontainer>.sif`` details the *effective* runscript - i.e., the one that is actually being executed. Of course, the ultimate solution to this issue is to develop and maintain Singularity definition files for containers of interest.  
+    Execution intentions are detailed through specification files - i.e., the ``Dockerfile`` in the case of Docker images. However, intentions and precedence aside, the reality of executing a container may not align with expectations. To alleviate this mismatch, use of ``singularity inspect --runscript <somecontainer>.sif`` details the *effective* runscript - i.e., the one that is actually being executed. Of course, the ultimate solution to this issue is to develop and maintain Singularity definition files for containers of interest.
 
     3. More than one image in the OCI bundle directory
 
-    :ref:`As illustrated above <sec:cli_oci_bootstrap_agent>`, and with respect to the bootstrap agent ``oci://$OCI_BUNDLE_DIR``, a fatal error is generated when *more* than one image is referenced in the ``$OCI_BUNDLE_DIR/index.json`` file. The workaround shared previously was to append the bootstrap directive with the unique reference name for the image of interest - i.e., ``oci://$OCI_BUNDLE_DIR:org.opencontainers.image.ref.name``. Because it may take some effort to locate the reference name for an image of interest, an even simpler solution is to ensure that each ``$OCI_BUNDLE_DIR`` contains at most a single image.  
+    :ref:`As illustrated above <sec:cli_oci_bootstrap_agent>`, and with respect to the bootstrap agent ``oci://$OCI_BUNDLE_DIR``, a fatal error is generated when *more* than one image is referenced in the ``$OCI_BUNDLE_DIR/index.json`` file. The workaround shared previously was to append the bootstrap directive with the unique reference name for the image of interest - i.e., ``oci://$OCI_BUNDLE_DIR:org.opencontainers.image.ref.name``. Because it may take some effort to locate the reference name for an image of interest, an even simpler solution is to ensure that each ``$OCI_BUNDLE_DIR`` contains at most a single image.
 
     4. Cache maintenance
 
     Maintenance of the Singularity cache (i.e., ``$HOME/.singularity/cache``) requires manual intervention at this time. By **carefully** issuing the command ``rm -rf $HOME/.singularity/cache``, its local cache will be cleared of all downloaded images.
 
-    5. The ``http`` and ``https`` are ``pull`` only boostrap agents 
+    5. The ``http`` and ``https`` are ``pull`` only boostrap agents
 
-    ``http`` and ``https`` are the only examples of ``pull`` only boostrap agents. In other words, when used with Singularity's ``pull`` command, the result is a local copy of, for example, an OCI archive image. This means that a subsequent step is necessary to actually create a SIF container for use by Singularity - a step involving the ``oci-archive`` bootstrap agent in the case of an OCI image archive. 
+    ``http`` and ``https`` are the only examples of ``pull`` only boostrap agents. In other words, when used with Singularity's ``pull`` command, the result is a local copy of, for example, an OCI archive image. This means that a subsequent step is necessary to actually create a SIF container for use by Singularity - a step involving the ``oci-archive`` bootstrap agent in the case of an OCI image archive.
 
-Like :ref:`best practices <sec:best_practices>`, troubleshooting scenarios and solutions emerge from experience. Contributions that allow additional experiences to be shared  are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details. 
+Like :ref:`best practices <sec:best_practices>`, troubleshooting scenarios and solutions emerge from experience. Contributions that allow additional experiences to be shared  are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details.
 
-.. TODO-ND SIFtool - does it have more to offer here??? 
+.. TODO-ND SIFtool - does it have more to offer here???
+
+
+------------------------------------------
+Dockerfile vs. Singularity Definition file
+------------------------------------------
+
+On the following table, you can see which are the similarities/differences between a Dockerfile and a Singularity definition file:
+
+
+================ ================================== ========== =======================================================================
+Singularity Definition file                                            Dockerfile
+--------------------------------------------------- ----------------------------------------------------------------------------------
+Section           Description                       Section    Description
+================ ================================== ========== =======================================================================
+``Bootstrap``    | Defines from which library
+                 | to build your container
+                 | from.                               \-       | Not supported
+                 | You are free to choose between
+                 | ``library``(Our cloud library)
+                 | ,``docker`` and ``shub``.
+
+``From:``        | To specify the provider from      ``FROM``  | Creates a layer from the described docker image.
+                 | which to build the container.               | For example, if you got a Dockerfile with the ``FROM`` section
+                                                               | set like: ``FROM:ubuntu:18.04``, this means that a layer
+                                                               | will be created from the ``ubuntu:18.04`` **Docker** image.
+                                                               | (You cannot choose any other bootstrap provider)
+``%files``       | To copy files from your local     ``COPY``  | To copy files from your Docker's client current directory.
+                 | to the host.
+
+``%environment`` | To declare and set your           ``ENV``   | ``ENV`` will take the name of the variable and the value and set it.
+                 | environment variables.
+
+``%help``        | To provide a help section            \-      | Not supported on the Dockerfile
+                 | to your container image.
+
+``%post``        | Commands that will be run at      ``RUN``   | Commands to build your application image with ``make``
+                 | build-time.
+
+``%runscript```  | Commands that will be run at      ``CMD``   | Commands that run within the Docker container.
+                 | running your container image.
+
+``%startscript`` | Commands that will be run when       \-      | Not supported
+                 | an instance is started. This is
+                 | useful for container images
+                 | using services.
+================ ================================== ========== =======================================================================
