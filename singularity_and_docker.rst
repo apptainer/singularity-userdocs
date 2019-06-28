@@ -1849,9 +1849,10 @@ Like :ref:`best practices <sec:best_practices>`, troubleshooting scenarios and s
 
 .. TODO-ND SIFtool - does it have more to offer here???
 
+.. _sec:deffile-vs-dockerfile:
 
 ------------------------------------------
-Dockerfile vs. Singularity Definition file
+Singularity Definition file vs. Dockerfile
 ------------------------------------------
 
 On the following table, you can see which are the similarities/differences between a Dockerfile and a Singularity definition file:

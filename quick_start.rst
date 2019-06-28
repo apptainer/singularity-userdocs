@@ -334,7 +334,8 @@ image format after downloading it.
 downloading images, you can use ``build`` to create images from other images or
 from scratch using a :ref:`definition file <definitionfiles>`. You can also
 use ``build`` to convert an image between the container formats supported by
-Singularity.
+Singularity. To see a comparison of Singularity definition file with Dockerfile,
+please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
 
 .. _cowimage:
 
