@@ -124,8 +124,7 @@ If the host MPI is MPICH, a definition file such as the following example can be
       mpitest.c /opt
 
   %environment
-      MPICH_DIR=/opt/mpich-3.3
-      export MPICH_DIR
+      export MPICH_DIR=/opt/mpich-3.3
       export SINGULARITY_MPICH_DIR=$MPICH_DIR
       export SINGULARITYENV_APPEND_PATH=$MPICH_DIR/bin
       export SINGULAIRTYENV_APPEND_LD_LIBRARY_PATH=$MPICH_DIR/lib
@@ -166,8 +165,7 @@ If the host MPI is Open MPI, the definition file looks like:
       mpitest.c /opt
 
   %environment
-      OMPI_DIR=/opt/ompi
-      export OMPI_DIR
+      export OMPI_DIR=/opt/ompi
       export SINGULARITY_OMPI_DIR=$OMPI_DIR
       export SINGULARITYENV_APPEND_PATH=$OMPI_DIR/bin
       export SINGULAIRTYENV_APPEND_LD_LIBRARY_PATH=$OMPI_DIR/lib
