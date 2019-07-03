@@ -757,10 +757,10 @@ Keywords
 The From keyword is mandatory and applies to these modules in the same nature
 as described for other Bootstrap agents.
 
+.. _scratch-agent:
+
 ``scratch`` bootstrap agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-.. _scratch-agent:
 
 Through all the Bootstrap agents mentioned above, you were essentially building
 over a base(parent) image pulled from either Library/Docker/Shub etc, but
