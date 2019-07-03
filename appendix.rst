@@ -217,7 +217,7 @@ You can see them listed alphabetically below with their respective functionality
 #. **SINGULARITY_WRITABLE_TMPFS**: Makes the file system accessible as read-write with non-persistent data (with overlay support only). Default is set to false.
 
 
-.. _build-modules:
+.. _buildmodules:
 
 Build Modules
 -------------
@@ -363,8 +363,6 @@ Container Library and building from it instead.
 
 For detailed information about setting your build environment see
 :ref:`Build Customization <build-environment>`.
-
-.. TODO Add section on docker-daemon boostrap agent
 
 .. _build-shub:
 
@@ -607,6 +605,7 @@ On CentOS you can install it from the epel repos like so:
 
     $ sudo yum update && sudo yum install epel-release && sudo yum install debootstrap.noarch
 
+
 .. _build-arch:
 
 
@@ -732,3 +731,61 @@ into the core operating system. It is a best practice to supply only the bare
 essentials such that the ``%post`` section has what it needs to properly
 complete the build. One common package you may want to install when using the
 zypper build module is ``zypper`` itself.
+
+.. _docker-daemon-archive:
+
+``docker-daemon & docker-archive`` bootstrap agents
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+For users using docker locally there are two options for creating Singularity
+images without the need for a repository: ``docker-daemon://`` and ``docker-archive://``
+
+Overview
+""""""""
+
+``docker-daemon`` allows you to build a SIF from locally running docker daemon
+images while ``docker-archive`` let's you build from tar archives of images
+pulled from docker.
+
+Keywords
+""""""""
+
+.. code-block:: singularity
+
+    From: /path/to/container/file/or/directory
+
+The From keyword is mandatory and applies to these modules in the same nature
+as described for other Bootstrap agents.
+
+``scratch`` bootstrap agent
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. _scratch-agent:
+
+Through all the Bootstrap agents mentioned above, you were essentially building
+over a base(parent) image pulled from either Library/Docker/Shub etc, but
+Singularity offers support to create even the base images or minimal images to
+create your custom containers.
+
+Overview
+""""""""
+
+This module allows you to take full control of the content inside your container,
+i.e., the user mentions the binaries/packages required for creation of the
+container. The installation of any software, necessary config files can all be
+mentioned in the ``%setup`` section of the definition file. This agent is
+particularly useful for creating minimal image sizes and are more secure since
+the creator is fully aware of what's inside the container (ideally only the
+items required to run your application) and hence reduces the attack surface.
+attack surface.
+
+Keywords
+""""""""
+
+.. code-block:: singularity
+
+    Bootstrap: scratch
+
+Since you are building the image from scratch, it does not require and hence
+does not support any keywords.
+
