@@ -5,7 +5,9 @@ jobs:
     # This is the base environment that Circle will use
     docker:
       - image: circleci/python:3.6-stretch
-     
+    
+    working_directory: singularity-userdocs
+    
     steps:
       # Get our data and merge with upstream
       - run: sudo apt-get update
@@ -36,7 +38,7 @@ jobs:
           destination: html
           
       - store_artifacts:
-          path: /tmp/artifacts
+          path: singularity-userdocs/artifacts
 
 # Tell CircleCI to use this workflow when it builds the site
 workflows:
