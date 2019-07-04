@@ -26,8 +26,7 @@ jobs:
       # Build the docs
       - run:
           name: Build docs to store
-          command: |
-            cd doc 
+          command: | 
             make html
       # Tell Circle to store the documentation output in a folder that we can access later
       - store_artifacts:
