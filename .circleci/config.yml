@@ -5,6 +5,9 @@ jobs:
     # This is the base environment that Circle will use
     docker:
       - image: circleci/python:3.6-stretch
+    
+    working_directory: /tmp
+    
     steps:
       # Get our data and merge with upstream
       - run: sudo apt-get update
