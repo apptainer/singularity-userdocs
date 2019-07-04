@@ -27,7 +27,7 @@ jobs:
       - run:
           name: Build docs to store
           command: | 
-            make html
+            make html SKIPCLI=1
       # Tell Circle to store the documentation output in a folder that we can access later
       - store_artifacts:
           path: doc/_build/html/
