@@ -1,7 +1,7 @@
 
 .. _appendix:
 
-Appendix
+Appendi
 ========
 
 
