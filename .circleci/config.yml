@@ -33,6 +33,9 @@ jobs:
       - store_artifacts:
           path: doc/_build/html/
           destination: html
+          
+      - store_artifacts:
+          path: /tmp/artifacts
 
 # Tell CircleCI to use this workflow when it builds the site
 workflows:
