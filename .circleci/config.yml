@@ -18,7 +18,7 @@ jobs:
       # Install the packages needed to build our documentation
       # This will depend on your particular package!
       - run: pip install --user Sphinx
-      - run: pip install sphinx_rtd_theme
+      - run: pip install --user sphinx_rtd_theme
       # Cache some files for a speedup in subsequent builds
       - save_cache:
           key: cache-pip
