@@ -27,11 +27,11 @@ jobs:
       - run:
           name: Build docs to store
           command: |
-            cd singularity-userdocs
+            cd doc
             make html
       # Tell Circle to store the documentation output in a folder that we can access later
       - store_artifacts:
-          path: singularity-userdocs/_build/html/
+          path: doc/_build/html/
           destination: html
 
 # Tell CircleCI to use this workflow when it builds the site
