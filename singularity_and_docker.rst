@@ -1237,15 +1237,15 @@ As the copy operation has clearly been *skipped*, it is evident that a copy of a
     └── cache
         └── oci
             ├── blobs
-            │   └── sha256
-            │       ├── 3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
-            │       ├── 73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
-            │       ├── 7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
-            │       ├── 8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
-            │       ├── 9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
-            │       ├── 9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
-            │       ├── d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
-            │       └── f2a852991b0a36a9f3d6b2a33b98a461e9ede8393482f0deb5287afcbae2ce10
+            │   └── sha256
+            │       ├── 3b61febd4aefe982e0cb9c696d415137384d1a01052b50a85aae46439e15e49a
+            │       ├── 73d5b1025fbfa138f2cacf45bbf3f61f7de891559fa25b28ab365c7d9c3cbd82
+            │       ├── 7fac07fb303e0589b9c23e6f49d5dc1ff9d6f3c8c88cabe768b430bdb47f03a9
+            │       ├── 8e860504ff1ee5dc7953672d128ce1e4aa4d8e3716eb39fe710b849c64b20945
+            │       ├── 9d99b9777eb02b8943c0e72d7a7baec5c782f8fd976825c9d3fb48b3101aacc2
+            │       ├── 9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
+            │       ├── d010c8cf75d7eb5d2504d5ffa0d19696e8d745a457dd8d28ec6dd41d3763617e
+            │       └── f2a852991b0a36a9f3d6b2a33b98a461e9ede8393482f0deb5287afcbae2ce10
             ├── index.json
             └── oci-layout
 
@@ -1456,7 +1456,7 @@ Even when all OCI blobs are already in Singularity's local cache, repeated image
 Building Containers for Singularity from OCI Images
 ===================================================
 
-.. _cli-oci-bootstrap-agent:
+.. _sec:cli_oci_bootstrap_agent:
 
 Working Locally from the Singularity Command Line: ``oci`` Boostrap Agent
 -------------------------------------------------------------------------
@@ -1512,7 +1512,7 @@ does not *uniquely* specify an image from which to bootstrap the ``build`` proce
     Executing the Singularity ``pull`` command multiple times on the same image produces multiple ``org.opencontainers.image.ref.name`` entries in the ``index.json`` file. Appending the value of the unique ``org.opencontainers.image.ref.name`` allows for use of the ``oci`` boostrap agent.
 
 
-.. _cli-oci-archive-bootstrap-agent:
+.. _sec:cli_oci_archive_bootstrap_agent:
 
 Working Locally from the Singularity Command Line: ``oci-archive`` Boostrap Agent
 ---------------------------------------------------------------------------------
