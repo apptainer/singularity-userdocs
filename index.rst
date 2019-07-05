@@ -24,6 +24,7 @@ User Guide
    Plugins <plugins>
    Security Options <security_options>
    Network Options <networking>
+   Fakeroot feature <fakeroot>
    Remote Endpoints <endpoint>
    Cgroups Support <cgroups>
    Appendix <appendix>
