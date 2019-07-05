@@ -1847,4 +1847,4 @@ In making use of Docker and OCI images through Singularity the need to troublesh
 
 Like :ref:`best practices <sec:best_practices>`, troubleshooting scenarios and solutions emerge from experience. Contributions that allow additional experiences to be shared  are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details. 
 
-.. TODO-ND SIFtool - does it have more to offer here??? 
+.. TODO-ND SIFtool - does it have more to offer here???
