@@ -79,7 +79,7 @@ this:
     Include: yum
 
 Each bootstrap agent enables its own options and keywords. You can read about
-them and see examples in the :ref:`appendix <buildmodules>`:
+them and see examples in the :ref:`appendix <appendix>`:
 
 
 Preferred bootstrap agents
@@ -91,8 +91,6 @@ Preferred bootstrap agents
 
 -  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
 
--  :ref:`scratch <scratch-agent>` (a flexible option for building a container from scratch)
-
 Other bootstrap agents
 ======================
 
@@ -101,14 +99,6 @@ Other bootstrap agents
 -  :ref:`yum <build-yum>` (yum based systems such as CentOS and Scientific Linux)
 
 -  :ref:`debootstrap <build-debootstrap>` (apt based systems such as Debian and Ubuntu)
-
--  :ref:`oci <cli-oci-bootstrap-agent>` (bundle compliant with OCI Image Specification)
-
--  :ref:`oci-archive <cli-oci-archive-bootstrap-agent>` (tar files obeying the OCI Image Layout Specification)
-
--  :ref:`docker-daemon <docker-daemon-archive>` (images managed by the locally running docker daemon)
-
--  :ref:`docker-archive <docker-daemon-archive>` (archived docker images)
 
 -  :ref:`arch <build-arch>` (Arch Linux)
 
@@ -127,9 +117,9 @@ build process. Note that if any command fails, the build process will halt.
 
 Here is an example definition file that uses every available section. We will
 discuss each section in turn. It is not necessary to include every section (or
-any sections at all) within a def file. Furthermore, multiple sections of the
-same name can be included and will be appended to one another during the build
-process.
+any sections at all) within a def file. Furthermore, the order of the sections
+in the def file is unimportant and multiple sections of the same name can be
+included and will be appended to one another during the build process.
 
 .. code-block:: singularity
 
@@ -178,23 +168,19 @@ process.
         This is a demo container used to illustrate a def file that uses all
         supported sections.
 
-Although, the order of the sections in the def file is unimportant, they have
-been documented below in the order of their execution during the build process
-for logical understanding.
-
 %setup
 ======
 
-During the build process, commands in the ``%setup`` section are first executed
-on the host system outside of the container after the base OS has been installed.
-You can reference the container file system with the ``$SINGULARITY_ROOTFS``
-environment variable in the ``%setup`` section.
+Commands in the ``%setup`` section are executed on the host system outside of
+the container after the base OS has been installed. You can reference the
+container file system with the ``$SINGULARITY_ROOTFS`` environment variable in
+the ``%setup`` section.
 
 .. note::
 
     Be careful with the ``%setup`` section! This scriptlet is executed outside
     of the container on the host system itself, and is executed with elevated
-    privileges. Commands in ``%setup`` can alter and potentially damage the
+    priviledges. Commands in ``%setup`` can alter and potentially damage the
     host.
 
 Consider the example from the definition file above:
@@ -250,86 +236,6 @@ previous stage and the destination in the current container.
 Files in the ``%files`` section are copied before the ``%post`` section is
 executed so that they are available during the build and configuration process.
 
-%app*
-=====
-
-In some circumstances, it may be redundant to build different containers for
-each app with nearly equivalent dependencies. Singularity supports installing
-apps within internal modules based on the concept of `Standard Container
-Integration Format (SCI-F) <https://sci-f.github.io/>`_
-All the apps are handled by Singularity at this point. More information on
-Apps :ref:`here <apps>`.
-
-%post
-=====
-
-This is where you will download files from the internet with tools like ``git``
-and ``wget``, install new software and libraries, write configuration files,
-create new directories, etc.
-
-Consider the example from the definition file above:
-
-.. code-block:: singularity
-
-    %post
-        apt-get update && apt-get install -y netcat
-        NOW=`date`
-        echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
-
-
-This ``%post`` scriptlet uses the Ubuntu package manager ``apt`` to update the
-container and install the program ``netcat`` (that will be used in the
-``%startscript`` section below).
-
-The script is also setting an environment variable at build time.  Note that the
-value of this variable cannot be anticipated, and therefore cannot be set during
-the ``%environment`` section. For situations like this, the ``$SINGULARITY_ENVIRONMENT``
-variable is provided. Redirecting text to this variable will cause it to be
-written to a file called ``/.singularity.d/env/91-environment.sh`` that will be
-sourced at runtime.
-
-%test
-=====
-
-The ``%test`` section runs at the very end of the build process to validate the
-container using a method of your choice. You can also execute this scriptlet
-through the container itself, using the ``test`` command.
-
-Consider the example from the def file above:
-
-.. code-block:: singularity
-
-    %test
-        grep -q NAME=\"Ubuntu\" /etc/os-release
-        if [ $? -eq 0 ]; then
-            echo "Container base is Ubuntu as expected."
-        else
-            echo "Container base is not Ubuntu."
-        fi
-
-
-This (somewhat silly) script tests if the base OS is Ubuntu. You could also
-write a script to test that binaries were appropriately downloaded and built, or
-that software works as expected on custom hardware. If you want to build a
-container without running the ``%test`` section (for example, if the build
-system does not have the same hardware that will be used on the production
-system), you can do so with the ``--notest`` build option:
-
-.. code-block:: none
-
-    $ sudo singularity build --notest my_container.sif my_container.def
-
-Running the test command on a container built with this def file yields the
-following:
-
-.. code-block:: none
-
-    $ singularity test my_container.sif
-    Container base is Ubuntu as expected.
-
-
-Now, the following sections are all inserted into the container filesystem in
-single step:
 
 %environment
 ============
@@ -368,12 +274,12 @@ set appropriately at runtime with the following command:
     LC_ALL=C
 
 In the special case of variables generated at build time, you can also add
-environment variables to your container in the ``%post`` section.
+environment variables to your container in the ``%post`` section (see below).
 
 At build time, the content of the ``%environment`` section is written to a file
 called ``/.singularity.d/env/90-environment.sh`` inside of the container.  Text
-redirected to the ``$SINGULARITY_ENVIRONMENT`` variable during ``%post`` is
-added to a file called ``/.singularity.d/env/91-environment.sh``.
+redirected to the ``$SINGULARITY_ENVIRONMENT`` variable during ``%post`` (see
+below) is added to a file called ``/.singularity.d/env/91-environment.sh``.
 
 At runtime, scripts in ``/.singularity/env`` are sourced in order. This means
 that variables in the ``%post`` section take precedence over those added  via
@@ -382,6 +288,36 @@ that variables in the ``%post`` section take precedence over those added  via
 See :ref:`Environment and Metadata <environment-and-metadata>` for more
 information about the Singularity container environment.
 
+%post
+=====
+
+Commands in the ``%post`` section are executed within the container after the
+base OS has been installed at build time. This is where you will download files
+from the internet with tools like ``git`` and ``wget``, install new software and
+libraries, write configuration files, create new directories, etc.
+
+Consider the example from the definition file above:
+
+.. code-block:: singularity
+
+    %post
+        apt-get update && apt-get install -y netcat
+        NOW=`date`
+        echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+
+
+This ``%post`` scriptlet uses the Ubuntu package manager ``apt`` to update the
+container and install the program ``netcat`` (that will be used in the
+``%startscript`` section below).
+
+The script is also setting an environment variable at build time.  Note that the
+value of this variable cannot be anticipated, and therefore cannot be set during
+the ``%environment`` section. For situations like this, the
+``$SINGULARITY_ENVIRONMENT`` variable is provided. Redirecting text to this
+variable will cause it to be written to a file called
+``/.singularity.d/env/91-environment.sh`` that will be sourced at runtime.  Note
+that variables set in ``%post`` take precedence over those set in the
+``%environment`` section as explained above.
 
 .. _runscript:
 
@@ -459,6 +395,46 @@ The script can be invoked like so:
     $ singularity instance stop instance1
     Stopping instance1 instance of /home/vagrant/my_container.sif (PID=19035)
 
+%test
+=====
+
+The ``%test`` section runs at the very end of the build process to validate the
+container using a method of your choice. You can also execute this scriptlet
+through the container itself, using the ``test`` command.
+
+Consider the example from the def file above:
+
+.. code-block:: singularity
+
+    %test
+        grep -q NAME=\"Ubuntu\" /etc/os-release
+        if [ $? -eq 0 ]; then
+            echo "Container base is Ubuntu as expected."
+        else
+            echo "Container base is not Ubuntu."
+        fi
+
+
+This (somewhat silly) script tests if the base OS is Ubuntu. You could also
+write a script to test that binaries were appropriately downloaded and built, or
+that software works as expected on custom hardware. If you want to build a
+container without running the ``%test`` section (for example, if the build
+system does not have the same hardware that will be used on the production
+system), you can do so with the ``--notest`` build option:
+
+.. code-block:: none
+
+    $ sudo singularity build --notest my_container.sif my_container.def
+
+Running the test command on a container built with this def file yields the
+following:
+
+.. code-block:: none
+
+    $ singularity test my_container.sif
+    Container base is Ubuntu as expected.
+
+
 %labels
 =======
 
@@ -522,16 +498,13 @@ After building the help can be displayed like so:
 Multi-Stage Builds
 ------------------
 
-Singularity 3.2 introduces multi-stage builds where one environment can be used
-for compilation, then the resulting binary can be copied into a final
-environment. This allows a slimmer final image that does not require the entire
-development stack.
+Singularity 3.2 introduces multi-stage builds where one environment can be used for compilation, then the resulting binary can be copied into a final environment.  This allows a slimmer final image that does not require the entire development stack.
 
 .. code-block:: singularity
 
     Bootstrap: docker
     From: golang:1.12.3-alpine3.9
-    Stage: devel
+    Stage: build
 
     %post
       # prep environment
@@ -552,6 +525,7 @@ development stack.
       go build -o hello hello.go
 
 
+
     # Install binary into final image
     Bootstrap: library
     From: alpine:3.9
@@ -561,22 +535,16 @@ development stack.
     %files from build
       /root/hello /bin/hello
 
-The names of stages are arbitrary. Each of these sections will be executed in
-the same order as described for single stage build except the files from the
-previous stage are copied before ``%setup`` section of the next stage. Files
-can only be copied from stages declared before the current stage in the definition.
-E.g., the ``devel`` stage in the above definition cannot copy files from the
-``final`` stage, but the ``final`` stage can copy files from the ``devel`` stage.
-
-.. _apps:
+The names of stages are arbitrary. Files can only be copied from stages declared before the current stage in the definition. E.g., the ``devel`` stage in the above definition cannot copy files from the ``final`` stage, but the ``final`` stage can copy files from the ``devel`` stage.
 
 ----
 Apps
 ----
 
-The ``%app*`` sections can exist alongside any of the primary sections (i.e.
-``%post``, ``%runscript``, ``%environment``, etc.).  As with the other sections,
-the ordering of the ``%app*`` sections isn’t important.
+In some circumstances, it may be redundant to build different containers for
+each app with nearly equivalent dependencies. Singularity supports installing
+apps within internal modules based on the concept of `Standard Container
+Integration Format (SCI-F) <https://sci-f.github.io/>`_
 
 The following runscript demonstrates how to build 2 different apps into the
 same container using SCI-F modules:
@@ -634,6 +602,10 @@ An ``%appinstall`` section is the equivalent of ``%post`` but for a particular
 app. Similarly, ``%appenv`` equates to the app version of ``%environment`` and
 so on.
 
+The ``%app*`` sections can exist alongside any of the primary sections (i.e.
+``%post``, ``%runscript``, ``%environment``, etc.).  As with the other sections,
+the ordering of the ``%app*`` sections isn’t important.
+
 After installing apps into modules using the ``%app*`` sections, the ``--app``
 option becomes available allowing the following functions:
 
@@ -682,4 +654,3 @@ When crafting your recipe, it is best to consider the following:
 #. Build production containers from a definition file  instead of a sandbox that
    has been manually changed. This ensures greatest possibility of
    reproducibility and mitigates the "black box" effect.
-
