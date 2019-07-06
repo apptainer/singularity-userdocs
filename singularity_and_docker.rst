@@ -1858,40 +1858,64 @@ Singularity Definition file vs. Dockerfile
 On the following table, you can see which are the similarities/differences between a Dockerfile and a Singularity definition file:
 
 
-================ ================================== ========== =======================================================================
-Singularity Definition file                                            Dockerfile
---------------------------------------------------- ----------------------------------------------------------------------------------
-Section           Description                       Section    Description
-================ ================================== ========== =======================================================================
+================ ==================================== ================ =======================================================================
+Singularity Definition file                           Dockerfile
+----------------------------------------------------- ----------------------------------------------------------------------------------------
+Section           Description                         Section          Description
+================ ==================================== ================ =======================================================================
 ``Bootstrap``    | Defines from which library
                  | to build your container
-                 | from.                               \-       | Not supported
+                 | from.                                \-            | Can only bootstrap from Docker Hub.
                  | You are free to choose between
                  | ``library``(Our cloud library)
-                 | ,``docker`` and ``shub``.
+                 | ,``docker``, ``shub`` and
+                 | ``oras``.
 
-``From:``        | To specify the provider from      ``FROM``  | Creates a layer from the described docker image.
-                 | which to build the container.               | For example, if you got a Dockerfile with the ``FROM`` section
-                                                               | set like: ``FROM:ubuntu:18.04``, this means that a layer
-                                                               | will be created from the ``ubuntu:18.04`` **Docker** image.
-                                                               | (You cannot choose any other bootstrap provider)
-``%files``       | To copy files from your local     ``COPY``  | To copy files from your Docker's client current directory.
+``From:``        | To specify the provider from       ``FROM``        | Creates a layer from the described docker image.
+                 | which to build the container.                     | For example, if you got a Dockerfile with the ``FROM`` section
+                                                                     | set like: ``FROM:ubuntu:18.04``, this means that a layer
+                                                                     | will be created from the ``ubuntu:18.04`` **Docker** image.
+                                                                     | (You cannot choose any other bootstrap provider)
+
+``%setup``       | Commands that run outside the
+                 | container (in the host system)
+                 | after the base OS has been
+                 | installed.
+
+``%files``       | To copy files from your local      ``COPY``        | To copy files from your Docker's client current directory.
                  | to the host.
 
-``%environment`` | To declare and set your           ``ENV``   | ``ENV`` will take the name of the variable and the value and set it.
+``%environment`` | To declare and set your            ``ENV``         | ``ENV`` will take the name of the variable and the value and set it.
                  | environment variables.
 
-``%help``        | To provide a help section            \-      | Not supported on the Dockerfile
+``%help``        | To provide a help section            \-           | Not supported on the Dockerfile.
                  | to your container image.
 
-``%post``        | Commands that will be run at      ``RUN``   | Commands to build your application image with ``make``
+``%post``        | Commands that will be run at       ``RUN``         | Commands to build your application image with ``make``
                  | build-time.
 
-``%runscript```  | Commands that will be run at      ``CMD``   | Commands that run within the Docker container.
+``%runscript```  | Commands that will be run at       ``CMD``         | Commands that run within the Docker container.
                  | running your container image.
 
-``%startscript`` | Commands that will be run when       \-      | Not supported
+``%startscript`` | Commands that will be run when       \-           | Not supported.
                  | an instance is started. This is
                  | useful for container images
                  | using services.
-================ ================================== ========== =======================================================================
+
+``%test``        | Commands that run at the           ``HEALTHCHECK`` | Commands that verify the health status of the container.
+                 | very end of the build process
+                 | to validate the container using
+                 | a method of your choice.
+                 | (to verify distribution or software
+                 | versions installed inside the
+                 | container)
+
+``%apps``        | Allows you to install internal       \-           | Not supported.
+                 | modules based on the concept of
+                 | `SCIF-apps
+                 | <https://sci-f.github.io/>`_
+
+``%labels``      | Section to add and define metadata  ``LABEL``     | Section to declare metadata as a key-value pair.
+                 | within your container.
+
+================ ==================================== ================ =======================================================================
