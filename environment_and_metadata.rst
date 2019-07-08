@@ -48,7 +48,7 @@ You can also add labels to your container using the ``%labels`` section like so:
         From: default/alpine
 
         %labels
-            OWNER Joana
+            OWNER = Joana
 
 To view the labels within your container you use the ``inspect`` command:
 
