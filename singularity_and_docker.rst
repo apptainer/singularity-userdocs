@@ -1858,64 +1858,89 @@ Singularity Definition file vs. Dockerfile
 On the following table, you can see which are the similarities/differences between a Dockerfile and a Singularity definition file:
 
 
-================ ==================================== ================ =======================================================================
-Singularity Definition file                           Dockerfile
------------------------------------------------------ ----------------------------------------------------------------------------------------
-Section           Description                         Section          Description
-================ ==================================== ================ =======================================================================
-``Bootstrap``    | Defines from which library
-                 | to build your container
-                 | from.                                \-            | Can only bootstrap from Docker Hub.
-                 | You are free to choose between
-                 | ``library``(Our cloud library)
-                 | ,``docker``, ``shub`` and
-                 | ``oras``.
+================ ========================== ================ =============================
+Singularity Definition file                 Dockerfile
+------------------------------------------- ----------------------------------------------
+Section          Description                Section          Description
+================ ========================== ================ =============================
+``Bootstrap``    | Defines from which
+                 | library to build
+                 | your container from.      \-              | Can only bootstrap
+                 | You are free to choose                    | from Docker Hub.
+                 | between ``library``
+                 | (Our cloud library)
+                 | , ``docker`` , ``shub``
+                 | and ``oras``.
 
-``From:``        | To specify the provider from       ``FROM``        | Creates a layer from the described docker image.
-                 | which to build the container.                     | For example, if you got a Dockerfile with the ``FROM`` section
-                                                                     | set like: ``FROM:ubuntu:18.04``, this means that a layer
-                                                                     | will be created from the ``ubuntu:18.04`` **Docker** image.
-                                                                     | (You cannot choose any other bootstrap provider)
+``From:``        | To specify the provider   ``FROM``        | Creates a layer from
+                 | from which to build the                   | the described docker image.
+                 | container.                                | For example, if you got a
+                                                             | Dockerfile with the ``FROM``
+                                                             | section set like:
+                                                             | ``FROM:ubuntu:18.04``,
+                                                             | this means that a layer
+                                                             | will be created from the
+                                                             | ``ubuntu:18.04``
+                                                             | **Docker** image.
+                                                             | (You cannot choose any
+                                                             | other bootstrap provider)
 
-``%setup``       | Commands that run outside the
-                 | container (in the host system)
-                 | after the base OS has been
-                 | installed.
+``%setup``       | Commands that run        \-               | Not supported.
+                 | outside the
+                 | container (in the host
+                 | system) after the base
+                 | OS has been installed.
 
-``%files``       | To copy files from your local      ``COPY``        | To copy files from your Docker's client current directory.
-                 | to the host.
+``%files``       | To copy files from
+                 | your local               ``COPY``         | To copy files from your
+                 | to the host.                              | Docker's client current
+                                                             | directory.
 
-``%environment`` | To declare and set your            ``ENV``         | ``ENV`` will take the name of the variable and the value and set it.
-                 | environment variables.
+``%environment`` | To declare and set       ``ENV``          | ``ENV`` will take the name
+                 | your environment                          |  of the variable and the
+                 | variables.                                | value and set it.
 
-``%help``        | To provide a help section            \-           | Not supported on the Dockerfile.
-                 | to your container image.
+``%help``        | To provide a help
+                 | section to your          \-               | Not supported on the
+                 | container image.                          | Dockerfile.
 
-``%post``        | Commands that will be run at       ``RUN``         | Commands to build your application image with ``make``
-                 | build-time.
+``%post``        | Commands that will
+                 | be run at                ``RUN``          | Commands to build your
+                 | build-time.                               | application image
+                                                             | with ``make``
 
-``%runscript```  | Commands that will be run at       ``CMD``         | Commands that run within the Docker container.
-                 | running your container image.
+``%runscript```  | Commands that will
+                 | be run at                ``CMD``          | Commands that run
+                 | running your                              | within the Docker
+                 | container image.                          | container.
 
-``%startscript`` | Commands that will be run when       \-           | Not supported.
-                 | an instance is started. This is
-                 | useful for container images
+``%startscript`` | Commands that will
+                 | be run when                \-             | Not supported.
+                 | an instance is started.
+                 | This is useful for
+                 | container images
                  | using services.
 
-``%test``        | Commands that run at the           ``HEALTHCHECK`` | Commands that verify the health status of the container.
-                 | very end of the build process
-                 | to validate the container using
-                 | a method of your choice.
-                 | (to verify distribution or software
-                 | versions installed inside the
-                 | container)
+``%test``        | Commands that run
+                 | at the very end          ``HEALTHCHECK``  | Commands that verify
+                 | of the build process                      | the health status of
+                 | to validate the                           | the container.
+                 | container using
+                 | a method of your
+                 | choice. (to verify
+                 | distribution or
+                 | software versions
+                 | installed inside
+                 | the container)
 
-``%apps``        | Allows you to install internal       \-           | Not supported.
-                 | modules based on the concept of
-                 | `SCIF-apps
-                 | <https://sci-f.github.io/>`_
+``%apps``        | Allows you to install
+                 | internal modules           \-             | Not supported.
+                 | based on the concept
+                 | of SCIF-apps.
 
-``%labels``      | Section to add and define metadata  ``LABEL``     | Section to declare metadata as a key-value pair.
-                 | within your container.
+``%labels``      | Section to add and
+                 | define metadata          ``LABEL``        | Section to declare
+                 | within your container.                    | metadata as a
+                                                             | key-value pair.
 
-================ ==================================== ================ =======================================================================
+================ ========================== ================ =============================
