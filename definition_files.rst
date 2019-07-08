@@ -450,8 +450,8 @@ Consider the example from the def file above:
         Author d@sylabs.io
         Version v0.0.1
 
-Note that labels are defined by a key-value pair, and delimited by a space character.
-On the previous example, the name of the variable label is ``Author``` with a
+Note that labels are defined by a key-value pair and are delimited by a space character.
+On the previous example, the first variable label name is ``Author``` with a
 value of ``d@sylabs.io``.
 
 The easiest way to see labels is to inspect the image:
