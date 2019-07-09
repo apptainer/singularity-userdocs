@@ -79,7 +79,7 @@ this:
     Include: yum
 
 Each bootstrap agent enables its own options and keywords. You can read about
-them and see examples in the :ref:`appendix <appendix>`:
+them and see examples in the :ref:`appendix section<buildmodules>`:
 
 
 Preferred bootstrap agents
@@ -91,6 +91,10 @@ Preferred bootstrap agents
 
 -  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
 
+-  :ref:`oras <build-oras>` (images from supporting OCI registries)
+
+-  :ref:`scratch <scratch-agent>` (a flexible option for building a container from scratch)
+
 Other bootstrap agents
 ======================
 
@@ -99,6 +103,14 @@ Other bootstrap agents
 -  :ref:`yum <build-yum>` (yum based systems such as CentOS and Scientific Linux)
 
 -  :ref:`debootstrap <build-debootstrap>` (apt based systems such as Debian and Ubuntu)
+
+-  :ref:`oci <cli-oci-bootstrap-agent>` (bundle compliant with OCI Image Specification)
+
+-  :ref:`oci-archive <cli-oci-archive-bootstrap-agent>` (tar files obeying the OCI Image Layout Specification)
+
+-  :ref:`docker-daemon <docker-daemon-archive>` (images managed by the locally running docker daemon)
+
+-  :ref:`docker-archive <docker-daemon-archive>` (archived docker images)
 
 -  :ref:`arch <build-arch>` (Arch Linux)
 
@@ -117,9 +129,9 @@ build process. Note that if any command fails, the build process will halt.
 
 Here is an example definition file that uses every available section. We will
 discuss each section in turn. It is not necessary to include every section (or
-any sections at all) within a def file. Furthermore, the order of the sections
-in the def file is unimportant and multiple sections of the same name can be
-included and will be appended to one another during the build process.
+any sections at all) within a def file. Furthermore, multiple sections of the
+same name can be included and will be appended to one another during the build
+process.
 
 .. code-block:: singularity
 
@@ -168,19 +180,23 @@ included and will be appended to one another during the build process.
         This is a demo container used to illustrate a def file that uses all
         supported sections.
 
+Although, the order of the sections in the def file is unimportant, they have
+been documented below in the order of their execution during the build process
+for logical understanding.
+
 %setup
 ======
 
-Commands in the ``%setup`` section are executed on the host system outside of
-the container after the base OS has been installed. You can reference the
-container file system with the ``$SINGULARITY_ROOTFS`` environment variable in
-the ``%setup`` section.
+During the build process, commands in the ``%setup`` section are first executed
+on the host system outside of the container after the base OS has been installed.
+You can reference the container file system with the ``$SINGULARITY_ROOTFS``
+environment variable in the ``%setup`` section.
 
 .. note::
 
     Be careful with the ``%setup`` section! This scriptlet is executed outside
     of the container on the host system itself, and is executed with elevated
-    priviledges. Commands in ``%setup`` can alter and potentially damage the
+    privileges. Commands in ``%setup`` can alter and potentially damage the
     host.
 
 Consider the example from the definition file above:
@@ -236,65 +252,22 @@ previous stage and the destination in the current container.
 Files in the ``%files`` section are copied before the ``%post`` section is
 executed so that they are available during the build and configuration process.
 
+%app*
+=====
 
-%environment
-============
-
-The ``%environment`` section allows you to define environment variables that
-will be set at runtime. Note that these variables are not made available at
-build time by their inclusion in the ``%environment`` section. This means that
-if you need the same variables during the build process, you should also define
-them in your ``%post`` section. Specifically:
-
--  **during build**: The ``%environment`` section is written to a file in the
-   container metadata directory. This file is not sourced.
-
--  **during runtime**: The file in the container metadata directory is sourced.
-
-You should use the same conventions that you would use in a ``.bashrc`` or
-``.profile`` file. Consider this example from the def file above:
-
-.. code-block:: singularity
-
-    %environment
-        export LISTEN_PORT=12345
-        export LC_ALL=C
-
-The ``$LISTEN_PORT`` variable will be used in the ``%startscript`` section
-below. The ``$LC_ALL`` variable is useful for many programs (often written in
-Perl) that complain when no locale is set.
-
-After building this container, you can verify that the environment variables are
-set appropriately at runtime with the following command:
-
-.. code-block:: none
-
-    $ singularity exec my_container.sif env | grep -E 'LISTEN_PORT|LC_ALL'
-    LISTEN_PORT=12345
-    LC_ALL=C
-
-In the special case of variables generated at build time, you can also add
-environment variables to your container in the ``%post`` section (see below).
-
-At build time, the content of the ``%environment`` section is written to a file
-called ``/.singularity.d/env/90-environment.sh`` inside of the container.  Text
-redirected to the ``$SINGULARITY_ENVIRONMENT`` variable during ``%post`` (see
-below) is added to a file called ``/.singularity.d/env/91-environment.sh``.
-
-At runtime, scripts in ``/.singularity/env`` are sourced in order. This means
-that variables in the ``%post`` section take precedence over those added  via
-``%environment``.
-
-See :ref:`Environment and Metadata <environment-and-metadata>` for more
-information about the Singularity container environment.
+In some circumstances, it may be redundant to build different containers for
+each app with nearly equivalent dependencies. Singularity supports installing
+apps within internal modules based on the concept of `Standard Container
+Integration Format (SCI-F) <https://sci-f.github.io/>`_
+All the apps are handled by Singularity at this point. More information on
+Apps :ref:`here <apps>`.
 
 %post
 =====
 
-Commands in the ``%post`` section are executed within the container after the
-base OS has been installed at build time. This is where you will download files
-from the internet with tools like ``git`` and ``wget``, install new software and
-libraries, write configuration files, create new directories, etc.
+This section is where you can download files from the internet with tools like ``git``
+and ``wget``, install new software and libraries, write configuration files,
+create new directories, etc.
 
 Consider the example from the definition file above:
 
@@ -312,88 +285,10 @@ container and install the program ``netcat`` (that will be used in the
 
 The script is also setting an environment variable at build time.  Note that the
 value of this variable cannot be anticipated, and therefore cannot be set during
-the ``%environment`` section. For situations like this, the
-``$SINGULARITY_ENVIRONMENT`` variable is provided. Redirecting text to this
-variable will cause it to be written to a file called
-``/.singularity.d/env/91-environment.sh`` that will be sourced at runtime.  Note
-that variables set in ``%post`` take precedence over those set in the
-``%environment`` section as explained above.
-
-.. _runscript:
-
-%runscript
-==========
-
-.. _sec:runscript:
-
-The contents of the ``%runscript`` section are written to a file within the
-container that is executed when the container image is run (either via the
-``singularity run`` command or by executing the container directly as a
-command). When the container is invoked, arguments following the container name
-are passed to the runscript. This means that you can (and should) process
-arguments within your runscript.
-
-Consider the example from the def file above:
-
-.. code-block:: singularity
-
-    %runscript
-        echo "Container was created $NOW"
-        echo "Arguments received: $*"
-        exec echo "$@"
-
-In this runscript, the time that the container was created is echoed via the
-``$NOW`` variable (set in the ``%post`` section above). The options passed to
-the container at runtime are printed as a single string (``$*``) and then they
-are passed to echo via a quoted array (``$@``) which ensures that all of the
-arguments are properly parsed by the executed command. The ``exec`` preceding
-the final ``echo`` command replaces the current entry in the process table
-(which originally was the call to Singularity). Thus the runscript shell process
-ceases to exist, and only the process running within the container remains.
-
-Running the container built using this def file will yield the following:
-
-.. code-block:: none
-
-    $ ./my_container.sif
-    Container was created Thu Dec  6 20:01:56 UTC 2018
-    Arguments received:
-
-    $ ./my_container.sif this that and the other
-    Container was created Thu Dec  6 20:01:56 UTC 2018
-    Arguments received: this that and the other
-    this that and the other
-
-.. _sec:help:
-
-%startscript
-============
-
-Similar to the ``%runscript`` section, the contents of the ``%startscript``
-section are written to a file within the container at build time.  This file is
-executed when the ``instance start`` command is issued.
-
-Consider the example from the def file above.
-
-.. code-block:: singularity
-
-    %startscript
-        nc -lp $LISTEN_PORT
-
-Here the netcat program is used to listen for TCP traffic on the port indicated
-by the ``$LISTEN_PORT`` variable (set in the ``%environment`` section above).
-The script can be invoked like so:
-
-.. code-block:: none
-
-    $ singularity instance start my_container.sif instance1
-    INFO:    instance started successfully
-
-    $ lsof | grep LISTEN
-    nc        19061               vagrant    3u     IPv4             107409      0t0        TCP *:12345 (LISTEN)
-
-    $ singularity instance stop instance1
-    Stopping instance1 instance of /home/vagrant/my_container.sif (PID=19035)
+the ``%environment`` section. For situations like this, the ``$SINGULARITY_ENVIRONMENT``
+variable is provided. Redirecting text to this variable will cause it to be
+written to a file called ``/.singularity.d/env/91-environment.sh`` that will be
+sourced at runtime.
 
 %test
 =====
@@ -433,6 +328,136 @@ following:
 
     $ singularity test my_container.sif
     Container base is Ubuntu as expected.
+
+
+Now, the following sections are all inserted into the container filesystem in
+single step:
+
+%environment
+============
+
+The ``%environment`` section allows you to define environment variables that
+will be set at runtime. Note that these variables are not made available at
+build time by their inclusion in the ``%environment`` section. This means that
+if you need the same variables during the build process, you should also define
+them in your ``%post`` section. Specifically:
+
+-  **during build**: The ``%environment`` section is written to a file in the
+   container metadata directory. This file is not sourced.
+
+-  **during runtime**: The file in the container metadata directory is sourced.
+
+You should use the same conventions that you would use in a ``.bashrc`` or
+``.profile`` file. Consider this example from the def file above:
+
+.. code-block:: singularity
+
+    %environment
+        export LISTEN_PORT=12345
+        export LC_ALL=C
+
+The ``$LISTEN_PORT`` variable will be used in the ``%startscript`` section
+below. The ``$LC_ALL`` variable is useful for many programs (often written in
+Perl) that complain when no locale is set.
+
+After building this container, you can verify that the environment variables are
+set appropriately at runtime with the following command:
+
+.. code-block:: none
+
+    $ singularity exec my_container.sif env | grep -E 'LISTEN_PORT|LC_ALL'
+    LISTEN_PORT=12345
+    LC_ALL=C
+
+In the special case of variables generated at build time, you can also add
+environment variables to your container in the ``%post`` section.
+
+At build time, the content of the ``%environment`` section is written to a file
+called ``/.singularity.d/env/90-environment.sh`` inside of the container.  Text
+redirected to the ``$SINGULARITY_ENVIRONMENT`` variable during ``%post`` is
+added to a file called ``/.singularity.d/env/91-environment.sh``.
+
+At runtime, scripts in ``/.singularity/env`` are sourced in order. This means
+that variables in the ``%post`` section take precedence over those added  via
+``%environment``.
+
+See :ref:`Environment and Metadata <environment-and-metadata>` for more
+information about the Singularity container environment.
+
+.. _startscript:
+
+%startscript
+============
+
+Similar to the ``%runscript`` section, the contents of the ``%startscript``
+section are written to a file within the container at build time.  This file is
+executed when the ``instance start`` command is issued.
+
+Consider the example from the def file above.
+
+.. code-block:: singularity
+
+    %startscript
+        nc -lp $LISTEN_PORT
+
+Here the netcat program is used to listen for TCP traffic on the port indicated
+by the ``$LISTEN_PORT`` variable (set in the ``%environment`` section above).
+The script can be invoked like so:
+
+.. code-block:: none
+
+    $ singularity instance start my_container.sif instance1
+    INFO:    instance started successfully
+
+    $ lsof | grep LISTEN
+    nc        19061               vagrant    3u     IPv4             107409      0t0        TCP *:12345 (LISTEN)
+
+    $ singularity instance stop instance1
+    Stopping instance1 instance of /home/vagrant/my_container.sif (PID=19035)
+
+
+.. _runscript:
+
+%runscript
+==========
+
+The contents of the ``%runscript`` section are written to a file within the
+container that is executed when the container image is run (either via the
+``singularity run`` command or by executing the container directly as a
+command). When the container is invoked, arguments following the container name
+are passed to the runscript. This means that you can (and should) process
+arguments within your runscript.
+
+Consider the example from the def file above:
+
+.. code-block:: singularity
+
+    %runscript
+        echo "Container was created $NOW"
+        echo "Arguments received: $*"
+        exec echo "$@"
+
+In this runscript, the time that the container was created is echoed via the
+``$NOW`` variable (set in the ``%post`` section above). The options passed to
+the container at runtime are printed as a single string (``$*``) and then they
+are passed to echo via a quoted array (``$@``) which ensures that all of the
+arguments are properly parsed by the executed command. The ``exec`` preceding
+the final ``echo`` command replaces the current entry in the process table
+(which originally was the call to Singularity). Thus the runscript shell process
+ceases to exist, and only the process running within the container remains.
+
+Running the container built using this def file will yield the following:
+
+.. code-block:: none
+
+    $ ./my_container.sif
+    Container was created Thu Dec  6 20:01:56 UTC 2018
+    Arguments received:
+
+    $ ./my_container.sif this that and the other
+    Container was created Thu Dec  6 20:01:56 UTC 2018
+    Arguments received: this that and the other
+    this that and the other
 
 
 %labels
@@ -498,13 +523,16 @@ After building the help can be displayed like so:
 Multi-Stage Builds
 ------------------
 
-Singularity 3.2 introduces multi-stage builds where one environment can be used for compilation, then the resulting binary can be copied into a final environment.  This allows a slimmer final image that does not require the entire development stack.
+Starting with Singularity v3.2 multi-stage builds are supported where one environment 
+can be used for compilation, then the resulting binary can be copied into a final
+environment. This allows a slimmer final image that does not require the entire
+development stack.
 
 .. code-block:: singularity
 
     Bootstrap: docker
     From: golang:1.12.3-alpine3.9
-    Stage: build
+    Stage: devel
 
     %post
       # prep environment
@@ -525,7 +553,6 @@ Singularity 3.2 introduces multi-stage builds where one environment can be used 
       go build -o hello hello.go
 
 
-
     # Install binary into final image
     Bootstrap: library
     From: alpine:3.9
@@ -535,16 +562,22 @@ Singularity 3.2 introduces multi-stage builds where one environment can be used 
     %files from build
       /root/hello /bin/hello
 
-The names of stages are arbitrary. Files can only be copied from stages declared before the current stage in the definition. E.g., the ``devel`` stage in the above definition cannot copy files from the ``final`` stage, but the ``final`` stage can copy files from the ``devel`` stage.
+The names of stages are arbitrary. Each of these sections will be executed in
+the same order as described for single stage build except the files from the
+previous stage are copied before ``%setup`` section of the next stage. Files
+can only be copied from stages declared before the current stage in the definition.
+E.g., the ``devel`` stage in the above definition cannot copy files from the
+``final`` stage, but the ``final`` stage can copy files from the ``devel`` stage.
+
+.. _apps:
 
 ----
 Apps
 ----
 
-In some circumstances, it may be redundant to build different containers for
-each app with nearly equivalent dependencies. Singularity supports installing
-apps within internal modules based on the concept of `Standard Container
-Integration Format (SCI-F) <https://sci-f.github.io/>`_
+The ``%app*`` sections can exist alongside any of the primary sections (i.e.
+``%post``, ``%runscript``, ``%environment``, etc.).  As with the other sections,
+the ordering of the ``%app*`` sections isn’t important.
 
 The following runscript demonstrates how to build 2 different apps into the
 same container using SCI-F modules:
@@ -602,10 +635,6 @@ An ``%appinstall`` section is the equivalent of ``%post`` but for a particular
 app. Similarly, ``%appenv`` equates to the app version of ``%environment`` and
 so on.
 
-The ``%app*`` sections can exist alongside any of the primary sections (i.e.
-``%post``, ``%runscript``, ``%environment``, etc.).  As with the other sections,
-the ordering of the ``%app*`` sections isn’t important.
-
 After installing apps into modules using the ``%app*`` sections, the ``--app``
 option becomes available allowing the following functions:
 
@@ -654,3 +683,4 @@ When crafting your recipe, it is best to consider the following:
 #. Build production containers from a definition file  instead of a sandbox that
    has been manually changed. This ensures greatest possibility of
    reproducibility and mitigates the "black box" effect.
+
