@@ -450,11 +450,20 @@ Consider the example from the def file above:
         Author d@sylabs.io
         Version v0.0.1
 
-Note that labels are defined by a key-value pair and are delimited by a space character.
-On the previous example, the first variable label name is ``Author``` with a
+Note that labels are defined by a key-value pairs and are delimited by the first space character.
+On the previous example, the first label name is ``Author``` with a
 value of ``d@sylabs.io``.
 
-The easiest way to see labels is to inspect the image:
+Consider the following example:
+
+.. code-block:: singularity
+
+    %labels
+        MyLabel Hello World
+
+In this second example, the label named ``MyLabel`` has the value of ``Hello World``.
+
+To inspect the available labels on your image you can do so by running the following command:
 
 .. code-block:: none
 
