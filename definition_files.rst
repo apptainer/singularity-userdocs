@@ -449,12 +449,17 @@ Consider the example from the def file above:
     %labels
         Author d@sylabs.io
         Version v0.0.1
+        MyLabel Hello World
 
-Note that labels are defined by a key-value pair and are delimited by a space character.
-On the previous example, the first variable label name is ``Author``` with a
-value of ``d@sylabs.io``.
 
-The easiest way to see labels is to inspect the image:
+Note that labels are defined by key-value pairs. To define a label just add it
+on the labels section and after the first space character add the correspondent value to the label.
+
+On the previous example, the first label name is ``Author``` with a
+value of ``d@sylabs.io``. The second label name is ``Version`` with a value of ``v0.0.1``.
+Finally, the last label named ``MyLabel`` has the value of ``Hello World``.
+
+To inspect the available labels on your image you can do so by running the following command:
 
 .. code-block:: none
 
@@ -463,6 +468,7 @@ The easiest way to see labels is to inspect the image:
     {
     	"Author": "d@sylabs.io",
     	"Version": "v0.0.1",
+      "MyLabel": "Hello World",
     	"org.label-schema.build-date": "Thursday_6_December_2018_20:1:56_UTC",
     	"org.label-schema.schema-version": "1.0",
     	"org.label-schema.usage": "/.singularity.d/runscript.help",
