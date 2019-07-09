@@ -449,19 +449,14 @@ Consider the example from the def file above:
     %labels
         Author d@sylabs.io
         Version v0.0.1
-
-Note that labels are defined by a key-value pairs and are delimited by the first space character.
-On the previous example, the first label name is ``Author``` with a
-value of ``d@sylabs.io``.
-
-Consider the following example:
-
-.. code-block:: singularity
-
-    %labels
         MyLabel Hello World
 
-In this second example, the label named ``MyLabel`` has the value of ``Hello World``.
+Note that labels are defined by key-value pairs. To define a label just add it
+on the labels section and after the first space character add the correspondent value to the label.
+
+On the previous example, the first label name is ``Author``` with a
+value of ``d@sylabs.io``. The second label name is ``Version`` with a value of ``v0.0.1``.
+Finally, the last label named ``MyLabel`` has the value of ``Hello World``.
 
 To inspect the available labels on your image you can do so by running the following command:
 
@@ -472,6 +467,7 @@ To inspect the available labels on your image you can do so by running the follo
     {
     	"Author": "d@sylabs.io",
     	"Version": "v0.0.1",
+      "MyLabel": "Hello World",
     	"org.label-schema.build-date": "Thursday_6_December_2018_20:1:56_UTC",
     	"org.label-schema.schema-version": "1.0",
     	"org.label-schema.usage": "/.singularity.d/runscript.help",
