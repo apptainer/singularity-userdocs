@@ -465,16 +465,16 @@ To inspect the available labels on your image you can do so by running the follo
     $ singularity inspect my_container.sif
 
     {
-    	"Author": "d@sylabs.io",
-    	"Version": "v0.0.1",
+      "Author": "d@sylabs.io",
+      "Version": "v0.0.1",
       "MyLabel": "Hello World",
-    	"org.label-schema.build-date": "Thursday_6_December_2018_20:1:56_UTC",
-    	"org.label-schema.schema-version": "1.0",
-    	"org.label-schema.usage": "/.singularity.d/runscript.help",
-    	"org.label-schema.usage.singularity.deffile.bootstrap": "library",
-    	"org.label-schema.usage.singularity.deffile.from": "ubuntu:18.04",
-    	"org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
-    	"org.label-schema.usage.singularity.version": "3.0.1"
+      "org.label-schema.build-date": "Thursday_6_December_2018_20:1:56_UTC",
+      "org.label-schema.schema-version": "1.0",
+      "org.label-schema.usage": "/.singularity.d/runscript.help",
+      "org.label-schema.usage.singularity.deffile.bootstrap": "library",
+      "org.label-schema.usage.singularity.deffile.from": "ubuntu:18.04",
+      "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
+      "org.label-schema.usage.singularity.version": "3.0.1"
     }
 
 Some labels that are captured automatically from the build process. You can read
