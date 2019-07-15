@@ -419,10 +419,10 @@ image and the new image during bootstrap.
 Overview
 """"""""
 
-A container from supporting OCI Registries - Eg: Azure Container Registry, 
-Local registry servers etc can be used as your “base” image and later customized. 
-This allows you to build multiple images from the same starting point. For example,
-you may want to build several containers with the same custom python installation, 
+Using, this module, a container from supporting OCI Registries - Eg: ACR (Azure Container 
+Registry), local container registries, etc can be used as your “base” image and later 
+customized. This allows you to build multiple images from the same starting point. For 
+example, you may want to build several containers with the same custom python installation, 
 the same custom compiler toolchain, or the same base MPI installation. Instead of 
 building these from scratch each time, you could make use of ``oras`` to pull an 
 appropriate base container and then build new containers by adding customizations in 
