@@ -419,8 +419,8 @@ image and the new image during bootstrap.
 Overview
 """"""""
 
-A container from supporting OCI Registries; Eg: Azure Container Registry, 
-Local Registry Servers etc can be used as your “base” and later customized. 
+A container from supporting OCI Registries - Eg: Azure Container Registry, 
+Local registry servers etc can be used as your “base” image and later customized. 
 This allows you to build multiple images from the same starting point. For example,
 you may want to build several containers with the same custom python installation, 
 the same custom compiler toolchain, or the same base MPI installation. Instead of 
@@ -443,7 +443,7 @@ use.
     From: oras://registry/namespace/image:tag
 
 The ``From`` keyword is mandatory. It specifies the container to use as a base.
-Mentioning ``tag`` to refer to the version of image you want to use is mandatory.
+Also,``tag`` is mandatory that refers to the version of image you want to use.
 
 .. _build-localimage:
 
