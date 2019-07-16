@@ -1896,7 +1896,7 @@ Section          Description                Section          Description
                                                              | directory.
 
 ``%environment`` | To declare and set       ``ENV``          | ``ENV`` will take the name
-                 | your environment                          |  of the variable and the
+                 | your environment                          | of the variable and the
                  | variables.                                | value and set it.
 
 ``%help``        | To provide a help
@@ -1942,5 +1942,5 @@ Section          Description                Section          Description
                  | within your container.                    | metadata as a
                                                              | key-value pair.
 
-================ ========================== ================ ====================================
+================ ========================== ================ =============================
 .. TODO-ND SIFtool - does it have more to offer here???
