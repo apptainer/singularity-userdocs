@@ -1456,7 +1456,7 @@ Even when all OCI blobs are already in Singularity's local cache, repeated image
 Building Containers for Singularity from OCI Images
 ===================================================
 
-.. _sec:cli_oci_bootstrap_agent:
+.. _cli-oci-bootstrap-agent:
 
 Working Locally from the Singularity Command Line: ``oci`` Boostrap Agent
 -------------------------------------------------------------------------
@@ -1512,7 +1512,7 @@ does not *uniquely* specify an image from which to bootstrap the ``build`` proce
     Executing the Singularity ``pull`` command multiple times on the same image produces multiple ``org.opencontainers.image.ref.name`` entries in the ``index.json`` file. Appending the value of the unique ``org.opencontainers.image.ref.name`` allows for use of the ``oci`` boostrap agent.
 
 
-.. _sec:cli_oci_archive_bootstrap_agent:
+.. _cli-oci-archive-bootstrap-agent:
 
 Working Locally from the Singularity Command Line: ``oci-archive`` Boostrap Agent
 ---------------------------------------------------------------------------------
@@ -1857,7 +1857,6 @@ Singularity Definition file vs. Dockerfile
 
 On the following table, you can see which are the similarities/differences between a Dockerfile and a Singularity definition file:
 
-
 ================ ========================== ================ =============================
 Singularity Definition file                 Dockerfile
 ------------------------------------------- ----------------------------------------------
@@ -1943,4 +1942,5 @@ Section          Description                Section          Description
                  | within your container.                    | metadata as a
                                                              | key-value pair.
 
-================ ========================== ================ =============================
+================ ========================== ================ ====================================
+.. TODO-ND SIFtool - does it have more to offer here???
