@@ -55,7 +55,8 @@ system image:
 
 The second example creates an ext3 file system image with 500MBs of empty space.
 
-Now you can use this overlay with your container. 
+Now you can use this overlay with your container, though filesystem permissions
+still control where you can write.  
 
 .. note::
 
@@ -67,7 +68,9 @@ Now you can use this overlay with your container.
 
     $ sudo singularity shell --overlay my_overlay/ ubuntu.sif
 
-    Singularity ubuntu.sif:~> touch /foo
+    Singularity ubuntu.sif:~> mkdir /data
+
+    Singularity ubuntu.sif:~> chown user /data
 
     Singularity ubuntu.sif:~> apt-get update && apt-get install -y vim
 
@@ -84,8 +87,8 @@ a writable container.
 
     $ singularity shell --overlay my_overlay/ ubuntu.sif
 
-    Singularity ubuntu.sif:~> ls /foo
-    /foo
+    Singularity ubuntu.sif:~> ls -lasd /data
+    4 drwxr-xr-x 2 user root 4096 Apr  9 10:21 /data
 
     Singularity ubuntu.sif:~> which vim
     /usr/bin/vim
@@ -100,8 +103,8 @@ will be gone.
 
     $ singularity shell ubuntu.sif
 
-    Singularity ubuntu.sif:~> ls /foo
-    ls: cannot access 'foo': No such file or directory
+    Singularity ubuntu.sif:~> ls /data
+    ls: cannot access 'data': No such file or directory
 
     Singularity ubuntu.sif:~> which vim
 
