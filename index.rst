@@ -27,4 +27,5 @@ User Guide
    Fakeroot feature <fakeroot>
    Remote Endpoints <endpoint>
    Cgroups Support <cgroups>
+   Singularity and MPI applications <mpi>
    Appendix <appendix>
