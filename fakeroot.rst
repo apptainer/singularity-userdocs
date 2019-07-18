@@ -73,12 +73,16 @@ And everything done in this dedicated network won't affect the host network.
     Of course an unprivileged user could not map host ports below than 1024 by using:
     ``--network-args="portmap=80:80/tcp"``
 
+.. warning::
+    For unprivileged installation of Singularity or is ``allow setuid = no`` is set in ``singularity.conf``
+    users won't be able to use ``fakeroot`` network.
+
 -----
 Usage
 -----
 
-By default fakeroot feature is disabled for all users, it requires that your username is added in
-``fakeroot allowed users`` list in ``singularity.conf``, if you can't add it yourself, ask to an
+Fakeroot looks at user mappings in ``/etc/subuid`` and ``/etc/subgid``, so your username need to be listed
+in those files with a valid mapping (see admin-guide for details), if you can't edit those files, ask to an
 administrator.
 
 Then you could use it with ``--fakeroot`` or ``-f`` option, this option is available with singularity commands :
@@ -92,10 +96,10 @@ Then you could use it with ``--fakeroot`` or ``-f`` option, this option is avail
 Build
 =====
 
-With fakeroot an unprivileged user can now build image from a definition file with few restrictions, bootstrap
-methods requiring to create block devices (like ``/dev/null``) won't work as **"fake root"** user is not allowed to
-create block devices, so bootstrap methods like ``debootstrap``, ``yum``, ``zypper`` doesn't work with ``--fakeroot``
-option.
+With fakeroot an unprivileged user can now build image from a definition file with few restrictions, some bootstrap
+methods requiring to create block devices (like ``/dev/null``) may not always work correctly with **"fake root"**,
+Singularity uses seccomp filters to give programs the illusion that block devices creation worked, while it seems to
+work fine with ``yum`` and *may* work with other bootstrap methods, actually ``debootstrap`` is known to not work.
 
 Examples
 ========
