@@ -4,13 +4,10 @@
 Security in Singularity Containers
 ***********************************
 
-Containers are all rage today for many good reasons. They are light in weight, easy to spin-up and require less system resources 
-as compared to hardware VM environments. More importantly, container technology facilitates advanced research computing by granting 
-the ability to package software in highly portable and reproducible environments encapsulating all dependencies, including the operating 
-system. But there are still some challenges to container security. 
+Containers are all the rage today for many good reasons. They are light weight, easy to spin-up and require reduced IT management resources as compared to hardware VM environments. More importantly, container technology facilitates advanced research computing by granting the ability to package software in highly portable and reproducible environments encapsulating all dependencies, including the operating system. But there are still some challenges to container security. 
 
 Singularity, which is a container paradigm created by necessity for scientific and application driven workloads, addresses some 
-core missions of containers : Mobility of Compute, Reproducibility, HPC support, and **Security**. This document intends to aware
+core missions of containers : Mobility of Compute, Reproducibility, HPC support, and **Security**. This document intends to inform
 users of different security features supported by Singularity.
 
 Singularity Runtime
@@ -45,13 +42,12 @@ block within the SIF file which can guarantee immutability and provide accountab
 `OpenPGP <https://www.openpgp.org/>`_ standard to create and manage these keys. After building an image within Singularity, user can
 ``singularity sign`` the container and push it to the Library along with its public PGP key(Stored in :ref:`Keystore <keystore>`) which 
 later can be verified (``singularity verify``) while pulling or downloading the image. :ref:`This feature <signNverify>` in particular 
-promotes collaboration within and between teams at work. 
+protects collaboration within and between systems and teams. 
 
 With a new development to SIF, the root file system that resides in the squashFS partition of SIF will be encrypted as a result of 
 which everything inside the container becomes inaccessible without a key. This feature will make it necessary for the users to 
 have a password in order to run the containers. It also ensures that no other user on the system will be able to look at your
-container files. Since it is all encrypted, it can defend intruders from getting hold of the image while in transit and manipulating 
-it.
+container files. Since it is all encrypted, it can defend from intruders manipulating the image while in transit.
 
 Unlike other container platforms where the build step requires a number of layers to be read and written into another layer 
 involving the creation of intermediate containers, Singularity executes it in a single step resulting in a ``.sif`` file thereby
