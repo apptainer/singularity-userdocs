@@ -114,7 +114,7 @@ documentation associated with container images, and discover container images pu
 Key Store
 *********
 
-The `Key Store <https://cloud.sylabs.io/keystore>`_ is a key management system offered by Sylabs that utilizes `OpenPGP implementation <https://gnupg.org/>`_ to facilitate users in sharing PGP public keys, which can be used to sign and verify Singularity container images. The service is based on the OpenPGP HTTP Keyserver Protocol (HKP), with several enhancements:
+The `Key Store <https://cloud.sylabs.io/keystore>`_ is a key management system offered by Sylabs that utilizes `OpenPGP implementation <https://gnupg.org/>`_ to facilitate sharing and maintaining of PGP public keys used to sign and verify Singularity container images. This service is based on the OpenPGP HTTP Keyserver Protocol (HKP), with several enhancements:
 
 - The Service requires connections to be secured with Transport Layer Security (TLS).
 - The Service implements token-based authentication, allowing only authenticated users to add or modify PGP keys.
