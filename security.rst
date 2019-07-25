@@ -4,14 +4,14 @@
 Security in Singularity Containers
 ***********************************
 
-Containers are all rage today for many good reasons. They are light in weight, easy to spinup and  require less system resources 
-as compared to hardware VM environments. More importantly, container technology facilitates advanced research computing by granting the ability to 
-package software in highly portable and reproducible environments encapsulating all dependencies, including the operating system. 
-But there are still some challenges to container security. 
+Containers are all rage today for many good reasons. They are light in weight, easy to spin-up and require less system resources 
+as compared to hardware VM environments. More importantly, container technology facilitates advanced research computing by granting 
+the ability to package software in highly portable and reproducible environments encapsulating all dependencies, including the operating 
+system. But there are still some challenges to container security. 
 
 Singularity, which is a container paradigm created by necessity for scientific and application driven workloads, addresses some 
-core missions of containers - Mobility of Compute, Reproducibility, HPC support, and **Security**. This document intends to aware
-users of different approaches Singularity takes in offering security features.
+core missions of containers : Mobility of Compute, Reproducibility, HPC support, and **Security**. This document intends to aware
+users of different security features supported by Singularity.
 
 Singularity Runtime
 ###################
@@ -19,14 +19,14 @@ Singularity Runtime
 Singularity Runtime enforces a unique security model that makes it appropriate for *untrusted users* to run *untrusted containers* 
 safely on multi-tenant resources. Since Singularity Runtime dynamically writes UID and GID information to the appropriate files 
 within the container at runtime, the user remains the same *inside* and *outside* the container, i.e., if you're an unprivileged 
-user while entering the container you'll remain an unprivigeled user inside the container. A privilege separation model is in place
+user while entering the container you'll remain an unprivileged user inside the container. A privilege separation model is in place
 to prevent users from escalating privileges once they are inside of a container. The container file system is mounted using the 
-nosuid option, and processes are spawned with the ``PR_NO_NEW_PRIVS`` flag. Taken together, this approach provides a secure way 
+``nosuid`` option, and processes are spawned with the ``PR_NO_NEW_PRIVS`` flag. Taken together, this approach provides a secure way 
 for users to run containers and greatly simplifies things like reading and writing data to the host system with appropriate 
 ownership.
 
-It is also important to note that the philosophy of Singularity is *Integration* over *Isolation*. Most container runtimes strive 
-to isolate your container from the host system and other cotainers as much as possible. Singularity, on the 
+It is also important to note that the philosophy of Singularity is *Integration* over *Isolation*. Most container run times strive 
+to isolate your container from the host system and other containers as much as possible. Singularity, on the 
 other hand, assumes that the user’s primary goals are portability, reproducibility, and ease of use and that isolation is often a 
 tertiary concern. Therefore, Singularity only isolates the mount namespace by default, and will also bind mount several host 
 directories such as ``$HOME`` and ``/tmp`` into the container at runtime. If needed, additional levels of isolation can be achieved
@@ -36,16 +36,16 @@ These measures allow users to interact with the host system from within the cont
 Singularity Image Format (SIF)
 ##############################
 
-Sylabs addresses Container Security as a continous process. It attempts to provide container integrity throughout the distribution
+Sylabs addresses Container Security as a continuous process. It attempts to provide container integrity throughout the distribution
 pipeline.. i.e., at rest, in transit and while running. Hence, the SIF has been designed to achieve these goals. 
 
 A SIF file is an immutable container runtime image. It is a physical representation of the container environment itself. An 
 important component of SIF that elicits security feature is the ability to cryptographically sign a container, creating a signature
-block within the SIF file which can guarantee immutability and provide accountability as to who signed it. Users can leverage this 
-feature by creating and managing PGP keys with Singularity. After building an image within Singularity, user can ``signularity sign``
-the container and push it to the Library along with its public PGP key(Stored in :ref:`Keystore <keystore>`) which later can be  
-verified (``singularity verify``) while pulling or downloading the image. :ref:`This feature <signNverify>` in particular promotes 
-collaboration within and between teams at work. 
+block within the SIF file which can guarantee immutability and provide accountability as to who signed it. Singularity follows the 
+`OpenPGP <https://www.openpgp.org/>`_ standard to create and manage these keys. After building an image within Singularity, user can
+``singularity sign`` the container and push it to the Library along with its public PGP key(Stored in :ref:`Keystore <keystore>`) which 
+later can be verified (``singularity verify``) while pulling or downloading the image. :ref:`This feature <signNverify>` in particular 
+promotes collaboration within and between teams at work. 
 
 With a new development to SIF, the root file system that resides in the squashFS partition of SIF will be encrypted as a result of 
 which everything inside the container becomes inaccessible without a key. This feature will make it necessary for the users to 
@@ -73,10 +73,10 @@ Starting v3.0, Singularity added native support for ``cgroups``, allowing users 
 without the help of a separate program like a batch scheduling system. This feature helps in preventing  DoS attacks where one 
 container seizes control of all available system resources in order to stop other containers from operating properly. 
 To utilize this feature, a user first creates a configuration file. An example configuration file is installed by default with 
-Singularity to provide a guide. At runtime, the ``--apply-cgroups`` option is used to specifiy the location of the configuration 
+Singularity to provide a guide. At runtime, the ``--apply-cgroups`` option is used to specify the location of the configuration 
 file and cgroups are configured accordingly. More about cgroups support `here <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#cgroups-toml>`_.
 
-``--securtity`` options
+``--security`` options
 ***********************
 
 Singularity supports a number of methods for specifying the security scope and context when running Singularity containers. 
@@ -114,8 +114,7 @@ documentation associated with container images, and discover container images pu
 Key Store
 *********
 
-The `Key Service <https://cloud.sylabs.io/keystore>`_ enables users to share PGP public keys, which can be used to sign and verify Singularity container images. The 
-service is based on the OpenPGP HTTP Keyserver Protocol (HKP), with several enhancements:
+The `Key Store <https://cloud.sylabs.io/keystore>`_ is a key management system offered by Sylabs that utilizes `OpenPGP implementation <https://gnupg.org/>`_ to facilitate users in sharing PGP public keys, which can be used to sign and verify Singularity container images. The service is based on the OpenPGP HTTP Keyserver Protocol (HKP), with several enhancements:
 
 - The Service requires connections to be secured with Transport Layer Security (TLS).
 - The Service implements token-based authentication, allowing only authenticated users to add or modify PGP keys.
@@ -140,14 +139,8 @@ Security Considerations of Cloud Services:
    updates so, when a CVE is announced publicly PRO subscribers are already using patched software.
 
 
-Security is not a checkbox that one can tick and forget.  It’s an ongoing process that begins with software architecture, and 
+Security is not a check box that one can tick and forget.  It’s an ongoing process that begins with software architecture, and 
 continues all the way through to ongoing security practices.  In addition to ensuring that containers are run without elevated 
 privileges where appropriate, and that containers are produced by trusted sources, users must monitor their containers for newly 
 discovered vulnerabilities and update when necessary just as they would with any other software. Sylabs is constantly probing to 
 find and patch vulnerabilities within Singularity, and will continue to do so.
-
-
-
-
-
-
