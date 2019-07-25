@@ -8,6 +8,7 @@ User Guide
    Quick Start <quick_start>
    Contributing <contributing>
    Installation <installation>
+   Container Security <security>
    Command Line Reference <cli>
    Build a container <build_a_container>
    The Definition File <definition_files>
