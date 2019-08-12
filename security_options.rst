@@ -15,19 +15,32 @@ the security scope and context when running Singularity containers.
 Linux Capabilities
 ------------------
 
+.. note::
+     It is extremely important to recognize that **granting users Linux 
+     capabilities with the** ``capability`` **command group is usually identical 
+     to granting those users root level access on the host system**. Most if not
+     all capabilities will allow users to "break out" of the container and 
+     become root on the host. This feature is targeted toward special use cases 
+     (like cloud-native architectures) where an admin/developer might want to 
+     limit the attack surface within a container that normally runs as root. 
+     This is not a good option in multi-tenant HPC environments where an admin
+     wants to grant a user special privileges within a container. For that and
+     similar use cases, the :ref:`fakeroot feature <fakeroot>` is a better 
+     option. 
+
 Singularity provides full support for granting and revoking Linux capabilities
 on a user or group basis.  For example, let us suppose that an admin has
-decided to grant a user capabilities to open raw sockets so that they can use
-``ping`` in a container where the binary is controlled via capabilities (i.e. a
-recent version of CentOS).
+decided to grant a user (named ``pinger``) capabilities to open raw sockets so 
+that they can use ``ping`` in a container where the binary is controlled via 
+capabilities (i.e. a recent version of CentOS).
 
 To do so, the admin would issue a command such as this:
 
 .. code-block:: none
 
-    $ sudo singularity capability add --user david CAP_NET_RAW
+    $ sudo singularity capability add --user pinger CAP_NET_RAW
 
-This means the user ``david`` has just been granted permissions (through Linux
+This means the user ``pinger`` has just been granted permissions (through Linux
 capabilities) to open raw sockets within Singularity containers.
 
 The admin can check that this change is in effect with the ``capability list``
@@ -35,10 +48,10 @@ command.
 
 .. code-block:: none
 
-    $ sudo singularity capability list --user david
+    $ sudo singularity capability list --user pinger
     CAP_NET_RAW
 
-To take advantage of this new capability, the user ``david`` must also request
+To take advantage of this new capability, the user ``pinger`` must also request
 the capability when executing a container with the ``--add-caps`` flag like so:
 
 .. code-block:: none
@@ -51,15 +64,15 @@ the capability when executing a container with the ``--add-caps`` flag like so:
     1 packets transmitted, 1 received, 0% packet loss, time 0ms
     rtt min/avg/max/mdev = 18.320/18.320/18.320/0.000 ms
 
-If the admin decides that it is no longer necessary to allow the user ``dave``
+If the admin decides that it is no longer necessary to allow the user ``pinger``
 to open raw sockets within Singularity containers, they can revoke the
 appropriate Linux capability like so:
 
 .. code-block:: none
 
-    $ sudo singularity capability drop --user david CAP_NET_RAW
+    $ sudo singularity capability drop --user pinger CAP_NET_RAW
 
-The ``capabiltiy add`` and ``drop`` subcommands will also accept the case
+The ``capability add`` and ``drop`` subcommands will also accept the case
 insensitive keyword ``all`` to grant or revoke all Linux capabilities to a user
 or group.  Similarly, the ``--add-caps`` option will accept the ``all`` keyword.
 Of course appropriate caution should be exercised when using this keyword.
