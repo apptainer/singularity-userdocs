@@ -58,7 +58,9 @@ Admin Configurable Files
 #########################
 
 Singularity Administrators will have the ability to access various configuration files, that will let them set security 
-restrictions, grant or revoke a user’s capabilities, manage resources and authorize containers etc. One such file interesting in this context is `ecl.toml <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#ecl-toml>`_ which allows blacklisting and whitelisting of containers. However, you should find all the configuration files and their parameters documented `here <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html>`_. 
+restrictions, grant or revoke a user’s capabilities, manage resources and authorize containers etc. One such file interesting in this context is `ecl.toml <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#ecl-toml>`_ 
+which allows blacklisting and whitelisting of containers. However, you should find all the configuration files and their parameters
+documented `here <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html>`_. 
 
 cgroups support
 ****************
@@ -91,10 +93,13 @@ As mentioned earlier, singularity runtime prevents executing code with root-leve
 container requires elevated privileges that most of the commercial environments do not grant its users. `Build Service <https://cloud.sylabs.io/builder>`_ 
 aims to help this challenge by allowing unprivileged users a service that can be used to build containers targeting one or more CPU 
 architectures. System administrators can use the system to monitor which users are building containers, and the contents of those 
-containers.
+containers. Starting with Singularity 3.0, the CLI has native integration with the Build Service from version 3.0 onwards. In 
+addition, a browser interface to the Build Service also exists, which allows users to build containers using only a web browser.
 
-Starting with Singularity 3.0, the CLI has native integration with the Build Service from version 3.0 onwards. In addition, a 
-browser interface to the Build Service also exists, which allows users to build containers using only a web browser.
+.. note::
+
+    Please see the :ref:`Fakeroot feature <fakeroot>` which is a secure option for admins in multi-tenant HPC enironments and 
+    similar usecases where they might want to grant a user special privileges inside a container.
 
 Container Library
 *****************
