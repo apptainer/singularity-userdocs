@@ -8,6 +8,7 @@ User Guide
    Quick Start <quick_start>
    Contributing <contributing>
    Installation <installation>
+   Container Security <security>
    Command Line Reference <cli>
    Build a container <build_a_container>
    The Definition File <definition_files>
@@ -19,6 +20,7 @@ User Guide
    Running Services <running_services>
    Environment and Metadata <environment_and_metadata>
    OCI Runtime Support <oci_runtime>
+   Container Security <security>
    Key commands <key_commands>
    Sign and Verify <signNverify>
    Plugins <plugins>

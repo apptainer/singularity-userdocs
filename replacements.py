@@ -1,4 +1,3 @@
-
 def variableReplace(app, docname, source):
     """
     Takes the source on rst and replaces all the needed variables declared on variable_replacements structure
@@ -11,9 +10,11 @@ def variableReplace(app, docname, source):
 #Add the needed variables to be replaced either on code or on text on the next dictionary structure.
 variable_replacements = {
     "{InstallationVersion}" : "3.3.0",
-    "\{version\}" : "3.3"
+    "\{version\}" : "3.3",
+    "\{adminversion\}" : "3.2"
 }
 
 def setup(app):
    app.add_config_value('variable_replacements', {}, True)
    app.connect('source-read', variableReplace)
+
