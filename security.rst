@@ -98,8 +98,8 @@ addition, a browser interface to the Build Service also exists, which allows use
 
 .. note::
 
-    Please see the :ref:`Fakeroot feature <fakeroot>` which is a secure option for admins in multi-tenant HPC enironments and 
-    similar usecases where they might want to grant a user special privileges inside a container.
+    Please see the :ref:`Fakeroot feature <fakeroot>` which is a secure option for admins in multi-tenant HPC environments and 
+    similar use cases where they might want to grant a user special privileges inside a container.
 
 Container Library
 *****************
