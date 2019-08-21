@@ -13,6 +13,7 @@ User Guide
    Build a container <build_a_container>
    The Definition File <definition_files>
    Build Environment <build_env>
+   Encrypted Containers <encryption>
    Cloud Library <cloud_library>
    Singularity and Docker <singularity_and_docker>
    Bind Paths and Mounts <bind_paths_and_mounts>
