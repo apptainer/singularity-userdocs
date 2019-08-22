@@ -23,17 +23,18 @@ Container decryption occurs at runtime completely within kernel space.
         This feature utilizes the Linux ``dm-crypt`` library and ``cryptsetup`` 
         utility and requires cryptsetup version of >= 2.0.0.  This version 
         should be standard with recent Linux versions such as Ubuntu 18 and 
-        Centos/RHEL 8, but users of older Linux versions may have to update. 
+        Centos/RHEL 7, but users of older Linux versions may have to update. 
 
 ----------------------
 Encrypting a container
 ----------------------
 
 A container can be encrypted either by supplying a plaintext passphrase or a 
-key-file containing an asymmetric RSA public key.
+PEM file containing an asymmetric RSA public key.  Of these two methods the PEM
+file is more secure and is therefore recommended for production use. 
 
 A passphrase or a key-file is supplied at build time via an environment variable 
-or a command line option.
+or a command line option. 
 
 +------------------------+------------------------------------------+-------------------------+
 | **Encryption Method**  | **Environment Variable**                 | **Commandline Option**  |
@@ -58,6 +59,14 @@ variables are set, the following precedence is respected.
 Passphrase Encryption
 =====================
 
+.. note::
+
+        Passphrase encryption is less secure the encrypting containers using a 
+        PEM file and private RSA key (detailed below).  Passphrase encryption is
+        provided as a convenience, and as a way for users to familiarize 
+        themselves with the encrypted container workflow, but users running 
+        encrypted containers in production are encouraged to use a PEM key.   
+
 In case of plaintext passphrase encryption, a passphrase is supplied by one of 
 the following methods.
 
@@ -66,42 +75,31 @@ Encrypting with a passphrase interactively
 
 .. code-block:: none
 
-        $ sudo singularity build --encrypt --passphrase ~/containers/encrypted.sif ~/containers/encrypted.def
+        $ sudo singularity build --passphrase encrypted.sif encrypted.def
         Enter encryption passphrase: <secret>
         INFO:    Starting build...
-
-Using a command line option
----------------------------
-
-.. code-block:: none
-
-        $ sudo singularity build --passphrase="secret" encrypted.sif encrypted.def
-        Starting build...
-
-.. note::
-        This method is not preferred since it records your passphrase on your
-        command line (and in your ``.*history`` file) where it can be viewed by
-        others with appropriate permissions.  
 
 Using an environment variable
 -----------------------------
 
 .. code-block:: none
 
-        $ sudo SINGULARITY_ENCRYPTION_PASSPHRASE="secret" singularity build --encrypt encrypted.sif encrypted.recipe
+        $ sudo SINGULARITY_ENCRYPTION_PASSPHRASE=<secret> singularity build --encrypt encrypted.sif encrypted.def
         Starting build...
 
 In this case it is necessary to use the ``--encrypted`` flag since the presence
 of an environment variable alone will not trigger the encrypted build workflow.
 
-It's possible to set an environment variable in a way that will not record your
-passphrase on the command line.  For instance, you could save a plain text 
-passphrase in a file (e.g. ``secret.txt``) and use it like so.
+While this example shows how an environment variable can be used to set a
+passphrase, you should set the environment variable in a way that will not 
+record your passphrase on the command line.  For instance, you could save a 
+plain text passphrase in a file (e.g. ``secret.txt``) and use it like so.
 
 .. code-block:: none
 
         $ export SINGULARITY_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
-        $ sudo singularity build --encrypted encrypted.sif encrypted.recipe
+
+        $ sudo -E singularity build --encrypt encrypted.sif encrypted.def
         Starting build...
 
 PEM File Encryption
@@ -128,7 +126,7 @@ like so:
         $ ls
         rsa  rsa.pem  rsa.pub
 
-You would use the ``rsa.pub`` file to encrypt your container and the ``rsa`` 
+You would use the ``rsa.pem`` file to encrypt your container and the ``rsa`` 
 file to run it.  
 
 Using a command line option
@@ -136,7 +134,7 @@ Using a command line option
 
 .. code-block:: none
 
-        $ sudo singularity build --pempath=<path-to-pem-file> encrypted.sif encrypted.recipe
+        $ sudo singularity build --pem-path=rsa.pem encrypted.sif encrypted.def
         Starting build...
 
 Using an environment variable
@@ -144,8 +142,11 @@ Using an environment variable
 
 .. code-block:: none
 
-        $ sudo SINGULARITY_ENCRYPTION_PEM_PATH=<path-to-pem-file> singularity build -e encrypted.sif encrypted.recipe
+        $ sudo SINGULARITY_ENCRYPTION_PEM_PATH=rsa.pem singularity build --encrypt encrypted.sif encrypted.def
         Starting build...
+
+In this case it is necessary to use the ``--encrypted`` flag since the presence
+of an environment variable alone will not trigger the encrypted build workflow.
 
 ------------------------------
 Running an encrypted container
@@ -158,7 +159,7 @@ supplying the private key or a plaintext passphrase.
 Running a container encrypted with a passphrase
 ===============================================
 
-A passphrase can be supplied at runtime by any of the ways listed in the 
+A passphrase can be supplied at runtime by either of the ways listed in the 
 sections above.
 
 Running with a passphrase interactively
@@ -166,31 +167,20 @@ Running with a passphrase interactively
 
 .. code-block:: none
 
-        $ singularity run encrypted.sif
+        $ singularity run --passphrase encrypted.sif
         Enter passphrase for encrypted container: <secret>
-
-Using a command line option
----------------------------
-
-.. code-block:: none
-
-        $ singularity run --passphrase="secret" encrypted.sif
-
-.. note::
-        This method is not preferred since it records your passphrase on your
-        command line (and in your ``.*history`` file) where it can be viewed by
-        others with appropriate permissions.  
 
 Using an environment variable
 -----------------------------
 
 .. code-block:: none
 
-        $ env SINGULARITY_ENCRYPTION_PASSPHRASE="secret" singularity run encrypted.sif
+        $ SINGULARITY_ENCRYPTION_PASSPHRASE="secret" singularity run encrypted.sif
 
-It's possible to set an environment variable in a way that will not record your
-passphrase on the command line.  For instance, you could save a plain text 
-passphrase in a file (e.g. ``secret.txt``) and use it like so.
+While this example shows how an environment variable can be used to set a
+passphrase, you should set the environment variable in a way that will not 
+record your passphrase on the command line.  For instance, you could save a 
+plain text passphrase in a file (e.g. ``secret.txt``) and use it like so.
 
 .. code-block:: none
 
@@ -204,16 +194,16 @@ Running a container encrypted with a PEM file
 A private key is supplied using either of the methods listed in the Encryption 
 section above.
 
-Using an environment variable
------------------------------
-
-.. code-block:: none
-
-        $ SINGULARITY_ENCRYPTION_PEM_PATH=<path-to-private-key> singularity run encrypted.sif
-
 Using a command line option
 ---------------------------
 
 .. code-block:: none
 
-        $ singularity run --pem-path=<path-to-private-key> singularity run encrypted.sif
+        $ singularity run --pem-path=rsa encrypted.sif
+
+Using an environment variable
+-----------------------------
+
+.. code-block:: none
+
+        $ SINGULARITY_ENCRYPTION_PEM_PATH=rsa singularity run encrypted.sif
