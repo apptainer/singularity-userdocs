@@ -4,8 +4,8 @@
 Encrypted Containers
 ====================
 
-Users can build a secure container environment by encrypting the root file
-system.
+Users can build a secure, confidential container environment by encrypting the 
+root file system.
 
 --------
 Overview
@@ -13,11 +13,12 @@ Overview
 
 In Singularity >= v3.4.0 a new feature to build and run encrypted containers has
 been added to allow users to encrypt the file system image within a SIF.  This 
-encryption can be performed using either a passphrase or asymmetrically via a 
-Privacy Enhanced Mail (PEM) file and a matching private RSA key.  The container 
-is encrypted in transit, at rest, and even while running.  In other words, there 
-is no intermediate, decrypted version of the container on disk or in memory.  
-Container decryption occurs at runtime completely within kernel space.  
+encryption can be performed using either a passphrase or asymmetrically via an 
+RSA key pair in Privacy Enhanced Mail (PEM) format and a matching private RSA 
+key.  The container is encrypted in transit, at rest, and even while running.  
+In other words, there is no intermediate, decrypted version of the container on 
+disk or in memory.  Container decryption occurs at runtime completely within 
+kernel space.  
 
 .. note:: 
         This feature utilizes the Linux ``dm-crypt`` library and ``cryptsetup`` 
@@ -61,11 +62,11 @@ Passphrase Encryption
 
 .. note::
 
-        Passphrase encryption is less secure the encrypting containers using a 
-        PEM file and private RSA key (detailed below).  Passphrase encryption is
-        provided as a convenience, and as a way for users to familiarize 
-        themselves with the encrypted container workflow, but users running 
-        encrypted containers in production are encouraged to use a PEM key.   
+        Passphrase encryption is less secure than encrypting containers using an 
+        RSA key pair (detailed below).  Passphrase encryption is provided as a 
+        convenience, and as a way for users to familiarize themselves with the 
+        encrypted container workflow, but users running encrypted containers in 
+        production are encouraged to use asymmetric keys.   
 
 In case of plaintext passphrase encryption, a passphrase is supplied by one of 
 the following methods.
@@ -87,8 +88,8 @@ Using an environment variable
         $ sudo SINGULARITY_ENCRYPTION_PASSPHRASE=<secret> singularity build --encrypt encrypted.sif encrypted.def
         Starting build...
 
-In this case it is necessary to use the ``--encrypted`` flag since the presence
-of an environment variable alone will not trigger the encrypted build workflow.
+In this case it is necessary to use the ``--encrypt`` flag since the presence of
+an environment variable alone will not trigger the encrypted build workflow.
 
 While this example shows how an environment variable can be used to set a
 passphrase, you should set the environment variable in a way that will not 
@@ -145,16 +146,16 @@ Using an environment variable
         $ sudo SINGULARITY_ENCRYPTION_PEM_PATH=rsa.pem singularity build --encrypt encrypted.sif encrypted.def
         Starting build...
 
-In this case it is necessary to use the ``--encrypted`` flag since the presence
-of an environment variable alone will not trigger the encrypted build workflow.
+In this case it is necessary to use the ``--encrypt`` flag since the presence of
+an environment variable alone will not trigger the encrypted build workflow.
 
 ------------------------------
 Running an encrypted container
 ------------------------------
 
-To ``run``, ``shell``, or ``exec`` an encrypted image, the same credentials used 
-to encrypt the image need to be supplied at runtime, either in a key-file 
-supplying the private key or a plaintext passphrase.
+To ``run``, ``shell``, or ``exec`` an encrypted image, credentials to decrypt 
+the image need to be supplied at runtime either in a key-file or a plaintext 
+passphrase.
 
 Running a container encrypted with a passphrase
 ===============================================
