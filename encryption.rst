@@ -36,24 +36,24 @@ file is more secure and is therefore recommended for production use.
 A passphrase or a key-file is supplied at build time via an environment variable 
 or a command line option. 
 
-+------------------------+------------------------------------------+-------------------------+
-| **Encryption Method**  | **Environment Variable**                 | **Commandline Option**  |
-+------------------------+------------------------------------------+-------------------------+
-| Passphrase             | ``SINGULARITY_ENCRYPTION_PASSPHRASE``    | ``--passphrase``        |
-+------------------------+------------------------------------------+-------------------------+
-| Asymmentric (PEM)      | ``SINGULARITY_ENCRYPTION_PEMPATH``       | ``--pempath``           | 
-+------------------------+------------------------------------------+-------------------------+
++------------------------+-------------------------------------------+--------------------------+
+| **Encryption Method**  | **Environment Variable**                  | **Commandline Option**   |
++------------------------+-------------------------------------------+--------------------------+
+| Passphrase             | ``SINGULARITY_ENCRYPTION_PASSPHRASE``     | ``--passphrase``         |
++------------------------+-------------------------------------------+--------------------------+
+| Asymmentric (PEM)      | ``SINGULARITY_ENCRYPTION_PEM_PATH``       | ``--pem-path``           | 
++------------------------+-------------------------------------------+--------------------------+
 
 An ``-e|--encrypt`` build flag is used to indicate that the container needs to 
 be encrypted.  This flag must be used to encrypt via the 
 ``SINGULARITY_ENCRYPTION_*`` environment variables.  The ``-e|--encrypt`` flag
-is implicitly set when the ``--passphrase`` or ``--pempath`` flags are passed
+is implicitly set when the ``--passphrase`` or ``--pem-path`` flags are passed
 with the build command.  If multiple encryption related flags and/or environment 
 variables are set, the following precedence is respected.  
 
-#. ``--pempath``
+#. ``--pem-path``
 #. ``--passphrase``
-#. ``SINGULARITY_ENCRYPTION_PEMPATH``
+#. ``SINGULARITY_ENCRYPTION_PEM_PATH``
 #. ``SINGULARITY_ENCRYPTION_PASSPHRASE``
 
 Passphrase Encryption
