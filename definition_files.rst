@@ -572,7 +572,7 @@ development stack.
     Stage: final
 
     # install binary from stage one
-    %files from build
+    %files from devel
       /root/hello /bin/hello
 
 The names of stages are arbitrary. Each of these sections will be executed in
