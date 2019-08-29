@@ -77,6 +77,15 @@ insensitive keyword ``all`` to grant or revoke all Linux capabilities to a user
 or group.  Similarly, the ``--add-caps`` option will accept the ``all`` keyword.
 Of course appropriate caution should be exercised when using this keyword.
 
+-----------------------------
+Building encrypted containers
+-----------------------------
+Beginning in Singularity 3.4.0 it is possible to build and run encrypted
+containers.  The containers are decrypted at runtime entirely in kernel space, 
+meaning that no intermediate decrypted data is ever present on disk or in 
+memory.  See :ref:`encrypted containers <encryption>` for more details.
+
+
 -------------------------------
 Security related action options
 -------------------------------
