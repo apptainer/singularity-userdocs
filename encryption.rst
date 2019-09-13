@@ -14,7 +14,7 @@ Overview
 In Singularity >= v3.4.0 a new feature to build and run encrypted containers has
 been added to allow users to encrypt the file system image within a SIF.  This
 encryption can be performed using either a passphrase or asymmetrically via an
-RSA key pair in Privacy Enhanced Mail (PEM) format. The container is encrypted
+RSA key pair in Privacy Enhanced Mail (PEM/PKCS1) format. The container is encrypted
 in transit, at rest, and even while running. In other words, there is no
 intermediate, decrypted version of the container on disk.  Container decryption
 occurs at runtime completely within kernel space.  
@@ -54,7 +54,7 @@ via an environment variable or a command line option.
 +------------------------+-------------------------------------------+--------------------------+
 | Passphrase             | ``SINGULARITY_ENCRYPTION_PASSPHRASE``     | ``--passphrase``         |
 +------------------------+-------------------------------------------+--------------------------+
-| Asymmentric Key (PEM)  | ``SINGULARITY_ENCRYPTION_PEM_PATH``       | ``--pem-path``           | 
+| Asymmetric Key (PEM)   | ``SINGULARITY_ENCRYPTION_PEM_PATH``       | ``--pem-path``           | 
 +------------------------+-------------------------------------------+--------------------------+
 
 The ``-e|--encrypt`` flag is implicitly set when the ``--passphrase`` or
@@ -116,8 +116,9 @@ plain text passphrase in a file (e.g. ``secret.txt``) and use it like so.
 PEM File Encryption
 ===================
 
-Singularity currently supports RSA encryption using public/private key-pair. 
-Keys are supplied in PEM format.  
+Singularity currently supports RSA encryption using a public/private key-pair. 
+Keys are supplied in PEM format. The public key is used to encrypt containers that
+can be decrypted on a host that has access to the secret private key.
 
 You can create a pair of RSA keys suitable for encrypting your container with 
 the ``ssh-keygen`` command, and then create a PEM file with a few specific flags 
@@ -125,35 +126,37 @@ like so:
 
 .. code-block:: none
 
-        $ ssh-keygen
+        # Generate a keypair
+        $ ssh-keygen -t rsa -b 2048
         Generating public/private rsa key pair.
         Enter file in which to save the key (/home/vagrant/.ssh/id_rsa): rsa
         Enter passphrase (empty for no passphrase):
         Enter same passphrase again:
         [snip...]
 
-        $ ssh-keygen -f ./rsa.pub -e -m pem >rsa.pem
+        # Convert the public key to PEM PKCS1 format
+        $ ssh-keygen -f ./rsa.pub -e -m pem >rsa_pub.pem
 
-        $ ls
-        rsa  rsa.pem  rsa.pub
+        # Rename the private key (already PEM PKCS1) to a nice name
+        $ mv rsa rsa_pri.pem
 
-You would use the ``rsa.pem`` file to encrypt your container and the ``rsa`` 
+You would use the ``rsa_pub.pem`` file to encrypt your container and the ``rsa_pri.pem`` 
 file to run it.  
 
-Using a command line option
----------------------------
+Encrypting with a command line option
+--------------------------------------
 
 .. code-block:: none
 
-        $ sudo singularity build --pem-path=rsa.pem encrypted.sif encrypted.def
+        $ sudo singularity build --pem-path=rsa_pub.pem encrypted.sif encrypted.def
         Starting build...
 
-Using an environment variable
------------------------------
+Encrypting with an environment variable
+---------------------------------------
 
 .. code-block:: none
 
-        $ sudo SINGULARITY_ENCRYPTION_PEM_PATH=rsa.pem singularity build --encrypt encrypted.sif encrypted.def
+        $ sudo SINGULARITY_ENCRYPTION_PEM_PATH=rsa_pub.pem singularity build --encrypt encrypted.sif encrypted.def
         Starting build...
 
 In this case it is necessary to use the ``--encrypt`` flag since the presence of
@@ -181,8 +184,8 @@ Running with a passphrase interactively
         $ singularity run --passphrase encrypted.sif
         Enter passphrase for encrypted container: <secret>
 
-Using an environment variable
------------------------------
+Running with a passphrase in an environment variable
+----------------------------------------------------
 
 .. code-block:: none
 
@@ -205,16 +208,16 @@ Running a container encrypted with a PEM file
 A private key is supplied using either of the methods listed in the Encryption 
 section above.
 
-Using a command line option
----------------------------
+Running using a command line option
+-----------------------------------
 
 .. code-block:: none
 
-        $ singularity run --pem-path=rsa encrypted.sif
+        $ singularity run --pem-path=rsa_pri.pem encrypted.sif
 
-Using an environment variable
------------------------------
+Running using an environment variable
+-------------------------------------
 
 .. code-block:: none
 
-        $ SINGULARITY_ENCRYPTION_PEM_PATH=rsa singularity run encrypted.sif
+        $ SINGULARITY_ENCRYPTION_PEM_PATH=rsa_pri.pem singularity run encrypted.sif
