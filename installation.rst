@@ -58,7 +58,8 @@ similar with other package managers.
         libseccomp-dev \
         wget \
         pkg-config \
-        git
+        git \
+        cryptsetup-bin
 
 ``yum``
 
