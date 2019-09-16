@@ -170,10 +170,20 @@ Singularity also allows you to modify the default cache location for pulling ima
 ``SINGULARITY_CACHEDIR`` by default points to ``$HOME/.singularity/cache`` but this path can be modified. You would need to set and export the ``SINGULARITY_CACHEDIR`` environment variable before pulling the image, like so:
 
 .. code-block:: none
+
    $ export SINGULARITY_CACHEDIR=$HOME/mycontainers
    $ singularity pull library://library/default/alpine
 
 And that will successfully pull that container image inside your new ``SINGULARITY_CACHEDIR`` location.
+
+--------------------
+Encrypted Containers
+--------------------
+
+Beginning in Singularity 3.4.0 it is possible to build and run encrypted
+containers.  The containers are decrypted at runtime entirely in kernel space, 
+meaning that no intermediate decrypted data is ever present on disk or in 
+memory.  See :ref:`encrypted containers <encryption>` for more details.
 
 ---------------------
 Environment Variables
@@ -220,3 +230,11 @@ Library
 **SINGULARITY_LIBRARY** Used to specify the library to pull from. Default is set to our Cloud Library.
 
 **SINGULARITY_REMOTE** Used to build an image remotely (This does not require root). The default is set to false.
+
+Encryption
+----------
+
+**SINGULARITY_ENCRYPTION_PASSPHRASE** Used to pass a plaintext passphrase to encrypt a container file system (with the ``--encrypt`` flag). The default is empty.
+
+**SINGULARITY_ENCRYPTION_PEM_PATH** Used to specify the location of a public key to use for container encryption (with the ``--encrypt`` flag). The default is empty.
+

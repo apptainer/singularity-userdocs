@@ -74,6 +74,8 @@ You can see them listed alphabetically below with their respective functionality
 ^^^^^
 
 #. **SINGULARITY_ENVIRONMENT**: Contains all the environment variables that have been exported in your container.
+#. **SINGULARITY_ENCRYPTION_PASSPHRASE**: Used to specify the plaintext passphrase to encrypt the container.
+#. **SINGULARITY_ENCRYPTION_PEM_PATH**: Used to specify the path of the file containing public or private key to encrypt the container in PEM format.
 #. **SINGULARITYENV_***: Allows you to transpose variables into the container at runtime. You can see more in detail how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
 #. **SINGULARITYENV_APPEND_PATH**: Used to append directories to the end of the ``$PATH`` environment variable. You can see more in detail on how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
 #. **SINGULARITYENV_PATH**: A specified path to override the ``$PATH`` environment variable within the container. You can see more in detail on how to use this variable in our :ref:`environment and metadata section <environment-and-metadata>`.
