@@ -251,7 +251,7 @@ the ``capability`` command group like so:
 
 .. code-block:: none
 
-    $ singularity capability list --user dave
+    $ singularity capability list dave
 
 Container authors might also write help docs specific to a container or for an
 internal module called an ``app``. If those help docs exist for a particular
