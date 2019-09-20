@@ -34,13 +34,13 @@ Singularity Image Format (SIF)
 ##############################
 
 Sylabs addresses Container Security as a continuous process. It attempts to provide container integrity throughout the distribution
-pipeline.. i.e., at rest, in transit and while running. Hence, the SIF has been designed to achieve these goals. 
+pipeline i.e. at rest, in transit and while running. Hence, the SIF has been designed to achieve these goals. 
 
 A SIF file is an immutable container runtime image. It is a physical representation of the container environment itself. An 
 important component of SIF that elicits security feature is the ability to cryptographically sign a container, creating a signature
 block within the SIF file which can guarantee immutability and provide accountability as to who signed it. Singularity follows the 
 `OpenPGP <https://www.openpgp.org/>`_ standard to create and manage these keys. After building an image within Singularity, user can
-``singularity sign`` the container and push it to the Library along with its public PGP key(Stored in :ref:`Keystore <keystore>`) which 
+``singularity sign`` the container and push it to the Library along with its public PGP key (stored in :ref:`Keystore <keystore>`) which 
 later can be verified (``singularity verify``) while pulling or downloading the image. :ref:`This feature <signNverify>` in particular 
 protects collaboration within and between systems and teams. 
 
@@ -90,7 +90,7 @@ Remote Builder
 **************
 
 As mentioned earlier, singularity runtime prevents executing code with root-level permissions on the host system. But building a 
-container requires elevated privileges that most of the commercial environments do not grant its users. `Build Service <https://cloud.sylabs.io/builder>`_ 
+container requires elevated privileges that most of the commercial environments do not grant their users. `Build Service <https://cloud.sylabs.io/builder>`_ 
 aims to help this challenge by allowing unprivileged users a service that can be used to build containers targeting one or more CPU 
 architectures. System administrators can use the system to monitor which users are building containers, and the contents of those 
 containers. Starting with Singularity 3.0, the CLI has native integration with the Build Service from version 3.0 onwards. In 
