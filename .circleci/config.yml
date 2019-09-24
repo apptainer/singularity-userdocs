@@ -113,7 +113,10 @@ workflows:
     jobs:
       - lint_markdown
       - check_rst
-      - make_html
-      - make_pdf_epub
-
+      - make_html:
+          requires:
+            - check_rst
+      - make_pdf_epub:
+          requires:
+            - check_rst
 
