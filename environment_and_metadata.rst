@@ -470,7 +470,7 @@ helpful to know where they are and what they do:
    later versions of Singularity, these files may be dynamically written at
    runtime.
 
--  **env**: All *.sh files in this directory are sourced in alpha-numeric order
+-  **env**: All ``*.sh`` files in this directory are sourced in alpha-numeric order
    when the container is initiated. For legacy purposes there is a symbolic link
    called ``/environment`` that points to
    ``/.singularity.d/env/90-environment.sh``.

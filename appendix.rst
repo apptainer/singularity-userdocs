@@ -770,7 +770,7 @@ zypper build module is ``zypper`` itself.
 .. _docker-daemon-archive:
 
 ``docker-daemon & docker-archive`` bootstrap agents
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For users using docker locally there are two options for creating Singularity
 images without the need for a repository: ``docker-daemon://`` and ``docker-archive://``

@@ -60,7 +60,7 @@ Admin Configurable Files
 Singularity Administrators will have the ability to access various configuration files, that will let them set security 
 restrictions, grant or revoke a user’s capabilities, manage resources and authorize containers etc. One such file interesting in this context is `ecl.toml <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#ecl-toml>`_ 
 which allows blacklisting and whitelisting of containers. However, you should find all the configuration files and their parameters
-documented `here <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html>`_. 
+documented `here <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html>`__. 
 
 cgroups support
 ****************
@@ -70,14 +70,14 @@ without the help of a separate program like a batch scheduling system. This feat
 container seizes control of all available system resources in order to stop other containers from operating properly. 
 To utilize this feature, a user first creates a configuration file. An example configuration file is installed by default with 
 Singularity to provide a guide. At runtime, the ``--apply-cgroups`` option is used to specify the location of the configuration 
-file and cgroups are configured accordingly. More about cgroups support `here <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#cgroups-toml>`_.
+file and cgroups are configured accordingly. More about cgroups support `here <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#cgroups-toml>`__.
 
 ``--security`` options
 ***********************
 
 Singularity supports a number of methods for specifying the security scope and context when running Singularity containers. 
 Additionally, it supports new flags that can be passed to the action commands; ``shell``, ``exec``, and ``run`` allowing fine 
-grained control of security. Details about them are documented `here <https://sylabs.io/guides/\{version\}/user-guide/security_options.html>`_.
+grained control of security. Details about them are documented `here <https://sylabs.io/guides/\{version\}/user-guide/security_options.html>`__.
 
 Security in SCS
 ################
