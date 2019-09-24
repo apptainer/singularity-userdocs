@@ -1,0 +1,119 @@
+version: 2.1
+
+defaults: &defaults
+  docker:
+    - image: python:3.6-buster
+
+jobs:
+
+  lint_markdown:
+    <<: *defaults
+    docker:
+      - image: node:11-slim
+    steps:
+      - checkout
+      - run:
+          name: Install markdownlint
+          command: npm install -g markdownlint-cli
+      - run:
+          name: Check for Lint
+          command: markdownlint .
+
+  check_rst:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install sphinx
+          command: |
+            pip install sphinx sphinx-rtd-theme rstcheck pygmentss
+      - run:
+          name: Lint rst
+          command: |
+            rstcheck *.rst
+
+  make_html:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Singularity submodule init
+          command: |
+            git submodule update --init --recursive
+      - run:
+          name: Install sphinx
+          command: |
+            pip install sphinx sphinx-rtd-theme restructuredtext_lint pygments
+      - run:
+          name: Install singularity deps
+          command: |
+            apt-get update -y && \
+            apt-get install -f -y build-essential libssl-dev uuid-dev squashfs-tools libseccomp-dev cryptsetup-bin libgpgme-dev
+      - run:
+          name: Install Go 1.12.9
+          command: |
+            wget https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz
+            rm -rf /usr/local/go
+            tar -C /usr/local -xzf go1.12.9.linux-amd64.tar.gz
+            ln -s /usr/local/go/bin/go /usr/local/bin/go
+      - run:
+          name: make html
+          command: |
+            make html
+      - store_artifacts:
+          path: _build/html
+          destination: html
+
+  make_pdf_epub:
+    <<: *defaults
+    steps:
+      - checkout
+      - run:
+          name: Install sphinx
+          command: |
+            pip install sphinx sphinx-rtd-theme restructuredtext_lint pygments
+      - run:
+          name: submodule init
+          command: |
+            git submodule update --init --recursive
+      - run:
+          name: Install singularity deps
+          command: |
+            apt-get update -y && \
+            apt-get install -f -y build-essential libssl-dev uuid-dev squashfs-tools libseccomp-dev cryptsetup-bin libgpgme-dev
+      - run:
+          name: Install Go 1.12.9
+          command: |
+            wget https://dl.google.com/go/go1.12.9.linux-amd64.tar.gz
+            rm -rf /usr/local/go
+            tar -C /usr/local -xzf go1.12.9.linux-amd64.tar.gz
+            ln -s /usr/local/go/bin/go /usr/local/bin/go
+      - run:
+          name: Install TeXlive
+          command: |
+            apt-get install -f -y texlive-latex-extra latexmk
+      - run:
+          name: make pdf
+          command: |
+            make latexpdf
+      - store_artifacts:
+          path: _build/latex
+          destination: pdf
+      - run:
+          name: make epub
+          command: |
+            make epub
+      - store_artifacts:
+          path: _build/epub
+          destination: epu
+
+workflows:
+  version: 2
+  build_and_test:
+    jobs:
+      - lint_markdown
+      - check_rst
+      - make_html
+      - make_pdf_epub
+
+
