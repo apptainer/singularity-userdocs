@@ -405,7 +405,7 @@ misconception, Mac does not run on a Linux kernel.  It runs on a kernel called
 Darwin originally forked from BSD.)
 
 For this reason, the Singularity community maintains a set of Vagrant Boxes via
-`Vagrant Cloud <https://www.vagrantup.com/>`_, one of `Hashicorp's
+`Vagrant Cloud <https://www.vagrantup.com/>`__, one of `Hashicorp's
 <https://www.hashicorp.com/#open-source-tools>`_ open source tools. The current
 versions can be found under the `sylabs <https://app.vagrantup.com/sylabs>`_
 organization.
@@ -436,8 +436,8 @@ Mac
 
 With Singularity Desktop for macOS (Alpha Preview):
 
-The disk image file is available `here <http://repo.sylabs.io/desktop/singularity-desktop-0.0.1alpha.dmg>`_.
-More information can be found `here <https://www.sylabs.io/singularity-desktop-macos/>`_.
+The disk image file is available `here <http://repo.sylabs.io/desktop/singularity-desktop-0.0.1alpha.dmg>`__.
+More information can be found `here <https://www.sylabs.io/singularity-desktop-macos/>`__.
 
 Singularity is also available via Vagrant (installable with
 `Homebrew <https://brew.sh>`_ or manually) or with the Singularity Desktop for

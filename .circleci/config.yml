@@ -30,7 +30,7 @@ jobs:
       - run:
           name: Lint rst
           command: |
-            rstcheck *.rst
+            rstcheck --report warning *.rst
 
   make_html:
     <<: *defaults

@@ -1,16 +1,16 @@
-.. _mpi
+.. _mpi:
 
 ================================
 Singularity and MPI applications
 ================================
 
-.. _sec:mpi
+.. _sec-mpi:
 
 The `Message Passing Interface (MPI) <https://mpi-forum.org>`_
 is a standard extensively used by HPC applications to implement various communication
 across compute nodes of a single system or across compute platforms.
 There are two main open-source implementations of MPI at the
-moment - `OpenMPI <https://www.open-mpi.org//>`_ and `MPICH <https://www.mpich.org/>`_,
+moment - `OpenMPI <https://www.open-mpi.org/>`_ and `MPICH <https://www.mpich.org/>`_,
 both of which are supported by Singularity. The goal of this page is to
 demonstrate the development and running of MPI programs using Singularity containers.
 
