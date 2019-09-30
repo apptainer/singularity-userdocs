@@ -47,7 +47,8 @@ You must first install development libraries to your host. Assuming Ubuntu
         libseccomp-dev \
         wget \
         pkg-config \
-        git
+        git \
+        cryptsetup
 
 .. note::
     Note that ``squashfs-tools`` is only a dependency for commands that build
