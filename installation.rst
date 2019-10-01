@@ -53,7 +53,7 @@ similar with other package managers.
         build-essential \
         libssl-dev \
         uuid-dev \
-        libgpgme11-dev \
+        libgpgme-dev \
         squashfs-tools \
         libseccomp-dev \
         wget \
@@ -203,7 +203,7 @@ installed the bash completion file in a different location.)
 Build and install an RPM
 ========================
 
-Building and installing a Singularty RPM allows the installation be more easily
+Building and installing a Singularity RPM allows the installation be more easily
 managed, upgraded and removed. In Singularity >=v3.0.1 you can build an RPM
 directly from the `release tarball
 <https://github.com/sylabs/singularity/releases>`_.
