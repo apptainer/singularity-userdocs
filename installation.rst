@@ -72,7 +72,8 @@ similar with other package managers.
         libuuid-devel \
         libseccomp-devel \
         wget \
-        squashfs-tools
+        squashfs-tools \
+        cryptsetup
 
 .. _install-go:
 
