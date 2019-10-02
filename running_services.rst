@@ -64,6 +64,12 @@ for the container instances’ processes/services to live inside. We can
 confirm that this command started an instance by running the
 instance.list command like so:
 
+.. note::
+   
+   In Singularity 2.x the name of an instance *must not* contain a ``-`` (hyphen)
+   character. This restriction is not present in Singularity 3.x
+
+
 .. code-block:: none
 
     $ singularity instance.list
