@@ -733,6 +733,10 @@ disk space!
 
 This module allows you to build a Suse style container from a mirror URI.
 
+.. note::
+   ``zypper`` version 1.11.20 or greater is required on the host system, as
+   Singularity requires the ``--releasever`` flag.
+
 Overview
 """"""""
 
