@@ -92,7 +92,7 @@ releases <https://github.com/sylabs/singularity/releases>`_ page to ``/usr/local
 
 .. code-block:: none
 
-    $ VER=2.5.1
+    $ VER=2.5.2
 
     $ wget https://github.com/sylabs/singularity/releases/download/$VER/singularity-$VER.tar.gz
 
