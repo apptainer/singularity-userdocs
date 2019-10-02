@@ -60,6 +60,8 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **SINGULARITY_DETACHED**: To submit a build job and print the build ID (no real-time logs and also requires ``--remote``). Default is set to false.
 
+#. **SINGULARITY_DISABLE_CACHE**: To disable all caching of docker/oci, library, oras, etc. downloads and built SIFs. Default is set to false.
+
 #. **SINGULARITY_DNS**: A list of the DNS server addresses separated by commas to be added in ``resolv.conf``.
 
 #. **SINGULARITY_DOCKER_LOGIN**: To specify the interactive prompt for docker authentication.
