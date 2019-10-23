@@ -56,6 +56,7 @@ similar with other package managers.
         libgpgme-dev \
         squashfs-tools \
         libseccomp-dev \
+        cryptsetup-bin \
         wget \
         pkg-config \
         git \
