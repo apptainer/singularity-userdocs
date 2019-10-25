@@ -1,16 +1,15 @@
 # Singularity User Docs
 
-This project uses <a href="http://docutils.sourceforge.net/rst.html">
-reStructured Text (RST)</a> and <a href="https://readthedocs.org/">ReadTheDocs
-</a> . As a library for the current theme, <a
-href="https://pypi.org/project/Sphinx/" alt="PyPI">Sphinx Python library </a>
-was used, using Python v. 2.7.
+This project uses [reStructured Text (RST)](http://docutils.sourceforge.net/rst.html)
+and [ReadTheDocs](https://readthedocs.org/). As a library for the current
+theme, [Sphinx Python library](https://pypi.org/project/Sphinx/) was used,
+using Python v.2.7.
 
 ## Setting up an environment to contribute
 
 First things first, you will need to install the following tools:
 
-- <a href="https://www.python.org/download/releases/2.7/">Install Python 2.7</a>
+- [Install Python 2.7](https://www.python.org/download/releases/2.7/)
 - After that then you will need to install Sphinx:
 
 ```sh
