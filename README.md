@@ -9,7 +9,7 @@ using Python v.2.7.
 
 First things first, you will need to install the following tools:
 
-- <a href="https://www.python.org/download/releases/2.7/">Install Python 2.7</a>
+- [Install Python 2.7](https://www.python.org/download/releases/2.7/)
 - After that then you will need to install Sphinx:
 
 ```sh
