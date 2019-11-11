@@ -156,15 +156,7 @@ will be gone.
 
     Singularity ubuntu.sif:~> exit
 
-------------------------------
-A note on resizing ext3 images
-------------------------------
-
-Singularity v2 provided built-in support for creating and resizing ext3 file 
-system images, but with the adoption of SIF as the default container format,
-this support was dropped.  
-
-Luckily, you can use standard Linux tools to manipulate ext3 images. For
+To resize an overlay, standard Linux tools which manipulate ext3 images can be used.  For
 instance, to resize the 500MB file created above to 700MB one could use the 
 ``e2fsck`` and ``resize2fs`` utilities like so:
 
