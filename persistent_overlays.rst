@@ -121,7 +121,7 @@ After you've completed the steps above, you can shell into your container with t
 
 .. code-block:: none
 
-        $ sudo singularity shell --writable ubuntu_latest.si
+        $ sudo singularity shell --writable ubuntu_latest.sif
 
 Final note
 ==========
