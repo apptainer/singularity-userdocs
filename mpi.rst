@@ -203,7 +203,7 @@ Bind model
 ----------
 
 Similarily to the *Hybrid Approach*, the basic idea behind *Bind Approach* is to start the MPI
-application by calling the MPI launcher (e.g., `mpirun`) from the host. The main different between
+application by calling the MPI launcher (e.g., `mpirun`) from the host. The main difference between
 the hybrid and bind approach is the fact that with the bind approach, the container usually does
 not include any MPI implementation. This means that Singularity needs to mount/bind the MPI
 available on the host into the container.
@@ -228,7 +228,7 @@ The drawbacks are:
 
 The creation of a Singularity container based on the bind model is based on the following steps:
 
-1. Compile your application on a system with the target MPI implementation, as you would docker
+1. Compile your application on a system with the target MPI implementation, as you would do
    to install your application on any system.
 2. Create a definition file that includes the copy of the application from the host to the container
    image, as well as all required dependencies.
