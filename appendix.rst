@@ -538,7 +538,7 @@ use. It is only required if you have specified a %{OSVERSION} variable in the
     MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
 
 The MirrorURL keyword is mandatory. It specifies the URI to use as a mirror to
-download the OS. If you define the ``OSVersion`` keyword, than you can use it in
+download the OS. If you define the ``OSVersion`` keyword, then you can use it in
 the URI as in the example above.
 
 .. code-block:: singularity
