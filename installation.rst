@@ -53,7 +53,7 @@ similar with other package managers.
         build-essential \
         libssl-dev \
         uuid-dev \
-        libgpgme11-dev \
+        libgpgme-dev \
         squashfs-tools \
         libseccomp-dev \
         wget \
@@ -72,7 +72,8 @@ similar with other package managers.
         libuuid-devel \
         libseccomp-devel \
         wget \
-        squashfs-tools
+        squashfs-tools \
+        cryptsetup
 
 .. _install-go:
 
@@ -203,7 +204,7 @@ installed the bash completion file in a different location.)
 Build and install an RPM
 ========================
 
-Building and installing a Singularty RPM allows the installation be more easily
+Building and installing a Singularity RPM allows the installation be more easily
 managed, upgraded and removed. In Singularity >=v3.0.1 you can build an RPM
 directly from the `release tarball
 <https://github.com/sylabs/singularity/releases>`_.
@@ -405,7 +406,7 @@ misconception, Mac does not run on a Linux kernel.  It runs on a kernel called
 Darwin originally forked from BSD.)
 
 For this reason, the Singularity community maintains a set of Vagrant Boxes via
-`Vagrant Cloud <https://www.vagrantup.com/>`_, one of `Hashicorp's
+`Vagrant Cloud <https://www.vagrantup.com/>`__, one of `Hashicorp's
 <https://www.hashicorp.com/#open-source-tools>`_ open source tools. The current
 versions can be found under the `sylabs <https://app.vagrantup.com/sylabs>`_
 organization.
@@ -436,8 +437,8 @@ Mac
 
 With Singularity Desktop for macOS (Alpha Preview):
 
-The disk image file is available `here <http://repo.sylabs.io/desktop/singularity-desktop-0.0.1alpha.dmg>`_.
-More information can be found `here <https://www.sylabs.io/singularity-desktop-macos/>`_.
+The disk image file is available `here <http://repo.sylabs.io/desktop/singularity-desktop-0.0.1alpha.dmg>`__.
+More information can be found `here <https://www.sylabs.io/singularity-desktop-macos/>`__.
 
 Singularity is also available via Vagrant (installable with
 `Homebrew <https://brew.sh>`_ or manually) or with the Singularity Desktop for

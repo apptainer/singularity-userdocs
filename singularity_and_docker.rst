@@ -1743,6 +1743,38 @@ In working with definition files, the following additional considerations arise:
     }
 
 
+.. _sec:docker_cache:
+
+-----------------
+Container Caching
+-----------------
+
+To avoid fetching duplicate docker or OCI layers every time you want to ``run``, ``exec`` etc. a ``docker://`` or ``oci://`` container directly, Singularity keeps a cache of layer files. The SIF format container that Singularity creates from these layers is also cached. This means that re-running a docker container, e.g. ``singularity run docker://alpine`` is much faster until the upstream image changes in docker hub, and a new SIF must be built from updated layers.
+
+By default the cache directory is ``.singularity/cache`` in your ``$HOME`` directory. You can modify the cache directory by setting the ``SINGULARITY_CACHEDIR`` environment variable. To disable caching altogether, set the ``SINGULARITY_DISABLE_CACHE`` environment variable.
+
+The ``singularity cache`` command can be used to see the content of your cache dir, and clean the cache if needed:
+
+.. code-block:: none
+                
+    $ singularity cache list
+    There are 10 container file(s) using 4.75 GB and 78 oci blob file(s) using 5.03 GB of space
+    Total space used: 9.78 GB
+
+    $ singularity cache clean
+    This will delete everything in your cache (containers from all sources and OCI blobs). 
+    Hint: You can see exactly what would be deleted by canceling and using the --dry-run option.
+    Do you want to continue? [N/y] y
+    Removing /home/dave/.singularity/cache/library
+    Removing /home/dave/.singularity/cache/oci-tmp
+    Removing /home/dave/.singularity/cache/shub
+    Removing /home/dave/.singularity/cache/oci
+    Removing /home/dave/.singularity/cache/net
+    Removing /home/dave/.singularity/cache/oras
+
+For a more complete guide to caching and the ``cache`` command, see the :ref:`build-environment` page.
+
+    
 .. _sec:best_practices:
 
 --------------
@@ -1771,7 +1803,8 @@ Singularity can make use of most Docker and OCI images without complication. How
     In a ``Dockerfile``, `environment variables are declared <https://docs.docker.com/engine/reference/builder/#env>`_ as key-value pairs through use of the ``ENV`` instruction. Declaration in the build specification for a container is advised, rather than relying upon user
     (e.g., ``.bashrc``, ``.profile``) or system-wide configuration files for interactive shells. Should a ``Dockerfile`` be converted into a definition file for Singularity, as suggested in the container-maintenance best practice above, :ref:`environment variables can be explicitly represented <definition-files>` as ``ENV`` instructions that have been converted into entries in the ``%environment`` section, respectively. This best practice can be stated as follows:
 
-        "Define environment variables in container specifications, not interactive shells"
+
+    "Define environment variables in container specifications, not interactive shells"
 
 
     4. Installation to ``/root``
@@ -1943,4 +1976,5 @@ Section          Description                Section          Description
                                                              | key-value pair.
 
 ================ ========================== ================ =============================
+
 .. TODO-ND SIFtool - does it have more to offer here???

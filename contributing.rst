@@ -44,7 +44,7 @@ For general bugs/issues, you can open an issue `at the GitHub repo
 security  related issue/problem, please email Sylabs directly at 
 `security@sylabs.io <mailto:security@sylabs.io>`_. More information about the 
 Sylabs security policies and procedures can be found `here 
-<https://www.sylabs.io/singularity/security-policy/>`_
+<https://www.sylabs.io/singularity/security-policy/>`__
 
 -------------------
 Write Documentation
@@ -74,7 +74,7 @@ Other dependencies include:
 More information about contributing to the documentation, instructions on how to 
 install the dependencies, and how to generate the files can be obtained 
 `here 
-<https://github.com/sylabs/singularity-userdocs/blob/master/README.md#singularity-user-docs>`_.
+<https://github.com/sylabs/singularity-userdocs/blob/master/README.md#singularity-user-docs>`__.
 
 For more information on using Git and GitHub to create a pull request suggesting 
 additions and edits to the docs, see the :ref:`section on contributing to the

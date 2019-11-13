@@ -47,7 +47,8 @@ You must first install development libraries to your host. Assuming Ubuntu
         libseccomp-dev \
         wget \
         pkg-config \
-        git
+        git \
+        cryptsetup
 
 .. note::
     Note that ``squashfs-tools`` is only a dependency for commands that build
@@ -433,7 +434,7 @@ Running a container
 Singularity containers contain :ref:`runscripts <runscript>`. These are user
 defined scripts that define the actions a container should perform when someone
 runs it. The runscript can be triggered with the `run <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_run.html>`_
- command, or simply by calling the container as though it were an executable.
+command, or simply by calling the container as though it were an executable.
 
 .. code-block:: none
 

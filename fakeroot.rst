@@ -74,7 +74,7 @@ And everything done in this dedicated network won't affect the host network.
     ``--network-args="portmap=80:80/tcp"``
 
 .. warning::
-    For unprivileged installation of Singularity or is ``allow setuid = no`` is set in ``singularity.conf``
+    For unprivileged installation of Singularity or if ``allow setuid = no`` is set in ``singularity.conf``
     users won't be able to use ``fakeroot`` network.
 
 -----
