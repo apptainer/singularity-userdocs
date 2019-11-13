@@ -9,7 +9,7 @@ jobs:
   lint_markdown:
     <<: *defaults
     docker:
-      - image: node:11-slim
+      - image: node:11
     steps:
       - checkout
       - run:
