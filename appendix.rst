@@ -60,6 +60,8 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **SINGULARITY_DETACHED**: To submit a build job and print the build ID (no real-time logs and also requires ``--remote``). Default is set to false.
 
+#. **SINGULARITY_DISABLE_CACHE**: To disable all caching of docker/oci, library, oras, etc. downloads and built SIFs. Default is set to false.
+
 #. **SINGULARITY_DNS**: A list of the DNS server addresses separated by commas to be added in ``resolv.conf``.
 
 #. **SINGULARITY_DOCKER_LOGIN**: To specify the interactive prompt for docker authentication.
@@ -536,7 +538,7 @@ use. It is only required if you have specified a %{OSVERSION} variable in the
     MirrorURL: http://mirror.centos.org/centos-%{OSVERSION}/%{OSVERSION}/os/$basearch/
 
 The MirrorURL keyword is mandatory. It specifies the URI to use as a mirror to
-download the OS. If you define the ``OSVersion`` keyword, than you can use it in
+download the OS. If you define the ``OSVersion`` keyword, then you can use it in
 the URI as in the example above.
 
 .. code-block:: singularity
@@ -733,6 +735,10 @@ disk space!
 
 This module allows you to build a Suse style container from a mirror URI.
 
+.. note::
+   ``zypper`` version 1.11.20 or greater is required on the host system, as
+   Singularity requires the ``--releasever`` flag.
+
 Overview
 """"""""
 
@@ -770,7 +776,7 @@ zypper build module is ``zypper`` itself.
 .. _docker-daemon-archive:
 
 ``docker-daemon & docker-archive`` bootstrap agents
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For users using docker locally there are two options for creating Singularity
 images without the need for a repository: ``docker-daemon://`` and ``docker-archive://``
