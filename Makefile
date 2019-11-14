@@ -58,6 +58,7 @@ clidocs: cli/singularity.rst
 vendor/github.com/sylabs/singularity/builddir/singularity:
 	export GOPATH=$$(pwd)/vendor &&\
 	cd $(SINGULARITY_DIR) &&\
+	go mod vendor &&\
 	./mconfig &&\
 	cd builddir &&\
 	make
