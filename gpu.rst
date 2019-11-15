@@ -175,7 +175,7 @@ CUDA_ERROR_UNKNOWN when everything seems to be correctly configured
 CUDA depends on multiple kernel modules being loaded. Not all of the modules are
 loaded at system startup. Some portions of the NVIDA driver stack are initialized
 when first needed. This is done using a setuid root binary, so initializing can
-be triggered by any user on the host. In Singularity containers, privelege
+be triggered by any user on the host. In Singularity containers, privilege
 escalation is blocked, so the setuid root binary cannot initialize the driver
 stack fully.
 
