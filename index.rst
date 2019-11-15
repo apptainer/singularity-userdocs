@@ -30,4 +30,5 @@ User Guide
    Remote Endpoints <endpoint>
    Cgroups Support <cgroups>
    Singularity and MPI applications <mpi>
+   GPU Support <gpu>
    Appendix <appendix>
