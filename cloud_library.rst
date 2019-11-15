@@ -42,7 +42,8 @@ To generate a access token, do the following steps:
  2. Click the top right button with your username.
  3. From the dropdown menu, click "Access Tokens".
  4. Enter a token name, like ``my token for linux ws``, then click "Create a new token".
- 5. Copy the token and paste it to ``~/.singularity/sylabs-token``.
+ 5. Copy the token to the clipboard.
+ 6. Run ``singularity remote login`` and past the token at the prompt.
 
 Now that you have your token, you are ready to push your container!
 
