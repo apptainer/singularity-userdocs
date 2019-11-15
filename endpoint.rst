@@ -33,7 +33,7 @@ administrator.
 
    The ``remote`` command group *cannot be used* to e.g. configure
    singularity to store credentials for access to a docker
-   registry. See the `:ref:singularity-and-docker`
+   registry. See the :ref:`singularity-and-docker`
    guide for information about authenticating to various docker
    registries.
 
@@ -44,7 +44,7 @@ Public Singularity Container Services
 A fresh, default installation of Singularity is configured to connect
 to the public `cloud.sylabs.io <https://cloud.sylabs.io>`__
 services. If you only want to use the public services you just need to
-obtain an authentication token, and the ``singularity remote login``:
+obtain an authentication token, and then ``singularity remote login``:
 
   1) Go to: https://cloud.sylabs.io/
   2) Click "Sign in to Sylabs" and follow the sign in steps.
@@ -88,8 +88,8 @@ You can interact with the public container services using various Singularity co
 
 .. note::
 
-   Using ``docker://`` and ``shub://`` URIs with these commands
-   does not interact with the Sylabs cloud.
+   Using ``docker://``, ``oras://`` and ``shub://`` URIs with these commands
+   does not interact with the Sylabs Cloud.
 
 -------------------------
 Managing Remote Endpoints
@@ -97,7 +97,7 @@ Managing Remote Endpoints
 
 Generally, users and administrators should manage remote endpoints
 using the ``singularity remote`` command, and avoid editing
-``remote.yaml`` files directly.
+``remote.yaml`` configuration files directly.
 
 List and Login to Remotes
 =========================
@@ -143,8 +143,8 @@ To ``add`` a remote endpoint (for the current user only):
 
     $ singularity remote add <remote_name> <remote_uri>
 
-E.g. if you have an installation of Singularity enterprise hosted at
-  enterprise.example.com:
+For example, if you have an installation of Singularity enterprise
+hosted at enterprise.example.com:
 
 .. code-block:: none
 
@@ -155,7 +155,8 @@ E.g. if you have an installation of Singularity enterprise hosted at
     Generate an API Key at https://enterprise.example.com/auth/tokens, and paste here:
     API Key:
 
-You will be prompted to setup an API key as the remote is added.
+You will be prompted to setup an API key as the remote is added. The
+web address needed to do this will always be given.
 
 To ``add`` a global remote endpoint (available to all users on the
 system) an administrative user should run:
@@ -171,9 +172,9 @@ system) an administrative user should run:
     INFO:    Remote "company-remote" added.
     INFO:    Global option detected. Will not automatically log into remote.
    
-.. note::
-     Global remote configurations can only be modified by the root user and can
-     be viewed in ``~/.singularity/remote.yaml`` file.
+.. note:: Global remote configurations can only be modified by the
+     root user and are stored in the ``etc/singularity/remote.yaml``
+     file, at the Singularity installation location.
 
 Conversely, to ``remove`` an endpoint:
 
@@ -186,7 +187,7 @@ endpoint:
 
 .. code-block:: none
 
-    $ singularity remote remove --global <remote_name>
+    $ sudo singularity remote remove --global <remote_name>
 
 
 Set the Default Remote
@@ -219,10 +220,10 @@ The default remote shows up in ``[...]`` square brackets in the output of ``remo
     [myremote]      enterprise.example.com  NO
 
     
-If you do not want to switch remote with ``remote use`` you can tell:
+If you do not want to switch remote with ``remote use`` you can:
 
-- ``push`` and ``pull`` to use an alternative library server with
-    the ``--library`` option.
-- ``build --remote`` to use an alternative remote builder with the
-    ``--builder`` option.
-- ``keys`` to use an alternative keyserver with the ``-url`` option.
+* Make ``push`` and ``pull`` use an alternative library server with
+  the ``--library`` option.
+* Make ``build --remote`` use an alternative remote builder with the
+  ``--builder`` option.
+* Make ``keys`` use an alternative keyserver with the ``-url`` option.
