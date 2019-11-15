@@ -107,7 +107,7 @@ The ``--fakeroot`` option is available with the following singularity commands:
 Build
 =====
 
-With fakeroot an unprivileged user can now build image from a definition file with few restrictions. Some bootstrap
+With fakeroot an unprivileged user can now build an image from a definition file with few restrictions. Some bootstrap
 methods that require creation of block devices (like ``/dev/null``) may not always work correctly with **"fake root"**,
 Singularity uses seccomp filters to give programs the illusion that block device creation succeeded. This appears to
 work with ``yum`` bootstraps and *may* work with other bootstrap methods, although ``debootstrap`` is known to not work.
