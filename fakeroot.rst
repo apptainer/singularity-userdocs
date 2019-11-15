@@ -8,7 +8,7 @@ Fakeroot feature
 Overview
 --------
 
-Fakeroot feature (or commonly referred as rootless mode) allows an unprivileged user
+The fakeroot feature (commonly referred as rootless mode) allows an unprivileged user
 to run a container as a **"fake root"** user by leveraging
 `user namespace UID/GID mapping <http://man7.org/linux/man-pages/man7/user_namespaces.7.html>`_.
 
@@ -32,11 +32,11 @@ Filesystem
 
 A **"fake root"** user can't access or modify files and directories for which he doesn't
 have already access or rights on the host filesystem, so a **"fake root"** user won't be able
-to access to host file like ``/etc/shadow`` or host ``/root`` directory.
+to access root-only host files like ``/etc/shadow`` or the host ``/root`` directory.
 
-Additionally, all files or directories created with **"fake root"** user are owned like
-``root:root`` inside container and are owned like ``user:group`` outside of container.
-Let's see the following example, in this case "user" is authorized to use the fakeroot feature
+Additionally, all files or directories created by the **"fake root"** user are owned by
+``root:root`` inside container but as ``user:group`` outside of the container.
+Let's consider the following example, in this case "user" is authorized to use the fakeroot feature
 and can use 65536 UIDs starting at 131072 (same thing for GIDs).
 
 +----------------------+-----------------------+
@@ -53,21 +53,20 @@ and can use 65536 UIDs starting at 131072 (same thing for GIDs).
 | 65536                | 196607                |
 +----------------------+-----------------------+
 
-Which means if **"fake root"** user creates a file a ``bin`` user in container, this file will
+Which means if the **"fake root"** user creates a file under a ``bin`` user in the container, this file will
 be owned by ``131073:131073`` outside of container. The responsibility relies on the administrator
 to ensure that there is no overlap with the current user's UID/GID on the system.
 
 Network
 =======
 
-Restrictions are also applied for network, if ``singularity`` is executed without ``--net`` flag,
-the **"fake root"** user won't be able to use ``ping`` or bind a container service on a port below
-than 1024.
+Restrictions are also applied to networking, if ``singularity`` is executed without the ``--net`` flag,
+the **"fake root"** user won't be able to use ``ping`` or bind a container service to a port below
+1024.
 
-With ``--net`` the **"fake root"** user has full privileges in this dedicated network, inside
+With ``--net`` the **"fake root"** user has full privileges in a dedicated container network. Inside
 the container network he can bind on privileged ports below 1024, use ping, manage firewall rules,
-listen traffic ...
-And everything done in this dedicated network won't affect the host network.
+listen to traffic, etc. Anything done in this dedicated network won't affect the host network.
 
 .. note:: 
     Of course an unprivileged user could not map host ports below than 1024 by using:
@@ -75,17 +74,29 @@ And everything done in this dedicated network won't affect the host network.
 
 .. warning::
     For unprivileged installation of Singularity or if ``allow setuid = no`` is set in ``singularity.conf``
-    users won't be able to use ``fakeroot`` network.
+    users won't be able to use a ``fakeroot`` network.
+
+----------------------------
+Requirements / Configuration
+----------------------------
+
+Fakeroot depends on user mappings set in ``/etc/subuid`` and group mappings in ``/etc/subgid``, so your username 
+needs to be listed in those files with a valid mapping (see the admin-guide for details), if you can't edit
+the files ask an administrator.
+
+In Singularity ``3.5`` a ``singularity config fakeroot`` command has been added to allow configuration
+of the ``/etc/subuid`` and ``/etc/subgid`` mappings from the Singularity command line. You must be a root
+user or run with ``sudo`` to use ``config fakeroot``, as the mapping files are security sensitive. See the
+admin-guide for more details.
 
 -----
 Usage
 -----
 
-Fakeroot looks at user mappings in ``/etc/subuid`` and ``/etc/subgid``, so your username need to be listed
-in those files with a valid mapping (see admin-guide for details), if you can't edit those files, ask to an
-administrator.
+If your user account is configured with valid ``subuid`` and ``subgid`` mappings you work as a fake root user
+inside a container by using the ``--fakeroot`` or ``-f`` option. 
 
-Then you could use it with ``--fakeroot`` or ``-f`` option, this option is available with singularity commands :
+The ``--fakeroot`` option is available with the following singularity commands:
 
   - ``shell``
   - ``exec``
@@ -96,10 +107,10 @@ Then you could use it with ``--fakeroot`` or ``-f`` option, this option is avail
 Build
 =====
 
-With fakeroot an unprivileged user can now build image from a definition file with few restrictions, some bootstrap
-methods requiring to create block devices (like ``/dev/null``) may not always work correctly with **"fake root"**,
-Singularity uses seccomp filters to give programs the illusion that block devices creation worked, while it seems to
-work fine with ``yum`` and *may* work with other bootstrap methods, actually ``debootstrap`` is known to not work.
+With fakeroot an unprivileged user can now build an image from a definition file with few restrictions. Some bootstrap
+methods that require creation of block devices (like ``/dev/null``) may not always work correctly with **"fake root"**,
+Singularity uses seccomp filters to give programs the illusion that block device creation succeeded. This appears to
+work with ``yum`` bootstraps and *may* work with other bootstrap methods, although ``debootstrap`` is known to not work.
 
 Examples
 ========
