@@ -74,14 +74,14 @@ by using the ``instance list`` command like so:
 
     $ singularity instance list
 
-    INSTANCE NAME    PID      IMAGE
-    instance1        12715    /home/ysub/alpine_latest.sif
+    INSTANCE NAME    PID      IP              IMAGE
+    instance1        22084                    /home/dave/instances/alpine_latest.sif
 
 .. note::
-    The instances are linked with your user. So make sure to run *all* the
+    The instances are linked with your user account. So make sure to run *all*
     instance commands either with or without the ``sudo`` privilege. If you
-    ``start`` an instance with sudo and then you must ``list`` it with sudo, as
-    well or you will not be able to locate the instance.
+    ``start`` an instance with sudo then you must ``list`` it with sudo as
+    well, or you will not be able to locate the instance.
 
 If you want to run multiple instances from the same image, it’s as simple as
 running the command multiple times with different instance names. The instance
@@ -99,10 +99,20 @@ And again to confirm that the instances are running as we expected:
 
     $ singularity instance list
 
-    INSTANCE NAME    PID      IMAGE
-    instance1        12715    /home/ysub/alpine_latest.sif
-    instance2        12795    /home/ysub/alpine_latest.sif
-    instance3        12837    /home/ysub/alpine_latest.sif
+    INSTANCE NAME    PID      IP              IMAGE
+    instance1        22084                    /home/dave/instances/alpine_latest.sif
+    instance2        22443                    /home/dave/instances/alpine_latest.sif
+    instance3        22493                    /home/dave/instances/alpine_latest.sif
+
+You can also filter the instance list by supplying a pattern:
+
+.. code-block:: none
+
+    $ singularity instance list '*2'
+    
+    INSTANCE NAME    PID      IP              IMAGE
+    instance2        22443                    /home/dave/instances/alpine_latest.s
+
 
 You can use the ``singularity run/exec`` commands on instances:
 
@@ -538,3 +548,47 @@ instances.
     .. code-block:: none
 
         $ singularity instance start --bind output/dir/outside/:/output/ nginx.sif  web
+
+
+------------------------------
+System integration / PID files
+------------------------------
+
+If you are running services in containers you may want them to be started on
+boot, and shutdown gracefully automatically. This is usually performed by an init process,
+or another supervisor daemon installed on your host. Many init and supervisor
+daemons support managing processes via pid files.
+
+You can specify a `--pid-file` option to `singularity instance start` to write
+the PID for an instance to the specifed file, e.g.
+
+.. code-block:: none
+
+    $ singularity instance start --pid-file /home/dave/alpine.pid alpine_latest.sif instanceA
+
+    $ cat /home/dave/alpine.pid 
+    23727
+
+
+An example service file for an instance controlled by systemd is below. This can be used as a
+template to setup containerized services under systemd.
+
+.. code-block:: none
+
+    [Unit]
+    Description=Web Instance
+    After=network.target
+
+    [Service]
+    Type=forking
+    Restart=always
+    User=www-data
+    Group=www-data
+    PIDFile=/run/web-instance.pid
+    ExecStart=/usr/local/bin/singularity instance start --pid-file /run/web-instance.pid /data/containers/web.sif web-instance
+    ExecStop=/usr/local/bin/singularity instance stop web-instance
+
+    [Install]
+    WantedBy=multi-user.target
+
+Note that ``Type=forking`` is required here, since ``instance start`` starts an instance and then exits.
