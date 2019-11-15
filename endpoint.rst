@@ -24,6 +24,19 @@ are stored in their ``~/.singularity/remote.yaml``
 file. Alternatively, remote endpoints can be set system-wide by an
 administrator.
 
+.. note::
+
+   The ``remote`` command group configures Singularity to use
+   and authenticate to the public Sylabs Cloud, a private installation
+   of Singularity Enterprise, or community-developed services that are
+   API compatible.
+
+   The ``remote`` command group *cannot be used* to e.g. configure
+   singularity to store credentials for access to a docker
+   registry. See the `:ref:singularity-and-docker`
+   guide for information about authenticating to various docker
+   registries.
+
 -------------------------------------
 Public Singularity Container Services
 -------------------------------------
