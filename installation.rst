@@ -77,6 +77,11 @@ similar with other package managers.
 
 .. _install-go:
 
+.. note::
+
+   You can build Singularity (3.5+) without ``cryptsetup`` available, but will
+   not be able to use encrypted containers without it installed on your system.
+
 ----------
 Install Go
 ----------
