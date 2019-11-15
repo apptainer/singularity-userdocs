@@ -53,7 +53,7 @@ and can use 65536 UIDs starting at 131072 (same thing for GIDs).
 | 65536                | 196607                |
 +----------------------+-----------------------+
 
-Which means if the **"fake root"** user creates a file a ``bin`` user in container, this file will
+Which means if the **"fake root"** user creates a file under a ``bin`` user in the container, this file will
 be owned by ``131073:131073`` outside of container. The responsibility relies on the administrator
 to ensure that there is no overlap with the current user's UID/GID on the system.
 
