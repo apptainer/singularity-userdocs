@@ -23,12 +23,12 @@ signed using a PGP key. To use this feature with images that you pull from the
 container library, you must first generate an access token to the Sylabs Cloud.
 If you don't already have a valid access token, follow these steps:
 
-  1) Go to : https://cloud.sylabs.io/
+  1) Go to: https://cloud.sylabs.io/
   2) Click "Sign in to Sylabs" and follow the sign in steps.
   3) Click on your login id (same and updated button as the Sign in one).
   4) Select "Access Tokens" from the drop down menu.
-  5) Click the "Manage my API tokens" button from the "Account Management" page.
-  6) Click "Create".
+  5) Enter a name for your new access token, such as "test token"
+  6) Click the "Create a New Access Token" button.
   7) Click "Copy token to Clipboard" from the "New API Token" page.
   8) Run ``singularity remote login`` and paste the access token at the prompt.
 

@@ -38,11 +38,14 @@ Access tokens for pushing a container, and remote builder.
 
 To generate a access token, do the following steps:
 
- 1. Go to: https://cloud.sylabs.io/library.
- 2. Click the top right button with your username.
- 3. From the dropdown menu, click "Access Tokens".
- 4. Enter a token name, like ``my token for linux ws``, then click "Create a new token".
- 5. Copy the token and paste it to ``~/.singularity/sylabs-token``.
+  1) Go to: https://cloud.sylabs.io/
+  2) Click "Sign in to Sylabs" and follow the sign in steps.
+  3) Click on your login id (same and updated button as the Sign in one).
+  4) Select "Access Tokens" from the drop down menu.
+  5) Enter a name for your new access token, such as "test token"
+  6) Click the "Create a New Access Token" button.
+  7) Click "Copy token to Clipboard" from the "New API Token" page.
+  8) Run ``singularity remote login`` and paste the access token at the prompt.
 
 Now that you have your token, you are ready to push your container!
 

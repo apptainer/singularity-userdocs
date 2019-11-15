@@ -195,7 +195,6 @@ Singularity can make use of public images available from the `Docker Hub <https:
 .. code-block:: none
 
     $ singularity pull docker://godlovedc/lolcow
-    WARNING: Authentication token file not found : Only pulls of public images will succeed
     INFO:    Starting build...
     Getting image source signatures
     Copying blob sha256:9fb6c798fa41e509b58bccc5c29654c3ff4648b608f5daa67c1aab6a7d02c118
@@ -225,10 +224,6 @@ This ``pull`` results in a *local* copy of the Docker image in SIF, the Singular
     lolcow_latest.sif: a /usr/bin/env run-singularity script executable (binary data)
 
 In converting to SIF, individual layers of the Docker image have been *combined* into a single, native file for use by Singularity; there is no need to subsequently ``build`` the image for Singularity. For example, you can now ``exec``, ``run`` or ``shell`` into the SIF version via Singularity, :ref:`as described above <sec:action_commands_prebuilt_public_docker_images>`.
-
-.. note::
-
-    The above authentication warning originates from a check for the existence of ``${HOME}/.singularity/sylabs-token``. It can be ignored when making use of Docker Hub, or  silenced by issuing ``touch ${HOME}/.singularity/sylabs-token`` once.
 
 .. _sec:use_prebuilt_public_docker_images_SUB_inspect:
 
@@ -513,7 +508,7 @@ Building Containers Remotely
 
 By making use of the `Sylabs Cloud Remote Builder <https://cloud.sylabs.io/builder>`_, it is possible to build SIF containers *remotely* from images hosted at Docker Hub. The Sylabs Cloud Remote Builder is a **service** that can be used from the Singularity command line or via its Web interface. Here use of the Singularity CLI is emphasized.
 
-Once you have an account for Sylabs Cloud, and have logged in to the portal, select `Remote Builder <https://cloud.sylabs.io/builder>`_. The right-hand side of this page is devoted to use of the Singularity CLI. Self-generated API tokens are used to enable authenticated access to the Remote Builder. To create a token, follow the `instructions provided <https://cloud.sylabs.io/auth/tokens>`_. Once the token has been created, store it in the file ``$HOME/.singularity/sylabs-token``.
+Once you have an account for Sylabs Cloud, and have logged in to the portal, select `Remote Builder <https://cloud.sylabs.io/builder>`_. The right-hand side of this page is devoted to use of the Singularity CLI. Self-generated API tokens are used to enable authenticated access to the Remote Builder. To create a token, follow the `instructions provided <https://cloud.sylabs.io/auth/tokens>`_. Once the token has been created, run ``singularity remote login`` and paste it at the prompt.
 
 The above token provides *authenticated* use of the Sylabs Cloud Remote Builder when ``--remote`` is *appended* to the Singularity ``build`` command. For example, for remotely hosted images:
 
