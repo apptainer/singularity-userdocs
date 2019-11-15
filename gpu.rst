@@ -229,7 +229,7 @@ DKMS driver.
 Example - tensorflow-rocm
 =========================
 
-Tensorflow is commonly used for machine learning projects, but can be diffficult
+Tensorflow is commonly used for machine learning projects, but can be difficult
 to install on older systems, and is updated frequently. Running tensorflow from
 a container removes installation problems and makes trying out new versions easy.
 
