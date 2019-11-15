@@ -42,7 +42,7 @@ ensure that:
   server running, unless you want to run graphical apps from the container.
 * Either a working installation of the ``nvidia-container-cli`` tool is available
   on the ``PATH`` when you run ``singularity``, or the NVIDIA libraries are in
-  the system's library search path .
+  the system's library search path.
 * The application inside your container was compiled for a CUDA version, and
   device capability level, that is supported by the host card and driver.
 
