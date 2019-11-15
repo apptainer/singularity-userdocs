@@ -384,8 +384,10 @@ running ``verify`` with the same ``--groupid`` option.
   
 .. note::
 
-   As of Singularity 3.5 a group signature is not valid to verify a
-   container in the absence of a signature on the container root
-   filesystem partition. As metadata is moved to SIF paritions in
-   future, the semantics of signatures and verification will change to
-   make more effective use of group signatures.
+    As of Singularity 3.5 a group signature will not verify a
+    container by default. A signature on the container root filesystem
+    partition will be needed or the group id of the group signature
+    via `--groupid` will need to be supplied.  As metadata is moved to
+    SIF paritions in future, the semantics of signatures and
+    verification will change to make more effective use of group
+    signatures.
