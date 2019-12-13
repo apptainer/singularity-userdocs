@@ -775,28 +775,78 @@ zypper build module is ``zypper`` itself.
 
 .. _docker-daemon-archive:
 
-``docker-daemon & docker-archive`` bootstrap agents
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``docker-daemon`` and ``docker-archive`` bootstrap agents
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-For users using docker locally there are two options for creating Singularity
-images without the need for a repository: ``docker-daemon://`` and ``docker-archive://``
+If you are using docker locally there are two options for creating Singularity
+images without the need for a repository. You can either build a SIF from a 
+``docker-save`` tar file or you can convert any docker image present in 
+docker's daemon internal storage.
+
 
 Overview
 """"""""
 
-``docker-daemon`` allows you to build a SIF from locally running docker daemon
-images while ``docker-archive`` let's you build from tar archives of images
-pulled from docker.
+``docker-daemon`` allows you to build a SIF from any docker image currently 
+residing in docker's daemon internal storage:
+
+.. code-block:: console
+
+    $ docker images alpine
+    REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
+    alpine              latest              965ea09ff2eb        7 weeks ago         5.55MB
+
+    $ singularity run docker-daemon:alpine:latest
+    INFO:    Converting OCI blobs to SIF format
+    INFO:    Starting build...
+    Getting image source signatures
+    Copying blob 77cae8ab23bf done
+    Copying config 759e71f0d3 done
+    Writing manifest to image destination
+    Storing signatures
+    2019/12/11 14:53:24  info unpack layer: sha256:eb7c47c7f0fd0054242f35366d166e6b041dfb0b89e5f93a82ad3a3206222502
+    INFO:    Creating SIF file...
+    Singularity> 
+
+while ``docker-archive`` permits you to do the same thing starting from a docker
+image stored in a ``docker-save`` formatted tar file:
+
+.. code-block:: console
+
+    $ docker save -o alpine.tar alpine:latest
+
+    $ singularity run docker-archive:$(pwd)/alpine.tar
+    INFO:    Converting OCI blobs to SIF format
+    INFO:    Starting build...
+    Getting image source signatures
+    Copying blob 77cae8ab23bf done
+    Copying config 759e71f0d3 done
+    Writing manifest to image destination
+    Storing signatures
+    2019/12/11 15:25:09  info unpack layer: sha256:eb7c47c7f0fd0054242f35366d166e6b041dfb0b89e5f93a82ad3a3206222502
+    INFO:    Creating SIF file...
+    Singularity> 
 
 Keywords
 """"""""
 
+The ``docker-daemon`` bootstrap agent can be used in a Singularity definition file 
+as follows:
+
 .. code-block:: singularity
 
-    From: /path/to/container/file/or/directory
+    From: docker-daemon:<image>:<tag>
 
-The ``From`` keyword is mandatory and applies to these modules in the same nature
-as described for other Bootstrap agents.
+where both ``<image>`` and ``<tag>`` are mandatory fields that must be written explicitly.
+The ``docker-archive`` bootstrap agent requires instead the path to the tar file 
+containing the image:
+
+.. code-block:: singularity
+
+    From: docker-archive:<path-to-tar-file>
+
+Note that differently from the ``docker://`` bootstrap agent both ``docker-daemon`` and 
+``docker-archive`` don't require a double slash ``//`` after the colon in the agent name.
 
 .. _scratch-agent:
 
