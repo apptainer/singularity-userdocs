@@ -224,14 +224,24 @@ use is generally discouraged.
 %files
 ======
 
-The ``%files`` section allows you to copy files from your host system into the
-container with greater safety than using the ``%setup`` section. Each line is a
-``<source>`` and ``<destination>`` pair, where the source is a path on your host
-system, and the destination is a path in the container. The  ``<destination>``
-specification can be omitted and will be assumed to be the same path as the
-``<source>`` specification.
+The ``%files`` section allows you to copy files into the container with greater
+safety than using the ``%setup`` section. Its general form is:
 
-Consider the example from the definition file above:
+.. code-block:: singularity
+
+    %files [from <stage>]
+        <source> [<destination>]
+        ...
+
+Each line is a ``<source>`` and ``<destination>`` pair. The ``<source>`` is either:
+
+  1. A valid path on your host system
+  2. A valid path in a previous stage of the build
+
+while the ``<destination>`` is always a path into the current container. If the 
+``<destination>`` path is omitted it will be assumed to be the same as ``<source>``.
+To show how copying from your host system works, let's consider the example from
+the definition file above:
 
 .. code-block:: singularity
 
@@ -244,7 +254,7 @@ section (see above).  The ``%files`` scriptlet will copy ``file1`` to the root
 of the container file system and then make a second copy of ``file1`` within the
 container in ``/opt``.
 
-Files can be copied from other stages by providing the source location in the
+Files can also be copied from other stages by providing the source location in the
 previous stage and the destination in the current container.
 
 .. code-block:: singularity
@@ -252,7 +262,11 @@ previous stage and the destination in the current container.
   %files from stage_name
     /root/hello /bin/hello
 
-Files in the ``%files`` section are copied before the ``%post`` section is
+The only difference in behavior between copying files from your host system and copying them
+from previous stages is that in the former case symbolic links are always followed 
+during the copy to the container, while in the latter symbolic links are preserved.
+
+Files in the ``%files`` section are always copied before the ``%post`` section is
 executed so that they are available during the build and configuration process.
 
 %app*
