@@ -13,11 +13,10 @@ Sylabs introduced the online `Sylabs Cloud
 <https://cloud.sylabs.io/library/guide#create>`_ their container
 images with others.
 
-The ``remote`` command group in Singularity allows you to login to
-an account on the public container services cloud, or configure
-Singularity to point to a local installation of Singularity
-Enterprise, which provides an on-premise private Container Library,
-Remote Builder and Key Store.
+The ``remote`` command group in Singularity allows you to login to an
+account on the public Sylabs cloud, or configure Singularity to point
+to a local installation of Singularity Enterprise, which provides an
+on-premise private Container Library, Remote Builder and Key Store.
 
 Users can setup and switch between multiple remote endpoints, which
 are stored in their ``~/.singularity/remote.yaml``
@@ -37,9 +36,9 @@ administrator.
    guide for information about authenticating to various docker
    registries.
 
--------------------------------------
-Public Singularity Container Services
--------------------------------------
+-------------------
+Public Sylabs Cloud
+-------------------
 
 A fresh, default installation of Singularity is configured to connect
 to the public `cloud.sylabs.io <https://cloud.sylabs.io>`__
@@ -73,7 +72,7 @@ If you see any errors you may need to check if your system requires
 proxy environment variables to be set, or if a firewall is blocking
 access to ``*.sylabs.io``. Talk to your system adminitrator.
 
-You can interact with the public container services using various Singularity commands:
+You can interact with the public Sylabs Cloud using various Singularity commands:
 
 `pull <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_pull.html>`_,
 `push <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_push.html>`_,

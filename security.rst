@@ -168,14 +168,13 @@ allowing fine grained control of security. Details about them are
 documented `here
 <https://sylabs.io/guides/\{version\}/user-guide/security_options.html>`__.
 
-Security in SCS
-################
+Security in the Sylabs Cloud
+############################
 
-`Singularity Container Services (SCS) <https://cloud.sylabs.io/home>`_
-consists of a Remote Builder, a Container Library, and a
-Keystore. Taken together, the Singularity Container Services provide
-an end-to-end solution for packaging and distributing applications in
-secure and trusted containers.
+`Sylabs Cloud <https://cloud.sylabs.io/home>`_ consists of a Remote
+Builder, a Container Library, and a Keystore. Together, theses
+services provide an end-to-end solution for packaging and distributing
+applications in secure and trusted containers.
 
 Remote Builder
 **************
