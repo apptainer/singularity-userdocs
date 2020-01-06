@@ -92,6 +92,17 @@ compile it from source.
 This is one of several ways to `install and configure Go
 <https://golang.org/doc/install>`_.
 
+.. note::
+
+   If you have previously installed Go from a download, rather than an
+   operating system package, you should remove your ``go`` directory,
+   e.g. ``rm -r /usr/local/go`` before installing a newer
+   version. Extracting a new version of Go over an existing
+   installation can lead to errors when building Go programs, as it
+   may leave old files, which have been removed or replaced in newer
+   versions.
+
+
 Visit the `Go download page <https://golang.org/dl/>`_ and pick a package
 archive to download. Copy the link address and download with wget.  Then extract
 the archive to ``/usr/local`` (or use other instructions on go installation
