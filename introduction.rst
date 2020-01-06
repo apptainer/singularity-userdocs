@@ -17,13 +17,13 @@ software you need on each different operating system and system.
 Why use Singularity?
 ====================
 
-Singularity was born out of the need to run complex applications on
-HPC clusters in a simple, portable, and reproducible way. First
-developed at Lawrence Berkeley National Laboratory, it quickly became
-popular at other HPC sites, academic sites, and beyond. Singularity is
-an open-source project, with a friendly community of developers and
-users. The user base continues to expand, with Singularity now used
-across industry and academia in many areas of work.
+Singularity was created to run complex applications on HPC clusters in
+a simple, portable, and reproducible way. First developed at Lawrence
+Berkeley National Laboratory, it quickly became popular at other HPC
+sites, academic sites, and beyond. Singularity is an open-source
+project, with a friendly community of developers and users. The user
+base continues to expand, with Singularity now used across industry
+and academia in many areas of work.
 
 Many container platforms are available, but Singularity is focused on:
 
@@ -35,8 +35,8 @@ Many container platforms are available, but Singularity is focused on:
   - Mobility of compute. The single file SIF container format is easy
     to transport and share.
   - A simple, effective security model. You are the same user inside a
-    container as outside, and cannot gain additional privelege on the
-    host system, by default. Read more about :ref:`security`.
+    container as outside, and cannot gain additional privilege on the
+    host system by default. Read more about :ref:`security`.
 
 Why use containers?
 ===================
@@ -59,7 +59,7 @@ Containers change the user space into a swappable component. This
 means that the entire user space portion of a Linux operating system,
 including programs, custom configurations, and environment can be
 independent of whether your system is running CentOS, Fedora
-etc. underneath. A Singularity container packages up whatever you need
+etc., underneath. A Singularity container packages up whatever you need
 into a single, verifiable file.
 
 Software developers can now build their stack onto whatever operating
@@ -94,8 +94,11 @@ libraries, data and scripts such that an entire demonstration can be
 contained and either archived or distributed for others to replicate
 no matter what version of Linux they are presently running.
 
-Commercially supported code requiring a particular environment Some
-commercial applications are only certified to run on particular
+--------------------------------------------------------------
+Commercially supported code requiring a particular environment
+--------------------------------------------------------------
+
+Some commercial applications are only certified to run on particular
 versions of Linux. If that application was installed into a
 Singularity container running the version of Linux that it is
 certified for, that container could run on any Linux host. The

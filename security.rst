@@ -35,7 +35,7 @@ If you suspect you have found a vulnerability in Singularity, please
 follow the steps in our published `Security Policy
 <https://sylabs.io/security-policy>`__.
 
-so that it can be disclosed, investigate, and fixed in an appropriate
+so that it can be disclosed, investigated, and fixed in an appropriate
 manner.
 
 Singularity PRO - Long Term Support & Security Patches
@@ -134,7 +134,7 @@ System administrators who manage Singularity can use configuration
 files, to set security restrictions, grant or revoke a user’s
 capabilities, manage resources and authorize containers etc.
 
-Fore example, the `ecl.toml
+For example, the `ecl.toml
 <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#ecl-toml>`_
 file allows blacklisting and whitelisting of containers.
 
@@ -242,7 +242,7 @@ Authentication and encryption
 2. The services support authentication of users via signed and encrypted authentication
    tokens.
 
-3. There is no implicit trust relationship between each services. Each
+3. There is no implicit trust relationship between each service. Each
    request between the services is authenticated using the
    authentication token supplied by the user in the associated
    request.
