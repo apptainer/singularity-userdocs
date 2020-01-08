@@ -8,8 +8,8 @@ Overview
 --------
 
 The Sylabs Cloud Library is the place to :ref:`push <push>` your
-containers to the cloud so other users can download, :ref:`verify
-<signNverify>`, and use them.
+containers to the cloud so other users can :ref:`pull <pull>`,
+:ref:`verify <signNverify>`, and use them.
 
 The Sylabs Cloud also provides a :ref:`Remote Builder
 <remote_builder>`, allowing you to build containers on a secure remote
