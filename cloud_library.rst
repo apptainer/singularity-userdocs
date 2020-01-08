@@ -3,17 +3,18 @@
 Cloud Library
 =============
 
-This page will cover how to use the Singularity Cloud Services (SCS) with Singularity.
-
 --------
 Overview
 --------
 
-The Cloud Library is the place to :ref:`push <push>` your containers to the cloud so other users can
-download, :ref:`verify <signNverify>`, and use the containers.
+The Sylabs Cloud Library is the place to :ref:`push <push>` your
+containers to the cloud so other users can :ref:`pull <pull>`,
+:ref:`verify <signNverify>`, and use them.
 
-Sylabs also provides a :ref:`Remote Builder <remote_builder>`, used to build your containers 
-containers without root access within the cloud.
+The Sylabs Cloud also provides a :ref:`Remote Builder
+<remote_builder>`, allowing you to build containers on a secure remote
+service. This is convenient so that you can build containers on
+systems where you do not have root privileges.
 
 .. _make_a_account:
 
