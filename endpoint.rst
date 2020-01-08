@@ -14,7 +14,7 @@ Sylabs introduced the online `Sylabs Cloud
 images with others.
 
 The ``remote`` command group in Singularity allows you to login to an
-account on the public Sylabs cloud, or configure Singularity to point
+account on the public Sylabs Cloud, or configure Singularity to point
 to a local installation of Singularity Enterprise, which provides an
 on-premise private Container Library, Remote Builder and Key Store.
 
