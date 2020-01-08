@@ -11,7 +11,7 @@ and running containers.
 
 For a detailed guide to installation and configuration, please see the
 separate Admin Guide for this version of Singularity at
-`<https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html>`__.
+`<https://sylabs.io/guides/\{adminversion\}/admin-guide/>`__.
 
               
 Getting Started & Background Information
@@ -22,7 +22,6 @@ Getting Started & Background Information
               
    Introduction to Singularity <introduction>
    Quick Start <quick_start>
-   Installation <installation>
    Security in Singularity <security>
 
 Building Containers   
