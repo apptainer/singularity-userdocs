@@ -716,7 +716,7 @@ to this:
     If you have questions about any of the above, you can email the open source
     list (singularity@lbl.gov), join the open source slack channel
     (singularity-container.slack.com), or contact the organization that supports
-    Singularity directly to get a human response (sylabs.io/contact). I can do
+    Singularity directly (sylabs.io/contact). I can do
     my best to facilitate this interaction if help is needed.
 
     Thank you kindly for considering this request!
