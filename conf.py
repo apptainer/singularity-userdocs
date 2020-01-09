@@ -144,7 +144,7 @@ html_favicon = 'favicon.png'
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['html/_static']
 
-html_js_files = ['js/ga.js', 'js/footer.js']
+html_js_files = ['js/ga.js']
 
 html_css_files = ['css/custom.css']
 # Add any extra paths that contain custom files (such as robots.txt or
