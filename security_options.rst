@@ -16,74 +16,96 @@ Linux Capabilities
 ------------------
 
 .. note::
-     It is extremely important to recognize that **granting users Linux 
-     capabilities with the** ``capability`` **command group is usually identical 
+     It is extremely important to recognize that **granting users Linux
+     capabilities with the** ``capability`` **command group is usually identical
      to granting those users root level access on the host system**. Most if not
-     all capabilities will allow users to "break out" of the container and 
-     become root on the host. This feature is targeted toward special use cases 
-     (like cloud-native architectures) where an admin/developer might want to 
-     limit the attack surface within a container that normally runs as root. 
+     all capabilities will allow users to "break out" of the container and
+     become root on the host. This feature is targeted toward special use cases
+     (like cloud-native architectures) where an admin/developer might want to
+     limit the attack surface within a container that normally runs as root.
      This is not a good option in multi-tenant HPC environments where an admin
      wants to grant a user special privileges within a container. For that and
-     similar use cases, the :ref:`fakeroot feature <fakeroot>` is a better 
-     option. 
+     similar use cases, the :ref:`fakeroot feature <fakeroot>` is a better
+     option.
 
 Singularity provides full support for granting and revoking Linux capabilities
 on a user or group basis.  For example, let us suppose that an admin has
-decided to grant a user (named ``pinger``) capabilities to open raw sockets so 
-that they can use ``ping`` in a container where the binary is controlled via 
-capabilities (i.e. a recent version of CentOS).
+decided to grant a user (named ``pinger``) capabilities to open raw sockets so
+that they can use ``ping`` in a container where the binary is controlled via
+capabilities. For information about how to manage capabilities as an admin
+please refer to the
+`capability admin docs <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#capability.json>`_.
 
-To do so, the admin would issue a command such as this:
 
-.. code-block:: none
-
-    $ sudo singularity capability add --user pinger CAP_NET_RAW
-
-This means the user ``pinger`` has just been granted permissions (through Linux
-capabilities) to open raw sockets within Singularity containers.
-
-The admin can check that this change is in effect with the ``capability list``
-command.
+To take advantage of this granted capability as a user, ``pinger`` must also
+request the capability when executing a container with the ``--add-caps`` flag
+like so:
 
 .. code-block:: none
 
-    $ sudo singularity capability list --user pinger
-    CAP_NET_RAW
-
-To take advantage of this new capability, the user ``pinger`` must also request
-the capability when executing a container with the ``--add-caps`` flag like so:
-
-.. code-block:: none
-
-    $ singularity exec --add-caps CAP_NET_RAW library://centos ping -c 1 8.8.8.8
+    $ singularity exec --add-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
     PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
-    64 bytes from 8.8.8.8: icmp_seq=1 ttl=128 time=18.3 ms
+    64 bytes from 8.8.8.8: icmp_seq=1 ttl=52 time=73.1 ms
 
     --- 8.8.8.8 ping statistics ---
     1 packets transmitted, 1 received, 0% packet loss, time 0ms
-    rtt min/avg/max/mdev = 18.320/18.320/18.320/0.000 ms
+    rtt min/avg/max/mdev = 73.178/73.178/73.178/0.000 ms
 
-If the admin decides that it is no longer necessary to allow the user ``pinger``
-to open raw sockets within Singularity containers, they can revoke the
-appropriate Linux capability like so:
+If the admin decides that it is no longer necessary to allow the user
+``pinger`` to open raw sockets within Singularity containers, they can revoke
+the appropriate Linux capability and ``pinger`` will not be able to add that
+capability to their containers anymore:
 
 .. code-block:: none
 
-    $ sudo singularity capability drop --user pinger CAP_NET_RAW
+    $ singularity exec --add-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+    WARNING: not authorized to add capability: CAP_NET_RAW
+    ping: socket: Operation not permitted
 
-The ``capability add`` and ``drop`` subcommands will also accept the case
-insensitive keyword ``all`` to grant or revoke all Linux capabilities to a user
-or group.  Similarly, the ``--add-caps`` option will accept the ``all`` keyword.
+
+Another scenario which is atypical of shared resource environments, but useful
+in cloud-native architectures is dropping capabilities when spawning containers
+as the root user to help minimize attack surfaces. With a default installation
+of Singularity, containers created by the root user will maintain all
+capabilities. This behavior is configurable if desired. Check out the
+`capability configuration <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#capability.json>`_
+and `root default capabilities <https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#setuid-and-capabilities>`_
+sections of the admin docs for more information.
+
+Assuming the root user will execute containers with the ``CAP_NET_RAW``
+capability by default, executing the same container ``pinger`` executed above
+works without the need to grant capabilities:
+
+.. code-block:: none
+
+    # singularity exec library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+    PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+    64 bytes from 8.8.8.8: icmp_seq=1 ttl=52 time=59.6 ms
+
+    --- 8.8.8.8 ping statistics ---
+    1 packets transmitted, 1 received, 0% packet loss, time 0ms
+    rtt min/avg/max/mdev = 59.673/59.673/59.673/0.000 ms
+
+Now we can manually drop the ``CAP_NET_RAW`` capability like so:
+
+.. code-block:: none
+
+    # singularity exec --drop-caps CAP_NET_RAW library://sylabs/tests/ubuntu_ping:v1.0 ping -c 1 8.8.8.8
+    ping: socket: Operation not permitted
+
+And now the container will not have the ability to create new sockets, causing
+the ``ping`` command to fail.
+
+The ``--add-caps`` and ``--drop-caps`` options will accept the ``all`` keyword.
 Of course appropriate caution should be exercised when using this keyword.
 
 -----------------------------
 Building encrypted containers
 -----------------------------
 Beginning in Singularity 3.4.0 it is possible to build and run encrypted
-containers.  The containers are decrypted at runtime entirely in kernel space, 
-meaning that no intermediate decrypted data is ever present on disk or in 
-memory.  See :ref:`encrypted containers <encryption>` for more details.
+containers.  The containers are decrypted at runtime entirely in kernel space,
+meaning that no intermediate decrypted data is ever present on disk. See
+:ref:`encrypted containers <encryption>` for more details.
 
 
 -------------------------------
