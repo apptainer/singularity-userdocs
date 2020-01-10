@@ -6,11 +6,15 @@ Quick Start
 
 .. _sec:quickstart:
 
-This guide is intended for running Singularity on a computer where you have root
-(administrative) privileges.
+This guide is intended for running Singularity on a computer where you
+have root (administrative) privileges, and will install Singularity
+from source code. Other installation options, including building an
+RPM package and installing Singularity without root privileges are
+discussed in the `installation section of the admin guide
+<https://sylabs.io/guides/\{adminversion\}/admin-guide/installation.html>`__.
 
 If you need to request an installation on your shared resource, see the
-:ref:`requesting an installation help page <installationrequest>` for
+:ref:`requesting an installation section <installation-request>` for
 information to send to your system administrator.
 
 For any additional help or support contact the Sylabs team:
@@ -23,12 +27,11 @@ https://www.sylabs.io/contact/
 Quick Installation Steps
 ------------------------
 
-You will need a Linux system to run Singularity.
-
-.. note::
-     This is only a short manual for Quick Installation. For details on
-     different methods of installation, versions, and RPM etc, please refer to
-     the :ref:`Installation page <installation>`.
+You will need a Linux system to run Singularity natively. Options for
+using Singularity on Mac and Windows machines, along with alternate
+Linux installation options are discussed in the `installation section of the
+admin guide
+<https://sylabs.io/guides/\{adminversion\}/admin-guide/installation.html>`__.
 
 Install system dependencies
 ===========================
@@ -73,6 +76,15 @@ installed to compile it from source.
 This is one of several ways to `install and configure Go
 <https://golang.org/doc/install>`_.
 
+.. note::
+
+   If you have previously installed Go from a download, rather than an
+   operating system package, you should remove your ``go`` directory,
+   e.g. ``rm -r /usr/local/go`` before installing a newer version.
+   Extracting a new version of Go over an existing installation can
+   lead to errors when building Go programs, as it may leave old
+   files, which have been removed or replaced in newer versions.
+
 Visit the `Go Downloads page <https://golang.org/dl/>`_ and pick a package
 archive suitable to the environment you are in. Once the Download is complete,
 extract the archive to ``/usr/local`` (or use other instructions on go installation
@@ -80,7 +92,7 @@ page). Alternatively, follow the commands here:
 
 .. code-block:: none
 
-    $ export VERSION=1.12 OS=linux ARCH=amd64 && \  # Replace the values as needed
+    $ export VERSION=1.13 OS=linux ARCH=amd64 && \  # Replace the values as needed
       wget https://dl.google.com/go/go$VERSION.$OS-$ARCH.tar.gz && \ # Downloads the required Go package
       sudo tar -C /usr/local -xzvf go$VERSION.$OS-$ARCH.tar.gz && \ # Extracts the archive
       rm go$VERSION.$OS-$ARCH.tar.gz    # Deletes the ``tar`` file
@@ -648,3 +660,67 @@ do with Singularity!
 
 If you need additional help or support, contact the Sylabs team:
 https://www.sylabs.io/contact/
+
+
+.. _installation-request:
+
+Singularity on a shared resource
+---------------------------------
+
+Perhaps you are a user who wants a few talking points and background to share
+with your administrator.  Or maybe you are an administrator who needs to decide
+whether to install Singularity.
+
+This document, and the accompanying administrator documentation provides answers
+to many common questions.
+
+If you need to request an installation you may decide to draft a message similar
+to this:
+
+.. code-block:: none
+
+    Dear shared resource administrator,
+
+    We are interested in having Singularity (https://www.sylabs.io/docs/)
+    installed on our shared resource. Singularity containers will allow us to
+    build encapsulated environments, meaning that our work is reproducible and
+    we are empowered to choose all dependencies including libraries, operating
+    system, and custom software. Singularity is already in use on many of the
+    top HPC centers around the world. Examples include:
+
+        Texas Advanced Computing Center
+        GSI Helmholtz Center for Heavy Ion Research
+        Oak Ridge Leadership Computing Facility
+        Purdue University
+        National Institutes of Health HPC
+        UFIT Research Computing at the University of Florida
+        San Diego Supercomputing Center
+        Lawrence Berkeley National Laboratory
+        University of Chicago
+        McGill HPC Centre/Calcul Québec
+        Barcelona Supercomputing Center
+        Sandia National Lab
+        Argonne National Lab
+
+    Importantly, it has a vibrant team of developers, scientists, and HPC
+    administrators that invest heavily in the security and development of the
+    software, and are quick to respond to the needs of the community. To help
+    learn more about Singularity, I thought these items might be of interest:
+
+        - Security: A discussion of security concerns is discussed at
+        https://www.sylabs.io/guides/{adminversion}/admin-guide/admin_quickstart.html
+
+        - Installation:
+        https://www.sylabs.io/guides/{adminversion}/admin-guide/installation.html
+
+    If you have questions about any of the above, you can email the open source
+    list (singularity@lbl.gov), join the open source slack channel
+    (singularity-container.slack.com), or contact the organization that supports
+    Singularity directly (sylabs.io/contact). I can do
+    my best to facilitate this interaction if help is needed.
+
+    Thank you kindly for considering this request!
+
+    Best,
+
+    User

@@ -4,6 +4,7 @@
 /**/*.whl
 .idea
 .DS_Store
+*.pyc
 __pycache__
 pygments_singularity.pyc
 pygments_json.pyc
@@ -38,3 +39,6 @@ _build/html/_static/js/theme.js
 _build/epub/*
 _build/latex/*
 cli/*
+
+# go mod pkg cache
+vendor/pkg/
