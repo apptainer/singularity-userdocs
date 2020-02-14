@@ -19,7 +19,7 @@ to run a container as a **"fake root"** user by leveraging
 A **"fake root"** user has almost the same administrative rights as root but only **inside the container**
 and the **requested namespaces**, which means that this user:
 
-  - can set different user/group ownership for files or directories he owns
+  - can set different user/group ownership for files or directories they own
   - can change user/group identity with su/sudo commands
   - has full privileges inside the requested namespaces (network, ipc, uts)
 
@@ -30,8 +30,8 @@ Restrictions/security
 Filesystem
 ==========
 
-A **"fake root"** user can't access or modify files and directories for which he doesn't
-have already access or rights on the host filesystem, so a **"fake root"** user won't be able
+A **"fake root"** user can't access or modify files and directories for which they don't
+already have access or rights on the host filesystem, so a **"fake root"** user won't be able
 to access root-only host files like ``/etc/shadow`` or the host ``/root`` directory.
 
 Additionally, all files or directories created by the **"fake root"** user are owned by
@@ -65,7 +65,7 @@ the **"fake root"** user won't be able to use ``ping`` or bind a container servi
 1024.
 
 With ``--net`` the **"fake root"** user has full privileges in a dedicated container network. Inside
-the container network he can bind on privileged ports below 1024, use ping, manage firewall rules,
+the container network they can bind on privileged ports below 1024, use ping, manage firewall rules,
 listen to traffic, etc. Anything done in this dedicated network won't affect the host network.
 
 .. note:: 
