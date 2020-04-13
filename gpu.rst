@@ -208,7 +208,7 @@ The ``--rocm`` flag will:
 Requirements
 ============
 
-To use the ``--rcom`` flag to run a CUDA application inside a container you must
+To use the ``--rocm`` flag to run a CUDA application inside a container you must
 ensure that:
 
 * The host has a working installation of the ``amdgpu`` driver, and a compatible
