@@ -175,7 +175,7 @@ If the host MPI is Open MPI, the definition file looks like:
       export OMPI_DIR=/opt/ompi
       export SINGULARITY_OMPI_DIR=$OMPI_DIR
       export SINGULARITYENV_APPEND_PATH=$OMPI_DIR/bin
-      export SINGULAIRTYENV_APPEND_LD_LIBRARY_PATH=$OMPI_DIR/lib
+      export SINGULARITYENV_APPEND_LD_LIBRARY_PATH=$OMPI_DIR/lib
 
   %post
       echo "Installing required packages..."
