@@ -113,7 +113,7 @@ assume for a moment that the application is `mpitest.c`, a simple Hello World:
 
 .. note::
     MPI is an interface to a library, so it consists of function calls and
-    libraries that can be used my many programming languages. It comes with
+    libraries that can be used by many programming languages. It comes with
     standardized bindings for Fortran and C. However, it can support
     applications in many languages like Python, R, etc.
 
