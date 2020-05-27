@@ -6,19 +6,123 @@ Environment and Metadata
 
 .. _sec:envandmetadata:
 
-Singularity containers support environment variables and labels that you can add
-to your container during the build process. If you are looking for environment
-variables  to set up the environment on the host system during build time, see
-the :ref:`build environment section <build-environment>`.
+Environment variables are values you can set in a session, which can
+be used to influence the behavior of programs. Most non-trival
+programs need some configuration, even when they are packaged into a
+container. It's often considered best practice to use environment
+variables to pass settings to a program in a container, because they
+are easily set and don't rely on writing and binding in configuration
+files. When building a container you may need to set fixed or default
+environment variables. When running containers you may need to set or
+override environment variables.
 
---------
-Overview
---------
+The metadata of a container is information that describes the
+container. Singularity automatically records information such as the
+definition file used to build a container, the version of Singularity
+used etc., as *labels* on a container. You can also specify your own to be
+recorded against your container.
 
-Environment variables can be included in your container by adding them in your
-definition file:
+--------------------------
+Changes in Singularity 3.6
+--------------------------
 
-- In the ``%environment`` section of your definition file.
+Singularity 3.6 has modified the ways in which environment variables
+are handled, to allow long-term stability and consistency that has
+been lacking in prior versions. It also introduces new ways of setting
+environment variables, such as the ``--env`` and ``--env-file``
+options.
+
+.. warning::
+
+   If you have containers built with Singularity <3.6, and frequentely
+   set and override environment variables, please review this section
+   carefully. Some behaviour has changed.
+
+Summary of changes
+------------------
+
+ - When building a container, the environment in the base image
+   (e.g. a docker image) is set during the ``%post`` section of the build.
+ - An environment variable set in a container image, from the
+   bootstrap base image, or in the ``%environment`` section of a
+   definition file *will not* be overridden by a host environment
+   variable of the same name. The ``--env``, ``--env-file``, or
+   ``SINGULARITYENV_`` methods must be used to explicitly override a
+   environment variable set by the container image.
+
+
+
+--------------------
+Environment Overview
+--------------------
+
+When you run a program in a container with Singularity, the
+environment variables that the program sees are a combination of:
+
+ - The environment variables set in the base image (e.g. Docker image)
+   used to build the container.
+ - The environment variables set in the ``%environment`` section of
+   the definition file used to build the container.
+ - *Most* of the environment variables set on your host, which are
+   passed into the container.
+ - Any variables you set specifically for the container at runtime,
+   using the ``--env``, ``--env-file`` options, or by setting
+   ``SINGULARITYENV_`` variables outside of the container.
+ - The ``PATH`` variable can be manipulated to add entries.
+ - Runtime variables ``SINGULARITY_xxx`` set by Singularity to provide
+   information about the container.
+
+The environment variables from the definition file always apply but
+can be overridden.
+
+You can choose to exclude passing environment variables from the host
+into the container from your host with the ``-e`` or ``--cleanenv``
+option.
+
+We'll go through each place environment variables can be defined, so
+that you can understand how the final environment in a container is
+created, and can be manipulated.
+
+If you are interested in variables available when you are *building* a
+container, rather than when running a container, see :ref:`build
+environment section <build-environment>`.
+
+-----------------------------
+Environment from a base image
+-----------------------------
+
+When you build a container with Singularity you might *bootstrap* from
+a library or docker image, or using OS bootstrap tools such as
+``debootstrap``, ``yum`` etc.
+
+Using ``debootstrap``, ``yum`` etc. you are starting from a fresh
+install of a Linux distribution into your container. No specific
+environment variables will be set. If you are using a ``library`` or
+``docker`` source then you may inherit environment variables from your
+base image.
+
+If I build a singularity container from the image
+``docker://python:3.7`` then when I run the container I can see that
+the ``PYTHON_VERSION`` variable is set in the container:
+
+.. code-block::
+
+   $ singularity exec python.sif env | grep PYTHON_VERSION
+   PYTHON_VERSION=3.7.7
+
+This happens because  the ``Dockerfile`` used to build  that container has
+``ENV PYTHON_RELEASE 3.7.7`` set inside it.
+
+You can always override the value of these docker base image environment
+variables, if needed. See below.
+
+----------------------------------
+Environment from a definition file
+----------------------------------
+
+Environment variables can be included in your container by adding them
+in your definition file. Use ``export`` in the ``%environment``
+section of a definition file to set a container environment variable:
 
 .. code-block:: singularity
 
@@ -26,167 +130,220 @@ definition file:
         From: default/alpine
 
         %environment
-            VARIABLE_ONE = hello
-            VARIABLE_TWO = world
-            export VARIABLE_ONE VARIABLE_TWO
+            export MYVAR="Hello"
 
-- Or in the ``%post`` section of your definition file.
+        %runscript
+            echo $MYVAR
 
-.. code-block:: singularity
 
-        Bootstrap: library
-        From: default/alpine
+Now the value of ``MYVAR`` is ``Hello`` when the container
+is launched. The ``%runscript`` is set to echo the value.
 
-        %post
-            echo 'export VARIABLE_NAME=variable_value' >>$SINGULARITY_ENVIRONMENT
+.. code-block::
 
-You can also add labels to your container using the ``%labels`` section like so:
+   $ singularity run env.sif 
+   Hello
 
-.. code-block:: singularity
+-------------------------
+Environment from the host
+-------------------------
 
-        Bootstrap: library
-        From: default/alpine
+If you have environment variables set outside of your container, on
+the host, then by default they will be available inside the
+container. Except that:
 
-        %labels
-            OWNER Joana
+ - The ``PS1`` shell prompt is set for a container specific prompt.
+ - The ``PATH`` environment variable will be modified to contain default values.
+ - The ``LD_LIBRARY_PATH`` is modified to a default
+   ``/.singularity.d/libs``, that will include NVIDIA / ROCm libraries
+   if applicable.
 
-To view the labels within your container you use the ``inspect`` command:
+Also, an environment variable set on the host *will not* override a
+variable of the same name that has been set inside the container image.
+   
+If you *do not want* the host environment variables to pass into the
+container, you can use the ``-e`` or ``--cleanenv`` option to give a
+clean environment inside the container, with a minimal set of
+environment variables for correct operation of most software.
 
-.. code-block:: none
+.. code-block::
 
-    $  singularity inspect mysifimage.sif
+   $ singularity exec --cleanenv env.sif env
+   HOME=/home/dave
+   LANG=C
+   LD_LIBRARY_PATH=/.singularity.d/libs
+   PATH=/startpath:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+   PROMPT_COMMAND=PS1="Singularity> "; unset PROMPT_COMMAND
+   PS1=Singularity> 
+   PWD=/home/dave/doc-tesrts
+   SINGULARITY_COMMAND=exec
+   SINGULARITY_CONTAINER=/home/dave/doc-tesrts/env.sif
+   SINGULARITY_ENVIRONMENT=/.singularity.d/env/91-environment.sh
+   SINGULARITY_NAME=env.sif
+   TERM=xterm-256color
 
-This will give you the following output:
 
-.. code-block:: none
+.. warning::
 
-      {
-          "OWNER": "Joana",
-          "org.label-schema.build-date": "Monday_07_January_2019_0:01:50_CET",
-          "org.label-schema.schema-version": "1.0",
-          "org.label-schema.usage": "/.singularity.d/runscript.help",
-          "org.label-schema.usage.singularity.deffile.bootstrap": "library",
-          "org.label-schema.usage.singularity.deffile.from": "debian:9",
-          "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
-          "org.label-schema.usage.singularity.version": "3.0.1-236.g2453fdfe"
-      }
+   If you work on a host system that sets a lot of environment
+   variables, e.g. because you use software made available through
+   environment module / lmod, you may see strange behavior in your
+   container. Check your host environment with ``env`` for variables
+   such as ``PYTHON_PATH`` that can change the way code runs, and
+   consider using ``--cleanenv``.
 
-Many of these labels are created by default, but you can also see the custom
-label that was added in the example above.
+   
+--------------------------------
+Overriding environment variables
+--------------------------------
 
-The ``inspect`` command has :ref:`additional options <inspect-command>` that
-are useful for viewing the container's metadata.
+You can override variables that have been set in the container image
+in various way, as appropriate for your workflow.
 
------------
-Environment
------------
+``--env`` option
+----------------
 
-If you build a container from the `Container Library
-<https://cloud.sylabs.io/library>`_ or Docker Hub, the environment will be
-included with the container at build time. You can also define new environment
-variables in your definition file as follows:
+*New in Singularity 3.6*
 
-.. code-block:: singularity
+The ``--env`` option on the ``run/exec/shell`` commands allows you to
+specify environment variable values as ``NAME=VALUE`` pairs:
 
-    Bootstrap: library
-    From: default/alpine
+.. code-block::
 
-    %environment
-        #First define the variables
-        VARIABLE_PATH=/usr/local/bootstrap
-        VARIABLE_VERSION=3.0
-        #Then export them
-        export VARIABLE_PATH VARIABLE_VERSION
+   $ singularity run env.sif 
+   Hello
+   
+   $ singularity run --env MYVAR=Goodbye env.sif
+   Goodbye
 
-You may need to add environment variables to your container during the ``%post``
-section. For instance, maybe you will not know the appropriate value of a
-variable until you have installed some software. To add variables to the
-environment during ``%post`` you can use the ``$SINGULARITY_ENVIRONMENT``
-variable with the following syntax:
+Separate multiple variables with commas, e.g. ``--env MYVAR=A,MYVAR2=B``.
 
-.. code-block:: singularity
 
-    %post
-        echo 'export VARIABLE_NAME=variable_value' >>$SINGULARITY_ENVIRONMENT
+``--env-file`` option
+---------------------
 
-Text in the ``%environment`` section will be appended to the file
-``/.singularity.d/env/90-environment.sh`` while text redirected
-to ``$SINGULARITY_ENVIRONMENT`` will appear in the file
-``/.singularity.d/env/91-environment.sh``. If nothing is redirected to
-``$SINGULARITY_ENVIRONMENT`` in the ``%post`` section, the file
-``/.singularity.d/env/91-environment.sh`` will not exist.
+*New in Singularity 3.6*
 
-Because files in ``/.singularity.d/env`` are sourced in alpha-numerical order,
-variables added using ``$SINGULARITY_ENVIRONMENT`` take precedence over those
-added via the ``%environment`` section.
+The ``--env-file`` option lets you provide a file that contains
+environment variable as ``NAME=VALUE`` pairs, e.g.:
 
-If you need to define a variable in the container at runtime, when you execute
-Singularity pass a variable prefixed with ``SINGULARITYENV_``. These variables
-will be transposed automatically and the prefix will be stripped. For example,
-let’s say we want to set the variable ``HELLO`` to have value ``world``. We can
-do that as follows:
 
-.. code-block:: none
+.. code-block::
 
-    $ SINGULARITYENV_HELLO=world singularity exec centos7.img env | grep HELLO
-    HELLO=world
+  $ cat myenvs 
+  MYVAR="Hello from a file"
 
-The ``--cleanenv`` option can be used to remove the host environment and execute
-a container with a minimal environment.
+  $ singularity run --env-file myenvs env.sif 
+  Hello from a file
 
-.. code-block:: none
 
-    $ singularity exec --cleanenv centos7.img env
-    LD_LIBRARY_PATH=:/usr/local/lib:/usr/local/lib64
-    SINGULARITY_NAME=test.img
-    PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-    PWD=/home/gmk/git/singularity
-    LANG=en_US.UTF-8
-    SHLVL=0
-    SINGULARITY_INIT=1
-    SINGULARITY_CONTAINER=test.img
+``SINGULARITYENV_`` prefix
+--------------------------
 
-Without the ``--cleanenv`` flag, the environment on the host system will be
-present within the container at run time.
+If you set a variable on your host called ``SINGULARITYENV_xxx``
+*before* you run a container, then it will appear as the environment
+variable ``xxx`` inside the container:
 
-If you need to change the ``$PATH`` of your container at run time there are
-a few special environmental variables you can use:
+.. code-block::
 
--  ``SINGULARITYENV_PREPEND_PATH=/good/stuff/at/beginning`` to prepend directories to the beginning of the ``$PATH``
+   $ singularity run env.sif
+   Hello
 
--  ``SINGULARITYENV_APPEND_PATH=/good/stuff/at/end`` to append directories to the end of the ``$PATH``
+   $ export SINGULARITYENV_MYVAR="Overridden"
+   $ singularity run env.sif
+   Overridden
 
--  ``SINGULARITYENV_PATH=/a/new/path`` to override the ``$PATH`` within the container
+Manipulating ``PATH``
+---------------------
 
-------
-Labels
-------
+``PATH`` is a special environment variable that tells a system where
+to look for programs that can be run. ``PATH`` contains multiple
+filesytem locations (paths) separated by colons. When you ask to run a
+program, ``myprog``, the system looks through these locations one by
+one, until it finds ``myprog``.
 
-Your container stores metadata about its build, along with Docker labels, and
-custom labels that you define during build in a ``%labels`` section.
+To ensure containers work correctly, when a host ``PATH`` might
+contain a lot of host-specific locations that are not present in the
+container, Singularity will ensure ``PATH`` in the container is set to
+a default.
+
+.. code-block::
+
+   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+This covers the 'standard' locations for software installed using a
+system package manager in most Linux distributions. If you have
+software installed elsewhere in the container, then you can override
+this by setting ``PATH`` in the container definition ``%environment``
+block.
+
+If your container depends on things that are bind mounted into it, or
+you have another need to modify the ``PATH`` variable when starting a
+container, you can do so with ``SINGULARITYENV_APPEND_PATH`` or
+``SINGULARITYENV_PREPEND_PATH``.
+
+If you set a variable on your host called
+``SINGULARITYENV_APPEND_PATH`` then its value will be appended
+(added to the end) of the ``PATH`` variable in the container.
+
+.. code-block::
+
+   $ singularity exec env.sif sh -c 'echo $PATH'
+   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+   $ export SINGULARITYENV_APPEND_PATH="/endpath"
+   $ singularity exec env.sif sh -c 'echo $PATH'
+   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/endpath
+
+If you set a variable on your host called
+``SINGULARITYENV_PREPEND_PATH`` then its value will be prepended
+(added to the start) of the ``PATH`` variable in the container.
+
+.. code-block::
+
+   $ singularity exec env.sif sh -c 'echo $PATH'
+   /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+   $ export SINGULARITYENV_PREPEND_PATH="/startpath"
+   $ singularity exec env.sif sh -c 'echo $PATH'
+   /startpath:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+Environment Variable Precedence
+-------------------------------
+
+The order in which environment variables are set in version 3.6 is as follows:
+
+  - Clear the environment, keeping just ``HOME`` and ``SINGULARITY_APPNAME``.
+  - Take docker defined environment variables, where docker was the base image source.
+  - Handle ``PATH``:    
+     - If ``PATH`` is not defined set the Singularity default ``PATH``
+     - If ``PATH`` is defined, add any missing path parts from Singularity defaults
+  - Take environment variables defined explicitly in the image
+    (``%environment`` etc.). Can override any previously set values.
+  - Set SCIF (``--app``) environment variables
+  - Set base environment essential vars (``PS1`` and ``LD_LIBRARY_PATH``)
+  - Inject ``SINGULARITYENV_`` / ``--env`` / ``--env-file`` variables
+    so they can override or modify any previous values:
+  - Source any remaining scripts from ``/singularity.d/env`` 
+
+------------------
+Container Metadata
+------------------
+
+Each Singularity container has metadata describing the container, how
+it was built, etc. This metadata includes the definition file used to
+build the container and labels, which are specific pieces of
+information set automatically or explicitly when the container is
+built.
 
 For containers that are generated with Singularity version 3.0 and later, labels
 are represented using the `rc1 Label Schema <http://label-schema.org/rc1/>`_.
-For example:
 
-.. code-block:: none
+Custom Labels
+-------------
 
-    $ singularity inspect jupyter.sif
-        {
-            "OWNER": "Joana",
-            "org.label-schema.build-date": "Friday_21_December_2018_0:49:50_CET",
-            "org.label-schema.schema-version": "1.0",
-            "org.label-schema.usage": "/.singularity.d/runscript.help",
-            "org.label-schema.usage.singularity.deffile.bootstrap": "library",
-            "org.label-schema.usage.singularity.deffile.from": "debian:9",
-            "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
-            "org.label-schema.usage.singularity.version": "3.0.1-236.g2453fdfe"
-        }
-
-You will notice that the one label doesn’t belong to the label schema, ``OWNER`` .
-This was a user provided label during bootstrap.
-
-You can add custom labels to your container in a bootstrap file:
+You can add custom labels to your container using the ``%labels``
+section in definition file:
 
 .. code-block:: singularity
 
@@ -196,47 +353,46 @@ You can add custom labels to your container in a bootstrap file:
     %labels
       OWNER Joana
 
-The ``inspect`` command is useful for viewing labels and other container
-meta-data. The next section will detail its various options.
-
------------------------
-The ``inspect`` command
------------------------
+Inspecting Metadata
+-------------------
 
 .. _inspect-command:
 
-The ``inspect`` command gives you the ability to print out the labels and/or
-other metadata that was added to your container using the definition file.
+The ``inspect`` command gives you the ability to view the labels and/or
+other metadata that were added to your container when it was built.
 
-^^^^^^^^^^^^
-``--labels``
-^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
+``-l``/  ``--labels``
+^^^^^^^^^^^^^^^^^^^^^
 
-This flag corresponds to the default behavior of the ``inspect`` command. When
-you run a ``singularity inspect <your-container.sif>`` you will get output like
-this.
+Running inspect without any options, or with the ``-l`` or
+``--labels`` options will display any labels set on the container
 
 .. code-block:: none
 
-    $ singularity inspect --labels jupyter.sif
+    $ singularity inspect jupyter.sif
+        {
+            "OWNER": "Joana"
+            "org.label-schema.build-date": "Friday_21_December_2018_0:49:50_CET",
+            "org.label-schema.schema-version": "1.0",
+            "org.label-schema.usage": "/.singularity.d/runscript.help",
+            "org.label-schema.usage.singularity.deffile.bootstrap": "library",
+            "org.label-schema.usage.singularity.deffile.from": "debian:9",
+            "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
+            "org.label-schema.usage.singularity.version": "3.0.1-236.g2453fdfe"
+        }
 
-    {
-        "org.label-schema.build-date": "Friday_21_December_2018_0:49:50_CET",
-        "org.label-schema.schema-version": "1.0",
-        "org.label-schema.usage": "/.singularity.d/runscript.help",
-        "org.label-schema.usage.singularity.deffile.bootstrap": "library",
-        "org.label-schema.usage.singularity.deffile.from": "debian:9",
-        "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
-        "org.label-schema.usage.singularity.version": "3.0.1-236.g2453fdfe"
-    }
+We can easily see when the container was built, the source of the base
+image, and the exact version of Singularity that was used to build it.
 
-This is the same as running ``singularity inspect jupyter.sif``.
+The custom label ``OWNER`` that we set in our definition file is also visible.
 
-^^^^^^^^^^^^^
-``--deffile``
-^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^
+``-d`` / ``--deffile``
+^^^^^^^^^^^^^^^^^^^^^^
 
-This flag gives you the def file(s) that was used to create the container.
+The ``-d`` or ``-deffile`` flag shows the definition file(s) that were
+used to build the container.
 
 .. code-block:: none
 
@@ -304,11 +460,11 @@ And the output would look like:
 
 Which is a definition file for a ``jupyter.sif`` container.
 
-^^^^^^^^^^^^^^^
-``--runscript``
-^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^
+``-r`` / ``--runscript``
+^^^^^^^^^^^^^^^^^^^^^^^^
 
-This flag shows the runscript for the image.
+The ``-r`` or ``--runscript`` option shows the runscript for the image.
 
 .. code-block:: none
 
@@ -345,11 +501,11 @@ And the output would look like:
 
     exec $SINGULARITY_OCI_RUN
 
-^^^^^^^^^^
-``--test``
-^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
+``-t`` / ``--test``
+^^^^^^^^^^^^^^^^^^^
 
-This flag shows the test script for the image.
+The ``-t`` or ``--test`` flag shows the test script for the image.
 
 .. code-block:: none
 
@@ -357,14 +513,13 @@ This flag shows the test script for the image.
 
 This will output the corresponding ``%test`` section from the definition file.
 
-^^^^^^^^^^^^^^^^^
-``--environment``
-^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+``-e`` / ``--environment``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This flag shows the environment settings for the image. The respective
-environment variables set in ``%environment`` section ( So the ones in
-``90-environment.sh`` ) and ``SINGULARITY_ENV`` variables set at runtime (that
-are located in``91-environment.sh``) will be printed out.
+The ``-e`` or ``--environment`` flag shows the environment variables
+that are defined in the container image. These may show as being set
+from different files, depending on how the container was built.
 
 .. code-block:: none
 
@@ -381,20 +536,13 @@ And the output would look like:
     JUP_IPNAME=localhost
     export JUP_PORT JUP_IPNAME
 
-    ==91-environment.sh==
-    export RANDOM=123456
 
-As you can see, the ``JUP_PORT`` and ``JUP_IPNAME`` were previously defined in
-the ``%environment`` section of the defintion file, while the RANDOM variable
-shown regards to the use of ``SINGULARITYENV_`` variables, so in this case
-``SINGULARITYENV_RANDOM`` variable was set and exported at runtime.
+^^^^^^^^^^^^^^^^^^^^^^^
+``-h`` / ``--helpfile``
+^^^^^^^^^^^^^^^^^^^^^^^
 
-^^^^^^^^^^^^^^
-``--helpfile``
-^^^^^^^^^^^^^^
-
-This flag will show the container's description in the ``%help`` section of its
-definition file.
+The ``-h`` or ``-helpfile`` flag will show the container's description
+in the ``%help`` section of its definition file.
 
 You can call it this way:
 
@@ -409,9 +557,9 @@ And the output would look like:
     Container with Anaconda 2 (Conda 4.5.11 Canary) and Jupyter Notebook 5.6.0 for Debian 9.x (Stretch).
     This installation is based on Python 2.7.15
 
-^^^^^^^^^^
-``--json``
-^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^
+``-j`` / ``--json``
+^^^^^^^^^^^^^^^^^^^
 
 This flag gives you the possibility to output your labels in a JSON format.
 
@@ -432,13 +580,24 @@ And the output would look like:
 	     "type": "container"
     }
 
-------------------
-Container Metadata
-------------------
+-------------------------
+/.singularity.d directory
+-------------------------
 
-Inside of the container, metadata is stored in the ``/.singularity.d``
-directory. You probably shouldn’t edit any of these files directly but it may be
-helpful to know where they are and what they do:
+The ``/.singularity.d`` directory in a container contains scripts and
+environment files that are used when a container is executed.
+
+In previous versions of Singularity these files, within the container
+filesystem, were all directly used by the Singularity runtime, and
+they remain present to ensure compatibility with older versions of
+Singularity, wherever possible.
+
+*You should not modify* files under ``/.singularity.d``, from your
+definition file during builds, or directly within your container
+image. Recent 3.x versions of Singularity replace older action
+scripts dynamically, at runtime. In the longer term, metadata will be
+moved outside of the container, and stored only in the SIF file
+metadata descriptor.
 
 .. code-block:: none
 
@@ -468,15 +627,20 @@ helpful to know where they are and what they do:
 -  **actions**: This directory contains helper scripts to allow the container to
    carry out the action commands. (e.g. ``exec`` , ``run`` or ``shell``)  In
    later versions of Singularity, these files may be dynamically written at
-   runtime.
+   runtime, *and should not be modified* in the container.
 
--  **env**: All ``*.sh`` files in this directory are sourced in alpha-numeric order
-   when the container is initiated. For legacy purposes there is a symbolic link
-   called ``/environment`` that points to
-   ``/.singularity.d/env/90-environment.sh``.
+-  **env**: All ``*.sh`` files in this directory are sourced in
+   alpha-numeric order when the container is initiated. For legacy
+   purposes there is a symbolic link called ``/environment`` that
+   points to ``/.singularity.d/env/90-environment.sh``. Whenever
+   possible, avoid modifying or creating environment files manually to
+   prevent potential issues building & running containers with future
+   versions of Singularity. Beginning with Singularity 3.6, additional
+   facilities such as ``--env`` and ``--env-file`` are available to
+   allow manipulation of the container environment at runtime.
 
 -  **labels.json**: The json file that stores a containers labels described
-   above.
+   above. The 
 
 -  **libs**: At runtime the user may request some host-system libraries to be
    mapped into the container (with the ``--nv`` option for example). If so, this
