@@ -62,9 +62,9 @@ Library.
 
 .. code-block:: none
 
-    $ sudo singularity build lolcow.simg library://sylabs-jms/testing/lolcow
+    $ sudo singularity build lolcow.sif library://sylabs-jms/testing/lolcow
 
-The first argument (``lolcow.simg``) specifies a path and name for your
+The first argument (``lolcow.sif``) specifies a path and name for your
 container. The second argument (``library://sylabs-jms/testing/lolcow``) gives
 the Container Library URI from which to download. By default the container will
 be converted to a compressed, read-only SIF. If you want your container in a
