@@ -318,6 +318,9 @@ If you set a variable on your host called
    $ singularity exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/endpath
 
+Alternatively you could use the ``--env`` option to set a
+``APPEND_PATH`` variable, e.g. ``--env APPEND_PATH=/endpath``.
+
 If you set a variable on your host called
 ``SINGULARITYENV_PREPEND_PATH`` then its value will be prepended
 (added to the start) of the ``PATH`` variable in the container.
@@ -330,6 +333,22 @@ If you set a variable on your host called
    $ export SINGULARITYENV_PREPEND_PATH="/startpath"
    $ singularity exec env.sif sh -c 'echo $PATH'
    /startpath:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+Alternatively you could use the ``--env`` option to set a
+``PREPEND_PATH`` variable, e.g. ``--env PREPEND_PATH=/startpath``.
+
+
+Evaluating container variables
+------------------------------
+
+When setting environment variables with ``--env`` etc. you can specify
+an escaped variable name, e.g. ``\$PATH`` to evaluate the value of
+that variable in the container.
+
+For example, ``--env PATH="\$PATH:/endpath"`` would have the same
+effect as ``--env APPEND_PATH="/endpath"``.
+
+
 
 Environment Variable Precedence
 -------------------------------
