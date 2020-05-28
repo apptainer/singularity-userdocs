@@ -103,7 +103,7 @@ environment variables will be set. If you are using a ``library`` or
 base image.
 
 If I build a singularity container from the image
-``Docker://python:3.7`` then when I run the container I can see that
+``docker://python:3.7`` then when I run the container I can see that
 the ``PYTHON_VERSION`` variable is set in the container:
 
 .. code-block::
@@ -209,7 +209,7 @@ program running in the container.
   - ``SINGULARITY_ENVIRONMENT`` - path inside the container to the
     shell script holding the container image environment settings.
   - ``SINGULARITY_NAME`` - name of the container image,
-    e.g. ``myfile.sif`` or ``Docker://ubuntu``.
+    e.g. ``myfile.sif`` or ``docker://ubuntu``.
 
    
 --------------------------------
@@ -394,7 +394,7 @@ section in a definition file:
 
 .. code-block:: singularity
 
-    Bootstrap: Docker
+    Bootstrap: docker
     From: ubuntu: latest
 
     %labels
@@ -653,7 +653,7 @@ the SIF file metadata descriptor.
     │   └── test
     ├── env
     │   ├── 01-base.sh
-    |   ├── 10-Docker2singularity.sh
+    |   ├── 10-docker2singularity.sh
     │   ├── 90-environment.sh
     │   ├── 91-environment.sh
     |   ├── 94-appsbase.sh
