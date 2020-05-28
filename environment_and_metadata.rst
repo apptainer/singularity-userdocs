@@ -7,28 +7,27 @@ Environment and Metadata
 .. _sec:envandmetadata:
 
 Environment variables are values you can set in a session, which can
-be used to influence the behavior of programs. Most non-trival
-programs need some configuration, even when they are packaged into a
-container. It's often considered best practice to use environment
-variables to pass settings to a program in a container, because they
-are easily set and don't rely on writing and binding in configuration
-files. When building a container you may need to set fixed or default
-environment variables. When running containers you may need to set or
-override environment variables.
+be used to influence the behavior of programs. It's often considered
+best practice to use environment variables to pass settings to a
+program in a container, because they are easily set and don't rely on
+writing and binding in program-specific configuration files. When
+building a container you may need to set fixed or default environment
+variables. When running containers you may need to set or override
+environment variables.
 
-The metadata of a container is information that describes the
-container. Singularity automatically records important information
-such as the definition file used to build a container. Other details
-such as the version of Singularity used are present as *labels* on a
-container. You can also specify your own to be recorded against your
-container.
+The :ref:`metadata <sec:metadata>` of a container is information that
+describes the container. Singularity automatically records important
+information such as the definition file used to build a
+container. Other details such as the version of Singularity used are
+present as :ref:`labels <sec:labels>` on a container. You can also
+specify your own to be recorded against your container.
 
 --------------------------
 Changes in Singularity 3.6
 --------------------------
 
 Singularity 3.6 has modified the ways in which environment variables
-are handled, to allow long-term stability and consistency that has
+are handled to allow long-term stability and consistency that has
 been lacking in prior versions. It also introduces new ways of setting
 environment variables, such as the ``--env`` and ``--env-file``
 options.
@@ -43,7 +42,7 @@ Summary of changes
 ------------------
 
  - When building a container, the environment defined in the base
-   image (e.g. a docker image) is available during the ``%post``
+   image (e.g. a Docker image) is available during the ``%post``
    section of the build.
  - An environment variable set in a container image, from the
    bootstrap base image, or in the ``%environment`` section of a
@@ -94,17 +93,17 @@ Environment from a base image
 -----------------------------
 
 When you build a container with Singularity you might *bootstrap* from
-a library or docker image, or using Linux distribution bootstrap tools
+a library or Docker image, or using Linux distribution bootstrap tools
 such as ``debootstrap``, ``yum`` etc.
 
 When using ``debootstrap``, ``yum`` etc. you are starting from a fresh
 install of a Linux distribution into your container. No specific
 environment variables will be set. If you are using a ``library`` or
-``docker`` source then you may inherit environment variables from your
+``Docker`` source then you may inherit environment variables from your
 base image.
 
 If I build a singularity container from the image
-``docker://python:3.7`` then when I run the container I can see that
+``Docker://python:3.7`` then when I run the container I can see that
 the ``PYTHON_VERSION`` variable is set in the container:
 
 .. code-block::
@@ -191,7 +190,7 @@ environment variables for correct operation of most software.
    variables, e.g. because you use software made available through
    environment modules / lmod, you may see strange behavior in your
    container. Check your host environment with ``env`` for variables
-   such as ``PYTHON_PATH`` that can change the way code runs, and
+   such as ``PYTHONPATH`` that can change the way code runs, and
    consider using ``--cleanenv``.
 
 ----------------------------------------
@@ -210,7 +209,7 @@ program running in the container.
   - ``SINGULARITY_ENVIRONMENT`` - path inside the container to the
     shell script holding the container image environment settings.
   - ``SINGULARITY_NAME`` - name of the container image,
-    e.g. ``myfile.sif`` or ``docker://ubuntu``.
+    e.g. ``myfile.sif`` or ``Docker://ubuntu``.
 
    
 --------------------------------
@@ -263,9 +262,9 @@ environment variables as ``NAME=VALUE`` pairs, e.g.:
 ``SINGULARITYENV_`` prefix
 --------------------------
 
-If you set a variable on your host called ``SINGULARITYENV_xxx``
-*before* you run a container, then it will set the environment
-variable ``xxx`` inside the container:
+If you export an environment variable on your host called
+``SINGULARITYENV_xxx`` *before* you run a container, then it will set
+the environment variable ``xxx`` inside the container:
 
 .. code-block::
 
@@ -275,6 +274,7 @@ variable ``xxx`` inside the container:
    $ export SINGULARITYENV_MYVAR="Overridden"
    $ singularity run env.sif
    Overridden
+
 
 Manipulating ``PATH``
 ---------------------
@@ -338,7 +338,7 @@ When a container is run with Singularity 3.6, the container
 environment is constructed in the following order:
 
   - Clear the environment, keeping just ``HOME`` and ``SINGULARITY_APPNAME``.
-  - Take docker defined environment variables, where docker was the base image source.
+  - Take Docker defined environment variables, where Docker was the base image source.
   - If ``PATH`` is not defined set the Singularity default ``PATH`` *or*
   - If ``PATH`` is defined, add any missing path parts from Singularity defaults
   - Take environment variables defined explicitly in the image
@@ -348,6 +348,8 @@ environment is constructed in the following order:
   - Inject ``SINGULARITYENV_`` / ``--env`` / ``--env-file`` variables
     so they can override or modify any previous values:
   - Source any remaining scripts from ``/singularity.d/env`` 
+
+.. _sec:metadata:
 
 ------------------
 Container Metadata
@@ -363,6 +365,8 @@ For containers that are generated with Singularity version 3.0 and
 later, default labels are represented using the `rc1 Label Schema
 <http://label-schema.org/rc1/>`_.
 
+.. _sec:labels:
+
 Custom Labels
 -------------
 
@@ -371,7 +375,7 @@ section in a definition file:
 
 .. code-block:: singularity
 
-    Bootstrap: docker
+    Bootstrap: Docker
     From: ubuntu: latest
 
     %labels
@@ -630,7 +634,7 @@ the SIF file metadata descriptor.
     │   └── test
     ├── env
     │   ├── 01-base.sh
-    |   ├── 10-docker2singularity.sh
+    |   ├── 10-Docker2singularity.sh
     │   ├── 90-environment.sh
     │   ├── 91-environment.sh
     |   ├── 94-appsbase.sh
