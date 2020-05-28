@@ -853,21 +853,49 @@ Note that differently from the ``docker://`` bootstrap agent both ``docker-daemo
 ``scratch`` bootstrap agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Through all the Bootstrap agents mentioned above, you were essentially building
-over a base(parent) image pulled from either Library/Docker/Shub/Oras etc, but
-Singularity offers support to create even the base images or minimal images to
-create your custom containers.
+The scratch bootstrap agent allows you to start from a completely
+empty container. You are then responsible for adding any and all
+executables, libraries etc. that are required. Starting with a scratch
+container can be useful when you are aiming to minimize container size,
+and have a simple application / static binaries.
 
 Overview
 """"""""
 
-This module allows you to take full control of the content inside your container,
-i.e., the user mentions the binaries/packages required for creation of the
-container. The installation of any software, necessary configuration files can all be
-mentioned in the ``%setup`` section of the definition file. This agent is
-particularly useful for creating minimal image sizes and is more secure since
-the creator is fully aware of what's inside the container (ideally only the
-items required to run your application) and hence reduces the attack surface.
+A minimal container providing a shell can be created by copying the
+``busybox`` static binary into an empty scratch container:
+
+.. code-block:: singularity
+
+    Bootstrap: scratch
+
+    %setup
+        # Runs on host - fetch static busybox binary
+        curl -o /tmp/busybox https://www.busybox.net/downloads/binaries/1.31.0-i686-uclibc/busybox
+        # It needs to be executable
+        chmod +x /tmp/busybox
+
+    %files
+        # Copy from host into empty container
+        /tmp/busybox /bin/sh
+
+    %runscript
+       /bin/sh
+
+
+The resulting container provides a shell, and is 696KiB in size:
+
+.. code-block::
+
+    $ ls -lah scratch.sif
+    -rwxr-xr-x. 1 dave dave 696K May 28 13:29 scratch.sif
+
+    $ singularity run scratch.sif
+    WARNING: passwd file doesn't exist in container, not updating
+    WARNING: group file doesn't exist in container, not updating
+    Singularity> echo "Hello from a 696KiB container"
+    Hello from a 696KiB container
+
 
 Keywords
 """"""""
@@ -876,6 +904,4 @@ Keywords
 
     Bootstrap: scratch
 
-Since you are building the image from scratch, it does not require and hence
-does not support any keywords.
-
+There are no additional keywords for the scratch bootstrap agent.
