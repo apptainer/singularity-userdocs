@@ -19,111 +19,174 @@ related to the build environment.
 Cache Folders
 -------------
 
-To make downloading images for build and :ref:`pull <pull-command>` faster and less redundant, Singularity
-uses a caching strategy. By default, Singularity will create
-a set of folders in your ``$HOME`` directory for docker layers, Cloud library images, and metadata, respectively:
+Singularity will cache SIF container images generated from remote
+sources, and any OCI/docker layers used to create them. The cache is
+created at ``$HOME/.singularity/cache`` by default. The location of
+the cache can be changed by setting the ``SINGULARITY_CACHEDIR``
+environment variable.
+
+.. note::
+
+   When you run builds as root, using ``sudo``, images will be cached
+   in root’s home at ``/root`` and not your user’s home. Use the
+   ``-E`` option to sudo to pass through a ``SINGULARITY_CACHEDIR``
+   environment variable.
+
+If you change the value of ``SINGULARITY_CACHEDIR`` be sure to choose
+a location that is:
+
+ - Unique to you. Permissions are set on the cache so that private
+   images cached for one user are not exposed to another. This means
+   that ``SINGULARITY_CACHEDIR`` cannot be shared.
+ - Located on a filesystem with sufficient space for the number and size of
+   container images anticipated.
+ - Located on a filesystem that supports atomic rename, if possible.
+
+.. warning::
+
+   If you are not certain that your ``$HOME`` or
+   ``SINGULARITY_CACHEDIR`` filesytems support atomic rename, do not
+   run Singularity in parallel using remote container URLs. Instead
+   use ``singularity pull`` to create a local SIF image, and then run
+   this SIF image in a parallel step. An alternative is to use the
+   ``--disable-cache`` option, but this will result in each
+   Singularity instance independently fetching the container from the
+   remote source, into a temporary location.
+
+
+Inside the cache location you will find separate directories for the
+different kinds of data that are cached:
 
 .. code-block:: none
 
+    $HOME/.singularity/cache/blob
     $HOME/.singularity/cache/library
-    $HOME/.singularity/cache/oci
+    $HOME/.singularity/cache/net
     $HOME/.singularity/cache/oci-tmp
+    $HOME/.singularity/cache/shub
 
-If you want to cache in a different directory, set ``SINGULARITY_CACHEDIR`` to the desired path.
-By using the ``-E`` option with the ``sudo`` command, ``SINGULARITY_CACHEDIR`` will be passed along
-to root's environment and respected during the build.
-Remember that when you run commands as root images will be cached in root’s home at ``/root`` and not your user’s home.
+You can safely delete these directories, or content within
+them. Singularity will re-create any directories and data that are
+needed in future runs.
+
+You should not add any additional files, or modify files in the cache,
+as this may cause checksum / integrity errors when you run or build
+containers. If you experience problems use ``singularity cache clean``
+to reset the cache to a clean, empty state.
+    
 
 --------------
 Cache commands
 --------------
 
-Singularity 3.1 comes with new commands for cleaning and listing the cache image files generated.
-
+The ``cache`` command for Singularity allows you to view and clean up
+your cache, without manually inspecting the cache directories.
 
 .. note::
 
-    Running the cache commands with sudo privilege will consider cache location as ``/root/.singularity/cache``. The default location for cache without sudo privilege is ``~/.singularity/cache``.
-    Make sure that if you build a container with sudo privilege, you will need to consider the sudo location from the cache, and not the default.
+   If you have built images as root, directly or via ``sudo``, the
+   cache location for those builds is ``/root/.singularity``. You
+   will need to use ``sudo`` when running ``cache clean`` or ``cache
+   list`` to manage these cache entries.
 
-    For example, running the following command with sudo privilege (considering the sudo privilege location for cache ``/root/.singularity/cache``):
-
-    .. code-block:: none
-
-        $ sudo singularity cache list
-        NAME                   DATE CREATED           SIZE             TYPE
-        ubuntu_latest.sif      2019-01-31 14:59:32    28.11 Mb         library
-        ubuntu_18.04.sif       2019-01-31 14:58:44    27.98 Mb         library
-
-    and then cleaning the cache without sudo privilege (``singularity cache clean -a``) will not work, since the default cache location is ``~/.singularity/cache``.
-    In this case you would need to run the clean command with sudo privilege:
-
-    .. code-block:: none
-
-        $ sudo singularity cache clean -a
-        NAME                     DATE CREATED           SIZE             TYPE
-
-        There 0 containers using: 0.00 kB, 0 oci blob file(s) using 0.00 kB of space.
-        Total space used: 0.00 kB
+   
 
 Listing Cache
 =============
 
-For example, you can list cache image files and check which type they belong to: Library or oci.
+To view a summary of cache usage, use ``singularity cache list``:
 
 .. code-block:: none
 
     $ singularity cache list
-    NAME                   DATE CREATED           SIZE             TYPE
-    ubuntu_latest.sif      2019-01-31 14:59:32    28.11 Mb         library
-    ubuntu_18.04.sif       2019-01-31 14:58:44    27.98 Mb         library
-    alpine_latest.sif      2019-01-31 14:58:24    2.18 Mb          library
-    centos_latest.sif      2019-01-31 14:59:07    72.96 Mb         library
-    centos_latest.sif      2019-01-31 14:59:26    73.45 Mb         oci
-    ubuntu_18.04.sif       2019-01-31 14:58:58    27.99 Mb         oci
-    ubuntu_latest.sif      2019-01-31 14:59:41    27.99 Mb         oci
-    alpine_latest.sif      2019-01-31 14:58:30    2.72 Mb          oci
+    There are 4 container file(s) using 59.45 MB and 23 oci blob file(s) using 379.10 MB of space
+    Total space used: 438.55 MB
 
-    There are 15 oci blob file(s) using 112.51 Mb of space. Use: '-T=blob' to list
-
-You can also clean a specific cache type, choosing between: ``library``, ``oci``, ``blob`` (separated by commas)
+To view detailed information, use ``singularity cache list -v``:
 
 .. code-block:: none
 
-    # clean only library cache
-    $ singularity cache clean --type=library
+    $ singularity cache list -v
+    NAME                     DATE CREATED           SIZE             TYPE
+    0ed5a98249068fe0592edb   2020-05-27 12:57:22    192.21 MB        blob
+    1d9cd1b99a7eca56d8f2be   2020-05-28 15:19:07    0.35 kB          blob
+    219c332183ec3800bdfda4   2020-05-28 12:22:13    0.35 kB          blob
+    2adae3950d4d0f11875568   2020-05-27 12:57:16    51.83 MB         blob
+    376057ac6fa17f65688c56   2020-05-27 12:57:12    50.39 MB         blob
+    496548a8c952b37bdf149a   2020-05-27 12:57:14    10.00 MB         blob
+    5a63a0a859d859478f3046   2020-05-27 12:57:13    7.81 MB          blob
+    5efaeecfa72afde779c946   2020-05-27 12:57:25    0.23 kB          blob
+    6154df8ff9882934dc5bf2   2020-05-27 08:37:22    0.85 kB          blob
+    70d0b3967cd8abe96c9719   2020-05-27 12:57:24    26.61 MB         blob
+    8f5af4048c33630473b396   2020-05-28 15:19:07    0.57 kB          blob
+    95c3f3755f37380edb2f8f   2020-05-28 14:07:20    2.48 kB          blob
+    96878229af8adf91bcbf11   2020-05-28 14:07:20    0.81 kB          blob
+    af88fdb253aac46693de78   2020-05-28 12:22:13    0.58 kB          blob
+    bb94ffe723890b4d62d742   2020-05-27 12:57:23    6.15 MB          blob
+    c080bf936f6a1fdd2045e3   2020-05-27 12:57:25    1.61 kB          blob
+    cbdbe7a5bc2a134ca8ec91   2020-05-28 12:22:13    2.81 MB          blob
+    d51af753c3d3a984351448   2020-05-27 08:37:21    28.56 MB         blob
+    d9cbbca60e5f0fc028b13c   2020-05-28 15:19:06    760.85 kB        blob
+    db8816f445487e48e1d614   2020-05-27 12:57:25    1.93 MB          blob
+    fc878cd0a91c7bece56f66   2020-05-27 08:37:22    32.30 kB         blob
+    fee5db0ff82f7aa5ace634   2020-05-27 08:37:22    0.16 kB          blob
+    ff110406d51ca9ea722112   2020-05-27 12:57:25    7.78 kB          blob
+    sha256.02ee8bf9dc335c2   2020-05-29 13:45:14    28.11 MB         library
+    sha256.5111f59250ac94f   2020-05-28 13:14:39    782.34 kB        library
+    747d2dbbaaee995098c979   2020-05-28 14:07:22    27.77 MB         oci-tmp
+    9a839e63dad54c3a6d1834   2020-05-28 12:22:13    2.78 MB          oci-tmp
 
-    # clean only oci cache
-    $ singularity cache clean --type=oci
+    There are 4 container file(s) using 59.45 MB and 23 oci blob file(s) using 379.10 MB of space
+    Total space used: 438.55 MB
 
-    # clean only blob cache
-    $ singularity cache clean --type=blob
+All cache entries are named using a content hash, so that identical
+layers or images that are pulled from different URIs do not consume
+more space than needed.
+    
+Entries marked ``blob`` are OCI/docker layers and manifests, that are
+used to create SIF format images in the ``oci-tmp`` cache. Other
+caches are named for the source of the image e.g. ``library`` and
+``oras``.
 
-    # clean only library, and oci cache
-    $ singularity cache clean --type=library,oci
+You can limit the cache list to a specific cache type with the
+``-type`` / ``-t`` option.
 
-.. note::
-
-    This feature of passing additional flags with comma-separated arguments can also be used with the ``singularity cache clean`` command we will see below.
-
+    
 Cleaning the Cache
 ==================
 
-Most of the ``cache clean`` and ``cache list`` flags can be interchanged, (``--name`` is only reserved for ``cache clean``).
+To reclaim space used by the Singularity cache, use ``singularity
+cache clean``.
 
-It's worth noting that by running the following command: (with no flags)
+By default ``singularity cache clean`` will remove all cache entries,
+after asking you to confirm:
 
 .. code-block:: none
 
     $ singularity cache clean
+    This will delete everything in your cache (containers from all sources and OCI blobs). 
+    Hint: You can see exactly what would be deleted by canceling and using the --dry-run option.
+    Do you want to continue? [N/y] n
 
-By default will just clean the blob cache, but if you do:
+Use the ``--dry-run`` / ``-n`` option to see the files that would be
+deleted, or the ``--force`` / ``-f`` option to clean without asking
+for confirmation.
+
+If you want to leave your most recent cached images in place, but
+remove images that were cached longer ago, you can use the ``--days``
+/ ``-d`` option. E.g. to clean cache entries older than 30 days:
 
 .. code-block:: none
 
-    $ singularity cache clean --all
+    $ singularity cache clean --days 30
 
-It will clean all the cache.
+To remove only a specific kind of cache entry, e.g. only library
+images, use the ``type`` / ``-T`` option:
+
+.. code-block:: none
+
+    $ singularity cache clean --type library
+
 
 -----------------
 Temporary Folders
@@ -131,52 +194,43 @@ Temporary Folders
 
  .. _sec:temporaryfolders:
 
- Singularity uses a temporary directory to build the squashfs filesystem,
- and this temp space needs to be large enough to hold the entire resulting Singularity image.
- By default this happens in ``/tmp`` but the location can be configured by setting ``SINGULARITY_TMPDIR`` to the full
- path where you want the sandbox and squashfs temp files to be stored. Remember to use ``-E`` option to pass the value of ``SINGULARITY_TMPDIR``
- to root's environment when executing the ``build`` command with ``sudo``.
+When building a container, or pulling/running a Singularity container
+from a Docker/OCI source, a temporary working space is required. The
+container is constructed in this temporary space before being packaged
+into a Singularity SIF image. Temporary space is also used when
+running containers in unprivileged mode, and performing some
+operations on filesystems that do not fully support ``--fakeroot``.
 
- When you run one of the action commands (i.e. ``run``, ``exec``, or ``shell``) with a container from the
- container library or an OCI registry, Singularity builds the container in the temporary directory caches it
- and runs it from the cached location.
+The location for temporary directories defaults to
+``/tmp``. Singularity will also respect the environment variable
+``TMPDIR``, and both of these locations can be overridden by setting
+the environment variable ``SINGULARITY_TMPDIR``.
 
- Consider the following command:
+The temporary directory used during a build must be on a filesystem
+that has enough space to hold the entire container image,
+uncompressed, including any temporary files that are created and later
+removed during the build. You may need to set ``SINGULARITY_TMPDIR``
+when building a large container on a system which has a small ``/tmp``
+filesystem.
 
-.. code-block:: none
+Remember to use ``-E`` option to pass the value of
+``SINGULARITY_TMPDIR`` to root's environment when executing the
+``build`` command with ``sudo``.
 
-    $ singularity exec docker://busybox /bin/sh
+.. warning::
 
-This container is first built in ``/tmp``. Since all the oci blobs are converted into SIF format,
-by default a temporary runtime directory is created in:
+   Many modern Linux distributions use an in-memory ``tmpfs``
+   filesystem for ``/tmp`` when installed on a computer with a
+   sufficient amount of RAM. This may limit the size of container you
+   can build, as temporary directories under ``/tmp`` share RAM with
+   runniing programs etc. A ``tmpfs`` also uses default mount options
+   that can interfere with some container builds.
 
-.. code-block:: none
+   Set ``SINGULARITY_TMPDIR`` to a disk location, or disable the
+   ``tmpfs`` ``/tmp`` mount on your system if you experience
+   problems.
 
-    $HOME/.singularity/cache/oci-tmp/<sha256-code>/busybox_latest.sif
-
-In this case, the ``SINGULARITY_TMPDIR`` and ``SINGULARITY_CACHEDIR`` variables will also be respected.
-
------------
-Pull Folder
------------
-
-To customize your pull default location you can do so by specifying Singularity in which folder to pull the image, assuming you own a folder called ``mycontainers`` inside your ``$HOME`` folder
-, you would need to do something like the following:
-
-.. code-block:: none
-
-    $ singularity pull $HOME/mycontainers library://library/default/alpine
-
-Singularity also allows you to modify the default cache location for pulling images. By default, the location of the pull folder is given by the environment variable ``SINGULARITY_CACHEDIR``.
-``SINGULARITY_CACHEDIR`` by default points to ``$HOME/.singularity/cache`` but this path can be modified. You would need to set and export the ``SINGULARITY_CACHEDIR`` environment variable before pulling the image, like so:
-
-.. code-block:: none
-
-   $ export SINGULARITY_CACHEDIR=$HOME/mycontainers
-   $ singularity pull library://library/default/alpine
-
-And that will successfully pull that container image inside your new ``SINGULARITY_CACHEDIR`` location.
-
+ 
 --------------------
 Encrypted Containers
 --------------------
