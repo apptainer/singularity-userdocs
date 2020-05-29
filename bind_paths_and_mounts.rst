@@ -146,3 +146,105 @@ without mounting your host ``$HOME`` directory with the ``--no-home`` flag.
 .. code-block:: none
 
     $ singularity shell --containall my_container.sif
+
+
+-----------
+FUSE mounts
+-----------
+
+Filesystem in Userspace (FUSE) is an interface to allow filesystems to
+be mounted using code that runs in userspace, rather than in the Linux
+Kernel. Unprivileged (non-root) users can mount filesystems that have
+FUSE drivers. For example, the ``fuse-sshfs`` package allows you to
+mount a remote computer's filesystem to your local host, over ssh:
+
+.. code-block:: none
+
+    $ mount.fuse sshfs#ythel:/home/dave other_host/
+
+    # Now mounted to my local machine:
+    $ ythel:/home/dave on /home/dave/other_host type fuse.sshfs (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
+
+
+Singularity 3.6 introduces the ``--fusemount`` option, which allows
+you directly expose FUSE filesystems inside a container. The FUSE
+command / driver that mounts a particular type of filesystem can be
+located on the host, or in the container.
+
+The FUSE command *must* be based on libfuse3 to work correctly with
+Singularity ``--fusemount``. If you are using an older distribution
+that provides FUSE commands such as ``sshfs`` based on FUSE 2 then you
+can install FUSE 3 versions of the commands you need inside your
+container.
+
+
+.. note::
+
+   ``--fusemount`` functionality was present in a hidden preview state
+   from Singularity 3.4. The behavior has changed for the final
+   supported version introduced in Singularity 3.6.
+
+
+   
+FUSE mount definitions
+======================
+
+A fusemount definition for Singularity consists of 3 parts:
+
+.. code-block:: none
+
+    --fusemount <type>:<fuse command> <container mountpoint>
+
+
+- **type** specifies how and where the FUSE mount will be run. The options are:
+  
+  - ``container`` - use a FUSE command on the host, to mount a
+    filesystem into the container, with the fuse process attached.
+  - ``host`` - use a FUSE command inside the container, to mount a
+    filesystem into the container, with the fuse process attached.
+  - ``container-daemon`` - use a FUSE command on the host, to mount a
+    filesystem into the container, with the fuse process detached.
+  - ``host-daemon`` - use a FUSE command inside the container, to
+    mount a filesystem into the container, with the fuse process
+    detached.
+
+- **fuse command** specifies the name of the executable that
+  implements the FUSE mount, and any arguments. E.g. ``sshfs
+  server:over-there/`` for mounting a remote filesystem over SSH,
+  where the remote source is ``over-there/`` in my home directory on
+  the machine called ``server``.
+
+- **container mountpoint** is an *absolute path* at which the FUSE
+  filesystem will be mounted in the container.
+  
+    
+FUSE mount with a host executable
+=================================
+
+To use a FUSE ``sshfs`` mount in a container, where the ``fuse-sshfs`` package has
+been installed on my host, I run with the ``host`` mount type:
+
+.. code-block:: none
+
+    $ singularity run --fusemount "host:sshfs server:/ /server" docker://ubuntu
+    Singularity> cat /etc/hostname 
+    localhost.localdomain
+    Singularity> cat /server/etc/hostname
+    server
+
+FUSE mount with a container executable
+======================================
+
+If the FUSE driver / command that you want to use for the mount has
+been added to your container, you can use the ``container`` mount
+type:
+
+.. code-block:: none
+
+    $ singularity run --fusemount "container:sshfs server:/ /server" sshfs.sif
+    Singularity> cat /etc/hostname 
+    localhost.localdomain
+    Singularity> cat /server/etc/hostname
+    server
+
+ 
