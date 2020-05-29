@@ -41,7 +41,7 @@ You can see them listed alphabetically below with their respective functionality
 ``C``
 ^^^^^
 
-#. **SINGULARITY_CACHEDIR**: Specifies the directory for image downloads to be cached in.
+#. **SINGULARITY_CACHEDIR**: Specifies the directory for image downloads to be cached in. See :ref:`sec:cache`.
 
 #. **SINGULARITY_CLEANENV**: Specifies if the environment should be cleaned or not before running the container. Default is set to false.
 
@@ -190,7 +190,7 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **SINGULARITY_TEST**: Specifies the test script for the image.
 
-#. **SINGULARITY_TMPDIR**: Used with the ``build`` command, to consider a temporary location for the build.
+#. **SINGULARITY_TMPDIR**: Used with the ``build`` command, to consider a temporary location for the build. See :ref:`sec:temporaryfolders`.
 
 ``U``
 ^^^^^
@@ -898,7 +898,7 @@ The resulting container provides a shell, and is 696KiB in size:
 
 
 Keywords
-""""""""
+
 
 .. code-block:: singularity
 

@@ -104,7 +104,7 @@ Here ``docker`` is prepended to ensure that the ``run`` command of Singularity i
 
 .. note::
 
-    Use is made of the ``$HOME/.singularity`` directory by default to cache images. To cache images elsewhere, use of the environment variable ``SINGULARITY_CACHEDIR`` can be made.
+    Use is made of the ``$HOME/.singularity`` directory by default to :ref:`cache images <sec:cache>`. To cache images elsewhere, use of the environment variable ``SINGULARITY_CACHEDIR`` can be made.
 
 As the runtime of this container is encapsulated as a single SIF file, it is possible to
 
