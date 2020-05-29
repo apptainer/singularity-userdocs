@@ -15,6 +15,8 @@ environment by doing things such as specifying a custom cache directory for imag
 sending your Docker Credentials to the registry endpoint. Here we will discuss these and other topics
 related to the build environment.
 
+.. _sec:cache:
+
 -------------
 Cache Folders
 -------------
@@ -188,11 +190,11 @@ images, use the ``type`` / ``-T`` option:
     $ singularity cache clean --type library
 
 
+.. _sec:temporaryfolders:
+
 -----------------
 Temporary Folders
 -----------------
-
- .. _sec:temporaryfolders:
 
 When building a container, or pulling/running a Singularity container
 from a Docker/OCI source, a temporary working space is required. The
