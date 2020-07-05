@@ -198,13 +198,13 @@ follows:
       verify      Verify cryptographic signatures attached to an image
       version     Show the version for Singularity
 
-  Examples:
-    $ singularity help <command> [<subcommand>]
-    $ singularity help build
-    $ singularity help instance start
+    Examples:
+      $ singularity help <command> [<subcommand>]
+      $ singularity help build
+      $ singularity help instance start
 
 
-  For additional help or support, please visit https://www.sylabs.io/docs/
+    For additional help or support, please visit https://www.sylabs.io/docs/
 
 
 Information about subcommand can also be viewed with the ``help`` command.
@@ -212,25 +212,28 @@ Information about subcommand can also be viewed with the ``help`` command.
 .. code-block:: none
 
     $ singularity help verify
-    Verify cryptographic signatures on container
+    Verify cryptographic signatures attached to an image
 
     Usage:
       singularity verify [verify options...] <image path>
 
     Description:
-      The verify command allows a user to verify cryptographic signatures on SIF
-      container files. There may be multiple signatures for data objects and
-      multiple data objects signed. By default the command searches for the primary
-      partition signature. If found, a list of all verification blocks applied on
-      the primary partition is gathered so that data integrity (hashing) and
+      The verify command allows a user to verify cryptographic signatures on SIF 
+      container files. There may be multiple signatures for data objects and 
+      multiple data objects signed. By default the command searches for the primary 
+      partition signature. If found, a list of all verification blocks applied on 
+      the primary partition is gathered so that data integrity (hashing) and 
       signature verification is done for all those blocks.
 
     Options:
-      -g, --groupid uint32   group ID to be verified
-      -h, --help             help for verify
-      -i, --id uint32        descriptor ID to be verified
-      -l, --local            only verify with local keys
-      -u, --url string       key server URL (default "https://keys.sylabs.io")
+      -a, --all               verify all objects
+      -g, --group-id uint32   verify objects with the specified group ID
+      -h, --help              help for verify
+      -j, --json              output json
+          --legacy-insecure   enable verification of (insecure) legacy signatures
+      -l, --local             only verify with local keys
+      -i, --sif-id uint32     verify object with the specified ID
+      -u, --url string        key server URL (default "https://keys.sylabs.io")
 
 
     Examples:
@@ -238,6 +241,7 @@ Information about subcommand can also be viewed with the ``help`` command.
 
 
     For additional help or support, please visit https://www.sylabs.io/docs/
+
 
 Singularity uses positional syntax (i.e. the order of commands and options
 matters). Global options affecting the behavior of all commands follow the main
