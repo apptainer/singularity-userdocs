@@ -12,6 +12,15 @@ them to sign and verify containers. This provides a trusted method for
 Singularity users to share containers. It ensures a bit-for-bit reproduction
 of the original container as the author intended it.
 
+.. note::
+
+    Singularity 3.6.0 uses a new signature format. Containers signed
+    by 3.6.0 cannot be verifed by older versions of Singularity.
+
+    To verify containers signed with older versions of Singularity using 3.6.0
+    the ``--legacy-insecure`` flag must be provided to the ``singularity verify`` command.
+
+
 .. _verify_container_from_library:
 
 -----------------------------------------------
@@ -49,42 +58,6 @@ bit-for-bit reproductions of the original image.
     INFO:    Container verified: alpine_latest.sif
 
 In this example you can see that **Sylabs Admin** has signed the container.
-
-Verifying All Partitions
-========================
-
-By default in Singularity 3.5 and below, the sign command verifies
-only the container root filesysytem partition in the SIF file. The
-default behaviour of signing is that only this partition is
-signed. This protects you against modification of content that is used
-when running the container.
-
-In a future release, Singularity will move metadata to SIF partitions,
-outside of the container rootfs, and will sign these additional
-partitions as they become critical to the security of the container.
-
-In Singularity 3.5 the ``--all`` option allows you to force
-signing/verifcation of all partitions in a SIF file, e.g. including
-the definition file partition.
-
-When verifying ``--all`` on a container you will see signatures for each
-partition, or a warning for each partition that is not signed:
-
-.. code-block:: none
-
-    $ singularity verify --all alpine_latest.sif
-
-    WARNING: Missing signature for SIF descriptor 1 (Def.FILE)
-    Container is signed by 1 key(s):
-
-    Verifying partition: FS:
-    8883491F4268F173C6E5DC49EDECE4F3F38D871E
-    [REMOTE]  Sylabs Admin <support@sylabs.io>
-    [OK]      Data integrity verified
-
-    INFO:    Container verified: alpine_latest.sif
-
-.. _sign_your_own_containers:
 
 ---------------------------
 Signing your own containers
@@ -212,16 +185,17 @@ needing to contact the Keystore.
 
 .. code-block:: none
 
-    $ singularity verify my_container.sif 
-
-    Container is signed by 1 key(s):
-
-    Verifying partition: FS:
-    E5F780B2C22F59DF748524B435C3844412EE233B
-    [LOCAL]   David Trudgian (demo) <david.trudgian@sylabs.io>
-    [OK]      Data integrity verified
-
-    INFO:    Container verified: my_container.sif
+    $ singularity verify my_container.sif
+    Verifying image: my_container.sif
+    [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
+    [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
+    Objects verified:
+    ID  |GROUP   |LINK    |TYPE
+    ------------------------------------------------
+    1   |1       |NONE    |Def.FILE
+    2   |1       |NONE    |JSON.Generic
+    3   |1       |NONE    |FS
+    Container verified: my_container.sif
 
 
 If you've pushed your key to the Keystore you can also verify this
@@ -233,15 +207,18 @@ first ``remove`` your local public key, and then try to use the
 
     $ singularity key remove E5F780B2C22F59DF748524B435C3844412EE233B
 
-    $ singularity verify my_container.sif 
-    Container is signed by 1 key(s):
+    $ singularity verify my_container.sif
+    Verifying image: my_container.sif
+    [REMOTE]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
+    [REMOTE]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
+    Objects verified:
+    ID  |GROUP   |LINK    |TYPE
+    ------------------------------------------------
+    1   |1       |NONE    |Def.FILE
+    2   |1       |NONE    |JSON.Generic
+    3   |1       |NONE    |FS
+    Container verified: my_container.sif
 
-    Verifying partition: FS:
-    E5F780B2C22F59DF748524B435C3844412EE233B
-    [REMOTE]  David Trudgian (demo) <david.trudgian@sylabs.io>
-    [OK]      Data integrity verified
-
-    INFO:    Container verified: my_container.sif
 
 Note that the ``[REMOTE]`` message shows the key used for verification
 was obtained from the keystore, and is not present on your local
@@ -255,62 +232,14 @@ offline with ``singularity key pull``
     1 key(s) added to keyring of trust /home/dave/.singularity/sypgp/pgp-public
 
 
-
-Signing All Partitions
-======================
-
-By default in Singularity 3.5 and below only the root filesystem
-partition of a SIF container is signed. This protects you against
-modification of content that is used when running the container, but
-the recipe file embedded seperately into the SIF is not signed.
-
-In a future release Singularity will move metadata to SIF paritions
-outside of the container rootfs, and will sign these additional
-partitions as they become critical to the security of the container.
-
-In Singularity 3.5 the ``--all`` option allows you to force
-signing/verifcation of all partitions in a SIF file, e.g. including
-the definition file partion.
-
-.. code-block:: none
-
-    $ singularity sign --all alpine_latest.sif
-
-    Signing image: alpine_latest.sif
-    Enter key passphrase : 
-    Signature created and applied to alpine_latest.sif
-
-
-    $ singularity verify --all alpine_all.sif 
-
-    Container is signed by 3 key(s):
-
-    Verifying partition: Def.FILE:
-    535BFAA2C5FCDBDB7AAD587F4815CE5B17F4F1DB
-    [LOCAL]   David C. Trudgian (Publishing Keys) <david.trudgian@sylabs.io>
-    [OK]      Data integrity verified
-
-    Verifying partition: JSON.Generic:
-    535BFAA2C5FCDBDB7AAD587F4815CE5B17F4F1DB
-    [LOCAL]   David C. Trudgian (Publishing Keys) <david.trudgian@sylabs.io>
-    [OK]      Data integrity verified
-
-    Verifying partition: FS:
-    535BFAA2C5FCDBDB7AAD587F4815CE5B17F4F1DB
-    [LOCAL]   David C. Trudgian (Publishing Keys) <david.trudgian@sylabs.io>
-    [OK]      Data integrity verified
-
-    INFO:    Container verified: alpine_all.sif
-
 Advanced Signing - SIF IDs and Groups
 =====================================
 
-As well as the default behaviour, to sign the container rootfs, and
-the ``--all`` option to sign every partition in a SIF file, fine
-grained control of signing is possible.
+As well as the default behaviour, which signs all objects,
+fine-grained control of signing is possible.
 
 If you ``sif list`` a SIF file you will see it is comprised of a
-number of partitions. Each partition has an ``ID``, and belongs to a
+number of objects. Each object has an ``ID``, and belongs to a
 ``GROUP``.
 
 .. code-block:: none
@@ -328,66 +257,87 @@ number of partitions. Each partition has an ``ID``, and belongs to a
     2    |1       |NONE    |36864-36961               |JSON.Generic
     3    |1       |NONE    |40960-25890816            |FS (Squashfs/*System/amd64)
 
-    
-I can choose to sign a specific partition with the ``--sif-id`` option to ``sign``.
+
+I can choose to sign and verify a specific object with the ``--sif-id`` option
+to ``sign`` and ``verify``.
 
 .. code-block:: none
 
     $ singularity sign --sif-id 1 my_container.sif 
-
     Signing image: my_container.sif
     Enter key passphrase : 
-    Signature created and applied to my_container.sif
+    Signature created and applied to my_container.sif 
 
-    $ singularity verify --all my_container.sif 
+    $ singularity verify --sif-id 1 my_container.sif
+    Verifying image: my_container.sif
+    [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
+    [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
+    Objects verified:
+    ID  |GROUP   |LINK    |TYPE
+    ------------------------------------------------
+    1   |1       |NONE    |Def.FILE
+    Container verified: my_container.sif
 
-    WARNING: Missing signature for SIF descriptor 2 (JSON.Generic)
-    WARNING: Missing signature for SIF descriptor 3 (FS)
-    Container is signed by 1 key(s):
 
-    Verifying partition: Def.FILE:
-    535BFAA2C5FCDBDB7AAD587F4815CE5B17F4F1DB
-    [LOCAL]   David C. Trudgian (Publishing Keys) <david.trudgian@sylabs.io>
-    [OK]      Data integrity verified
+Note that running the ``verify`` command without specifying the specific sif-id
+gives a fatal error. The container is not considered verified as whole because
+other objects could have been changed without my knowledge.
 
-    INFO:    Container verified: my_container.sif
+.. code-block:: none
 
-Note that the ``verify --all`` shows me that only the definition file
-partition was signed in this case.
+    $ singularity verify my_container.sif
+    Verifying image: my_container.sif
+    [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
+    [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
 
-I can sign a group of partitions with the ``--groupid`` option to ``sign``.
+    Error encountered during signature verification: object 2: object not signed
+    FATAL:   Failed to verify container: integrity: object 2: object not signed
+
+
+I can sign a group of objects with the ``--group-id`` option to ``sign``.
 
 .. code-block:: none
 
     $ singularity sign --groupid 1 my_container.sif 
-
     Signing image: my_container.sif
     Enter key passphrase : 
     Signature created and applied to my_container.sif
 
-This creates one signature over the content of all partitions in the
+
+This creates one signature over all objects in the
 group. I can verify that nothing in the group has been modified by
-running ``verify`` with the same ``--groupid`` option.
+running ``verify`` with the same ``--group-id`` option.
 
 .. code-block:: none
 
-    $ singularity verify --groupid 1 my_container.sif 
+    $ singularity verify --group-id 1 my_container.sif 
+    Verifying image: my_container.sif
+    [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
+    [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
+    Objects verified:
+    ID  |GROUP   |LINK    |TYPE
+    ------------------------------------------------
+    1   |1       |NONE    |Def.FILE
+    2   |1       |NONE    |JSON.Generic
+    3   |1       |NONE    |FS
+    Container verified: my_container.sif
 
-    Container is signed by 1 key(s):
 
-    Verifying partition: group: 1:
-    535BFAA2C5FCDBDB7AAD587F4815CE5B17F4F1DB
-    [LOCAL]   David C. Trudgian (Publishing Keys) <david.trudgian@sylabs.io>
-    [OK]      Data integrity verified
+Because every object in the SIF file is within the signed group 1 the entire
+container is signed, and the default ``verify`` behavior without specifying
+``--group-id`` can also verify the container:
 
-    INFO:    Container verified: my_container.sif
-  
-.. note::
+.. code-block:: none
 
-    As of Singularity 3.5 a group signature will not verify a
-    container by default. A signature on the container root filesystem
-    partition will be needed or the group id of the group signature
-    via `--groupid` will need to be supplied.  As metadata is moved to
-    SIF paritions in future, the semantics of signatures and
-    verification will change to make more effective use of group
-    signatures.
+    $ singularity verify my_container.sif
+    Verifying image: my_container.sif
+    [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
+    [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
+    Objects verified:
+    ID  |GROUP   |LINK    |TYPE
+    ------------------------------------------------
+    1   |1       |NONE    |Def.FILE
+    2   |1       |NONE    |JSON.Generic
+    3   |1       |NONE    |FS
+    Container verified: my_container.sif
+
