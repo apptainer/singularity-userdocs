@@ -83,13 +83,13 @@ the ``-d`` option to ``mkfs.ext3``:
 
 .. code-block:: none
 
-   $ mkdir -p overlay/upper
+   $ mkdir -p overlay/upper overlay/work
    $ dd if=/dev/zero of=overlay.img bs=1M count=500 && \
         mkfs.ext3 -d overlay overlay.img
 
 Now the container will be writable as the unprivileged user who
-created the ``overlay/upper`` directory that was placed into
-``overlay.img``.
+created the ``overlay/upper`` and ``overlay/work`` directories
+that were placed into ``overlay.img``.
 
 .. code-block:: none
 
@@ -103,7 +103,7 @@ created the ``overlay/upper`` directory that was placed into
    The ``-d`` option to ``mkfs.ext3`` does not support ``uid`` or
    ``gid`` values >65535. To allow writes from users with larger uids
    you can create the directories for your overlay with open
-   permissions, e.g. ``mkdir -p -m 777 overlay/upper``. At runtime
+   permissions, e.g. ``mkdir -p -m 777 overlay/upper overlay/work``. At runtime
    files and directories created in the overlay will have the correct
    ``uid`` and ``gid``, but it is not possible to lock down
    permissions so that the overlay is only writable by certain users.
