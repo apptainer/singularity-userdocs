@@ -15,7 +15,7 @@ both of which are supported by Singularity. The goal of this page is to
 demonstrate the development and running of MPI programs using Singularity containers.
 
 There are several ways of carrying this out, the most popular way of
-executing MPI applications installed in a Sigularity container is to rely on the
+executing MPI applications installed in a Singularity container is to rely on the
 MPI implementation available on the host. This is called the *Host MPI* or
 the *Hybrid* model since both the MPI implementations provided by system
 administrators (on the host) and in the containers will be used.
