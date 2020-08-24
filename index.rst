@@ -89,3 +89,4 @@ Reference
 
    Appendix <appendix>
    Command Line Reference <cli>
+   License <license>
