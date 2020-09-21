@@ -48,6 +48,19 @@ plugin's source code.
     Currently, **all** plugins must be compiled from the Singularity source
     code tree.
 
+    Also, the plugins mechanism for the Go language that Singularity is written
+    in is quite restrictive - it requires extremely close version matching of
+    packages used in a plugin to the ones used in the program the plugin is
+    built for. Additionally Singularity is using build time config to get the
+    source tree location for ``singularity plugin compile`` so that you don't
+    need to export environment variables etc, and there isn't mismatch between
+    package path information that Go uses.  This means that at present you must:
+
+    * Build plugins using the exact same version of the source code, in the
+      same location, as was used to build the Singularity executable.
+    * Use the exact same version of Go that was used to build the executable
+      when compiling a plugin for it.
+
 Every plugin encapsulates various information such as the plugin's author, the
 plugin's version, etc. To view this information about a plugin, use the
 ``inspect`` command.
