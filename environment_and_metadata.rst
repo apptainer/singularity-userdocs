@@ -210,6 +210,9 @@ program running in the container.
     shell script holding the container image environment settings.
   - ``SINGULARITY_NAME`` - name of the container image,
     e.g. ``myfile.sif`` or ``docker://ubuntu``.
+  - ``SINGULARITY_BIND`` - a list of bind paths that the user
+    requested, via flags or environment variables, when running the
+    container.
 
    
 --------------------------------
