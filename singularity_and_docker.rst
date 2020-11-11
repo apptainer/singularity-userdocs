@@ -1645,7 +1645,8 @@ Working with Definition Files: Mandatory Header Keywords
 
 Three, new bootstrap agents have been introduced as a consequence of compliance with the OCI Image Specification - assuming ``http`` and ``https`` are considered together. In addition to bootstrapping images for Singularity completely from the command line, definition files can be employed.
 
-As :ref:`above <sec:cli_oci_bootstrap_agent>`, the OCI image layout compliant Singularity cache can be employed to create SIF containers; the definition file, ``lolcow-oci.def``, equivalent is:
+As :ref:`above <cli-oci-bootstrap-agent>`, the OCI image layout compliant Singularity cache can be employed to create SIF containers; the definition file, ``lolcow-oci.def``, equivalent is:
+
 
 .. code-block:: singularity
 
@@ -1863,7 +1864,7 @@ In making use of Docker and OCI images through Singularity the need to troublesh
 
     3. More than one image in the OCI bundle directory
 
-    :ref:`As illustrated above <sec:cli_oci_bootstrap_agent>`, and with respect to the bootstrap agent ``oci://$OCI_BUNDLE_DIR``, a fatal error is generated when *more* than one image is referenced in the ``$OCI_BUNDLE_DIR/index.json`` file. The workaround shared previously was to append the bootstrap directive with the unique reference name for the image of interest - i.e., ``oci://$OCI_BUNDLE_DIR:org.opencontainers.image.ref.name``. Because it may take some effort to locate the reference name for an image of interest, an even simpler solution is to ensure that each ``$OCI_BUNDLE_DIR`` contains at most a single image.
+    :ref:`As illustrated above <cli-oci-bootstrap-agent>`, and with respect to the bootstrap agent ``oci://$OCI_BUNDLE_DIR``, a fatal error is generated when *more* than one image is referenced in the ``$OCI_BUNDLE_DIR/index.json`` file. The workaround shared previously was to append the bootstrap directive with the unique reference name for the image of interest - i.e., ``oci://$OCI_BUNDLE_DIR:org.opencontainers.image.ref.name``. Because it may take some effort to locate the reference name for an image of interest, an even simpler solution is to ensure that each ``$OCI_BUNDLE_DIR`` contains at most a single image.
 
     4. Cache maintenance
 

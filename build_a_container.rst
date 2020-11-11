@@ -12,7 +12,7 @@ download and assemble existing containers from external resources like the
 `Container Library <https://cloud.sylabs.io/library>`_ and
 `Docker Hub <https://hub.docker.com/>`_. You can use it to convert containers
 between the formats supported by Singularity. And you can use it in conjunction
-with a :ref:`Singularity definition <container-recipes>` file to create a
+with a :ref:`Singularity definition <definition-files>` file to create a
 container from scratch and customized it to fit your needs.
 
 --------
@@ -37,7 +37,7 @@ can be one of the following:
 
 -  path to a **directory** to build from a sandbox
 
--  path to a :ref:`Singularity definition file <container-recipes>`
+-  path to a :ref:`Singularity definition file <definition-files>`
 
 ``build`` can produce containers in two different formats that can be specified
 as follows.
