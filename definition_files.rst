@@ -122,6 +122,51 @@ Other bootstrap agents
 -  :ref:`zypper <build-zypper>` (zypper based systems such as Suse and OpenSuse)
 
 
+SIF Image Verification / Fingerprints Header
+============================================
+
+If the bootstrap image is in the SIF format, then a verification will
+be performed at build time. This verification checks wether the image
+has been signed. If it has been signed the integrity of the image is
+checked, and the signatures matched to public keys if available. This
+process is equivalent to running ``singularity verify`` on the
+bootstrap image.
+
+By default a failed verification, e.g. against an unsigned image, or
+one that has been modified after signing, will produce a warning but
+the build will continue.
+
+To enforce that the bootstrap image verifies correctly and has been
+signed by one or more keys, you can use the ``Fingerprints:`` header
+introduced in Singularity 3.7.
+
+.. code-block:: singularity
+
+    Bootstrap: localimage
+    From: test.sif
+    Fingerprints: 12045C8C0B1004D058DE4BEDA20C27EE7FF7BA84,22045C8C0B1004D058DE4BEDA20C27EE7FF7BA84
+
+If, at build time, the image is not signed with keys corresponding to
+*all* of the listed fingerprints, the build will fail.
+
+The ``Fingerprints:`` header can be used with bootstrap agents that
+provide a SIF image. The ``library`` agent always retrieves a SIF
+image. The ``localimage`` agent can be use to refer to SIF or other
+types of images.
+
+The ``Fingerprints:`` header has no effect if the bootstrap image is
+not in SIF format.
+
+
+.. note::
+
+   The verification occurs before the bootstrap image is extracted
+   into a temporary directory for the build process. The fingerprint
+   check ensures the correct image was retrieved for the build, but
+   does not protect against malicious changes that could be made
+   during the build process on a compromised machine.
+
+
 --------
 Sections
 --------

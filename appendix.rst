@@ -275,6 +275,16 @@ The Library keyword is optional. It will default to
 ``https://library.sylabs.io``.
 
 
+.. code-block:: singularity
+
+    Fingerprints: 22045C8C0B1004D058DE4BEDA20C27EE7FF7BA84
+
+The Fingerprints keyword is optional. It specifies one or more comma
+separated fingerprints corresponding to PGP public keys. If present,
+the bootstrap image will be verified and the build will only proceed
+if it is signed by keys matching *all* of the specified fingerprints.
+
+
 .. _build-docker-module:
 
 
@@ -488,6 +498,16 @@ use.
 
 The ``From`` keyword is mandatory. It specifies the local container to use as a
 base.
+
+.. code-block:: singularity
+
+    Fingerprints: 22045C8C0B1004D058DE4BEDA20C27EE7FF7BA84
+
+The Fingerprints keyword is optional. It specifies one or more comma
+separated fingerprints corresponding to PGP public keys. If present,
+and the ``From:`` keyword points to a SIF format image, it will be
+verified and the build will only proceed if it is signed by keys
+matching *all* of the specified fingerprints.
 
 Notes
 """""
