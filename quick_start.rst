@@ -349,7 +349,7 @@ Unlike ``pull``, ``build`` will convert your image to the latest Singularity
 image format after downloading it.
 ``build`` is like a “Swiss Army knife” for container creation. In addition to
 downloading images, you can use ``build`` to create images from other images or
-from scratch using a :ref:`definition file <definitionfiles>`. You can also
+from scratch using a :ref:`definition file <definition-files>`. You can also
 use ``build`` to convert an image between the container formats supported by
 Singularity. To see a comparison of Singularity definition file with Dockerfile,
 please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
@@ -650,7 +650,7 @@ from the Container Library.
 
 - And finally, the ``%labels`` section allows for custom metadata to be added to the container.
 
-This is a very small example of the things that you can do with a :ref:`definition file <definitionfiles>`.
+This is a very small example of the things that you can do with a :ref:`definition file <definition-files>`.
 In addition to building a container from the Container Library, you can start
 with base images from Docker Hub and use images directly from official
 repositories such as Ubuntu, Debian, CentOS, Arch, and BusyBox.  You can also

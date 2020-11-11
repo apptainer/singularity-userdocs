@@ -59,6 +59,8 @@ bit-for-bit reproductions of the original image.
 
 In this example you can see that **Sylabs Admin** has signed the container.
 
+.. _sign_your_own_containers:
+
 ---------------------------
 Signing your own containers
 ---------------------------
