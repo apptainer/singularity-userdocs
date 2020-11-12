@@ -438,6 +438,37 @@ section in a definition file:
     %labels
       OWNER Joana
 
+      
+Dynamic Build Time Labels
+-------------------------
+
+You may wish to set a label to a value that is not known in advance,
+when you are writing the definition file, but can be obtained in the
+``%post`` section of your definition file while the container is
+building.
+
+Singularity 3.7 and above allow this, through adding labels to the
+file defined by the ``SINGULARITY_LABELS`` environment variable in the
+``%post`` section:
+
+.. code-block:: singularity
+               
+    Bootstrap: library
+    From: ubuntu:latest
+
+    # These labels take a fixed value in the definition
+    %labels
+      OWNER Joana
+
+    # We can now also set labels to a value at build time
+    %post
+      VAL="$(myprog --version)"
+      echo "my.label $VAL" >> "$SINGULARITY_LABELS"
+
+Labels must be added to the file one per line, in a ``NAME VALUE`` format,
+where the name and value are separated by a space.
+
+
 Inspecting Metadata
 -------------------
 
@@ -456,6 +487,7 @@ Running inspect without any options, or with the ``-l`` or
 .. code-block:: console
 
     $ singularity inspect ubuntu.sif 
+    my.label: version 1.2.3
     OWNER: Joana
     org.label-schema.build-arch: amd64
     org.label-schema.build-date: Thursday_12_November_2020_10:51:59_CST
@@ -659,6 +691,7 @@ And the output would look like:
             "data": {
                     "attributes": {
                             "labels": {
+                                    "my.label": "version 1.2.3",
                                     "OWNER": "Joana",
                                     "org.label-schema.build-arch": "amd64",
                                     "org.label-schema.build-date": "Thursday_12_November_2020_10:51:59_CST",
