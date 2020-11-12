@@ -33,7 +33,7 @@ container library, you must first generate an access token to the Sylabs Cloud.
 If you don't already have a valid access token, follow these steps:
 
   1) Go to: https://cloud.sylabs.io/
-  2) Click "Sign in to Sylabs" and follow the sign in steps.
+  2) Click "Sign In" and follow the sign in steps.
   3) Click on your login id (same and updated button as the Sign in one).
   4) Select "Access Tokens" from the drop down menu.
   5) Enter a name for your new access token, such as "test token"

@@ -110,16 +110,26 @@ To ``list`` existing remote endpoints, run this:
 
     $ singularity remote list
 
-    NAME           URI              GLOBAL
-    [SylabsCloud]  cloud.sylabs.io  YES
+    Cloud Services Endpoints
+    ========================
 
-The ``[...]`` brackets around the name ``SylabsCloud`` show that this
-is the current default remote endpoint.
+    NAME         URI              ACTIVE  GLOBAL  EXCLUSIVE
+    SylabsCloud  cloud.sylabs.io  YES     YES     NO
+
+    Keyservers
+    ==========
+
+    URI                     GLOBAL  INSECURE  ORDER
+    https://keys.sylabs.io  YES     NO        1*
+
+
+The ``YES`` in the ``ACTIVE`` column for ``SylabsCloud`` shows that
+this is the current default remote endpoint.
    
 To ``login`` to a remote, for the first time or if your token expires
 or was revoked:
 
-.. code-block:: none
+.. code-block:: console
 
     # Login to the default remote endpoint
     $ singularity remote login
@@ -135,6 +145,23 @@ or was revoked:
     API Key: 
     INFO:    API Key Verified!
 
+    
+If you ``login`` to a remote that you already have a valid token for,
+you will be prompted, and the new token will be verified, before it
+replaces your existing credential. If you enter an incorrect token
+your existing token will not be replaced:
+
+.. code-block:: console
+   
+    $ singularity remote login
+    An access token is already set for this remote. Replace it? [N/y]y
+    Generate an access token at https://cloud.sylabs.io/auth/tokens, and paste it here.
+    Token entered will be hidden for security.
+    Access Token: 
+    FATAL:   while verifying token: error response from server: Invalid Credentials
+
+    # Previous token is still in place
+    
     
 Add & Remove Remotes
 ====================
