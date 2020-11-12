@@ -432,8 +432,8 @@ section in a definition file:
 
 .. code-block:: singularity
 
-    Bootstrap: docker
-    From: ubuntu: latest
+    Bootstrap: library
+    From: ubuntu:latest
 
     %labels
       OWNER Joana
@@ -453,20 +453,17 @@ other metadata that were added to your container when it was built.
 Running inspect without any options, or with the ``-l`` or
 ``--labels`` options will display any labels set on the container
 
-.. code-block:: none
+.. code-block:: console
 
-    $ singularity inspect jupyter.sif
-        {
-            "OWNER": "Joana"
-            "org.label-schema.build-date": "Friday_21_December_2018_0:49:50_CET",
-            "org.label-schema.schema-version": "1.0",
-            "org.label-schema.usage": "/.singularity.d/runscript.help",
-            "org.label-schema.usage.singularity.deffile.bootstrap": "library",
-            "org.label-schema.usage.singularity.deffile.from": "debian:9",
-            "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
-            "org.label-schema.usage.singularity.version": "3.0.1-236.g2453fdfe"
-        }
-
+    $ singularity inspect ubuntu.sif 
+    OWNER: Joana
+    org.label-schema.build-arch: amd64
+    org.label-schema.build-date: Thursday_12_November_2020_10:51:59_CST
+    org.label-schema.schema-version: 1.0
+    org.label-schema.usage.singularity.deffile.bootstrap: library
+    org.label-schema.usage.singularity.deffile.from: ubuntu:latest
+    org.label-schema.usage.singularity.version: 3.7.0-rc.1
+                
 We can easily see when the container was built, the source of the base
 image, and the exact version of Singularity that was used to build it.
 
@@ -650,20 +647,31 @@ This flag gives you the possibility to output your labels in a JSON format.
 
 You can call it this way:
 
-.. code-block:: none
+.. code-block:: console
 
-    $ singularity inspect --json jupyter.sif
+    $ singularity inspect --json ubuntu.sif
 
 And the output would look like:
 
-.. code-block:: none
+.. code-block:: json
 
     {
-	     "attributes": {
-		     "labels": "{\n\t\"org.label-schema.build-date\": \"Friday_21_December_2018_0:49:50_CET\",\n\t\"org.label-schema.schema-version\": \"1.0\",\n\t\"org.label-schema.usage\": \"/.singularity.d/runscript.help\",\n\t\"org.label-schema.usage.singularity.deffile.bootstrap\": \"library\",\n\t\"org.label-schema.usage.singularity.deffile.from\": \"debian:9\",\n\t\"org.label-schema.usage.singularity.runscript.help\": \"/.singularity.d/runscript.help\",\n\t\"org.label-schema.usage.singularity.version\": \"3.0.1-236.g2453fdfe\"\n}"
-	     },
-	     "type": "container"
+            "data": {
+                    "attributes": {
+                            "labels": {
+                                    "OWNER": "Joana",
+                                    "org.label-schema.build-arch": "amd64",
+                                    "org.label-schema.build-date": "Thursday_12_November_2020_10:51:59_CST",
+                                    "org.label-schema.schema-version": "1.0",
+                                    "org.label-schema.usage.singularity.deffile.bootstrap": "library",
+                                    "org.label-schema.usage.singularity.deffile.from": "ubuntu:latest",
+                                    "org.label-schema.usage.singularity.version": "3.7.0-rc.1"
+                            }
+                    }
+            },
+            "type": "container"
     }
+
 
 -------------------------
 /.singularity.d directory
