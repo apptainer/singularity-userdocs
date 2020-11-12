@@ -26,9 +26,9 @@ specify your own to be recorded against your container.
 Changes in Singularity 3.6
 --------------------------
 
-Singularity 3.6 has modified the ways in which environment variables
+Singularity 3.6 modified the ways in which environment variables
 are handled to allow long-term stability and consistency that has
-been lacking in prior versions. It also introduces new ways of setting
+been lacking in prior versions. It also introduced new ways of setting
 environment variables, such as the ``--env`` and ``--env-file``
 options.
 
@@ -370,6 +370,41 @@ environment is constructed in the following order:
   - Inject ``SINGULARITYENV_`` / ``--env`` / ``--env-file`` variables
     so they can override or modify any previous values:
   - Source any remaining scripts from ``/singularity.d/env`` 
+
+
+.. _sec:umask:
+
+
+--------------------------------
+Umask / Default File Permissions
+--------------------------------
+
+The ``umask`` value on a Linux system controls the default permissions
+for newly created files. It is not an environment variable, but
+influences the behavior of programs in the container when they create
+new files.
+
+.. note::
+
+   A detailed description of what the ``umask`` is, and how it works
+   can be found at `Wikipedia
+   <https://en.wikipedia.org/wiki/Umask>`__.
+
+   
+Singularity 3.7 and above set the ``umask`` in the container to match
+the value outside, unless:
+
+  - The ``--fakeroot`` option is used, in which case a ``0022`` umask
+    is set so that ``root`` owned newly created files have expected
+    'system default' permissions, and can be accessed by other
+    non-root users who may use the same container later.
+  - The ``--no-umask`` option is used, in which case a ``0022`` umask
+    is set.
+
+.. note::
+
+   In Singularity 3.6 and below a default ``0022`` umask was always applied.
+
 
 .. _sec:metadata:
 
