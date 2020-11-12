@@ -1633,11 +1633,7 @@ The resulting SIF file can be validated as follows, for example:
 
         2. Creation of a SIF file via the ``oci-archive`` bootstrap agent. The Singularity ``build`` command achieves this.
 
-.. note::
-
-    Though a frequently asked question, the distribution of OCI images remains `out of scope <https://www.opencontainers.org/about/oci-scope-table>`_. In other words, there is no OCI endorsed distribution method or registry.
-
-    Established with nothing more than a Web server then, any individual, group or organization, *could* host OCI archives. This might be particularly appealing, for example, for organizations having security requirements that preclude access to public registries such as Docker Hub. Other that having a very basic hosting capability, OCI archives need only comply to the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`.
+Established with nothing more than a Web server then, any individual, group or organization, *could* host OCI archives. This might be particularly appealing, for example, for organizations having security requirements that preclude access to public registries such as Docker Hub. Other that having a very basic hosting capability, OCI archives need only comply to the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`.
 
 
 Working with Definition Files: Mandatory Header Keywords
