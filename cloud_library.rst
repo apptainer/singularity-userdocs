@@ -86,7 +86,7 @@ Pulling a container
 
 The ``singularity pull`` command will download a container from the `Library <https://cloud.sylabs.io/library>`_
 (``library://``), `Docker Hub <https://hub.docker.com/>`_ (``docker://``), and also
-`Shub <https://singularity-hub.org/collections>`_ (``shub://``).
+`Shub <https://singularity-hub.org>`_ (``shub://``).
 
 .. note::
     When pulling from Docker, the container will automatically be converted to a SIF (Singularity Image Format) container.

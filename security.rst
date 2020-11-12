@@ -165,8 +165,7 @@ Singularity supports a number of methods for further modifying the
 security scope and context when running Singularity containers.  Flags
 can be passed to the action commands; ``shell``, ``exec``, and ``run``
 allowing fine grained control of security. Details about them are
-documented `here
-<https://sylabs.io/guides/\{version\}/user-guide/security_options.html>`__.
+documented :ref:`here <security-options>`.
 
 Security in the Sylabs Cloud
 ############################

@@ -10,7 +10,7 @@ Sylabs introduced the online `Sylabs Cloud
 <https://cloud.sylabs.io/home>`_ to enable users to `Create
 <https://cloud.sylabs.io/builder>`_, `Secure
 <https://cloud.sylabs.io/keystore?sign=true>`_, and `Share
-<https://cloud.sylabs.io/library/guide#create>`_ their container
+<https://cloud.sylabs.io/library>`_ their container
 images with others.
 
 The ``remote`` command group in Singularity allows you to login to an
