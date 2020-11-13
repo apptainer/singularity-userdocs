@@ -289,23 +289,31 @@ containers of interest on the `Container Library <https://cloud.sylabs.io/librar
 
 .. code-block:: none
 
-    $ singularity search alp
-    No users found for 'alp'
+    singularity search tensorflow
+    Found 22 container images for amd64 matching "tensorflow":
 
-    Found 1 collections for 'alp'
-    	library://jchavez/alpine
+	library://ajgreen/default/tensorflow2-gpu-py3-r-jupyter:latest
+		Current software: tensorflow2; py3.7; r; jupyterlab1.2.6
+		Signed by: 1B8565093D80FA393BC2BD73EA4711C01D881FCB
 
-    Found 5 containers for 'alp'
-    	library://jialipassion/official/alpine
-    		Tags: latest
-    	library://dtrudg/linux/alpine
-    		Tags: 3.2 3.3 3.4 3.5 3.6 3.7 3.8 edge latest
-    	library://sylabsed/linux/alpine
-    		Tags: 3.6 3.7 latest
-    	library://library/default/alpine
-    		Tags: 3.1 3.2 3.3 3.4 3.5 3.6 3.7 3.8 latest
-    	library://sylabsed/examples/alpine
-    		Tags: latest
+	library://bensonyang/collection/tensorflow-rdma_v4.sif:latest
+
+	library://dxtr/default/hpc-tensorflow:0.1
+
+	library://emmeff/tensorflow/tensorflow:latest
+
+	library://husi253/default/tensorflow:20.01-tf1-py3-mrcnn-2020.10.07
+
+	library://husi253/default/tensorflow:20.01-tf1-py3-mrcnn-20201014
+
+	library://husi253/default/tensorflow:20.01-tf2-py3-lhx-20201007
+
+	library://irinaespejo/default/tensorflow-gan:sha256.0c1b6026ba2d6989242f418835d76cd02fc4cfc8115682986395a71ef015af18
+
+	library://jon/default/tensorflow:1.12-gpu
+		Signed by: D0E30822F7F4B229B1454388597B8AFA69C8EE9F
+
+        ...
 
 You can use the `pull <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_pull.html>`_
 and `build <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_build.html>`_
@@ -318,7 +326,7 @@ simply downloads the image file to your system.
 
 .. code-block:: none
 
-    $ singularity pull library://sylabsed/linux/alpine
+    $ singularity pull library://lolcow
 
 You can also use ``pull`` with the ``docker://`` uri to reference Docker images
 served from a registry. In this case ``pull`` does not just download an image

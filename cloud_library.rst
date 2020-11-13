@@ -40,7 +40,7 @@ Access tokens for pushing a container, and remote builder.
 To generate a access token, do the following steps:
 
   1) Go to: https://cloud.sylabs.io/
-  2) Click "Sign in to Sylabs" and follow the sign in steps.
+  2) Click "Sign In" and follow the sign in steps.
   3) Click on your login id (same and updated button as the Sign in one).
   4) Select "Access Tokens" from the drop down menu.
   5) Enter a name for your new access token, such as "test token"
@@ -144,38 +144,102 @@ Check out :ref:`this page <signNverify>` on how to: :ref:`verify a container <ve
 Searching the Library for Containers
 ------------------------------------
 
-When it comes to searching the library, you could always go to: https://cloud.sylabs.io/library and search from there
-through the web GUI. Or you can use ``singularity search <container/user>``, this will search the library for
-the ``<container/user>``.
+To find interesting or useful containers in the library, you can open
+https://cloud.sylabs.io/library in your browser and search from there
+through the web GUI.
+
+Alternatively, from the CLI you can use ``singularity search
+<query>``. This will search the library for container images matching
+``<query>``.
 
 Using the CLI Search
 --------------------
 
-Here is an example for searching the library for ``centos``:
+Here is an example of searching the library for ``centos``:
 
-.. code-block:: none
+.. code-block:: console
 
-    $ singularity search centos
-    No users found for 'centos'
-    
-    No collections found for 'centos'
-    
-    Found 6 containers for 'centos'
-    	library://dtrudg/linux/centos
-    		Tags: 6 7 centos6 centos7 latest
-    	library://library/default/centos
-    		Tags: 6 7 latest
-    	library://gmk/demo/centos-vim
-    		Tags: latest
-    	library://mroche/baseline/centos
-    		Tags: 7 7.5 7.5.1804 7.6 7.6.1810 latest
-    	library://gmk/default/centos7-devel
-    		Tags: latest
-    	library://emmeff/default/centos7-python36
-    		Tags: 1.0
+    singularity search centos
+    Found 72 container images for amd64 matching "centos":
 
-Notice there are different tags for the same container.
+	library://dcsouthwick/iotools/centos7:latest
 
+	library://dcsouthwick/iotools/centos7:sha256.48e81523aaad3d74e7af8b154ac5e75f2726cc6cab37f718237d8f89d905ff89
+		Minimal centos7 image from yum bootstrap
+
+	library://dtrudg/linux/centos:7,centos7,latest
+
+	library://dtrudg/linux/centos:centos6,6
+
+	library://emmeff/centos/centos:8
+
+	library://essen1999/default/centos-tree:latest
+
+	library://gallig/default/centos_benchmark-signed:7.7.1908
+		Signed by: 6B44B0BC9CD273CC6A71DA8CED6FA43EF8771A02
+
+	library://gmk/default/centos7-devel:latest
+		Signed by: 7853F08767A4596B3C1AD95E48E1080AB16ED1BC
+
+
+Containers can have multiple tags, and these are shown separated by
+commas after the ``:`` in the
+URL. E.g. ``library://dtrudg/linux/centos:7,centos7,latest`` is a
+single container image with 3 tags, ``7``, ``centos7``, and
+``latest``. You can ``singularity pull`` the container image using any
+one of these tags.
+                
+                
+Note that the results show ``amd64`` containers only. By default
+``search`` returns only containers with an architecture matching your
+current system. To e.g. search for ``arm64`` containers from an
+``amd64`` machine you can use the ``--arch`` flag:
+
+.. code-block:: console
+
+    singularity search --arch arm64 alpine
+    Found 5 container images for arm64 matching "alpine":
+
+	library://dtrudg-sylabs-2/multiarch/alpine:latest
+
+	library://geoffroy.vallee/alpine/alpine:latest
+		Signed by: 9D56FA7CAFB4A37729751B8A21749D0D6447B268
+
+	library://library/default/alpine:3.11.5,latest,3,3.11
+
+	library://library/default/alpine:3.9,3.9.2
+
+	library://sylabs/tests/passphrase_encrypted_alpine:3.11.5
+
+        
+You can also limit results to only signed containers with the
+``--signed`` flag:
+
+.. code-block:: console
+
+    singularity search --signed alpine
+    Found 45 container images for amd64 matching "alpine":
+
+	library://deep/default/alpine:latest,1.0.1
+		Signed by: 8883491F4268F173C6E5DC49EDECE4F3F38D871E
+
+	library://godloved/secure/alpine:20200514.0.0
+		Signed base image built directly from mirrors suitable for secure building. Make sure to check that the fingerprint is B7761495F83E6BF7686CA5F0C1A7D02200787921
+		Signed by: B7761495F83E6BF7686CA5F0C1A7D02200787921
+
+	library://godlovedc/blah/alpine:sha256.63259fd0a2acb88bb652702c08c1460b071df51149ff85dc88db5034532a14a0
+		Signed by: 8883491F4268F173C6E5DC49EDECE4F3F38D871E
+
+	library://heffaywrit/base/alpine:latest
+		Signed by: D4038BDDE21017435DFE5ADA9F2D10A25D64C1EF
+
+	library://hellseva/class/alpine:latest
+		Signed by: 6D60F95E86A593603897164F8E09E44D12A7111C
+
+	library://hpc110/default/alpine-miniconda:cupy
+		Signed by: 9FF48D6202271D3C842C53BD0D237BE8BB5B5C76
+        ...
+            
 .. _remote_builder:
 
 --------------

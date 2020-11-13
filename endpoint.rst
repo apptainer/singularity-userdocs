@@ -46,7 +46,7 @@ services. If you only want to use the public services you just need to
 obtain an authentication token, and then ``singularity remote login``:
 
   1) Go to: https://cloud.sylabs.io/
-  2) Click "Sign in to Sylabs" and follow the sign in steps.
+  2) Click "Sign In" and follow the sign in steps.
   3) Click on your login id (same and updated button as the Sign in one).
   4) Select "Access Tokens" from the drop down menu.
   5) Enter a name for your new access token, such as "test token"
@@ -57,20 +57,23 @@ obtain an authentication token, and then ``singularity remote login``:
 Once your token is stored, you can check that you are able to connect
 to the services with the ``status`` subcommand:
 
-.. code:: none
+.. code:: console
 
     $ singularity remote status
     INFO:    Checking status of default remote.
-    SERVICE           STATUS  VERSION
-    Builder Service   OK      v1.1.4-0-g3ef2555
-    Consent Service   OK      v1.0.2-0-g2a24b4a
-    Keystore Service  OK      v1.9.0-0-g112eb0e-dirty
-    Library Service   OK      v1.0.4-0-g24d3b74
-    Token Service     OK      v1.0.2-0-g2a24b4a
+    SERVICE    STATUS  VERSION             URI
+    Builder    OK      v1.1.14-0-gc7a68c1  https://build.sylabs.io
+    Consent    OK      v1.0.2-0-g2a24b4a   https://auth.sylabs.io/consent
+    Keyserver  OK      v1.13.0-0-g13c778b  https://keys.sylabs.io
+    Library    OK      v1.0.16-0-gb7eeae4  https://library.sylabs.io
+    Token      OK      v1.0.2-0-g2a24b4a   https://auth.sylabs.io/token
+    INFO:    Access Token Verified!
+
+    Valid authentication token set (logged in).
 
 If you see any errors you may need to check if your system requires
 proxy environment variables to be set, or if a firewall is blocking
-access to ``*.sylabs.io``. Talk to your system adminitrator.
+access to ``*.sylabs.io``. Talk to your system administrator.
 
 You can interact with the public Sylabs Cloud using various Singularity commands:
 
@@ -107,16 +110,26 @@ To ``list`` existing remote endpoints, run this:
 
     $ singularity remote list
 
-    NAME           URI              GLOBAL
-    [SylabsCloud]  cloud.sylabs.io  YES
+    Cloud Services Endpoints
+    ========================
 
-The ``[...]`` brackets around the name ``SylabsCloud`` show that this
-is the current default remote endpoint.
+    NAME         URI              ACTIVE  GLOBAL  EXCLUSIVE
+    SylabsCloud  cloud.sylabs.io  YES     YES     NO
+
+    Keyservers
+    ==========
+
+    URI                     GLOBAL  INSECURE  ORDER
+    https://keys.sylabs.io  YES     NO        1*
+
+
+The ``YES`` in the ``ACTIVE`` column for ``SylabsCloud`` shows that
+this is the current default remote endpoint.
    
 To ``login`` to a remote, for the first time or if your token expires
 or was revoked:
 
-.. code-block:: none
+.. code-block:: console
 
     # Login to the default remote endpoint
     $ singularity remote login
@@ -132,6 +145,23 @@ or was revoked:
     API Key: 
     INFO:    API Key Verified!
 
+    
+If you ``login`` to a remote that you already have a valid token for,
+you will be prompted, and the new token will be verified, before it
+replaces your existing credential. If you enter an incorrect token
+your existing token will not be replaced:
+
+.. code-block:: console
+   
+    $ singularity remote login
+    An access token is already set for this remote. Replace it? [N/y]y
+    Generate an access token at https://cloud.sylabs.io/auth/tokens, and paste it here.
+    Token entered will be hidden for security.
+    Access Token: 
+    FATAL:   while verifying token: error response from server: Invalid Credentials
+
+    # Previous token is still in place
+    
     
 Add & Remove Remotes
 ====================
