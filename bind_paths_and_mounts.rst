@@ -272,4 +272,115 @@ type:
     Singularity> cat /server/etc/hostname
     server
 
- 
+------------
+Image Mounts
+------------
+
+In Singularity 3.6 and above you can mount a directory contained in an
+image file into a container. This may be useful if you want to
+distribute directories containing a large number of data files as a
+single image file.
+
+You can mount from image files in ext3 format, squashfs format, or SIF
+format.
+
+The ext3 image file format allows you to mount it into the container
+read/write and make changes, while the other formats are
+read-only. Note that you can only use a read/write image in a single
+container. You cannot mount it to multiple container runs at the same
+time.
+
+To mount a directory from an image file, use the ``-B/--bind`` option
+and specify the bind in the format:
+
+.. code-block:: none
+
+    -B <image-file>:<dest>:image-src=<source>
+
+This will bind the ``<source>`` inside ``<image-file>`` to ``<dest>``
+in the container.
+
+If you do not add ``:image-src=<source>`` to your bind specification,
+then the ``<image-file>`` itself will be bound to ``<dest>`` instead.
+    
+
+Ext3 Image Files
+================
+
+If you have a directory called ``inputs/`` that holds data files you wish
+to distribute in an image file that allows read/write:
+
+.. code-block:: sh
+
+    # Create an image file 'inputs.img' of size 100MB and put the
+    # files inputs/ into it's root directory
+    $ mkfs.ext3 -d inputs/ inputs.img 100M
+    mke2fs 1.45.6 (20-Mar-2020)
+    Creating regular file inputs.img
+    Creating filesystem with 102400 1k blocks and 25688 inodes
+    Filesystem UUID: e23c29c9-7a49-4b82-89bf-2faf36b5a781
+    Superblock backups stored on blocks: 
+   	8193, 24577, 40961, 57345, 73729
+
+    Allocating group tables: done                            
+    Writing inode tables: done                            
+    Creating journal (4096 blocks): done
+    Copying files into the device: done
+    Writing superblocks and filesystem accounting information: done 
+
+    # Run Singularity, mounting my input data to '/input-data' in
+    # the container.
+    $ singularity run -B inputs.img:/input-data:image-src=/ mycontainer.sif
+    Singularity> ls /input-data
+    1           3           5           7           9
+    2           4           6           8           lost+found
+
+    
+SquashFS Image Files
+====================
+
+If you have a directory called ``inputs/`` that holds data files you wish
+to distribute in an image file that is read-only, and compressed, then
+the squashfs format is appropriate:
+
+.. code-block:: sh
+
+    # Create an image file 'inputs.squashfs' and put the files from
+    # inputs/ into it's root directory
+    $ mksquashfs inputs/ inputs.squashfs
+    Parallel mksquashfs: Using 16 processors
+    Creating 4.0 filesystem on inputs.squashfs, block size 131072.
+    ...
+
+    # Run Singularity, mounting my input data to '/input-data' in
+    # the container.
+    $ singularity run -B inputs.squashfs:/input-data:image-src=/ mycontainer.sif
+    Singularity> ls /input-data/
+    1  2  3  4  5  6  7  8  9
+
+    
+SIF Image Files
+===============
+
+Advanced users may wish to create a standalone SIF image, which contains
+an ``ext3`` or ``squashfs`` data partition holding files, by using the
+``singularity sif`` commands similarly to the :ref:`persistent
+overlays instructions<overlay-sif>`:
+
+.. code-block:: console
+
+    # Create a new empty SIF file
+    $ singularity sif new inputs.sif
+
+    # Add the squashfs data image from above to the SIF
+    $ singularity sif add --datatype 4 --partarch 2 --partfs 1 --parttype 3 inputs.sif inputs.squashfs
+
+    # Run Singularity, binding data from the SIF file
+    $ singularity run -B inputs.sif:/input-data:image-src=/ mycontainer.sif
+    Singularity> ls /input-data
+    1  2  3  4  5  6  7  8  9
+
+If your bind source is a SIF then Singularity will bind from
+the first data partition in the SIF, or you may specify an
+alternative descriptor by ID with the additional bind option
+``:id=n``, where n is the descriptor ID.

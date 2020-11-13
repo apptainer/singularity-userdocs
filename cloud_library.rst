@@ -56,28 +56,48 @@ Now that you have your token, you are ready to push your container!
 Pushing a Container
 -------------------
 
-The ``singularity push`` command will push a container to the container library with the given URL. Here's an example
-of a typical push command:
+The ``singularity push`` command will push a container to the
+container library with the given URL. Here's an example of a typical
+push command:
 
 .. code-block:: none
 
     $ singularity push my-container.sif library://your-name/project-dir/my-container:latest
 
-The ``:latest`` is the container tag. Tags are used to have different version of the same container.
+The ``:latest`` is the container tag. Tags are used to have different
+version of the same container.
 
 .. note::
     When pushing your container, theres no need to add a ``.sif`` (Singularity Image Format) to the end of the container name, (like
     on your local machine), because all containers on the library are SIF containers.
 
-Let's assume you have your container (v1.0.1), and you want to push that container without deleting
-your ``:latest`` container, then you can add a version tag to that container, like so:
+Let's assume you have your container (v1.0.1), and you want to push
+that container without deleting your ``:latest`` container, then you
+can add a version tag to that container, like so:
 
 .. code-block:: none
 
     $ singularity push my-container.sif library://your-name/project-dir/my-container:1.0.1
 
-You can download the container with that tag by replacing the ``:latest``, with the tagged container you want to download.
+You can download the container with that tag by replacing the
+``:latest``, with the tagged container you want to download.
 
+To set a description against the container image as you push it, use
+the `-D` flag introduced in Singularity 3.7. This provides an
+alternative to setting the description via the web interface:
+
+.. code-block:: console
+
+    $ singularity push -D "My alpine 3.11 container" alpine_3.11.sif library://myuser/examples/alpine:3.11
+    2.7MiB / 2.7MiB [=========================================================================] 100 % 1.1 MiB/s 0s
+
+    Library storage: using 13.24 MiB out of 11.00 GiB quota (0.1% used)
+    Container URL: https://cloud.sylabs.io/library/myuser/examples/alpine
+
+Note that when you push to a library that supports it, Singularity 3.7
+and above will report your quota usage and the direct URL to view the
+container in your web browser.
+               
 .. _pull:
 
 -------------------
