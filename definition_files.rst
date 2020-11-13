@@ -216,9 +216,9 @@ process.
         grep -q NAME=\"Ubuntu\" /etc/os-release
         if [ $? -eq 0 ]; then
             echo "Container base is Ubuntu as expected."
-            exit 1
         else
             echo "Container base is not Ubuntu."
+            exit 1
         fi
 
     %labels

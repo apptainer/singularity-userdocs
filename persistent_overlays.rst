@@ -146,6 +146,8 @@ The example below shows the directory overlay in action.
 
     Singularity ubuntu.sif:~> exit
 
+.. _overlay-sif:
+    
 Overlay embedded in SIF
 =======================
 
