@@ -216,6 +216,7 @@ process.
         grep -q NAME=\"Ubuntu\" /etc/os-release
         if [ $? -eq 0 ]; then
             echo "Container base is Ubuntu as expected."
+            exit 1
         else
             echo "Container base is not Ubuntu."
         fi
@@ -355,9 +356,10 @@ sourced at runtime.
 %test
 =====
 
-The ``%test`` section runs at the very end of the build process to validate the
-container using a method of your choice. You can also execute this scriptlet
-through the container itself, using the ``test`` command.
+The ``%test`` section runs at the very end of the build process to
+validate the container using a method of your choice. You can also
+execute this scriptlet through the container itself, using the
+``test`` command.
 
 Consider the example from the def file above:
 
@@ -369,15 +371,17 @@ Consider the example from the def file above:
             echo "Container base is Ubuntu as expected."
         else
             echo "Container base is not Ubuntu."
+            exit 1
         fi
 
 
-This (somewhat silly) script tests if the base OS is Ubuntu. You could also
-write a script to test that binaries were appropriately downloaded and built, or
-that software works as expected on custom hardware. If you want to build a
-container without running the ``%test`` section (for example, if the build
-system does not have the same hardware that will be used on the production
-system), you can do so with the ``--notest`` build option:
+This (somewhat silly) script tests if the base OS is Ubuntu. You could
+also write a script to test that binaries were appropriately
+downloaded and built, or that software works as expected on custom
+hardware. If you want to build a container without running the
+``%test`` section (for example, if the build system does not have the
+same hardware that will be used on the production system), you can do
+so with the ``--notest`` build option:
 
 .. code-block:: none
 
@@ -390,7 +394,41 @@ following:
 
     $ singularity test my_container.sif
     Container base is Ubuntu as expected.
+    
+One common use of the ``%test`` section is to run a quick check that
+the programs you intend to install in the container are present. If
+you installed the program ``samtools``, which shows a usage screen when
+run without any options, you might test it can be run with:
 
+.. code-block:: singularity
+
+    %test
+        # Run samtools - exits okay with usage screen if installed
+        samtools
+
+If ``samtools`` is not sucessfully installed in the container then the
+``singularity test`` will exit with an error such as ``samtools:
+command not found``.
+
+Some programs return an error code when run without mandatory
+options. If you want to ignore this, and just check the program is
+present and can be called, you can run it as ``myprog || true`` in
+your test:
+
+.. code-block:: singularity
+
+    %test
+        # Run bwa - exits with error code if installed and run without
+        # options
+        bwa || true
+
+The ``|| true`` means that if the command before it is found but
+returns an error code it will be ignored, and replaced with the error
+code from ``true`` - which is always ``0`` indicating success.
+
+Because the ``%test`` section is a shell scriptlet, complex tests are
+possible. Your scriptlet should usually be written so it will exit
+with a non zero error code if there is a problem during the tests.
 
 Now, the following sections are all inserted into the container filesystem in
 single step:
