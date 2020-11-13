@@ -37,6 +37,31 @@ configuration, the system default bind points are ``$HOME`` , ``/sys:/sys`` ,
 ``/etc/passwd:/etc/passwd``, and ``$PWD``. Where the first path before ``:``
 is the path from the host and the second path is the path in the container.
 
+Disabling System Binds
+======================
+
+The ``--no-mount`` flag, added in Singularity 3.7, allows specific
+system mounts to be disabled, even if they are set in the
+``singularity.conf`` configuration file by the administrator.
+
+For example, if Singularity has been configured with ``mount hostfs =
+yes`` then every filesystem on the host will be bind mounted to the
+container by default. If, e.g. a ``/project`` filesystem on your host
+conflicts with a ``/project`` directory in the container you are
+running, you can disable the ``hostfs`` binds:
+
+.. code:: console
+
+    $ singularity run --no-mount hostfs mycontainer.sif
+
+    
+Multiple mounts can be disabled by specifying them separated by
+commas:
+
+.. code:: console
+
+    $ singularity run --no-mount tmp,sys,dev mycontainer.sif
+
 -----------------------
 User-defined bind paths
 -----------------------

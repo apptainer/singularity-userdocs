@@ -26,9 +26,9 @@ specify your own to be recorded against your container.
 Changes in Singularity 3.6
 --------------------------
 
-Singularity 3.6 has modified the ways in which environment variables
+Singularity 3.6 modified the ways in which environment variables
 are handled to allow long-term stability and consistency that has
-been lacking in prior versions. It also introduces new ways of setting
+been lacking in prior versions. It also introduced new ways of setting
 environment variables, such as the ``--env`` and ``--env-file``
 options.
 
@@ -371,6 +371,41 @@ environment is constructed in the following order:
     so they can override or modify any previous values:
   - Source any remaining scripts from ``/singularity.d/env`` 
 
+
+.. _sec:umask:
+
+
+--------------------------------
+Umask / Default File Permissions
+--------------------------------
+
+The ``umask`` value on a Linux system controls the default permissions
+for newly created files. It is not an environment variable, but
+influences the behavior of programs in the container when they create
+new files.
+
+.. note::
+
+   A detailed description of what the ``umask`` is, and how it works
+   can be found at `Wikipedia
+   <https://en.wikipedia.org/wiki/Umask>`__.
+
+   
+Singularity 3.7 and above set the ``umask`` in the container to match
+the value outside, unless:
+
+  - The ``--fakeroot`` option is used, in which case a ``0022`` umask
+    is set so that ``root`` owned newly created files have expected
+    'system default' permissions, and can be accessed by other
+    non-root users who may use the same container later.
+  - The ``--no-umask`` option is used, in which case a ``0022`` umask
+    is set.
+
+.. note::
+
+   In Singularity 3.6 and below a default ``0022`` umask was always applied.
+
+
 .. _sec:metadata:
 
 ------------------
@@ -397,11 +432,42 @@ section in a definition file:
 
 .. code-block:: singularity
 
-    Bootstrap: docker
-    From: ubuntu: latest
+    Bootstrap: library
+    From: ubuntu:latest
 
     %labels
       OWNER Joana
+
+      
+Dynamic Build Time Labels
+-------------------------
+
+You may wish to set a label to a value that is not known in advance,
+when you are writing the definition file, but can be obtained in the
+``%post`` section of your definition file while the container is
+building.
+
+Singularity 3.7 and above allow this, through adding labels to the
+file defined by the ``SINGULARITY_LABELS`` environment variable in the
+``%post`` section:
+
+.. code-block:: singularity
+               
+    Bootstrap: library
+    From: ubuntu:latest
+
+    # These labels take a fixed value in the definition
+    %labels
+      OWNER Joana
+
+    # We can now also set labels to a value at build time
+    %post
+      VAL="$(myprog --version)"
+      echo "my.label $VAL" >> "$SINGULARITY_LABELS"
+
+Labels must be added to the file one per line, in a ``NAME VALUE`` format,
+where the name and value are separated by a space.
+
 
 Inspecting Metadata
 -------------------
@@ -418,20 +484,18 @@ other metadata that were added to your container when it was built.
 Running inspect without any options, or with the ``-l`` or
 ``--labels`` options will display any labels set on the container
 
-.. code-block:: none
+.. code-block:: console
 
-    $ singularity inspect jupyter.sif
-        {
-            "OWNER": "Joana"
-            "org.label-schema.build-date": "Friday_21_December_2018_0:49:50_CET",
-            "org.label-schema.schema-version": "1.0",
-            "org.label-schema.usage": "/.singularity.d/runscript.help",
-            "org.label-schema.usage.singularity.deffile.bootstrap": "library",
-            "org.label-schema.usage.singularity.deffile.from": "debian:9",
-            "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
-            "org.label-schema.usage.singularity.version": "3.0.1-236.g2453fdfe"
-        }
-
+    $ singularity inspect ubuntu.sif 
+    my.label: version 1.2.3
+    OWNER: Joana
+    org.label-schema.build-arch: amd64
+    org.label-schema.build-date: Thursday_12_November_2020_10:51:59_CST
+    org.label-schema.schema-version: 1.0
+    org.label-schema.usage.singularity.deffile.bootstrap: library
+    org.label-schema.usage.singularity.deffile.from: ubuntu:latest
+    org.label-schema.usage.singularity.version: 3.7.0-rc.1
+                
 We can easily see when the container was built, the source of the base
 image, and the exact version of Singularity that was used to build it.
 
@@ -615,20 +679,32 @@ This flag gives you the possibility to output your labels in a JSON format.
 
 You can call it this way:
 
-.. code-block:: none
+.. code-block:: console
 
-    $ singularity inspect --json jupyter.sif
+    $ singularity inspect --json ubuntu.sif
 
 And the output would look like:
 
-.. code-block:: none
+.. code-block:: json
 
     {
-	     "attributes": {
-		     "labels": "{\n\t\"org.label-schema.build-date\": \"Friday_21_December_2018_0:49:50_CET\",\n\t\"org.label-schema.schema-version\": \"1.0\",\n\t\"org.label-schema.usage\": \"/.singularity.d/runscript.help\",\n\t\"org.label-schema.usage.singularity.deffile.bootstrap\": \"library\",\n\t\"org.label-schema.usage.singularity.deffile.from\": \"debian:9\",\n\t\"org.label-schema.usage.singularity.runscript.help\": \"/.singularity.d/runscript.help\",\n\t\"org.label-schema.usage.singularity.version\": \"3.0.1-236.g2453fdfe\"\n}"
-	     },
-	     "type": "container"
+            "data": {
+                    "attributes": {
+                            "labels": {
+                                    "my.label": "version 1.2.3",
+                                    "OWNER": "Joana",
+                                    "org.label-schema.build-arch": "amd64",
+                                    "org.label-schema.build-date": "Thursday_12_November_2020_10:51:59_CST",
+                                    "org.label-schema.schema-version": "1.0",
+                                    "org.label-schema.usage.singularity.deffile.bootstrap": "library",
+                                    "org.label-schema.usage.singularity.deffile.from": "ubuntu:latest",
+                                    "org.label-schema.usage.singularity.version": "3.7.0-rc.1"
+                            }
+                    }
+            },
+            "type": "container"
     }
+
 
 -------------------------
 /.singularity.d directory
