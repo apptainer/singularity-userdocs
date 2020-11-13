@@ -244,7 +244,7 @@ The standard way to execute MPI applications with hybrid Singularity containers 
 run the native ``mpirun`` command from the host, which will start Singularity
 containers and ultimately MPI ranks within the containers.
 
-Assuming your container with MPI and your application is already build,
+Assuming your container with MPI and your application is already built,
 the ``mpirun`` command to start your application looks like when your container
 has been built based on the hybrid model:
 
@@ -272,7 +272,7 @@ start, the MPI binary is executed:
 Bind model
 ----------
 
-Similar to the *Hybrid Approach*, the basic idea behind *Bind Approach* is to start the MPI
+Similar to the *Hybrid Approach*, the basic idea behind the *Bind Approach* is to start the MPI
 application by calling the MPI launcher (e.g., `mpirun`) from the host. The main difference between
 the hybrid and bind approach is the fact that with the bind approach, the container usually does
 not include any MPI implementation. This means that Singularity needs to mount/bind the MPI
@@ -334,7 +334,7 @@ program, which in this case has been compiled on the host to
 
 In this example, the application ``mpitest`` is copied from the host
 into ``/opt``, so we will need to run it as ``/opt/mpitest`` inside
-out container.
+our container.
 
 The environment section adds paths for binaries and libraries under
 ``$MPI_DIR`` - which we will need to set when running the container.
@@ -493,4 +493,3 @@ ask for MPI advice from the Singularity community. HPC cluster
 configurations vary greatly and most MPI problems are related to MPI /
 interconnect configuration, and not caused by issues in Singularity
 itself.
-
