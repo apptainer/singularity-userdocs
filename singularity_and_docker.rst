@@ -272,7 +272,7 @@ In our example ``docker://godlovedc/lolcow``, ``godlovedc`` specifies a Docker H
 Making use of private images from Docker Hub
 ----------------------------------------------------------
 
-After successful authentication, Singularity can also make use of *private* images available from the `Docker Hub <https://hub.docker.com/>`_. The two means available for authentication follow here. Before describing these means, it is instructive to illustate the error generated when attempting access a private image *without* credentials:
+After successful authentication, Singularity can also make use of *private* images available from the `Docker Hub <https://hub.docker.com/>`_. The three means available for authentication follow here. Before describing these means, it is instructive to illustrate the error generated when attempting access a private image *without* credentials:
 
 .. code-block:: none
 
@@ -283,6 +283,18 @@ After successful authentication, Singularity can also make use of *private* imag
     unauthorized: authentication required
 
 In this case, the ``mylolcow`` repository of user ``ilumb`` **requires** authentication through specification of a valid username and password.
+
+
+Authentication via Remote Login
+===============================
+
+Singularity 3.7 introduces the ability for users to supply credentials on a per
+registry basis with the ``remote`` command group. See :ref:`Managing OCI Registries <sec:managing_oci_registries>`
+for detailed instructions.
+
+Using this method of authentication will allow you to pull private images
+without needing to specify any of the login related environment variables
+or flags described below.
 
 
 .. _sec:authentication_via_docker_login:
