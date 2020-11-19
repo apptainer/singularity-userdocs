@@ -52,7 +52,6 @@ Summary of changes
    environment variable set by the container image.
 
 
-
 --------------------
 Environment Overview
 --------------------
@@ -144,6 +143,14 @@ is launched. The ``%runscript`` is set to echo the value.
 
    $ singularity run env.sif 
    Hello
+
+.. warning::
+   Singularity 3.6 uses an embedded shell interpreter to evaluate and setup container
+   environments, therefore all commands executed from the ``%environment`` section have
+   an execution timeout of **5 seconds** for Singularity 3.6 and a **1 minute** timeout since
+   Singularity 3.7. While it is fine to source a script from there, it is not recommended
+   to use this section to do potentially long initialization stuff because it would
+   impact users running the image and the execution could abort due to timeout.
 
 -------------------------
 Environment from the host
