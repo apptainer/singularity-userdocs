@@ -1,7 +1,7 @@
 # Singularity User Docs
 
 This repository holds user-facing documentation for the
-[Singularity](https://github.com/sylabs/singularity) container runtime.
+[Singularity](https://github.com/hpcng/singularity) container runtime.
 
 This is a community project led by [Sylabs](https://sylabs.io), and
 contributions are always welcome! If you'd like to update or improve
@@ -223,7 +223,7 @@ this, just run:
 
 ```bash
 git submodule update --remote --merge
-git add vendor/src/github.com/sylabs/singularity
+git add vendor/src/github.com/hpcng/singularity
 git commit
 ```
 
