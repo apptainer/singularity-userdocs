@@ -11,7 +11,7 @@ and running containers.
 
 For a detailed guide to installation and configuration, please see the
 separate Admin Guide for this version of Singularity at
-`<https://sylabs.io/guides/\{adminversion\}/admin-guide/>`__.
+`<\{admindocbaseurl\}/\{adminversion\}/>`__.
 
               
 Getting Started & Background Information

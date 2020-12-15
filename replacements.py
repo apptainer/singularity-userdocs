@@ -11,7 +11,9 @@ def variableReplace(app, docname, source):
 variable_replacements = {
     "{InstallationVersion}" : "3.7.0",
     "\{version\}" : "3.7",
-    "\{adminversion\}" : "3.7"
+    "\{adminversion\}" : "3.7",
+    "\{docbaseurl\}" : "https://hpcng.github.io/singularity-userdocs",
+    "\{admindocbaseurl\}" : "https://hpcng.github.io/singularity-admindocs"
 }
 
 def setup(app):

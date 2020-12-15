@@ -15,7 +15,7 @@ Changes in Singularity 3.7
 --------------------------
 
 Singularity 3.7 introduces a global keyring which can be managed by administrators with the new ``--global`` option.
-This global keyring is used by ECL (https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#ecl-toml)
+This global keyring is used by ECL (\{admindocbaseurl\}/\{adminversion\}/configfiles.html#ecl-toml)
 and allows administrators to manage public keys used during ECL image verification.
 
 ------------------
