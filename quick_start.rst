@@ -696,9 +696,9 @@ to this:
     We are interested in having Singularity (https://www.sylabs.io/docs/)
     installed on our shared resource. Singularity containers will allow us to
     build encapsulated environments, meaning that our work is reproducible and
-    we are empowered to choose all dependencies including libraries, operating
-    system, and custom software. Singularity is already in use on many of the
-    top HPC centers around the world. Examples include:
+    we are empowered to choose all dependencies including libraries and custom
+    software. Singularity is already in use on many of the top HPC centers
+    around the world. Examples include:
 
         Texas Advanced Computing Center
         GSI Helmholtz Center for Heavy Ion Research
