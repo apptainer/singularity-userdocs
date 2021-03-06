@@ -152,7 +152,7 @@ identical.
 
     $ singularity instance stop --all
 
-    $ singularity instance stop --a
+    $ singularity instance stop -a
 
 .. note::
     Note that you must escape the wildcard with a backslash like this ``\*`` to
