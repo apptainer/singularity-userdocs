@@ -62,6 +62,8 @@ commas:
 
     $ singularity run --no-mount tmp,sys,dev mycontainer.sif
 
+.. _user-defined-bind-paths:
+
 -----------------------
 User-defined bind paths
 -----------------------
