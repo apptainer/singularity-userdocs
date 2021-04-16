@@ -28,9 +28,9 @@ primary methods: system-defined bind paths and user-defined bind paths.
 System-defined bind paths
 -------------------------
 
-The system administrator has the ability to define what bind paths will be
+The system administrator can define what bind paths will be
 included automatically inside each container. Some bind paths are automatically
-derived (e.g. a user’s home directory) and some are statically defined (e.g.
+derived (e.g., a user’s home directory) and some are statically defined (e.g.
 bind paths in the Singularity configuration file). In the default
 configuration, the system default bind points are ``$HOME`` , ``/sys:/sys`` ,
 ``/proc:/proc``, ``/tmp:/tmp``, ``/var/tmp:/var/tmp``, ``/etc/resolv.conf:/etc/resolv.conf``,
@@ -46,7 +46,7 @@ system mounts to be disabled, even if they are set in the
 
 For example, if Singularity has been configured with ``mount hostfs =
 yes`` then every filesystem on the host will be bind mounted to the
-container by default. If, e.g. a ``/project`` filesystem on your host
+container by default. If, e.g., a ``/project`` filesystem on your host
 conflicts with a ``/project`` directory in the container you are
 running, you can disable the ``hostfs`` binds:
 
@@ -105,7 +105,7 @@ You can bind multiple directories in a single command with this syntax:
 This will bind ``/opt`` on the host to ``/opt`` in the container and ``/data``
 on the host to ``/mnt`` in the container.
 
-Using the environment variable instead of the command line argument, this would
+Using the environment variable instead of the command line argument, would
 be:
 
 .. code-block:: none
@@ -134,7 +134,7 @@ within the container.  Singularity can often carry out this operation even in
 the absence of the "overlay fs" feature.
 
 However, binding paths to non-existent points within the container can result in
-unexpected behavior when used in conjuction with the ``--writable`` flag, and is
+unexpected behavior when used in conjunction with the ``--writable`` flag, and is
 therefore disallowed. If you need to specify bind paths in combination with the
 ``--writable`` flag, please ensure that the appropriate bind points exist within
 the container. If they do not already exist, it will be necessary to modify the
@@ -198,7 +198,7 @@ located on the host, or in the container.
 
 The FUSE command *must* be based on libfuse3 to work correctly with
 Singularity ``--fusemount``. If you are using an older distribution
-that provides FUSE commands such as ``sshfs`` based on FUSE 2 then you
+that provides FUSE commands such as ``sshfs`` based on FUSE 2, then you
 can install FUSE 3 versions of the commands you need inside your
 container.
 
@@ -214,7 +214,7 @@ container.
 FUSE mount definitions
 ======================
 
-A fusemount definition for Singularity consists of 3 parts:
+A FUSE mount definition for Singularity consists of 3 parts:
 
 .. code-block:: none
 
@@ -276,9 +276,9 @@ type:
 Image Mounts
 ------------
 
-In Singularity 3.6 and above you can mount a directory contained in an
+In Singularity 3.6 and above, you can mount a directory contained in an
 image file into a container. This may be useful if you want to
-distribute directories containing a large number of data files as a
+distribute directories containing many data files as a
 single image file.
 
 You can mount from image files in ext3 format, squashfs format, or SIF
@@ -340,7 +340,7 @@ SquashFS Image Files
 ====================
 
 If you have a directory called ``inputs/`` that holds data files you wish
-to distribute in an image file that is read-only, and compressed, then
+to distribute in a read-only image file, and compressed, then
 the squashfs format is appropriate:
 
 .. code-block:: sh
@@ -380,7 +380,7 @@ overlays instructions<overlay-sif>`:
     Singularity> ls /input-data
     1  2  3  4  5  6  7  8  9
 
-If your bind source is a SIF then Singularity will bind from
-the first data partition in the SIF, or you may specify an
+If your bind source is a SIF, then Singularity will bind from
+the first data partition in the SIF or you may specify an
 alternative descriptor by ID with the additional bind option
 ``:id=n``, where n is the descriptor ID.
