@@ -125,8 +125,8 @@ Other bootstrap agents
 SIF Image Verification / Fingerprints Header
 ============================================
 
-If the bootstrap image is in the SIF format, then a verification will
-be performed at build time. This verification checks wether the image
+If the bootstrap image is in the SIF format, then verification will
+be performed at build time. This verification checks whether the image
 has been signed. If it has been signed the integrity of the image is
 checked, and the signatures matched to public keys if available. This
 process is equivalent to running ``singularity verify`` on the
@@ -151,7 +151,7 @@ If, at build time, the image is not signed with keys corresponding to
 
 The ``Fingerprints:`` header can be used with bootstrap agents that
 provide a SIF image. The ``library`` agent always retrieves a SIF
-image. The ``localimage`` agent can be use to refer to SIF or other
+image. The ``localimage`` agent can be used to refer to SIF or other
 types of images.
 
 The ``Fingerprints:`` header has no effect if the bootstrap image is
@@ -229,7 +229,7 @@ process.
         This is a demo container used to illustrate a def file that uses all
         supported sections.
 
-Although, the order of the sections in the def file is unimportant, they have
+Although the order of the sections in the def file is unimportant, they have
 been documented below in the order of their execution during the build process
 for logical understanding.
 
@@ -406,7 +406,7 @@ run without any options, you might test it can be run with:
         # Run samtools - exits okay with usage screen if installed
         samtools
 
-If ``samtools`` is not sucessfully installed in the container then the
+If ``samtools`` is not successfully installed in the container then the
 ``singularity test`` will exit with an error such as ``samtools:
 command not found``.
 
@@ -428,7 +428,7 @@ code from ``true`` - which is always ``0`` indicating success.
 
 Because the ``%test`` section is a shell scriptlet, complex tests are
 possible. Your scriptlet should usually be written so it will exit
-with a non zero error code if there is a problem during the tests.
+with a non-zero error code if there is a problem during the tests.
 
 Now, the following sections are all inserted into the container filesystem in
 single step:
@@ -490,7 +490,7 @@ information about the Singularity container environment.
 ============
 
 Similar to the ``%runscript`` section, the contents of the ``%startscript``
-section are written to a file within the container at build time.  This file is
+section is written to a file within the container at build time.  This file is
 executed when the ``instance start`` command is issued.
 
 Consider the example from the def file above.
@@ -580,7 +580,7 @@ Consider the example from the def file above:
 Note that labels are defined by key-value pairs. To define a label just add it
 on the labels section and after the first space character add the correspondent value to the label.
 
-On the previous example, the first label name is ``Author``` with a
+In the previous example, the first label name is ``Author``` with a
 value of ``d@sylabs.io``. The second label name is ``Version`` with a value of ``v0.0.1``.
 Finally, the last label named ``MyLabel`` has the value of ``Hello World``.
 
@@ -650,7 +650,7 @@ development stack.
       export HOME="/root"
       cd /root
 
-      # insert source code, could also be copied from host with %files
+      # insert source code, could also be copied from the host with %files
       cat << EOF > hello.go
       package main
       import "fmt"
@@ -663,7 +663,7 @@ development stack.
       go build -o hello hello.go
 
 
-    # Install binary into final image
+    # Install binary into the final image
     Bootstrap: library
     From: alpine:3.9
     Stage: final
@@ -673,7 +673,7 @@ development stack.
       /root/hello /bin/hello
 
 The names of stages are arbitrary. Each of these sections will be executed in
-the same order as described for single stage build except the files from the
+the same order as described for a single stage build except the files from the
 previous stage are copied before ``%setup`` section of the next stage. Files
 can only be copied from stages declared before the current stage in the definition.
 E.g., the ``devel`` stage in the above definition cannot copy files from the
@@ -790,7 +790,7 @@ When crafting your recipe, it is best to consider the following:
 #. Ensure that sensitive files like ``/etc/passwd``, ``/etc/group``, and
    ``/etc/shadow`` do not contain secrets.
 
-#. Build production containers from a definition file  instead of a sandbox that
-   has been manually changed. This ensures greatest possibility of
+#. Build production containers from a definition file instead of a sandbox that
+   has been manually changed. This ensures the greatest possibility of
    reproducibility and mitigates the "black box" effect.
 
