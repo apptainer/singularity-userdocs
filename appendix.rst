@@ -68,7 +68,7 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **SINGULARITY_DOCKER_USERNAME**: To specify a username for docker authentication.
 
-#. **SINGULARITY_DOCKER_PASSWORD**: To specify the password for docker authentication.
+#. **SINGULARITY_DOCKER_PASSWORD**: To specify the password for Docker authentication.
 
 #. **SINGULARITY_DROP_CAPS**: To specify a list (comma separated string) of capabilities to be dropped. Default is an empty string.
 
@@ -100,7 +100,7 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **SINGULARITY_HELPFILE**: Specifies the runscript helpfile, if it exists.
 
-#. **SINGULARITY_HOME** : A home directory specification, it could be a source or destination path. The source path is the home directory outside the container and the destination overrides the home directory within the container.
+#. **SINGULARITY_HOME** : A home directory specification, it could be a source or destination path. The source path is the home directory outside the container, and the destination overrides the home directory within the container.
 
 #. **SINGULARITY_HOSTNAME**: The container's hostname.
 
@@ -131,7 +131,7 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **SINGULARITY_NAME**: Specifies a custom image name.
 
-#. **SINGULARITY_NETWORK**: Used to specify a desired network. If more than one parameters is used, addresses should be separated by commas, where each network will bring up a dedicated interface inside the container.
+#. **SINGULARITY_NETWORK**: Used to specify a desired network. If more than one parameter is used, addresses should be separated by commas, where each network will bring up a dedicated interface inside the container.
 
 #. **SINGULARITY_NETWORK_ARGS**: To specify the network arguments to pass to CNI plugins.
 
@@ -143,7 +143,7 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **SINGULARITY_NO_INIT** and **SINGULARITY_NOSHIMINIT**: Considers not starting the ``shim`` process with ``--pid``.
 
-#. **SINGULARITY_NO_NV**: Flag to disable Nvidia support. Opposite of ``SINGULARITY_NV``.
+#. **SINGULARITY_NO_NV**: Flag to disable Nvidia support. The opposite of ``SINGULARITY_NV``.
 
 #. **SINGULARITY_NO_PRIVS**: To drop all the privileges from root user in the container. Default is set to false.
 
@@ -157,7 +157,7 @@ You can see them listed alphabetically below with their respective functionality
 ``P``
 ^^^^^
 
-#. **SINGULARITY_PWD** and **SINGULARITY_TARGET_PWD**: The initial working directory for payload process inside the container.
+#. **SINGULARITY_PWD** and **SINGULARITY_TARGET_PWD**: The initial working directory for the payload process inside the container.
 
 ``R``
 ^^^^^
@@ -175,11 +175,11 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **SINGULARITY_SCRATCH** and **SINGULARITY_SCRATCHDIR**: Used to include a scratch directory within the container that is linked to a temporary directory. (use -W to force location)
 
-#. **SINGULARITY_SECTION**: To specify a comma separated string of all the sections to be run from the deffile (setup, post, files, environment, test, labels, none)
+#. **SINGULARITY_SECTION**: To specify a comma-separated string of all the sections to be run from the deffile (setup, post, files, environment, test, labels, none)
 
 #. **SINGULARITY_SECURITY**: Used to enable security features. (SELinux, Apparmor, Seccomp)
 
-#. **SINGULARITY_SECRET**: Lists all the private keys instead of the default which display the public ones.
+#. **SINGULARITY_SECRET**: Lists all the private keys instead of the default, which displays the public ones.
 
 #. **SINGULARITY_SHELL**: The path to the program to be used as an interactive shell.
 
@@ -216,7 +216,7 @@ You can see them listed alphabetically below with their respective functionality
 
 #. **SINGULARITY_WORKDIR**: The working directory to be used for ``/tmp``, ``/var/tmp`` and ``$HOME`` (if ``-c`` or ``--contain`` was also used)
 
-#. **SINGULARITY_WRITABLE**: By default, all Singularity containers are available as read only, this option makes the file system accessible as read/write. Default set to false.
+#. **SINGULARITY_WRITABLE**: By default, all Singularity containers are available as read-only, this option makes the file system accessible as read/write. Default set to false.
 
 #. **SINGULARITY_WRITABLE_TMPFS**: Makes the file system accessible as read-write with non-persistent data (with overlay support only). Default is set to false.
 
@@ -264,7 +264,7 @@ use.
 The ``From`` keyword is mandatory. It specifies the container to use as a base.
 ``entity`` is optional and defaults to ``library``. ``collection`` is
 optional and defaults to ``default``. This is the correct namespace to use for
-some official containers (``alpine`` for example). ``tag`` is also optional and
+some official containers (``alpine`` for example). ``tag`` is optional and
 will default to ``latest``.
 
 .. code-block:: singularity
@@ -279,9 +279,8 @@ The Library keyword is optional. It will default to
 
     Fingerprints: 22045C8C0B1004D058DE4BEDA20C27EE7FF7BA84
 
-The Fingerprints keyword is optional. It specifies one or more comma
-separated fingerprints corresponding to PGP public keys. If present,
-the bootstrap image will be verified and the build will only proceed
+The Fingerprints keyword is optional. It specifies one or more comma-separated fingerprints corresponding to PGP public keys. If present,
+the bootstrap image will be verified, and the build will only proceed
 if it is signed by keys matching *all* of the specified fingerprints.
 
 
@@ -305,7 +304,7 @@ Debian, Arch, Suse, Alpine, BusyBox, etc.
 
 Or maybe you want a container that already has software installed. For instance,
 maybe you want to build a container that uses CUDA and cuDNN to leverage the
-GPU, but you don’t want to install from scratch. You can start with one of the
+GPU, but don’t want to install from scratch. You can start with one of the
 ``nvidia/cuda`` containers and install your software on top of that.
 
 Or perhaps you have already invested in Docker and created your own Docker
@@ -330,7 +329,7 @@ use.
 The ``From`` keyword is mandatory. It specifies the container to use as a base.
 ``registry`` is optional and defaults to ``index.docker.io``. ``namespace`` is
 optional and defaults to ``library``. This is the correct namespace to use for
-some official containers (ubuntu for example). ``tag`` is also optional and will
+some official containers (Ubuntu, for example). ``tag`` is also optional and will
 default to ``latest``
 
 See :ref:`Singularity and Docker <singularity-and-docker>` for more detailed
@@ -434,7 +433,7 @@ Overview
 """"""""
 
 Using, this module, a container from supporting OCI Registries - Eg: ACR (Azure Container 
-Registry), local container registries, etc can be used as your “base” image and later 
+Registry), local container registries, etc. can be used as your “base” image and later 
 customized. This allows you to build multiple images from the same starting point. For 
 example, you may want to build several containers with the same custom python installation, 
 the same custom compiler toolchain, or the same base MPI installation. Instead of 
@@ -643,20 +642,19 @@ downloading the OS.
 
 The Include keyword is optional. It allows you to install additional packages
 into the core operating system. It is a best practice to supply only the bare
-essentials such that the ``%post`` section has what it needs to properly
-complete the build.
+essentials such that the ``%post`` section has what it needs to complete the build properly.
 
 Notes
 """""
 
-In order to use the ``debootstrap`` build module, you must have ``debootstrap``
-installed on your system. On Ubuntu you can install it like so:
+To use the ``debootstrap`` build module, you must have ``debootstrap``
+installed on your system. On Ubuntu, you can install it like so:
 
 .. code-block:: none
 
     $ sudo apt-get update && sudo apt-get install debootstrap
 
-On CentOS you can install it from the epel repos like so:
+On CentOS, you can install it from the epel repos like so:
 
 .. code-block:: none
 
@@ -671,7 +669,7 @@ On CentOS you can install it from the epel repos like so:
 
 .. _sec:build-arch:
 
-This module allows you to build a Arch Linux based container.
+This module allows you to build an Arch Linux based container.
 
 Overview
 """"""""
@@ -698,7 +696,7 @@ operating system.
 Notes
 """""
 
-Arch Linux is, by design, a very stripped down, light-weight OS. You may need to
+Arch Linux is, by design, a very stripped-down, lightweight OS. You may need to
 perform a significant amount of configuration to get a usable OS. Please refer
 to this
 `README.md <https://github.com/singularityware/singularity/blob/master/examples/arch/README.md>`_
@@ -719,7 +717,7 @@ This module allows you to build a container based on BusyBox.
 Overview
 """"""""
 
-Use the ``busybox`` module to specify a BusyBox base for container. You must
+Use the ``busybox`` module to specify a BusyBox base for the container. You must
 also specify a URI for the mirror you would like to use.
 
 Keywords
@@ -789,8 +787,8 @@ use. It is only required if you have specified a %{OSVERSION} variable in the
 
 The Include keyword is optional. It allows you to install additional packages
 into the core operating system. It is a best practice to supply only the bare
-essentials such that the ``%post`` section has what it needs to properly
-complete the build. One common package you may want to install when using the
+essentials such that the ``%post`` section has what it needs to complete the
+build properly. One common package you may want to install when using the
 zypper build module is ``zypper`` itself.
 
 .. _docker-daemon-archive:
@@ -798,17 +796,17 @@ zypper build module is ``zypper`` itself.
 ``docker-daemon`` and ``docker-archive`` bootstrap agents
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you are using docker locally there are two options for creating Singularity
+If you are using Docker locally there are two options for creating Singularity
 images without the need for a repository. You can either build a SIF from a 
 ``docker-save`` tar file or you can convert any docker image present in 
-docker's daemon internal storage.
+Docker's daemon internal storage.
 
 
 Overview
 """"""""
 
 ``docker-daemon`` allows you to build a SIF from any docker image currently 
-residing in docker's daemon internal storage:
+residing in Docker's daemon internal storage:
 
 .. code-block:: console
 
@@ -828,7 +826,7 @@ residing in docker's daemon internal storage:
     INFO:    Creating SIF file...
     Singularity> 
 
-while ``docker-archive`` permits you to do the same thing starting from a docker
+while ``docker-archive`` permits you to do the same thing starting from a Docker
 image stored in a ``docker-save`` formatted tar file:
 
 .. code-block:: console
@@ -873,11 +871,10 @@ Note that differently from the ``docker://`` bootstrap agent both ``docker-daemo
 ``scratch`` bootstrap agent
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-The scratch bootstrap agent allows you to start from a completely
-empty container. You are then responsible for adding any and all
-executables, libraries etc. that are required. Starting with a scratch
-container can be useful when you are aiming to minimize container size,
-and have a simple application / static binaries.
+The scratch bootstrap agent allows you to start from an empty container. You are then responsible for adding any
+executables, libraries, etc., that are required. Starting with a scratch
+container can be useful when aiming to minimize container size
+and have simple application/static binaries.
 
 Overview
 """"""""
@@ -903,7 +900,7 @@ A minimal container providing a shell can be created by copying the
        /bin/sh
 
 
-The resulting container provides a shell, and is 696KiB in size:
+The resulting container provides a shell and is 696KiB in size:
 
 .. code-block::
 
