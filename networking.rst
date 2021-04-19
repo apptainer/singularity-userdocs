@@ -7,13 +7,23 @@ Network virtualization
 
 .. _sec:networking:
 
-Singularity 3.0 introduces full integration with
-`cni <https://github.com/containernetworking/cni>`_ , and several new features to
-make network virtualization easy.
+Singularity provides full integration with `cni
+<https://github.com/containernetworking/cni>`_ , to make network
+virtualization easy. The following options can be used with the the
+action commands (``exec``, ``run``, and ``shell``) to create and
+configure a virtualized network for a container.
 
-A few new options have been added to the action commands (``exec``, ``run``,
-and ``shell``) to facilitate these features, and the ``--net`` option has been
-updated as well.  These options can only be used by root.
+.. note::
+
+   Many of these options are available only to the ``root`` user by
+   default. Unrestricted ability to configure networking for
+   containers would allow users to affect networking on the host, or
+   in a cluster.
+
+   Singularity 3.8 allows the administrator to permit a list of
+   unprivileged users and/or groups to use specified network
+   configurations. This is accomplished through settings in
+   ``singularity.conf``. See the administrator guide for details.
 
 
 ``--dns``
@@ -94,13 +104,15 @@ the following network types:
     - macvlan
     - none (must be used alone)
 
-``None`` is the only network option that can be used by non-privileged users.  
-It isolates the container network from the host network with a loopback 
-interface. 
+By default, ``none`` is the only network configuration that can be
+used by non-privileged users.  It isolates the container network from
+the host network with a loopback interface.
 
-Administrators can also define custom network configurations and place them in
-the same directory for the benefit of users.
-
+Administrators can permit certain users or groups to request other
+network configurations through options in
+``singularity.conf``. Additional cni configuration files can be added
+to the ``network`` configuration directory as required, and
+Singularity's provided configurations may also be modified.
 
 ``--network-args``
 ==================
