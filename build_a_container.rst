@@ -290,6 +290,26 @@ any sections that are in the definition file into the existing container.
 
 The ``--update`` option is only valid when used with sandbox containers.
 
+``--nv``
+========
+
+This flag allows you to mount the Nvidia CUDA libraries of your host into your build
+environment. Libraries are mounted during the execution of ``post`` and ``test`` sections.
+
+``--rocm``
+==========
+
+This flag allows you to mount the AMD Rocm libraries of your host into your build
+environment. Libraries are mounted during the execution of ``post`` and ``test`` sections.
+
+``--bind``
+==========
+
+This flag allows you to mount a directory, a file or an image during build, it works
+the same way as ``--bind`` for ``shell``, ``exec`` and ``run`` and can be specified
+multiple times, see :ref:`user defined bind paths <user-defined-bind-paths>`.
+Bind mount occurs during the execution of ``post`` and ``test`` sections.
+
 -----------------
 More Build topics
 -----------------
