@@ -1,0 +1,75 @@
+name: Singularity User Docs Hosting
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Build:
+    name: Build
+    runs-on: ubuntu-latest
+    steps:
+      - name: Extract branch name
+        id: extract
+        shell: bash
+        run: echo ::set-output name=branch::${GITHUB_REF#refs/*/}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Checkout Docs
+        uses: actions/checkout@v2
+        with:
+            fetch-depth: 0
+            path: build
+
+      - name: Install Deps
+        run: |
+            sudo apt-get update -y && \
+            sudo apt-get install -f -y build-essential libssl-dev uuid-dev squashfs-tools libseccomp-dev cryptsetup-bin libgpgme-dev \
+            texlive-latex-extra latexmk
+
+      - name: Install Sphinx
+        run: pip install sphinx sphinx-rtd-theme restructuredtext_lint pygments
+
+      - name: Singularity Submodule Init
+        working-directory: build
+        run: git submodule update --init --recursive
+
+      - name: Build HTML
+        working-directory: build
+        run: make html
+
+      - name: Checkout Docs
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          ref: gh-pages
+          path: push
+
+      - name: Prep repo
+        working-directory: push
+        run: rm -rf docs/${{ steps.extract.outputs.branch }} && mkdir docs/${{ steps.extract.outputs.branch }}
+
+      - name: Copy Generated Docs
+        run: cp -r ./build/_build/html/* ./push/docs/${{ steps.extract.outputs.branch }}
+
+      - name: Add Jekyll Ignore
+        working-directory: push
+        run: touch docs/${{ steps.extract.outputs.branch }}/.nojekyll
+
+      - name: Setup Git Info
+        run: |
+            git config --global user.email "ci@hpcng.org"
+            git config --global user.name "singularity-user-docs-ci"
+
+      - name: Commit Docs
+        working-directory: push
+        run: git add . && git commit -m "auto-generated commit" --allow-empty
+
+      - name: Push Docs
+        working-directory: push
+        run: git push origin gh-pages
