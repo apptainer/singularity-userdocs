@@ -48,6 +48,49 @@ To use a persistent overlay, you must first have a container.
 File system image overlay
 =========================
 
+Since 3.8, Singularity provides a command ``singularity overlay create`` to
+create persistent overlay images. You can create a single EXT3 overlay image
+or adding a EXT3 writable overlay partition to an existing SIF image.
+
+.. note::
+
+    ``dd`` and ``mkfs.ext3`` must be installed on your system. Additionally
+    ``mkfs.ext3`` must support ``-d`` option in order to create an overlay
+    directory tree usable by a regular user.
+
+For example, to create a 1 GiB overlay image:
+
+.. code-block:: none
+
+    $ singularity overlay create --size 1024 /tmp/ext3_overlay.img
+
+To add a 1 GiB writable overlay partition to an existing SIF image:
+
+.. code-block:: none
+
+    $ singularity overlay create --size 1024 ubuntu.sif
+
+.. warning::
+
+    It is not possible to add a writable overlay partition to a **signed**, **encrypted**
+    SIF image or if the SIF image already contain a writable overlay partition.
+
+``singularity overlay create`` also provides an option ``--create-dir``
+to create additional directories owned by the calling user, it can be specified
+multiple times to create many directories. This is particularly useful when you
+need to make a directory writable by your user.
+
+So for example:
+
+.. code-block:: none
+
+    $ singularity build /tmp/nginx.sif docker://nginx
+    $ singularity overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
+    $ echo "test" | singularity exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
+
+Create an overlay image (< 3.8)
+-------------------------------
+
 You can use tools like ``dd`` and ``mkfs.ext3`` to create and format
 an empty ext3 file system image, which holds all changes made in your
 container within a single file. Using an overlay image file makes it
