@@ -10,7 +10,7 @@ BUILDDIR      = _build
 # This is a custom target that represents the CLI docs generated from Singularity
 CLIDOCS = cli/singularity.rst
 # This is the full path to the singularity submodule
-SINGULARITY_DIR = $(CURDIR)/vendor/src/github.com/sylabs/singularity
+SINGULARITY_DIR = $(CURDIR)/vendor/src/github.com/hpcng/singularity
 
 # User-friendly check for sphinx-build
 ifeq ($(shell which $(SPHINXBUILD) >/dev/null 2>&1; echo $$?), 1)
@@ -55,7 +55,7 @@ ifndef SKIPCLI
 
 clidocs: cli/singularity.rst
 
-vendor/github.com/sylabs/singularity/builddir/singularity:
+vendor/github.com/hpcng/singularity/builddir/singularity:
 	export GOPATH=$$(pwd)/vendor &&\
 	cd $(SINGULARITY_DIR) &&\
 	go mod vendor &&\
@@ -63,7 +63,7 @@ vendor/github.com/sylabs/singularity/builddir/singularity:
 	cd builddir &&\
 	make
 
-cli/singularity.rst: vendor/github.com/sylabs/singularity/builddir/singularity
+cli/singularity.rst: vendor/github.com/hpcng/singularity/builddir/singularity
 	export GOPATH=$$(pwd)/vendor &&\
 	go run $(SINGULARITY_DIR)/cmd/docs/docs.go rst --dir cli
 
