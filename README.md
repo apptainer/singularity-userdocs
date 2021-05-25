@@ -3,7 +3,7 @@
 This repository holds user-facing documentation for the
 [Singularity](https://github.com/hpcng/singularity) container runtime.
 
-This is a community project led by [Sylabs](https://sylabs.io), and
+This is a community project led by [HPCng](https:/hpcng.org), and
 contributions are always welcome! If you'd like to update or improve
 Singularity's documentation please follow the instructions below, and submit a
 PR on GitHub.
