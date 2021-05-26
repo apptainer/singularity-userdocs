@@ -11,7 +11,7 @@ have root (administrative) privileges, and will install Singularity
 from source code. Other installation options, including building an
 RPM package and installing Singularity without root privileges are
 discussed in the `installation section of the admin guide
-<https://sylabs.io/guides/\{adminversion\}/admin-guide/installation.html>`__.
+<https://singularity.hpcng.org/admin-docs/\{adminversion\}/installation.html>`__.
 
 If you need to request an installation on your shared resource, see the
 :ref:`requesting an installation section <installation-request>` for
@@ -31,7 +31,7 @@ You will need a Linux system to run Singularity natively. Options for
 using Singularity on Mac and Windows machines, along with alternate
 Linux installation options are discussed in the `installation section of the
 admin guide
-<https://sylabs.io/guides/\{adminversion\}/admin-guide/installation.html>`__.
+<https://singularity.hpcng.org/admin-docs/\{adminversion\}/installation.html>`__.
 
 Install system dependencies
 ===========================
