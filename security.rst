@@ -135,12 +135,12 @@ files, to set security restrictions, grant or revoke a user’s
 capabilities, manage resources and authorize containers etc.
 
 For example, the `ecl.toml
-<https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#ecl-toml>`_
+<https://singularity.hpcng.org/admin-docs/\{adminversion\}/configfiles.html#ecl-toml>`_
 file allows blacklisting and whitelisting of containers.
 
 Configuration files and their parameters are documented for administrators
 documented `here
-<https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html>`__.
+<https://singularity.hpcng.org/admin-docs/\{adminversion\}/configfiles.html>`__.
 
 cgroups support
 ****************
@@ -156,7 +156,7 @@ installed by default with Singularity as a guide. At runtime, the
 ``--apply-cgroups`` option is used to specify the location of the
 configuration file to apply to the container and cgroups are
 configured accordingly. More about cgroups support `here
-<https://sylabs.io/guides/\{adminversion\}/admin-guide/configfiles.html#cgroups-toml>`__.
+<https://singularity.hpcng.org/admin-docs/\{adminversion\}/configfiles.html#cgroups-toml>`__.
 
 ``--security`` options
 ***********************

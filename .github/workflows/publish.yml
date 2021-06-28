@@ -1,0 +1,69 @@
+---
+name: publish
+
+on:
+  push:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+
+      - name: Install Singularity dependencies
+        run: |
+          sudo apt-get install -f -y build-essential libssl-dev uuid-dev squashfs-tools libseccomp-dev cryptsetup-bin libgpgme-dev
+
+      - name: Install LaTeX dependencies
+        run: |
+          sudo apt-get install -f -y texlive-latex-extra latexmk
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+
+      - name: Install Sphinx
+        run: |
+          pip install --user --upgrade --upgrade-strategy eager sphinx sphinx-rtd-theme restructuredtext_lint pygments
+
+      - name: Build web documentation
+        run: |
+          make html
+
+      - name: Build PDF documentation
+        run: |
+          make latexpdf
+
+      - name: Build EPUB documentation
+        run: |
+          make epub
+
+      - name: Install SSH key
+        env:
+          SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          echo "${{ secrets.GH_DEPLOY_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          cat <<EOT >> ~/.ssh/config
+          Host github.com
+          HostName github.com
+          IdentityFile ~/.ssh/id_rsa
+          EOT
+          git config --global user.email "actions@github.com"
+          git config --global user.name "gh-actions"
+
+      - name: Update website repo
+        run: |
+          git clone git@github.com:hpcng/singularity-web.git ~/singularity-web
+          rm -rf ~/singularity-web/static/user-docs/${GITHUB_REF##*/}
+          cp -r _build/html ~/singularity-web/static/user-docs/${GITHUB_REF##*/}
+          cd ~/singularity-web
+          git add static/user-docs/${GITHUB_REF##*/}
+          git commit -m "Update ${GITHUB_REF##*/} userdocs"
+          git push

@@ -62,16 +62,16 @@ access to ``*.sylabs.io``. Talk to your system administrator.
 
 You can interact with the public Sylabs Cloud using various Singularity commands:
 
-`pull <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_pull.html>`_,
-`push <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_push.html>`_,
-`build --remote <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_build.html#options>`_,
-`key <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_key.html>`_,
-`search <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_search.html>`_,
-`verify <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_verify.html>`_,
-`exec <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_exec.html>`_,
-`shell <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_shell.html>`_,
-`run <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_run.html>`_,
-`instance <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_instance.html>`_
+`pull <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_pull.html>`_,
+`push <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_push.html>`_,
+`build --remote <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_build.html#options>`_,
+`key <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_key.html>`_,
+`search <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_search.html>`_,
+`verify <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_verify.html>`_,
+`exec <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_exec.html>`_,
+`shell <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_shell.html>`_,
+`run <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_run.html>`_,
+`instance <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_instance.html>`_
 
 .. note::
 
@@ -523,13 +523,13 @@ Singularity will supply the correct credentials for the registry based off of
 the hostname when using the following commands with a ``docker://`` or 
 ``oras://`` URI:
 
-`pull <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_pull.html>`_,
-`push <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_push.html>`_,
-`build <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_build.html>`_,
-`exec <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_exec.html>`_,
-`shell <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_shell.html>`_,
-`run <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_run.html>`_,
-`instance <https://www.sylabs.io/guides/\{version\}/user-guide/cli/singularity_instance.html>`_
+`pull <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_pull.html>`_,
+`push <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_push.html>`_,
+`build <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_build.html>`_,
+`exec <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_exec.html>`_,
+`shell <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_shell.html>`_,
+`run <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_run.html>`_,
+`instance <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_instance.html>`_
 
 
 .. note::
