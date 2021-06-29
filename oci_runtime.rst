@@ -740,7 +740,7 @@ Beyond ``root.path``, the ``config.json`` file includes a multitude of additiona
 
 For a comprehensive discussion of all the ``config.json`` file properties, refer to the `implementation guide <https://github.com/opencontainers/runtime-spec/blob/master/config.md>`_. 
 
-Technically, the ``overlay`` directory was *not* content expected of an OCI compliant filesystem bundle. As detailed in the section dedicated to `Persistent Overlays <https://www.sylabs.io/guides/3.0/user-guide/persistent_overlays.html>`_, these directories allow for the introduction of 
+Technically, the ``overlay`` directory was *not* content expected of an OCI compliant filesystem bundle. As detailed in the section dedicated to `Persistent Overlays <https://singularity.hpcng.org/user-docs/master/persistent_overlays.html>`_, these directories allow for the introduction of 
 a writable file system on an otherwise immutable read-only container; thus they permit the illusion of read-write access.
 
 .. TODO Need to ensure that what's written above is correct 

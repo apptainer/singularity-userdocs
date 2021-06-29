@@ -27,13 +27,13 @@ addition to ensuring that containers are run without elevated
 privileges where appropriate, and that containers are produced by
 trusted sources, users must monitor their containers for newly
 discovered vulnerabilities and update when necessary just as they
-would with any other software. Sylabs is constantly probing to find
+would with any other software. Singularity Community is constantly probing to find
 and patch vulnerabilities within Singularity, and will continue to do
 so.
 
 If you suspect you have found a vulnerability in Singularity, please
 follow the steps in our published `Security Policy
-<https://sylabs.io/security-policy>`__.
+<https://singularity.hpcng.org/security-policy/>`__.
 
 so that it can be disclosed, investigated, and fixed in an appropriate
 manner.
@@ -51,8 +51,8 @@ beyond that offered by the open source project. Security and bug-fix
 patches are backported to select versions of Singularity PRO, so that
 they can be deployed long-term where required. PRO users receive
 security fixes (without specific notification or detail) prior to
-public disclosure, as detailed in the `Sylabs Security Policy
-<https://sylabs.io/security-policy>`__.
+public disclosure, as detailed in the `Singularity Community Security Policy
+<https://singularity.hpcng.org/security-policy/>`__.
 
 
 Singularity Runtime & User Privilege
