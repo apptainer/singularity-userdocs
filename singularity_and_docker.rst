@@ -752,7 +752,7 @@ Working with Definition Files
 .. _sec:def_file_mandatory_headers_remotely_bootstrapped:
 
 Mandatory Header Keywords: Remotely Bootstrapped
------------------------------------------------
+-------------------------------------------------
 
 Akin to a set of blueprints that explain how to build a custom container, Singularity definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here.
 
