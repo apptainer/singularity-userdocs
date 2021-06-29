@@ -41,7 +41,7 @@ Raise an Issue
 
 For general bugs/issues, you can open an issue `at the GitHub repo 
 <https://github.com/hpcng/singularity/issues/new>`_. However, if you find a 
-security  related issue/problem, please email Singularity Project Team directly at 
+security  related issue/problem, please email the Singularity Security Team directly at 
 `singularity-security@hpcng.org <mailto:singularity-security@hpcng.org>`_. More information about the 
 Singularity security policies and procedures can be found `here 
 <https://singularity.hpcng.org/security-policy/>`__
@@ -204,7 +204,6 @@ will need to follow the next steps:
         git push origin master && # to update your fork \
         git checkout new-feature && \
         git merge master 
-
 
 
 
