@@ -11,7 +11,7 @@ have root (administrative) privileges, and will install Singularity
 from source code. Other installation options, including building an
 RPM package and installing Singularity without root privileges are
 discussed in the `installation section of the admin guide
-<https://singularity.hpcng.org/admin-docs/\{adminversion\}/installation.html>`__.
+<\{admindocs\}/installation.html>`__.
 
 If you need to request an installation on your shared resource, see the
 :ref:`requesting an installation section <installation-request>` for
@@ -31,7 +31,7 @@ You will need a Linux system to run Singularity natively. Options for
 using Singularity on Mac and Windows machines, along with alternate
 Linux installation options are discussed in the `installation section of the
 admin guide
-<https://singularity.hpcng.org/admin-docs/\{adminversion\}/installation.html>`__.
+<\{admindocs\}/installation.html>`__.
 
 Install system dependencies
 ===========================
@@ -315,8 +315,8 @@ containers of interest on the `Container Library <https://cloud.sylabs.io/librar
 
         ...
 
-You can use the `pull <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_pull.html>`_
-and `build <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_build.html>`_
+You can use the `pull <cli/singularity_pull.html>`_
+and `build <cli/singularity_build.html>`_
 commands to download pre-built images from an external resource like the
 `Container Library <https://cloud.sylabs.io/library>`_ or
 `Docker Hub <https://hub.docker.com/>`_.
@@ -381,7 +381,7 @@ from the Container Library:
 Shell
 =====
 
-The `shell <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_shell.html>`_
+The `shell <cli/singularity_shell.html>`_
 command allows you to spawn a new shell within your container and interact with
 it as though it were a small virtual machine.
 
@@ -417,7 +417,7 @@ exited.
 Executing Commands
 ==================
 
-The `exec <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_exec.html>`_
+The `exec <cli/singularity_exec.html>`_
 command allows you to execute a custom command within a container by specifying
 the image file. For instance, to execute the ``cowsay`` program within the
 ``lolcow_latest.sif`` container:
@@ -457,7 +457,7 @@ Running a container
 
 Singularity containers contain :ref:`runscripts <runscript>`. These are user
 defined scripts that define the actions a container should perform when someone
-runs it. The runscript can be triggered with the `run <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_run.html>`_
+runs it. The runscript can be triggered with the `run <cli/singularity_run.html>`_
 command, or simply by calling the container as though it were an executable.
 
 .. code-block:: none
@@ -670,8 +670,7 @@ access on your build system, you can build images using the `Remote Builder <htt
 This quickstart document just scratches the surface of all of the things you can
 do with Singularity!
 
-If you need additional help or support, contact the Sylabs team:
-https://www.sylabs.io/contact/
+If you need additional help or support, see https://singularity.hpcng.org/help.
 
 
 .. _installation-request:
@@ -693,7 +692,7 @@ to this:
 
     Dear shared resource administrator,
 
-    We are interested in having Singularity (https://www.sylabs.io/docs/)
+    We are interested in having Singularity (https://singularity.hpcng.org)
     installed on our shared resource. Singularity containers will allow us to
     build encapsulated environments, meaning that our work is reproducible and
     we are empowered to choose all dependencies including libraries, operating
@@ -720,16 +719,14 @@ to this:
     learn more about Singularity, I thought these items might be of interest:
 
         - Security: A discussion of security concerns is discussed at
-        https://www.sylabs.io/guides/{adminversion}/admin-guide/admin_quickstart.html
+        \{admindocs\}/admin_quickstart.html
 
         - Installation:
-        https://www.sylabs.io/guides/{adminversion}/admin-guide/installation.html
+        \{admindocs\}/installation.html
 
-    If you have questions about any of the above, you can email the open source
-    list (singularity@lbl.gov), join the open source slack channel
-    (singularity-container.slack.com), or contact the organization that supports
-    Singularity directly (sylabs.io/contact). I can do
-    my best to facilitate this interaction if help is needed.
+    If you have questions about any of the above, you can contact one
+    of the sources listed at https://singularity.hpcng.org/help.  I can
+    do my best to facilitate this interaction if help is needed.
 
     Thank you kindly for considering this request!
 
