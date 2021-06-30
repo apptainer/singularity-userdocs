@@ -11,7 +11,7 @@ and running containers.
 
 For a detailed guide to installation and configuration, please see the
 separate Admin Guide for this version of Singularity at
-`<https://singularity.hpcng.org/admin-docs/\{adminversion\}/>`__.
+`<\{admindocs\}/>`__.
 
               
 Getting Started & Background Information

@@ -8,7 +8,7 @@ Bind Paths and Mounts
 
 .. _sec:bindpaths:
 
-If `not disabled by the system administrator <https://singularity.hpcng.org/admin-docs/\{adminversion\}/config_files.html#bind-mount-management>`_,
+If `not disabled by the system administrator <\{admindocs\}/config_files.html#bind-mount-management>`_,
 Singularity allows you to map directories on your host system to directories
 within your container using bind mounts. This allows you to read and write data
 on the host system with ease.
@@ -68,7 +68,7 @@ commas:
 User-defined bind paths
 -----------------------
 
-If the system administrator has `not disabled user control of binds <https://singularity.hpcng.org/admin-docs/\{adminversion\}/configfiles.html#bind-mount-management>`_,
+If the system administrator has `not disabled user control of binds <\{admindocs\}/configfiles.html#bind-mount-management>`_,
 you will be able to request your own bind paths within your container.
 
 The Singularity action commands (``run``, ``exec``, ``shell``, and

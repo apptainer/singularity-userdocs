@@ -11,7 +11,7 @@ have root (administrative) privileges, and will install Singularity
 from source code. Other installation options, including building an
 RPM package and installing Singularity without root privileges are
 discussed in the `installation section of the admin guide
-<https://singularity.hpcng.org/admin-docs/\{adminversion\}/installation.html>`__.
+<\{admindocs\}/installation.html>`__.
 
 If you need to request an installation on your shared resource, see the
 :ref:`requesting an installation section <installation-request>` for
@@ -31,7 +31,7 @@ You will need a Linux system to run Singularity natively. Options for
 using Singularity on Mac and Windows machines, along with alternate
 Linux installation options are discussed in the `installation section of the
 admin guide
-<https://singularity.hpcng.org/admin-docs/\{adminversion\}/installation.html>`__.
+<\{admindocs\}/installation.html>`__.
 
 Install system dependencies
 ===========================
@@ -720,10 +720,10 @@ to this:
     learn more about Singularity, I thought these items might be of interest:
 
         - Security: A discussion of security concerns is discussed at
-        https://singularity.hpcng.org/admin-docs/\{adminversion\}/admin_quickstart.html
+        \{admindocs\}/admin_quickstart.html
 
         - Installation:
-        https://singularity.hpcng.org/admin-docs/\{adminversion\}/installation.html
+        \{admindocs\}/installation.html
 
     If you have questions about any of the above, you can email the open source
     list (singularity@lbl.gov), join the open source slack channel
