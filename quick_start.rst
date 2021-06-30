@@ -670,8 +670,7 @@ access on your build system, you can build images using the `Remote Builder <htt
 This quickstart document just scratches the surface of all of the things you can
 do with Singularity!
 
-If you need additional help or support, contact the Sylabs team:
-https://www.sylabs.io/contact/
+If you need additional help or support, see https://singularity.hpcng.org/help.
 
 
 .. _installation-request:
@@ -693,7 +692,7 @@ to this:
 
     Dear shared resource administrator,
 
-    We are interested in having Singularity (https://www.sylabs.io/docs/)
+    We are interested in having Singularity (https://singularity.hpcng.org)
     installed on our shared resource. Singularity containers will allow us to
     build encapsulated environments, meaning that our work is reproducible and
     we are empowered to choose all dependencies including libraries, operating
@@ -725,11 +724,9 @@ to this:
         - Installation:
         \{admindocs\}/installation.html
 
-    If you have questions about any of the above, you can email the open source
-    list (singularity@lbl.gov), join the open source slack channel
-    (singularity-container.slack.com), or contact the organization that supports
-    Singularity directly (sylabs.io/contact). I can do
-    my best to facilitate this interaction if help is needed.
+    If you have questions about any of the above, you can contact one
+    of the sources listed at https://singularity.hpcng.org/help.  I can
+    do my best to facilitate this interaction if help is needed.
 
     Thank you kindly for considering this request!
 
