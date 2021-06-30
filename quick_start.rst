@@ -315,8 +315,8 @@ containers of interest on the `Container Library <https://cloud.sylabs.io/librar
 
         ...
 
-You can use the `pull <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_pull.html>`_
-and `build <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_build.html>`_
+You can use the `pull <cli/singularity_pull.html>`_
+and `build <cli/singularity_build.html>`_
 commands to download pre-built images from an external resource like the
 `Container Library <https://cloud.sylabs.io/library>`_ or
 `Docker Hub <https://hub.docker.com/>`_.
@@ -381,7 +381,7 @@ from the Container Library:
 Shell
 =====
 
-The `shell <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_shell.html>`_
+The `shell <cli/singularity_shell.html>`_
 command allows you to spawn a new shell within your container and interact with
 it as though it were a small virtual machine.
 
@@ -417,7 +417,7 @@ exited.
 Executing Commands
 ==================
 
-The `exec <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_exec.html>`_
+The `exec <cli/singularity_exec.html>`_
 command allows you to execute a custom command within a container by specifying
 the image file. For instance, to execute the ``cowsay`` program within the
 ``lolcow_latest.sif`` container:
@@ -457,7 +457,7 @@ Running a container
 
 Singularity containers contain :ref:`runscripts <runscript>`. These are user
 defined scripts that define the actions a container should perform when someone
-runs it. The runscript can be triggered with the `run <https://www.singularity.hpcng.org/user-docs/\{version\}/cli/singularity_run.html>`_
+runs it. The runscript can be triggered with the `run <cli/singularity_run.html>`_
 command, or simply by calling the container as though it were an executable.
 
 .. code-block:: none
@@ -720,10 +720,10 @@ to this:
     learn more about Singularity, I thought these items might be of interest:
 
         - Security: A discussion of security concerns is discussed at
-        https://www.sylabs.io/guides/{adminversion}/admin-guide/admin_quickstart.html
+        https://singularity.hpcng.org/admin-docs/\{adminversion\}/admin_quickstart.html
 
         - Installation:
-        https://www.sylabs.io/guides/{adminversion}/admin-guide/installation.html
+        https://singularity.hpcng.org/admin-docs/\{adminversion\}/installation.html
 
     If you have questions about any of the above, you can email the open source
     list (singularity@lbl.gov), join the open source slack channel
