@@ -35,8 +35,8 @@ A Singularity Definition file is divided into two parts:
    sections that produce scripts to be executed at runtime can accept options
    intended for ``/bin/sh``
 
-For more in-depth and practical examples of def files, see the `Sylabs examples
-repository <https://github.com/sylabs/examples>`_
+For more in-depth and practical examples of def files, see the `Singularity examples
+repository <https://github.com/hpcng/singularity/tree/master/examples>`_
 
 For a comparison between Dockerfile and Singularity definition file,
 please see: :ref:`this section <sec:deffile-vs-dockerfile>`.

@@ -17,8 +17,8 @@ If you need to request an installation on your shared resource, see the
 :ref:`requesting an installation section <installation-request>` for
 information to send to your system administrator.
 
-For any additional help or support contact the Sylabs team:
-https://www.sylabs.io/contact/
+For any additional help or support contact the Singularity Community:
+https://singularity.hpcng.org/help
 
 
 .. _quick-installation:

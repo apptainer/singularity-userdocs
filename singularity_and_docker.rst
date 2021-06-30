@@ -752,7 +752,7 @@ Working with Definition Files
 .. _sec:def_file_mandatory_headers_remotely_bootstrapped:
 
 Mandatory Header Keywords: Remotely Bootstrapped
------------------------------------------------
+-------------------------------------------------
 
 Akin to a set of blueprints that explain how to build a custom container, Singularity definition files (or "def files") are considered in detail :ref:`elsewhere in this manual <definition-files>`. Therefore, only def file nuances specific to interoperability with Docker receive consideration here.
 
@@ -868,7 +868,7 @@ A copy of the SIF file created by the service remains in the Sylabs Cloud Singul
 .. _sec:mandatory_headers_docker_locally_bootstrapped_def_file:
 
 Mandatory Header Keywords: Locally Bootstrapped
-----------------------------------------------
+------------------------------------------------
 
 When ``docker-daemon`` is the bootstrap agent in a Singularity definition file, SIF containers can be created from images cached locally by Docker. Suppose the definition file ``lolcow-d.def`` has contents:
 
@@ -1466,7 +1466,7 @@ Building Containers for Singularity from OCI Images
 .. _cli-oci-bootstrap-agent:
 
 Working Locally from the Singularity Command Line: ``oci`` Bootstrap Agent
--------------------------------------------------------------------------
+--------------------------------------------------------------------------
 
 The example detailed in the previous section can be used to illustrate how a SIF file for use by Singularity can be created from the local cache - an albeit contrived example, that works because the Singularity cache is compliant with the OCI Image Layout Specification.
 
@@ -1522,7 +1522,7 @@ does not *uniquely* specify an image from which to bootstrap the ``build`` proce
 .. _cli-oci-archive-bootstrap-agent:
 
 Working Locally from the Singularity Command Line: ``oci-archive`` Bootstrap Agent
----------------------------------------------------------------------------------
+----------------------------------------------------------------------------------
 
 OCI archives, i.e., ``tar`` files obeying the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`, can seed creation of a container for Singularity. In this case, use is made of the ``oci-archive`` bootstrap agent.
 

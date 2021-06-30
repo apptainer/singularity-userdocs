@@ -41,10 +41,10 @@ Raise an Issue
 
 For general bugs/issues, you can open an issue `at the GitHub repo 
 <https://github.com/hpcng/singularity/issues/new>`_. However, if you find a 
-security  related issue/problem, please email Sylabs directly at 
-`security@sylabs.io <mailto:security@sylabs.io>`_. More information about the 
-Sylabs security policies and procedures can be found `here 
-<https://www.sylabs.io/singularity/security-policy/>`__
+security  related issue/problem, please email the Singularity Security Team directly at 
+`singularity-security@hpcng.org <mailto:singularity-security@hpcng.org>`_. More information about the 
+Singularity security policies and procedures can be found `here 
+<https://singularity.hpcng.org/security-policy/>`__
 
 -------------------
 Write Documentation
@@ -181,7 +181,7 @@ Step 5. Submit a Pull Request
 Once you have pushed your branch, then you can go to your fork (in the web GUI 
 on GitHub) and `submit a Pull Request
 <https://help.github.com/articles/creating-a-pull-request/>`_. Regardless of the 
-name of your branch, your PR should be submitted to the Sylabs ``master`` 
+name of your branch, your PR should be submitted to the Singularity ``master`` 
 branch. Submitting your PR will open a conversation thread for the maintainers 
 of Singularity to discuss your contribution. At this time, the continuous 
 integration that is linked with the code base will also be executed. If there is 
@@ -204,7 +204,6 @@ will need to follow the next steps:
         git push origin master && # to update your fork \
         git checkout new-feature && \
         git merge master 
-
 
 
 
