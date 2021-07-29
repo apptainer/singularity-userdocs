@@ -119,7 +119,7 @@ proceed with the installation.
     $ export VERSION={InstallationVersion} && # adjust this as necessary \
         wget https://github.com/hpcng/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
         tar -xzf singularity-${VERSION}.tar.gz && \
-        cd singularity
+        cd singularity-${VERSION}
 
 .. _compile:
 
