@@ -296,11 +296,23 @@ The ``--update`` option is only valid when used with sandbox containers.
 This flag allows you to mount the Nvidia CUDA libraries of your host into your build
 environment. Libraries are mounted during the execution of ``post`` and ``test`` sections.
 
+.. note::
+
+    This option can't be set via the environment variable `SINGULARITY_NV`.
+    Singularity will attempt to bind binaries listed in SINGULARITY_CONFDIR/nvliblist.conf,
+    if the mount destination doesn't exist inside the container, they are ignored.
+
 ``--rocm``
 ==========
 
 This flag allows you to mount the AMD Rocm libraries of your host into your build
 environment. Libraries are mounted during the execution of ``post`` and ``test`` sections.
+
+.. note::
+
+    This option can't be set via the environment variable `SINGULARITY_ROCM`.
+    Singularity will attempt to bind binaries listed in SINGULARITY_CONFDIR/rocmliblist.conf,
+    if the mount destination doesn't exist inside the container, they are ignored.
 
 ``--bind``
 ==========
@@ -309,6 +321,25 @@ This flag allows you to mount a directory, a file or an image during build, it w
 the same way as ``--bind`` for ``shell``, ``exec`` and ``run`` and can be specified
 multiple times, see :ref:`user defined bind paths <user-defined-bind-paths>`.
 Bind mount occurs during the execution of ``post`` and ``test`` sections.
+
+.. note::
+
+    This option can't be set via the environment variables `SINGULARITY_BIND` and `SINGULARITY_BINDPATH`
+
+**Beware that the mount points must exist in the built image** prior to executing ``post`` and ``test``.
+So if you want to bind ``--bind /example`` and it doesn't exist in the bootstrap image, you have to
+workaround that by adding a ``setup`` section:
+
+.. code-block:: none
+
+    %setup
+      mkdir $SINGULARITY_ROOTFS/example
+
+.. note::
+
+    Binding your directory to `/mnt` is another workaround, as this directory is often present in
+    distribution images and is intended for that purpose, you could avoid the directory creation
+    in the definition file.
 
 -----------------
 More Build topics

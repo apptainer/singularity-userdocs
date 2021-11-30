@@ -8,8 +8,13 @@ Bind Paths and Mounts
 
 .. _sec:bindpaths:
 
+<<<<<<< HEAD
 If `not disabled by the system administrator <\{admindocs\}/config_files.html#bind-mount-management>`_,
 apptainer allows you to map directories on your host system to directories
+=======
+If `not disabled by the system administrator <\{admindocs\}/configfiles.html#bind-mount-management>`_,
+Singularity allows you to map directories on your host system to directories
+>>>>>>> de5c4ef98283f80100a46cc06bf501c17096b71f
 within your container using bind mounts. This allows you to read and write data
 on the host system with ease.
 
