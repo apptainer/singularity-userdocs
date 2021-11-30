@@ -7,18 +7,18 @@ Signing and Verifying Containers
 
 .. _sec:signNverify:
 
-Singularity 3.0 introduced the ability to create and manage PGP keys and use
+apptainer 3.0 introduced the ability to create and manage PGP keys and use
 them to sign and verify containers. This provides a trusted method for
-Singularity users to share containers. It ensures a bit-for-bit reproduction
+apptainer users to share containers. It ensures a bit-for-bit reproduction
 of the original container as the author intended it.
 
 .. note::
 
-    Singularity 3.6.0 uses a new signature format. Containers signed
-    by 3.6.0 cannot be verifed by older versions of Singularity.
+    apptainer 3.6.0 uses a new signature format. Containers signed
+    by 3.6.0 cannot be verifed by older versions of apptainer.
 
-    To verify containers signed with older versions of Singularity using 3.6.0
-    the ``--legacy-insecure`` flag must be provided to the ``singularity verify`` command.
+    To verify containers signed with older versions of apptainer using 3.6.0
+    the ``--legacy-insecure`` flag must be provided to the ``apptainer verify`` command.
 
 
 .. _verify_container_from_library:
@@ -39,14 +39,14 @@ If you don't already have a valid access token, follow these steps:
   5) Enter a name for your new access token, such as "test token"
   6) Click the "Create a New Access Token" button.
   7) Click "Copy token to Clipboard" from the "New API Token" page.
-  8) Run ``singularity remote login`` and paste the access token at the prompt.
+  8) Run ``apptainer remote login`` and paste the access token at the prompt.
 
 Now you can verify containers that you pull from the library, ensuring they are
 bit-for-bit reproductions of the original image.
 
 .. code-block:: none
 
-    $ singularity verify alpine_latest.sif 
+    $ apptainer verify alpine_latest.sif 
 
     Container is signed by 1 key(s):
 
@@ -71,13 +71,13 @@ Generating and managing PGP keys
 To sign your own containers you first need to generate one or more keys.
 
 If you attempt to sign a container before you have generated any keys,
-Singularity will guide you through the interactive process of creating a new
+apptainer will guide you through the interactive process of creating a new
 key. Or you can use the ``newpair`` subcommand in the ``key`` command group
 like so:.
 
 .. code-block:: none
 
-    $ singularity key newpair
+    $ apptainer key newpair
     
     Enter your name (e.g., John Doe) : David Trudgian
     Enter your email address (e.g., john.doe@example.com) : david.trudgian@sylabs.io
@@ -90,8 +90,8 @@ like so:.
 
 Note that I chose ``Y`` when asked if I wanted to push my key to the
 keystore. This will push my public key to whichever keystore has been
-configured by the ``singularity remote`` command, so that it can be
-retrieved by other users running ``singularity verify``. If you do not
+configured by the ``apptainer remote`` command, so that it can be
+retrieved by other users running ``apptainer verify``. If you do not
 wish to push your public key, say ``n`` during the ``newpair``
 process.
     
@@ -101,9 +101,9 @@ locally.`
 
 .. code-block:: none
 
-    $ singularity key list
+    $ apptainer key list
 
-    Public key listing (/home/dave/.singularity/sypgp/pgp-public):
+    Public key listing (/home/dave/.apptainer/sypgp/pgp-public):
 
     0) U: David Trudgian (demo) <david.trudgian@sylabs.io>
        C: 2019-11-15 09:54:54 -0600 CST
@@ -119,11 +119,11 @@ for the following:
        - F: Fingerprint
        - L: Key length
 
-If you chose not to push your key to the keystore during the ``newpair`` process, but later wish to, you can push it to a keystore configured using ``singularity remote`` like so:
+If you chose not to push your key to the keystore during the ``newpair`` process, but later wish to, you can push it to a keystore configured using ``apptainer remote`` like so:
 
 .. code-block:: none
 
-    $ singularity key push E5F780B2C22F59DF748524B435C3844412EE233B
+    $ apptainer key push E5F780B2C22F59DF748524B435C3844412EE233B
     
     public key `E5F780B2C22F59DF748524B435C3844412EE233B` pushed to server successfully
 
@@ -132,16 +132,16 @@ again like so.
 
 .. code-block:: none
 
-    $ singularity key search Trudgian
+    $ apptainer key search Trudgian
 
     Showing 1 results
 
     KEY ID    BITS  NAME/EMAIL
     12EE233B  4096  David Trudgian (demo) <david.trudgian@sylabs.io>  
 
-    $ singularity key pull 12EE233B
+    $ apptainer key pull 12EE233B
     
-    1 key(s) added to keyring of trust /home/dave/.singularity/sypgp/pgp-public
+    1 key(s) added to keyring of trust /home/dave/.apptainer/sypgp/pgp-public
 
 But note that this only restores the *public* key (used for verifying) to your
 local machine and does not restore the *private* key (used for signing).
@@ -151,23 +151,23 @@ local machine and does not restore the *private* key (used for signing).
 Searching for keys
 ==================
 
-Singularity allows you to search the keystore for public keys. You can search for names,
+apptainer allows you to search the keystore for public keys. You can search for names,
 emails, and fingerprints (key IDs). When searching for a fingerprint, you need to use ``0x``
 before the fingerprint, check the example:
 
 .. code-block:: none
 
     # search for key ID:
-    $ singularity key search 0x8883491F4268F173C6E5DC49EDECE4F3F38D871E
+    $ apptainer key search 0x8883491F4268F173C6E5DC49EDECE4F3F38D871E
 
     # search for the sort ID:
-    $ singularity key search 0xF38D871E
+    $ apptainer key search 0xF38D871E
 
     # search for user:
-    $ singularity key search Godlove
+    $ apptainer key search Godlove
 
     # search for email:
-    $ singularity key search @gmail.com
+    $ apptainer key search @gmail.com
 
 Signing and validating your own containers
 ==========================================
@@ -176,7 +176,7 @@ Now that you have a key generated, you can use it to sign images like so:
 
 .. code-block:: none
 
-    $ singularity sign my_container.sif 
+    $ apptainer sign my_container.sif 
 
     Signing image: my_container.sif
     Enter key passphrase : 
@@ -187,7 +187,7 @@ needing to contact the Keystore.
 
 .. code-block:: none
 
-    $ singularity verify my_container.sif
+    $ apptainer verify my_container.sif
     Verifying image: my_container.sif
     [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
     [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
@@ -207,9 +207,9 @@ first ``remove`` your local public key, and then try to use the
 
 .. code-block:: none
 
-    $ singularity key remove E5F780B2C22F59DF748524B435C3844412EE233B
+    $ apptainer key remove E5F780B2C22F59DF748524B435C3844412EE233B
 
-    $ singularity verify my_container.sif
+    $ apptainer verify my_container.sif
     Verifying image: my_container.sif
     [REMOTE]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
     [REMOTE]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
@@ -225,13 +225,13 @@ first ``remove`` your local public key, and then try to use the
 Note that the ``[REMOTE]`` message shows the key used for verification
 was obtained from the keystore, and is not present on your local
 computer. You can retrieve it, so that you can verify even if you are
-offline with ``singularity key pull``
+offline with ``apptainer key pull``
 
 .. code-block:: none
 
-    $ singularity key pull E5F780B2C22F59DF748524B435C3844412EE233B
+    $ apptainer key pull E5F780B2C22F59DF748524B435C3844412EE233B
 
-    1 key(s) added to keyring of trust /home/dave/.singularity/sypgp/pgp-public
+    1 key(s) added to keyring of trust /home/dave/.apptainer/sypgp/pgp-public
 
 
 Advanced Signing - SIF IDs and Groups
@@ -246,7 +246,7 @@ number of objects. Each object has an ``ID``, and belongs to a
 
 .. code-block:: none
 
-    $ singularity sif list my_container.sif 
+    $ apptainer sif list my_container.sif 
 
     Container id: e455d2ae-7f0b-4c79-b3ef-315a4913d76a
     Created on:   2019-11-15 10:11:58 -0600 CST
@@ -265,12 +265,12 @@ to ``sign`` and ``verify``.
 
 .. code-block:: none
 
-    $ singularity sign --sif-id 1 my_container.sif 
+    $ apptainer sign --sif-id 1 my_container.sif 
     Signing image: my_container.sif
     Enter key passphrase : 
     Signature created and applied to my_container.sif 
 
-    $ singularity verify --sif-id 1 my_container.sif
+    $ apptainer verify --sif-id 1 my_container.sif
     Verifying image: my_container.sif
     [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
     [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
@@ -287,7 +287,7 @@ other objects could have been changed without my knowledge.
 
 .. code-block:: none
 
-    $ singularity verify my_container.sif
+    $ apptainer verify my_container.sif
     Verifying image: my_container.sif
     [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
     [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
@@ -300,7 +300,7 @@ I can sign a group of objects with the ``--group-id`` option to ``sign``.
 
 .. code-block:: none
 
-    $ singularity sign --groupid 1 my_container.sif 
+    $ apptainer sign --groupid 1 my_container.sif 
     Signing image: my_container.sif
     Enter key passphrase : 
     Signature created and applied to my_container.sif
@@ -312,7 +312,7 @@ running ``verify`` with the same ``--group-id`` option.
 
 .. code-block:: none
 
-    $ singularity verify --group-id 1 my_container.sif 
+    $ apptainer verify --group-id 1 my_container.sif 
     Verifying image: my_container.sif
     [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
     [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448
@@ -331,7 +331,7 @@ container is signed, and the default ``verify`` behavior without specifying
 
 .. code-block:: none
 
-    $ singularity verify my_container.sif
+    $ apptainer verify my_container.sif
     Verifying image: my_container.sif
     [LOCAL]   Signing entity: David Trudgian (Demo keys) <david.trudgian@sylabs.io>
     [LOCAL]   Fingerprint: 65833F473098C6215E750B3BDFD69E5CEE85D448

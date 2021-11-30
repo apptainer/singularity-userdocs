@@ -11,7 +11,7 @@ root file system.
 Overview
 --------
 
-In Singularity >= v3.4.0 a new feature to build and run encrypted containers has
+In apptainer >= v3.4.0 a new feature to build and run encrypted containers has
 been added to allow users to encrypt the file system image within a SIF.  This
 encryption can be performed using either a passphrase or asymmetrically via an
 RSA key pair in Privacy Enhanced Mail (PEM/PKCS1) format. The container is encrypted
@@ -38,12 +38,12 @@ file is more secure and is therefore recommended for production use.
 
 .. note::
 
-        In Singularity 3.4, the definition file stored with the container will
+        In apptainer 3.4, the definition file stored with the container will
         not be encrypted. If it contains sensitive information you should remove
-        it before encryption via ``singularity sif del 1 myimage.sif``. Metadata
+        it before encryption via ``apptainer sif del 1 myimage.sif``. Metadata
         encryption will be addressed in a future release.
 
-An ``-e|--encrypt`` flag to ``singularity build`` is used to indicate that the container needs to 
+An ``-e|--encrypt`` flag to ``apptainer build`` is used to indicate that the container needs to 
 be encrypted.
 
 A passphrase or a key-file used to perform the encryption is supplied at build time
@@ -52,9 +52,9 @@ via an environment variable or a command line option.
 +------------------------+-------------------------------------------+--------------------------+
 | **Encryption Method**  | **Environment Variable**                  | **Commandline Option**   |
 +------------------------+-------------------------------------------+--------------------------+
-| Passphrase             | ``SINGULARITY_ENCRYPTION_PASSPHRASE``     | ``--passphrase``         |
+| Passphrase             | ``apptainer_ENCRYPTION_PASSPHRASE``     | ``--passphrase``         |
 +------------------------+-------------------------------------------+--------------------------+
-| Asymmetric Key (PEM)   | ``SINGULARITY_ENCRYPTION_PEM_PATH``       | ``--pem-path``           | 
+| Asymmetric Key (PEM)   | ``apptainer_ENCRYPTION_PEM_PATH``       | ``--pem-path``           | 
 +------------------------+-------------------------------------------+--------------------------+
 
 The ``-e|--encrypt`` flag is implicitly set when the ``--passphrase`` or
@@ -64,8 +64,8 @@ respected.
 
 #. ``--pem-path``
 #. ``--passphrase``
-#. ``SINGULARITY_ENCRYPTION_PEM_PATH``
-#. ``SINGULARITY_ENCRYPTION_PASSPHRASE``
+#. ``apptainer_ENCRYPTION_PEM_PATH``
+#. ``apptainer_ENCRYPTION_PASSPHRASE``
 
 Passphrase Encryption
 =====================
@@ -86,7 +86,7 @@ Encrypting with a passphrase interactively
 
 .. code-block:: none
 
-        $ sudo singularity build --passphrase encrypted.sif encrypted.def
+        $ sudo apptainer build --passphrase encrypted.sif encrypted.def
         Enter encryption passphrase: <secret>
         INFO:    Starting build...
 
@@ -95,7 +95,7 @@ Using an environment variable
 
 .. code-block:: none
 
-        $ sudo SINGULARITY_ENCRYPTION_PASSPHRASE=<secret> singularity build --encrypt encrypted.sif encrypted.def
+        $ sudo apptainer_ENCRYPTION_PASSPHRASE=<secret> apptainer build --encrypt encrypted.sif encrypted.def
         Starting build...
 
 In this case it is necessary to use the ``--encrypt`` flag since the presence of
@@ -108,15 +108,15 @@ plain text passphrase in a file (e.g. ``secret.txt``) and use it like so.
 
 .. code-block:: none
 
-        $ export SINGULARITY_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
+        $ export apptainer_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
-        $ sudo -E singularity build --encrypt encrypted.sif encrypted.def
+        $ sudo -E apptainer build --encrypt encrypted.sif encrypted.def
         Starting build...
 
 PEM File Encryption
 ===================
 
-Singularity currently supports RSA encryption using a public/private key-pair. 
+apptainer currently supports RSA encryption using a public/private key-pair. 
 Keys are supplied in PEM format. The public key is used to encrypt containers that
 can be decrypted on a host that has access to the secret private key.
 
@@ -148,7 +148,7 @@ Encrypting with a command line option
 
 .. code-block:: none
 
-        $ sudo singularity build --pem-path=rsa_pub.pem encrypted.sif encrypted.def
+        $ sudo apptainer build --pem-path=rsa_pub.pem encrypted.sif encrypted.def
         Starting build...
 
 Encrypting with an environment variable
@@ -156,7 +156,7 @@ Encrypting with an environment variable
 
 .. code-block:: none
 
-        $ sudo SINGULARITY_ENCRYPTION_PEM_PATH=rsa_pub.pem singularity build --encrypt encrypted.sif encrypted.def
+        $ sudo apptainer_ENCRYPTION_PEM_PATH=rsa_pub.pem apptainer build --encrypt encrypted.sif encrypted.def
         Starting build...
 
 In this case it is necessary to use the ``--encrypt`` flag since the presence of
@@ -181,7 +181,7 @@ Running with a passphrase interactively
 
 .. code-block:: none
 
-        $ singularity run --passphrase encrypted.sif
+        $ apptainer run --passphrase encrypted.sif
         Enter passphrase for encrypted container: <secret>
 
 Running with a passphrase in an environment variable
@@ -189,7 +189,7 @@ Running with a passphrase in an environment variable
 
 .. code-block:: none
 
-        $ SINGULARITY_ENCRYPTION_PASSPHRASE="secret" singularity run encrypted.sif
+        $ apptainer_ENCRYPTION_PASSPHRASE="secret" apptainer run encrypted.sif
 
 While this example shows how an environment variable can be used to set a
 passphrase, you should set the environment variable in a way that will not 
@@ -198,9 +198,9 @@ plain text passphrase in a file (e.g. ``secret.txt``) and use it like so.
 
 .. code-block:: none
 
-        $ export SINGULARITY_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
+        $ export apptainer_ENCRYPTION_PASSPHRASE=$(cat secret.txt)
 
-        $ singularity run encrypted.sif
+        $ apptainer run encrypted.sif
 
 Running a container encrypted with a PEM file
 =============================================
@@ -213,11 +213,11 @@ Running using a command line option
 
 .. code-block:: none
 
-        $ singularity run --pem-path=rsa_pri.pem encrypted.sif
+        $ apptainer run --pem-path=rsa_pri.pem encrypted.sif
 
 Running using an environment variable
 -------------------------------------
 
 .. code-block:: none
 
-        $ SINGULARITY_ENCRYPTION_PEM_PATH=rsa_pri.pem singularity run encrypted.sif
+        $ apptainer_ENCRYPTION_PEM_PATH=rsa_pri.pem apptainer run encrypted.sif

@@ -4,17 +4,17 @@
 Limiting container resources with cgroups
 =========================================
 
-Starting in Singularity 3.0, users have the ability to limit container resources
+Starting in apptainer 3.0, users have the ability to limit container resources
 using cgroups.
 
 --------
 Overview
 --------
 
-Singularity cgroups support can be configured and utilized via a TOML file. An
+apptainer cgroups support can be configured and utilized via a TOML file. An
 example file is typically installed at
-``/usr/local/etc/singularity/cgroups/cgroups.toml`` (but may also be installed 
-in other locations such as ``/etc/singularity/cgroups/cgroups.toml`` depending 
+``/usr/local/etc/apptainer/cgroups/cgroups.toml`` (but may also be installed 
+in other locations such as ``/etc/apptainer/cgroups/cgroups.toml`` depending 
 on your installation method).  You can copy and edit this file to suit your 
 needs.  Then when you need to limit your container resources, apply the settings 
 in the TOML file by using the path as an argument to the ``--apply-cgroups`` 
@@ -22,7 +22,7 @@ option like so:
 
 .. code-block:: none
 
-    $ sudo singularity shell --apply-cgroups /path/to/cgroups.toml my_container.sif
+    $ sudo apptainer shell --apply-cgroups /path/to/cgroups.toml my_container.sif
 
 The ``--apply-cgroups`` option can only be used with root privileges.
 
@@ -47,7 +47,7 @@ Start your container like so:
 
 .. code-block:: none
 
-    $ sudo singularity instance start --apply-cgroups /home/$USER/cgroups.toml \
+    $ sudo apptainer instance start --apply-cgroups /home/$USER/cgroups.toml \
         my_container.sif instance1
 
 After that, you can verify that the container is only using 500MB of memory.
@@ -55,7 +55,7 @@ After that, you can verify that the container is only using 500MB of memory.
 
 .. code-block:: none
 
-    $ cat /sys/fs/cgroup/memory/singularity/*/memory.limit_in_bytes
+    $ cat /sys/fs/cgroup/memory/apptainer/*/memory.limit_in_bytes
     524288000
 
 
@@ -64,7 +64,7 @@ the following command.
 
 .. code-block:: none
 
-    $ sudo singularity instance stop instance1
+    $ sudo apptainer instance stop instance1
 
 Similarly, the remaining examples can be tested by starting instances and
 examining the contents of the appropriate subdirectories of ``/sys/fs/cgroup/``.

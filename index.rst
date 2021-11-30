@@ -3,14 +3,14 @@ User Guide
 ==========
 
 
-Welcome to the Singularity User Guide!
+Welcome to the apptainer User Guide!
 
-This guide aims to give an introduction to Singularity, brief
+This guide aims to give an introduction to apptainer, brief
 installation instructions, and cover topics relevant to users building
 and running containers.
 
 For a detailed guide to installation and configuration, please see the
-separate Admin Guide for this version of Singularity at
+separate Admin Guide for this version of apptainer at
 `<\{admindocs\}/>`__.
 
               
@@ -20,9 +20,9 @@ Getting Started & Background Information
 .. toctree::
    :maxdepth: 2
               
-   Introduction to Singularity <introduction>
+   Introduction to apptainer <introduction>
    Quick Start <quick_start>
-   Security in Singularity <security>
+   Security in apptainer <security>
 
 Building Containers   
 ===================
@@ -33,7 +33,7 @@ Building Containers
    Build a container <build_a_container>
    The Definition File <definition_files>
    Build Environment <build_env>
-   Singularity and Docker <singularity_and_docker>
+   apptainer and Docker <apptainer_and_docker>
    Fakeroot feature <fakeroot>
 
 Signing & Encryption
@@ -70,7 +70,7 @@ Advanced Usage
    Security Options <security_options>
    Network Options <networking>
    Cgroups Support <cgroups>
-   Singularity and MPI applications <mpi>
+   apptainer and MPI applications <mpi>
    GPU Support <gpu>
 
 Get Involved

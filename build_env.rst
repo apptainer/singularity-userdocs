@@ -21,25 +21,25 @@ related to the build environment.
 Cache Folders
 -------------
 
-Singularity will cache SIF container images generated from remote
+apptainer will cache SIF container images generated from remote
 sources, and any OCI/docker layers used to create them. The cache is
-created at ``$HOME/.singularity/cache`` by default. The location of
-the cache can be changed by setting the ``SINGULARITY_CACHEDIR``
+created at ``$HOME/.apptainer/cache`` by default. The location of
+the cache can be changed by setting the ``apptainer_CACHEDIR``
 environment variable.
 
 .. note::
 
    When you run builds as root, using ``sudo``, images will be cached
    in root’s home at ``/root`` and not your user’s home. Use the
-   ``-E`` option to sudo to pass through a ``SINGULARITY_CACHEDIR``
+   ``-E`` option to sudo to pass through a ``apptainer_CACHEDIR``
    environment variable.
 
-If you change the value of ``SINGULARITY_CACHEDIR`` be sure to choose
+If you change the value of ``apptainer_CACHEDIR`` be sure to choose
 a location that is:
 
  - Unique to you. Permissions are set on the cache so that private
    images cached for one user are not exposed to another. This means
-   that ``SINGULARITY_CACHEDIR`` cannot be shared.
+   that ``apptainer_CACHEDIR`` cannot be shared.
  - Located on a filesystem with sufficient space for the number and size of
    container images anticipated.
  - Located on a filesystem that supports atomic rename, if possible.
@@ -47,12 +47,12 @@ a location that is:
 .. warning::
 
    If you are not certain that your ``$HOME`` or
-   ``SINGULARITY_CACHEDIR`` filesytems support atomic rename, do not
-   run Singularity in parallel using remote container URLs. Instead
-   use ``singularity pull`` to create a local SIF image, and then run
+   ``apptainer_CACHEDIR`` filesytems support atomic rename, do not
+   run apptainer in parallel using remote container URLs. Instead
+   use ``apptainer pull`` to create a local SIF image, and then run
    this SIF image in a parallel step. An alternative is to use the
    ``--disable-cache`` option, but this will result in each
-   Singularity instance independently fetching the container from the
+   apptainer instance independently fetching the container from the
    remote source, into a temporary location.
 
 
@@ -61,19 +61,19 @@ different kinds of data that are cached:
 
 .. code-block:: none
 
-    $HOME/.singularity/cache/blob
-    $HOME/.singularity/cache/library
-    $HOME/.singularity/cache/net
-    $HOME/.singularity/cache/oci-tmp
-    $HOME/.singularity/cache/shub
+    $HOME/.apptainer/cache/blob
+    $HOME/.apptainer/cache/library
+    $HOME/.apptainer/cache/net
+    $HOME/.apptainer/cache/oci-tmp
+    $HOME/.apptainer/cache/shub
 
 You can safely delete these directories, or content within
-them. Singularity will re-create any directories and data that are
+them. apptainer will re-create any directories and data that are
 needed in future runs.
 
 You should not add any additional files, or modify files in the cache,
 as this may cause checksum / integrity errors when you run or build
-containers. If you experience problems use ``singularity cache clean``
+containers. If you experience problems use ``apptainer cache clean``
 to reset the cache to a clean, empty state.
     
 
@@ -81,13 +81,13 @@ to reset the cache to a clean, empty state.
 Cache commands
 --------------
 
-The ``cache`` command for Singularity allows you to view and clean up
+The ``cache`` command for apptainer allows you to view and clean up
 your cache, without manually inspecting the cache directories.
 
 .. note::
 
    If you have built images as root, directly or via ``sudo``, the
-   cache location for those builds is ``/root/.singularity``. You
+   cache location for those builds is ``/root/.apptainer``. You
    will need to use ``sudo`` when running ``cache clean`` or ``cache
    list`` to manage these cache entries.
 
@@ -96,19 +96,19 @@ your cache, without manually inspecting the cache directories.
 Listing Cache
 =============
 
-To view a summary of cache usage, use ``singularity cache list``:
+To view a summary of cache usage, use ``apptainer cache list``:
 
 .. code-block:: none
 
-    $ singularity cache list
+    $ apptainer cache list
     There are 4 container file(s) using 59.45 MB and 23 oci blob file(s) using 379.10 MB of space
     Total space used: 438.55 MB
 
-To view detailed information, use ``singularity cache list -v``:
+To view detailed information, use ``apptainer cache list -v``:
 
 .. code-block:: none
 
-    $ singularity cache list -v
+    $ apptainer cache list -v
     NAME                     DATE CREATED           SIZE             TYPE
     0ed5a98249068fe0592edb   2020-05-27 12:57:22    192.21 MB        blob
     1d9cd1b99a7eca56d8f2be   2020-05-28 15:19:07    0.35 kB          blob
@@ -157,15 +157,15 @@ You can limit the cache list to a specific cache type with the
 Cleaning the Cache
 ==================
 
-To reclaim space used by the Singularity cache, use ``singularity
+To reclaim space used by the apptainer cache, use ``apptainer
 cache clean``.
 
-By default ``singularity cache clean`` will remove all cache entries,
+By default ``apptainer cache clean`` will remove all cache entries,
 after asking you to confirm:
 
 .. code-block:: none
 
-    $ singularity cache clean
+    $ apptainer cache clean
     This will delete everything in your cache (containers from all sources and OCI blobs). 
     Hint: You can see exactly what would be deleted by canceling and using the --dry-run option.
     Do you want to continue? [N/y] n
@@ -180,14 +180,14 @@ remove images that were cached longer ago, you can use the ``--days``
 
 .. code-block:: none
 
-    $ singularity cache clean --days 30
+    $ apptainer cache clean --days 30
 
 To remove only a specific kind of cache entry, e.g. only library
 images, use the ``type`` / ``-T`` option:
 
 .. code-block:: none
 
-    $ singularity cache clean --type library
+    $ apptainer cache clean --type library
 
 
 .. _sec:temporaryfolders:
@@ -196,27 +196,27 @@ images, use the ``type`` / ``-T`` option:
 Temporary Folders
 -----------------
 
-When building a container, or pulling/running a Singularity container
+When building a container, or pulling/running a apptainer container
 from a Docker/OCI source, a temporary working space is required. The
 container is constructed in this temporary space before being packaged
-into a Singularity SIF image. Temporary space is also used when
+into a apptainer SIF image. Temporary space is also used when
 running containers in unprivileged mode, and performing some
 operations on filesystems that do not fully support ``--fakeroot``.
 
 The location for temporary directories defaults to
-``/tmp``. Singularity will also respect the environment variable
+``/tmp``. apptainer will also respect the environment variable
 ``TMPDIR``, and both of these locations can be overridden by setting
-the environment variable ``SINGULARITY_TMPDIR``.
+the environment variable ``apptainer_TMPDIR``.
 
 The temporary directory used during a build must be on a filesystem
 that has enough space to hold the entire container image,
 uncompressed, including any temporary files that are created and later
-removed during the build. You may need to set ``SINGULARITY_TMPDIR``
+removed during the build. You may need to set ``apptainer_TMPDIR``
 when building a large container on a system which has a small ``/tmp``
 filesystem.
 
 Remember to use ``-E`` option to pass the value of
-``SINGULARITY_TMPDIR`` to root's environment when executing the
+``apptainer_TMPDIR`` to root's environment when executing the
 ``build`` command with ``sudo``.
 
 .. warning::
@@ -228,7 +228,7 @@ Remember to use ``-E`` option to pass the value of
    runniing programs etc. A ``tmpfs`` also uses default mount options
    that can interfere with some container builds.
 
-   Set ``SINGULARITY_TMPDIR`` to a disk location, or disable the
+   Set ``apptainer_TMPDIR`` to a disk location, or disable the
    ``tmpfs`` ``/tmp`` mount on your system if you experience
    problems.
 
@@ -237,7 +237,7 @@ Remember to use ``-E`` option to pass the value of
 Encrypted Containers
 --------------------
 
-Beginning in Singularity 3.4.0 it is possible to build and run encrypted
+Beginning in apptainer 3.4.0 it is possible to build and run encrypted
 containers.  The containers are decrypted at runtime entirely in kernel space, 
 meaning that no intermediate decrypted data is ever present on disk or in 
 memory.  See :ref:`encrypted containers <encryption>` for more details.
@@ -246,7 +246,7 @@ memory.  See :ref:`encrypted containers <encryption>` for more details.
 Environment Variables
 ---------------------
 
-#. If a flag is represented by both a CLI option and an environment variable, and both are set, the CLI option will always take precedence. This is true for all environment variables except for ``SINGULARITY_BIND`` and ``SINGULARITY_BINDPATH`` which is combined with the ``--bind`` option, argument pair if both are present.
+#. If a flag is represented by both a CLI option and an environment variable, and both are set, the CLI option will always take precedence. This is true for all environment variables except for ``apptainer_BIND`` and ``apptainer_BINDPATH`` which is combined with the ``--bind`` option, argument pair if both are present.
 
 #. Environment variables overwrite default values in the CLI code
 
@@ -262,36 +262,36 @@ environment variables at runtime.
 Docker
 ------
 
-**SINGULARITY_DOCKER_LOGIN** Used for the interactive login for Docker Hub.
+**apptainer_DOCKER_LOGIN** Used for the interactive login for Docker Hub.
 
-**SINGULARITY_DOCKER_USERNAME** Your Docker username.
+**apptainer_DOCKER_USERNAME** Your Docker username.
 
-**SINGULARITY_DOCKER_PASSWORD** Your Docker password.
+**apptainer_DOCKER_PASSWORD** Your Docker password.
 
 **RUNSCRIPT_COMMAND** Is not obtained from the environment, but is a
 hard coded default (“/bin/bash”). This is the fallback command used in
 the case that the docker image does not have a CMD or ENTRYPOINT.
 **TAG** Is the default tag, ``latest``.
 
-**SINGULARITY_NOHTTPS** This is relevant if you want to use a
+**apptainer_NOHTTPS** This is relevant if you want to use a
 registry that doesn’t have https, and it speaks for itself. If you
-export the variable ``SINGULARITY_NOHTTPS`` you can force the software to not use https when
+export the variable ``apptainer_NOHTTPS`` you can force the software to not use https when
 interacting with a Docker registry. This use case is typically for use
 of a local registry.
 
 Library
 -------
 
-**SINGULARITY_BUILDER** Used to specify the remote builder service URL. The default value is our remote builder.
+**apptainer_BUILDER** Used to specify the remote builder service URL. The default value is our remote builder.
 
-**SINGULARITY_LIBRARY** Used to specify the library to pull from. Default is set to our Cloud Library.
+**apptainer_LIBRARY** Used to specify the library to pull from. Default is set to our Cloud Library.
 
-**SINGULARITY_REMOTE** Used to build an image remotely (This does not require root). The default is set to false.
+**apptainer_REMOTE** Used to build an image remotely (This does not require root). The default is set to false.
 
 Encryption
 ----------
 
-**SINGULARITY_ENCRYPTION_PASSPHRASE** Used to pass a plaintext passphrase to encrypt a container file system (with the ``--encrypt`` flag). The default is empty.
+**apptainer_ENCRYPTION_PASSPHRASE** Used to pass a plaintext passphrase to encrypt a container file system (with the ``--encrypt`` flag). The default is empty.
 
-**SINGULARITY_ENCRYPTION_PEM_PATH** Used to specify the location of a public key to use for container encryption (with the ``--encrypt`` flag). The default is empty.
+**apptainer_ENCRYPTION_PEM_PATH** Used to specify the location of a public key to use for container encryption (with the ``--encrypt`` flag). The default is empty.
 

@@ -43,12 +43,12 @@ To use a persistent overlay, you must first have a container.
 
 .. code-block:: none
 
-    $ sudo singularity build ubuntu.sif library://ubuntu
+    $ sudo apptainer build ubuntu.sif library://ubuntu
 
 File system image overlay
 =========================
 
-Since 3.8, Singularity provides a command ``singularity overlay create`` to
+Since 3.8, apptainer provides a command ``apptainer overlay create`` to
 create persistent overlay images. You can create a single EXT3 overlay image
 or adding a EXT3 writable overlay partition to an existing SIF image.
 
@@ -62,20 +62,20 @@ For example, to create a 1 GiB overlay image:
 
 .. code-block:: none
 
-    $ singularity overlay create --size 1024 /tmp/ext3_overlay.img
+    $ apptainer overlay create --size 1024 /tmp/ext3_overlay.img
 
 To add a 1 GiB writable overlay partition to an existing SIF image:
 
 .. code-block:: none
 
-    $ singularity overlay create --size 1024 ubuntu.sif
+    $ apptainer overlay create --size 1024 ubuntu.sif
 
 .. warning::
 
     It is not possible to add a writable overlay partition to a **signed**, **encrypted**
     SIF image or if the SIF image already contain a writable overlay partition.
 
-``singularity overlay create`` also provides an option ``--create-dir``
+``apptainer overlay create`` also provides an option ``--create-dir``
 to create additional directories owned by the calling user, it can be specified
 multiple times to create many directories. This is particularly useful when you
 need to make a directory writable by your user.
@@ -84,9 +84,9 @@ So for example:
 
 .. code-block:: none
 
-    $ singularity build /tmp/nginx.sif docker://nginx
-    $ singularity overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
-    $ echo "test" | singularity exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
+    $ apptainer build /tmp/nginx.sif docker://nginx
+    $ apptainer overlay create --size 1024 --create-dir /var/cache/nginx /tmp/nginx.sif
+    $ echo "test" | apptainer exec /tmp/nginx.sif sh -c "cat > /var/cache/nginx/test"
 
 Create an overlay image (< 3.8)
 -------------------------------
@@ -117,7 +117,7 @@ the container.
 
 .. code-block:: none
 
-   $ sudo singularity shell --overlay overlay.img ubuntu.sif
+   $ sudo apptainer shell --overlay overlay.img ubuntu.sif
 
 To manage permissions in the overlay, so the container is writable by
 unprivileged users you can create a directory structure on your host,
@@ -136,10 +136,10 @@ that were placed into ``overlay.img``.
 
 .. code-block:: none
 
-   $ singularity shell --overlay overlay.img ubuntu.sif
-   Singularity> echo $USER
+   $ apptainer shell --overlay overlay.img ubuntu.sif
+   apptainer> echo $USER
    dtrudg
-   Singularity> echo "Hello" > /hello
+   apptainer> echo "Hello" > /hello
                 
 .. note::
 
@@ -176,18 +176,18 @@ The example below shows the directory overlay in action.
 
 .. code-block:: none
 
-    $ sudo singularity shell --overlay my_overlay/ ubuntu.sif
+    $ sudo apptainer shell --overlay my_overlay/ ubuntu.sif
 
-    Singularity ubuntu.sif:~> mkdir /data
+    apptainer ubuntu.sif:~> mkdir /data
 
-    Singularity ubuntu.sif:~> chown user /data
+    apptainer ubuntu.sif:~> chown user /data
 
-    Singularity ubuntu.sif:~> apt-get update && apt-get install -y vim
+    apptainer ubuntu.sif:~> apt-get update && apt-get install -y vim
 
-    Singularity ubuntu.sif:~> which vim
+    apptainer ubuntu.sif:~> which vim
     /usr/bin/vim
 
-    Singularity ubuntu.sif:~> exit
+    apptainer ubuntu.sif:~> exit
 
 .. _overlay-sif:
     
@@ -205,11 +205,11 @@ this, you must first create a file system image:
         mkfs.ext3 overlay.img
 
 Then, you can add the overlay to the SIF image using the ``sif``
-functionality of Singularity.
+functionality of apptainer.
 
 .. code-block:: none
 
-   $ singularity sif add --datatype 4 --partfs 2 --parttype 4 --partarch 2 --groupid 1 ubuntu_latest.sif overlay.img
+   $ apptainer sif add --datatype 4 --partfs 2 --parttype 4 --partarch 2 --groupid 1 ubuntu_latest.sif overlay.img
 
 Below is the explanation what each parameter means, and how it can possibly affect the operation:
 
@@ -225,14 +225,14 @@ Below is the explanation what each parameter means, and how it can possibly affe
   there's no more than one group, therefore we can assume it is 1.
 
 All of these options are documented within the CLI help. Access it by
-running ``singularity sif add --help``.
+running ``apptainer sif add --help``.
 
 After you've completed the steps above, you can shell into your
 container with the ``--writable`` option.
 
 .. code-block:: none
 
-        $ sudo singularity shell --writable ubuntu_latest.sif
+        $ sudo apptainer shell --writable ubuntu_latest.sif
 
 Final note
 ==========
@@ -242,15 +242,15 @@ were using a writable container.
 
 .. code-block:: none
 
-    $ singularity shell --overlay my_overlay/ ubuntu.sif
+    $ apptainer shell --overlay my_overlay/ ubuntu.sif
 
-    Singularity ubuntu.sif:~> ls -lasd /data
+    apptainer ubuntu.sif:~> ls -lasd /data
     4 drwxr-xr-x 2 user root 4096 Apr  9 10:21 /data
 
-    Singularity ubuntu.sif:~> which vim
+    apptainer ubuntu.sif:~> which vim
     /usr/bin/vim
 
-    Singularity ubuntu.sif:~> exit
+    apptainer ubuntu.sif:~> exit
 
 
 If you mount your container without the ``--overlay`` directory, your changes
@@ -258,14 +258,14 @@ will be gone.
 
 .. code-block:: none
 
-    $ singularity shell ubuntu.sif
+    $ apptainer shell ubuntu.sif
 
-    Singularity ubuntu.sif:~> ls /data
+    apptainer ubuntu.sif:~> ls /data
     ls: cannot access 'data': No such file or directory
 
-    Singularity ubuntu.sif:~> which vim
+    apptainer ubuntu.sif:~> which vim
 
-    Singularity ubuntu.sif:~> exit
+    apptainer ubuntu.sif:~> exit
 
 To resize an overlay, standard Linux tools which manipulate ext3
 images can be used.  For instance, to resize the 500MB file created

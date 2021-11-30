@@ -16,17 +16,17 @@ variables. When running containers you may need to set or override
 environment variables.
 
 The :ref:`metadata <sec:metadata>` of a container is information that
-describes the container. Singularity automatically records important
+describes the container. apptainer automatically records important
 information such as the definition file used to build a
-container. Other details such as the version of Singularity used are
+container. Other details such as the version of apptainer used are
 present as :ref:`labels <sec:labels>` on a container. You can also
 specify your own to be recorded against your container.
 
 --------------------------
-Changes in Singularity 3.6
+Changes in apptainer 3.6
 --------------------------
 
-Singularity 3.6 modified the ways in which environment variables
+apptainer 3.6 modified the ways in which environment variables
 are handled to allow long-term stability and consistency that has
 been lacking in prior versions. It also introduced new ways of setting
 environment variables, such as the ``--env`` and ``--env-file``
@@ -34,7 +34,7 @@ options.
 
 .. warning::
 
-   If you have containers built with Singularity <3.6, and frequently
+   If you have containers built with apptainer <3.6, and frequently
    set and override environment variables, please review this section
    carefully. Some behavior has changed.
 
@@ -48,7 +48,7 @@ Summary of changes
    bootstrap base image, or in the ``%environment`` section of a
    definition file *will not* be overridden by a host environment
    variable of the same name. The ``--env``, ``--env-file``, or
-   ``SINGULARITYENV_`` methods must be used to explicitly override a
+   ``apptainerENV_`` methods must be used to explicitly override a
    environment variable set by the container image.
 
 
@@ -56,7 +56,7 @@ Summary of changes
 Environment Overview
 --------------------
 
-When you run a program in a container with Singularity, the
+When you run a program in a container with apptainer, the
 environment variables that the program sees are a combination of:
 
  - The environment variables set in the base image (e.g. Docker image)
@@ -67,9 +67,9 @@ environment variables that the program sees are a combination of:
    passed into the container.
  - Any variables you set specifically for the container at runtime,
    using the ``--env``, ``--env-file`` options, or by setting
-   ``SINGULARITYENV_`` variables outside of the container.
+   ``apptainerENV_`` variables outside of the container.
  - The ``PATH`` variable can be manipulated to add entries.
- - Runtime variables ``SINGULARITY_xxx`` set by Singularity to provide
+ - Runtime variables ``apptainer_xxx`` set by apptainer to provide
    information about the container.
 
 The environment variables from the base image or definition file used
@@ -91,7 +91,7 @@ environment section <build-environment>`.
 Environment from a base image
 -----------------------------
 
-When you build a container with Singularity you might *bootstrap* from
+When you build a container with apptainer you might *bootstrap* from
 a library or Docker image, or using Linux distribution bootstrap tools
 such as ``debootstrap``, ``yum`` etc.
 
@@ -101,13 +101,13 @@ environment variables will be set. If you are using a ``library`` or
 ``Docker`` source then you may inherit environment variables from your
 base image.
 
-If I build a singularity container from the image
+If I build a apptainer container from the image
 ``docker://python:3.7`` then when I run the container I can see that
 the ``PYTHON_VERSION`` variable is set in the container:
 
 .. code-block::
 
-   $ singularity exec python.sif env | grep PYTHON_VERSION
+   $ apptainer exec python.sif env | grep PYTHON_VERSION
    PYTHON_VERSION=3.7.7
 
 This happens because  the ``Dockerfile`` used to build  that container has
@@ -124,7 +124,7 @@ Environment variables can be included in your container by adding them
 to your definition file. Use ``export`` in the ``%environment``
 section of a definition file to set a container environment variable:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
         Bootstrap: library
         From: default/alpine
@@ -141,14 +141,14 @@ is launched. The ``%runscript`` is set to echo the value.
 
 .. code-block::
 
-   $ singularity run env.sif 
+   $ apptainer run env.sif 
    Hello
 
 .. warning::
-   Singularity 3.6 uses an embedded shell interpreter to evaluate and setup container
+   apptainer 3.6 uses an embedded shell interpreter to evaluate and setup container
    environments, therefore all commands executed from the ``%environment`` section have
-   an execution timeout of **5 seconds** for Singularity 3.6 and a **1 minute** timeout since
-   Singularity 3.7. While it is fine to source a script from there, it is not recommended
+   an execution timeout of **5 seconds** for apptainer 3.6 and a **1 minute** timeout since
+   apptainer 3.7. While it is fine to source a script from there, it is not recommended
    to use this section to run potentially long initialization tasks because this would
    impact users running the image and the execution could abort due to timeout.
 
@@ -163,7 +163,7 @@ container. Except that:
  - The ``PS1`` shell prompt is reset for a container specific prompt.
  - The ``PATH`` environment variable will be modified to contain default values.
  - The ``LD_LIBRARY_PATH`` is modified to a default
-   ``/.singularity.d/libs``, that will include NVIDIA / ROCm libraries
+   ``/.apptainer.d/libs``, that will include NVIDIA / ROCm libraries
    if applicable.
 
 Also, an environment variable set on the host *will not* override a
@@ -176,18 +176,18 @@ environment variables for correct operation of most software.
 
 .. code-block::
 
-   $ singularity exec --cleanenv env.sif env
+   $ apptainer exec --cleanenv env.sif env
    HOME=/home/dave
    LANG=C
-   LD_LIBRARY_PATH=/.singularity.d/libs
+   LD_LIBRARY_PATH=/.apptainer.d/libs
    PATH=/startpath:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
-   PROMPT_COMMAND=PS1="Singularity> "; unset PROMPT_COMMAND
-   PS1=Singularity> 
+   PROMPT_COMMAND=PS1="apptainer> "; unset PROMPT_COMMAND
+   PS1=apptainer> 
    PWD=/home/dave/doc-tesrts
-   SINGULARITY_COMMAND=exec
-   SINGULARITY_CONTAINER=/home/dave/doc-tesrts/env.sif
-   SINGULARITY_ENVIRONMENT=/.singularity.d/env/91-environment.sh
-   SINGULARITY_NAME=env.sif
+   apptainer_COMMAND=exec
+   apptainer_CONTAINER=/home/dave/doc-tesrts/env.sif
+   apptainer_ENVIRONMENT=/.apptainer.d/env/91-environment.sh
+   apptainer_NAME=env.sif
    TERM=xterm-256color
 
 
@@ -201,23 +201,23 @@ environment variables for correct operation of most software.
    consider using ``--cleanenv``.
 
 ----------------------------------------
-Environment from the Singularity runtime
+Environment from the apptainer runtime
 ----------------------------------------
 
 It can be useful for a program to know when it is running in a
-Singularity container, and some basic information about the container
-environment. Singularity will automatically set a number of
+apptainer container, and some basic information about the container
+environment. apptainer will automatically set a number of
 environment variables in a container that can be inspected by any
 program running in the container.
 
-  - ``SINGULARITY_COMMAND`` - how the container was started,
+  - ``apptainer_COMMAND`` - how the container was started,
     e.g. ``exec`` / ``run`` / ``shell``.
-  - ``SINGULARITY_CONTAINER`` - the full path to the container image.
-  - ``SINGULARITY_ENVIRONMENT`` - path inside the container to the
+  - ``apptainer_CONTAINER`` - the full path to the container image.
+  - ``apptainer_ENVIRONMENT`` - path inside the container to the
     shell script holding the container image environment settings.
-  - ``SINGULARITY_NAME`` - name of the container image,
+  - ``apptainer_NAME`` - name of the container image,
     e.g. ``myfile.sif`` or ``docker://ubuntu``.
-  - ``SINGULARITY_BIND`` - a list of bind paths that the user
+  - ``apptainer_BIND`` - a list of bind paths that the user
     requested, via flags or environment variables, when running the
     container.
 
@@ -233,17 +233,17 @@ your workflow.
 ``--env`` option
 ----------------
 
-*New in Singularity 3.6*
+*New in apptainer 3.6*
 
 The ``--env`` option on the ``run/exec/shell`` commands allows you to
 specify environment variables as ``NAME=VALUE`` pairs:
 
 .. code-block::
 
-   $ singularity run env.sif 
+   $ apptainer run env.sif 
    Hello
    
-   $ singularity run --env MYVAR=Goodbye env.sif
+   $ apptainer run --env MYVAR=Goodbye env.sif
    Goodbye
 
 Separate multiple variables with commas, e.g. ``--env
@@ -254,7 +254,7 @@ variables include special characters.
 ``--env-file`` option
 ---------------------
 
-*New in Singularity 3.6*
+*New in apptainer 3.6*
 
 The ``--env-file`` option lets you provide a file that contains
 environment variables as ``NAME=VALUE`` pairs, e.g.:
@@ -265,24 +265,24 @@ environment variables as ``NAME=VALUE`` pairs, e.g.:
   $ cat myenvs 
   MYVAR="Hello from a file"
 
-  $ singularity run --env-file myenvs env.sif 
+  $ apptainer run --env-file myenvs env.sif 
   Hello from a file
 
 
-``SINGULARITYENV_`` prefix
+``apptainerENV_`` prefix
 --------------------------
 
 If you export an environment variable on your host called
-``SINGULARITYENV_xxx`` *before* you run a container, then it will set
+``apptainerENV_xxx`` *before* you run a container, then it will set
 the environment variable ``xxx`` inside the container:
 
 .. code-block::
 
-   $ singularity run env.sif
+   $ apptainer run env.sif
    Hello
 
-   $ export SINGULARITYENV_MYVAR="Overridden"
-   $ singularity run env.sif
+   $ export apptainerENV_MYVAR="Overridden"
+   $ apptainer run env.sif
    Overridden
 
 
@@ -297,7 +297,7 @@ one, until it finds ``myprog``.
 
 To ensure containers work correctly, when a host ``PATH`` might
 contain a lot of host-specific locations that are not present in the
-container, Singularity will ensure ``PATH`` in the container is set to
+container, apptainer will ensure ``PATH`` in the container is set to
 a default.
 
 .. code-block::
@@ -312,36 +312,36 @@ block.
 
 If your container depends on things that are bind mounted into it, or
 you have another need to modify the ``PATH`` variable when starting a
-container, you can do so with ``SINGULARITYENV_APPEND_PATH`` or
-``SINGULARITYENV_PREPEND_PATH``.
+container, you can do so with ``apptainerENV_APPEND_PATH`` or
+``apptainerENV_PREPEND_PATH``.
 
 If you set a variable on your host called
-``SINGULARITYENV_APPEND_PATH`` then its value will be appended
+``apptainerENV_APPEND_PATH`` then its value will be appended
 (added to the end) of the ``PATH`` variable in the container.
 
 .. code-block::
 
-   $ singularity exec env.sif sh -c 'echo $PATH'
+   $ apptainer exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-   $ export SINGULARITYENV_APPEND_PATH="/endpath"
-   $ singularity exec env.sif sh -c 'echo $PATH'
+   $ export apptainerENV_APPEND_PATH="/endpath"
+   $ apptainer exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/endpath
 
 Alternatively you could use the ``--env`` option to set a
 ``APPEND_PATH`` variable, e.g. ``--env APPEND_PATH=/endpath``.
 
 If you set a variable on your host called
-``SINGULARITYENV_PREPEND_PATH`` then its value will be prepended
+``apptainerENV_PREPEND_PATH`` then its value will be prepended
 (added to the start) of the ``PATH`` variable in the container.
 
 .. code-block::
 
-   $ singularity exec env.sif sh -c 'echo $PATH'
+   $ apptainer exec env.sif sh -c 'echo $PATH'
    /usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-   $ export SINGULARITYENV_PREPEND_PATH="/startpath"
-   $ singularity exec env.sif sh -c 'echo $PATH'
+   $ export apptainerENV_PREPEND_PATH="/startpath"
+   $ apptainer exec env.sif sh -c 'echo $PATH'
    /startpath:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
 Alternatively you could use the ``--env`` option to set a
@@ -363,20 +363,20 @@ effect as ``--env APPEND_PATH="/endpath"``.
 Environment Variable Precedence
 -------------------------------
 
-When a container is run with Singularity 3.6, the container
+When a container is run with apptainer 3.6, the container
 environment is constructed in the following order:
 
-  - Clear the environment, keeping just ``HOME`` and ``SINGULARITY_APPNAME``.
+  - Clear the environment, keeping just ``HOME`` and ``apptainer_APPNAME``.
   - Take Docker defined environment variables, where Docker was the base image source.
-  - If ``PATH`` is not defined set the Singularity default ``PATH`` *or*
-  - If ``PATH`` is defined, add any missing path parts from Singularity defaults
+  - If ``PATH`` is not defined set the apptainer default ``PATH`` *or*
+  - If ``PATH`` is defined, add any missing path parts from apptainer defaults
   - Take environment variables defined explicitly in the image
     (``%environment``). These can override any previously set values.
   - Set SCIF (``--app``) environment variables
   - Set base environment essential vars (``PS1`` and ``LD_LIBRARY_PATH``)
-  - Inject ``SINGULARITYENV_`` / ``--env`` / ``--env-file`` variables
+  - Inject ``apptainerENV_`` / ``--env`` / ``--env-file`` variables
     so they can override or modify any previous values:
-  - Source any remaining scripts from ``/singularity.d/env`` 
+  - Source any remaining scripts from ``/apptainer.d/env`` 
 
 
 .. _sec:umask:
@@ -398,7 +398,7 @@ new files.
    <https://en.wikipedia.org/wiki/Umask>`__.
 
    
-Singularity 3.7 and above set the ``umask`` in the container to match
+apptainer 3.7 and above set the ``umask`` in the container to match
 the value outside, unless:
 
   - The ``--fakeroot`` option is used, in which case a ``0022`` umask
@@ -410,7 +410,7 @@ the value outside, unless:
 
 .. note::
 
-   In Singularity 3.6 and below a default ``0022`` umask was always applied.
+   In apptainer 3.6 and below a default ``0022`` umask was always applied.
 
 
 .. _sec:metadata:
@@ -419,13 +419,13 @@ the value outside, unless:
 Container Metadata
 ------------------
 
-Each Singularity container has metadata describing the container, how
+Each apptainer container has metadata describing the container, how
 it was built, etc. This metadata includes the definition file used to
 build the container and labels, which are specific pieces of
 information set automatically or explicitly when the container is
 built.
 
-For containers that are generated with Singularity version 3.0 and
+For containers that are generated with apptainer version 3.0 and
 later, default labels are represented using the `rc1 Label Schema
 <http://label-schema.org/rc1/>`_.
 
@@ -437,7 +437,7 @@ Custom Labels
 You can add custom labels to your container using the ``%labels``
 section in a definition file:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     Bootstrap: library
     From: ubuntu:latest
@@ -454,11 +454,11 @@ when you are writing the definition file, but can be obtained in the
 ``%post`` section of your definition file while the container is
 building.
 
-Singularity 3.7 and above allow this, through adding labels to the
-file defined by the ``SINGULARITY_LABELS`` environment variable in the
+apptainer 3.7 and above allow this, through adding labels to the
+file defined by the ``apptainer_LABELS`` environment variable in the
 ``%post`` section:
 
-.. code-block:: singularity
+.. code-block:: apptainer
                
     Bootstrap: library
     From: ubuntu:latest
@@ -470,7 +470,7 @@ file defined by the ``SINGULARITY_LABELS`` environment variable in the
     # We can now also set labels to a value at build time
     %post
       VAL="$(myprog --version)"
-      echo "my.label $VAL" >> "$SINGULARITY_LABELS"
+      echo "my.label $VAL" >> "$apptainer_LABELS"
 
 Labels must be added to the file one per line, in a ``NAME VALUE`` format,
 where the name and value are separated by a space.
@@ -493,18 +493,18 @@ Running inspect without any options, or with the ``-l`` or
 
 .. code-block:: console
 
-    $ singularity inspect ubuntu.sif 
+    $ apptainer inspect ubuntu.sif 
     my.label: version 1.2.3
     OWNER: Joana
     org.label-schema.build-arch: amd64
     org.label-schema.build-date: Thursday_12_November_2020_10:51:59_CST
     org.label-schema.schema-version: 1.0
-    org.label-schema.usage.singularity.deffile.bootstrap: library
-    org.label-schema.usage.singularity.deffile.from: ubuntu:latest
-    org.label-schema.usage.singularity.version: 3.7.0-rc.1
+    org.label-schema.usage.apptainer.deffile.bootstrap: library
+    org.label-schema.usage.apptainer.deffile.from: ubuntu:latest
+    org.label-schema.usage.apptainer.version: 3.7.0-rc.1
                 
 We can easily see when the container was built, the source of the base
-image, and the exact version of Singularity that was used to build it.
+image, and the exact version of apptainer that was used to build it.
 
 The custom label ``OWNER`` that we set in our definition file is also visible.
 
@@ -517,11 +517,11 @@ used to build the container.
 
 .. code-block:: none
 
-    $ singularity inspect --deffile jupyter.sif
+    $ apptainer inspect --deffile jupyter.sif
 
 And the output would look like:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     Bootstrap: library
     From: debian:9
@@ -554,7 +554,7 @@ And the output would look like:
         touch .condarc
 
     %post
-        echo 'export RANDOM=123456' >>$SINGULARITY_ENVIRONMENT
+        echo 'export RANDOM=123456' >>$apptainer_ENVIRONMENT
         #Installing all dependencies
         apt-get update && apt-get -y upgrade
         apt-get -y install \
@@ -589,7 +589,7 @@ The ``-r`` or ``--runscript`` option shows the runscript for the image.
 
 .. code-block:: none
 
-    $ singularity inspect --runscript jupyter.sif
+    $ apptainer inspect --runscript jupyter.sif
 
 And the output would look like:
 
@@ -600,27 +600,27 @@ And the output would look like:
     OCI_CMD="bash"
     # ENTRYPOINT only - run entrypoint plus args
     if [ -z "$OCI_CMD" ] && [ -n "$OCI_ENTRYPOINT" ]; then
-    SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} $@"
+    apptainer_OCI_RUN="${OCI_ENTRYPOINT} $@"
     fi
 
     # CMD only - run CMD or override with args
     if [ -n "$OCI_CMD" ] && [ -z "$OCI_ENTRYPOINT" ]; then
     if [ $# -gt 0 ]; then
-        SINGULARITY_OCI_RUN="$@"
+        apptainer_OCI_RUN="$@"
     else
-        SINGULARITY_OCI_RUN="${OCI_CMD}"
+        apptainer_OCI_RUN="${OCI_CMD}"
     fi
     fi
 
     # ENTRYPOINT and CMD - run ENTRYPOINT with CMD as default args
     # override with user provided args
     if [ $# -gt 0 ]; then
-        SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} $@"
+        apptainer_OCI_RUN="${OCI_ENTRYPOINT} $@"
     else
-        SINGULARITY_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
+        apptainer_OCI_RUN="${OCI_ENTRYPOINT} ${OCI_CMD}"
     fi
 
-    exec $SINGULARITY_OCI_RUN
+    exec $apptainer_OCI_RUN
 
 ^^^^^^^^^^^^^^^^^^^
 ``-t`` / ``--test``
@@ -630,7 +630,7 @@ The ``-t`` or ``--test`` flag shows the test script for the image.
 
 .. code-block:: none
 
-    $ singularity inspect --test jupyter.sif
+    $ apptainer inspect --test jupyter.sif
 
 This will output the corresponding ``%test`` section from the definition file.
 
@@ -644,7 +644,7 @@ one or more environment files, depending on how the container was built.
 
 .. code-block:: none
 
-    $ singularity inspect --environment jupyter.sif
+    $ apptainer inspect --environment jupyter.sif
 
 And the output would look like:
 
@@ -669,7 +669,7 @@ You can call it this way:
 
 .. code-block:: none
 
-    $ singularity inspect --helpfile jupyter.sif
+    $ apptainer inspect --helpfile jupyter.sif
 
 And the output would look like:
 
@@ -688,7 +688,7 @@ You can call it this way:
 
 .. code-block:: console
 
-    $ singularity inspect --json ubuntu.sif
+    $ apptainer inspect --json ubuntu.sif
 
 And the output would look like:
 
@@ -703,9 +703,9 @@ And the output would look like:
                                     "org.label-schema.build-arch": "amd64",
                                     "org.label-schema.build-date": "Thursday_12_November_2020_10:51:59_CST",
                                     "org.label-schema.schema-version": "1.0",
-                                    "org.label-schema.usage.singularity.deffile.bootstrap": "library",
-                                    "org.label-schema.usage.singularity.deffile.from": "ubuntu:latest",
-                                    "org.label-schema.usage.singularity.version": "3.7.0-rc.1"
+                                    "org.label-schema.usage.apptainer.deffile.bootstrap": "library",
+                                    "org.label-schema.usage.apptainer.deffile.from": "ubuntu:latest",
+                                    "org.label-schema.usage.apptainer.version": "3.7.0-rc.1"
                             }
                     }
             },
@@ -714,22 +714,22 @@ And the output would look like:
 
 
 -------------------------
-/.singularity.d directory
+/.apptainer.d directory
 -------------------------
 
-The ``/.singularity.d`` directory in a container contains scripts and
+The ``/.apptainer.d`` directory in a container contains scripts and
 environment files that are used when a container is executed.
 
-*You should not manually modify* files under ``/.singularity.d``, from
+*You should not manually modify* files under ``/.apptainer.d``, from
 your definition file during builds, or directly within your container
-image. Recent 3.x versions of Singularity replace older action scripts
+image. Recent 3.x versions of apptainer replace older action scripts
 dynamically, at runtime, to support new features. In the longer term,
 metadata will be moved outside of the container, and stored only in
 the SIF file metadata descriptor.
 
 .. code-block:: none
 
-    /.singularity.d/
+    /.apptainer.d/
 
     ├── actions
     │   ├── exec
@@ -739,7 +739,7 @@ the SIF file metadata descriptor.
     │   └── test
     ├── env
     │   ├── 01-base.sh
-    |   ├── 10-docker2singularity.sh
+    |   ├── 10-docker2apptainer.sh
     │   ├── 90-environment.sh
     │   ├── 91-environment.sh
     |   ├── 94-appsbase.sh
@@ -749,21 +749,21 @@ the SIF file metadata descriptor.
     ├── libs
     ├── runscript
     ├── runscript.help
-    ├── Singularity
+    ├── apptainer
     └── startscript
 
 -  **actions**: This directory contains helper scripts to allow the container to
    carry out the action commands. (e.g. ``exec`` , ``run`` or ``shell``). In
-   later versions of Singularity, these files may be dynamically written at
+   later versions of apptainer, these files may be dynamically written at
    runtime, *and should not be modified* in the container.
 
 -  **env**: All ``*.sh`` files in this directory are sourced in
    alpha-numeric order when the container is started. For legacy
    purposes there is a symbolic link called ``/environment`` that
-   points to ``/.singularity.d/env/90-environment.sh``. Whenever
+   points to ``/.apptainer.d/env/90-environment.sh``. Whenever
    possible, avoid modifying or creating environment files manually to
    prevent potential issues building & running containers with future
-   versions of Singularity. Beginning with Singularity 3.6, additional
+   versions of apptainer. Beginning with apptainer 3.6, additional
    facilities such as ``--env`` and ``--env-file`` are available to
    allow manipulation of the container environment at runtime.
 
@@ -776,15 +776,15 @@ the SIF file metadata descriptor.
 
 -  **runscript**: The commands in this file will be executed when the container
    is invoked with the ``run`` command or called as an executable. For legacy
-   purposes there is a symbolic link called ``/singularity`` that points to this
+   purposes there is a symbolic link called ``/apptainer`` that points to this
    file.
 
 -  **runscript.help**: Contains the description that was added in the ``%help``
    section.
 
--  **Singularity**: This is the definition file that was used to generate the
+-  **apptainer**: This is the definition file that was used to generate the
    container. If more than 1 definition file was used to generate the container
-   additional Singularity files will appear in numeric order in a sub-directory
+   additional apptainer files will appear in numeric order in a sub-directory
    called ``bootstrap_history``.
 
 -  **startscript**: The commands in this file will be executed when the

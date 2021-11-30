@@ -7,7 +7,7 @@ Definition Files
 
 .. _sec:deffiles:
 
-A Singularity Definition File (or "def file" for short) is like a set of
+A apptainer Definition File (or "def file" for short) is like a set of
 blueprints explaining how to build a custom container. It includes specifics
 about the base OS to build or the base container to start from, software to
 install, environment variables to set at runtime, files to add from the host
@@ -18,7 +18,7 @@ Overview
 --------
 
 
-A Singularity Definition file is divided into two parts:
+A apptainer Definition file is divided into two parts:
 
 #. **Header**: The Header describes the core operating system to build within
    the container. Here you will configure the base operating system features
@@ -35,17 +35,17 @@ A Singularity Definition file is divided into two parts:
    sections that produce scripts to be executed at runtime can accept options
    intended for ``/bin/sh``
 
-For more in-depth and practical examples of def files, see the `Singularity examples
-repository <https://github.com/hpcng/singularity/tree/master/examples>`_
+For more in-depth and practical examples of def files, see the `apptainer examples
+repository <https://github.com/hpcng/apptainer/tree/master/examples>`_
 
-For a comparison between Dockerfile and Singularity definition file,
+For a comparison between Dockerfile and apptainer definition file,
 please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
 
 ------
 Header
 ------
 
-The header should be written at the top of the def file. It tells Singularity
+The header should be written at the top of the def file. It tells apptainer
 about the base operating system that it should use to build the container. It is
 composed of several keywords.
 
@@ -57,7 +57,7 @@ will pull a container from the `Container Library
 bootstrap agent will pull docker layers from `Docker Hub
 <https://hub.docker.com/>`_ as a base OS to start your image.
 
-Starting with Singularity 3.2, the ``Bootstrap`` keyword needs to be the first
+Starting with apptainer 3.2, the ``Bootstrap`` keyword needs to be the first
 entry in the header section.  This breaks compatibility with older versions
 that allow the parameters of the header to appear in any order.
 
@@ -66,7 +66,7 @@ valid in the header. For example, when using the ``library`` bootstrap agent,
 the ``From`` keyword becomes valid. Observe the following example for building a
 Debian container from the Container Library:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     Bootstrap: library
     From: debian:7
@@ -74,7 +74,7 @@ Debian container from the Container Library:
 A def file that uses an official mirror to install Centos-7 might look like
 this:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     Bootstrap: yum
     OSVersion: 7
@@ -92,7 +92,7 @@ Preferred bootstrap agents
 
 -  :ref:`docker <build-docker-module>` (images hosted on Docker Hub)
 
--  :ref:`shub <build-shub>` (images hosted on Singularity Hub)
+-  :ref:`shub <build-shub>` (images hosted on apptainer Hub)
 
 -  :ref:`oras <build-oras>` (images from supporting OCI registries)
 
@@ -129,7 +129,7 @@ If the bootstrap image is in the SIF format, then verification will
 be performed at build time. This verification checks whether the image
 has been signed. If it has been signed the integrity of the image is
 checked, and the signatures matched to public keys if available. This
-process is equivalent to running ``singularity verify`` on the
+process is equivalent to running ``apptainer verify`` on the
 bootstrap image.
 
 By default a failed verification, e.g. against an unsigned image, or
@@ -138,9 +138,9 @@ the build will continue.
 
 To enforce that the bootstrap image verifies correctly and has been
 signed by one or more keys, you can use the ``Fingerprints:`` header
-introduced in Singularity 3.7.
+introduced in apptainer 3.7.
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     Bootstrap: localimage
     From: test.sif
@@ -181,7 +181,7 @@ any sections at all) within a def file. Furthermore, multiple sections of the
 same name can be included and will be appended to one another during the build
 process.
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     Bootstrap: library
     From: ubuntu:18.04
@@ -189,7 +189,7 @@ process.
 
     %setup
         touch /file1
-        touch ${SINGULARITY_ROOTFS}/file2
+        touch ${apptainer_ROOTFS}/file2
 
     %files
         /file1
@@ -202,7 +202,7 @@ process.
     %post
         apt-get update && apt-get install -y netcat
         NOW=`date`
-        echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+        echo "export NOW=\"${NOW}\"" >> $apptainer_ENVIRONMENT
 
     %runscript
         echo "Container was created $NOW"
@@ -238,7 +238,7 @@ for logical understanding.
 
 During the build process, commands in the ``%setup`` section are first executed
 on the host system outside of the container after the base OS has been installed.
-You can reference the container file system with the ``$SINGULARITY_ROOTFS``
+You can reference the container file system with the ``$apptainer_ROOTFS``
 environment variable in the ``%setup`` section.
 
 .. note::
@@ -250,18 +250,18 @@ environment variable in the ``%setup`` section.
 
 Consider the example from the definition file above:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %setup
         touch /file1
-        touch ${SINGULARITY_ROOTFS}/file2
+        touch ${apptainer_ROOTFS}/file2
 
 Here, ``file1`` is created at the root of the file system **on the host**.
 We'll use ``file1`` to demonstrate the usage of the ``%files`` section below.
 The ``file2`` is created at the root of the file system **within the
 container**.
 
-In later versions of Singularity the ``%files`` section is provided as a safer
+In later versions of apptainer the ``%files`` section is provided as a safer
 alternative to copying files from the host system into the container during the
 build. Because of the potential danger involved in running the ``%setup``
 scriptlet with elevated privileges on the host system during the build, it's
@@ -273,7 +273,7 @@ use is generally discouraged.
 The ``%files`` section allows you to copy files into the container with greater
 safety than using the ``%setup`` section. Its general form is:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %files [from <stage>]
         <source> [<destination>]
@@ -289,7 +289,7 @@ while the ``<destination>`` is always a path into the current container. If the
 To show how copying from your host system works, let's consider the example from
 the definition file above:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %files
         /file1
@@ -303,7 +303,7 @@ container in ``/opt``.
 Files can also be copied from other stages by providing the source location in the
 previous stage and the destination in the current container.
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
   %files from stage_name
     /root/hello /bin/hello
@@ -319,10 +319,10 @@ executed so that they are available during the build and configuration process.
 =====
 
 In some circumstances, it may be redundant to build different containers for
-each app with nearly equivalent dependencies. Singularity supports installing
+each app with nearly equivalent dependencies. apptainer supports installing
 apps within internal modules based on the concept of `Standard Container
 Integration Format (SCI-F) <https://sci-f.github.io/>`_
-All the apps are handled by Singularity at this point. More information on
+All the apps are handled by apptainer at this point. More information on
 Apps :ref:`here <apps>`.
 
 %post
@@ -334,12 +334,12 @@ create new directories, etc.
 
 Consider the example from the definition file above:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %post
         apt-get update && apt-get install -y netcat
         NOW=`date`
-        echo "export NOW=\"${NOW}\"" >> $SINGULARITY_ENVIRONMENT
+        echo "export NOW=\"${NOW}\"" >> $apptainer_ENVIRONMENT
 
 
 This ``%post`` scriptlet uses the Ubuntu package manager ``apt`` to update the
@@ -348,9 +348,9 @@ container and install the program ``netcat`` (that will be used in the
 
 The script is also setting an environment variable at build time.  Note that the
 value of this variable cannot be anticipated, and therefore cannot be set during
-the ``%environment`` section. For situations like this, the ``$SINGULARITY_ENVIRONMENT``
+the ``%environment`` section. For situations like this, the ``$apptainer_ENVIRONMENT``
 variable is provided. Redirecting text to this variable will cause it to be
-written to a file called ``/.singularity.d/env/91-environment.sh`` that will be
+written to a file called ``/.apptainer.d/env/91-environment.sh`` that will be
 sourced at runtime.
 
 %test
@@ -363,7 +363,7 @@ execute this scriptlet through the container itself, using the
 
 Consider the example from the def file above:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %test
         grep -q NAME=\"Ubuntu\" /etc/os-release
@@ -385,14 +385,14 @@ so with the ``--notest`` build option:
 
 .. code-block:: none
 
-    $ sudo singularity build --notest my_container.sif my_container.def
+    $ sudo apptainer build --notest my_container.sif my_container.def
 
 Running the test command on a container built with this def file yields the
 following:
 
 .. code-block:: none
 
-    $ singularity test my_container.sif
+    $ apptainer test my_container.sif
     Container base is Ubuntu as expected.
     
 One common use of the ``%test`` section is to run a quick check that
@@ -400,14 +400,14 @@ the programs you intend to install in the container are present. If
 you installed the program ``samtools``, which shows a usage screen when
 run without any options, you might test it can be run with:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %test
         # Run samtools - exits okay with usage screen if installed
         samtools
 
 If ``samtools`` is not successfully installed in the container then the
-``singularity test`` will exit with an error such as ``samtools:
+``apptainer test`` will exit with an error such as ``samtools:
 command not found``.
 
 Some programs return an error code when run without mandatory
@@ -415,7 +415,7 @@ options. If you want to ignore this, and just check the program is
 present and can be called, you can run it as ``myprog || true`` in
 your test:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %test
         # Run bwa - exits with error code if installed and run without
@@ -450,7 +450,7 @@ them in your ``%post`` section. Specifically:
 You should use the same conventions that you would use in a ``.bashrc`` or
 ``.profile`` file. Consider this example from the def file above:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %environment
         export LISTEN_PORT=12345
@@ -465,7 +465,7 @@ set appropriately at runtime with the following command:
 
 .. code-block:: none
 
-    $ singularity exec my_container.sif env | grep -E 'LISTEN_PORT|LC_ALL'
+    $ apptainer exec my_container.sif env | grep -E 'LISTEN_PORT|LC_ALL'
     LISTEN_PORT=12345
     LC_ALL=C
 
@@ -473,16 +473,16 @@ In the special case of variables generated at build time, you can also add
 environment variables to your container in the ``%post`` section.
 
 At build time, the content of the ``%environment`` section is written to a file
-called ``/.singularity.d/env/90-environment.sh`` inside of the container.  Text
-redirected to the ``$SINGULARITY_ENVIRONMENT`` variable during ``%post`` is
-added to a file called ``/.singularity.d/env/91-environment.sh``.
+called ``/.apptainer.d/env/90-environment.sh`` inside of the container.  Text
+redirected to the ``$apptainer_ENVIRONMENT`` variable during ``%post`` is
+added to a file called ``/.apptainer.d/env/91-environment.sh``.
 
-At runtime, scripts in ``/.singularity/env`` are sourced in order. This means
+At runtime, scripts in ``/.apptainer/env`` are sourced in order. This means
 that variables in the ``%post`` section take precedence over those added  via
 ``%environment``.
 
 See :ref:`Environment and Metadata <environment-and-metadata>` for more
-information about the Singularity container environment.
+information about the apptainer container environment.
 
 .. _startscript:
 
@@ -495,7 +495,7 @@ executed when the ``instance start`` command is issued.
 
 Consider the example from the def file above.
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %startscript
         nc -lp $LISTEN_PORT
@@ -506,13 +506,13 @@ The script can be invoked like so:
 
 .. code-block:: none
 
-    $ singularity instance start my_container.sif instance1
+    $ apptainer instance start my_container.sif instance1
     INFO:    instance started successfully
 
     $ lsof | grep LISTEN
     nc        19061               vagrant    3u     IPv4             107409      0t0        TCP *:12345 (LISTEN)
 
-    $ singularity instance stop instance1
+    $ apptainer instance stop instance1
     Stopping instance1 instance of /home/vagrant/my_container.sif (PID=19035)
 
 
@@ -523,14 +523,14 @@ The script can be invoked like so:
 
 The contents of the ``%runscript`` section are written to a file within the
 container that is executed when the container image is run (either via the
-``singularity run`` command or by executing the container directly as a
+``apptainer run`` command or by executing the container directly as a
 command). When the container is invoked, arguments following the container name
 are passed to the runscript. This means that you can (and should) process
 arguments within your runscript.
 
 Consider the example from the def file above:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %runscript
         echo "Container was created $NOW"
@@ -543,7 +543,7 @@ the container at runtime are printed as a single string (``$*``) and then they
 are passed to echo via a quoted array (``$@``) which ensures that all of the
 arguments are properly parsed by the executed command. The ``exec`` preceding
 the final ``echo`` command replaces the current entry in the process table
-(which originally was the call to Singularity). Thus the runscript shell process
+(which originally was the call to apptainer). Thus the runscript shell process
 ceases to exist, and only the process running within the container remains.
 
 Running the container built using this def file will yield the following:
@@ -564,12 +564,12 @@ Running the container built using this def file will yield the following:
 =======
 
 The ``%labels`` section is used to add metadata to the file
-``/.singularity.d/labels.json`` within your container. The general format is a
+``/.apptainer.d/labels.json`` within your container. The general format is a
 name-value pair.
 
 Consider the example from the def file above:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %labels
         Author d@sylabs.io
@@ -588,7 +588,7 @@ To inspect the available labels on your image you can do so by running the follo
 
 .. code-block:: none
 
-    $ singularity inspect my_container.sif
+    $ apptainer inspect my_container.sif
 
     {
       "Author": "d@sylabs.io",
@@ -596,11 +596,11 @@ To inspect the available labels on your image you can do so by running the follo
       "MyLabel": "Hello World",
       "org.label-schema.build-date": "Thursday_6_December_2018_20:1:56_UTC",
       "org.label-schema.schema-version": "1.0",
-      "org.label-schema.usage": "/.singularity.d/runscript.help",
-      "org.label-schema.usage.singularity.deffile.bootstrap": "library",
-      "org.label-schema.usage.singularity.deffile.from": "ubuntu:18.04",
-      "org.label-schema.usage.singularity.runscript.help": "/.singularity.d/runscript.help",
-      "org.label-schema.usage.singularity.version": "3.0.1"
+      "org.label-schema.usage": "/.apptainer.d/runscript.help",
+      "org.label-schema.usage.apptainer.deffile.bootstrap": "library",
+      "org.label-schema.usage.apptainer.deffile.from": "ubuntu:18.04",
+      "org.label-schema.usage.apptainer.runscript.help": "/.apptainer.d/runscript.help",
+      "org.label-schema.usage.apptainer.version": "3.0.1"
     }
 
 Some labels that are captured automatically from the build process. You can read
@@ -615,7 +615,7 @@ container during the build. This text can then be displayed using the
 
 Consider the example from the def file above:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     %help
         This is a demo container used to illustrate a def file that uses all
@@ -625,7 +625,7 @@ After building the help can be displayed like so:
 
 .. code-block:: none
 
-    $ singularity run-help my_container.sif
+    $ apptainer run-help my_container.sif
         This is a demo container used to illustrate a def file that uses all
         supported sections.
 
@@ -633,12 +633,12 @@ After building the help can be displayed like so:
 Multi-Stage Builds
 ------------------
 
-Starting with Singularity v3.2 multi-stage builds are supported where one environment 
+Starting with apptainer v3.2 multi-stage builds are supported where one environment 
 can be used for compilation, then the resulting binary can be copied into a final
 environment. This allows a slimmer final image that does not require the entire
 development stack.
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     Bootstrap: docker
     From: golang:1.12.3-alpine3.9
@@ -692,7 +692,7 @@ the ordering of the ``%app*`` sections isn’t important.
 The following runscript demonstrates how to build 2 different apps into the
 same container using SCI-F modules:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     Bootstrap: docker
     From: ubuntu
@@ -752,7 +752,7 @@ To run a specific app within the container:
 
 .. code-block:: none
 
-    % singularity run --app foo my_container.sif
+    % apptainer run --app foo my_container.sif
     RUNNING FOO
 
 The same environment variable, ``$SOFTWARE`` is defined for both apps in the def
@@ -762,10 +762,10 @@ depending on the app we specify:
 
 .. code-block:: none
 
-    $ singularity exec --app foo my_container.sif env | grep SOFTWARE
+    $ apptainer exec --app foo my_container.sif env | grep SOFTWARE
     SOFTWARE=foo
 
-    $ singularity exec --app bar my_container.sif env | grep SOFTWARE
+    $ apptainer exec --app bar my_container.sif env | grep SOFTWARE
     SOFTWARE=bar
 
 --------------------------------

@@ -46,7 +46,7 @@ To generate a access token, do the following steps:
   5) Enter a name for your new access token, such as "test token"
   6) Click the "Create a New Access Token" button.
   7) Click "Copy token to Clipboard" from the "New API Token" page.
-  8) Run ``singularity remote login`` and paste the access token at the prompt.
+  8) Run ``apptainer remote login`` and paste the access token at the prompt.
 
 Now that you have your token, you are ready to push your container!
 
@@ -56,19 +56,19 @@ Now that you have your token, you are ready to push your container!
 Pushing a Container
 -------------------
 
-The ``singularity push`` command will push a container to the
+The ``apptainer push`` command will push a container to the
 container library with the given URL. Here's an example of a typical
 push command:
 
 .. code-block:: none
 
-    $ singularity push my-container.sif library://your-name/project-dir/my-container:latest
+    $ apptainer push my-container.sif library://your-name/project-dir/my-container:latest
 
 The ``:latest`` is the container tag. Tags are used to have different
 version of the same container.
 
 .. note::
-    When pushing your container, theres no need to add a ``.sif`` (Singularity Image Format) to the end of the container name, (like
+    When pushing your container, theres no need to add a ``.sif`` (apptainer Image Format) to the end of the container name, (like
     on your local machine), because all containers on the library are SIF containers.
 
 Let's assume you have your container (v1.0.1), and you want to push
@@ -77,24 +77,24 @@ can add a version tag to that container, like so:
 
 .. code-block:: none
 
-    $ singularity push my-container.sif library://your-name/project-dir/my-container:1.0.1
+    $ apptainer push my-container.sif library://your-name/project-dir/my-container:1.0.1
 
 You can download the container with that tag by replacing the
 ``:latest``, with the tagged container you want to download.
 
 To set a description against the container image as you push it, use
-the `-D` flag introduced in Singularity 3.7. This provides an
+the `-D` flag introduced in apptainer 3.7. This provides an
 alternative to setting the description via the web interface:
 
 .. code-block:: console
 
-    $ singularity push -D "My alpine 3.11 container" alpine_3.11.sif library://myuser/examples/alpine:3.11
+    $ apptainer push -D "My alpine 3.11 container" alpine_3.11.sif library://myuser/examples/alpine:3.11
     2.7MiB / 2.7MiB [=========================================================================] 100 % 1.1 MiB/s 0s
 
     Library storage: using 13.24 MiB out of 11.00 GiB quota (0.1% used)
     Container URL: https://cloud.sylabs.io/library/myuser/examples/alpine
 
-Note that when you push to a library that supports it, Singularity 3.7
+Note that when you push to a library that supports it, apptainer 3.7
 and above will report your quota usage and the direct URL to view the
 container in your web browser.
                
@@ -104,31 +104,31 @@ container in your web browser.
 Pulling a container
 -------------------
 
-The ``singularity pull`` command will download a container from the `Library <https://cloud.sylabs.io/library>`_
+The ``apptainer pull`` command will download a container from the `Library <https://cloud.sylabs.io/library>`_
 (``library://``), `Docker Hub <https://hub.docker.com/>`_ (``docker://``), and also
-`Shub <https://singularity-hub.org>`_ (``shub://``).
+`Shub <https://apptainer-hub.org>`_ (``shub://``).
 
 .. note::
-    When pulling from Docker, the container will automatically be converted to a SIF (Singularity Image Format) container.
+    When pulling from Docker, the container will automatically be converted to a SIF (apptainer Image Format) container.
 
 Here's a typical pull command:
 
 .. code-block:: none
 
-    $ singularity pull file-out.sif library://alpine:latest
+    $ apptainer pull file-out.sif library://alpine:latest
 
     # or pull from docker:
 
-    $ singularity pull file-out.sif docker://alpine:latest
+    $ apptainer pull file-out.sif docker://alpine:latest
 
 .. note::
-    If there's no tag after the container name, Singularity automatically will pull the container with the ``:latest`` tag.
+    If there's no tag after the container name, apptainer automatically will pull the container with the ``:latest`` tag.
 
 To pull a container with a specific tag, just add the tag to the library URL:
 
 .. code-block:: none
 
-    $ singularity pull file-out.sif library://alpine:3.8
+    $ apptainer pull file-out.sif library://alpine:3.8
 
 Of course, you can pull your own containers. Here's what that will look like:
 
@@ -139,11 +139,11 @@ Pulling your own container is just like pulling from Github, Docker, etc...
 
 .. code-block:: none
 
-    $ singularity pull out-file.sif library://your-name/project-dir/my-container:latest
+    $ apptainer pull out-file.sif library://your-name/project-dir/my-container:latest
 
     # or use a different tag:
 
-    $ singularity pull out-file.sif library://your-name/project-dir/my-container:1.0.1
+    $ apptainer pull out-file.sif library://your-name/project-dir/my-container:1.0.1
 
 .. note::
     You *don't* have to specify a output file, one will be created automatically, but it's good practice to always
@@ -168,7 +168,7 @@ To find interesting or useful containers in the library, you can open
 https://cloud.sylabs.io/library in your browser and search from there
 through the web GUI.
 
-Alternatively, from the CLI you can use ``singularity search
+Alternatively, from the CLI you can use ``apptainer search
 <query>``. This will search the library for container images matching
 ``<query>``.
 
@@ -179,7 +179,7 @@ Here is an example of searching the library for ``centos``:
 
 .. code-block:: console
 
-    singularity search centos
+    apptainer search centos
     Found 72 container images for amd64 matching "centos":
 
 	library://dcsouthwick/iotools/centos7:latest
@@ -206,7 +206,7 @@ Containers can have multiple tags, and these are shown separated by
 commas after the ``:`` in the
 URL. E.g. ``library://dtrudg/linux/centos:7,centos7,latest`` is a
 single container image with 3 tags, ``7``, ``centos7``, and
-``latest``. You can ``singularity pull`` the container image using any
+``latest``. You can ``apptainer pull`` the container image using any
 one of these tags.
                 
                 
@@ -217,7 +217,7 @@ current system. To e.g. search for ``arm64`` containers from an
 
 .. code-block:: console
 
-    singularity search --arch arm64 alpine
+    apptainer search --arch arm64 alpine
     Found 5 container images for arm64 matching "alpine":
 
 	library://dtrudg-sylabs-2/multiarch/alpine:latest
@@ -237,7 +237,7 @@ You can also limit results to only signed containers with the
 
 .. code-block:: console
 
-    singularity search --signed alpine
+    apptainer search --signed alpine
     Found 45 container images for amd64 matching "alpine":
 
 	library://deep/default/alpine:latest,1.0.1
@@ -272,7 +272,7 @@ Here's a typical remote build command:
 
 .. code-block:: none
 
-    $ singularity build --remote file-out.sif docker://ubuntu:18.04
+    $ apptainer build --remote file-out.sif docker://ubuntu:18.04
 
 
 Building from a definition file:
@@ -280,7 +280,7 @@ Building from a definition file:
 
 This is our definition file. Let's call it ``ubuntu.def``:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     bootstrap: library
     from: ubuntu:18.04
@@ -292,7 +292,7 @@ Now, to build the container, use the ``--remote`` flag, and without ``sudo``:
 
 .. code-block:: none
 
-    $ singularity build --remote ubuntu.sif ubuntu.def
+    $ apptainer build --remote ubuntu.sif ubuntu.def
 
 .. note::
     Make sure you have a :ref:`access token <creating_a_access_token>`, otherwise the build will fail.

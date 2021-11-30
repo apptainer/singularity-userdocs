@@ -14,16 +14,16 @@ OCI Runtime Support
 Overview
 --------
 
-OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes. Singularity's compliance with respect to the OCI Image Specification is considered in detail :ref:`elsewhere <sec:oci_overview>`. It is Singularity's compliance with the OCI Runtime Specification that is of concern here. 
+OCI is an acronym for the `Open Containers Initiative <https://www.opencontainers.org/>`_ - an independent organization whose mandate is to develop open standards relating to containerization. To date, standardization efforts have focused on container formats and runtimes. apptainer's compliance with respect to the OCI Image Specification is considered in detail :ref:`elsewhere <sec:oci_overview>`. It is apptainer's compliance with the OCI Runtime Specification that is of concern here. 
 
-Briefly, compliance with respect to the OCI Runtime Specification is addressed in Singularity through the introduction of the ``oci`` command group. Although this command group can, in principle, be used to provide a runtime that supports end users, in this initial documentation effort, emphasis is placed upon interoperability with Kubernetes; more specifically, interoperability with Kubernetes via the `Singularity Container Runtime Interface <https://www.sylabs.io/guides/cri/1.0/user-guide/index.html>`_. 
+Briefly, compliance with respect to the OCI Runtime Specification is addressed in apptainer through the introduction of the ``oci`` command group. Although this command group can, in principle, be used to provide a runtime that supports end users, in this initial documentation effort, emphasis is placed upon interoperability with Kubernetes; more specifically, interoperability with Kubernetes via the `apptainer Container Runtime Interface <https://www.sylabs.io/guides/cri/1.0/user-guide/index.html>`_. 
 
-Owing to this restricted focus, a subset of the Singularity ``oci`` command group receives attention here; specifically:
+Owing to this restricted focus, a subset of the apptainer ``oci`` command group receives attention here; specifically:
 
 	- Mounting and unmounting OCI filesystem bundles
 	- Creating OCI compliant container instances 
 
-Some context for integration with Kubernetes via the Singularity CRI is provided at the end of the section.
+Some context for integration with Kubernetes via the apptainer CRI is provided at the end of the section.
 
 .. note:: 
 
@@ -44,11 +44,11 @@ Mounting an OCI Filesystem Bundle
 
 `BusyBox <https://busybox.net/about.html>`_ is used here for the purpose of illustration.
 
-Suppose the Singularity Image Format (SIF) file ``busybox_latest.sif`` exists locally. (Recall: 
+Suppose the apptainer Image Format (SIF) file ``busybox_latest.sif`` exists locally. (Recall: 
 
 .. code-block:: none
 
-	$ singularity pull docker://busybox
+	$ apptainer pull docker://busybox
 	INFO:    Starting build...
 	Getting image source signatures
 	Copying blob sha256:fc1a6b909f82ce4b72204198d49de3aaf757b3ab2bb823cb6e47c416b97c5985
@@ -60,13 +60,13 @@ Suppose the Singularity Image Format (SIF) file ``busybox_latest.sif`` exists lo
 	INFO:    Creating SIF file...
 	INFO:    Build complete: busybox_latest.sif
 
-This is one way to bootstrap creation of this image in SIF that *retains* a local copy - i.e., a local copy of the SIF file *and* a cached copy of the OCI blobs. Additional approaches and details can be found in the section :ref:`Support for Docker and OCI <singularity-and-docker>`). 
+This is one way to bootstrap creation of this image in SIF that *retains* a local copy - i.e., a local copy of the SIF file *and* a cached copy of the OCI blobs. Additional approaches and details can be found in the section :ref:`Support for Docker and OCI <apptainer-and-docker>`). 
 
 For the purpose of boostrapping the creation of an OCI compliant container, this SIF file can be mounted as follows: 
 
 .. code-block:: none 
 
-	$ sudo singularity oci mount ./busybox_latest.sif /var/tmp/busybox
+	$ sudo apptainer oci mount ./busybox_latest.sif /var/tmp/busybox
 
 By issuing the ``mount`` command, the root filesystem encapsulated in the SIF file ``busybox_latest.sif`` is mounted on ``/var/tmp/busybox`` as an ``overlay`` file system, 
 
@@ -132,7 +132,7 @@ The `filtered <https://github.com/stedolan/jq>`_ ``config.json`` file correspond
 	      "gid": 0
 	    },
 	    "args": [
-	      "/.singularity.d/actions/run"
+	      "/.apptainer.d/actions/run"
 	    ],
 	    "env": [
 	      "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
@@ -712,13 +712,13 @@ identifies ``/var/tmp/busybox/rootfs`` as the container's root filesystem, as re
 .. code-block:: none
 
 	$ sudo ls /var/tmp/busybox/rootfs
-	bin  dev  environment  etc  home  proc	root  singularity  sys	tmp  usr  var
+	bin  dev  environment  etc  home  proc	root  apptainer  sys	tmp  usr  var
 
 .. note::
 
-	``environment`` and ``singularity`` above are symbolic links to the ``.singularity.d`` directory. 
+	``environment`` and ``apptainer`` above are symbolic links to the ``.apptainer.d`` directory. 
 
-.. TODO Is the ``.singularity.d`` ignored in this case? Relates to the other quote I lifted ... 
+.. TODO Is the ``.apptainer.d`` ignored in this case? Relates to the other quote I lifted ... 
 
 	"The definition of a bundle is only concerned with how a container, and its configuration data, are stored on a local filesystem so that it can be consumed by a compliant runtime."
 
@@ -726,17 +726,17 @@ Beyond ``root.path``, the ``config.json`` file includes a multitude of additiona
 
 	- ``ociVersion`` - a mandatory property that identifies the version of the OCI runtime specification that the bundle is compliant with 
 
-	- ``process`` - an optional property that specifies the container process. When invoked via Singularity, subproperties such as ``args`` are populated by making use of the contents of the ``.singularity.d`` directory, e.g. via ``$ sudo cat /var/tmp/busybox/config.json | jq [.process.args]``:
+	- ``process`` - an optional property that specifies the container process. When invoked via apptainer, subproperties such as ``args`` are populated by making use of the contents of the ``.apptainer.d`` directory, e.g. via ``$ sudo cat /var/tmp/busybox/config.json | jq [.process.args]``:
 
 	.. code-block:: json
 
 		[
 		  [
-		    "/.singularity.d/actions/run"
+		    "/.apptainer.d/actions/run"
 		  ]
 		]
 
-	where ``run`` equates to the :ref:`familiar runscript <sec:inspect_container_metadata>` for this container. If image creation is bootstrapped via a Docker or OCI agent, Singularity will make use of ``ENTRYPOINT`` or ``CMD`` (from the OCI image) to populate ``args``; for additional discussion, please refer to :ref:`Directing Execution <sec:def_files_execution>` in the section :ref:`Support for Docker and OCI <singularity-and-docker>`. 
+	where ``run`` equates to the :ref:`familiar runscript <sec:inspect_container_metadata>` for this container. If image creation is bootstrapped via a Docker or OCI agent, apptainer will make use of ``ENTRYPOINT`` or ``CMD`` (from the OCI image) to populate ``args``; for additional discussion, please refer to :ref:`Directing Execution <sec:def_files_execution>` in the section :ref:`Support for Docker and OCI <apptainer-and-docker>`. 
 
 For a comprehensive discussion of all the ``config.json`` file properties, refer to the `implementation guide <https://github.com/opencontainers/runtime-spec/blob/master/config.md>`_. 
 
@@ -758,13 +758,13 @@ SIF files encapsulate the OCI runtime. By 'OCI mounting' a SIF file (see above),
 
 .. code-block:: none
 
-	$ sudo singularity oci create -b /var/tmp/busybox busybox1
+	$ sudo apptainer oci create -b /var/tmp/busybox busybox1
 
 .. note::
 
-	Data for the ``config.json`` file exists within the SIF file as a descriptor for images pulled or built from Docker/OCI registries. For images sourced elsewhere, a default ``config.json`` file is created when the ``singularity oci mount ...`` command is issued. 
+	Data for the ``config.json`` file exists within the SIF file as a descriptor for images pulled or built from Docker/OCI registries. For images sourced elsewhere, a default ``config.json`` file is created when the ``apptainer oci mount ...`` command is issued. 
 
-	Upon invocation, ``singularity oci mount ...`` also mounts the root filesystem stored in the SIF file on ``/bundle/rootfs``, and establishes an overlay filesystem on the mount point ``/bundle/overlay``. 
+	Upon invocation, ``apptainer oci mount ...`` also mounts the root filesystem stored in the SIF file on ``/bundle/rootfs``, and establishes an overlay filesystem on the mount point ``/bundle/overlay``. 
 
 In this example, the filesystem bundle is located in the directory ``/var/tmp/busybox`` - i.e., the mount point identified above with respect to 'OCI mounting'. The ``config.json`` file, along with the ``rootfs`` and ``overlay`` filesystems, are all employed in the bootstrap process. The instance is named ``busybox1`` in this example. 
 
@@ -772,7 +772,7 @@ In this example, the filesystem bundle is located in the directory ``/var/tmp/bu
 
 	The outcome of this creation request is truly a container **instance**. Multiple instances of the same container can easily be created by simply changing the name of the instance upon subsequent invocation requests. 
 
-The ``state`` of the container instance can be determined via ``$ sudo singularity oci state busybox1``:
+The ``state`` of the container instance can be determined via ``$ sudo apptainer oci state busybox1``:
 
 .. code-block:: json
 
@@ -783,8 +783,8 @@ The ``state`` of the container instance can be determined via ``$ sudo singulari
 	"pid": 6578,
 	"bundle": "/var/tmp/busybox",
 	"createdAt": 1554389921452964253,
-	"attachSocket": "/var/run/singularity/instances/root/busybox1/attach.sock",
-	"controlSocket": "/var/run/singularity/instances/root/busybox1/control.sock"
+	"attachSocket": "/var/run/apptainer/instances/root/busybox1/attach.sock",
+	"controlSocket": "/var/run/apptainer/instances/root/busybox1/control.sock"
 	}
 
 Container state, as conveyed via these properties, is in compliance with the OCI runtime specification as detailed `here <https://github.com/opencontainers/runtime-spec/blob/master/runtime.md#state>`_. 
@@ -800,9 +800,9 @@ The ``create`` command has a number of options available. Of these, real-time lo
 .. ------------------------------------------
 
 
-.. $ sudo singularity oci start busybox
+.. $ sudo apptainer oci start busybox
 
-.. ~$ sudo singularity oci state busybox
+.. ~$ sudo apptainer oci state busybox
 
 .. TODO Review CC's responses again ... see GDocs note on March 20, 2019
 
@@ -822,7 +822,7 @@ To unmount a mounted OCI filesystem bundle, the following command should be issu
 
 .. code-block:: none
 
-	$ sudo singularity oci umount /var/tmp/busybox
+	$ sudo apptainer oci umount /var/tmp/busybox
 
 .. note:: 
 
@@ -839,21 +839,21 @@ To unmount a mounted OCI filesystem bundle, the following command should be issu
 Kubernetes Integration
 ----------------------
 
-As noted at the :ref:`outset here <sec:oci_runtime_overview>`, in documenting support for an OCI runtime in Singularity, the impetus is initially derived from the requirement to integrate with `Kubernetes <https://kubernetes.io/>`_. Simply stated, Kubernetes is an open-source system for orchestrating containers; developed originally at Google, Kubernetes was contributed as seed technology to the `Cloud Native Compute Foundation <https://www.cncf.io/>`_ (CNCF). At this point, Kubernetes is regarded as a Graduated Project by CNCF, and is being used widely in production deployments. Even though Kubernetes emphasizes an orientation around services, it is appealing to those seeking to orchestrate containers having compute-driven requirements. Furthermore, emerging classes of workload in AI for example, appear to have requirements that are best addressed by a combination of service and traditional HPC infrastructures. Thus there is ample existing, as well as emerging, interest in integrating Singularity containers with Kubernetes. 
+As noted at the :ref:`outset here <sec:oci_runtime_overview>`, in documenting support for an OCI runtime in apptainer, the impetus is initially derived from the requirement to integrate with `Kubernetes <https://kubernetes.io/>`_. Simply stated, Kubernetes is an open-source system for orchestrating containers; developed originally at Google, Kubernetes was contributed as seed technology to the `Cloud Native Compute Foundation <https://www.cncf.io/>`_ (CNCF). At this point, Kubernetes is regarded as a Graduated Project by CNCF, and is being used widely in production deployments. Even though Kubernetes emphasizes an orientation around services, it is appealing to those seeking to orchestrate containers having compute-driven requirements. Furthermore, emerging classes of workload in AI for example, appear to have requirements that are best addressed by a combination of service and traditional HPC infrastructures. Thus there is ample existing, as well as emerging, interest in integrating apptainer containers with Kubernetes. 
 
-The connection with support for the OCI runtime documented here, within the context of a Singularity-Kubernetes integration, can be best established through an architectural schematic. Dating back to the introduction of a Container Runtime Interface (CRI) for Kubernetes in late 2016, the schematic below is a modified version of the original presented in `a Kubernetes blog post <https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/>`_. The lower branch of this schematic is essentially a reproduction of the original; it does however, place emphasis on OCI compliance in terms of the CRI and containers (the runtime as well as their instances). 
+The connection with support for the OCI runtime documented here, within the context of a apptainer-Kubernetes integration, can be best established through an architectural schematic. Dating back to the introduction of a Container Runtime Interface (CRI) for Kubernetes in late 2016, the schematic below is a modified version of the original presented in `a Kubernetes blog post <https://kubernetes.io/blog/2016/12/container-runtime-interface-cri-in-kubernetes/>`_. The lower branch of this schematic is essentially a reproduction of the original; it does however, place emphasis on OCI compliance in terms of the CRI and containers (the runtime as well as their instances). 
 
 .. image:: sycri_ociruntime_implementation.png
 
-From this schematic it is evident that integrating Singularity containers with Kubernetes requires the following efforts:
+From this schematic it is evident that integrating apptainer containers with Kubernetes requires the following efforts:
 
-	1. Implementation of a CRI for Singularity 
+	1. Implementation of a CRI for apptainer 
 	
-	2. Implementation of an OCI runtime in Singularity
+	2. Implementation of an OCI runtime in apptainer
 
-The implementation of a CRI for Singularity is the emphasis of a separate and distinct `open source project <https://github.com/sylabs/singularity-cri>`_; the implementation of this CRI is documented here. For the rationale conveyed through the architectural schematic, Singularity CRI's dependence upon Singularity with OCI runtime support is made clear as `an installation prerequisite <https://www.sylabs.io/guides/cri/1.0/user-guide/installation.html?highlight=oci#install-dependencies>`_. User-facing documentation for Singularity CRI details usage in a Kubernetes context - usage, of course, that involves orchestration of a Singularity container obtained from the `Sylabs Cloud Container Library <https://cloud.sylabs.io/library>`_. Because the entire Kubernetes-based deployment can exist within a single instance of a Singularity container, Singularity CRI can be easily evaluated via Sykube; inspired by `Minikube <https://kubernetes.io/docs/setup/minikube/>`_, `use of Sykube <https://www.sylabs.io/guides/cri/1.0/user-guide/sykube.html>`_ is included in the documentation for Singularity CRI.
+The implementation of a CRI for apptainer is the emphasis of a separate and distinct `open source project <https://github.com/sylabs/apptainer-cri>`_; the implementation of this CRI is documented here. For the rationale conveyed through the architectural schematic, apptainer CRI's dependence upon apptainer with OCI runtime support is made clear as `an installation prerequisite <https://www.sylabs.io/guides/cri/1.0/user-guide/installation.html?highlight=oci#install-dependencies>`_. User-facing documentation for apptainer CRI details usage in a Kubernetes context - usage, of course, that involves orchestration of a apptainer container obtained from the `Sylabs Cloud Container Library <https://cloud.sylabs.io/library>`_. Because the entire Kubernetes-based deployment can exist within a single instance of a apptainer container, apptainer CRI can be easily evaluated via Sykube; inspired by `Minikube <https://kubernetes.io/docs/setup/minikube/>`_, `use of Sykube <https://www.sylabs.io/guides/cri/1.0/user-guide/sykube.html>`_ is included in the documentation for apptainer CRI.
 
-Documenting the implementation of an OCI-compliant runtime for Singularity has been the emphasis here. Although this standalone runtime can be used by end users independent of anything to do with Singularity and Kubernetes, the primary purpose here has been documenting it within this integrated context. In other words, by making use of the OCI runtime presented by Singularity, commands originating from Kubernetes (see, e.g., `Basic Usage <https://sylabs.io/guides/cri/1.0/user-guide/examples.html>`_ in the Singularity CRI documentation) have impact ultimately on Singularity containers via the CRI. Singularity CRI is implemented as a `gRPC <https://grpc.io/>`_ server - i.e., a persistent service available to `Kubelets <https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/>`_ (node agents). Taken together, this integration allows Singularity containers to be manipulated directly from Kubernetes.  
+Documenting the implementation of an OCI-compliant runtime for apptainer has been the emphasis here. Although this standalone runtime can be used by end users independent of anything to do with apptainer and Kubernetes, the primary purpose here has been documenting it within this integrated context. In other words, by making use of the OCI runtime presented by apptainer, commands originating from Kubernetes (see, e.g., `Basic Usage <https://sylabs.io/guides/cri/1.0/user-guide/examples.html>`_ in the apptainer CRI documentation) have impact ultimately on apptainer containers via the CRI. apptainer CRI is implemented as a `gRPC <https://grpc.io/>`_ server - i.e., a persistent service available to `Kubelets <https://kubernetes.io/docs/reference/command-line-tools-reference/kubelet/>`_ (node agents). Taken together, this integration allows apptainer containers to be manipulated directly from Kubernetes.  
 
 
 .. TODO Describe a workflow 
@@ -867,11 +867,11 @@ Documenting the implementation of an OCI-compliant runtime for Singularity has b
 
 .. CC's suggested workflow:
 
-.. singularity build /tmp/test.sif docker://busybox
-.. sudo singularity oci mount /tmp/test.sif /var/tmp/busy
-.. sudo singularity oci create -b /var/tmp/busy testing > /dev/null 2>&1
-.. sudo singularity oci start testing
-.. sudo singularity oci exec testing /bin/sh
-.. sudo singularity oci kill testing
-.. sudo singularity oci delete testing
-.. sudo singularity oci umount /var/tmp/busy
+.. apptainer build /tmp/test.sif docker://busybox
+.. sudo apptainer oci mount /tmp/test.sif /var/tmp/busy
+.. sudo apptainer oci create -b /var/tmp/busy testing > /dev/null 2>&1
+.. sudo apptainer oci start testing
+.. sudo apptainer oci exec testing /bin/sh
+.. sudo apptainer oci kill testing
+.. sudo apptainer oci delete testing
+.. sudo apptainer oci umount /var/tmp/busy

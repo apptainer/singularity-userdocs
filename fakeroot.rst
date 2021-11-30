@@ -60,7 +60,7 @@ to ensure that there is no overlap with the current user's UID/GID on the system
 Network
 =======
 
-Restrictions are also applied to networking, if ``singularity`` is executed without the ``--net`` flag,
+Restrictions are also applied to networking, if ``apptainer`` is executed without the ``--net`` flag,
 the **"fake root"** user won't be able to use ``ping`` or bind a container service to a port below
 1024.
 
@@ -73,7 +73,7 @@ listen to traffic, etc. Anything done in this dedicated network won't affect the
     ``--network-args="portmap=80:80/tcp"``
 
 .. warning::
-    For unprivileged installation of Singularity or if ``allow setuid = no`` is set in ``singularity.conf``
+    For unprivileged installation of apptainer or if ``allow setuid = no`` is set in ``apptainer.conf``
     users won't be able to use a ``fakeroot`` network.
 
 ----------------------------
@@ -84,8 +84,8 @@ Fakeroot depends on user mappings set in ``/etc/subuid`` and group mappings in `
 needs to be listed in those files with a valid mapping (see the admin-guide for details), if you can't edit
 the files ask an administrator.
 
-In Singularity ``3.5`` a ``singularity config fakeroot`` command has been added to allow configuration
-of the ``/etc/subuid`` and ``/etc/subgid`` mappings from the Singularity command line. You must be a root
+In apptainer ``3.5`` a ``apptainer config fakeroot`` command has been added to allow configuration
+of the ``/etc/subuid`` and ``/etc/subgid`` mappings from the apptainer command line. You must be a root
 user or run with ``sudo`` to use ``config fakeroot``, as the mapping files are security sensitive. See the
 admin-guide for more details.
 
@@ -96,7 +96,7 @@ Usage
 If your user account is configured with valid ``subuid`` and ``subgid`` mappings you work as a fake root user
 inside a container by using the ``--fakeroot`` or ``-f`` option. 
 
-The ``--fakeroot`` option is available with the following singularity commands:
+The ``--fakeroot`` option is available with the following apptainer commands:
 
   - ``shell``
   - ``exec``
@@ -109,7 +109,7 @@ Build
 
 With fakeroot an unprivileged user can now build an image from a definition file with few restrictions. Some bootstrap
 methods that require creation of block devices (like ``/dev/null``) may not always work correctly with **"fake root"**,
-Singularity uses seccomp filters to give programs the illusion that block device creation succeeded. This appears to
+apptainer uses seccomp filters to give programs the illusion that block device creation succeeded. This appears to
 work with ``yum`` bootstraps and *may* work with other bootstrap methods, although ``debootstrap`` is known to not work.
 
 Examples
@@ -120,18 +120,18 @@ Build from a definition file:
 
 .. code-block:: none
 
-    singularity build --fakeroot /tmp/test.sif /tmp/test.def
+    apptainer build --fakeroot /tmp/test.sif /tmp/test.def
 
 Ping from container:
 --------------------
 
 .. code-block:: none
 
-    singularity exec --fakeroot --net docker://alpine ping -c1 8.8.8.8
+    apptainer exec --fakeroot --net docker://alpine ping -c1 8.8.8.8
 
 HTTP server:
 ------------
 
 .. code-block:: none
 
-    singularity run --fakeroot --net --network-args="portmap=8080:80/tcp" -w docker://nginx
+    apptainer run --fakeroot --net --network-args="portmap=8080:80/tcp" -w docker://nginx

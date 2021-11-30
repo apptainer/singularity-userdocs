@@ -1,7 +1,7 @@
 .. _mpi:
 
 ================================
-Singularity and MPI applications
+apptainer and MPI applications
 ================================
 
 .. _sec-mpi:
@@ -11,11 +11,11 @@ is a standard extensively used by HPC applications to implement various communic
 across compute nodes of a single system or across compute platforms.
 There are two main open-source implementations of MPI at the
 moment - `OpenMPI <https://www.open-mpi.org/>`_ and `MPICH <https://www.mpich.org/>`_,
-both of which are supported by Singularity. The goal of this page is to
-demonstrate the development and running of MPI programs using Singularity containers.
+both of which are supported by apptainer. The goal of this page is to
+demonstrate the development and running of MPI programs using apptainer containers.
 
 There are several ways of carrying this out, the most popular way of
-executing MPI applications installed in a Singularity container is to rely on the
+executing MPI applications installed in a apptainer container is to rely on the
 MPI implementation available on the host. This is called the *Host MPI* or
 the *Hybrid* model since both the MPI implementations provided by system
 administrators (on the host) and in the containers will be used.
@@ -35,19 +35,19 @@ requires to bind/mount the MPI version available on the host into the container.
 Hybrid model
 ------------
 
-The basic idea behind the *Hybrid Approach* is when you execute a Singularity
+The basic idea behind the *Hybrid Approach* is when you execute a apptainer
 container with MPI code, you will call ``mpiexec`` or a similar launcher on the
-``singularity`` command itself. The MPI process outside of the container will
+``apptainer`` command itself. The MPI process outside of the container will
 then work in tandem with MPI inside the container and the containerized MPI code
 to instantiate the job.
 
-The Open MPI/Singularity workflow in detail:
+The Open MPI/apptainer workflow in detail:
 
 1. The MPI launcher (e.g., ``mpirun``, ``mpiexec``) is called by the resource manager or the user directly from a shell.
 2. Open MPI then calls the process management daemon (ORTED).
-3. The ORTED process launches the Singularity container requested by the launcher command.
-4. Singularity instantiates the container and namespace environment.
-5. Singularity then launches the MPI application within the container.
+3. The ORTED process launches the apptainer container requested by the launcher command.
+4. apptainer instantiates the container and namespace environment.
+5. apptainer then launches the MPI application within the container.
 6. The MPI application launches and loads the Open MPI libraries.
 7. The Open MPI libraries connect back to the ORTED process via the Process Management Interface (PMI).
 
@@ -73,7 +73,7 @@ framework installed on the host from source.
 Test Application
 ================
 
-To illustrate how Singularity can be used to execute MPI applications, we will
+To illustrate how apptainer can be used to execute MPI applications, we will
 assume for a moment that the application is ``mpitest.c``, a simple Hello World:
 
 .. code-block:: c
@@ -240,8 +240,8 @@ If the host MPI is Open MPI, the definition file looks like:
 Running an MPI Application
 ==========================
 
-The standard way to execute MPI applications with hybrid Singularity containers is to
-run the native ``mpirun`` command from the host, which will start Singularity
+The standard way to execute MPI applications with hybrid apptainer containers is to
+run the native ``mpirun`` command from the host, which will start apptainer
 containers and ultimately MPI ranks within the containers.
 
 Assuming your container with MPI and your application is already built,
@@ -250,15 +250,15 @@ has been built based on the hybrid model:
 
 .. code-block:: none
 
-    $ mpirun -n <NUMBER_OF_RANKS> singularity exec <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
+    $ mpirun -n <NUMBER_OF_RANKS> apptainer exec <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
 
 Practically, this command will first start a process instantiating ``mpirun``
-and then Singularity containers on compute nodes. Finally, when the containers
+and then apptainer containers on compute nodes. Finally, when the containers
 start, the MPI binary is executed:
 
 .. code-block:: none
 
-    $ mpirun -n 8 singularity run hybrid-mpich.sif /opt/mpitest
+    $ mpirun -n 8 apptainer run hybrid-mpich.sif /opt/mpitest
     Hello, I am rank 3/8
     Hello, I am rank 4/8
     Hello, I am rank 6/8
@@ -275,7 +275,7 @@ Bind model
 Similar to the *Hybrid Approach*, the basic idea behind the *Bind Approach* is to start the MPI
 application by calling the MPI launcher (e.g., `mpirun`) from the host. The main difference between
 the hybrid and bind approach is the fact that with the bind approach, the container usually does
-not include any MPI implementation. This means that Singularity needs to mount/bind the MPI
+not include any MPI implementation. This means that apptainer needs to mount/bind the MPI
 available on the host into the container.
 
 Technically this requires two steps:
@@ -296,7 +296,7 @@ The drawbacks are:
   - The user must ensure that the host MPI is compatible with the MPI used to compile
     and install the application in the container.
 
-The creation of a Singularity container for the bind model is based on the following steps:
+The creation of a apptainer container for the bind model is based on the following steps:
 
 1. Compile your application on a system with the target MPI implementation, as you would do
    to install your application on any system.
@@ -357,7 +357,7 @@ the definition file if you wish.
 .. code-block:: none
 
     $ export MPI_DIR="<PATH/TO/HOST/MPI/DIRECTORY>"            
-    $ mpirun -n <NUMBER_OF_RANKS> singularity exec --bind "$MPI_DIR" <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
+    $ mpirun -n <NUMBER_OF_RANKS> apptainer exec --bind "$MPI_DIR" <PATH/TO/MY/IMAGE> </PATH/TO/BINARY/WITHIN/CONTAINER>
 
 On an example system we may be using an Open MPI installation at
 ``/cm/shared/apps/openmpi/gcc/64/4.0.5/``. This means that the
@@ -367,7 +367,7 @@ commands to run the container in bind mode are:
 .. code-block:: none
 
     $ export MPI_DIR="/cm/shared/apps/openmpi/gcc/64/4.0.5"
-    $ mpirun -n 8 singularity exec --bind "$MPI_DIR" bind.sif /opt/mpitest
+    $ mpirun -n 8 apptainer exec --bind "$MPI_DIR" bind.sif /opt/mpitest
     Hello, I am rank 1/8
     Hello, I am rank 2/8
     Hello, I am rank 0/8
@@ -385,18 +385,18 @@ Batch Scheduler / Slurm
 If your target system is setup with a batch system such as SLURM, a standard
 way to execute MPI applications is through a batch script. The following
 example illustrates the context of a batch script for Slurm that aims at
-starting a Singularity container on each node allocated to the execution of
+starting a apptainer container on each node allocated to the execution of
 the job. It can easily be adapted for all major batch systems available.
 
 .. code-block:: none
 
     $ cat my_job.sh
     #!/bin/bash
-    #SBATCH --job-name singularity-mpi
+    #SBATCH --job-name apptainer-mpi
     #SBATCH -N $NNODES # total number of nodes
     #SBATCH --time=00:05:00 # Max execution time
 
-    mpirun -n $NP singularity exec /var/nfsshare/gvallee/mpich.sif /opt/mpitest
+    mpirun -n $NP apptainer exec /var/nfsshare/gvallee/mpich.sif /opt/mpitest
 
 In fact, the example describes a job that requests the number of nodes specified
 by the ``NNODES`` environment variable and a total number of MPI processes specified
@@ -418,7 +418,7 @@ Alternative Launchers
 On many systems it is common to use an alternative launcher to start
 MPI applications, e.g. Slurm's ``srun`` rather than the ``mpirun``
 provided by the MPI installation. This approach is supported with
-Singularity as long as the container MPI version supports the same
+apptainer as long as the container MPI version supports the same
 process management interface (e.g. PMI2 / PMIx) and version as is used
 by the launcher.
 
@@ -435,7 +435,7 @@ that MPI implementations are built to support them. You may need to
 install or bind Infiniband/Omnipath libraries into your containers
 when using these interconnects.
 
-By default Singularity exposes every device in ``/dev`` to the
+By default apptainer exposes every device in ``/dev`` to the
 container. If you run a container using the ``--contain`` or
 ``--containall`` flags a minimal ``/dev`` is used instead. You may
 need to bind in additional ``/dev/`` entries manually to
@@ -457,7 +457,7 @@ E.g. if we attempt to run the hybrid Open MPI container, but with
 .. code-block::
 
     $ module add mpich
-    $ mpirun -n 8 singularity run hybrid-openmpi.sif /opt/mpitest
+    $ mpirun -n 8 apptainer run hybrid-openmpi.sif /opt/mpitest
     Hello, I am rank 0/1
     Hello, I am rank 0/1
     Hello, I am rank 0/1
@@ -473,7 +473,7 @@ interconnect libraries may not be available or configured properly
 with the MPI stack in the container.
 
 Please check the following things carefully before asking questions in
-the Singularity community:
+the apptainer community:
 
  - For the hybrid mode, is the MPI version on the host compatible with
    the version in the container? Newer MPI versions can generally
@@ -488,8 +488,8 @@ the Singularity community:
    container? Is the MPI stack in the container configured correctly
    to use them?
 
-We recommend using the Singularity Google Group or Slack Channel to
-ask for MPI advice from the Singularity community. HPC cluster
+We recommend using the apptainer Google Group or Slack Channel to
+ask for MPI advice from the apptainer community. HPC cluster
 configurations vary greatly and most MPI problems are related to MPI /
-interconnect configuration, and not caused by issues in Singularity
+interconnect configuration, and not caused by issues in apptainer
 itself.

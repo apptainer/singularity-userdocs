@@ -9,7 +9,7 @@ Bind Paths and Mounts
 .. _sec:bindpaths:
 
 If `not disabled by the system administrator <\{admindocs\}/config_files.html#bind-mount-management>`_,
-Singularity allows you to map directories on your host system to directories
+apptainer allows you to map directories on your host system to directories
 within your container using bind mounts. This allows you to read and write data
 on the host system with ease.
 
@@ -18,10 +18,10 @@ on the host system with ease.
 Overview
 --------
 
-When Singularity ‘swaps’ the host operating system for the one inside your
+When apptainer ‘swaps’ the host operating system for the one inside your
 container, the host file systems becomes inaccessible. But you may want to read
 and write files on the host system from within the container. To enable this
-functionality, Singularity will bind directories back into the container via two
+functionality, apptainer will bind directories back into the container via two
 primary methods: system-defined bind paths and user-defined bind paths.
 
 -------------------------
@@ -31,7 +31,7 @@ System-defined bind paths
 The system administrator has the ability to define what bind paths will be
 included automatically inside each container. Some bind paths are automatically
 derived (e.g. a user’s home directory) and some are statically defined (e.g.
-bind paths in the Singularity configuration file). In the default
+bind paths in the apptainer configuration file). In the default
 configuration, the system default bind points are ``$HOME`` , ``/sys:/sys`` ,
 ``/proc:/proc``, ``/tmp:/tmp``, ``/var/tmp:/var/tmp``, ``/etc/resolv.conf:/etc/resolv.conf``,
 ``/etc/passwd:/etc/passwd``, and ``$PWD``. Where the first path before ``:``
@@ -40,11 +40,11 @@ is the path from the host and the second path is the path in the container.
 Disabling System Binds
 ======================
 
-The ``--no-mount`` flag, added in Singularity 3.7, allows specific
+The ``--no-mount`` flag, added in apptainer 3.7, allows specific
 system mounts to be disabled, even if they are set in the
-``singularity.conf`` configuration file by the administrator.
+``apptainer.conf`` configuration file by the administrator.
 
-For example, if Singularity has been configured with ``mount hostfs =
+For example, if apptainer has been configured with ``mount hostfs =
 yes`` then every filesystem on the host will be bind mounted to the
 container by default. If, e.g. a ``/project`` filesystem on your host
 conflicts with a ``/project`` directory in the container you are
@@ -52,7 +52,7 @@ running, you can disable the ``hostfs`` binds:
 
 .. code:: console
 
-    $ singularity run --no-mount hostfs mycontainer.sif
+    $ apptainer run --no-mount hostfs mycontainer.sif
 
     
 Multiple mounts can be disabled by specifying them separated by
@@ -60,7 +60,7 @@ commas:
 
 .. code:: console
 
-    $ singularity run --no-mount tmp,sys,dev mycontainer.sif
+    $ apptainer run --no-mount tmp,sys,dev mycontainer.sif
 
 .. _user-defined-bind-paths:
 
@@ -71,10 +71,10 @@ User-defined bind paths
 If the system administrator has `not disabled user control of binds <\{admindocs\}/configfiles.html#bind-mount-management>`_,
 you will be able to request your own bind paths within your container.
 
-The Singularity action commands (``run``, ``exec``, ``shell``, and
+The apptainer action commands (``run``, ``exec``, ``shell``, and
 ``instance start``) will accept the ``--bind/-B`` command-line option to specify
-bind paths, and will also honor the ``$SINGULARITY_BIND`` (or
-``$SINGULARITY_BINDPATH``) environment variable. The argument for this option is
+bind paths, and will also honor the ``$apptainer_BIND`` (or
+``$apptainer_BINDPATH``) environment variable. The argument for this option is
 a comma-delimited string of bind path specifications in the format
 ``src[:dest[:opts]]``, where ``src`` and ``dest`` are paths outside and inside
 of the container respectively. If ``dest`` is not given, it is set equal to
@@ -95,14 +95,14 @@ the container):
     $ ls /data
     bar  foo
 
-    $ singularity exec --bind /data:/mnt my_container.sif ls /mnt
+    $ apptainer exec --bind /data:/mnt my_container.sif ls /mnt
     bar  foo
 
 You can bind multiple directories in a single command with this syntax:
 
 .. code-block:: none
 
-    $ singularity shell --bind /opt,/data:/mnt my_container.sif
+    $ apptainer shell --bind /opt,/data:/mnt my_container.sif
 
 This will bind ``/opt`` on the host to ``/opt`` in the container and ``/data``
 on the host to ``/mnt`` in the container.
@@ -112,13 +112,13 @@ be:
 
 .. code-block:: none
 
-    $ export SINGULARITY_BIND="/opt,/data:/mnt"
+    $ export apptainer_BIND="/opt,/data:/mnt"
 
-    $ singularity shell my_container.sif
+    $ apptainer shell my_container.sif
 
-Using the environment variable ``$SINGULARITY_BIND``, you can bind paths even
+Using the environment variable ``$apptainer_BIND``, you can bind paths even
 when you are running your container as an executable file with a runscript. If
-you bind many directories into your Singularity containers and they don’t
+you bind many directories into your apptainer containers and they don’t
 change, you could even benefit by setting this variable in your ``.bashrc``
 file.
 
@@ -128,11 +128,11 @@ A note on using ``--bind`` with the ``--writable`` flag
 
 To mount a bind path inside the container, a *bind point* must be defined
 within the container. The bind point is a directory within the container that
-Singularity can use as a destination to bind a directory on the host system.
+apptainer can use as a destination to bind a directory on the host system.
 
-Starting in version 3.0, Singularity will do its best to bind mount requested
+Starting in version 3.0, apptainer will do its best to bind mount requested
 paths into a container regardless of whether the appropriate bind point exists
-within the container.  Singularity can often carry out this operation even in
+within the container.  apptainer can often carry out this operation even in
 the absence of the "overlay fs" feature.
 
 However, binding paths to non-existent points within the container can result in
@@ -150,12 +150,12 @@ Using ``--no-home`` and ``--containall`` flags
 ``--no-home``
 ^^^^^^^^^^^^^
 
-When shelling into your container image, Singularity allows you to mount your current working directory (``CWD``)
+When shelling into your container image, apptainer allows you to mount your current working directory (``CWD``)
 without mounting your host ``$HOME`` directory with the ``--no-home`` flag.
 
 .. code-block:: none
 
-      $ singularity shell --no-home my_container.sif
+      $ apptainer shell --no-home my_container.sif
 
 .. note::
 
@@ -172,7 +172,7 @@ without mounting your host ``$HOME`` directory with the ``--no-home`` flag.
 
 .. code-block:: none
 
-    $ singularity shell --containall my_container.sif
+    $ apptainer shell --containall my_container.sif
 
 
 -----------
@@ -193,13 +193,13 @@ mount a remote computer's filesystem to your local host, over ssh:
     $ ythel:/home/dave on /home/dave/other_host type fuse.sshfs (rw,nosuid,nodev,relatime,user_id=1000,group_id=1000)
 
 
-Singularity 3.6 introduces the ``--fusemount`` option, which allows
+apptainer 3.6 introduces the ``--fusemount`` option, which allows
 you directly expose FUSE filesystems inside a container. The FUSE
 command / driver that mounts a particular type of filesystem can be
 located on the host, or in the container.
 
 The FUSE command *must* be based on libfuse3 to work correctly with
-Singularity ``--fusemount``. If you are using an older distribution
+apptainer ``--fusemount``. If you are using an older distribution
 that provides FUSE commands such as ``sshfs`` based on FUSE 2 then you
 can install FUSE 3 versions of the commands you need inside your
 container.
@@ -208,15 +208,15 @@ container.
 .. note::
 
    ``--fusemount`` functionality was present in a hidden preview state
-   from Singularity 3.4. The behavior has changed for the final
-   supported version introduced in Singularity 3.6.
+   from apptainer 3.4. The behavior has changed for the final
+   supported version introduced in apptainer 3.6.
 
 
    
 FUSE mount definitions
 ======================
 
-A fusemount definition for Singularity consists of 3 parts:
+A fusemount definition for apptainer consists of 3 parts:
 
 .. code-block:: none
 
@@ -253,10 +253,10 @@ been installed on my host, I run with the ``host`` mount type:
 
 .. code-block:: none
 
-    $ singularity run --fusemount "host:sshfs server:/ /server" docker://ubuntu
-    Singularity> cat /etc/hostname 
+    $ apptainer run --fusemount "host:sshfs server:/ /server" docker://ubuntu
+    apptainer> cat /etc/hostname 
     localhost.localdomain
-    Singularity> cat /server/etc/hostname
+    apptainer> cat /server/etc/hostname
     server
 
 FUSE mount with a container executable
@@ -268,17 +268,17 @@ type:
 
 .. code-block:: none
 
-    $ singularity run --fusemount "container:sshfs server:/ /server" sshfs.sif
-    Singularity> cat /etc/hostname 
+    $ apptainer run --fusemount "container:sshfs server:/ /server" sshfs.sif
+    apptainer> cat /etc/hostname 
     localhost.localdomain
-    Singularity> cat /server/etc/hostname
+    apptainer> cat /server/etc/hostname
     server
 
 ------------
 Image Mounts
 ------------
 
-In Singularity 3.6 and above you can mount a directory contained in an
+In apptainer 3.6 and above you can mount a directory contained in an
 image file into a container. This may be useful if you want to
 distribute directories containing a large number of data files as a
 single image file.
@@ -330,10 +330,10 @@ to distribute in an image file that allows read/write:
     Copying files into the device: done
     Writing superblocks and filesystem accounting information: done 
 
-    # Run Singularity, mounting my input data to '/input-data' in
+    # Run apptainer, mounting my input data to '/input-data' in
     # the container.
-    $ singularity run -B inputs.img:/input-data:image-src=/ mycontainer.sif
-    Singularity> ls /input-data
+    $ apptainer run -B inputs.img:/input-data:image-src=/ mycontainer.sif
+    apptainer> ls /input-data
     1           3           5           7           9
     2           4           6           8           lost+found
 
@@ -354,10 +354,10 @@ the squashfs format is appropriate:
     Creating 4.0 filesystem on inputs.squashfs, block size 131072.
     ...
 
-    # Run Singularity, mounting my input data to '/input-data' in
+    # Run apptainer, mounting my input data to '/input-data' in
     # the container.
-    $ singularity run -B inputs.squashfs:/input-data:image-src=/ mycontainer.sif
-    Singularity> ls /input-data/
+    $ apptainer run -B inputs.squashfs:/input-data:image-src=/ mycontainer.sif
+    apptainer> ls /input-data/
     1  2  3  4  5  6  7  8  9
 
     
@@ -366,23 +366,23 @@ SIF Image Files
 
 Advanced users may wish to create a standalone SIF image, which contains
 an ``ext3`` or ``squashfs`` data partition holding files, by using the
-``singularity sif`` commands similarly to the :ref:`persistent
+``apptainer sif`` commands similarly to the :ref:`persistent
 overlays instructions<overlay-sif>`:
 
 .. code-block:: console
 
     # Create a new empty SIF file
-    $ singularity sif new inputs.sif
+    $ apptainer sif new inputs.sif
 
     # Add the squashfs data image from above to the SIF
-    $ singularity sif add --datatype 4 --partarch 2 --partfs 1 --parttype 3 inputs.sif inputs.squashfs
+    $ apptainer sif add --datatype 4 --partarch 2 --partfs 1 --parttype 3 inputs.sif inputs.squashfs
 
-    # Run Singularity, binding data from the SIF file
-    $ singularity run -B inputs.sif:/input-data:image-src=/ mycontainer.sif
-    Singularity> ls /input-data
+    # Run apptainer, binding data from the SIF file
+    $ apptainer run -B inputs.sif:/input-data:image-src=/ mycontainer.sif
+    apptainer> ls /input-data
     1  2  3  4  5  6  7  8  9
 
-If your bind source is a SIF then Singularity will bind from
+If your bind source is a SIF then apptainer will bind from
 the first data partition in the SIF, or you may specify an
 alternative descriptor by ID with the additional bind option
 ``:id=n``, where n is the descriptor ID.

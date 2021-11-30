@@ -6,10 +6,10 @@ Quick Start
 
 .. _sec:quickstart:
 
-This guide is intended for running Singularity on a computer where you
-have root (administrative) privileges, and will install Singularity
+This guide is intended for running apptainer on a computer where you
+have root (administrative) privileges, and will install apptainer
 from source code. Other installation options, including building an
-RPM package and installing Singularity without root privileges are
+RPM package and installing apptainer without root privileges are
 discussed in the `installation section of the admin guide
 <\{admindocs\}/installation.html>`__.
 
@@ -17,8 +17,8 @@ If you need to request an installation on your shared resource, see the
 :ref:`requesting an installation section <installation-request>` for
 information to send to your system administrator.
 
-For any additional help or support contact the Singularity Community:
-https://singularity.hpcng.org/help
+For any additional help or support contact the apptainer Community:
+https://apptainer.hpcng.org/help
 
 
 .. _quick-installation:
@@ -27,8 +27,8 @@ https://singularity.hpcng.org/help
 Quick Installation Steps
 ------------------------
 
-You will need a Linux system to run Singularity natively. Options for
-using Singularity on Mac and Windows machines, along with alternate
+You will need a Linux system to run apptainer natively. Options for
+using apptainer on Mac and Windows machines, along with alternate
 Linux installation options are discussed in the `installation section of the
 admin guide
 <\{admindocs\}/installation.html>`__.
@@ -59,18 +59,18 @@ You must first install development libraries to your host. Assuming Ubuntu
     other commands may do so as well if they are ran using container images
     from Docker Hub for instance.
 
-There are 3 broad steps to installing Singularity:
+There are 3 broad steps to installing apptainer:
 
 1. :ref:`Installing Go <install>`
-2. :ref:`Downloading Singularity <download>`
-3. :ref:`Compiling Singularity Source Code <compile>`
+2. :ref:`Downloading apptainer <download>`
+3. :ref:`Compiling apptainer Source Code <compile>`
 
 .. _install:
 
 Install Go
 ==========
 
-Singularity v3 and above is written primarily in Go, so you will need Go
+apptainer v3 and above is written primarily in Go, so you will need Go
 installed to compile it from source.
 
 This is one of several ways to `install and configure Go
@@ -106,28 +106,28 @@ Set the Environment variable ``PATH`` to point to Go:
 
 .. _download:
 
-Download Singularity from a release
+Download apptainer from a release
 ===================================
 
-You can download Singularity from one of the releases. To see a full list, visit
-`the GitHub release page <https://github.com/hpcng/singularity/releases>`_.
+You can download apptainer from one of the releases. To see a full list, visit
+`the GitHub release page <https://github.com/hpcng/apptainer/releases>`_.
 After deciding on a release to install, you can run the following commands to
 proceed with the installation.
 
 .. code-block:: none
 
     $ export VERSION={InstallationVersion} && # adjust this as necessary \
-        wget https://github.com/hpcng/singularity/releases/download/v${VERSION}/singularity-${VERSION}.tar.gz && \
-        tar -xzf singularity-${VERSION}.tar.gz && \
-        cd singularity-${VERSION}
+        wget https://github.com/hpcng/apptainer/releases/download/v${VERSION}/apptainer-${VERSION}.tar.gz && \
+        tar -xzf apptainer-${VERSION}.tar.gz && \
+        cd apptainer-${VERSION}
 
 .. _compile:
 
-Compile the Singularity source code
+Compile the apptainer source code
 ===================================
 
-Now you are ready to build Singularity. Dependencies will be automatically
-downloaded. You can build Singularity using the following commands:
+Now you are ready to build apptainer. Dependencies will be automatically
+downloaded. You can build apptainer using the following commands:
 
 .. code-block:: none
 
@@ -135,47 +135,47 @@ downloaded. You can build Singularity using the following commands:
         make -C builddir && \
         sudo make -C builddir install
 
-Singularity must be installed as root to function properly.
+apptainer must be installed as root to function properly.
 
 -------------------------------------
-Overview of the Singularity Interface
+Overview of the apptainer Interface
 -------------------------------------
 
-Singularity’s :ref:`command line interface <cli>` allows you to build
+apptainer’s :ref:`command line interface <cli>` allows you to build
 and interact with containers transparently. You can run programs inside a
 container as if they were running on your host system. You can easily redirect
 IO, use pipes, pass arguments, and access files, sockets, and ports on the host
 system from within a container.
 
-The ``help`` command gives an overview of Singularity options and subcommands as
+The ``help`` command gives an overview of apptainer options and subcommands as
 follows:
 
 .. code-block:: none
 
-    $ singularity help
+    $ apptainer help
 
     Linux container platform optimized for High Performance Computing (HPC) and
     Enterprise Performance Computing (EPC)
 
     Usage:
-      singularity [global options...]
+      apptainer [global options...]
 
     Description:
-      Singularity containers provide an application virtualization layer enabling
+      apptainer containers provide an application virtualization layer enabling
       mobility of compute via both application and environment portability. With
-      Singularity one is capable of building a root file system that runs on any
-      other Linux system where Singularity is installed.
+      apptainer one is capable of building a root file system that runs on any
+      other Linux system where apptainer is installed.
 
     Options:
       -d, --debug     print debugging information (highest verbosity)
-      -h, --help      help for singularity
+      -h, --help      help for apptainer
           --nocolor   print without color output (default False)
       -q, --quiet     suppress normal output
       -s, --silent    only print errors
       -v, --verbose   print additional information
 
     Available Commands:
-      build       Build a Singularity image
+      build       Build a apptainer image
       cache       Manage the local cache
       capability  Manage Linux capabilities for users and groups
       exec        Run a command within a container
@@ -184,24 +184,24 @@ follows:
       instance    Manage containers running as services
       key         Manage OpenPGP keys
       oci         Manage OCI containers
-      plugin      Manage singularity plugins
+      plugin      Manage apptainer plugins
       pull        Pull an image from a URI
       push        Upload image to the provided library (default is "cloud.sylabs.io")
-      remote      Manage singularity remote endpoints
+      remote      Manage apptainer remote endpoints
       run         Run the user-defined default command within a container
       run-help    Show the user-defined help for an image
       search      Search a Container Library for images
       shell       Run a shell within a container
-      sif         siftool is a program for Singularity Image Format (SIF) file manipulation
+      sif         siftool is a program for apptainer Image Format (SIF) file manipulation
       sign        Attach a cryptographic signature to an image
       test        Run the user-defined tests within a container
       verify      Verify cryptographic signatures attached to an image
-      version     Show the version for Singularity
+      version     Show the version for apptainer
 
     Examples:
-      $ singularity help <command> [<subcommand>]
-      $ singularity help build
-      $ singularity help instance start
+      $ apptainer help <command> [<subcommand>]
+      $ apptainer help build
+      $ apptainer help instance start
 
 
     For additional help or support, please visit https://www.sylabs.io/docs/
@@ -211,11 +211,11 @@ Information about subcommand can also be viewed with the ``help`` command.
 
 .. code-block:: none
 
-    $ singularity help verify
+    $ apptainer help verify
     Verify cryptographic signatures attached to an image
 
     Usage:
-      singularity verify [verify options...] <image path>
+      apptainer verify [verify options...] <image path>
 
     Description:
       The verify command allows a user to verify cryptographic signatures on SIF 
@@ -237,38 +237,38 @@ Information about subcommand can also be viewed with the ``help`` command.
 
 
     Examples:
-      $ singularity verify container.sif
+      $ apptainer verify container.sif
 
 
     For additional help or support, please visit https://www.sylabs.io/docs/
 
 
-Singularity uses positional syntax (i.e. the order of commands and options
+apptainer uses positional syntax (i.e. the order of commands and options
 matters). Global options affecting the behavior of all commands follow the main
-``singularity`` command. Then sub commands are followed by their options
+``apptainer`` command. Then sub commands are followed by their options
 and arguments.
 
-For example, to pass the ``--debug`` option to the main ``singularity`` command
-and run Singularity with debugging messages on:
+For example, to pass the ``--debug`` option to the main ``apptainer`` command
+and run apptainer with debugging messages on:
 
 .. code-block:: none
 
-    $ singularity --debug run library://sylabsed/examples/lolcow
+    $ apptainer --debug run library://sylabsed/examples/lolcow
 
 To pass the ``--containall`` option to the ``run`` command and run a
-Singularity image in an isolated manner:
+apptainer image in an isolated manner:
 
 .. code-block:: none
 
-    $ singularity run --containall library://sylabsed/examples/lolcow
+    $ apptainer run --containall library://sylabsed/examples/lolcow
 
-Singularity 2.4 introduced the concept of command groups. For instance, to list
+apptainer 2.4 introduced the concept of command groups. For instance, to list
 Linux capabilities for a particular user, you would use the  ``list`` command in
 the ``capability`` command group like so:
 
 .. code-block:: none
 
-    $ singularity capability list dave
+    $ apptainer capability list dave
 
 Container authors might also write help docs specific to a container or for an
 internal module called an ``app``. If those help docs exist for a particular
@@ -276,9 +276,9 @@ container, you can view them like so.
 
 .. code-block:: none
 
-    $ singularity inspect --helpfile container.sif  # See the container's help, if provided
+    $ apptainer inspect --helpfile container.sif  # See the container's help, if provided
 
-    $ singularity inspect --helpfile --app=foo foo.sif  # See the help for foo, if provided
+    $ apptainer inspect --helpfile --app=foo foo.sif  # See the help for foo, if provided
 
 -------------------------
 Download pre-built images
@@ -289,7 +289,7 @@ containers of interest on the `Container Library <https://cloud.sylabs.io/librar
 
 .. code-block:: none
 
-    singularity search tensorflow
+    apptainer search tensorflow
     Found 22 container images for amd64 matching "tensorflow":
 
 	library://ajgreen/default/tensorflow2-gpu-py3-r-jupyter:latest
@@ -315,27 +315,27 @@ containers of interest on the `Container Library <https://cloud.sylabs.io/librar
 
         ...
 
-You can use the `pull <cli/singularity_pull.html>`_
-and `build <cli/singularity_build.html>`_
+You can use the `pull <cli/apptainer_pull.html>`_
+and `build <cli/apptainer_build.html>`_
 commands to download pre-built images from an external resource like the
 `Container Library <https://cloud.sylabs.io/library>`_ or
 `Docker Hub <https://hub.docker.com/>`_.
 
-When called on a native Singularity image like those provided on the Container Library, ``pull``
+When called on a native apptainer image like those provided on the Container Library, ``pull``
 simply downloads the image file to your system.
 
 .. code-block:: none
 
-    $ singularity pull library://lolcow
+    $ apptainer pull library://lolcow
 
 You can also use ``pull`` with the ``docker://`` uri to reference Docker images
 served from a registry. In this case ``pull`` does not just download an image
 file. Docker images are stored in layers, so ``pull`` must also combine those
-layers into a usable Singularity file.
+layers into a usable apptainer file.
 
 .. code-block:: none
 
-    $ singularity pull docker://godlovedc/lolcow
+    $ apptainer pull docker://godlovedc/lolcow
 
 Pulling Docker images reduces reproducibility. If you were to pull a Docker
 image today and then wait six months and pull again, you are not guaranteed to
@@ -349,17 +349,17 @@ container like so:
 
 .. code-block:: none
 
-    $ singularity build ubuntu.sif library://ubuntu
+    $ apptainer build ubuntu.sif library://ubuntu
 
-    $ singularity build lolcow.sif docker://godlovedc/lolcow
+    $ apptainer build lolcow.sif docker://godlovedc/lolcow
 
-Unlike ``pull``, ``build`` will convert your image to the latest Singularity
+Unlike ``pull``, ``build`` will convert your image to the latest apptainer
 image format after downloading it.
 ``build`` is like a “Swiss Army knife” for container creation. In addition to
 downloading images, you can use ``build`` to create images from other images or
 from scratch using a :ref:`definition file <definition-files>`. You can also
 use ``build`` to convert an image between the container formats supported by
-Singularity. To see a comparison of Singularity definition file with Dockerfile,
+apptainer. To see a comparison of apptainer definition file with Dockerfile,
 please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
 
 .. _cowimage:
@@ -376,34 +376,34 @@ from the Container Library:
 
 .. code-block:: none
 
-    $ singularity pull library://sylabsed/examples/lolcow
+    $ apptainer pull library://sylabsed/examples/lolcow
 
 Shell
 =====
 
-The `shell <cli/singularity_shell.html>`_
+The `shell <cli/apptainer_shell.html>`_
 command allows you to spawn a new shell within your container and interact with
 it as though it were a small virtual machine.
 
 .. code-block:: none
 
-    $ singularity shell lolcow_latest.sif
+    $ apptainer shell lolcow_latest.sif
 
-    Singularity lolcow_latest.sif:~>
+    apptainer lolcow_latest.sif:~>
 
 
 The change in prompt indicates that you have entered the container (though you
 should not rely on that to determine whether you are in container or not).
 
-Once inside of a Singularity container, you are the same user as you are on the
+Once inside of a apptainer container, you are the same user as you are on the
 host system.
 
 .. code-block:: none
 
-    Singularity lolcow_latest.sif:~> whoami
+    apptainer lolcow_latest.sif:~> whoami
     david
 
-    Singularity lolcow_latest.sif:~> id
+    apptainer lolcow_latest.sif:~> id
     uid=1000(david) gid=1000(david) groups=1000(david),4(adm),24(cdrom),27(sudo),30(dip),46(plugdev),116(lpadmin),126(sambashare)
 
 ``shell`` also works with the ``library://``, ``docker://``, and ``shub://``
@@ -412,19 +412,19 @@ exited.
 
 .. code-block:: none
 
-    $ singularity shell library://sylabsed/examples/lolcow
+    $ apptainer shell library://sylabsed/examples/lolcow
 
 Executing Commands
 ==================
 
-The `exec <cli/singularity_exec.html>`_
+The `exec <cli/apptainer_exec.html>`_
 command allows you to execute a custom command within a container by specifying
 the image file. For instance, to execute the ``cowsay`` program within the
 ``lolcow_latest.sif`` container:
 
 .. code-block:: none
 
-    $ singularity exec lolcow_latest.sif cowsay moo
+    $ apptainer exec lolcow_latest.sif cowsay moo
      _____
     < moo >
      -----
@@ -440,7 +440,7 @@ disappears.
 
 .. code-block:: none
 
-    $ singularity exec library://sylabsed/examples/lolcow cowsay "Fresh from the library!"
+    $ apptainer exec library://sylabsed/examples/lolcow cowsay "Fresh from the library!"
      _________________________
     < Fresh from the library! >
      -------------------------
@@ -455,14 +455,14 @@ disappears.
 Running a container
 ===================
 
-Singularity containers contain :ref:`runscripts <runscript>`. These are user
+apptainer containers contain :ref:`runscripts <runscript>`. These are user
 defined scripts that define the actions a container should perform when someone
-runs it. The runscript can be triggered with the `run <cli/singularity_run.html>`_
+runs it. The runscript can be triggered with the `run <cli/apptainer_run.html>`_
 command, or simply by calling the container as though it were an executable.
 
 .. code-block:: none
 
-    $ singularity run lolcow_latest.sif
+    $ apptainer run lolcow_latest.sif
      _____________________________________
     / You have been selected for a secret \
     \ mission.                            /
@@ -490,7 +490,7 @@ This creates an ephemeral container that runs and then disappears.
 
 .. code-block:: none
 
-    $ singularity run library://sylabsed/examples/lolcow
+    $ apptainer run library://sylabsed/examples/lolcow
      ____________________________________
     / Is that really YOU that is reading \
     \ this?                              /
@@ -511,12 +511,12 @@ Files on the host are reachable from within the container.
 
     $ echo "Hello from inside the container" > $HOME/hostfile.txt
 
-    $ singularity exec lolcow_latest.sif cat $HOME/hostfile.txt
+    $ apptainer exec lolcow_latest.sif cat $HOME/hostfile.txt
 
     Hello from inside the container
 
 This example works because ``hostfile.txt`` exists in the user’s home directory.
-By default Singularity bind mounts ``/home/$USER``, ``/tmp``, and ``$PWD`` into
+By default apptainer bind mounts ``/home/$USER``, ``/tmp``, and ``$PWD`` into
 your container at runtime.
 
 You can specify additional directories to bind mount into your container with
@@ -527,15 +527,15 @@ system is bind mounted to the ``/mnt`` directory inside the container.
 
     $ echo "Drink milk (and never eat hamburgers)." > /data/cow_advice.txt
 
-    $ singularity exec --bind /data:/mnt lolcow_latest.sif cat /mnt/cow_advice.txt
+    $ apptainer exec --bind /data:/mnt lolcow_latest.sif cat /mnt/cow_advice.txt
     Drink milk (and never eat hamburgers).
 
-Pipes and redirects also work with Singularity commands just like they do with
+Pipes and redirects also work with apptainer commands just like they do with
 normal Linux commands.
 
 .. code-block:: none
 
-    $ cat /data/cow_advice.txt | singularity exec lolcow_latest.sif cowsay
+    $ cat /data/cow_advice.txt | apptainer exec lolcow_latest.sif cowsay
      ________________________________________
     < Drink milk (and never eat hamburgers). >
      ----------------------------------------
@@ -553,14 +553,14 @@ Build images from scratch
 
 .. _sec:buildimagesfromscratch:
 
-Singularity v3.0 and above produces immutable images in the Singularity Image File (SIF)
+apptainer v3.0 and above produces immutable images in the apptainer Image File (SIF)
 format. This ensures reproducible and verifiable images and allows for many
 extra benefits such as the ability to sign and verify your containers.
 
 However, during testing and debugging you may want an image format that is
 writable. This way you can ``shell`` into the image and install software and
 dependencies until you are satisfied that your container will fulfill your
-needs. For these scenarios, Singularity also supports the ``sandbox`` format
+needs. For these scenarios, apptainer also supports the ``sandbox`` format
 (which is really just a directory).
 
 Sandbox Directories
@@ -571,22 +571,22 @@ To build into a ``sandbox`` (container in a directory) use the
 
 .. code-block:: none
 
-    $ sudo singularity build --sandbox ubuntu/ library://ubuntu
+    $ sudo apptainer build --sandbox ubuntu/ library://ubuntu
 
 This command creates a directory called ``ubuntu/`` with an entire Ubuntu
-Operating System and some Singularity metadata in your current working
+Operating System and some apptainer metadata in your current working
 directory.
 
 You can use commands like ``shell``, ``exec`` , and ``run`` with this directory
-just as you would with a Singularity image. If you pass the ``--writable``
+just as you would with a apptainer image. If you pass the ``--writable``
 option when you use your container you can also write files within the sandbox
 directory (provided you have the permissions to do so).
 
 .. code-block:: none
 
-    $ sudo singularity exec --writable ubuntu touch /foo
+    $ sudo apptainer exec --writable ubuntu touch /foo
 
-    $ singularity exec ubuntu/ ls /foo
+    $ apptainer exec ubuntu/ ls /foo
     /foo
 
 Converting images from one format to another
@@ -600,16 +600,16 @@ so:
 
 .. code-block:: none
 
-    $ singularity build new-sif sandbox
+    $ apptainer build new-sif sandbox
 
 Doing so may break reproducibility if you have altered your sandbox outside of
 the context of a definition file, so you are advised to exercise care.
 
-Singularity Definition Files
+apptainer Definition Files
 ============================
 
 For a reproducible, verifiable and production-quality container you should
-build a SIF file using a Singularity definition file. This also makes it easy to
+build a SIF file using a apptainer definition file. This also makes it easy to
 add files, environment variables, and install custom software, and still start
 from your base of choice (e.g., the Container Library).
 
@@ -620,7 +620,7 @@ into the container from host system, etc.
 
 Here is an example of a definition file:
 
-.. code-block:: singularity
+.. code-block:: apptainer
 
     BootStrap: library
     From: ubuntu:16.04
@@ -645,9 +645,9 @@ named lolcow.def), you would call build like so:
 
 .. code-block:: none
 
-    $ sudo singularity build lolcow.sif lolcow.def
+    $ sudo apptainer build lolcow.sif lolcow.def
 
-In this example, the header tells Singularity to use a base Ubuntu 16.04 image
+In this example, the header tells apptainer to use a base Ubuntu 16.04 image
 from the Container Library.
 
 - The ``%post`` section executes within the container at build time after the base OS has been installed. The ``%post`` section is therefore the place to perform installations of new applications.
@@ -664,23 +664,23 @@ with base images from Docker Hub and use images directly from official
 repositories such as Ubuntu, Debian, CentOS, Arch, and BusyBox.  You can also
 use an existing container on your host system as a base.
 
-If you want to build Singularity images but you don't have administrative (root)
+If you want to build apptainer images but you don't have administrative (root)
 access on your build system, you can build images using the `Remote Builder <https://cloud.sylabs.io/builder>`_.
 
 This quickstart document just scratches the surface of all of the things you can
-do with Singularity!
+do with apptainer!
 
-If you need additional help or support, see https://singularity.hpcng.org/help.
+If you need additional help or support, see https://apptainer.hpcng.org/help.
 
 
 .. _installation-request:
 
-Singularity on a shared resource
+apptainer on a shared resource
 ---------------------------------
 
 Perhaps you are a user who wants a few talking points and background to share
 with your administrator.  Or maybe you are an administrator who needs to decide
-whether to install Singularity.
+whether to install apptainer.
 
 This document, and the accompanying administrator documentation provides answers
 to many common questions.
@@ -692,11 +692,11 @@ to this:
 
     Dear shared resource administrator,
 
-    We are interested in having Singularity (https://singularity.hpcng.org)
-    installed on our shared resource. Singularity containers will allow us to
+    We are interested in having apptainer (https://apptainer.hpcng.org)
+    installed on our shared resource. apptainer containers will allow us to
     build encapsulated environments, meaning that our work is reproducible and
     we are empowered to choose all dependencies including libraries, operating
-    system, and custom software. Singularity is already in use on many of the
+    system, and custom software. apptainer is already in use on many of the
     top HPC centers around the world. Examples include:
 
         Texas Advanced Computing Center
@@ -716,7 +716,7 @@ to this:
     Importantly, it has a vibrant team of developers, scientists, and HPC
     administrators that invest heavily in the security and development of the
     software, and are quick to respond to the needs of the community. To help
-    learn more about Singularity, I thought these items might be of interest:
+    learn more about apptainer, I thought these items might be of interest:
 
         - Security: A discussion of security concerns is discussed at
         \{admindocs\}/admin_quickstart.html
@@ -725,7 +725,7 @@ to this:
         \{admindocs\}/installation.html
 
     If you have questions about any of the above, you can contact one
-    of the sources listed at https://singularity.hpcng.org/help.  I can
+    of the sources listed at https://apptainer.hpcng.org/help.  I can
     do my best to facilitate this interaction if help is needed.
 
     Thank you kindly for considering this request!
