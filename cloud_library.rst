@@ -31,9 +31,9 @@ Making an account is easy, and straightforward:
 
 .. _creating_a_access_token:
 
------------------------
+-------------------------
 Creating an Access token
------------------------
+-------------------------
 
 Access tokens for pushing a container, and remote builder.
 

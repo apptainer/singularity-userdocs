@@ -52,9 +52,9 @@ via an environment variable or a command line option.
 +------------------------+-------------------------------------------+--------------------------+
 | **Encryption Method**  | **Environment Variable**                  | **Commandline Option**   |
 +------------------------+-------------------------------------------+--------------------------+
-| Passphrase             | ``apptainer_ENCRYPTION_PASSPHRASE``     | ``--passphrase``         |
+| Passphrase             | ``apptainer_ENCRYPTION_PASSPHRASE``       | ``--passphrase``         |
 +------------------------+-------------------------------------------+--------------------------+
-| Asymmetric Key (PEM)   | ``apptainer_ENCRYPTION_PEM_PATH``       | ``--pem-path``           | 
+| Asymmetric Key (PEM)   | ``apptainer_ENCRYPTION_PEM_PATH``         | ``--pem-path``           | 
 +------------------------+-------------------------------------------+--------------------------+
 
 The ``-e|--encrypt`` flag is implicitly set when the ``--passphrase`` or

@@ -4,7 +4,7 @@
 Contributing
 ============
 
-apptainer is an open source project, meaning we have the challenge of limited 
+Apptainer is an open source project, meaning we have the challenge of limited 
 resources. We are grateful for any support that you can offer. Helping other 
 users, raising issues, helping write documentation, or contributing code are all 
 ways to help!
