@@ -298,8 +298,8 @@ environment. Libraries are mounted during the execution of ``post`` and ``test``
 
 .. note::
 
-    This option can't be set via the environment variable `SINGULARITY_NV`.
-    Singularity will attempt to bind binaries listed in SINGULARITY_CONFDIR/nvliblist.conf,
+    This option can't be set via the environment variable `APPTAINER_NV`.
+    Apptainer will attempt to bind binaries listed in APPTAINER_CONFDIR/nvliblist.conf,
     if the mount destination doesn't exist inside the container, they are ignored.
 
 ``--rocm``
@@ -310,8 +310,8 @@ environment. Libraries are mounted during the execution of ``post`` and ``test``
 
 .. note::
 
-    This option can't be set via the environment variable `SINGULARITY_ROCM`.
-    Singularity will attempt to bind binaries listed in SINGULARITY_CONFDIR/rocmliblist.conf,
+    This option can't be set via the environment variable `APPTAINER_ROCM`.
+    Apptainer will attempt to bind binaries listed in APPTAINER_CONFDIR/rocmliblist.conf,
     if the mount destination doesn't exist inside the container, they are ignored.
 
 ``--bind``
@@ -324,7 +324,7 @@ Bind mount occurs during the execution of ``post`` and ``test`` sections.
 
 .. note::
 
-    This option can't be set via the environment variables `SINGULARITY_BIND` and `SINGULARITY_BINDPATH`
+    This option can't be set via the environment variables `APPTAINER_BIND` and `APPTAINER_BINDPATH`
 
 **Beware that the mount points must exist in the built image** prior to executing ``post`` and ``test``.
 So if you want to bind ``--bind /example`` and it doesn't exist in the bootstrap image, you have to
@@ -333,7 +333,7 @@ workaround that by adding a ``setup`` section:
 .. code-block:: none
 
     %setup
-      mkdir $SINGULARITY_ROOTFS/example
+      mkdir $APPTAINER_ROOTFS/example
 
 .. note::
 

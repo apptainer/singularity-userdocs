@@ -33,7 +33,7 @@ so.
 
 If you suspect you have found a vulnerability in apptainer, please
 follow the steps in our published `Security Policy
-<https://apptainer.hpcng.org/security-policy/>`__.
+<https://apptainer.org/security-policy/>`__.
 
 so that it can be disclosed, investigated, and fixed in an appropriate
 manner.
@@ -52,7 +52,7 @@ patches are backported to select versions of apptainer PRO, so that
 they can be deployed long-term where required. PRO users receive
 security fixes (without specific notification or detail) prior to
 public disclosure, as detailed in the `apptainer Community Security Policy
-<https://apptainer.hpcng.org/security-policy/>`__.
+<https://apptainer.org/security-policy/>`__.
 
 
 apptainer Runtime & User Privilege

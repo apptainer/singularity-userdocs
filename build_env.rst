@@ -10,8 +10,7 @@ Build Environment
 Overview
 --------
 
-You may wish to customize your build
-environment by doing things such as specifying a custom cache directory for images or
+You may wish to customize your build environment by doing things such as specifying a custom cache directory for images or
 sending your Docker Credentials to the registry endpoint. Here we will discuss these and other topics
 related to the build environment.
 
@@ -237,7 +236,7 @@ Remember to use ``-E`` option to pass the value of
 Encrypted Containers
 --------------------
 
-Beginning in apptainer 3.4.0 it is possible to build and run encrypted
+Beginning in singularity/apptainer 3.4.0 it is possible to build and run encrypted
 containers.  The containers are decrypted at runtime entirely in kernel space, 
 meaning that no intermediate decrypted data is ever present on disk or in 
 memory.  See :ref:`encrypted containers <encryption>` for more details.

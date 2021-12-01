@@ -5,8 +5,8 @@ import re
 
 class SingularityLexer(RegexLexer):
     """
-    Lexer for `Singularity definition files
-    <https://www.sylabs.io/guides/3.0/user-guide/definition_files.html>`_.
+    Lexer for `Apptainer definition files
+    <https://www.apptainer.org/guides/3.0/user-guide/definition_files.html>`_.
     """
 
     name = 'Singularity'

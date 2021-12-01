@@ -15,7 +15,7 @@ jobs:
       - name: Setup Go
         uses: actions/setup-go@v2
 
-      - name: Install Singularity dependencies
+      - name: Install Apptainer dependencies
         run: |
           sudo apt-get install -f -y build-essential libssl-dev uuid-dev squashfs-tools libseccomp-dev cryptsetup-bin libgpgme-dev
 
@@ -60,10 +60,10 @@ jobs:
 
       - name: Update website repo
         run: |
-          git clone git@github.com:hpcng/singularity-web.git ~/singularity-web
-          rm -rf ~/singularity-web/static/user-docs/${GITHUB_REF##*/}
-          cp -r _build/html ~/singularity-web/static/user-docs/${GITHUB_REF##*/}
-          cd ~/singularity-web
+          git clone git@github.com:apptainer/apptainer.org.git ~/apptainer.org
+          rm -rf ~//apptainer.org/static/user-docs/${GITHUB_REF##*/}
+          cp -r _build/html ~/apptainer.org/static/user-docs/${GITHUB_REF##*/}
+          cd ~/apptainer.org
           git add static/user-docs/${GITHUB_REF##*/}
           git commit -m "Update ${GITHUB_REF##*/} userdocs"
           git push

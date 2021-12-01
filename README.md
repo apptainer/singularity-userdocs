@@ -1,12 +1,10 @@
 # apptainer User Docs
 
 This repository holds user-facing documentation for the
-[apptainer](https://github.com/hpcng/apptainer) container runtime.
+[apptainer](https://github.com/apptainer) container runtime.
 
-This is a community project led by [HPCng](https:/hpcng.org), and
-contributions are always welcome! If you'd like to update or improve
-apptainer's documentation please follow the instructions below, and submit a
-PR on GitHub.
+This is a community project led by [Apptainer](https:/apptainer.org), under Linux Foundation umbrella (check [LF announcement](https://www.linuxfoundation.org/press-release/new-linux-foundation-project-accelerates-collaboration-on-container-systems-between-enterprise-and-high-performance-computing-environments/)). 
+Contributions are always welcome! If you'd like to update or improve apptainer's documentation please follow the instructions below, and submit a PR on GitHub.
 
 ## Setting up an environment to contribute
 
@@ -223,7 +221,7 @@ this, just run:
 
 ```bash
 git submodule update --remote --merge
-git add vendor/src/github.com/hpcng/apptainer
+git add vendor/src/github.com/apptainer
 git commit
 ```
 

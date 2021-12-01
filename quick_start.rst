@@ -18,7 +18,7 @@ If you need to request an installation on your shared resource, see the
 information to send to your system administrator.
 
 For any additional help or support contact the apptainer Community:
-https://apptainer.hpcng.org/help
+https://apptainer.org/help
 
 
 .. _quick-installation:
@@ -110,14 +110,14 @@ Download apptainer from a release
 ===================================
 
 You can download apptainer from one of the releases. To see a full list, visit
-`the GitHub release page <https://github.com/hpcng/apptainer/releases>`_.
+`the GitHub release page <https://github.com/apptainer/releases>`_.
 After deciding on a release to install, you can run the following commands to
 proceed with the installation.
 
 .. code-block:: none
 
     $ export VERSION={InstallationVersion} && # adjust this as necessary \
-        wget https://github.com/hpcng/apptainer/releases/download/v${VERSION}/apptainer-${VERSION}.tar.gz && \
+        wget https://github.com/apptainer/releases/download/v${VERSION}/apptainer-${VERSION}.tar.gz && \
         tar -xzf apptainer-${VERSION}.tar.gz && \
         cd apptainer-${VERSION}
 
@@ -670,7 +670,7 @@ access on your build system, you can build images using the `Remote Builder <htt
 This quickstart document just scratches the surface of all of the things you can
 do with apptainer!
 
-If you need additional help or support, see https://apptainer.hpcng.org/help.
+If you need additional help or support, see https://apptainer.org/help.
 
 
 .. _installation-request:
@@ -692,7 +692,7 @@ to this:
 
     Dear shared resource administrator,
 
-    We are interested in having apptainer (https://apptainer.hpcng.org)
+    We are interested in having apptainer (https://apptainer.org)
     installed on our shared resource. apptainer containers will allow us to
     build encapsulated environments, meaning that our work is reproducible and
     we are empowered to choose all dependencies including libraries, operating
@@ -725,7 +725,7 @@ to this:
         \{admindocs\}/installation.html
 
     If you have questions about any of the above, you can contact one
-    of the sources listed at https://apptainer.hpcng.org/help.  I can
+    of the sources listed at https://apptainer.org/help.  I can
     do my best to facilitate this interaction if help is needed.
 
     Thank you kindly for considering this request!

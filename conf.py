@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Singularity Container documentation build configuration file, created by
+# Apptainer Container documentation build configuration file, created by
 # sphinx-quickstart on Tue Aug 26 14:19:49 2014.
 #
 # This file is execfile()d with the current directory set to its
@@ -43,9 +43,9 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Singularity User Guide'
-author = u'Singularity Project Contributors'
-copyright = u'2017-2021, HPCng'
+project = u'Apptainer User Guide'
+author = u'Apptainer Project Contributors'
+copyright = u'2017-2021, Apptainer'
 
 # The version info for the project you're documenting, acts as replacement for
 # |version| and |release|, also used in various other places throughout the
@@ -116,8 +116,8 @@ html_theme_options = {
 
 html_context = {
     'display_github': True,
-    'github_user': 'hpcng',
-    'github_repo': 'singularity-userdocs',
+    'github_user': 'apptainer',
+    'github_repo': 'apptainer-userdocs',
     'github_version': 'master',
     'conf_py_path': '/',
 }
@@ -218,7 +218,7 @@ latex_elements = {
 # (source start file, target name, title,
 #  author, documentclass [howto, manual, or own class]).
 latex_documents = [
-  ('index', 'singularity-' + version + '-user-guide.tex', project, author, 'manual'),
+  ('index', 'apptainer-' + version + '-user-guide.tex', project, author, 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at the top of
@@ -262,7 +262,7 @@ epub_publisher = author
 epub_copyright = copyright
 
 # The basename for the epub file. It defaults to the project name.
-epub_basename = 'singularity-' + version + '-user-guide'
+epub_basename = 'apptainer-' + version + '-user-guide'
 
 # The HTML theme for the epub output.
 # Since the default themes are not optimized for small screen space,
@@ -272,7 +272,7 @@ epub_theme = 'epub'
 
 # The unique identifier of the text. This can be a ISBN number
 # or the project homepage.
-epub_identifier = 'https://github.com/hpcng/singularity-userdocs'
+epub_identifier = 'https://github.com/apptainer-userdocs'
 
 # The publication scheme for the epub_identifier. This is put in the Dublin Core metadata.
 # For published books the scheme is 'ISBN'. If you use the project homepage, 'URL' seems reasonable.
@@ -291,6 +291,6 @@ from sphinx.highlighting import lexers
 from pygments_singularity import SingularityLexer
 from pygments_json import JSONLexer
 from replacements import *
-# lexer for Singularity definition files (added here until it is upstreamed into Pygments).
+# lexer for Apptainer definition files (added here until it is upstreamed into Pygments).
 lexers['singularity'] = SingularityLexer(startinline=True)
 lexers['json'] = JSONLexer(startinline=True)

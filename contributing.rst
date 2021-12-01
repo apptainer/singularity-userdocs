@@ -29,7 +29,7 @@ apptainer on Slack
 ====================
 
 Many of our users come to Slack for quick help with an issue. You can find us at 
-`apptainer-container <https://apptainer-container.slack.com/>`_.
+`apptainer <https://apptainer-.slack.com/>`_.
 
 .. _contributing-to-documentation:
 
@@ -40,11 +40,11 @@ Raise an Issue
 --------------
 
 For general bugs/issues, you can open an issue `at the GitHub repo 
-<https://github.com/hpcng/apptainer/issues/new>`_. However, if you find a 
+<https://github.com/apptainer/issues/new>`_. However, if you find a 
 security  related issue/problem, please email the apptainer Security Team directly at 
-`apptainer-security@hpcng.org <mailto:apptainer-security@hpcng.org>`_. More information about the 
+`security@apptainer.org <mailto:security@apptainer.org>`_. More information about the 
 apptainer security policies and procedures can be found `here 
-<https://apptainer.hpcng.org/security-policy/>`__
+<https://apptainer.org/security-policy/>`__
 
 -------------------
 Write Documentation
@@ -56,10 +56,10 @@ on documentation. And there is very good reason for this: we want to share the
 love so nobody feels left out!
 
 You can contribute to the documentation by `raising an issue to suggest an 
-improvement <https://github.com/hpcng/apptainer-userdocs/issues/new>`_ or by 
+improvement <https://github.com/apptainer-userdocs/issues/new>`_ or by 
 sending a `pull request 
-<https://github.com/hpcng/apptainer-userdocs/compare>`_ on `our repository 
-for documentation <https://github.com/hpcng/apptainer-userdocs>`_.
+<https://github.com/apptainer-userdocs/compare>`_ on `our repository 
+for documentation <https://github.com/apptainer-userdocs>`_.
 
 The current documentation is generated with:
 
@@ -74,7 +74,7 @@ Other dependencies include:
 More information about contributing to the documentation, instructions on how to 
 install the dependencies, and how to generate the files can be obtained 
 `here 
-<https://github.com/hpcng/apptainer-userdocs/blob/master/README.md>`__.
+<https://github.com/apptainer-userdocs/blob/master/README.md>`__.
 
 For more information on using Git and GitHub to create a pull request suggesting 
 additions and edits to the docs, see the :ref:`section on contributing to the
@@ -93,16 +93,16 @@ means that you fork the main repo, create a new branch to make changes, and
 submit a pull request (PR) to the master branch.
 
 Check out our official `CONTRIBUTING.md 
-<https://github.com/hpcng/apptainer/blob/master/CONTRIBUTING.md>`_ document, 
+<https://github.com/apptainer/blob/master/CONTRIBUTING.md>`_ document, 
 which also includes a `code of conduct 
-<https://github.com/hpcng/apptainer/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
+<https://github.com/apptainer/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
 
 
 Step 1. Fork the repo
 =====================
 
 To contribute to apptainer, you should obtain a GitHub account and fork the 
-`apptainer <https://github.com/hpcng/apptainer>`_ repository. Once forked, 
+`apptainer <https://github.com/apptainer>`_ repository. Once forked, 
 clone your fork of the repo to your computer. (Obviously, you should replace 
 ``your-username`` with your GitHub username.)
 
@@ -198,7 +198,7 @@ will need to follow the next steps:
 
 .. code-block:: none
 
-    $ git remote add upstream https://github.com/hpcng/apptainer.git && # to add a new remote named "upstream" \
+    $ git remote add upstream https://github.com/apptainer.git && # to add a new remote named "upstream" \
         git checkout master && # or another branch to be updated \
         git pull upstream master && \
         git push origin master && # to update your fork \

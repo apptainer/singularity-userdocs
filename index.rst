@@ -3,7 +3,7 @@ User Guide
 ==========
 
 
-Welcome to the apptainer User Guide!
+Welcome to the Apptainer User Guide!
 
 This guide aims to give an introduction to apptainer, brief
 installation instructions, and cover topics relevant to users building

@@ -4,7 +4,7 @@
 Limiting container resources with cgroups
 =========================================
 
-Starting in apptainer 3.0, users have the ability to limit container resources
+Starting in singularity/apptainer 3.0, users have the ability to limit container resources
 using cgroups.
 
 --------
@@ -12,8 +12,7 @@ Overview
 --------
 
 apptainer cgroups support can be configured and utilized via a TOML file. An
-example file is typically installed at
-``/usr/local/etc/apptainer/cgroups/cgroups.toml`` (but may also be installed 
+example file is typically installed at ``/usr/local/etc/apptainer/cgroups/cgroups.toml`` (but may also be installed 
 in other locations such as ``/etc/apptainer/cgroups/cgroups.toml`` depending 
 on your installation method).  You can copy and edit this file to suit your 
 needs.  Then when you need to limit your container resources, apply the settings 

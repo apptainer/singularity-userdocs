@@ -36,7 +36,7 @@ A apptainer Definition file is divided into two parts:
    intended for ``/bin/sh``
 
 For more in-depth and practical examples of def files, see the `apptainer examples
-repository <https://github.com/hpcng/apptainer/tree/master/examples>`_
+repository <https://github.com/apptainer/tree/master/examples>`_
 
 For a comparison between Dockerfile and apptainer definition file,
 please see: :ref:`this section <sec:deffile-vs-dockerfile>`.
@@ -319,17 +319,11 @@ executed so that they are available during the build and configuration process.
 =====
 
 In some circumstances, it may be redundant to build different containers for
-<<<<<<< HEAD
-each app with nearly equivalent dependencies. apptainer supports installing
+each app with nearly equivalent dependencies. Apptainer supports installing
 apps within internal modules based on the concept of `Standard Container
 Integration Format (SCI-F) <https://sci-f.github.io/>`_
 All the apps are handled by apptainer at this point. More information on
 Apps :ref:`here <apps>`.
-=======
-each app with nearly equivalent dependencies. Singularity supports installing
-apps within internal modules based on the concept of the `Scientific Filesystem (SCIF) <https://sci-f.github.io/>`_.
-More information on defining and using SCIF Apps :ref:`here <apps>`.
->>>>>>> de5c4ef98283f80100a46cc06bf501c17096b71f
 
 %post
 =====
@@ -701,17 +695,17 @@ which to run easily. Each entry point can carry out a different task
 with its own environment, metadata etc., without the need for a
 collection of different containers.
 
-Singularity implements SCIF, and you can read more about how to use it
+Apptainer implements SCIF, and you can read more about how to use it
 below.
 
-SCIF is not specfic to Singularity. You can learn more about it at the
+SCIF is not specfic to Apptainer. You can learn more about it at the
 project's site: `<https://sci-f.github.io/>`_ which includes extended
 tutorials, the specification, and other information.
 
 SCIF %app* sections
 ===================
 
-SCIF apps within a Singularity container are created using ``%app*``
+SCIF apps within a Apptainer container are created using ``%app*``
 sections in a definition file. These ``%app*`` sections, which will impact the
 way the container runs a specific ``--app`` can exist alongside any of the 
 primary sections (i.e.  ``%post``,``%runscript``, ``%environment``, etc.).  As
