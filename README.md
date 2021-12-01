@@ -1,90 +1,62 @@
-# apptainer User Docs
+# Apptainer User Docs
 
 This repository holds user-facing documentation for the
-[apptainer](https://github.com/apptainer) container runtime.
+[Apptainer](https://github.com/apptainer) container runtime.
 
-This is a community project led by [Apptainer](https:/apptainer.org), under Linux Foundation umbrella (check [LF announcement](https://www.linuxfoundation.org/press-release/new-linux-foundation-project-accelerates-collaboration-on-container-systems-between-enterprise-and-high-performance-computing-environments/)). 
-Contributions are always welcome! If you'd like to update or improve apptainer's documentation please follow the instructions below, and submit a PR on GitHub.
+This is a community project led by [Apptainer](https:/apptainer.org), under Linux Foundation umbrella (check [LF announcement](https://www.linuxfoundation.org/press-release/new-linux-foundation-project-accelerates-collaboration-on-container-systems-between-enterprise-and-high-performance-computing-environments/)). Contributions are always welcome! If you'd like to update or improve Apptainer's documentation please follow the instructions below, and submit a PR on GitHub.
 
 ## Setting up an environment to contribute
 
-The apptainer user documentation is written in [reStructured Text (RST)
-format](http://docutils.sourceforge.net/rst.html) and generated using
-[Sphinx](https://pypi.org/project/Sphinx/). The
-[ReadTheDocs](https://readthedocs.org/) theme for Sphinx is used.
+The apptainer user documentation is written in [reStructured Text (RST) format](http://docutils.sourceforge.net/rst.html) and generated using [Sphinx](https://pypi.org/project/Sphinx/). The [ReadTheDocs](https://readthedocs.org/) theme for Sphinx is used.
 
-We use RST instead of markdown as it's better at handling large documents with
-many linked sections, and Sphinx makes it easy to produce online documentation
-as well as PDFs.
+We use RST instead of markdown as it's better at handling large documents with many linked sections, and Sphinx makes it easy to produce online documentation as well as PDFs.
 
 Sphinx is written in Python. To get setup to contribute:
 
-- Install Python 3.5 or newer, from your OS package manager or the [Python download
-  site](https://www.python.org/downloads/)
+- Install Python 3.5 or newer, from your OS package manager or the [Python download site](https://www.python.org/downloads/)
 - Use `pip3`to install Sphinx and the RTD theme package into your home directory:
 
 ```sh
 pip3 install --user Sphinx sphinx-rtd-theme
 ```
 
-If your version of python 3 does not come with `pip` / `pip3`, you may need to
-install a `python3-pip`package with `apt` or `yum`, or you can install pip
-follwing [the instructions here](https://pip.pypa.io/en/stable/installing/).
+If your version of python 3 does not come with `pip` / `pip3`, you may need to install a `python3-pip`package with `apt` or `yum`, or you can install pip follwing [the instructions here](https://pip.pypa.io/en/stable/installing/).
 
-You're all set! After this you will only need to use your favorite editor to
-work with the RST files.
+You're all set! After this you will only need to use your favorite editor to work with the RST files.
 
 ## How to edit & write RST
 
-A Sphinx documentation project has some structure that it's good to know before
-you dive in and start editing or writing content.
+A Sphinx documentation project has some structure that it's good to know before you dive in and start editing or writing content.
 
 ### Structure of the project
 
 This project maintains the following structure:
 
-1. `index.rst` : contains the front page of the online documentation and the
-   initial table of contents tree. Every documentation section is referenced by
-   a tag next to its name. (e.g. ``Quick Start <quick_start>``)
-2. All other `.rst`files are sections named to match reference tags described
-   before. So, for the `<quick_start>` reference in `index.rst` you'll find
-   a `quick_start.rst` file with the content for that section.
-3. The configuration used to build the final documentations from the `.rst`
-   files is set in the `conf.py` file.
+1. `index.rst` : contains the front page of the online documentation and the initial table of contents tree. Every documentation section is referenced by a tag next to its name. (e.g. ``Quick Start <quick_start>``)
+2. All other `.rst`files are sections named to match reference tags described before. So, for the `<quick_start>` reference in `index.rst` you'll find a `quick_start.rst` file with the content for that section.
+3. The configuration used to build the final documentations from the `.rst` files is set in the `conf.py` file.
 
 ### The conf.py file
 
-This file sets the themes, extensions, variables and naming scheme for output
-created when building the documentation with Sphinx. Some important elements
-include:
+This file sets the themes, extensions, variables and naming scheme for output created when building the documentation with Sphinx. Some important elements include:
 
-- `version` : Describes the current version of `apptainer` that the
-  documentation is for. We set version to the `major.minor` values, e.g. `3.5`,
-  as we are not creating separate documentation for each patch release.
-- `release`: Would be used to specify the current release of the software being
-  documented, including patch number, alpha tags etc. We leave this the same as
-  `version` as we only generate documentation for each `major.minor` version of
-  apptainer.
-- `html_theme`: Sets the theme to be used for HTML output. We are using the RTD
-  or Read The Docs theme.
+- `version` : Describes the current version of `apptainer` that the documentation is for. We set version to the `major.minor` values, e.g. `3.5`,as we are not creating separate documentation for each patch release.
+- `release`: Would be used to specify the current release of the software being documented, including patch number, alpha tags etc. We leave this the same as `version` as we only generate documentation for each `major.minor` version of Apptainer.
+- `html_theme`: Sets the theme to be used for HTML output. We are using the RTD or Read The Docs theme.
 - `html_context`: Options here control links back to our GitHub repository.
 - `html_logo`: The logo for the sidebar
 - `html_favicon`: The `favicon`for the entire project
 
 ### Cheatsheet to get started with reStructured (RST) Text
 
-RST is similar to Markdown, but has enough differences that you are likely to be
-caught out a few times until you are familiar with it. Let's look at some of the
-common things you need to do when writing or editing RST.
+RST is similar to Markdown, but has enough differences that you are likely to be caught out a few times until you are familiar with it. Let's look at some of the common things you need to do when writing or editing RST.
 
 #### 1. Create a section/subsection/subsubsection title
 
 Sections titles are defined by surrounding or underlining them
-with different characters. Each combination of overline/underline and character
-used represents a different level section.
+with different characters. Each combination of overline/underline and character used represents a different level section.
 
-- To create a main section title: A main section title is surrounded (above and
-  below) with `=` characters:
+- To create a main section title: A main section title is surrounded (above and below) with `=` characters:
 
 ```rst
 ================
@@ -109,31 +81,22 @@ New sub-sub section
 ===================
 ```
 
-- If you need more levels you can keep going: A sub-sub-sub-section is
-  underlined with `-` characters.
+- If you need more levels you can keep going: A sub-sub-sub-section is underlined with `-` characters.
 
 ```rst
 New sub-sub-sub section
 -----------------------
 ```
 
-RST doesn't actually set a specific order for the characters you use to
-underline and overline titles, as it will pick up the method used for the first
-title at each level. Following the convention above, though, will make it easy
-to see what level a section is wherever you are working in the documentation.
+RST doesn't actually set a specific order for the characters you use to underline and overline titles, as it will pick up the method used for the first title at each level. Following the convention above, though, will make it easy to see what level a section is wherever you are working in the documentation.
 
 #### 2. Reference sections
 
-To reference a section in an RST file you need to first create the reference
-above the title you need to reference, and second to reference it where you need
-the link to the reference section. When you build HTML or PDF output with Sphinx
-it will create the links for you, so the reader can jump around the
-documentation easily.
+To reference a section in an RST file you need to first create the reference above the title you need to reference, and second to reference it where you need the link to the reference section. When you build HTML or PDF output with Sphinx it will create the links for you, so the reader can jump around the documentation easily.
 
 ##### Step 1: Create the reference
 
-To create the reference on the section you need to link, you must specify a
-tag:
+To create the reference on the section you need to link, you must specify a tag:
 
 ```rst
 .. _build-docker:
@@ -143,9 +106,7 @@ Build from a Docker Image
 -------------------------
 ```
 
-This example will let you refer to the section titled "Build from a Docker
-Image" with the tag `build-docker`. Note that the tag here doesn't include the
-`_` that you have to prefix it with when creating the reference.
+This example will let you refer to the section titled "Build from a Docker Image" with the tag `build-docker`. Note that the tag here doesn't include the `_` that you have to prefix it with when creating the reference.
 
 ##### Step 2: Reference it
 
@@ -155,8 +116,7 @@ To reference a section you need to use this syntax:
 :ref:`read the section covering docker images <build-docker>`
 ```
 
-`:ref:` tells Sphinx that this is a reference. In between the `` ` ``you should
-provide text for the link, and then the tag you created above between `< >`.
+`:ref:` tells Sphinx that this is a reference. In between the `` ` ``you should provide text for the link, and then the tag you created above between `< >`.
 
 ### Further Reading
 
@@ -204,7 +164,7 @@ Output is written into `_build/epub` and the final EPUB will be named
 
 ## Generating CLI docs
 
-The apptainer CLI docs are generated using the actual code from apptainer.
+The Apptainer CLI docs are generated using the actual code from apptainer.
 To do this, we include apptainer as a git submodule, and whenever a Makefile
 target (like `make html`) is run, apptainer itself is compiled and used to
 generate the CLI docs.
@@ -225,5 +185,5 @@ git add vendor/src/github.com/apptainer
 git commit
 ```
 
-This will update the apptainer submodule to the latest version of the master
+This will update the Apptainer submodule to the latest version of the master
 branch.
