@@ -1466,7 +1466,7 @@ Building Containers for {Singularity} from OCI Images
 .. _cli-oci-bootstrap-agent:
 
 Working Locally from the {Singularity} Command Line: ``oci`` Bootstrap Agent
----------------------------------------------------------------------------
+----------------------------------------------------------------------------
 
 The example detailed in the previous section can be used to illustrate how a SIF file for use by {Singularity} can be created from the local cache - an albeit contrived example, that works because the {Singularity} cache is compliant with the OCI Image Layout Specification.
 
@@ -1522,7 +1522,7 @@ does not *uniquely* specify an image from which to bootstrap the ``build`` proce
 .. _cli-oci-archive-bootstrap-agent:
 
 Working Locally from the {Singularity} Command Line: ``oci-archive`` Bootstrap Agent
------------------------------------------------------------------------------------
+------------------------------------------------------------------------------------
 
 OCI archives, i.e., ``tar`` files obeying the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`, can seed creation of a container for {Singularity}. In this case, use is made of the ``oci-archive`` bootstrap agent.
 
