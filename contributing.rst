@@ -28,7 +28,7 @@ other users!
 ======================
 
 Many of our users come to Slack for quick help with an issue. You can find us at 
-`singularityce.slack.com <https://singularityce.slack.com/>`_.
+`singularity-container <https://singularity-container.slack.com/>`_.
 
 .. _contributing-to-documentation:
 
