@@ -13,7 +13,7 @@ def variableReplace(app, docname, source):
 # dictionary structure.
 variable_replacements = {
     "{InstallationVersion}" : "3.8.0",
-    "\{admindocs\}" : "https://singularity.hpcng.org/admin-docs/3.8"
+    "\{admindocs\}" : "https://singularity.hpcng.org/admin-docs/3.8",
     "\{version\}": "3.8",
     "\{adminversion\}": "3.8",
     # The 'Singularity' noun is now a replacement so we can have
