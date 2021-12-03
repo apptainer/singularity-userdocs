@@ -1,6 +1,6 @@
-.. _contributing:
+...  
 
-============
+
 Contributing
 ============
 
@@ -25,7 +25,7 @@ If you have been using apptainer and having good luck with it, join our
 <https://groups.google.com/a/lbl.gov/forum/#!forum/apptainer>`_  and help out 
 other users! 
 
-apptainer on Slack
+Apptainer on Slack
 ====================
 
 Many of our users come to Slack for quick help with an issue. You can find us at 
@@ -57,8 +57,7 @@ love so nobody feels left out!
 
 You can contribute to the documentation by `raising an issue to suggest an 
 improvement <https://github.com/apptainer-userdocs/issues/new>`_ or by 
-sending a `pull request 
-<https://github.com/apptainer-userdocs/compare>`_ on `our repository 
+sending a `pull request <https://github.com/apptainer-userdocs/compare>`_ on `our repository 
 for documentation <https://github.com/apptainer-userdocs>`_.
 
 The current documentation is generated with:

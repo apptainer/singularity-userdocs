@@ -3,15 +3,15 @@ from pygments.token import *
 from pygments.lexers.shell import BashLexer
 import re
 
-class SingularityLexer(RegexLexer):
+class ApptainerLexer(RegexLexer):
     """
     Lexer for `Apptainer definition files
     <https://www.apptainer.org/guides/3.0/user-guide/definition_files.html>`_.
     """
 
-    name = 'Singularity'
-    aliases = ['singularity']
-    filenames = ['*.def', 'Singularity']
+    name = 'Apptainer'
+    aliases = ['apptainer']
+    filenames = ['*.def', 'Apptainer']
     flags = re.IGNORECASE | re.MULTILINE | re.DOTALL
 
     _headers = r'^(\s)*(bootstrap|from|osversion|mirrorurl|include|registry|namespace|includecmd|fingerprints)(:)'

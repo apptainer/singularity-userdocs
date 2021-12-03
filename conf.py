@@ -52,7 +52,7 @@ copyright = u'2017-2021, Apptainer'
 # built documents.
 #
 # The short X.Y version.
-version = '3.8'
+version = '1.0'
 # We have not had separate docs per release version for some time, so set
 # release = version here.
 release = version
@@ -198,7 +198,7 @@ html_show_sourcelink = True
 #html_file_suffix = None
 
 # Output file base name for HTML help builder.
-htmlhelp_basename = 'singularity-' + version + '-user-guide'
+htmlhelp_basename = 'apptainer-' + version + '-user-guide'
 
 
 # -- Options for LaTeX output ---------------------------------------------
@@ -247,7 +247,7 @@ latex_logo = 'logo.png'
 
 # The title of the document. It defaults to the html_title option
 # but can be set independently for epub creation.
-epub_title = 'Singularity ' + version + ' User Guide'
+epub_title = 'Apptainer ' + version + ' User Guide'
 
 # The author of the document. This is put in the Dublin Core metadata.
 # It defaults to the author option.
@@ -272,7 +272,7 @@ epub_theme = 'epub'
 
 # The unique identifier of the text. This can be a ISBN number
 # or the project homepage.
-epub_identifier = 'https://github.com/apptainer-userdocs'
+epub_identifier = 'https://github.com/apptainer/apptainer-userdocs'
 
 # The publication scheme for the epub_identifier. This is put in the Dublin Core metadata.
 # For published books the scheme is 'ISBN'. If you use the project homepage, 'URL' seems reasonable.
@@ -288,9 +288,9 @@ epub_exclude_files = []
 
 sys.path.append(os.path.join(os.path.dirname(__file__), '.'))
 from sphinx.highlighting import lexers
-from pygments_singularity import SingularityLexer
+from pygments_apptainer import ApptainerLexer
 from pygments_json import JSONLexer
 from replacements import *
 # lexer for Apptainer definition files (added here until it is upstreamed into Pygments).
-lexers['singularity'] = SingularityLexer(startinline=True)
+lexers['apptainer'] = ApptainerLexer(startinline=True)
 lexers['json'] = JSONLexer(startinline=True)
