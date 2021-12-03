@@ -232,7 +232,7 @@ complete contents of that image.
 
     ``pull`` is a one-time-only operation that builds a SIF file corresponding to the image retrieved from Docker Hub. Updates to the image on Docker Hub will *not* be reflected in the *local* copy.
 
-In our example ``docker://sylabsio/lolcow``, ``sylabsio`` specifies a Docker Hub user, whereas ``lolcow`` is the name of the repository. Adding the option to specifiy an image tag, the generic version of the URI is ``docker://<user>/<repo-name>[:<tag>]``. `Repositories on Docker Hub <https://docs.docker.com/docker-hub/repos/>`_ provides additional details.
+In our example ``docker://sylabsio/lolcow``, ``sylabsio`` specifies a Docker Hub user, whereas ``lolcow`` is the name of the repository. Adding the option to specify an image tag, the generic version of the URI is ``docker://<user>/<repo-name>[:<tag>]``. `Repositories on Docker Hub <https://docs.docker.com/docker-hub/repos/>`_ provides additional details.
 
 
 .. _sec:using_prebuilt_private_images:
@@ -316,7 +316,7 @@ Based upon these exports, ``$ singularity pull docker://sylabsio/private`` allow
 
 .. note::
 
-    This approach for authentication supports both interactive and non-interactive sessions. However, the requirement for a plain-text password assigned to an envrionment variable, is the security compromise for this flexibility.
+    This approach for authentication supports both interactive and non-interactive sessions. However, the requirement for a plain-text password assigned to an environment variable, is the security compromise for this flexibility.
 
 .. note::
 
@@ -402,7 +402,7 @@ Alternatively, for purely interactive use, ``--docker-login`` is recommended:
     INFO:    Creating SIF file...
     INFO:    Build complete: pytorch_18.11-py3.sif
 
-Authentication aside, the outcome of the ``pull`` command is the {Singularity} container ``pytorch_18.11-py3.sif`` - i.e., a locally stored copy, that has been coverted to SIF.
+Authentication aside, the outcome of the ``pull`` command is the {Singularity} container ``pytorch_18.11-py3.sif`` - i.e., a locally stored copy, that has been converted to SIF.
 
 
 --------------------------------------------------------
@@ -746,7 +746,7 @@ enables authenticated use of the private image.
 
 .. note::
 
-    The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a priviledge escalation *required* to create {Singularity} containers via the ``build`` command.
+    The ``-E`` option is required to preserve the user's existing environment variables upon ``sudo`` invocation - a privilege escalation *required* to create {Singularity} containers via the ``build`` command.
 
 
 Remotely Bootstrapped and Built Containers
@@ -802,7 +802,7 @@ A copy of the SIF file created by the service remains in the Sylabs Cloud {Singu
 
 .. note::
 
-    The Sylabs Cloud is currently available as an Alpha Preview. In addition to the {Singularity} Library and Remote Builder, a Keystore service is also available. All three services make use of a *freemium* pricing model in supporting {Singularity} Community Edition. In contrast, all three services are included in SingularityPRO - an enterprise grade subscription for {Singularity} that is offered for a fee from Sylabs. For addtional details regarding the different offerings available for {Singularity}, please `consult the Sylabs website <https://www.sylabs.io/singularity/>`_.
+    The Sylabs Cloud is currently available as an Alpha Preview. In addition to the {Singularity} Library and Remote Builder, a Keystore service is also available. All three services make use of a *freemium* pricing model in supporting {Singularity} Community Edition. In contrast, all three services are included in SingularityPRO - an enterprise grade subscription for {Singularity} that is offered for a fee from Sylabs. For additional details regarding the different offerings available for {Singularity}, please `consult the Sylabs website <https://www.sylabs.io/singularity/>`_.
 
 
 .. _sec:mandatory_headers_docker_locally_bootstrapped_def_file:
@@ -995,7 +995,7 @@ Suppose now that a {Singularity} ``%runscript`` **section** is added to the defi
 
         date
 
-After conversion to SIF via the {Singularity} ``build`` command, exection of the resulting container produces the output:
+After conversion to SIF via the {Singularity} ``build`` command, execution of the resulting container produces the output:
 
 .. code-block:: none
 
@@ -1450,7 +1450,7 @@ The syntax for the ``oci`` bootstrap agent requires some elaboration, however. I
     blobs  index.json  oci-layout
 
 
-In other words, it is the ``$OCI_BUNDLE_DIR`` containing the data and metadata that collectively comprise the image layed out in accordance with the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>` - the same data and metadata that are assembled into a single SIF file through the ``build`` process. However,
+In other words, it is the ``$OCI_BUNDLE_DIR`` containing the data and metadata that collectively comprise the image laid out in accordance with the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>` - the same data and metadata that are assembled into a single SIF file through the ``build`` process. However,
 
 .. code-block:: none
 
@@ -1536,7 +1536,7 @@ In the previous section, an OCI archive was created from locally available OCI b
 
 Thus ``https`` (and ``http``) are additional bootstrap agents available to seed development of containers for {Singularity}.
 
-It is worth noting that the OCI image specfication compliant contents of this archive are:
+It is worth noting that the OCI image specification compliant contents of this archive are:
 
 .. code-block:: none
 
@@ -1668,8 +1668,8 @@ Applying ``build`` as follows
 results in the SIF container ``lolcow_oci_tarfile.sif``.
 
 
-Working with Definition Files: Additonal Considerations
--------------------------------------------------------
+Working with Definition Files: Additional Considerations
+--------------------------------------------------------
 
 In working with definition files, the following additional considerations arise:
 
@@ -1737,7 +1737,7 @@ Best Practices
 
     Docker containers *allow for* privilege escalation. In a ``Dockerfile``, for example, the ``USER`` instruction allows for user and/or group settings to be made in the Linux operating environment. The trust model in {Singularity} is completely different: {Singularity} allows untrusted users to run untrusted containers in a trusted way. Because {Singularity} containers embodied as SIF files execute in *user* space, there is no possibility for privilege escalation. In other words, those familiar with Docker, should *not* expect access to elevated user permissions; and as a corollary, use of the ``USER`` instruction must be *avoided*.
 
-    {Singularity} does, however, allow for fine-grained control over the permissions that containers require for execution. Given that Singularilty executes in user space, it is not surprising that permissions need to be externally established *for* the container through use of the ``capability`` command. :ref:`Detailed elsewhere in this documentation <security-options>`, {Singularity} allows users and/or groups to be granted/revoked authorized capabilties. Owing to {Singularity}'s trust model, this fundamental best practice can be stated as follows:
+    {Singularity} does, however, allow for fine-grained control over the permissions that containers require for execution. Given that Singularilty executes in user space, it is not surprising that permissions need to be externally established *for* the container through use of the ``capability`` command. :ref:`Detailed elsewhere in this documentation <security-options>`, {Singularity} allows users and/or groups to be granted/revoked authorized capabilities. Owing to {Singularity}'s trust model, this fundamental best practice can be stated as follows:
 
         "Employ ``singularity capability`` to manage execution privileges for containers"
 
@@ -1785,7 +1785,7 @@ Best Practices
 
     8. Use of plain-text passwords for authentication
 
-    For obvious reasons, it is desireable to completely *avoid* use of plain-text passwords. Therefore, for interactive sessions requiring authentication, use of the ``--docker-login`` option for {Singularity}'s ``pull`` and ``build`` commands is *recommended*. At the present time, the *only* option available for non-interactive use is to :ref:`embed plain-text passwords into environment variables <sec:authentication_via_environment_variables>`. Because the Sylabs Cloud {Singularity} Library employs `time-limited API tokens for authentication <https://cloud.sylabs.io/auth>`_, use of SIF containers hosted through this service provides a more secure means for both interactive *and* non-interactive use. This best practice is:
+    For obvious reasons, it is desirable to completely *avoid* use of plain-text passwords. Therefore, for interactive sessions requiring authentication, use of the ``--docker-login`` option for {Singularity}'s ``pull`` and ``build`` commands is *recommended*. At the present time, the *only* option available for non-interactive use is to :ref:`embed plain-text passwords into environment variables <sec:authentication_via_environment_variables>`. Because the Sylabs Cloud {Singularity} Library employs `time-limited API tokens for authentication <https://cloud.sylabs.io/auth>`_, use of SIF containers hosted through this service provides a more secure means for both interactive *and* non-interactive use. This best practice is:
 
         "Avoid use of plain-text passwords"
 
