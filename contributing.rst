@@ -1,8 +1,8 @@
-...  
+.. _contributing:
 
 
-Contributing
-============
+Contributing to Apptainer
+=========================
 
 Apptainer is an open source project, meaning we have the challenge of limited 
 resources. We are grateful for any support that you can offer. Helping other 
@@ -17,19 +17,20 @@ This is a huge endeavor, and your help would be greatly appreciated! Post to
 online communities about apptainer, and request that your distribution vendor, 
 service provider, and system administrators include apptainer for you!
 
-apptainer Google Group
-========================
+============
+Google Group
+============
 
 If you have been using apptainer and having good luck with it, join our 
-`Google Group 
-<https://groups.google.com/a/lbl.gov/forum/#!forum/apptainer>`_  and help out 
+`Google Group <https://groups.google.com/a/lbl.gov/forum/#!forum/apptainer>`_ and help out 
 other users! 
 
-Apptainer on Slack
-====================
+=====
+Slack
+=====
 
 Many of our users come to Slack for quick help with an issue. You can find us at 
-`apptainer <https://apptainer-.slack.com/>`_.
+`apptainer <https://apptainer.slack.com/>`_.
 
 .. _contributing-to-documentation:
 
@@ -39,12 +40,10 @@ Many of our users come to Slack for quick help with an issue. You can find us at
 Raise an Issue
 --------------
 
-For general bugs/issues, you can open an issue `at the GitHub repo 
-<https://github.com/apptainer/issues/new>`_. However, if you find a 
+For general bugs/issues, you can open an issue `at the GitHub repo <https://github.com/apptainer/issues/new>`_. However, if you find a 
 security  related issue/problem, please email the apptainer Security Team directly at 
 `security@apptainer.org <mailto:security@apptainer.org>`_. More information about the 
-apptainer security policies and procedures can be found `here 
-<https://apptainer.org/security-policy/>`__
+apptainer security policies and procedures can be found `here <https://apptainer.org/security-policy/>`__
 
 -------------------
 Write Documentation
@@ -72,8 +71,7 @@ Other dependencies include:
 
 More information about contributing to the documentation, instructions on how to 
 install the dependencies, and how to generate the files can be obtained 
-`here 
-<https://github.com/apptainer-userdocs/blob/master/README.md>`__.
+`here <https://github.com/apptainer-userdocs/blob/master/README.md>`__.
 
 For more information on using Git and GitHub to create a pull request suggesting 
 additions and edits to the docs, see the :ref:`section on contributing to the
@@ -96,7 +94,7 @@ Check out our official `CONTRIBUTING.md
 which also includes a `code of conduct 
 <https://github.com/apptainer/blob/master/CONTRIBUTING.md#code-of-conduct>`_.
 
-
+=====================
 Step 1. Fork the repo
 =====================
 

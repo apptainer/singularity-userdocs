@@ -10,29 +10,24 @@ Support for Docker and OCI
 Overview
 --------
 
-Effort has been expended in developing `Docker <https://www.docker.com/>`_ containers. Deconstructed into one or more compressed archives (typically split across multiple segments, or **layers** as they are known in Docker parlance) plus some metadata, images for these containers are built from specifications known as ``Dockerfiles``. The public `Docker Hub <https://hub.docker.com/>`_, as well as various private registries, host images for use as Docker containers. apptainer has from the outset emphasized the importance of interoperability with Docker. As a consequence, this section of the apptainer User Docs first makes its sole focus interoperabilty with Docker. In so doing, the following topics receive attention here:
+Effort has been expended in developing `Docker <https://www.docker.com/>`_ containers. Deconstructed into one or more compressed archives 
+(typically split across multiple segments, or **layers** as they are known in Docker parlance) plus some metadata, images for these containers
+are built from specifications known as ``Dockerfiles``. The public `Docker Hub <https://hub.docker.com/>`_, as well as various private registries, 
+host images for use as Docker containers. Apptainer has from the outset emphasized the importance of interoperability with Docker. As a consequence, 
+this section of the apptainer User Docs first makes its sole focus interoperabilty with Docker. In so doing, the following topics receive attention here:
+- Application of apptainer action commands on ephemeral containers derived from public Docker images
+- Converting public Docker images into apptainer's native format for containerization, namely the apptainer Image Format (SIF)
+- Authenticated application of apptainer commands to containers derived from private Docker images
+- Authenticated application of apptainer commands to containers derived from private Docker images originating from private registries
+- Building SIF containers for apptainer via the command line or definition files from a variety of sources for Docker images and image archives
 
-    - Application of apptainer action commands on ephemeral containers derived from public Docker images
-
-    - Converting public Docker images into apptainer's native format for containerization, namely the apptainer Image Format (SIF)
-
-    - Authenticated application of apptainer commands to containers derived from private Docker images
-
-    - Authenticated application of apptainer commands to containers derived from private Docker images originating from private registries
-
-    - Building SIF containers for apptainer via the command line or definition files from a variety of sources for Docker images and image archives
-
-The second part of this section places emphasis upon apptainer's interoperability with open standards emerging from the `Open Containers Initiative <https://www.opencontainers.org/>`_ (OCI). Specifically, in documenting apptainer interoperability as it relates to the OCI Image Specification, the following topics are covered:
-
-    - Compliance with the OCI Image Layout Specification
-
-    - OCI-compliant caching in apptainer
-
-    - Acquiring OCI images and image archives via apptainer
-
-    - Building SIF containers for apptainer via the command line or definition files from a variety of sources for OCI images and image archives
-
-The section closes with a brief enumeration of emerging best practices plus consideration of troubleshooting common issues.
+The second part of this section places emphasis upon apptainer's interoperability with open standards emerging from the `Open Containers Initiative <https://www.opencontainers.org/>`_ (OCI). 
+Specifically, in documenting apptainer interoperability as it relates to the OCI Image Specification, the following topics are covered:
+- Compliance with the OCI Image Layout Specification
+- OCI-compliant caching in apptainer
+- Acquiring OCI images and image archives via apptainer
+- Building SIF containers for apptainer via the command line or definition files from a variety of sources for OCI images and image archives
+he section closes with a brief enumeration of emerging best practices plus consideration of troubleshooting common issues.
 
 
 .. _sec:action_commands_prebuilt_public_docker_images:
@@ -1641,12 +1636,12 @@ The resulting SIF file can be validated as follows, for example:
 
     In working with remotely hosted OCI image archives then, a two-step workflow is *required* to produce SIF files for native use by apptainer:
 
-        1. Transfer of the image to local storage via the ``https`` (or ``http``) bootstrap agent. The apptainer ``pull`` command achieves this.
-
-        2. Creation of a SIF file via the ``oci-archive`` bootstrap agent. The apptainer ``build`` command achieves this.
-
-Established with nothing more than a Web server then, any individual, group or organization, *could* host OCI archives. This might be particularly appealing, for example, for organizations having security requirements that preclude access to public registries such as Docker Hub. Other that having a very basic hosting capability, OCI archives need only comply to the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`.
-
+    1. Transfer of the image to local storage via the ``https`` (or ``http``) bootstrap agent. The apptainer ``pull`` command achieves this.
+    2. Creation of a SIF file via the ``oci-archive`` bootstrap agent. The apptainer ``build`` command achieves this.
+    
+    Established with nothing more than a Web server then, any individual, group or organization, *could* host OCI archives. This might be particularly appealing, 
+    
+    for example, for organizations having security requirements that preclude access to public registries such as Docker Hub. Other that having a very basic hosting capability, OCI archives need only comply to the OCI Image Layout Specification :ref:`as discussed previously <misc:OCI_Image_Layout_Specification>`.
 
 Working with Definition Files: Mandatory Header Keywords
 --------------------------------------------------------
@@ -1727,13 +1722,10 @@ Working with Definition Files: Additonal Considerations
 
 In working with definition files, the following additional considerations arise:
 
-    - In addition to the mandatory header keywords documented above, :ref:`optional header keywords <sec:optional_headers_def_files>` are possible additions to OCI bundle and/or archive bootstrap definition files.
-
-    - As distribution of OCI bundles and/or archives is out of the Initiative's scope, so is the authentication required to access private images and/or registries.
-
-    - The direction of execution follows along the same lines :ref:`as described above <sec:def_files_execution>`. Of course, the SIF container's metadata will make clear the ``runscript`` through application of the ``inspect`` command :ref:`as described previously <sec:inspect_container_metadata>`.
-
-    - Container metadata will also reveal whether or not a given SIF file was bootstrapped from an OCI bundle or archive; for example, below it is evident that an OCI archive was employed to bootstrap creation of the SIF file:
+- In addition to the mandatory header keywords documented above, :ref:`optional header keywords <sec:optional_headers_def_files>` are possible additions to OCI bundle and/or archive bootstrap definition files.
+- As distribution of OCI bundles and/or archives is out of the Initiative's scope, so is the authentication required to access private images and/or registries.
+- The direction of execution follows along the same lines :ref:`as described above <sec:def_files_execution>`. Of course, the SIF container's metadata will make clear the ``runscript`` through application of the ``inspect`` command :ref:`as described previously <sec:inspect_container_metadata>`.
+- Container metadata will also reveal whether or not a given SIF file was bootstrapped from an OCI bundle or archive; for example, below it is evident that an OCI archive was employed to bootstrap creation of the SIF file:
 
 .. code-block:: javascript
 
@@ -1895,7 +1887,7 @@ apptainer Definition file vs. Dockerfile
 On the following table, you can see which are the similarities/differences between a Dockerfile and a apptainer definition file:
 
 ================ ========================== ================ =============================
-apptainer Definition file                 Dockerfile
+apptainer Definition file                   Dockerfile
 ------------------------------------------- ----------------------------------------------
 Section          Description                Section          Description
 ================ ========================== ================ =============================
