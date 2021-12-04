@@ -597,9 +597,8 @@ This indicates that ``godlovedc/lolcow:latest`` has been cached locally by Docke
 
 results in ``lolcow_from_docker_cache.sif`` for native use by apptainer. There are two important differences in syntax evident in the above ``build`` command:
 
-    1. The ``docker`` part of the URI has been appended by ``daemon``. This ensures apptainer seek an image locally cached by Docker to bootstrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
-
-    2. ``sudo`` is prepended to the ``build`` command for apptainer; this is required as the Docker daemon executes as ``root``. However, if the user issuing the ``build`` command is a member of the ``docker`` Linux group, then ``sudo`` need not be prepended.
+1. The ``docker`` part of the URI has been appended by ``daemon``. This ensures apptainer seek an image locally cached by Docker to bootstrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
+2. ``sudo`` is prepended to the ``build`` command for apptainer; this is required as the Docker daemon executes as ``root``. However, if the user issuing the ``build`` command is a member of the ``docker`` Linux group, then ``sudo`` need not be prepended.
 
 .. note::
 
@@ -620,9 +619,9 @@ apptainer containers can also be built at the command line from Docker images st
 
 The ``lolcow.tar`` file employed below in this example can be produced by making use of an environment in which Docker is available as follows:
 
-    1. Obtain a local copy of the image from Docker Hub via ``sudo docker pull godlovedc/lolcow``. Issuing the following command confirms that a copy of the desired image is available locally:
+1. Obtain a local copy of the image from Docker Hub via ``sudo docker pull godlovedc/lolcow``. Issuing the following command confirms that a copy of the desired image is available locally:
 
-    .. code-block:: none
+.. code-block:: none
 
         $ sudo docker images
         REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
@@ -692,9 +691,8 @@ Through use of the ``docker-archive`` bootstrap agent, a SIF file (``lolcow_tar.
 
 There are two important differences in syntax evident in the above ``build`` command:
 
-    1. The ``docker`` part of the URI has been appended by ``archive``. This ensures apptainer seek a Docker-format image archive stored locally as ``lolcow.tar`` to bootstrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
-
-    2. ``sudo`` is *not* prepended to the ``build`` command for apptainer. This is *not* required if the executing user has the appropriate access privileges to the stored file.
+1. The ``docker`` part of the URI has been appended by ``archive``. This ensures apptainer seek a Docker-format image archive stored locally as ``lolcow.tar`` to bootstrap the conversion process to SIF, as opposed to attempting to retrieve an image remotely hosted via Docker Hub.
+2. ``sudo`` is *not* prepended to the ``build`` command for apptainer. This is *not* required if the executing user has the appropriate access privileges to the stored file.
 
 .. note::
 
@@ -1081,13 +1079,10 @@ To *preserve* use of ``ENTRYPOINT`` and/or ``CMD`` as defined in the ``Dockerfil
 
 To summarize execution precedence:
 
-    1. If present, the ``%runscript`` section of the apptainer definition file is executed
-
-    2. If ``IncludeCmd`` is a non-empty keyword entry in the header of the apptainer definition file, then ``CMD`` from the ``Dockerfile`` is executed
-
-    3. If present in the ``Dockerfile``, ``ENTRYPOINT`` appended by ``CMD`` (if present) are executed in sequence
-
-    4. Execution of the ``bash`` shell is defaulted to
+1. If present, the ``%runscript`` section of the apptainer definition file is executed
+2. If ``IncludeCmd`` is a non-empty keyword entry in the header of the apptainer definition file, then ``CMD`` from the ``Dockerfile`` is executed
+3. If present in the ``Dockerfile``, ``ENTRYPOINT`` appended by ``CMD`` (if present) are executed in sequence
+4. Execution of the ``bash`` shell is defaulted to
 
 .. TODO-ND Test CMD vs ENTRYPOINT via a documented example
 
@@ -1149,9 +1144,8 @@ From this Bourne shell script, it is evident that only an ``ENTRYPOINT`` is deta
 
 The above Bourne shell script also illustrates how the following scenarios will be handled:
 
-    - A ``CMD`` only entry in the ``Dockerfile``
-
-    - **Both** ``ENTRYPOINT`` *and* ``CMD`` entries in the ``Dockerfile``
+- A ``CMD`` only entry in the ``Dockerfile``
+- **Both** ``ENTRYPOINT`` *and* ``CMD`` entries in the ``Dockerfile``
 
 From this level of detail, use of ``ENTRYPOINT`` *and/or* ``CMD`` in a Dockerfile has been made **explicit**. These remain examples within :ref:`the third case of execution precedence <sec:def_files_execution_SUB_execution_precedence>`.
 
@@ -1260,11 +1254,9 @@ Compliance with the OCI Image Layout Specification
 
 From the perspective of the directory ``$HOME/.apptainer/cache/oci``, this cache implementation in apptainer complies with the `OCI Image Layout Specification <https://github.com/opencontainers/image-spec/blob/master/image-layout.md>`_:
 
-    - ``blobs`` directory - contains content addressable data, that is otherwise considered opaque
-
-    - ``oci-layout`` file - a mandatory JSON object file containing both mandatory and optional content
-
-    - ``index.json`` file - a mandatory JSON object file containing an index of the images
+- ``blobs`` directory - contains content addressable data, that is otherwise considered opaque
+- ``oci-layout`` file - a mandatory JSON object file containing both mandatory and optional content
+- ``index.json`` file - a mandatory JSON object file containing an index of the images
 
 Because one or more images is 'bundled' here, the directory ``$HOME/.apptainer/cache/oci`` is referred to as the ``$OCI_BUNDLE_DIR``.
 
@@ -1779,71 +1771,41 @@ Best Practices
 
 apptainer can make use of most Docker and OCI images without complication. However, there exist  known cases where complications can arise. Thus a brief compilation of best practices follows below.
 
-    1. Accounting for trust
+1. Accounting for trust
+Docker containers *allow for* privilege escalation. In a ``Dockerfile``, for example, the ``USER`` instruction allows for user and/or group settings to be made in the Linux operating environment. The trust model in apptainer is completely different: apptainer allows untrusted users to run untrusted containers in a trusted way. Because apptainer containers embodied as SIF files execute in *user* space, there is no possibility for privilege escalation. In other words, those familiar with Docker, should *not* expect access to elevated user permissions; and as a corollary, use of the ``USER`` instruction must be *avoided*.
+apptainer does, however, allow for fine-grained control over the permissions that containers require for execution. Given that Singularilty executes in user space, it is not surprising that permissions need to be externally established *for* the container through use of the ``capability`` command. :ref:`Detailed elsewhere in this documentation <security-options>`, apptainer allows users and/or groups to be granted/revoked authorized capabilties. Owing to apptainer's trust model, this fundamental best practice can be stated as follows:
 
-    Docker containers *allow for* privilege escalation. In a ``Dockerfile``, for example, the ``USER`` instruction allows for user and/or group settings to be made in the Linux operating environment. The trust model in apptainer is completely different: apptainer allows untrusted users to run untrusted containers in a trusted way. Because apptainer containers embodied as SIF files execute in *user* space, there is no possibility for privilege escalation. In other words, those familiar with Docker, should *not* expect access to elevated user permissions; and as a corollary, use of the ``USER`` instruction must be *avoided*.
+"Employ ``apptainer capability`` to manage execution privileges for containers"
+2. Maintaining containers built from Docker and OCI images
+SIF files created by bootstrapping from Docker or OCI images are, of course, only as current as the most recent apptainer ``pull``. Subsequent retrievals *may* result in containers that are built and/or behave differently, owing to changes in the corresponding ``Dockerfile``. A prudent practice then, for maintaining containers of value, is based upon use of apptainer definition files. Styled and implemented after a ``Dockerfile`` retrieved at some point in time, use of ``diff`` on subsequent versions of this same file, can be employed to inform maintenance of the corresponding apptainer definition file. Understanding build specifications at this level of detail places container creators in a much more sensible position prior to signing with an encrypted key. Thus the best practice is:
 
-    apptainer does, however, allow for fine-grained control over the permissions that containers require for execution. Given that Singularilty executes in user space, it is not surprising that permissions need to be externally established *for* the container through use of the ``capability`` command. :ref:`Detailed elsewhere in this documentation <security-options>`, apptainer allows users and/or groups to be granted/revoked authorized capabilties. Owing to apptainer's trust model, this fundamental best practice can be stated as follows:
+"Maintain detailed build specifications for containers, rather than opaque runtimes"
+3. Working with environment variables
 
-        "Employ ``apptainer capability`` to manage execution privileges for containers"
-
-
-    2. Maintaining containers built from Docker and OCI images
-
-    SIF files created by bootstrapping from Docker or OCI images are, of course, only as current as the most recent apptainer ``pull``. Subsequent retrievals *may* result in containers that are built and/or behave differently, owing to changes in the corresponding ``Dockerfile``. A prudent practice then, for maintaining containers of value, is based upon use of apptainer definition files. Styled and implemented after a ``Dockerfile`` retrieved at some point in time, use of ``diff`` on subsequent versions of this same file, can be employed to inform maintenance of the corresponding apptainer definition file. Understanding build specifications at this level of detail places container creators in a much more sensible position prior to signing with an encrypted key. Thus the best practice is:
-
-        "Maintain detailed build specifications for containers, rather than opaque runtimes"
-
-    3. Working with environment variables
-
-    In a ``Dockerfile``, `environment variables are declared <https://docs.docker.com/engine/reference/builder/#env>`_ as key-value pairs through use of the ``ENV`` instruction. Declaration in the build specification for a container is advised, rather than relying upon user
-    (e.g., ``.bashrc``, ``.profile``) or system-wide configuration files for interactive shells. Should a ``Dockerfile`` be converted into a definition file for apptainer, as suggested in the container-maintenance best practice above, :ref:`environment variables can be explicitly represented <definition-files>` as ``ENV`` instructions that have been converted into entries in the ``%environment`` section, respectively. This best practice can be stated as follows:
-
-
-    "Define environment variables in container specifications, not interactive shells"
-
-
-    4. Installation to ``/root``
-
-    Docker and OCI container's are typically run as the ``root`` user; therefore, ``/root`` (this user's ``$HOME`` directory) will be the installation target when ``$HOME`` is specified. Installation to ``/root`` may prove workable in some circumstances - e.g., while the container is executing, or if read-only access is required to this directory after installation. In general, however, because this is the ``root`` directory conventional wisdom suggests this practice be avoided. Thus the best practice is:
-
-        "Avoid installations that make use of ``/root``."
-
-    5. Read-only ``/`` filesystem
-
-    apptainer mounts a container's ``/`` filesystem in read-only mode. To ensure a Docker container meets apptainer's requirements, it may prove useful to execute ``docker run --read-only --tmpfs /run --tmpfs /tmp godlovedc/lolcow``. The best practioce here is:
-
-        "Ensure Docker containers meet apptainer's read-only ``/`` filesystem requirement"
-
-    6. Installation to ``$HOME`` or ``$TMP``
-
-    In making use of apptainer, it is common practice for ``$USER`` to be automatically mounted on ``$HOME``, and for ``$TMP`` also to be mounted. To avoid the side effects (e.g., 'missing' or conflicting files) that might arise as a consequence of executing ``mount`` commands then, the best practice is:
-
-        "Avoid placing container 'valuables' in ``$HOME`` or ``$TMP``."
-
-    A detailed review of the container's build specification (e.g., its ``Dockerfile``) may be required to ensure this best practice is adhered to.
-
-    7. Current library caches
-
-    Irrespective of containers, `a common runtime error <https://codeyarns.com/2014/01/14/how-to-fix-shared-object-file-error/>`_ stems from failing to locate shared libraries required for execution. Suppose now there exists a requirement for symbolically linked libraries *within* a apptainer container. If the builld process that creates the container fails to update the cache, then it is quite likely that (read-only) execution of this container will result in the common error of missing libraries. Upon investigation, it is likely revealed that the library exists, just not the required symbolic links. Thus the best practice is:
-
-        "Ensure calls to ``ldconfig`` are executed towards the *end* of ``build`` specifications (e.g., ``Dockerfile``), so that the library cache is updated when the container is created."
-
-    8. Use of plain-text passwords for authentication
-
-    For obvious reasons, it is desireable to completely *avoid* use of plain-text passwords. Therefore, for interactive sessions requiring authentication, use of the ``--docker-login`` option for apptainer's ``pull`` and ``build`` commands is *recommended*. At the present time, the *only* option available for non-interactive use is to :ref:`embed plain-text passwords into environment variables <sec:authentication_via_environment_variables>`. Because the Sylabs Cloud apptainer Library employs `time-limited API tokens for authentication <https://cloud.sylabs.io/auth>`_, use of SIF containers hosted through this service provides a more secure means for both interactive *and* non-interactive use. This best practice is:
-
-        "Avoid use of plain-text passwords"
-
-    9. Execution ambiguity
-
-    Short of converting an *entire* ``Dockerfile`` into a apptainer definition file, informed specification of the ``%runscript`` entry in the def file *removes* any ambiguity associated with ``ENTRYPOINT`` :ref:`versus <sec:def_files_execution>` ``CMD`` and ultimately :ref:`execution precedence <sec:def_files_execution>`. Thus the best practice is:
-
-        "Employ apptainer's ``%runscript`` by default to avoid execution ambiguity"
-
-    Note that the ``ENTRYPOINT`` can be bypassed completely, e.g., ``docker run -i -t --entrypoint /bin/bash godlovedc/lolcow``. This allows for an interactive session within the container, that may prove useful in validating the built runtime.
-
-Best practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details.
+In a ``Dockerfile``, `environment variables are declared <https://docs.docker.com/engine/reference/builder/#env>`_ as key-value pairs through use of the ``ENV`` instruction. Declaration in the build specification for a container is advised, rather than relying upon user
+(e.g., ``.bashrc``, ``.profile``) or system-wide configuration files for interactive shells. Should a ``Dockerfile`` be converted into a definition file for apptainer, as suggested in the container-maintenance best practice above, :ref:`environment variables can be explicitly represented <definition-files>` as ``ENV`` instructions that have been converted into entries in the ``%environment`` section, respectively. This best practice can be stated as follows:
+"Define environment variables in container specifications, not interactive shells"
+4. Installation to ``/root``
+Docker and OCI container's are typically run as the ``root`` user; therefore, ``/root`` (this user's ``$HOME`` directory) will be the installation target when ``$HOME`` is specified. Installation to ``/root`` may prove workable in some circumstances - e.g., while the container is executing, or if read-only access is required to this directory after installation. In general, however, because this is the ``root`` directory conventional wisdom suggests this practice be avoided. Thus the best practice is:
+"Avoid installations that make use of ``/root``."
+5. Read-only ``/`` filesystem
+apptainer mounts a container's ``/`` filesystem in read-only mode. To ensure a Docker container meets apptainer's requirements, it may prove useful to execute ``docker run --read-only --tmpfs /run --tmpfs /tmp godlovedc/lolcow``. The best practioce here is:
+"Ensure Docker containers meet apptainer's read-only ``/`` filesystem requirement"
+6. Installation to ``$HOME`` or ``$TMP``
+In making use of apptainer, it is common practice for ``$USER`` to be automatically mounted on ``$HOME``, and for ``$TMP`` also to be mounted. To avoid the side effects (e.g., 'missing' or conflicting files) that might arise as a consequence of executing ``mount`` commands then, the best practice is:
+"Avoid placing container 'valuables' in ``$HOME`` or ``$TMP``."
+A detailed review of the container's build specification (e.g., its ``Dockerfile``) may be required to ensure this best practice is adhered to.
+7. Current library caches
+Irrespective of containers, `a common runtime error <https://codeyarns.com/2014/01/14/how-to-fix-shared-object-file-error/>`_ stems from failing to locate shared libraries required for execution. Suppose now there exists a requirement for symbolically linked libraries *within* a apptainer container. If the builld process that creates the container fails to update the cache, then it is quite likely that (read-only) execution of this container will result in the common error of missing libraries. Upon investigation, it is likely revealed that the library exists, just not the required symbolic links. Thus the best practice is:
+"Ensure calls to ``ldconfig`` are executed towards the *end* of ``build`` specifications (e.g., ``Dockerfile``), so that the library cache is updated when the container is created."
+8. Use of plain-text passwords for authentication
+For obvious reasons, it is desireable to completely *avoid* use of plain-text passwords. Therefore, for interactive sessions requiring authentication, use of the ``--docker-login`` option for apptainer's ``pull`` and ``build`` commands is *recommended*. At the present time, the *only* option available for non-interactive use is to :ref:`embed plain-text passwords into environment variables <sec:authentication_via_environment_variables>`. Because the Sylabs Cloud apptainer Library employs `time-limited API tokens for authentication <https://cloud.sylabs.io/auth>`_, use of SIF containers hosted through this service provides a more secure means for both interactive *and* non-interactive use. This best practice is:
+"Avoid use of plain-text passwords"
+9. Execution ambiguity
+Short of converting an *entire* ``Dockerfile`` into a apptainer definition file, informed specification of the ``%runscript`` entry in the def file *removes* any ambiguity associated with ``ENTRYPOINT`` :ref:`versus <sec:def_files_execution>` ``CMD`` and ultimately :ref:`execution precedence <sec:def_files_execution>`. Thus the best practice is:
+"Employ apptainer's ``%runscript`` by default to avoid execution ambiguity"
+Note that the ``ENTRYPOINT`` can be bypassed completely, e.g., ``docker run -i -t --entrypoint /bin/bash godlovedc/lolcow``. This allows for an interactive session within the container, that may prove useful in validating the built runtime.
+t practices emerge from experience. Contributions that allow additional experiences to be shared as best practices are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details.
 
 
 .. _sec:troubleshooting:
@@ -1854,25 +1816,16 @@ Troubleshooting
 
 In making use of Docker and OCI images through apptainer the need to troubleshoot may arise. A brief compilation of issues and their resolution is provided here.
 
-    1. Authentication issues
-
-    Authentication is required to make use of Docker-style private images and/or private registries. Examples involving private images hosted by the public Docker Hub were :ref:`provided above <sec:using_prebuilt_private_images>`, whereas the NVIDIA GPU Cloud was used to :ref:`illustrate access to a private registry <sec:using_prebuilt_private_images_parivate_registries>`. Even if the intended use of containers is non-interactive, issues in authenticating with these image-hosting services are most easily addressed through use of the ``--docker-login`` option that can be appended to a apptainer ``pull`` request. As soon as image signatures and blobs start being received, authentication credentials have been validated, and the image ``pull`` can be cancelled.
-
-    2. Execution mismatches
-
-    Execution intentions are detailed through specification files - i.e., the ``Dockerfile`` in the case of Docker images. However, intentions and precedence aside, the reality of executing a container may not align with expectations. To alleviate this mismatch, use of ``apptainer inspect --runscript <somecontainer>.sif`` details the *effective* runscript - i.e., the one that is actually being executed. Of course, the ultimate solution to this issue is to develop and maintain apptainer definition files for containers of interest.
-
-    3. More than one image in the OCI bundle directory
-
-    :ref:`As illustrated above <cli-oci-bootstrap-agent>`, and with respect to the bootstrap agent ``oci://$OCI_BUNDLE_DIR``, a fatal error is generated when *more* than one image is referenced in the ``$OCI_BUNDLE_DIR/index.json`` file. The workaround shared previously was to append the bootstrap directive with the unique reference name for the image of interest - i.e., ``oci://$OCI_BUNDLE_DIR:org.opencontainers.image.ref.name``. Because it may take some effort to locate the reference name for an image of interest, an even simpler solution is to ensure that each ``$OCI_BUNDLE_DIR`` contains at most a single image.
-
-    4. Cache maintenance
-
-    Maintenance of the apptainer cache (i.e., ``$HOME/.apptainer/cache``) requires manual intervention at this time. By **carefully** issuing the command ``rm -rf $HOME/.apptainer/cache``, its local cache will be cleared of all downloaded images.
-
-    5. The ``http`` and ``https`` are ``pull`` only bootstrap agents
-
-    ``http`` and ``https`` are the only examples of ``pull`` only bootstrap agents. In other words, when used with apptainer's ``pull`` command, the result is a local copy of, for example, an OCI archive image. This means that a subsequent step is necessary to actually create a SIF container for use by apptainer - a step involving the ``oci-archive`` bootstrap agent in the case of an OCI image archive.
+1. Authentication issues
+Authentication is required to make use of Docker-style private images and/or private registries. Examples involving private images hosted by the public Docker Hub were :ref:`provided above <sec:using_prebuilt_private_images>`, whereas the NVIDIA GPU Cloud was used to :ref:`illustrate access to a private registry <sec:using_prebuilt_private_images_parivate_registries>`. Even if the intended use of containers is non-interactive, issues in authenticating with these image-hosting services are most easily addressed through use of the ``--docker-login`` option that can be appended to a apptainer ``pull`` request. As soon as image signatures and blobs start being received, authentication credentials have been validated, and the image ``pull`` can be cancelled.
+2. Execution mismatches
+Execution intentions are detailed through specification files - i.e., the ``Dockerfile`` in the case of Docker images. However, intentions and precedence aside, the reality of executing a container may not align with expectations. To alleviate this mismatch, use of ``apptainer inspect --runscript <somecontainer>.sif`` details the *effective* runscript - i.e., the one that is actually being executed. Of course, the ultimate solution to this issue is to develop and maintain apptainer definition files for containers of interest.
+3. More than one image in the OCI bundle directory
+:ref:`As illustrated above <cli-oci-bootstrap-agent>`, and with respect to the bootstrap agent ``oci://$OCI_BUNDLE_DIR``, a fatal error is generated when *more* than one image is referenced in the ``$OCI_BUNDLE_DIR/index.json`` file. The workaround shared previously was to append the bootstrap directive with the unique reference name for the image of interest - i.e., ``oci://$OCI_BUNDLE_DIR:org.opencontainers.image.ref.name``. Because it may take some effort to locate the reference name for an image of interest, an even simpler solution is to ensure that each ``$OCI_BUNDLE_DIR`` contains at most a single image.
+4. Cache maintenance
+Maintenance of the apptainer cache (i.e., ``$HOME/.apptainer/cache``) requires manual intervention at this time. By **carefully** issuing the command ``rm -rf $HOME/.apptainer/cache``, its local cache will be cleared of all downloaded images.
+5. The ``http`` and ``https`` are ``pull`` only bootstrap agents
+``http`` and ``https`` are the only examples of ``pull`` only bootstrap agents. In other words, when used with apptainer's ``pull`` command, the result is a local copy of, for example, an OCI archive image. This means that a subsequent step is necessary to actually create a SIF container for use by apptainer - a step involving the ``oci-archive`` bootstrap agent in the case of an OCI image archive.
 
 Like :ref:`best practices <sec:best_practices>`, troubleshooting scenarios and solutions emerge from experience. Contributions that allow additional experiences to be shared  are always encouraged. Please refer to :ref:`Contributing <contributing>` for additional details.
 
