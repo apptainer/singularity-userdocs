@@ -137,7 +137,7 @@ You can see them listed alphabetically below with their respective functionality
 #. **SINGULARITY_LIBRARY**: Specifies the library to pull from. Default is set to our Cloud Library.
 
 ``M``
-=====
+^^^^^
 
 #. **SINGULARITY_MOUNT**: To specify host to container mounts, using the
    syntax understood by the ``--mount`` flag. Multiple mounts should be
