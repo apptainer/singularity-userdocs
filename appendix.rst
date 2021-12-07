@@ -82,9 +82,6 @@ You can see them listed alphabetically below with their respective functionality
 #. **SINGULARITY_DROP_CAPS**: To specify a list (comma separated string)
    of capabilities to be dropped. Default is an empty string.
 
-#. **SINGULARITY_DROP_CAPS**: To specify a list (comma separated string)
-   of capabilities to be dropped. Default is an empty string.
-
 ``E``
 ^^^^^
 
