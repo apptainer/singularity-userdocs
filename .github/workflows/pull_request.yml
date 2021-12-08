@@ -1,0 +1,45 @@
+---
+name: CI
+
+on:
+  pull_request:
+
+jobs:
+  CI:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          submodules: recursive
+
+      - name: Setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.17.3
+
+      - name: Install Singularity dependencies
+        run: |
+          sudo apt-get install -f -y build-essential libssl-dev uuid-dev squashfs-tools libseccomp-dev cryptsetup-bin libgpgme-dev
+
+      - name: Install LaTeX dependencies
+        run: |
+          sudo apt-get install -f -y texlive-latex-extra latexmk
+
+      - name: Setup Python
+        uses: actions/setup-python@v1
+
+      - name: Install Sphinx
+        run: |
+          pip install --user --upgrade --upgrade-strategy eager sphinx sphinx-rtd-theme restructuredtext_lint pygments
+
+      - name: Build web documentation
+        run: |
+          make html
+
+      - name: Build PDF documentation
+        run: |
+          make latexpdf
+
+      - name: Build EPUB documentation
+        run: |
+          make epub
