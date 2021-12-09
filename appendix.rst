@@ -168,7 +168,7 @@ You can see them listed alphabetically below with their respective functionality
    set to false.
 
 #. **SINGULARITY_NVCCLI**: To use nvidia-container-cli for container GPU setup
-   (experimental).
+   (experimental, only unprivileged).
 
 ``O``
 ^^^^^
