@@ -20,9 +20,9 @@ setup. This functionality, accessible via the new ``--nvccli`` flag,
 improves compatibility with OCI runtimes and exposes additional
 container configuration options.
 
----------------------------
-NVIDIA GPUs & CUDA (Legacy)
----------------------------
+-----------------------------
+NVIDIA GPUs & CUDA (Standard)
+-----------------------------
 
 Commands that ``run``, or otherwise execute containers (``shell``, ``exec``) can
 take an ``--nv`` option, which will setup the container's environment to use an
@@ -219,17 +219,20 @@ operation has a number of advantages, including:
 Requirements & Limitations
 ==========================
 
-* ``nvidia-container-cli`` must be installed on your host, owned by
-  the ``root`` user. Its path must be set in
+* ``nvidia-container-cli`` must be installed on your host.
+  Its path must be set in
   ``singularity.conf``. This value will be set at build time if
   ``nvidia-container-cli`` is found on the search ``$PATH``.
 
-* Your system should support the ``overlay`` filesystem if you will be
-  running SIF containers in set-uid mode.
-
-* ``--nvccli`` cannot currently be used in combination with
-  ``--fakeroot`` in a set-uid install of Singularity. Use the
-  traditional binding method with ``--nv`` only.
+* For security reasons, ``--nvccli`` cannot be used with
+  privileged mode in a set-uid install of {Singularity}.
+  Use the traditional binding method with ``--nv`` only or use
+  ``--nvccli`` with the the ``--user`` (or ``-u``) option to run unprivileged.
+  The option also cannot be used with ``--fakeroot``.
+  Since unprivileged mode does not support SIF files, use sandbox mode.
+  ``nvidia-container-cli`` also requires writing to the image, and
+  since without set-uid there is no overlay available, the ``--writable``
+  (or ``-w``) option is also required.
 
 * There are known problems with library discovery for the current
   ``nvidia-container-cli`` in recent Debian distributions. See `this
@@ -240,24 +243,24 @@ Requirements & Limitations
 Example - tensorflow-gpu
 ========================
 
-Tensorflow can be run using ``--nvccli`` in the same manner as the
-legacy ``--nv`` binding approach. Pull the large container to a SIF
-file:
+Tensorflow can be run using ``--nvccli`` in a similar manner as the
+standard ``--nv`` binding approach when run unprivleged. Build the
+large container into a sandbox:
 
 .. code-block:: none
 
-    $ singularity pull docker://tensorflow/tensorflow:latest-gpu
+    $ singularity build --sandbox tensorflow_latest-gpu docker://tensorflow/tensorflow:latest-gpu
+    INFO:    Starting build...
     ...
-    INFO:    Creating SIF file...
-    INFO:    Build complete: tensorflow_latest-gpu.sif
+    INFO:    Creating sandbox directory...
+    INFO:    Build complete: tensorflow_latest-gpu
 
 
 Then run the container with ``nvidia-container-cli`` GPU support:
 
 .. code-block:: none
 
-    $ singularity run --nv --nvccli tensorflow_latest-gpu.sif
-    INFO:    Setting --writable-tmpfs (required by nvidia-container-cli)
+    $ singularity run -uw --nv --nvccli tensorflow_latest-gpu
 
     ________                               _______________
     ___  __/__________________________________  ____/__  /________      __
@@ -270,11 +273,6 @@ Then run the container with ``nvidia-container-cli`` GPU support:
     which should map to the ID and group for your user on the Docker host. Great!
 
     Singularity>
-
-Note that ``--writable--tmpfs`` was automatically set, which allows
-files to be written inside the container to an ephemeral overlay that
-will be discarded on exit. This is required for the
-``nvidia-container-cli`` functionality.
 
 You can verify the GPU is available within the container by using the
 tensorflow ``list_local_devices()`` function:
@@ -305,13 +303,13 @@ GPU Selection
 
 When running with ``--nvccli``, by default {Singularity} will expose
 all GPUs on the host inside the container. This mirrors the
-functionality of the legacy GPU support for the most common use-case.
+functionality of the standard GPU support for the most common use-case.
 
 Setting the ``SINGULARITY_CUDA_VISIBLE_DEVICES`` environment variable
 before running a container is still supported, to control which GPUs
 are used by CUDA programs that honor
 ``CUDA_VISIBLE_DEVICES``. However, more powerful GPU isolation is
-possible using the ``--contain`` flag and ``NVIDIA_VISIBLE_DEVICES``
+possible using the ``--contain`` (or ``-c``) flag and ``NVIDIA_VISIBLE_DEVICES``
 environment variable. This controls which GPU devices are bound into
 the ``/dev`` tree in the container.
 
@@ -321,7 +319,7 @@ on a system with 4 GPUs, run the following:
 .. code-block:: none
 
     $ export NVIDIA_VISIBLE_DEVICES=1,2
-    $ singularity run --contain --nv --nvccli mycontainer.sif
+    $ singularity run -uwc --nv --nvccli tensorflow_latest-gpu
 
 Note that:
 
@@ -343,11 +341,11 @@ no GPUs will be available in the container, and a warning will be shown:
 
 .. code-block:: none
 
-    $ singularity run --contain --nv --nvccli mycontainer.sif
+    $ singularity run -uwc --nv --nvccli tensorflow_latest-gpu
     WARNING: When using nvidia-container-cli with --contain NVIDIA_VISIBLE_DEVICES
     must be set or no GPUs will be available in container.
 
-To restore the behaviour of the legacy GPU handling, set
+To restore the behaviour of the standard GPU handling, set
 ``NVIDIA_VISIBLE_DEVICES=0`` when running with ``--contain``.
 
 If your system contains Ampere or newer GPUs that support virtual MIG
