@@ -1,12 +1,9 @@
 # Singularity User Docs
 
-This repository holds user-facing documentation for the
-[Singularity](https://github.com/hpcng/singularity) container runtime.
-
-This is a community project led by [HPCng](https:/hpcng.org), and
-contributions are always welcome! If you'd like to update or improve
-Singularity's documentation please follow the instructions below, and submit a
-PR on GitHub.
+IMPORTANT NOTE: Singularity is being renamed to Apptainer. This
+repository is now only for maintaining the 3.8 series and archiving the
+history. Submit all current user docs issues and pull requests to
+https://github.com/apptainer/apptainer-userdocs.
 
 ## Setting up an environment to contribute
 
@@ -223,7 +220,7 @@ this, just run:
 
 ```bash
 git submodule update --remote --merge
-git add vendor/src/github.com/hpcng/singularity
+git add vendor/src/github.com/apptainer/singularity
 git commit
 ```
 
