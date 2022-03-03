@@ -1,9 +1,10 @@
 # Singularity User Docs
 
-IMPORTANT NOTE: Singularity is being renamed to Apptainer. This
-repository is now only for maintaining the 3.8 series and archiving the
-history. Submit all current user docs issues and pull requests to
-https://github.com/apptainer/apptainer-userdocs.
+IMPORTANT NOTE: Singularity has been renamed to
+[Apptainer](https://apptainer.org/news/community-announcement-20211130).
+This repository is now only for archiving the history.
+Submit all current issues and pull requests to
+[https://github.com/apptainer/apptainer](https://github.com/apptainer/apptainer).
 
 ## Setting up an environment to contribute
 
